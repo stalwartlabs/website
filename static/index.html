@@ -1,0 +1,538 @@
+<!doctype html>
+<html lang="en-US">
+
+<head>
+  <meta name="generator" content="Hugo 0.102.3" />
+  <meta charset="utf-8" />
+  <title>Stalwart Mail Server | Stalwart Labs Ltd.</title>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+  <!-- Themify -->
+  <link rel="stylesheet" href="/themify/themify.css">
+
+  <!-- Critical CSS -->
+
+  <link href="/css/critical.min.css" rel="stylesheet" />
+
+  <!--Favicon-->
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" crossorigin="use-credentials" href="/site.webmanifest">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-NTKTV3G55G"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-NTKTV3G55G');
+  </script>
+</head>
+
+<body>
+  <nav class="main-nav navbar navbar-expand-lg">
+    <div class="container-fluid">
+      <!-- Logo -->
+      <a class="navbar-brand" href="/">
+        <img class="logo-main" src="/images/logo.png" alt="logo-white" />
+      </a>
+      <!-- Toogle Button -->
+      <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#mainNav">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse nav-list" id="mainNav">
+        <!-- Navigation Links -->
+
+
+        <ul class="navbar-nav ml-auto">
+
+          <li class="nav-item">
+            <a href="/jmap" class="nav-link scroll">JMAP</a>
+          </li>
+
+          <li class="nav-item">
+            <a href="/imap" class="nav-link scroll">IMAP</a>
+          </li>
+
+          <li class="nav-item">
+            <a href="/smtp" class="nav-link scroll">SMTP</a>
+          </li>
+
+          <li class="nav-item">
+            <a href="https://stalwartlabs.medium.com/" target="_blank" class="nav-link scroll">Blog</a>
+          </li>
+
+        </ul>
+        <div class="account-list list-inline">
+          <li class="list-inline-item">
+            <a href="https://github.com/stalwartlabs" target="_blank" class="btn btn-sm btn-violate">
+              Github
+            </a>
+          </li>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div id="content">
+    <section class="hero" id="hero">
+      <div class="hero-shape">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 898.595 671.33">
+          <g data-name="Group 1168">
+            <path data-name="Path 1352"
+              d="M77.225.84S65.754 56.25 72.99 108.615c6.519 47.174 14.071 83.313 45.359 132.19s67.663 74.2 113.344 90.467c10.087 2.544 22.468 4.651 35.375 10.446 17.912 8.956 39.851 18.784 63.185 64.959 29.724 58.823 31.289 129.222 102.94 193.364 30.523 27.324 85.56 48.346 152.718 60.609 90.568 16.538 203.528 16.044 311.709-17.053 0-46.584-.016-642.734-.016-642.734z"
+              fill="#ffecee" />
+            <path data-name="Path 1353"
+              d="M4.946.863s-11.953 71.78 4.545 135.746 50.072 127.642 106.223 162.953c30.391 18.524 54.077 22.62 54.077 22.62s35.965 6.587 58.362 28.851 33.95 47.335 40.287 63.6 30.656 87.859 39.048 101.217 22.093 51.037 70.9 84.776 130.668 56.964 257.731 60.438 240.329-44.6 261.458-55.888"
+              fill="none" stroke="#273437" stroke-linecap="round" stroke-width="1.5" />
+          </g>
+        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 266.025 234.723">
+          <g data-name="Group 1169">
+            <path data-name="Path 1351"
+              d="M246.353.908s32.245 23.839 14.178 60.475-62.607 44.54-85.191 84.439-37.268 86.821-83.942 85.186c-36.9-1.289-90.335-44.54-90.335-44.54L1.188.657z"
+              fill="#ffecee" />
+            <path data-name="Path 1350"
+              d="M178.777.908s4.869 19.639 32.623 49.99 37.492 50.964 33.6 76.932-38.147 51.938-67.684 70.765-58.263 37.33-101.763 35.22c-40.1-1.945-59.9-27.777-71.327-57.935-.862-2.273-1.961-6.034-3.171-6.986"
+              fill="none" stroke="#273437" stroke-linecap="round" stroke-width="1.5" />
+          </g>
+        </svg>
+      </div>
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-6 order-2 order-lg-1">
+            <div class="hero-content">
+              <span class="hero-content-subtitle"> Stalwart Mail Server </span>
+              <h1> Modernize your mail server </h1>
+              <p> Self-hosting your mail server has been notoriously difficult. Not anymore! Stalwart is a scalable,
+                secure and robust open-source mail server software designed for the 21st century. </p>
+              <ul class="hero-content-buttons">
+                <li>
+                  <a href="#jmap" class="btn-platform">
+
+                    <div class="btn-platform-area">
+                      <span> Stalwart </span>
+                      JMAP Server
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a href="#smtp" class="btn-platform">
+                    <div class="btn-platform-area">
+                      <span> Stalwart </span>
+                      SMTP Server
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-6 order-1 order-lg-2">
+            <div class="hero-image">
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="service">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-12">
+            <div class="section-title">
+              <h2>
+                Key features
+              </h2>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6">
+            <div class="service-item">
+              <div class="service-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="144.201" height="146.575" viewBox="0 0 144.201 146.575">
+                  <g data-name="Group 1169">
+                    <path data-name="Path 1287"
+                      d="M36.919 47.929c3.321-4.628 4.717-10.314 6.909-15.571s5.678-10.529 11.1-12.266 11.345.535 16.016 3.778 8.635 7.464 13.516 10.381c5.386 3.22 11.606 4.69 17.706 6.164s12.309 3.047 17.592 6.43 9.569 8.95 9.784 15.221c.246 7.186-4.751 13.515-10.34 18.038s-12.072 8.03-16.819 13.43c-4.851 5.514-7.5 12.558-11 19.015s-8.41 12.8-15.45 14.882a22.734 22.734 0 01-13.705-.748 63.715 63.715 0 01-12.39-6.341c-6.825-4.179-13.626-8.51-19.452-14S19.711 94.096 17.619 86.366s-1.153-16.477 3.57-22.937c4.358-5.954 11.427-9.502 15.73-15.5z" />
+                    <path data-name="Path 1288"
+                      d="M34.832 96.861c-3.03-4.783-7.747-8.181-11.773-12.155s-7.587-9.146-7.17-14.785 4.713-10.247 9.437-13.336 10.089-5.173 14.59-8.58c4.971-3.76 8.639-8.94 12.265-14.008s7.386-10.2 12.467-13.804 11.802-5.478 17.66-3.343c6.71 2.448 10.682 9.404 12.77 16.233s2.907 14.104 6.115 20.482c3.274 6.518 8.777 11.583 13.424 17.205s8.658 12.505 7.962 19.764a22.563 22.563 0 01-5.787 12.34 63.255 63.255 0 01-10.449 9.044c-6.388 4.728-12.908 9.379-20.13 12.7s-15.254 5.27-23.148 4.32-15.606-5.07-19.8-11.823c-3.87-6.234-4.51-14.06-8.433-20.254z"
+                      fill="none" stroke="#273437" stroke-width="1.5" />
+                  </g>
+                </svg>
+                <i class="ti-shine"></i>
+              </div>
+              <div class="service-content">
+                <h4>Modern</h4>
+                <p>Designed around JMAP, a modern protocol for accessing e-mails and other data.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6">
+            <div class="service-item">
+              <div class="service-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="144.201" height="146.575" viewBox="0 0 144.201 146.575">
+                  <g data-name="Group 1169">
+                    <path data-name="Path 1287"
+                      d="M36.919 47.929c3.321-4.628 4.717-10.314 6.909-15.571s5.678-10.529 11.1-12.266 11.345.535 16.016 3.778 8.635 7.464 13.516 10.381c5.386 3.22 11.606 4.69 17.706 6.164s12.309 3.047 17.592 6.43 9.569 8.95 9.784 15.221c.246 7.186-4.751 13.515-10.34 18.038s-12.072 8.03-16.819 13.43c-4.851 5.514-7.5 12.558-11 19.015s-8.41 12.8-15.45 14.882a22.734 22.734 0 01-13.705-.748 63.715 63.715 0 01-12.39-6.341c-6.825-4.179-13.626-8.51-19.452-14S19.711 94.096 17.619 86.366s-1.153-16.477 3.57-22.937c4.358-5.954 11.427-9.502 15.73-15.5z" />
+                    <path data-name="Path 1288"
+                      d="M34.832 96.861c-3.03-4.783-7.747-8.181-11.773-12.155s-7.587-9.146-7.17-14.785 4.713-10.247 9.437-13.336 10.089-5.173 14.59-8.58c4.971-3.76 8.639-8.94 12.265-14.008s7.386-10.2 12.467-13.804 11.802-5.478 17.66-3.343c6.71 2.448 10.682 9.404 12.77 16.233s2.907 14.104 6.115 20.482c3.274 6.518 8.777 11.583 13.424 17.205s8.658 12.505 7.962 19.764a22.563 22.563 0 01-5.787 12.34 63.255 63.255 0 01-10.449 9.044c-6.388 4.728-12.908 9.379-20.13 12.7s-15.254 5.27-23.148 4.32-15.606-5.07-19.8-11.823c-3.87-6.234-4.51-14.06-8.433-20.254z"
+                      fill="none" stroke="#273437" stroke-width="1.5" />
+                  </g>
+                </svg>
+                <i class="ti-cloud"></i>
+              </div>
+              <div class="service-content">
+                <h4>Built to scale</h4>
+                <p>Scales out of the box without requiring third-party software.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6">
+            <div class="service-item">
+              <div class="service-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="144.201" height="146.575" viewBox="0 0 144.201 146.575">
+                  <g data-name="Group 1169">
+                    <path data-name="Path 1287"
+                      d="M36.919 47.929c3.321-4.628 4.717-10.314 6.909-15.571s5.678-10.529 11.1-12.266 11.345.535 16.016 3.778 8.635 7.464 13.516 10.381c5.386 3.22 11.606 4.69 17.706 6.164s12.309 3.047 17.592 6.43 9.569 8.95 9.784 15.221c.246 7.186-4.751 13.515-10.34 18.038s-12.072 8.03-16.819 13.43c-4.851 5.514-7.5 12.558-11 19.015s-8.41 12.8-15.45 14.882a22.734 22.734 0 01-13.705-.748 63.715 63.715 0 01-12.39-6.341c-6.825-4.179-13.626-8.51-19.452-14S19.711 94.096 17.619 86.366s-1.153-16.477 3.57-22.937c4.358-5.954 11.427-9.502 15.73-15.5z" />
+                    <path data-name="Path 1288"
+                      d="M34.832 96.861c-3.03-4.783-7.747-8.181-11.773-12.155s-7.587-9.146-7.17-14.785 4.713-10.247 9.437-13.336 10.089-5.173 14.59-8.58c4.971-3.76 8.639-8.94 12.265-14.008s7.386-10.2 12.467-13.804 11.802-5.478 17.66-3.343c6.71 2.448 10.682 9.404 12.77 16.233s2.907 14.104 6.115 20.482c3.274 6.518 8.777 11.583 13.424 17.205s8.658 12.505 7.962 19.764a22.563 22.563 0 01-5.787 12.34 63.255 63.255 0 01-10.449 9.044c-6.388 4.728-12.908 9.379-20.13 12.7s-15.254 5.27-23.148 4.32-15.606-5.07-19.8-11.823c-3.87-6.234-4.51-14.06-8.433-20.254z"
+                      fill="none" stroke="#273437" stroke-width="1.5" />
+                  </g>
+                </svg>
+                <i class="ti-rocket"></i>
+              </div>
+              <div class="service-content">
+                <h4>Powered by Rust</h4>
+                <p>Incredibly fast while ensuring memory safety. No runtimes or garbage collectors.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+    <section class="feature">
+      <div class="container">
+        <div class="row align-items-center" id="jmap">
+          <div class="col-lg-6">
+            <div class="feature-image">
+              <img src="/images/shape-01.svg" class="feature-image-shape1" style="left: -25%; top: 10%;"
+                alt="feature-image-shape" />
+              <img src="/images/empty.svg" alt="feature-image" />
+
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="feature-content ml-25">
+              <h2>
+                Stalwart JMAP
+              </h2>
+              <p>
+                Stalwart JMAP is an open-source JSON Meta Application Protocol server designed to be robust, secure and
+                scalable.
+              </p>
+              <div class="feature-content-list">
+                <ul>
+                  <li>
+                    <i class="ti-check"></i>
+                    <p> Rock solid. Powered by RocksDB. </p>
+                  </li>
+                  <li>
+                    <i class="ti-check"></i>
+                    <p> Secure. Written in Rust. </p>
+                  </li>
+                  <li>
+                    <i class="ti-check"></i>
+                    <p> Scalable and fault-tolerant. </p>
+                  </li>
+                </ul>
+              </div>
+              <p>
+                &nbsp;
+              </p>
+              <a href="/jmap/" data-text=Learn&#32;More class="btn btn-primary">
+                <span>Learn More</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="row align-items-center" id="imap">
+          <div class="col-lg-6 order-2 order-lg-1">
+            <div class="feature-content mr-25">
+              <h2>
+                Stalwart IMAP
+              </h2>
+              <p>
+                Stalwart IMAP is an open-source Internet Message Access Protocol server with both IMAP4rev2 and
+                IMAP4rev1 support.
+              </p>
+              <div class="feature-content-list">
+                <ul>
+                  <li>
+                    <i class="ti-check"></i>
+                    <p> IMAP4rev2&#43;1 to JMAP proxy. </p>
+                  </li>
+
+                  <li>
+                    <i class="ti-check"></i>
+                    <p> Supports multiple IMAP4 extensions. </p>
+                  </li>
+
+                  <li>
+                    <i class="ti-check"></i>
+                    <p> Standards Compliant. </p>
+                  </li>
+
+                </ul>
+              </div>
+              <p>
+                &nbsp;
+              </p>
+              <a href="/imap/" data-text=Learn&#32;More class="btn btn-primary">
+                <span>Learn More</span>
+              </a>
+            </div>
+          </div>
+          <div class="col-lg-6 order-1 order-lg-2">
+            <div class="feature-image">
+              <img src="/images/shape-03.svg" class="feature-image-shape3" style="right: -25%; top: 10%;"
+                alt="feature-image-shape" />
+              <img src="/images/empty.svg" alt="feature-image" />
+
+            </div>
+          </div>
+        </div>
+        <div class="row align-items-center" id="smtp">
+          <div class="col-lg-6">
+            <div class="feature-image">
+              <img src="/images/shape-01.svg" class="feature-image-shape1" style="left: -25%; top: 10%;"
+                alt="feature-image-shape" />
+              <img src="/images/empty.svg" alt="feature-image" />
+
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="feature-content ml-25">
+              <h2>
+                Stalwart SMTP
+              </h2>
+              <p>
+                Stalwart SMTP is a modern SMTP server developed in Rust with a focus on security, speed, and extensive
+                configurability.
+              </p>
+              <div class="feature-content-list">
+                <ul>
+                  <li>
+                    <i class="ti-check"></i>
+                    <p> Built-in DMARC, DKIM, SPF and ARC support. </p>
+                  </li>
+                  <li>
+                    <i class="ti-check"></i>
+                    <p> Transport security through DANE and MTA-STS. </p>
+                  </li>
+                  <li>
+                    <i class="ti-check"></i>
+                    <p> Configurable rules and Sieve scripting. </p>
+                  </li>
+                </ul>
+              </div>
+              <p>
+                &nbsp;
+              </p>
+              <a href="/smtp/" data-text=Learn&#32;More class="btn btn-primary">
+                <span>Learn More</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="faq" id="faq">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-6">
+            <div class="faq-content">
+              <h2>
+                Frequently asked questions
+              </h2>
+              <p>
+                If you have a question that is not listed here you may use the contact form below or write to us on
+                Discord.
+              </p>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="faq-accordion" id="faqAccordion">
+
+              <div class="faq-accordion-item">
+                <div class="header">
+                  <h5 class="mb-0">
+                    <button class="btn btn-link
+                      
+                      " type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false">
+                      How do I get support?
+                    </button>
+                  </h5>
+                </div>
+
+                <div id="collapseOne" class="collapse show" data-parent="#faqAccordion">
+                  <div class="body">
+                    You can get help from the community by starting a discussion on Github or Discord. You may also
+                    become a sponsor and get support directly from Stalwart Labs Ltd.
+                  </div>
+                </div>
+              </div>
+
+              <div class="faq-accordion-item">
+                <div class="header">
+                  <h5 class="mb-0">
+                    <button class="btn btn-link
+                      
+                      
+                      collapsed
+                      " type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false">
+                      How safe is my data?
+                    </button>
+                  </h5>
+                </div>
+
+                <div id="collapseThree" class="collapse " data-parent="#faqAccordion">
+                  <div class="body">
+                    Stalwart JMAP stores all metadata and settings in RocksDB, a high performance embedded database for
+                    key-value data. RocksDB is used in production systems at various web-scale enterprises including
+                    Facebook, Yahoo! and LinkedIn. It has also been adpoted as storage backend by popular SQL and NoSQL
+                    databases such as Apache Cassandra, CockroachDB and MySQL. Even though RocksDB can be fully trusted
+                    with your information, e-mail messages are stored separately from metadata, directly in the file
+                    system to allow quick recovery in case of catastrophic failure.
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+
+
+    <!--contactHeader.html-->
+    <section class="page-header">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <h2>Contact Stalwart Labs</h2>
+            <p>
+              Have questions about any of our products? Use the form below and we'll get back to you as soon as
+              possible.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!--contactForm.html-->
+    <section class="contact">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <form id="contact-form" action="https://fabform.io/f/jJ5SVP8" method="POST" class="contact-form row">
+              <div class="col-lg-6">
+                <input type="text" class="form-control" placeholder="Full Name" name="Name" required />
+              </div>
+              <div class="col-lg-6">
+                <input type="email" class="form-control" placeholder="Email" name="email" required />
+              </div>
+              <div class="col-12">
+                <input type="text" class="form-control" placeholder="Subject" name="subject" />
+              </div>
+              <div class="col-12">
+                <textarea class="form-control" placeholder="Message" required cols="30" rows="7"
+                  name="message"></textarea>
+              </div>
+
+              <div class="col-6 text-right">
+                <button id="contact-form-button" class="btn btn-primary-filled" type="submit" formtarget="_blank">
+                  Submit
+                </button>
+              </div>
+              <div class="col-12">
+                <p id="contact-form-status" class="mt-3"></p>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 col-md-4">
+          <div class="footer-description">
+            <img src="/images/logo.png" alt="logo">
+            <p>
+              Copyright © 2022 Stalwart Labs Ltd.
+              </br>
+              Registered in England and Wales with company number 12124087.
+            </p>
+            <ul class="footer-description-social">
+              <li>
+                <a href="https://github.com/stalwartlabs"><i class="ti-github"></i></a>
+              </li>
+              <li>
+                <a href="https://twitter.com/stalwartlabs"><i class="ti-twitter-alt"></i></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-4">
+          <div class="footer-widget">
+            <h4>Sitemap</h4>
+            <div class="footer-widget-list">
+              <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/jmap">JMAP Server</a></li>
+                <li><a href="/imap">IMAP Server</a></li>
+                <li><a href="/smtp">SMTP Server</a></li>
+                <li><a href="https://stalwartlabs.medium.com/">Blog</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-4">
+          <div class="footer-widget">
+            <h4>Address</h4>
+            <div class="footer-widget-list">
+              <ul>
+                <li>
+                  <i class="ti-pin"></i>128 City Road, London, EC1V 2NX, UK
+                </li>
+                <li><a href="mailto:hello@stalw.art"><i class="ti-email"></i>hello@stalw.art</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <link href="/css/non-critical.min.css" rel="stylesheet" />
+  <script src="/js/vendor.min.js"></script>
+  <script src="/js/script.min.js"></script>
+</body>
+
+</html>
