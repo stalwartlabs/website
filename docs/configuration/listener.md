@@ -92,7 +92,7 @@ MIIFCTCCAvGgAwIBAgIUCgHGQYUqtelbHGVSzCVwBL3fyEUwDQYJKoZIhvcNAQEL
 0fR8+xz9kDLf8xupV+X9heyFGHSyYU2Lveaevtr2Ij3weLRgJ6LbNALoeKXk
 -----END CERTIFICATE-----
 '''
-private-key = "file:///usr/local/stalwart-smtp/etc/private/tls.key"
+private-key = "file:///opt/stalwart-smtp/etc/private/tls.key"
 ```
 
 ## Maximum connections

@@ -76,7 +76,7 @@ Example:
 ```toml
 [global.tracing]
 method = "log"
-path = "/usr/local/stalwart-mail/logs"
+path = "/opt/stalwart-mail/logs"
 prefix = "stalwart-mail.log"
 rotate = "daily"
 level = "info"

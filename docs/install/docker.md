@@ -28,7 +28,7 @@ $ docker pull stalwartlabs/mail-server:latest
 Create a directory on your host machine where you will store the configuration files and the data for the mail server, for example:
 
 ```bash
-$ mkdir /usr/local/stalwart-mail
+$ mkdir /opt/stalwart-mail
 ```
 
 Then run the configuration script:
