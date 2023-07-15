@@ -1,0 +1,42 @@
+---
+slug: sieve-stalwart-jmap
+title: Sieve filters are now available on Stalwart JMAP v0.2
+authors: [mdecimus]
+tags: [sieve, jmap, server]
+---
+
+Sieve (RFC5228) is a scripting language for filtering email messages at or around the time of final delivery. It is suitable for running on a mail server where users may not be allowed to execute arbitrary programs as it has no user-controlled loops or the ability to run external programs. Sieve is a data-driven programming language, similar to earlier email filtering languages such as procmail and maildrop, and earlier line-oriented languages such as sed and AWK: it specifies conditions to match and actions to take on matching.
+
+Today [Stalwart JMAP v0.2](https://github.com/stalwartlabs/jmap-server/) was released including support for the for [JMAP for Sieve Scripts](https://www.ietf.org/archive/id/draft-ietf-jmap-sieve-12.html) draft. Additionally, [ManageSieve](https://datatracker.ietf.org/doc/html/rfc5804) support was added to [Stalwart IMAP v0.2](https://github.com/stalwartlabs/imap-server/).
+
+Stalwart JMAP safely runs Sieve scripts in a controlled sandbox that ensures that programs do not exceed or abuse their allocated system resources.
+
+Unlike other mail servers that offer limited support for Sieve extensions, Stalwart JMAP supports all existing Sieve extensions including:
+
+* [RFC 5228 — Sieve: An Email Filtering Language](https://datatracker.ietf.org/doc/html/rfc5228)
+* [RFC 3894 — Copying Without Side Effects](https://datatracker.ietf.org/doc/html/rfc3894)
+* [RFC 5173 — Body Extension](https://datatracker.ietf.org/doc/html/rfc5173)
+* [RFC 5183 — Environment Extension](https://datatracker.ietf.org/doc/html/rfc5183)
+* [RFC 5229 — Variables Extension](https://datatracker.ietf.org/doc/html/rfc5229)
+* [RFC 5230 — Vacation Extension](https://datatracker.ietf.org/doc/html/rfc5230)
+* [RFC 5231 — Relational Extension](https://datatracker.ietf.org/doc/html/rfc5231)
+* [RFC 5232 — Imap4flags Extension](https://datatracker.ietf.org/doc/html/rfc5232)
+* [RFC 5233 — Subaddress Extension](https://datatracker.ietf.org/doc/html/rfc5233)
+* [RFC 5235 — Spamtest and Virustest Extensions](https://datatracker.ietf.org/doc/html/rfc5235)
+* [RFC 5260 — Date and Index Extensions](https://datatracker.ietf.org/doc/html/rfc5260)
+* [RFC 5293 — Editheader Extension](https://datatracker.ietf.org/doc/html/rfc5293)
+* [RFC 5429 — Reject and Extended Reject Extensions](https://datatracker.ietf.org/doc/html/rfc5429)
+* [RFC 5435 — Extension for Notifications](https://datatracker.ietf.org/doc/html/rfc5435)
+* [RFC 5463 — Ihave Extension](https://datatracker.ietf.org/doc/html/rfc5463)
+* [RFC 5490 — Extensions for Checking Mailbox Status and Accessing Mailbox Metadata](https://datatracker.ietf.org/doc/html/rfc5490)
+* [RFC 5703 — MIME Part Tests, Iteration, Extraction, Replacement, and Enclosure](https://datatracker.ietf.org/doc/html/rfc5703)
+* [RFC 6009 — Delivery Status Notifications and Deliver-By Extensions](https://datatracker.ietf.org/doc/html/rfc6009)
+* [RFC 6131 — Sieve Vacation Extension: “Seconds” Parameter](https://datatracker.ietf.org/doc/html/rfc6131)
+* [RFC 6134 — Externally Stored Lists](https://datatracker.ietf.org/doc/html/rfc6134)
+* [RFC 6558 — Converting Messages before Delivery](https://datatracker.ietf.org/doc/html/rfc6558)
+* [RFC 6609 — Include Extension](https://datatracker.ietf.org/doc/html/rfc6609)
+* [RFC 7352 — Detecting Duplicate Deliveries](https://datatracker.ietf.org/doc/html/rfc7352)
+* [RFC 8579 — Delivering to Special-Use Mailboxes](https://datatracker.ietf.org/doc/html/rfc8579)
+* [RFC 8580 — File Carbon Copy (FCC)](https://datatracker.ietf.org/doc/html/rfc8580)
+* [RFC 9042 — Delivery by MAILBOXID](https://datatracker.ietf.org/doc/html/rfc9042)
+* [REGEX-01 — Regular Expression Extension (draft-ietf-sieve-regex-01)](https://www.ietf.org/archive/id/draft-ietf-sieve-regex-01.html)

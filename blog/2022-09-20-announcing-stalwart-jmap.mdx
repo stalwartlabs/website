@@ -1,0 +1,21 @@
+---
+slug: announcing-stalwart-jmap
+title: Announcing Stalwart JMAP server
+authors: [mdecimus]
+tags: [jmap, email, rust, server]
+---
+
+We are happy to announce Stalwart JMAP, an open-source JSON Meta Application Protocol server written in Rust that aims to be scalable, robust and secure.
+
+Some of its key features are:
+
+* JMAP Core, JMAP Mail and JMAP over WebSocket full compliance.
+* IMAP4 rev2/1 support via [Stalwart IMAP](https://github.com/stalwartlabs/imap-server), an imap-to-jmap proxy.
+* Scalable and fault tolerant: consensus over Raft, node autodiscovery over gossip and read-only replicas.
+* RocksDB backend with full-text search support in 17 languages.
+* OAuth 2.0 authorization code and device authorization flows.
+* Domain Keys Identified Mail (DKIM) message signing.
+* Written in Rust.
+* No third-party software required to run or scale.
+
+Currently Stalwart JMAP requires an SMTP server such as Postfix in order to receive e-mails. However, the next item on the roadmap is to release an SMTP server in Rust with the goal of making self-hosting an e-mail server much simpler without sacrificing any security.

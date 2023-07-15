@@ -29,6 +29,12 @@ The path to the local blob store is configured with the `store.blob.local.path` 
 path = "/opt/stalwart-mail/data/blobs"
 ```
 
+:::tip Hint
+
+In this example, your users' email messages will be stored under `/opt/stalwart-mail/data/blobs/<account_id>/Maildir`. Where `<account_id>` is the unique identifier of the user's account.
+
+:::
+
 ## S3-compatible storage
 
 For distributed and larger-scale implementations, Stalwart Mail Server supports the use of S3-compatible storage services. S3, or Simple Storage Service, is a scalable object storage protocol used by many cloud providers. By using an S3-compatible service, Stalwart can store emails and blobs on remote servers, facilitating large-scale storage management, easy data replication, and backup, making it a viable option for businesses seeking robustness and scalability.

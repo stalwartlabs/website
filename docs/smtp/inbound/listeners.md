@@ -62,7 +62,7 @@ There is no need to enable LMTP if you are only using Stalwart SMTP to receive e
 
 ## Management port
 
-Stalwart SMTP features an HTTP-based management API that provides system administrators with the ability to manage message queues and scheduled DMARC and TLS aggregate reports. The API can be utilized through the [Command Line Interface](/TODO), using curl, or even automated through scripts.
+Stalwart SMTP features an HTTP-based management API that provides system administrators with the ability to manage message queues and scheduled DMARC and TLS aggregate reports. The API can be utilized through the [Command Line Interface](/docs/management/overview), using curl, or even automated through scripts.
 
 To enable the management interface in Stalwart SMTP, a special type of listener that uses the HTTP protocol has to be created. This can be done by specifying the IP address(es) and port(s) for the management API to listen for incoming connections in the `server.listener.<id>.bind` attribute and setting the `server.listener.<id>.protocol` attribute to `http`.
 

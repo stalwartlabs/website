@@ -111,7 +111,7 @@ mail.yourdomain.org. IN TXT "v=spf1 a -all ra=postmaster"
 _dmarc.yourdomain.org. IN TXT "v=DMARC1; p=none; rua=mailto:postmaster@yourdomain.org; ruf=mailto:postmaster@yourdomain.org"
 ```
 
-If you already have a DKIM certificate simply ignore these instructions and refer to the [DKIM section](/docs/smtp/TODO) for instructions on how to add a new DKIM signature
+If you already have a DKIM certificate simply ignore these instructions and refer to the [DKIM section](/docs/smtp/authentication/dkim) for instructions on how to add a new DKIM signature
 
 ### Take note of the administrator credentials
 
@@ -127,11 +127,13 @@ If you have chosen to use an existing LDAP directory or SQL database for authent
 
 The installation script will create the configuration file under `<INSTALL_DIR>/etc/config.toml`. You may want to review the configuration file and make any changes before starting the server.
 
-In particular, you will need to:
+:::tip In particular, you will need to:
 
-- If you have selected to use an external directory or database as authentication backend, add to the configuration file the connection details for your LDAP directory or SQL database. For detailed instructions on how to configure your directory, refer to the [Directory](/docs/directory/overview) section.
-- If you have selected to use an S3-compatible blob store, add to the configuration file the connection details for your blob store. For instructions on how to configure an S3-compatible store, refer to the [Blob store](/docs/TODO) section.
-- If you are installing the SMTP only package, add to the configuration file the LMTP server details where messages for local accounts will be delivered to. For more details refer to the [Transport & Routing configuration](/docs/TODO) section.
+- If you have selected to use an external directory or database as authentication backend, add to the configuration file the connection details for your LDAP directory or SQL database. For detailed instructions on how to configure your directory, refer to the [LDAP directory](/docs/directory/types/ldap) or [SQL database](/docs/directory/types/sql) sections.
+- If you have selected to use an S3-compatible blob store, add to the configuration file the connection details for your blob store. For instructions on how to configure an S3-compatible store, refer to the [Blob store](/docs/jmap/blob#s3-compatible-storage) section.
+- If you are installing the SMTP only package, add to the configuration file the LMTP server details where messages for local accounts will be delivered to. For more details refer to the [Routing configuration](/docs/smtp/outbound/routing) section.
+
+:::
 
 ### Restart service
 
@@ -153,6 +155,5 @@ Note: If you have installed any of the standalone packages, the name of the serv
 
 If everything went well, your users should now be able to connect to the server and send and receive emails. If you are unable to connect to the server, check the log files under `<INSTALL_DIR>/logs` for any errors.
 
-Now that you have Stalwart Mail Server up and running, you may want to configure the [Directory](/docs/directory/overview), [JMAP](/docs/TODO), [IMAP](/docs/TODO) or [SMTP](/docs/TODO) components.
-
+Now that you have Stalwart Mail Server up and running, you may want to configure the [Directory](/docs/directory/overview), [JMAP](/docs/jmap/overview), [IMAP](/docs/imap/overview) or [SMTP](/docs/smtp/overview) components.
 

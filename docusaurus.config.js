@@ -7,7 +7,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Stalwart Labs',
-  tagline: 'Dinosaurs are cool',
+  tagline: 'Modernize your email server',
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
@@ -39,20 +39,26 @@ const config = {
       ({
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+            'https://github.com/stalwartlabs/website/tree/main/',
         },
         blog: {
           showReadingTime: true,
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+            'https://github.com/stalwartlabs/website/tree/main/',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
+        },
+        sitemap: {
+          changefreq: 'weekly',
+          priority: 0.5,
+          ignorePatterns: ['/tags/**'],
+          filename: 'sitemap.xml',
+        },
+        gtag: {
+          trackingID: 'G-NTKTV3G55G',
+          anonymizeIP: true,
         },
       }),
     ],
@@ -62,7 +68,7 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       // Replace with your project's social card
-      image: 'img/docusaurus-social-card.jpg',
+      image: 'img/stalwart-social-card.jpg',
       navbar: {
         title: 'Stalwart',
         logo: {
@@ -92,19 +98,19 @@ const config = {
             items: [
               {
                 label: 'All-in-one Server',
-                to: '/docs/intro',
+                to: '/docs/get-started',
               },
               {
                 label: 'JMAP Server',
-                to: '/docs/intro',
+                to: '/docs/jmap/overview',
               },
               {
                 label: 'IMAP Server',
-                to: '/docs/intro',
+                to: '/docs/imap/overview',
               },
               {
                 label: 'SMTP Server',
-                to: '/docs/intro',
+                to: '/docs/smtp/overview',
               },
             ],
           },

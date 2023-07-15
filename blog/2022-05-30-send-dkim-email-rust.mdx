@@ -1,0 +1,72 @@
+---
+slug: send-dkim-emails-rust
+title: Sending DKIM signed e-mail messages over SMTP in Rust
+authors: [mdecimus]
+tags: [email, rust, send, dkim]
+---
+
+Building and sending e-mails securely does not have to be complicated. Today the mail-send crate was released including the following features:
+
+* Generates **e-mail** messages conforming to the Internet Message Format standard (*RFC 5322*) with full **MIME** support (*RFC 2045–2049*) and automatic selection of the most optimal encoding for each message body part.
+* DomainKeys Identified Mail (**DKIM**) Signatures (*RFC 6376*).
+* **SMTP** support with **TLS** and multiple authentication mechanisms (XOAUTH2, CRAM-MD5, DIGEST-MD5, LOGIN and PLAIN).
+* Full async (requires Tokio).
+
+Composing and sending an e-mail message via SMTP is as simple as:
+
+```rust
+        // Build a simple multipart message
+        let message = MessageBuilder::new()
+            .from(("John Doe", "john@example.com"))
+            .to(vec![
+                ("Jane Doe", "jane@example.com"),
+                ("James Smith", "james@test.com"),
+            ])
+            .subject("Hi!")
+            .html_body("<h1>Hello, world!</h1>")
+            .text_body("Hello world!");
+    
+        // Connect to an SMTP relay server over TLS and
+        // authenticate using the provided credentials.
+        Transport::new("smtp.gmail.com")
+            .credentials("john", "p4ssw0rd")
+            .connect_tls()
+            .await
+            .unwrap()
+            .send(message)
+            .await
+            .unwrap();
+```
+
+And to sign a message with DKIM just do:
+
+```rust
+    // Build a simple text message with a single attachment
+        let message = MessageBuilder::new()
+            .from(("John Doe", "john@example.com"))
+            .to("jane@example.com")
+            .subject("Howdy!")
+            .text_body("These pretzels are making me thirsty.")
+            .binary_attachment("image/png", "pretzels.png", [1, 2, 3, 4].as_ref());
+    
+        // Set up DKIM signer
+        let dkim = DKIM::from_pkcs1_pem_file("./cert.pem")
+            .unwrap()
+            .domain("example.com")
+            .selector("2022")
+            .headers(["From", "To", "Subject"]) // Headers to sign
+            .expiration(60 * 60 * 7); // Number of seconds before this signature expires (optional)
+    
+        // Connect to an SMTP relay server over TLS.
+        // Signs each message with the configured DKIM signer.
+        Transport::new("smtp.example.com")
+            .dkim(dkim)
+            .connect_tls()
+            .await
+            .unwrap()
+            .send(message)
+            .await
+            .unwrap();
+```
+
+More examples can be found on [Github](https://github.com/stalwartlabs/mail-send/tree/main/examples). Enjoy DKIM signing!

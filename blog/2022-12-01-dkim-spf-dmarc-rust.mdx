@@ -1,0 +1,176 @@
+---
+slug: dkim-spf-dmarc-rust
+title: DKIM, ARC, SPF and DMARC authentication in Rust
+authors: [mdecimus]
+tags: [dkim, arc, spf, dmarc, rust]
+---
+
+Today the mail-auth library was released, which is an e-mail authentication and reporting library written in Rust that supports the DKIM, ARC, SPF and DMARC protocols. It is the Rust equivalent of OpenDKIM, OpenSPF, OpenARC and OpenDMARC combined in one library (as well as some extras such ARF support). mail-auth includes the following features:
+
+* **DomainKeys Identified Mail (DKIM)**:
+* ED25519-SHA256 (Edwards-Curve Digital Signature Algorithm), RSA-SHA256 and RSA-SHA1 signing and verification.
+* DKIM Authorized Third-Party Signatures.
+* DKIM failure reporting using the Abuse Reporting Format.
+* **Authenticated Received Chain (ARC)**:
+* ED25519-SHA256 (Edwards-Curve Digital Signature Algorithm), RSA-SHA256 and RSA-SHA1 chain verification.
+* ARC sealing.
+* **Sender Policy Framework (SPF)**:
+* Policy evaluation.
+* SPF failure reporting using the Abuse Reporting Format.
+* **Domain-based Message Authentication, Reporting, and Conformance (DMARC)**:
+* Policy evaluation.
+* DMARC aggregate report parsing and generation.
+* **Abuse Reporting Format (ARF)**:
+* Abuse and Authentication failure reporting.
+* Feedback report parsing and generation.
+
+## DKIM Signature Verification
+
+```rust
+        // Create a resolver using Cloudflare DNS
+        let resolver = Resolver::new_cloudflare_tls().unwrap();
+
+        // Parse message
+        let authenticated_message = AuthenticatedMessage::parse(RFC5322_MESSAGE.as_bytes()).unwrap();
+
+        // Validate signature
+        let result = resolver.verify_dkim(&authenticated_message).await;
+
+        // Make sure all signatures passed verification
+        assert!(result.iter().all(|s| s.result() == &DKIMResult::Pass));
+```
+
+## DKIM Signing
+
+```rust
+        // Sign an e-mail message using RSA-SHA256
+        let pk_rsa = PrivateKey::from_rsa_pkcs1_pem(RSA_PRIVATE_KEY).unwrap();
+        let signature_rsa = Signature::new()
+            .headers(["From", "To", "Subject"])
+            .domain("example.com")
+            .selector("default")
+            .sign(RFC5322_MESSAGE.as_bytes(), &pk_rsa)
+            .unwrap();
+
+        // Sign an e-mail message using ED25519-SHA256
+        let pk_ed = PrivateKey::from_ed25519(
+            &base64_decode(ED25519_PUBLIC_KEY.as_bytes()).unwrap(),
+            &base64_decode(ED25519_PRIVATE_KEY.as_bytes()).unwrap(),
+        )
+        .unwrap();
+        let signature_ed = Signature::new()
+            .headers(["From", "To", "Subject"])
+            .domain("example.com")
+            .selector("default-ed")
+            .sign(RFC5322_MESSAGE.as_bytes(), &pk_ed)
+            .unwrap();
+
+        // Print the message including both signatures to stdout
+        println!(
+            "{}{}{}",
+            signature_rsa.to_header(),
+            signature_ed.to_header(),
+            RFC5322_MESSAGE
+        );
+```
+
+## ARC Chain Verification
+
+```rust
+        // Create a resolver using Cloudflare DNS
+        let resolver = Resolver::new_cloudflare_tls().unwrap();
+
+        // Parse message
+        let authenticated_message = AuthenticatedMessage::parse(RFC5322_MESSAGE.as_bytes()).unwrap();
+
+        // Validate ARC chain
+        let result = resolver.verify_arc(&authenticated_message).await;
+
+        // Make sure ARC passed verification
+        assert_eq!(result.result(), &DKIMResult::Pass);
+```
+
+## ARC Chain Sealing
+
+```rust
+        // Create a resolver using Cloudflare DNS
+        let resolver = Resolver::new_cloudflare_tls().unwrap();
+
+        // Parse message to be sealed
+        let authenticated_message = AuthenticatedMessage::parse(RFC5322_MESSAGE.as_bytes()).unwrap();
+
+        // Verify ARC and DKIM signatures
+        let arc_result = resolver.verify_arc(&authenticated_message).await;
+        let dkim_result = resolver.verify_dkim(&authenticated_message).await;
+
+        // Build Authenticated-Results header
+        let auth_results = AuthenticationResults::new("mx.mydomain.org")
+            .with_dkim_result(&dkim_result, "sender@example.org")
+            .with_arc_result(&arc_result, "127.0.0.1".parse().unwrap());
+
+        // Seal message
+        if arc_result.can_be_sealed() {
+            // Seal the e-mail message using RSA-SHA256
+            let pk_rsa = PrivateKey::from_rsa_pkcs1_pem(RSA_PRIVATE_KEY).unwrap();
+            let arc_set = ARC::new(&auth_results)
+                .domain("example.org")
+                .selector("default")
+                .headers(["From", "To", "Subject", "DKIM-Signature"])
+                .seal(&authenticated_message, &arc_result, &pk_rsa)
+                .unwrap();
+
+            // Print the sealed message to stdout
+            println!("{}{}", arc_set.to_header(), RFC5322_MESSAGE)
+        } else {
+            eprintln!("The message could not be sealed, probably an ARC chain with cv=fail was found.")
+        }
+```
+
+## SPF Policy Evaluation
+
+```rust
+        // Create a resolver using Cloudflare DNS
+        let resolver = Resolver::new_cloudflare_tls().unwrap();
+
+        // Verify HELO identity
+        let result = resolver
+            .verify_spf_helo("127.0.0.1".parse().unwrap(), "gmail.com")
+            .await;
+        assert_eq!(result.result(), SPFResult::Fail);
+
+        // Verify MAIL-FROM identity
+        let result = resolver
+            .verify_spf_sender("::1".parse().unwrap(), "gmail.com", "sender@gmail.com")
+            .await;
+        assert_eq!(result.result(), SPFResult::Fail);
+```
+
+## DMARC Policy Evaluation
+
+```rust
+        // Create a resolver using Cloudflare DNS
+        let resolver = Resolver::new_cloudflare_tls().unwrap();
+
+        // Verify DKIM signatures
+        let authenticated_message = AuthenticatedMessage::parse(RFC5322_MESSAGE.as_bytes()).unwrap();
+        let dkim_result = resolver.verify_dkim(&authenticated_message).await;
+
+        // Verify SPF MAIL-FROM identity
+        let spf_result = resolver
+            .verify_spf_sender("::1".parse().unwrap(), "example.org", "sender@example.org")
+            .await;
+
+        // Verify DMARC
+        let dmarc_result = resolver
+            .verify_dmarc(
+                &authenticated_message,
+                &dkim_result,
+                "example.org",
+                &spf_result,
+            )
+            .await;
+        assert_eq!(dmarc_result.dkim_result(), &DMARCResult::Pass);
+        assert_eq!(dmarc_result.spf_result(), &DMARCResult::Pass);
+```
+
+More examples available on Github under the [examples](https://github.com/stalwartlabs/mail-auth/blob/HEAD/examples) directory.
