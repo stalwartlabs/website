@@ -1,0 +1,22 @@
+---
+slug: announcing-mail-server
+title: "Announcing Stalwart Mail Server: unified, efficient, and more powerful than ever!"
+authors: [mdecimus]
+tags: [mail, server, jmap, imap, smtp]
+---
+
+We're thrilled to announce the release of Stalwart Mail Server, our biggest leap forward yet. This version combines the powerful capabilities of Stalwart JMAP, Stalwart IMAP, and Stalwart SMTP servers into one easy-to-install binary, offering you a unified, highly efficient mail server solution.
+
+Here are some of the exciting new features:
+
+- **LDAP** and **SQL** authentication support was added, giving you more flexibility and options to integrate Stalwart with your existing infrastructure.
+- We've incorporated support for **disk quotas** to provide better control over your storage resources.
+- **Subaddressing** and **catch-all** addresses are now supported. These features make the email handling process more flexible and efficient.
+- Storage options have been extended with the inclusion of **S3-compatible storage**. Now you can store your emails and blobs using reliable and scalable solutions such as MinIO, Amazon S3, or Google Cloud Storage.
+- In response to user feedback, we've replaced RocksDB with **SQLite**. Our community told us they wanted an open, trusted database technology with easier access to their data, and we listened! 
+- For those operating in distributed environments, you can now opt for the **FoundationDB** backend, supporting millions of users without sacrificing performance.
+- Stalwart IMAP is no longer an IMAP-to-JMAP proxy, instead, it now provides direct access to the message store. This significant change has brought a tremendous improvement in performance, reducing latency, and making your mail operations faster than ever.
+- We've also made significant strides in enhancing performance by rewriting the JMAP protocol parser and the storage API.
+- Lastly, we've made the decision to switch from Actix Web Server to Hyper. This change has allowed us to reduce memory footprint and increase performance, resulting in a more optimized and efficient mail server.
+
+With Stalwart Mail Server, we're delivering a more unified, powerful, and efficient solution that meets your growing email infrastructure needs. We're excited to see how you'll leverage these new capabilities, and as always, we're here to support you every step of the way!
