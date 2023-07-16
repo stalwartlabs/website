@@ -38,7 +38,7 @@ blocked-domains = ["mail.spammer.com", "mail.spammer.net"]
 
 ## SMTP Extensions
 
-Stalwart SMTP supports [various SMTP extensions](/docs/development/rfc/#smtp-and-extensions) which can be enabled through the following attributes under the `session.extensions` key:
+Stalwart SMTP supports [various SMTP extensions](/docs/development/rfcs#smtp-and-extensions) which can be enabled through the following attributes under the `session.extensions` key:
 
 - `pipelining`: This attribute enables SMTP pipelining (RFC 2920), which enables multiple commands to be sent in a single request to speed up communication between the client and server.
 - `chunking`: This attribute enables chunking (RFC 1830), an extension that allows large messages to be transferred in chunks which may reduce the load on the network and server.

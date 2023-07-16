@@ -117,4 +117,4 @@ if execute :binary "/opt/stalwart/bin/validate.sh" ["${env.remote_ip}", "${envel
 
 ## Supported extensions
 
-The Sieve extensions supported in Stalwart SMTP are listed in the [RFCs conformed section](/docs/development/rfc/).
+The Sieve extensions supported in Stalwart SMTP are listed in the [RFCs conformed section](/docs/development/rfcs#sieve).
