@@ -152,3 +152,5 @@ Make sure to replace `<STALWART_DIR>` with the path to the directory you created
 If everything went well, your users should now be able to connect to the server and send and receive emails. If you are unable to connect to the server, check the log files under `STALWART_DIR/logs` for any errors.
 
 Now that you have Stalwart Mail Server up and running, you may want to configure the [Directory](/docs/directory/overview), [JMAP](/docs/jmap/overview), [IMAP](/docs/imap/overview) or [SMTP](/docs/smtp/overview) components.
+
+If you have questions please check the [FAQ](/docs/faq) section or start a discussion in the [community forum](https://github.com/stalwartlabs/mail-server/discussions).

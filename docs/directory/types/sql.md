@@ -69,7 +69,7 @@ The `directory.<name>.columns` section maps the column names in the SQL database
 
 - `name`: Maps to the 'name' column in the SQL database. This is the login name for the account.
 - `description`: Maps to the 'description' column in the SQL database.
-- `secret`: Maps to the 'secret' column in the SQL database. Passwords can be stored encrypted, as a salted hash or in plain text (not recommended).
+- `secret`: Maps to the 'secret' column in the SQL database. Passwords can be stored [hashed](/docs/directory/users#passwords) or in plain text (not recommended).
 - `email`: Maps to the 'address' column in the SQL database.
 - `quota`: Maps to the 'quota' column in the SQL database. Expects an integer value in bytes.
 - `type`: Maps to the 'type' column in the SQL database. Expected values are `individual` (or `person`) for user accounts and `group` for group accounts.

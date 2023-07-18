@@ -4,7 +4,29 @@ sidebar_position: 4
 
 # Addresses
 
-Stalwart Mail Server supports both catch-all addresses and subaddressing mechanisms within its email handling architecture. These features provide users with an enhanced level of control over email management and routing.
+Stalwart Mail Server supports email aliases, mailing lists as well as catch-all addresses and subaddressing mechanisms within its email handling architecture. These features provide users with an enhanced level of control over email management and routing.
+
+## Email aliases
+
+An email alias is an alternative email address that is associated with a user's primary email address. In Stalwart Mail Server, email aliases are managed through the configured LDAP or SQL directory. This means that if you want to create, modify, or remove an alias, these operations should be performed directly in the LDAP or SQL directory, not in the mail server itself. 
+
+For example, if you are using an SQL directory with the [sample directory schema](/docs/directory/types/sql#sample-directory-schema), you could add the aliases `john.doe@example.org` and `jdoe@example.org` to the account `john` as follows:
+
+```sql
+INSERT INTO emails (name, address, type) VALUES ('john', 'john.doe@example.org', 'alias')
+INSERT INTO emails (name, address, type) VALUES ('john', 'jdoe@example.org', 'alias')
+```
+
+## Mailing lists
+
+A mailing list is a collection of email addresses used to distribute content to multiple recipients simultaneously. It is an efficient way to send newsletters, updates, or other forms of mass communication to a large group of people. Just like aliases, mailing lists are managed through the configured LDAP or SQL directory. This means that if you want to create, modify, or remove a mailing list, these operations should be performed directly in the LDAP or SQL directory, not in the mail server itself. 
+
+For example, if you are using an SQL directory with the [sample directory schema](/docs/directory/types/sql#sample-directory-schema), you could add the accounts `john` and `jane` to the mailing list `sales@example.org` as follows:
+
+```sql
+INSERT INTO emails (name, address, type) VALUES ('john', 'sales@example.org', 'list')
+INSERT INTO emails (name, address, type) VALUES ('jane', 'sales@example.org', 'list')
+```
 
 ## Catch-all addresses
 

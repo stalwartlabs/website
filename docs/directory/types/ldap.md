@@ -73,7 +73,7 @@ The `directory.<name>.attributes` section is used to map the LDAP attributes to 
 
 - `name`: Maps to the LDAP attribute for the user's account name.
 - `description`: Maps to the LDAP attributes used to store the user's description.
-- `secret`: Maps to the LDAP attribute for the user's password. Passwords can be stored encrypted, as a salted hash or in plain text (not recommended).
+- `secret`: Maps to the LDAP attribute for the user's password. Passwords can be stored [hashed](/docs/directory/users#passwords) or in plain text (not recommended).
 - `groups`: Maps to the LDAP attributes for the groups that a user belongs to.
 - `email`: Maps to the LDAP attribute for the user's primary email address.
 - `email-alias`: Maps to the LDAP attribute for the user's email alias(es).

@@ -93,9 +93,34 @@ Currently, Stalwart SMTP only supports external executable files for content fil
 Example:
 
 ```toml
+[session.data.pipe."my-filter"]
+command = "/path/to/my-filter"
+arguments = []
+timeout = "10s"
+```
+
+## Spam filtering
+
+Popular spam filters such as SpamAssassin and Rspamd can be easily integrated with Stalwart SMTP to filter incoming messages. When SpamAssassin or Rspamd are set up as content filters, each incoming email message received by Stalwart SMTP will be passed to the respective spam filter. The filter then analyses the message content according to its spam detection algorithms. Depending on the result of this analysis, the filter can tag the message as spam or potentially modify it before it's accepted by Stalwart SMTP for delivery.
+
+### SpamAssassin
+
+SpamAssassin can be easily integrated with Stalwart SMTP by setting [spamc](https://spamassassin.apache.org/full/3.1.x/doc/spamc.html) up as a content filter. The following example shows how to configure SpamAssassin as a content filter:
+
+```toml
 [session.data.pipe."spam-assassin"]
 command = "spamc"
 arguments = []
 timeout = "10s"
 ```
 
+### RSPAMD
+
+Rspamd can be easily integrated with Stalwart SMTP by setting [rspamc](https://rspamd.com/doc/integration.html#lda-mode) up as a content filter. The following example shows how to configure Rspamd as a content filter:
+
+```toml
+[session.data.pipe."rspamd"]
+command = "/usr/bin/rspamc"
+arguments = ["--mime"]
+timeout = "10s"
+```

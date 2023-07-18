@@ -20,7 +20,7 @@ Users are defined under the `directory.<id>.users` sections of the configuration
 
 - `name`: Specifies the username of the account.
 - `description`: Provides a description or full name for the user.
-- `secret`: Sets the password for the user account. Passwords can be stored encrypted, as a salted hash or in plain text (not recommended).
+- `secret`: Sets the password for the user account. Passwords can be stored [hashed](/docs/directory/users#passwords) or in plain text (not recommended).
 - `email`: A list of email addresses associated with the user. The first address in the list is considered the primary address.
 - `email-list`: Optionally, a list of mailing list addresses that the user is a part of.
 - `member-of`: A list of groups that the user is a member of.

@@ -118,3 +118,77 @@ if execute :binary "/opt/stalwart/bin/validate.sh" ["${env.remote_ip}", "${envel
 ## Supported extensions
 
 The Sieve extensions supported in Stalwart SMTP are listed in the [RFCs conformed section](/docs/development/rfcs#sieve).
+
+## Examples
+
+The following examples show how to use Sieve scripts to implement common email filtering tasks.
+
+### Greylisting
+
+The following script implements a simple greylisting filter using an SQL database:
+
+```toml
+[session.rcpt]
+script = "greylist"
+
+[sieve.scripts]
+greylist = '''
+    require ["variables", "vnd.stalwart.execute", "envelope", "reject"];
+
+    set "triplet" "${env.remote_ip}.${envelope.from}.${envelope.to}";
+
+    if not execute :query "SELECT 1 FROM greylist WHERE addr=? LIMIT 1" ["${triplet}"] {
+        execute :query "INSERT INTO greylist (addr) VALUES (?)" ["${triplet}"];
+        reject "422 4.2.2 Greylisted, please try again in a few moments.";
+    }
+'''
+```
+
+### Domain blacklisting
+
+The following script implements a domain blacklisting filter during the [EHLO](/docs/smtp/inbound/ehlo) phase:
+
+```toml
+[session.ehlo]
+script = "is-blocked"
+
+[sieve.scripts]
+is-blocked = '''
+    require ["variables", "extlists", "reject"];
+
+    if string :list "${env.helo_domain}" "sql/blocked-domains" {
+        reject "551 5.1.1 Your domain '${env.helo_domain}' has been blacklisted.";
+    }
+'''
+
+[directory."sql".lookup]
+blocked-domains = "SELECT 1 FROM blocked_domains WHERE domain=? LIMIT 1"
+
+```
+
+### Message modification
+
+The following example modifies the incoming message by replacing the content of all HTML parts with their uppercase version and adding a custom header to each part:
+
+```toml
+[session.data]
+script = "modify-message"
+
+[sieve.scripts]
+modify-message = '''
+    require ["envelope", "variables", "replace", "mime", "foreverypart", "editheader", "extracttext"];
+
+    if envelope :domain :is "to" "foobar.net" {
+        set "counter" "a";
+        foreverypart {
+            if header :mime :contenttype "content-type" "text/html" {
+                extracttext :upper "text_content";
+                replace "${text_content}";
+            }
+            set :length "part_num" "${counter}";
+            addheader :last "X-Part-Number" "${part_num}";
+            set "counter" "${counter}a";
+        }
+    }
+'''
+```

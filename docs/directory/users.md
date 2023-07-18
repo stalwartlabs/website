@@ -17,6 +17,8 @@ Each time a user logs in, the following information associated with the account 
 - `member-of`: A list of group names that the user is a member of.
 - `quota`: Disk quota for the user, in bytes.
 
+## Passwords
+
 Passwords can be stored in the directory hashed or in plain text (not recommended). The following password hashing schemes are supported:
 
 - **Argon2:** A password-hashing function that was selected as the winner of the Password Hashing Competition in 2015. Identified by the prefix `"$argon2"` in the hashed secret.
@@ -32,6 +34,12 @@ Passwords can be stored in the directory hashed or in plain text (not recommende
 - **Plain Text:** In some cases, passwords may be stored as plain text, although this is generally not recommended due to security concerns. Identified by the prefixes `"{PLAIN}"`, `"{plain}"`, `"{CLEAR}"`, or `"{clear}"`.
 
 If the hashed secret does not match any of these known prefixes, it is treated as a plain text password and directly compared to the provided secret.
+
+## Quotas
+
+Disk quotas are used to limit the amount of disk space a user or group can use. This tool is particularly useful in shared systems where it helps prevent a single user from consuming all the storage resources. Quotas work by monitoring and restricting the amount of disk space used.  When a user reaches their quota, they can no longer receive new emails until they delete some of their existing messages or until their quota is increased.
+
+In Stalwart Mail Server, quota settings are stored in the configured SQL or LDAP [directory](/docs/directory/overview). This means the disk quotas can be centrally managed and adjusted as necessary by the system administrator. Disk quota limits can be set individually for each user or can be applied uniformly across a group of users, depending on the system's needs.
 
 ## Groups
 
