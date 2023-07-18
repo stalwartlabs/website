@@ -18,7 +18,7 @@ script_one = '''
     require ["variables", "extlists", "reject"];
 
     if string :list "${env.helo_domain}" "list/blocked-domains" {
-        reject "551 5.1.1 Your domain '${env.helo_domain}' has been blacklisted.";
+        reject "551 5.1.1 Your domain '${env.helo_domain}' has been blocklisted.";
     }
 '''
 script_two = "file:///opt/stalwart-smtp/etc/sieve/my-script.sieve"
@@ -52,7 +52,7 @@ Stalwart SMTP compiles all defined Sieve scripts when it starts and executes the
 - `from-name`: Defines the default name to use for the from field in email notifications sent from a Sieve script.
 - `from-addr`: Defines the default email address to use for the from field in email notifications sent from a Sieve script.
 - `return-path`: Defines the default return path to use in email notifications sent from a Sieve script.
-- `sign`: Lists the [DKIM](/docs/smtp/authentication/dkim) signatures to add to email notifications sent from a Sieve script.
+- `sign`: Lists the [DKIM](/docs/smtp/authentication/dkim/overview) signatures to add to email notifications sent from a Sieve script.
 - `hostname`: Sets the local hostname to use when generating a `Message-Id` header. If no value is set, the `server.hostname` value is used instead.
 - `user-directory`: Specifies the [directory](/docs/directory/overview) to use when running `execute :query` Sieve commands.
 - `limits.redirects`: Specifies the maximum number of `redirect` commands that a Sieve script can execute.
@@ -144,9 +144,9 @@ greylist = '''
 '''
 ```
 
-### Domain blacklisting
+### Domain blocklisting
 
-The following script implements a domain blacklisting filter during the [EHLO](/docs/smtp/inbound/ehlo) phase:
+The following script implements a domain blocklisting filter during the [EHLO](/docs/smtp/inbound/ehlo) phase:
 
 ```toml
 [session.ehlo]
@@ -157,7 +157,7 @@ is-blocked = '''
     require ["variables", "extlists", "reject"];
 
     if string :list "${env.helo_domain}" "sql/blocked-domains" {
-        reject "551 5.1.1 Your domain '${env.helo_domain}' has been blacklisted.";
+        reject "551 5.1.1 Your domain '${env.helo_domain}' has been blocklisted.";
     }
 '''
 

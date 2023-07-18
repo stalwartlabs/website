@@ -55,7 +55,7 @@ A relay host is a server that accepts email from another server and then forward
 
 In the realm of email delivery, relay hosts are particularly useful in various scenarios. For instance, some organizations might not want to handle the complexity of direct delivery, so they send all their outgoing mail to a relay host (like an Internet Service Provider's mail server) which handles the details of delivery.
 
-Another common usage scenario is when sending emails from a network that's behind a firewall or when the server IP is on a blacklist. In these cases, a relay host that has a trusted IP address can deliver the email on behalf of the originating server. This can help overcome delivery problems related to IP reputation.
+Another common usage scenario is when sending emails from a network that's behind a firewall or when the server IP is on a blocklist. In these cases, a relay host that has a trusted IP address can deliver the email on behalf of the originating server. This can help overcome delivery problems related to IP reputation.
 
 Relay hosts can also be used for security purposes. Emails can be sent to a relay host that scans them for viruses and spam before they are delivered to the final recipient. This way, potentially harmful or unwanted messages can be detected and stopped before they reach their destination.
 

@@ -38,7 +38,7 @@ Stalwart SMTP [automatically analyzes](/docs/smtp/authentication/analysis) recei
 - `from-address`: The email address that will be used in the `From` header of the SPF report email.
 - `subject`: The subject name that will be used in the SPF report email.
 - `send`: The rate at which SPF reports will be sent to a given email address. When this rate is exceeded, no further SPF failure reports will be sent to that address.
-- `sign`: The list of [DKIM](/docs/smtp/authentication/dkim) signatures to use when signing the SPF report. 
+- `sign`: The list of [DKIM](/docs/smtp/authentication/dkim/overview) signatures to use when signing the SPF report. 
 
 Example:
 

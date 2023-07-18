@@ -70,7 +70,7 @@ Stalwart SMTP [automatically analyzes](/docs/smtp/authentication/analysis) TLS r
 - `org-name`: The name of the organization to be included in the report.
 - `send`: The frequency at which the TLS reports will be sent. The options are `hourly`, `daily`, `weekly`, or `never` to disable reporting.
 - `max-size`: The maximum size of the TLS report in bytes.
-- `sign`: The list of [DKIM](/docs/smtp/authentication/dkim) signatures to use when signing the TLS report. 
+- `sign`: The list of [DKIM](/docs/smtp/authentication/dkim/overview) signatures to use when signing the TLS report. 
 
 Example:
 

@@ -18,7 +18,7 @@ path = "/opt/stalwart-smtp/queue"
 hash = 64
 ```
 
-[DKIM](/docs/smtp/authentication/dkim), [SPF](/docs/smtp/authentication/spf), [DMARC](/docs/smtp/authentication/dmarc) and [TLS](/docs/smtp/outbound/tls) reports queued for delivery are stored in a different location which is specified with the `report.path` attribute. Just like with the message queue, it is possible to hash the queued reports under multiple sub-folders by specifying a hash value in the `report.hash` attribute. Additionally, the report submitter address can be configured using the `report.submitter` attribute or left blank to use the value specified in `server.hostname`.
+[DKIM](/docs/smtp/authentication/dkim/overview), [SPF](/docs/smtp/authentication/spf), [DMARC](/docs/smtp/authentication/dmarc) and [TLS](/docs/smtp/outbound/tls) reports queued for delivery are stored in a different location which is specified with the `report.path` attribute. Just like with the message queue, it is possible to hash the queued reports under multiple sub-folders by specifying a hash value in the `report.hash` attribute. Additionally, the report submitter address can be configured using the `report.submitter` attribute or left blank to use the value specified in `server.hostname`.
 
 Example:
 
@@ -56,7 +56,7 @@ DSNs are configured under the `report.dsn` key and support the following attribu
 
 - `from-name`: The name that will be used in the `From` header of the DSN email.
 - `from-address`: The email address that will be used in the `From` header of the DSN email.
-- `sign`: The list of [DKIM](/docs/smtp/authentication/dkim) signatures to use when signing the DSN.
+- `sign`: The list of [DKIM](/docs/smtp/authentication/dkim/overview) signatures to use when signing the DSN.
 
 Example:
 

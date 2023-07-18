@@ -98,7 +98,7 @@ mail.yourdomain.org. IN TXT "v=spf1 a -all ra=postmaster"
 _dmarc.yourdomain.org. IN TXT "v=DMARC1; p=none; rua=mailto:postmaster@yourdomain.org; ruf=mailto:postmaster@yourdomain.org"
 ```
 
-If you already have a DKIM certificate simply ignore these instructions and refer to the [DKIM section](/docs/smtp/authentication/dkim) for instructions on how to add a new DKIM signature
+If you already have a DKIM certificate simply ignore these instructions and refer to the [DKIM section](/docs/smtp/authentication/dkim/overview) for instructions on how to add a new DKIM signature
 
 ### Take note of the administrator credentials
 

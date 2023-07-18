@@ -11,6 +11,12 @@ This allows you to leverage an existing [LDAP](/docs/directory/types/ldap) direc
 Any changes to user accounts or groups in the directory server — such as adding or removing users, changing passwords, or modifying group memberships — are immediately reflected in the Stalwart Mail Server.
 If you don't currently have a directory server, you can create an SQLite directory during installation which uses the [sample directory schema](/docs/directory/types/sql#sample-directory-schema).
 
+### How do I add a new domain?
+
+It is not necessary to configure new domain names in order to start receiving emails for it. Just like user accounts, your local domains are also retrieved the directory server. For [SQL](/docs/directory/types/sql) servers this is done by executing the `domains` [lookup query](/docs/directory/types/sql#lookup-queries) and in [LDAP](/docs/directory/types/ldap) servers this is done by searching for objects using `domain` [lookup query](/docs/directory/types/ldap#lookup-queries).
+
+Sending emails from a new domain does not require any additional configuration either, but to improve deliverability it is recommended that you [create a new DKIM key](/docs/smtp/authentication/dkim/sign#generating-dkim-keys), add it to your [DNS records](/docs/smtp/authentication/dkim/sign#publishing-dkim-keys) and [enable DKIM signing](/docs/smtp/authentication/dkim/sign#multiple-domains) for the new domain.
+
 ### Where is my data stored?
 
 This depends on the database and blob storage backends you are using. Settings, indexes and other metadata can be stored either in [SQLite](/docs/jmap/database#sqlite) or [FoundationDB](/docs/jmap/database#foundationdb) database backends. Emails and blobs can be stored either [locally using Maidir](/docs/jmap/blob#local-storage) or in [S3-compatible storage](/docs/jmap/blob#s3-compatible-storage) solutions.

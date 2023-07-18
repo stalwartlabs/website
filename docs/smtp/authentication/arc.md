@@ -17,7 +17,7 @@ Stalwart SMTP can be configured to automatically seal incoming and outgoing mess
 seal = ["rsa"]
 ```
 
-Please refer to the [DKIM section](/docs/smtp/authentication/dkim) for details on how to add signatures.
+Please refer to the [DKIM section](/docs/smtp/authentication/dkim/overview) for details on how to add signatures.
 
 ## Verification
 
