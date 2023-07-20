@@ -27,9 +27,9 @@ protocol = "smtp"
 greeting = "Welcome to Stalwart SMTP!"
 ```
 
-## Submissions port (Native implicit TLS)
+## Submissions port (TLS)
 
-SMTP submissions with native implicit TLS are received on port 465 by default. This is the standard port for SMTP submissions with native implicit TLS, and is used by mail clients to send email to mail servers. To enable SMTP submissions with native implicit TLS, create a listener with the following configuration:
+SMTP submissions with implicit TLS are received on port 465 by default. This is the standard port for SMTP submissions with native implicit TLS, and is used by mail clients to send email to mail servers. To enable SMTP submissions with native implicit TLS, create a listener with the following configuration:
 
 ```toml
 [server.listener."submissions"]
@@ -38,19 +38,15 @@ protocol = "smtp"
 tls.implicit = true
 ```
 
-## Submissions port (StartTLS)
+## Submissions port
 
-SMTP submissions with StartTLS are received on port 587 by default. This is the standard port for SMTP submissions with StartTLS, and is used by mail clients to send email to mail servers. To enable SMTP submissions, create a listener with the following configuration:
+SMTP submissions without implicit TLS are received on port 587 by default. This is the standard port for SMTP submissions on a clear-text connection (which can then be upgraded to TLS using the `STARTTLS` command), and is used by mail clients to send email to mail servers. To enable SMTP submissions, create a listener with the following configuration:
 
 ```toml
 [server.listener."submission"]
 bind = ["0.0.0.0:587"]
 protocol = "smtp"
 ```
-
----
-#### Note : Since [RFC8314](https://tools.ietf.org/html/rfc8314), it is desirable to support both submissions over native implicit TLS and submissions over StartTLS for mail clients that dosen't support native implicit TLS yet. This same RFC incite however to prefer the use of submissions over native implicit TLS whenever possible as it's more secure.
----
 
 ## LMTP port
 

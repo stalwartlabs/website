@@ -12,6 +12,9 @@ The connection details for the LDAP directory are specified under the `directory
 
 - `address`: The URL of the LDAP server.
 - `base-dn`: The base distinguished name (DN) from where searches should begin.
+- `tls`: Whether to use `STARTTLS` to encrypt the connection. This is disabled by default.
+- `allow-invalid-certs`: Whether to allow self-signed certificates. This is disabled by default.
+- `timeout`: The timeout for LDAP operations. This is set to 30 seconds by default.
 
 For example,
 
@@ -20,6 +23,8 @@ For example,
 type = "ldap"
 address = "ldap://localhost:3893"
 base-dn = "dc=example,dc=org"
+tls = true
+allow-invalid-certs = false
 ```
 
 ## Bind credentials
