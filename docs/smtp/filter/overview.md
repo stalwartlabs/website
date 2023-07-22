@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Overview
 
-Email filtering is a crucial part of any modern mail server system. Filtering serves various purposes including the management of incoming and outgoing messages, blocking or flagging spam, removing viruses from attachments, automating organization of messages, and implementing various user-defined rules for message handling. Effective filtering is essential not only for the organization and security of the mail system but also for user productivity and the overall quality of the email experience.
+E-mail filtering is a crucial part of any modern mail server system. Filtering serves various purposes including the management of incoming and outgoing messages, blocking or flagging spam, removing viruses from attachments, automating organization of messages, and implementing various user-defined rules for message handling. Effective filtering is essential not only for the organization and security of the mail system but also for user productivity and the overall quality of the email experience.
 
 Stalwart SMTP supports various filtering mechanisms, which allow a high degree of flexibility and customization for system administrators to define their filtering rules and operations:
 
