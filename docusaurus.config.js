@@ -132,8 +132,16 @@ const config = {
                 href: 'https://discord.gg/aVQr3jF8jd',
               },
               {
+                label: 'Mastodon',
+                href: 'https://mastodon.social/@stalwartlabs',
+              },
+              {
                 label: 'Twitter',
                 href: 'https://twitter.com/stalwartlabs',
+              },
+              {
+                label: 'Threads',
+                href: 'https://www.threads.net/@stalwartlabs',
               },
             ],
           },

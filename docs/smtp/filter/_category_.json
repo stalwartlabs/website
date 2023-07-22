@@ -1,6 +1,6 @@
 {
-    "label": "Email Authentication",
-    "position": 5,
+    "label": "Filtering",
+    "position": 4,
     "link": {
         "type": "generated-index"
     }

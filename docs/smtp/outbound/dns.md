@@ -26,7 +26,7 @@ The supported DNS resolver types for the `resolver.type` value are:
 - `google`: Use Google's public DNS service.
 - `system`: Use the system's default DNS resolver.
 
-Please note that `system` should be used when [DNS block lists](/docs/smtp/inbound/dnsbl) are enabled as lookups from public DNS services are not allowed by most DNSBL services.
+Please note that `system` should be used when [DNS block lists](/docs/smtp/filter/dnsbl) are enabled as lookups from public DNS services are not allowed by most DNSBL services.
 
 Example:
 

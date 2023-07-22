@@ -6,11 +6,13 @@ sidebar_position: 6
 
 The `DATA` command is used to initiate the data transfer phase of the email delivery process. Once the sender of the email has successfully completed the `MAIL FROM` and `RCPT TO` commands, they can issue the `DATA` (or `BDAT` when chunking is used) command to begin transmitting the email message. Once the entire email message has been transmitted, the SMTP server will respond with a status code indicating whether the message was accepted or rejected for delivery.
 
-## Filtering with Sieve
+## Filtering
 
-Once a message has been submitted either with the `DATA` or `BDAT` command, it is possible to run a [Sieve script](/docs/smtp/inbound/sieve) that accepts, rejects or modifies the message's contents. The `session.data.script` attribute in the configuration file specifies the name of the Sieve script to be executed.
+Once a message has been submitted either with the `DATA` or `BDAT` command, it is possible to run [sieve scripts](/docs/smtp/filter/sieve), [milter filters](/docs/smtp/filter/milter) or [pipes](/docs/smtp/filter/pipe) that accept, reject or modify the message's contents. When multiple filter types are configured, Stalwart SMTP will execute first the Milter filters, then the Sieve scripts and finally the Pipes.
 
-Example:
+### Sieve
+
+The `session.data.script` attribute in the configuration file specifies the name of the [Sieve script](/docs/smtp/filter/sieve) to be executed. For example:
 
 ```toml
 [session.data]
@@ -34,6 +36,14 @@ data = '''
     }
 '''
 ```
+
+### Milter
+
+Milter filters are defined under the `session.data.milter.<id>` section and each configured Milter filter can inspect and potentially modify the message, adding, changing, or removing headers, altering the body, or even rejecting the message outright. For details on how to configure Milter filters, see the [Milter](/docs/smtp/filter/milter) section.
+
+### Pipes
+
+Stalwart SMTP supports filtering messages using external executable files, referred to as "pipes". Pipes operate by receiving the email message through standard input (`stdin`), processing or modifying it as required, and then returning the adjusted message via standard output (`stdout`). For details on how to configure pipes, see the [Pipes](/docs/smtp/filter/pipe) section.
 
 ## Message Limits
 
@@ -78,49 +88,4 @@ message-id = [ { if = "listener", eq = "smtp", then = false },
 date = [ { if = "listener", eq = "smtp", then = false }, 
          { else = true } ]
 return-path = false
-```
-
-## Content filters
-
-Content filters are external programs such as SPAM filters or Antivirus programs that analyze and modify the message contents. These filters take the message contents from the standard input (`stdin`) and send back the modified contents via standard output (`stdout`). Content filters are defined under the `session.data.pipe.<id>` key with the following attributes:
-
-- `command`: This specifies the path to the binary program to be executed.
-- `arguments`: This attribute sets the arguments to be passed to the binary program.
-- `timeout`: The time to wait for the content filter to complete. If the filter takes longer than the specified time, the program is terminated and the message is delivered without modification.
-
-Currently, Stalwart SMTP only supports external executable files for content filters, but future versions will also include support for [WASM](https://en.wikipedia.org/wiki/WebAssembly) filters.
-
-Example:
-
-```toml
-[session.data.pipe."my-filter"]
-command = "/path/to/my-filter"
-arguments = []
-timeout = "10s"
-```
-
-## Spam filtering
-
-Popular spam filters such as SpamAssassin and Rspamd can be easily integrated with Stalwart SMTP to filter incoming messages. When SpamAssassin or Rspamd are set up as content filters, each incoming email message received by Stalwart SMTP will be passed to the respective spam filter. The filter then analyses the message content according to its spam detection algorithms. Depending on the result of this analysis, the filter can tag the message as spam or potentially modify it before it's accepted by Stalwart SMTP for delivery.
-
-### SpamAssassin
-
-SpamAssassin can be easily integrated with Stalwart SMTP by setting [spamc](https://spamassassin.apache.org/full/3.1.x/doc/spamc.html) up as a content filter. The following example shows how to configure SpamAssassin as a content filter:
-
-```toml
-[session.data.pipe."spam-assassin"]
-command = "spamc"
-arguments = []
-timeout = "10s"
-```
-
-### RSPAMD
-
-Rspamd can be easily integrated with Stalwart SMTP by setting [rspamc](https://rspamd.com/doc/integration.html#lda-mode) up as a content filter. The following example shows how to configure Rspamd as a content filter:
-
-```toml
-[session.data.pipe."rspamd"]
-command = "/usr/bin/rspamc"
-arguments = ["--mime"]
-timeout = "10s"
 ```

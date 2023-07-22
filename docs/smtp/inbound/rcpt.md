@@ -12,7 +12,7 @@ Under the `session.rcpt` key in the configuration file, the following attributes
 
 - `relay`: Specifies whether the SMTP server should relay messages for non-local domain names. This attribute is useful when configured as a [rule](/docs/smtp/overview) that only allows relaying for authenticated users.
 - `max-recipients`: Specifies the maximum number of recipients allowed per message.
-- `script`: Specifies the [Sieve script](/docs/smtp/inbound/sieve) to execute after a successful `RCPT TO` command, which can be used to implement greylisting, among other things.
+- `script`: Specifies the [Sieve script](/docs/smtp/filter/sieve) to execute after a successful `RCPT TO` command, which can be used to implement greylisting, among other things.
 - `directory`: Specifies the [directory](/docs/directory/overview) to use to validate local recipients.
 - `rcpt.errors.total`: Specifies the maximum number of invalid recipients allowed before a session is disconnected.
 - `rcpt.errors.wait`: Specifies the amount of time to wait when an invalid recipient is received.

@@ -8,7 +8,7 @@ The `MAIL FROM` command is used to initiate an SMTP message transfer by identify
 
 ## Settings
 
-Currently, the only configuration option available for the `MAIL FROM` stage is the `session.mail.script` attribute, which specifies the name of the [Sieve script](/docs/smtp/inbound/sieve) to run after a successful `MAIL FROM` command. This can be useful, for instance, for rejecting certain senders.
+Currently, the only configuration option available for the `MAIL FROM` stage is the `session.mail.script` attribute, which specifies the name of the [Sieve script](/docs/smtp/filter/sieve) to run after a successful `MAIL FROM` command. This can be useful, for instance, for rejecting certain senders.
 
 Example:
 

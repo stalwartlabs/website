@@ -4,12 +4,6 @@ sidebar_position: 3
 
 # Docker
 
-Before proceeding with the installation of Stalwart Mail Server, you need to make sure to have a valid TLS certificate for your server. 
-If you do not have one, you can obtain a free TLS certificate from [Let's Encrypt](https://letsencrypt.org/).
-Once you have obtained your certificate, proceed to pull the Docker image for the package you want to install.
-
-### Choose an image
-
 Stalwart Mail server is available as a Docker image that includes JMAP, IMAP, and SMTP servers and also as standalone images for those who need only one of these servers:
 
 - `stalwartlabs/mail-server:latest` - All-in-one mail server (JMAP + IMAP + SMTP)
@@ -17,35 +11,61 @@ Stalwart Mail server is available as a Docker image that includes JMAP, IMAP, an
 - `stalwartlabs/imap-server:latest` - IMAP server
 - `stalwartlabs/smtp-server:latest` - SMTP server
 
-Pull the image you want to use, for example:
+To get started, pull the image you want to use, for example:
 
 ```bash
 $ docker pull stalwartlabs/mail-server:latest
 ```
 
-### Run the configuration script
+### Start the container
 
 Create a directory on your host machine where you will store the configuration files and the data for the mail server, for example:
 
 ```bash
-$ mkdir /opt/stalwart-mail
+$ mkdir /var/lib/stalwart-mail
 ```
 
-Then run the configuration script:
+Once you have completed the setup instructions, start the Stalwart Mail server container:
 
 ```bash
-$ docker run -it -v <STALWART_DIR>:/opt/stalwart-mail \
-             --entrypoint /bin/bash <IMAGE_NAME> \
-             -c "bash /usr/local/bin/configure.sh" 
+$ docker run -d -ti -p 8080:8080 \
+             -p 25:25 -p 587:587 -p 465:465 -p 8686:8686 \
+             -p 143:143 -p 993:993 -p 4190:4190 \
+             -v <STALWART_DIR>:/opt/stalwart-mail \
+             --name stalwart-mail <IMAGE_NAME>
 ```
 
-Make sure to replace `<STALWART_DIR>` with the path to the directory you created above and `<IMAGE_NAME>` with the name of the image you pulled above.
+Make sure to replace `<STALWART_DIR>` with the path to the directory you created above and `<IMAGE_NAME>` with the name of the image you have pulled from Docker Hub.
+
+### Run the configuration script
+
+Although the container is now running, the server will not accept incoming connections until a configuration file has been created. To run the configuration script, execute:
+
+```bash
+$ docker exec -it stalwart-mail /bin/sh /usr/local/bin/configure.sh
+```
+
+Once you run the configuration script, you will be asked to select which [package](/docs/get-started#choosing-a-package) to enable in your container:
+
+```txt
+? Which components would you like to install? ›
+❯ All-in-one mail server (JMAP + IMAP + SMTP)
+  JMAP server
+  IMAP server
+  SMTP server
+```
+
+Use the arrow keys to select the package you want to enable and press `Enter` to continue.
 
 ### Choose where to store your data
 
-Next, unless you are using the SMTP server image, you will be asked to select a [blob store](/docs/get-started#supported-blob-stores):
+Next, unless you are installing only the SMTP server, you will be asked to select a [database backend](/docs/get-started#choosing-a-database-backend) as well as a [blob store](/docs/get-started#supported-blob-stores):
 
 ```txt
+? Which database engine would you like to use? ›
+❯ SQLite (single node, replicated with Litestream)
+  FoundationDB (distributed and fault-tolerant)
+
 ? Where would you like to store e-mails and blobs? ›
 ❯ Local disk using Maildir
   MinIO (or any S3-compatible object storage)
@@ -112,7 +132,9 @@ If you have chosen to use an existing LDAP directory or SQL database for authent
 
 ### Add your TLS certificate
 
-Copy your TLS certificate and private key to the following paths on your host machine:
+Before starting the Stalwart Mail Server container, you need to make sure to have a valid TLS certificate for your server. 
+If you do not have one, you can obtain a free TLS certificate from [Let's Encrypt](https://letsencrypt.org/).
+Once you have obtained your certificate, copy your TLS certificate and private key to the following paths on your host machine:
 
 ```bash
 $ cp /path/to/fullchain.pem <STALWART_DIR>/etc/certs/<SERVER_NAME>/fullchain.pem
@@ -135,17 +157,11 @@ The installation script will create the configuration file under `STALWART_DIR/e
 
 ### Start the container
 
-Once you have completed the setup instructions, start the Stalwart Mail server container:
+Once you have reviewed the configuration file, start the container:
 
 ```bash
-$ docker run -d -ti -p 8080:8080 \
-             -p 25:25 -p 587:587 -p 465:465 -p 8686:8686 \
-             -p 143:143 -p 993:993 -p 4190:4190 \
-             -v <STALWART_DIR>:/opt/stalwart-mail \
-             --name stalwart-mail <IMAGE_NAME>
+$ docker start stalwart-mail
 ```
-
-Make sure to replace `<STALWART_DIR>` with the path to the directory you created above and `<IMAGE_NAME>` with the name of the image you have pulled from Docker Hub.
 
 ### Next steps
 

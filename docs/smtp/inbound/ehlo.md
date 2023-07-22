@@ -12,7 +12,7 @@ The `session.ehlo` key in the configuration file controls the behavior of the `E
 
 - `require`: Specifies whether the remote client must send an `EHLO` command before starting an SMTP transaction. It is recommended to set this value to `true` to allow Stalwart SMTP to verify the [SPF](/docs/smtp/authentication/spf) EHLO identity of the client.
 - `reject-non-fqdn`: Determines whether to reject `EHLO` commands that do not include a fully-qualified domain name as a parameter. To reduce the amount of spam, it is recommended to enable this option for the standard SMTP port 25, but disable it for authenticated sessions on the SMTP submissions port.
-- `script`: The name of the [Sieve script](/docs/smtp/inbound/sieve) to run after a successful `EHLO` command.
+- `script`: The name of the [Sieve script](/docs/smtp/filter/sieve) to run after a successful `EHLO` command.
 
 Example:
 

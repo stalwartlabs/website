@@ -35,7 +35,7 @@ The backup procedure depends on which database and blob storage backend you are 
 
 ### How is Anti-SPAM handled?
 
-Stalwart SMTP supports both SpamAssassin and RSPAMD. Spam filters are configured as [content filters](/docs/smtp/inbound/data#spam-filtering).
+Stalwart SMTP can easily integrate with popular anti-spam solutions such as SpamAssassin and RSPAMD using [milter](/docs/smtp/filter/milter) as well as other [filtering mechanisms](/docs/smtp/filter/overview).
 
 ### Does it support relay hosts?
 
@@ -43,7 +43,7 @@ Yes, [relay hosts](/docs/smtp/outbound/routing#relay-host) are supported for sen
 
 ### Is greylisting supported?
 
-Yes, greylisting can be implemented as a Sieve filter. You can find an example [here](/docs/smtp/inbound/sieve#greylisting).
+Yes, greylisting can be implemented as a Sieve filter. You can find an example [here](/docs/smtp/filter/sieve#greylisting).
 
 ### Does it have a web interface?
 

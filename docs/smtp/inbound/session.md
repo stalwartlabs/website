@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # SMTP session
 
-A session in Stalwart SMTP refers to an incoming SMTP connection, and the configuration file has a dedicated section for each stage of the SMTP session (connect, EHLO, AUTH, MAIL, RCPT, and DATA). Most stages of an SMTP session support the use of [Sieve scripts](/docs/smtp/inbound/sieve), which enable the creation of custom filters and modification of incoming message contents.
+A session in Stalwart SMTP refers to an incoming SMTP connection, and the configuration file has a dedicated section for each stage of the SMTP session (connect, EHLO, AUTH, MAIL, RCPT, and DATA). Most stages of an SMTP session support the use of [Sieve scripts](/docs/smtp/filter/sieve), which enable the creation of custom filters and modification of incoming message contents.
 
 ## Limits
 
@@ -25,7 +25,7 @@ duration = "10m"
 
 ## Connect stage
 
-Currently, the only configuration option available for the connect stage is the `session.connect.script` attribute, which specifies the name of the [Sieve script](/docs/smtp/inbound/sieve) to run before the SMTP session begins. This can be useful for filtering connections based on their remote IP address, for example.
+Currently, the only configuration option available for the connect stage is the `session.connect.script` attribute, which specifies the name of the [Sieve script](/docs/smtp/filter/sieve) to run before the SMTP session begins. This can be useful for filtering connections based on their remote IP address, for example.
 
 Example:
 
