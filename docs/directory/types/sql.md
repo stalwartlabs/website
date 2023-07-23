@@ -100,7 +100,13 @@ greylist = "SELECT 1 FROM greylisted_senders WHERE addr=? LIMIT 1"
 
 ## Sample directory schema
 
-In case you need to create a new SQL database to use as a directory in Stalwart Mail Server, you may use the following SQL statements to create a basic directory:
+This section provides a sample SQL database schema that can be used as a directory server for Stalwart Mail Server. The schema is provided as a reference and is not intended to be used as-is. You will need to modify the schema to suit your needs.
+
+### Table schema
+
+The following SQL statements can be used to create the tables for the sample schema:
+
+#### SQLite
 
 ```sql
 CREATE TABLE accounts (name TEXT PRIMARY KEY, secret TEXT, description TEXT, type TEXT NOT NULL, quota INTEGER DEFAULT 0, active BOOLEAN DEFAULT 1)
@@ -108,7 +114,46 @@ CREATE TABLE group_members (name TEXT NOT NULL, member_of TEXT NOT NULL, PRIMARY
 CREATE TABLE emails (name TEXT NOT NULL, address TEXT NOT NULL, type TEXT, PRIMARY KEY (name, address))
 ```
 
-To create the administrator account, run the following SQL statements:
+#### PostgreSQL
+
+```sql
+CREATE TABLE accounts (name TEXT PRIMARY KEY, secret TEXT, description TEXT, type TEXT NOT NULL, quota INTEGER DEFAULT 0, active BOOLEAN DEFAULT true);
+CREATE TABLE group_members (name TEXT NOT NULL, member_of TEXT NOT NULL, PRIMARY KEY (name, member_of));
+CREATE TABLE emails (name TEXT NOT NULL, address TEXT NOT NULL, type TEXT, PRIMARY KEY (name, address));
+```
+
+#### MySQL
+
+```sql
+CREATE TABLE accounts (name VARCHAR(32) PRIMARY KEY, secret VARCHAR(1024), description VARCHAR(1024), type VARCHAR(32) NOT NULL, quota INTEGER DEFAULT 0, active BOOLEAN DEFAULT 1);
+CREATE TABLE group_members (name VARCHAR(32) NOT NULL, member_of VARCHAR(32) NOT NULL, PRIMARY KEY (name, member_of));
+CREATE TABLE emails (name VARCHAR(32) NOT NULL, address VARCHAR(128) NOT NULL, type VARCHAR(32), PRIMARY KEY (name, address));
+```
+
+### Creating user accounts
+
+Before creating an account, you will first need to hash the account's password. One way to do this is using the `openssl` command. For example, to hash a password using the `SHA512` algorithm:
+
+```bash
+$ openssl passwd -6
+```
+
+Once you have the hashed secret, you may create a user account with an associated email address by running the following SQL statements:
+
+```sql
+INSERT INTO accounts (name, secret, description, type) VALUES ('<ACCOUNT_NAME>', '<HASHED_SECRET>', '<ACCOUNT_FULL_NAME>', 'individual')
+INSERT INTO emails (name, address, type) VALUES ('<ACCOUNT_NAME>', '<PRIMARY_EMAIL_ADDRESS>', 'primary')
+```
+
+Make sure to replace:
+ - `<ACCOUNT_NAME>` with the name of the account, for example `john`.
+ - `<HASHED_SECRET>` with the hashed password you generated above.
+ - `<ACCOUNT_FULL_NAME>` with the full name of the account, for example `John Doe`.
+ - `<PRIMARY_EMAIL_ADDRESS>` with the primary email address for the account, for example `john@example.org`.
+
+### Creating administrator accounts
+
+Administrator accounts are created in a similar way as regular user accounts, the only difference is that they are added to the `superusers` group:
 
 ```sql
 INSERT INTO accounts (name, secret, description, type) VALUES ('admin', '<HASHED_SECRET>', 'Postmaster', 'individual') 
@@ -116,12 +161,7 @@ INSERT INTO emails (name, address, type) VALUES ('admin', 'postmaster@<DOMAIN>',
 INSERT INTO group_members (name, member_of) VALUES ('admin', 'superusers')
 ```
 
-To create a user account with an associated email address, run the following SQL statements:
-
-```sql
-INSERT INTO accounts (name, secret, description, type) VALUES ('<ACCOUNT_NAME>', '<HASHED_SECRET>', '<ACCOUNT_FULL_NAME>', 'individual')
-INSERT INTO emails (name, address, type) VALUES ('<ACCOUNT_NAME>', '<PRIMARY_EMAIL_ADDRESS>', 'primary')
-```
+### Adding an email alias
 
 To add an email alias to an account, run the following SQL statements:
 
@@ -129,11 +169,19 @@ To add an email alias to an account, run the following SQL statements:
 INSERT INTO emails (name, address, type) VALUES ('<ACCOUNT_NAME>', '<EMAIL_ALIAS>', 'alias')
 ```
 
+Make sure to replace `<ACCOUNT_NAME>` with the name of the account and `<EMAIL_ALIAS>` with the email alias you want to add.
+
+### Adding members to a mailing list
+
 To add a user to a mailing list, run the following SQL statements:
 
 ```sql
 INSERT INTO emails (name, address, type) VALUES ('<ACCOUNT_NAME>', '<MAILING_LIST_ADDRESS>', 'list')
 ```
+
+Make sure to replace `<ACCOUNT_NAME>` with the name of the account and `<MAILING_LIST_ADDRESS>` with the mailing list address you want to add.
+
+### Creating group accounts
 
 To create a group account, run the following SQL statements:
 
@@ -141,9 +189,14 @@ To create a group account, run the following SQL statements:
 INSERT INTO accounts (name, description, type) VALUES ('<GROUP_NAME>', '<GROUP_DESCRIPTION>', 'group')
 ```
 
+Make sure to replace `<GROUP_NAME>` with the name of the group and `<GROUP_DESCRIPTION>` with the description of the group.
+
+### Adding members to a group
+
 To add a user to a group, run the following SQL statements:
 
 ```sql
 INSERT INTO group_members (name, member_of) VALUES ('<ACCOUNT_NAME>', '<GROUP_NAME>')
 ```
 
+Make sure to replace `<ACCOUNT_NAME>` with the name of the account and `<GROUP_NAME>` with the name of the group.
