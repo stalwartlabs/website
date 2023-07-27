@@ -29,7 +29,7 @@ Once you have completed the setup instructions, start the Stalwart Mail server c
 
 ```bash
 $ docker run -d -ti -p 8080:8080 \
-             -p 25:25 -p 587:587 -p 465:465 -p 8686:8686 \
+             -p 25:25 -p 587:587 -p 465:465 \
              -p 143:143 -p 993:993 -p 4190:4190 \
              -v <STALWART_DIR>:/opt/stalwart-mail \
              --name stalwart-mail <IMAGE_NAME>
@@ -45,27 +45,11 @@ Although the container is now running, the server will not accept incoming conne
 $ docker exec -it stalwart-mail /bin/sh /usr/local/bin/configure.sh
 ```
 
-Once you run the configuration script, you will be asked to select which [package](/docs/get-started#choosing-a-package) to enable in your container:
-
-```txt
-? Which components would you like to install? ›
-❯ All-in-one mail server (JMAP + IMAP + SMTP)
-  JMAP server
-  IMAP server
-  SMTP server
-```
-
-Use the arrow keys to select the package you want to enable and press `Enter` to continue.
-
 ### Choose where to store your data
 
-Next, unless you are installing only the SMTP server, you will be asked to select a [database backend](/docs/get-started#choosing-a-database-backend) as well as a [blob store](/docs/get-started#supported-blob-stores):
+Next, unless you are installing only the SMTP server, you will be asked to select a [blob store](/docs/get-started#supported-blob-stores) where you want to store your e-mails and blobs:
 
 ```txt
-? Which database engine would you like to use? ›
-❯ SQLite (single node, replicated with Litestream)
-  FoundationDB (distributed and fault-tolerant)
-
 ? Where would you like to store e-mails and blobs? ›
 ❯ Local disk using Maildir
   MinIO (or any S3-compatible object storage)

@@ -19,7 +19,7 @@ Or, to bind a listener to all interfaces:
 
 ```toml
 [server.listener."smtp"]
-bind = "0.0.0.0:25"
+bind = "[::]:25"
 ```
 
 ## Protocol
@@ -37,11 +37,11 @@ For example, to start an SMTP server on port 25 and an IMAP server on port 143, 
 
 ```toml
 [server.listener."smtp"]
-bind = ["0.0.0.0:25"]
+bind = ["[::]:25"]
 protocol = "smtp"
 
 [server.listener."imap"]
-bind = ["0.0.0.0:143"]
+bind = ["[::]:143"]
 protocol = "imap"
 ```
 
@@ -108,7 +108,7 @@ This value can also be overridden on a per-listener basis by setting the `max-co
 
 ```toml
 [server.listener."submissions"]
-bind = ["0.0.0.0:465"]
+bind = ["[::]:465"]
 protocol = "smtp"
 tls.implicit = true
 max-connections = 1024
@@ -157,20 +157,20 @@ The following example defines an SMTP listener on port `25`, an SMTP submissions
 
 ```toml
 [server.listener."smtp"]
-bind = ["0.0.0.0:25"]
+bind = ["[::]:25"]
 protocol = "smtp"
 
 [server.listener."submission"]
-bind = ["0.0.0.0:587"]
+bind = ["[::]:587"]
 protocol = "smtp"
 
 [server.listener."submissions"]
-bind = ["0.0.0.0:465"]
+bind = ["[::]:465"]
 protocol = "smtp"
 tls.implicit = true
 
 [server.listener."management"]
-bind = ["127.0.0.1:8686"]
+bind = ["127.0.0.1:8080"]
 protocol = "http"
 ```
 

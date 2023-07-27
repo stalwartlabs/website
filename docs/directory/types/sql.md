@@ -169,7 +169,20 @@ To add an email alias to an account, run the following SQL statements:
 INSERT INTO emails (name, address, type) VALUES ('<ACCOUNT_NAME>', '<EMAIL_ALIAS>', 'alias')
 ```
 
-Make sure to replace `<ACCOUNT_NAME>` with the name of the account and `<EMAIL_ALIAS>` with the email alias you want to add.
+Make sure to replace `<ACCOUNT_NAME>` with the name of the account and `<EMAIL_ALIAS>` with the email alias you want to add. 
+
+For example, to add the aliases `john.doe@example.org` and `jdoe@example.org` to the account `john`:
+
+```sql
+INSERT INTO emails (name, address, type) VALUES ('john', 'john.doe@example.org', 'alias')
+INSERT INTO emails (name, address, type) VALUES ('john', 'jdoe@example.org', 'alias')
+```
+
+Alternatively, you could designate the `postmaster` account as the [catch-all address](/docs/directory/addresses#catch-all-addresses) for the `example.org` domain by adding `@example.org` as an email alias for the `postmaster` account:
+
+```sql
+INSERT INTO emails (name, address, type) VALUES ('postmaster', '@example.org', 'alias')
+```
 
 ### Adding members to a mailing list
 
@@ -180,6 +193,13 @@ INSERT INTO emails (name, address, type) VALUES ('<ACCOUNT_NAME>', '<MAILING_LIS
 ```
 
 Make sure to replace `<ACCOUNT_NAME>` with the name of the account and `<MAILING_LIST_ADDRESS>` with the mailing list address you want to add.
+
+For example, you could add the accounts `john` and `jane` to the mailing list `sales@example.org` as follows:
+
+```sql
+INSERT INTO emails (name, address, type) VALUES ('john', 'sales@example.org', 'list')
+INSERT INTO emails (name, address, type) VALUES ('jane', 'sales@example.org', 'list')
+```
 
 ### Creating group accounts
 

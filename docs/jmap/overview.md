@@ -14,7 +14,7 @@ For example:
 
 ```toml
 [server.listener."jmap"]
-bind = ["0.0.0.0:8080"]
+bind = ["[::]:8080"]
 url = "jmap.example.org:8080"
 protocol = "jmap"
 ```

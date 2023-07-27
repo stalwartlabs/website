@@ -7,7 +7,7 @@ sidebar_position: 3
 Stalwart SMTP maintains a separate queue for DMARC and TLS aggregate reports until they are ready to delivered. Once a report is ready to be delivered, it is attached to an RFC5322 message and placed in the main message queue. The report queue is managed using the `report` CLI command which accepts the following arguments:
 
 ```txt
-$ stalwart-cli -u https://mx.foobar.org:8686 -c secret report 
+$ stalwart-cli -u https://mx.foobar.org:8080 -c secret report 
 Manage SMTP DMARC/TLS report queue
 
 Usage: stalwart-cli --url <URL> report <COMMAND>
@@ -27,7 +27,7 @@ Options:
 The command `report list` displays the reports that are not yet due for delivery. It accepts the following filtering parameters:
 
 ```txt
-$ stalwart-cli -u https://mx.foobar.org:8686 -c secret report list --help
+$ stalwart-cli -u https://mx.foobar.org:8080 -c secret report list --help
 Shows reports queued for delivery
 
 Usage: stalwart-cli report list [OPTIONS]
@@ -53,7 +53,7 @@ Options:
 For example:
 
 ```txt
-$ stalwart-cli -u https://mx.foobar.org:8686 -c secret report list
+$ stalwart-cli -u https://mx.foobar.org:8080 -c secret report list
 
 +-----------------------------------+------------+-------+---------------------------------+--------------------------------+-------+
 | ID                                | Domain     | Type  | From Date                       | To Date                        | Size  |
@@ -76,7 +76,7 @@ $ stalwart-cli -u https://mx.foobar.org:8686 -c secret report list
 The `report status` command shows the details for a pending report. It accepts as parameters one or more report ids, for example:
 
 ```txt
-$ stalwart-cli -u https://mx.foobar.org:8686 -c secret report status 'd!foobar.net!14235512968763890743'
+$ stalwart-cli -u https://mx.foobar.org:8080 -c secret report status 'd!foobar.net!14235512968763890743'
 
 +-------------+-----------------------------------+
 | ID          | d!foobar.net!14235512968763890743 |
@@ -98,7 +98,7 @@ $ stalwart-cli -u https://mx.foobar.org:8686 -c secret report status 'd!foobar.n
 The `queue cancel` command cancels the delivery of a report. The command expects one or multiple report ids, for example:
 
 ```txt
-$ stalwart-cli -u https://mx.foobar.org:8686 -c secret report cancel 'd!foobar.net!14235512968763890743'
+$ stalwart-cli -u https://mx.foobar.org:8080 -c secret report cancel 'd!foobar.net!14235512968763890743'
 
 Removed 1 report(s).
 ```

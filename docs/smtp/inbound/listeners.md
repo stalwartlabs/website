@@ -14,7 +14,7 @@ Unencrypted SMTP connections are received on port 25 by default. This is the sta
 
 ```toml
 [server.listener."smtp"]
-bind = "0.0.0.0:25"
+bind = "[::]:25"
 protocol = "smtp"
 ```
 
@@ -22,7 +22,7 @@ To change the default SMTP greeting that is sent to connecting clients, set your
 
 ```toml
 [server.listener."smtp"]
-bind = "0.0.0.0:25"
+bind = "[::]:25"
 protocol = "smtp"
 greeting = "Welcome to Stalwart SMTP!"
 ```
@@ -33,7 +33,7 @@ SMTP submissions with implicit TLS are received on port 465 by default. This is 
 
 ```toml
 [server.listener."submissions"]
-bind = ["0.0.0.0:465"]
+bind = ["[::]:465"]
 protocol = "smtp"
 tls.implicit = true
 ```
@@ -44,7 +44,7 @@ SMTP submissions without implicit TLS are received on port 587 by default. This 
 
 ```toml
 [server.listener."submission"]
-bind = ["0.0.0.0:587"]
+bind = ["[::]:587"]
 protocol = "smtp"
 ```
 
@@ -54,7 +54,7 @@ LMTP is a protocol that is used to deliver email to a mail server. It is similar
 
 ```toml
 [server.listener."lmtp"]
-bind = ["0.0.0.0:24"]
+bind = ["[::]:24"]
 protocol = "lmtp"
 ```
 
@@ -66,11 +66,11 @@ Stalwart SMTP features an HTTP-based management API that provides system adminis
 
 To enable the management interface in Stalwart SMTP, a special type of listener that uses the HTTP protocol has to be created. This can be done by specifying the IP address(es) and port(s) for the management API to listen for incoming connections in the `server.listener.<id>.bind` attribute and setting the `server.listener.<id>.protocol` attribute to `http`.
 
-For instance, to enable the HTTP management API on 127.0.0.1 port 8686:
+For instance, to enable the HTTP management API on 127.0.0.1 port 8080:
 
 ```toml
 [server.listener."management"]
-bind = ["127.0.0.1:8686"]
+bind = ["127.0.0.1:8080"]
 protocol = "http"
 ```
 

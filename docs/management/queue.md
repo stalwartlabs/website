@@ -7,7 +7,7 @@ sidebar_position: 1
 The SMTP message queue is managed using the `queue` CLI command which accepts the following arguments:
 
 ```txt
-$ stalwart-cli -u https://mx.foobar.org:8686 -c secret queue 
+$ stalwart-cli -u https://mx.foobar.org:8080 -c secret queue 
 Manage SMTP message queue
 
 Usage: stalwart-cli --url <URL> queue <COMMAND>
@@ -28,7 +28,7 @@ Options:
 The command `queue list` displays the messages awaiting to be delivered. It accepts the following filtering parameters:
 
 ```txt
-$ stalwart-cli -u https://mx.foobar.org:8686 -c secret queue list --help
+$ stalwart-cli -u https://mx.foobar.org:8080 -c secret queue list --help
 
 Shows messages queued for delivery
 
@@ -46,7 +46,7 @@ Options:
 For example:
 
 ```txt
-$ stalwart-cli -u https://mx.foobar.org:8686 -c secret queue list
+$ stalwart-cli -u https://mx.foobar.org:8080 -c secret queue list
 
 +-----------+--------------------------------+------------------+--------------------------------+--------+
 | ID        | Delivery Due                   | Sender           | Recipients                     | Size   |
@@ -80,7 +80,7 @@ $ stalwart-cli -u https://mx.foobar.org:8686 -c secret queue list
 The `queue status` command shows the details for a queued message. It accepts as parameters one or more message ids, for example:
 
 ```txt
-$ stalwart-cli -u https://mx.foobar.org:8686 -c secret queue status 52B91F716
+$ stalwart-cli -u https://mx.foobar.org:8080 -c secret queue status 52B91F716
 
 +--------------+---------------------------------------------------------------------------------------------------------+
 | ID           | 52B91F716                                                                                               |
@@ -122,7 +122,7 @@ $ stalwart-cli -u https://mx.foobar.org:8686 -c secret queue status 52B91F716
 The `queue retry` commands retries or reschedules the delivery of one or multiple messages. It accepts the following parameters where `BEFORE`, `AFTER` and `TIME` are RFC3339 timestamps:
 
 ```txt
-$ stalwart-cli -u https://mx.foobar.org:8686 -c secret queue retry --help
+$ stalwart-cli -u https://mx.foobar.org:8080 -c secret queue retry --help
 Reschedule delivery
 
 Usage: stalwart-cli queue retry [OPTIONS] [IDS]...
@@ -144,7 +144,7 @@ If the `-t` parameter is not provided, delivery is retried immediately.
 Rescheduling can be done by providing a list of message ids:
 
 ```txt
-$ stalwart-cli -u https://mx.foobar.org:8686 -c secret queue retry 52B91F716
+$ stalwart-cli -u https://mx.foobar.org:8080 -c secret queue retry 52B91F716
 
 Successfully rescheduled 1 message(s).
 ```
@@ -152,7 +152,7 @@ Successfully rescheduled 1 message(s).
 Or by using a filter that reschedules all matching messages:
 
 ```txt
-$ stalwart-cli -u https://mx.foobar.org:8686 -c secret queue retry -c bill3@foobar.net -d example1.com -t "2023-11-20T05:04:00Z"
+$ stalwart-cli -u https://mx.foobar.org:8080 -c secret queue retry -c bill3@foobar.net -d example1.com -t "2023-11-20T05:04:00Z"
 
 Successfully rescheduled 4 message(s).
 ```
@@ -162,7 +162,7 @@ Successfully rescheduled 4 message(s).
 The `queue cancel` command cancels the delivery of a message. It is also possible to partially cancel the delivery to just one or multiple recipients. The accepted options are:
 
 ```txt
-$ stalwart-cli -u https://mx.foobar.org:8686 -c secret queue cancel --help
+$ stalwart-cli -u https://mx.foobar.org:8080 -c secret queue cancel --help
 Cancel delivery
 
 Usage: stalwart-cli queue cancel [OPTIONS] [IDS]...
@@ -181,7 +181,7 @@ Options:
 For example, to cancel the delivery on an entire message:
 
 ```txt
-$ stalwart-cli -u https://mx.foobar.org:8686 -c secret queue cancel 42B91F716
+$ stalwart-cli -u https://mx.foobar.org:8080 -c secret queue cancel 42B91F716
 
 Cancelled delivery of 1 message(s).
 ```
@@ -189,7 +189,7 @@ Cancelled delivery of 1 message(s).
 Or, to just cancel the delivery to a particular recipient using a filter:
 
 ```txt
-$ stalwart-cli -u https://mx.foobar.org:8686 -c secret queue cancel -s bill@foobar.org -r john@foobar.org
+$ stalwart-cli -u https://mx.foobar.org:8080 -c secret queue cancel -s bill@foobar.org -r john@foobar.org
 
 Cancelled delivery of 5 message(s).
 ```

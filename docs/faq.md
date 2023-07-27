@@ -33,7 +33,7 @@ Yes. When using [FoundationDB](/docs/jmap/database#foundationdb) as the backend,
 
 The backup procedure depends on which database and blob storage backend you are using. Please refer to the [backup documentation](/docs/management/backup) for detailed instructions.
 
-### How is Anti-SPAM handled?
+### How is anti-spam handled?
 
 Stalwart SMTP can easily integrate with popular anti-spam solutions such as SpamAssassin and RSPAMD using [milter](/docs/smtp/filter/milter) as well as other [filtering mechanisms](/docs/smtp/filter/overview).
 

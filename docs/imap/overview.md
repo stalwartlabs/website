@@ -14,11 +14,11 @@ For example, to create a listener that accepts plain-text IMAP4 connections on p
 
 ```toml
 [server.listener."imap"]
-bind = ["0.0.0.0:143"]
+bind = ["[::]:143"]
 protocol = "imap"
 
 [server.listener."imaptls"]
-bind = ["0.0.0.0:993"]
+bind = ["[::]:993"]
 protocol = "imap"
 tls.implicit = true
 ```

@@ -22,7 +22,7 @@ For example:
 
 ```toml
 [server.listener."sieve"]
-bind = ["0.0.0.0:4190"]
+bind = ["[::]:4190"]
 protocol = "managesieve"
 tls.implicit = true
 ```

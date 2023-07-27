@@ -73,16 +73,30 @@ sign = [ { if = "sender-domain", eq = "foobar.org", then = "foo" },
          { else = [] } ]
 ```
 
-## Generating DKIM keys
+## Generating keys
+
+### RSA
 
 You can generate a new RSA DKIM key pair using the `openssl` command:
 
 ```bash
-$ openssl genrsa -out private.key 2048
-$ openssl rsa -in private.key -pubout -out public.key
+$ openssl genrsa -out rsa_private.key 2048
+$ openssl rsa -in rsa_private.key -pubout -out rsa_public.key
 ```
 
-These commands will generate a 2048-bit RSA private key and output it to a file named `private.key`. The public key will be output to a file named `public.key`.
+These commands will generate a 2048-bit RSA private key and output it to a file named `rsa_private.key`. The public key will be output to a file named `rsa_public.key`.
+Make sure to keep your private key safe and secure.
+
+### Edwards-curve Digital Signature Algorithm
+
+Similarly, you can generate a new ED25519 DKIM key pair using the `openssl` command:
+
+```bash
+openssl genpkey -algorithm ed25519 -out ed_private.key
+openssl pkey -in ed_private.key -pubout -out ed_public.key
+```
+
+These commands will generate a ED25519 private key and output it to a file named `ed_private.key`. The public key will be output to a file named `ed_public.key`.
 Make sure to keep your private key safe and secure.
 
 ## Publishing DKIM keys
@@ -95,13 +109,13 @@ In order to obtain the DKIM public key in a format suitable to be published in a
 $ openssl rsa -in private.key -pubout -outform der 2>/dev/null | openssl base64 -A
 ```
 
-This will output the public key encoded in `base64`. The next step is to add a TXT record to your DNS zone file with the following format:
+This will output the public key encoded in `base64`. The next step is to add a TXT record to your DNS zone file with the following format. For example, to publish an RSA key:
 
 ```txt
 v=DKIM1; k=rsa; p=PUBLIC_KEY
 ```
 
-For example, if your domain is `example.org`, your selector is `default` and your public key is `ABCDEFG` (your actual key will be much longer than this), the DNS TXT record would look like this:
+For example, if your domain is `example.org`, your selector is `default` and your RSA public key is `ABCDEFG` (your actual key will be much longer than this), the DNS TXT record would look like this:
 
 ```txt
 default._domainkey.example.org. IN TXT "v=DKIM1; k=rsa; p=ABCDEFG"
