@@ -1,5 +1,5 @@
 ---
-sidebar_position: 5
+sidebar_position: 3
 ---
 
 # Protocol
@@ -29,7 +29,7 @@ Upload limits control how often and how many files users can upload to the JMAP 
 
 - `max-size`: Defines the maximum file size, in bytes, for file uploads to the server.
 - `max-concurrent`: Restricts the number of concurrent file uploads a user can perform.
-- `ttl`: specifies the Time-To-Live (TTL) for each uploaded file, after which the file is [deleted from temporary storage](/docs/jmap/blob#blob-purging).
+- `ttl`: specifies the Time-To-Live (TTL) for each uploaded file, after which the file is [deleted from temporary storage](/docs/storage/blob/overview#blob-purging).
 - `quota.files`: Specifies the maximum number of files that a user can upload within a certain period.
 - `quota.size`: Defines the total size of files, in bytes, that a user can upload within a certain period.
 

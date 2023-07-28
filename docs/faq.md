@@ -1,5 +1,5 @@
 ---
-sidebar_position: 10
+sidebar_position: 11
 ---
 
 # FAQ
@@ -19,7 +19,7 @@ Sending emails from a new domain does not require any additional configuration e
 
 ### Where is my data stored?
 
-This depends on the database and blob storage backends you are using. Settings, indexes and other metadata can be stored either in [SQLite](/docs/jmap/database#sqlite) or [FoundationDB](/docs/jmap/database#foundationdb) database backends. Emails and blobs can be stored either [locally using Maidir](/docs/jmap/blob#local-storage) or in [S3-compatible storage](/docs/jmap/blob#s3-compatible-storage) solutions.
+This depends on the database and blob storage backends you are using. Settings, indexes and other metadata can be stored either in [SQLite](/docs/storage/database/sqlite) or [FoundationDB](/docs/storage/database/foundationdb) database backends. Emails and blobs can be stored either [locally using Maidir](/docs/storage/blob/local) or in [S3-compatible storage](/docs/storage/blob/s3) solutions.
 
 ### How can I migrate from another server?
 
@@ -27,7 +27,7 @@ Stalwart Mail Server includes a command line interface to facilitate [data migra
 
 ### Can it handle large volumes of users and emails?
 
-Yes. When using [FoundationDB](/docs/jmap/database#foundationdb) as the backend, Stalwart Mail Server can scale to support millions of users without sacrificing performance.
+Yes. When using [FoundationDB](/docs/storage/database/foundationdb) as the backend, Stalwart Mail Server can scale to support millions of users without sacrificing performance.
 
 ### How do I backup my data?
 

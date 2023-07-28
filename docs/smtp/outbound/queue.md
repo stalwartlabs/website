@@ -37,7 +37,7 @@ The queue scheduling settings determine the frequency of delivery attempts, the 
 - `notify`: A list of durations specifying when to notify the sender of any delivery problems.
 - `expire`: The maximum duration that a message can remain in the queue before it expires and is returned to the sender.
 
-Additionally, these scheduling settings can be made dynamic using [rules](/docs/smtp/overview).
+Additionally, these scheduling settings can be made dynamic using [rules](/docs/configuration/overview/rules/syntax).
 
 Example:
 

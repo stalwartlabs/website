@@ -25,5 +25,5 @@ tls.implicit = true
 
 ## Data backend
 
-Both the Stalwart IMAP server and the Stalwart JMAP server share the same database and blob backend. This means that they use the same storage for metadata, settings, indexes, emails, and other binary data. Please refer to the [Database](/docs/jmap/database) and [Blob store](/docs/jmap/blob) section for more information on how to configure the data backend.
+Both the Stalwart IMAP server and the Stalwart JMAP server share the same database and blob backend. This means that they use the same storage for metadata, settings, indexes, emails, and other binary data. Please refer to the [Database](/docs/storage/database/overview) and [Blob store](/docs/storage/blob/overview) section for more information on how to configure the data backend.
 

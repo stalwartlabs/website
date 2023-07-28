@@ -53,7 +53,7 @@ size = 5242880 # 5mb
 
 ## Rules
 
-Rules enable the imposition of quotas on the message queue only when a specific condition is met. These [rules](/docs/smtp/overview) can be configured using the `queue.quota[].match` attribute. For example, to impose a 900 messages and 7mb quota by recipient only for messages sent from the domain "foobar.org":
+Rules enable the imposition of quotas on the message queue only when a specific condition is met. These [rules](/docs/configuration/overview/rules/syntax) can be configured using the `queue.quota[].match` attribute. For example, to impose a 900 messages and 7mb quota by recipient only for messages sent from the domain "foobar.org":
 
 ```toml
 [[queue.quota]]

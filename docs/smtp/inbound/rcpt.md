@@ -34,7 +34,7 @@ In the context of Stalwart SMTP, the `relay` parameter dictates whether the serv
 
 This functionality can be beneficial in various scenarios, such as when Stalwart SMTP is configured as a front-end server in a larger email infrastructure. However, care must be taken to properly secure relay functionality, as an open relay can be exploited for spamming purposes. Thus, it's crucial to ensure only authorized users or networks are allowed to use Stalwart SMTP for relaying messages.
 
-The `session.rcpt.relay` setting specifies whether the SMTP server should relay messages for non-local domain names. This attribute is useful when configured as a [rule](/docs/smtp/overview) that only allows relaying for authenticated users.
+The `session.rcpt.relay` setting specifies whether the SMTP server should relay messages for non-local domain names. This attribute is useful when configured as a [rule](/docs/configuration/overview/rules/syntax) that only allows relaying for authenticated users.
 
 For example:
 

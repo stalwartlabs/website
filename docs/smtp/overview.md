@@ -4,185 +4,89 @@ sidebar_position: 1
 
 # Overview
 
-Stalwart SMTP offers a flexible configuration system through the use of rules. These rules, which consist of single or nested `if` blocks, provide system administrators the ability to tailor the server behavior based on contextual variables such as IP address, sender, recipient and more. Rules can be applied to most parameters of the configuration file and are represented using nested TOML structures containing `if`, `else`, `all-of`, `any-of` and `none-of` attributes. 
+Stalwart SMTP server is enabled by creating one or more listeners. A listener essentially acts as a point of entry for SMTP or LMTP connections, listening on a specific port for any incoming connections. Administrators can set up multiple listeners, each potentially serving different roles or catering to different types of connections. Stalwart SMTP imposes no limit on the number of listeners that can be created, providing administrators with the flexibility to manage incoming connections as they see fit.
 
-For example, a simple rule to enable the `CHUNKING` extension only for the IP address 10.0.0.25 would look like this:
+The behavior of each listener can be customized by the administrator. This includes defining which types of connections are accepted, the specific actions to take upon receiving a connection, and the rules and scripts to be applied during the handling of the session. In conventional SMTP server configurations, certain ports are predetermined for specific types of SMTP connections: port 25 is typically used for unencrypted SMTP, port 587 for SMTP submissions, and port 465 for TLS encrypted SMTP submissions. Stalwart SMTP, however, does not impose these specific associations. Instead, it leaves the decision entirely to the administrator, allowing each listener's function to be defined as per specific requirements.
 
-```toml
-chunking = [ { if = "remote-ip", eq = "10.0.0.25", then = true},
-             { else = false } ]
-```
+For more information on how to configure listeners, see the main [listeners](/docs/configuration/listener) section.
 
-Or, an example of a complex rule that combines nested conditions using the `all-of`, `any-of` and `none-of` operands could look like this:
+## SMTP port
 
-```toml
-chunking = [ { any-of = [ { if = "rcpt-domain", eq = "example.org" },
-                          { if = "remote-ip", eq = "192.168.0.0/24" },
-                          { all-of = [
-                              { if = "rcpt", starts-with = "no-reply@" },
-                              { if = "sender", ends-with = "@domain.org" },
-                              { none-of = [
-                                  { if = "priority", eq = 1 },
-                                  { if = "priority", ne = -2 },
-                              ]}
-                          ]}
-                        ], then = false },
-              { else = true } ]
-```
-
-The use of rules in the configuration file is optional though, static values can also be assigned to settings, for example:
+Unencrypted SMTP connections are received on port 25 by default. This is the standard port for SMTP, and is used by mail servers to send email to each other. To enable unencrypted SMTP connections, create a listener with the following configuration:
 
 ```toml
-chunking = true
+[server.listener."smtp"]
+bind = "[::]:25"
+protocol = "smtp"
 ```
 
-## Syntax
-
-In the Stalwart SMTP configuration file, a setting can either be specified as a static value or as a rule. A rule is comprised of a TOML array that includes one or multiple single or nested conditional blocks, followed by an `else` block. The [ABNF](https://en.wikipedia.org/wiki/Augmented_Backus%E2%80%93Naur_form) (Augmented Backus-Naur Form) representation of a setting can be expressed as follows:
-
-```abnf
-SETTING        = <string> "=" (VALUE / RULE)
-RULE           = "[" (1*CONDITION) "," THEN_BLOCK "]"
-IF_BLOCK       = "{" "if" "=" VARIABLE "," COMPARATOR "=" CMP_VALUE "," "then" "=" VALUE "}"
-THEN_BLOCK     = "{" "then" "=" VALUE } 
-ALL_OF_BLOCK   = "{" "all-of" "=" "[" 1*CONDITION "]" "}"
-ANY_OF_BLOCK   = "{" "any-of" "=" "[" 1*CONDITION "]" "}"
-NONE_OF_BLOCK  = "{" "none-of" "=" "[" 1*CONDITION "]" "}"
-CONDITION      = IF_BLOCK / ALL_OF_BLOCK / ANY_OF_BLOCK / NONE_OF_BLOCK
-
-VARIABLE       = <string>
-COMPARATOR     = "eq" / "ne" / "starts-with" / "not-starts-with" / "ends-with" / 
-                 "not-ends-with" "in-list" / "not-in-list" / "matches" / "not-matches" 
-CMP_VALUE      = <string> / <number> / IP_CIDR
-IP_CIDR        = <ip_address> ["/" <integer>]
-VALUE          = <string> / <number> / <array> / <duration>
-```
-
-## Variables
-
-Each `if` block within a rule evaluates a specific context variable. The available context variables for evaluation vary depending on the setting and can include:
-
-- `remote-ip`: The IP address of the client for inbound sessions and the remote server's IP address for outbound sessions.
-- `local-ip`: The local server's IP address used in an outbound connection (available only when a source IP is specified).
-- `listener`: The listener ID where the connection was initiated for inbound sessions.
-- `sender`: The return path address specified in the MAIL FROM command for inbound sessions and the sender's address for outbound sessions.
-- `sender-domain`: The return path domain name specified in the MAIL FROM command for inbound sessions and the sender's domain name for outbound sessions.
-- `rcpt`: The recipient's address.
-- `rcpt-domain`: The recipient's domain name.
-- `priority`: The priority provided using the MT-PRIORITY extension.
-- `authenticated-as`: The account name used to authenticate the session for inbound sessions, or an empty value if the session is unauthenticated.
-- `mx`: The remote mail exchanger's hostname for outbound sessions.
-
-## Value comparators
-
-Comparators are functions that evaluate the contents of a variable against a specified value and return a boolean result. The following value comparators are available:
-
-- `eq` / `ne`: Tests for equality / non-equality of the value.
-- `starts-with` / `not-starts-with`: Tests whether a string starts with / does not start with a specified value.
-- `ends-with` / `not-ends-with`: Tests whether a string ends with / does not end with a specified value.
-- `in-list` / `not-in-list`: Tests whether a value is present / not present in a [directory](/docs/directory/overview).
-- `matches` / `not-matches`: Tests whether a value matches a regular expression / does not match a regular expression.
-
-### Lists
-
-The `in-list` and `not-in-list` comparators determine if the value contained in the variable is present or absent in the specified directory. The expected syntax for this comparator is `<directory_name>/<lookup_name>` where `<directory_name>` is the name of the directory and `<lookup_name>` is the name of the lookup. For example, `sql/domains` would execute the `domains` query in the `sql` directory.
-More details on the use of directories can be found below in the [lookups](#lookups) section.
-
-### Strings
-
-Variables such as `sender` or `rcpt` that contain string values can be evaluated using any of the value comparators, for instance:
+To change the default SMTP greeting that is sent to connecting clients, set your custom greeting in the `server.listener.<id>.greeting` attribute. For example:
 
 ```toml
-max-recipients = [ { if = "sender", matches = "^(.+)@(.+)$", then = 20 },
-                   { if = "authenticated-as", starts-with = "john@", then = 1000 },
-                   { if = "sender-domain", in-list = "db/postgresql/paid_clients", then = 5000 },
-                   { else = 5 } ]
+[server.listener."smtp"]
+bind = "[::]:25"
+protocol = "smtp"
+greeting = "Welcome to Stalwart SMTP!"
 ```
 
-### Integers
+## Submissions port (TLS)
 
-Variables such as `priority` that contain integer values can be evaluated only using the equality or list comparators, for instance:
+SMTP submissions with implicit TLS are received on port 465 by default. This is the standard port for SMTP submissions with native implicit TLS, and is used by mail clients to send email to mail servers. To enable SMTP submissions with native implicit TLS, create a listener with the following configuration:
 
 ```toml
-expire = [ { if = "priority", eq = "1", then = "5d" },
-           { if = "priority", in-list = "list/low_priorities", then = "1d" },
-           { else = "3d" } ]
+[server.listener."submissions"]
+bind = ["[::]:465"]
+protocol = "smtp"
+tls.implicit = true
 ```
 
-### IP Addresses
+## Submissions port
 
-Variables such as `remote-ip` or `local-ip` that contain IP addresses can be evaluated using the equality or list comparators. 
-When using the equality comparator, IP ranges may be specified using [CIDR notation](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing#CIDR_notation), for instance:
+SMTP submissions without implicit TLS are received on port 587 by default. This is the standard port for SMTP submissions on a clear-text connection (which can then be upgraded to TLS using the `STARTTLS` command), and is used by mail clients to send email to mail servers. To enable SMTP submissions, create a listener with the following configuration:
 
 ```toml
-notify = [ { if = "remote-ip", eq = "198.51.100.0/22", then = ["1d", "2d", "3d"] },
-           { if = "remote-ip", in-list = "list/lmtp_hosts", then = ["30d"] },
-           { if = "local-ip", ne = "2001:db8::/48", then = ["4d"] },
-           { else = ["5d", "6d"] } ]
+[server.listener."submission"]
+bind = ["[::]:587"]
+protocol = "smtp"
 ```
 
-## Logical comparators
+## LMTP port
 
-Logical comparators enable the evaluation of one or multiple conditions using boolean operations such as `AND,` `OR,` and `NOT.` The following logical comparators are available:
-
-- `all-of`: Represents the `AND` operation and returns true only when all conditions return true.
-- `any-of`: Represents the `OR` operation and returns true if any of the conditions return true.
-- `none-of`: Represents the `NOT` operation and returns true if none of the conditions return true.
-
-These logical comparators are represented as TOML arrays that contain the conditions to be evaluated, for example:
+LMTP is a protocol that is used to deliver email to a mail server. It is similar to SMTP, but is designed to be used by mail servers to deliver email to each other. LMTP is received on port 24 by default. To enable LMTP connections, create a listener with the following configuration:
 
 ```toml
-.. [ { any-of = [ { if = "authenticated-as", ne = "john@foobar.org" },
-                  { if = "rcpt-domain", eq = "example.org" },
-                  { if = "mx", starts-with = "mx.some" } ], then = .. 
-
-.. [ { all-of = [ { any-of = [
-                      { if = "authenticated-as", ne = "john@foobar.org" },
-                      { if = "rcpt-domain", eq = "example.org" },
-                      { if = "mx", starts-with = "mx.some" },
-                  ] },
-                  { all-of = [
-                      { if = "rcpt-domain", eq = "example.org" },
-                      { if = "listener", eq = "smtp" },
-                      { if = "mx", starts-with = "mx.some" }
-                  ] },
-                  { none-of = [
-                      { if = "rcpt-domain", eq = "example.org" },
-                      { if = "listener", eq = "smtp" },
-                      { if = "mx", starts-with = "mx.some" }
-                  ] }
-              ] }, then = ..
+[server.listener."lmtp"]
+bind = ["[::]:24"]
+protocol = "lmtp"
 ```
 
-## Lookups
+There is no need to enable LMTP if you are only using Stalwart SMTP to receive email from other mail servers. LMTP is only necessary if you are not using Stalwart SMTP as your primary mail server.
 
-Lookups allow the evaluation of queries against a [SQL database](/docs/directory/types/sql#custom-lookup-queries), [LDAP directory](/docs/directory/types/ldap#custom-lookup-queries) or [local lists](/docs/directory/types/memory#custom-lookup-lists). Lookups are useful for validating recipients, authenticating accounts, verifying addresses, expanding mailing lists or checking the presence of a value in a table. 
-Queries and lists are defined under the `directory.<name>.lookup.<lookup_name>` section of the configuration file, where `<name>` is the identifier of the directory and `<lookup_name>` is the name of the lookup. To reference a lookup from a rule, use the `in-list = "<name>/<lookup_name>"` comparator to check if a value is contained in the lookup list.
+## Management port
 
-For example, the following configuration defines a lookup named `trusted_ips` that checks if the remote IP address is present in the `trusted_ips` table of a mySQL database:
+Stalwart SMTP features an HTTP-based management API that provides system administrators with the ability to manage message queues and scheduled DMARC and TLS aggregate reports. The API can be utilized through the [Command Line Interface](/docs/management/overview), using curl, or even automated through scripts.
+
+To enable the management interface in Stalwart SMTP, a special type of listener that uses the HTTP protocol has to be created. This can be done by specifying the IP address(es) and port(s) for the management API to listen for incoming connections in the `server.listener.<id>.bind` attribute and setting the `server.listener.<id>.protocol` attribute to `http`.
+
+For instance, to enable the HTTP management API on 127.0.0.1 port 8080:
 
 ```toml
-[directory."mysql".lookup]
-trusted_ips = "SELECT 1 FROM trusted_ips WHERE address=? LIMIT 1"
-
-[session.rcpt]
-relay = [ { any-of = [ { if = "remote-ip", in-list = "mysql/trusted_ips" },
-                       { if = "authenticated-as", ne = "" }], then = true }, 
-          { else = false } ]
+[server.listener."management"]
+bind = ["127.0.0.1:8080"]
+protocol = "http"
 ```
 
-Lookup lists can also be defined in the configuration file using the `memory` directory type under the `directory.<name>.lookup.<lookup_name>` section. For example:
+The management interface will automatically enable the default TLS certificate used by the SMTP listener(s), but this can be [overridden](/docs/configuration/listener#overriding-defaults) from the configuration file.
 
-```toml
-[directory."lists"]
-type = "memory"
+Management requests must be authenticated and only [administrators](/docs/directory/users#administrators) are allowed to access the management interface. The directory service used to authenticate users can be configured through the `management.directory` attribute. For example:
 
-[directory."lists".lookup]
-can_vrfy = ["john@example.org", "jane@example.org"]
-
-[session.extensions]
-vrfy = [ { if = "authenticated-as", in-list = "lists/can_vrfy", then = true},
-        { else = false } ]
-
+```txt
+[management]
+directory = ["ldap"]
 ```
 
+:::tip Note
+
+The HTTP management interface is disabled when running the all-in-one mail server as the JMAP listener already supports handling SMTP management requests.
+
+:::

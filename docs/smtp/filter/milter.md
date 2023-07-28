@@ -12,7 +12,7 @@ When a mail is received and reaches the [DATA stage](/docs/smtp/inbound/data), S
 
 Milters are defined under the `session.data.milter.<id>` section and are configured using the following attributes:
 
-- `enable`: Determines whether this Milter support is turned on or off. This setting can be dynamically set using [rules](/docs/smtp/overview) which allows a certain Milter to be enabled or disabled based on the specific circumstances of an SMTP transaction.
+- `enable`: Determines whether this Milter support is turned on or off. This setting can be dynamically set using [rules](/docs/configuration/overview/rules/syntax) which allows a certain Milter to be enabled or disabled based on the specific circumstances of an SMTP transaction.
 - `hostname`: Hostname or IP address of the server where the Milter filter is running.
 - `port`: Network port on the Milter filter host server. 
 - `tls`: Whether to use Transport Layer Security (TLS) for the connection between Stalwart SMTP and the Milter filter. Usually Milters are run on the same server as the mail server, so this setting should be set to `false` unless the Milter filter is running on a different server

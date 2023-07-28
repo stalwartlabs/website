@@ -30,7 +30,7 @@ $ stalwart-cli -u https://jmap.example.org database rename john john.doe
 
 ## Purge expired blobs
 
-Stalwart Mail Server runs an automated [maintenance task](/docs/jmap/blob#blob-purging) that periodically deletes expired blobs, which are essentially data objects such as emails or Sieve scripts. This task helps manage storage space by removing data objects that are no longer needed. 
+Stalwart Mail Server runs an automated [maintenance task](/docs/storage/blob/overview#blob-purging) that periodically deletes expired blobs, which are essentially data objects such as emails or Sieve scripts. This task helps manage storage space by removing data objects that are no longer needed. 
 However, there might be situations when an administrator needs to initiate this process manually, perhaps to immediately free up storage space or troubleshoot storage-related issues. In these cases, Stalwart Mail Server provides a CLI command called `purge`.
 
 ```bash

@@ -62,14 +62,20 @@ report = false
 
 Although a single DKIM key may be used to sign multiple domains using [Authorized Third-Party Signatures](https://www.ietf.org/rfc/rfc6541.html), it is recommended to use a separate key for each domain. This allows for more granular control over the DKIM signing process and makes it easier to identify the source of any issues that may arise.
 
-To select which signature to use depending on the sender's domain, you can use a [configuration rule](/docs/smtp/overview) that evaluates the `sender-domain` variable and selects the appropriate signature. 
-
-For example, to sign messages from `@foobar.org` with the `foo` signature and messages from `@example.org` with the `example` signature:
+To select which signature to use depending on the sender's domain, you can use a [configuration rule](/docs/configuration/overview/rules/syntax) that evaluates the `sender-domain` variable and selects the appropriate signature. Then, to select the appropriate signature a [dynamic value](/docs/configuration/overview/values/dynamic) may be used. For example:
 
 ```toml
 [auth.dkim]
-sign = [ { if = "sender-domain", eq = "foobar.org", then = "foo" }, 
-         { if = "sender-domain", eq = "example.org", then = "example" }, 
+sign = [ { if = "sender-domain", in-list = "sql/domains", then = "rsa_${0}" }, 
+         { else = [] } ]
+```
+
+Alternatively, you may also configure rules that select the correct signature without using dynamic values as follows:
+
+```toml
+[auth.dkim]
+sign = [ { if = "sender-domain", eq = "foobar.org", then = "rsa_foo" }, 
+         { if = "sender-domain", eq = "example.org", then = "rsa_example" }, 
          { else = [] } ]
 ```
 
