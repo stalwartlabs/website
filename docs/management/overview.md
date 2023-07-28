@@ -14,7 +14,7 @@ If you would like to install the CLI on a different computer, download the [late
 
 ## Usage
 
-The default location of the Stalwart CLI is `/opt/stalwart-mail/bin/stalwart-cli`. When executed without any parameters, the CLI tool prints a brief help page such as this one:
+The default location of the Stalwart CLI is `/opt/stalwart-mail/bin/stalwart-cli` (or, inside a Docker image `/usr/local/bin/stalwart-cli``). When executed without any parameters, the CLI tool prints a brief help page such as this one:
 
 ```bash
 $ stalwart-cli
