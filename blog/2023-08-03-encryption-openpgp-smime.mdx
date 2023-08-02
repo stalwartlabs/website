@@ -1,0 +1,32 @@
+---
+slug: encryption-openpgp-smime
+title: "Introducing Encryption at Rest: Protecting Your Emails Even When They Sleep"
+authors: [mdecimus]
+tags: [encryption, openpgp, smime, email]
+---
+
+In the digital age where privacy and data protection are paramount, we continually strive to enhance the security features offered by Stalwart Mail Server. Today, we're thrilled to announce our latest upgrade – **Encryption at Rest**!
+
+### Understanding Encryption at Rest
+
+Encryption at Rest is designed to protect your data when it's stored, or 'at rest,' on your server. This new feature introduces the ability to automatically encrypt plain-text email messages with **OpenPGP** (Pretty Good Privacy) or **S/MIME** (Secure/Multipurpose Internet Mail Extensions) before being written to disk. It provides the option to use either AES256 or AES128 encryption for PGP and AES256-CBC or AES128-CBC for S/MIME.
+
+### Why It Matters
+
+With Encryption at Rest, your data remains secure even in the event of a physical storage breach. The encrypted data stored on our servers is inaccessible without the unique decryption keys. Even system administrators don't have the capacity to decrypt these messages, reinforcing the privacy of your communications. 
+
+### How it Works
+
+Encryption at rest in Stalwart Mail Server is easy to enable and use. All it requires is for users to upload their S/MIME certificate or PGP public key using a user-friendly web interface. These keys are utilized to automatically encrypt plain-text messages before they are written to disk.
+
+### Comparative Look
+
+What sets Stalwart Mail Server's implementation apart is its unique approach to key management. Unlike some other mail servers, Stalwart Mail Server does not store the private key on the server or in the database. This means that even the system administrators or anyone with access to the database won't be able to decrypt your messages.
+
+Take for instance, Dovecot's mail-crypt plugin. While it's a powerful tool for ensuring the security of email storage, its design requires the private key to be stored in the database. This effectively means that your emails can still be decrypted by someone with the right access. In contrast, Stalwart Mail Server provides an extra layer of security by allowing the user to retain sole possession of their private keys.
+
+### Looking Ahead
+
+At Stalwart Labs, we're committed to your data protection and privacy. Encryption at Rest is a significant addition to our email security arsenal, and we're excited for you to start using it. For detailed information on Encryption at Rest and instructions on its use, please visit our updated [documentation](/docs/storage/encryption/overview) and [FAQ](/docs/faq#encryption).
+
+Stay tuned for more updates, and happy mailing!

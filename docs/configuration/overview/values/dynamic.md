@@ -29,12 +29,12 @@ sign = [ { if = "rcpt-domain", eq = "example.org", then = "rsa_${0}" },
 
 ## Environment Variables
 
-Dynamic Values can also be generated using environment variables. Any of the supported [environment variables](/docs/configuration/overview/variables) such as `remote-ip`, `local-ip`, or `hostname` can be used. These variables can be referenced directly within the dynamic value string, making them incredibly useful for creating settings that adapt to the environment of the running application. For example:
+Dynamic Values can also be generated using environment variables. Any of the supported [environment variables](/docs/configuration/overview/variables) such as `remote-ip`, `local-ip`, or `listener` can be used. These variables can be referenced directly within the dynamic value string, making them incredibly useful for creating settings that adapt to the environment of the running application. For example:
 
 ```toml
-directory = "sql_${hostname}"
+directory = "sql_${listener}"
 ```
 
-In this example, `${hostname}` will be replaced at runtime by the value of the `hostname` environment variable.
+In this example, `${listener}` will be replaced at runtime by the value of the `listener` environment variable.
 
 
