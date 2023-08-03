@@ -73,6 +73,12 @@ The following RFCs are implemented by Stalwart Mail Server.
 - [RFC 8689 - SMTP Require TLS Option](https://datatracker.ietf.org/doc/html/rfc8689)
 - [RFC 2831 - Using Digest Authentication as a SASL Mechanism](https://www.rfc-editor.org/rfc/rfc2831)
 
+## Message Encryption
+
+- [RFC 8551 - Secure/Multipurpose Internet Mail Extensions (S/MIME) Version 4.0 Message Specification](https://datatracker.ietf.org/doc/html/rfc8551)
+- [RFC 4880 - OpenPGP Message Format](https://datatracker.ietf.org/doc/html/rfc4880)
+- [RFC 3156 - MIME Security with OpenPGP](https://datatracker.ietf.org/doc/html/rfc3156)
+
 ## Message Authentication
 
 ### DKIM
@@ -121,11 +127,6 @@ The following RFCs are implemented by Stalwart Mail Server.
 
 ### SMTP TLS Reporting
 - [RFC 8460 - SMTP TLS Reporting](https://datatracker.ietf.org/doc/html/rfc8460)
-
-## Message Encryption
-- [RFC 8551 - Secure/Multipurpose Internet Mail Extensions (S/MIME) Version 4.0 Message Specification](https://datatracker.ietf.org/doc/html/rfc8551)
-- [RFC 4880 - OpenPGP Message Format](https://datatracker.ietf.org/doc/html/rfc4880)
-- [RFC 3156 - MIME Security with OpenPGP](https://datatracker.ietf.org/doc/html/rfc3156)
 
 ## E-mail
 
