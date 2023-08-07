@@ -20,9 +20,15 @@ Please note that the private key from the S/MIME certificate should always remai
 
 ## Exporting certificates
 
+### Using a mail client
+
 S/MIME public certificates, which are necessary for others to send you encrypted email, can be exported from most email clients. The steps vary depending on the email client used, so it's recommended for users to refer to their email client's specific instructions. Within the settings of the email client, users typically have the option to view and export their certificates. Once located, users can select their S/MIME certificate and export the certificate file. 
 
+### Using MacOS
+
 If the email client doesn't offer an easy way to export the certificate, Mac users have another option. They can use the Keychain Access tool, a password management system in macOS. It stores a variety of data including passwords, certificates, and keys. To export the S/MIME public certificate, users can open the Keychain Access application, locate their S/MIME certificate in the list of keys, and then export the selected certificate.
+
+### Using OpenSSL
 
 Alternatively, OpenSSL can also be used to export S/MIME public certificates. This requires some knowledge of command line operations. Here's a basic command that can be used:
 
