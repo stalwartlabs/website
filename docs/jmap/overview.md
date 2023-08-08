@@ -29,3 +29,36 @@ For example:
 [jmap]
 directory = "sql"
 ```
+
+## HTTP headers
+
+The `jmap.http.headers` configuration option allows administrators to specify custom HTTP headers that the JMAP server should include in its responses. This can be beneficial for various purposes, including setting security policies, caching behaviors, or adding custom identification headers. The `jmap.http.headers` option accepts an array of string values. Each string value represents a full HTTP header in the format `Header-Name: Header-Value`.
+
+For example:
+
+```toml
+[jmap.http]
+headers = ["Cache-Control: max-age=3600", "Server: Stalwart JMAP"]
+```
+
+While this option provides flexibility in customizing response headers, administrators should exercise caution. Setting or overriding specific headers could impact the behavior of clients or intermediary systems that interact with the JMAP server. Always consult relevant documentation and ensure the desired behavior before setting custom headers.
+
+### CORS Policy
+
+CORS, or Cross-Origin Resource Sharing, is a security feature implemented by web browsers to control how web pages in one domain (origin) can request and interact with resources in a different domain. It's designed to safeguard against potentially harmful cross-site request behaviors that could compromise user data or website integrity.
+
+Web pages make requests to servers using the XMLHttpRequest or Fetch APIs. By default, web browsers restrict these requests to the same origin for security reasons. However, there are legitimate scenarios where a web page from one domain needs to request resources from another domain (e.g., loading fonts, accessing APIs). CORS provides a mechanism for servers to tell browsers which cross-origin requests should be allowed.
+
+The server communicates its CORS policy to the browser through specific HTTP headers. The browser then decides whether to allow the web page to make the cross-origin request based on these headers. For example, if a web page from `example-client.com` tries to fetch data from `example-api.com`, the server at `example-api.com` would need to include the appropriate CORS headers in its response to allow this.
+
+### Permissive CORS Policy
+
+To set a permissive CORS policy that allows any origin to access the resources on the server, you would need to set the `Access-Control-Allow-Origin` header to `*`. Here's how you can set this in the configuration file:
+
+```toml
+[jmap.http]
+headers = ["Access-Control-Allow-Origin: *"]
+```
+
+However, while this is the most permissive setting and allows any website to interact with the server, it can introduce security risks. When setting such a permissive policy, it's crucial to be aware of the potential implications and ensure that the server doesn't expose sensitive data or operations without proper authentication and authorization checks.
+
