@@ -23,14 +23,14 @@ The replacement syntax `${pos}` is used in the configuration to refer to the num
 In the given example:
 
 ```toml
-[session.to]
+[session.rcpt]
 rewrite = [ { if = "rcpt", matches = "^([^.]+)@([^.]+)\.(.+)$", then = "${1}+${2}@${3}" }, 
             { else = false } ]"
 ```
 
 The configuration is set to rewrite recipient addresses (`if = "rcpt"`). If an address matches the regular expression in the `matches` attribute, it's then rewritten according to the pattern in the `then` attribute, which uses the `${pos}` syntax to refer to the captured groups. If an address does not match the regular expression, as indicated by `{ else = false }`, no rewriting occurs.
 
-In the configuration file, address rewriting rules are defined in the `session.from.rewrite` and `session.to.rewrite` sections. The `session.from.rewrite` section is used to rewrite the sender address, while the `session.to.rewrite` section is used to rewrite the recipient address.
+In the configuration file, address rewriting rules are defined in the `session.mail.rewrite` and `session.rcpt.rewrite` sections. The `session.mail.rewrite` section is used to rewrite the sender address, while the `session.rcpt.rewrite` section is used to rewrite the recipient address.
 
 ## Sieve
 
@@ -38,7 +38,7 @@ In situations where the task of address rewriting cannot be accomplished using r
 
 In order to modify parts of the envelope within a Sieve script, the `set` command is used. The `set` command allows you to define and modify variables within your script, which can then be applied to elements of the envelope. This opens up an extensive range of possibilities for address rewriting, providing the power to construct elaborate rules for customizing how your mail server processes and directs incoming and outgoing messages.
 
-Rewriting rules defined in Sieve scripts are configured in the `sieve.scripts` section of the configuration file. The `sieve.scripts` section is a table of key-value pairs, where the key is the name of the script and the value is the script itself. The name of the script is used to refer to it in the `session.from.script` and `session.to.script` sections. For more details please refer to the [Sieve scripts](/docs/smtp/filter/sieve), [MAIL FROM](/docs/smtp/inbound/mail) stage and [RCPT TO](/docs/smtp/inbound/rcpt) stage sections of the documentation.
+Rewriting rules defined in Sieve scripts are configured in the `sieve.scripts` section of the configuration file. The `sieve.scripts` section is a table of key-value pairs, where the key is the name of the script and the value is the script itself. The name of the script is used to refer to it in the `session.mail.script` and `session.rcpt.script` sections. For more details please refer to the [Sieve scripts](/docs/smtp/filter/sieve), [MAIL FROM](/docs/smtp/inbound/mail) stage and [RCPT TO](/docs/smtp/inbound/rcpt) stage sections of the documentation.
 
 ## Examples
 
