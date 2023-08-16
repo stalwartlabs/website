@@ -53,11 +53,13 @@ The server communicates its CORS policy to the browser through specific HTTP hea
 
 ### Permissive CORS Policy
 
-To set a permissive CORS policy that allows any origin to access the resources on the server, you would need to set the `Access-Control-Allow-Origin` header to `*`. Here's how you can set this in the configuration file:
+To set a permissive CORS policy that allows any origin to access the resources on the server, you would need to set the `Access-Control-Allow-Origin` and `Access-Control-Allow-Headers` headers to `*`. Here's how you can set this in the configuration file:
 
 ```toml
 [jmap.http]
-headers = ["Access-Control-Allow-Origin: *"]
+headers = ["Access-Control-Allow-Origin: *", 
+           "Access-Control-Allow-Methods: POST, GET, HEAD, OPTIONS", 
+           "Access-Control-Allow-Headers: *"]
 ```
 
 However, while this is the most permissive setting and allows any website to interact with the server, it can introduce security risks. When setting such a permissive policy, it's crucial to be aware of the potential implications and ensure that the server doesn't expose sensitive data or operations without proper authentication and authorization checks.

@@ -126,6 +126,7 @@ The default TCP socket options for the server can be found under the `server.soc
 - `recv-buffer-size`: Specifies the size of the buffer used for receiving data. Increasing the size of the buffer can help improve the performance of the socket, but also increases memory usage.
 - `linger`: Specifies the time to wait before closing a socket when there is still unsent data. Setting this option to a non-zero value can help ensure that all data is sent before the socket is closed.
 - `tos`: Specifies the type of service (TOS) value for the socket, which determines the priority of the traffic sent through the socket.
+- `nodelay`: Specifies whether the Nagle algorithm should be disabled for the socket. Setting this option to `true` can help improve the performance of the socket, but may also increase network traffic.
 
 It is possible to override the default TCP socket options on a per-listener basis as detailed in the following sections.
 
