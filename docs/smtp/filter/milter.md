@@ -60,8 +60,10 @@ data = "60s"
 The following configuration options for a Milter filter can be set under the `session.data.milter.<id>.options` section:
 
 - `tempfail-on-error`: If this setting is enabled, Stalwart SMTP will respond with a temporary failure (typically a 4xx SMTP status code) when it encounters an error while communicating with a Milter filter. This tells the sending mail server to try delivering the message again later.
-- `max-response-size`: This setting controls the maximum size, in bytes, of a response that Stalwart SMTP will accept from a Milter filter. If a Milter filter sends a response that exceeds this size, Stalwart SMTP will consider it an error and handle it according to the `tempfail-on-error` setting.
-- `version`: This setting specifies the version of the Milter protocol that Stalwart SMTP should use when communicating with Milter filters. Supported versions are `2` and `6`. The value should be set to match the version of the Milter protocol supported by your Milter filters, usually version `6`.
+- `max-response-size`: Maximum size, in bytes, of a response that Stalwart SMTP will accept from a Milter filter. If a Milter filter sends a response that exceeds this size, Stalwart SMTP will consider it an error and handle it according to the `tempfail-on-error` setting.
+- `version`: Version of the Milter protocol that Stalwart SMTP should use when communicating with Milter filters. Supported versions are `2` and `6`. The value should be set to match the version of the Milter protocol supported by your Milter filters, usually version `6`.
+- `flags.actions`: Actions flags that Stalwart SMTP will advertise when negotiating options with Milter filters. Defaults to `0xff` (`255`).
+- `flags.protocol`: Protocol flags that Stalwart SMTP will advertise while negotiating options with Milter filters. Defaults to `0x42` (`66`).
 
 For example:
 
@@ -70,6 +72,10 @@ For example:
 tempfail-on-error = true
 max-response-size = 52428800 # 50mb
 version = 6
+
+[session.data.milter."rspamd".options.flags]
+actions = 255
+protocol = 66
 ```
 
 ## Development
