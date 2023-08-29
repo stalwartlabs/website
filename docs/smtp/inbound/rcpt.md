@@ -81,8 +81,8 @@ greylist = '''
 
     set "triplet" "${env.remote_ip}.${envelope.from}.${envelope.to}";
 
-    if not execute :query "SELECT 1 FROM greylist WHERE addr=? LIMIT 1" ["${triplet}"] {
-        execute :query "INSERT INTO greylist (addr) VALUES (?)" ["${triplet}"];
+    if not query "SELECT 1 FROM greylist WHERE addr=? LIMIT 1" ["${triplet}"] {
+        query "INSERT INTO greylist (addr) VALUES (?)" ["${triplet}"];
         reject "422 4.2.2 Greylisted, please try again in a few moments.";
     }
 '''

@@ -31,6 +31,13 @@ Sieve scripts executed in Stalwart SMTP have access to the following environment
 - `env.remote_ip`: The email client's IP address.
 - `env.helo_domain`: The domain name used in the EHLO/LHLO command.
 - `env.authenticated_as`: The account name used for authentication.
+- `env.from`: The sender's email address specified in the `From` header.
+- `env.spf`: The result of the [SPF MAIL FROM](/docs/smtp/authentication/spf) check.
+- `env.spf_ehlo`: The result of the [SPF EHLO](/docs/smtp/authentication/spf) check.
+- `env.dkim`: The result of the [DKIM](/docs/smtp/authentication/dkim/overview) check.
+- `env.arc`: The result of the [ARC](/docs/smtp/authentication/arc) check.
+- `env.dmarc`: The result of the [DMARC](/docs/smtp/authentication/dmarc) check.
+- `env.iprev`: The result of the [reverse IP](/docs/smtp/authentication/iprev) check.
 
 The envelope contents can be accessed using the [envelope test](https://www.rfc-editor.org/rfc/rfc5228.html#page-27) or through variables:
 
@@ -54,7 +61,6 @@ Stalwart SMTP compiles all defined Sieve scripts when it starts and executes the
 - `return-path`: Defines the default return path to use in email notifications sent from a Sieve script.
 - `sign`: Lists the [DKIM](/docs/smtp/authentication/dkim/overview) signatures to add to email notifications sent from a Sieve script.
 - `hostname`: Sets the local hostname to use when generating a `Message-Id` header. If no value is set, the `server.hostname` value is used instead.
-- `user-directory`: Specifies the [directory](/docs/directory/overview) to use when running `execute :query` Sieve commands.
 - `limits.redirects`: Specifies the maximum number of `redirect` commands that a Sieve script can execute.
 - `limits.out-messages`: Specifies the maximum number of outgoing email messages that a Sieve script is allowed to send.
 - `limits.received-headers`: Specifies the maximum number of `Received` headers that a message can contain.
@@ -72,7 +78,6 @@ from-addr = "no-reply@foobar.org"
 return-path = ""
 hostname = "mx.foobar.org"
 sign = ["rsa"]
-use-directory = "sql"
 
 [sieve.limits]
 redirects = 3
@@ -83,33 +88,125 @@ nested-includes = 5
 duplicate-expiry = "7d"
 ```
 
-## Execute extension
+## Arithmetical and Logical Expressions
 
-Stalwart SMTP adds to the Sieve language the `vnd.stalwart.execute` extension which allows scripts to execute external commands or SQL queries using the `execute` command (and test). The `execute` command/test expects as arguments the command or query name followed by the command arguments or query values.
+The expression extension introduces the ability to evaluate arithmetical and logical operations within Sieve scripts. This is particularly useful for performing calculations on variables or determining the flow based on specific logical conditions.
+Expressions can be evaluated using the `eval` test or the `%{}` tag.
+
+### Using the `eval` Test
+
+Expressions can be evaluated using the `eval` test. This test evaluates the expression within the quotes and returns a boolean value based on the result.
+
+```sieve
+if test eval "expression_here" {
+    # Actions to be performed if the expression evaluates to true
+}
+```
+
+In the following example, if the given mathematical expression results in a value greater than `2.25`, the message is rejected as SPAM.
+
+```sieve
+if test eval "score + ((awl_score / awl_count) - score) * awl_factor > 2.25" {
+    reject "Your message is SPAM.";
+    stop;
+}
+```
+
+### Using the `%{}` Tag
+
+Expressions can also be evaluated using the `%{}` tag, which replaces the tag with the result of the expression.
+
+For example, to set a variable's value based on an evaluated expression:
+
+```sieve
+set "score" "%{score + ((awl_score / awl_count) - score) * awl_factor}";
+```
+
+Or, to concatenate a string with the evaluated result:
+
+```sieve
+addheader "X-Score" "Calculated score of %{score + ((awl_score / awl_count) - score) * awl_factor}";
+```
+
+In the example above, an "X-Score" header is added to the message with the calculated score.
+
+## Supported Operators
+
+- **Arithmetical Operators:**
+    - `+`: Addition
+    - `-`: Subtraction
+    - `/`: Division
+    - `*`: Multiplication
+    
+- **Logical Operators:**
+    - `&&`: Logical AND
+    - `||`: Logical OR
+    - `^`: Logical XOR
+    - `!`: Logical NOT
+    
+- **Comparison Operators:**
+    - `>`: Greater than
+    - `<`: Less than
+    - `=`: Equal to
+    - `!=`: Not equal to
+    - `>=`: Greater than or equal to
+    - `<=`: Less than or equal to
+
+When working with logical and comparison operators, it is crucial to ensure that the data types being compared are compatible. For instance, comparing a string to a number using an operator like `>` may not yield the expected results. Always ensure that the variables and constants in your expressions have expected and consistent types to avoid unexpected behaviors.
+
+## Plugins extension
+
+Stalwart SMTP adds to the Sieve language the `vnd.stalwart.plugins` extension which allows scripts to execute external commands or SQL queries using the `exec` and `query` commands (and tests). Both commands/tests expects as arguments the command or query name followed by the command arguments or query values.
 
 ### Directory queries
 
-The `:query` tag is used to execute an SQL or LDAP query on the directory defined in the `sieve.use-directory` attribute, for example:
+The `query` command is used to execute an SQL or LDAP query on the directory. It expects as the first argument the query and as second argument the query values. Additionally, the following optional parameters can be specified:
+
+- `:use <directory name>`: Specifies the directory to use for the query. The directory name is defined in the `directory.<name>.lookup` section. If left unspecified, the first directory defined in the configuration file is used.
+- `:set [var1, var2, ..., varn]`: Specifies the variables to set with the query results. The variables are set in the order they are specified in the command.
+
+For example:
 
 ```sieve
-require ["vnd.stalwart.execute", "variables", "envelope", "reject"];
+require ["vnd.stalwart.plugins", "variables", "envelope", "reject"];
 
 set "triplet" "${env.remote_ip}.${envelope.from}.${envelope.to}";
 
-if not execute :query "SELECT 1 FROM greylist WHERE addr=? LIMIT 1" ["${triplet}"] {
-    execute :query "INSERT INTO greylist (addr) VALUES (?)" ["${triplet}"];
+if not query :use \"sql\" "SELECT 1 FROM greylist WHERE addr=? LIMIT 1" ["${triplet}"] {
+    query  :use \"sql\" "INSERT INTO greylist (addr) VALUES (?)" ["${triplet}"];
     reject "422 4.2.2 Greylisted, please try again in a few moments.";
+}
+```
+
+Or, to set the result of the query in a variable:
+
+```sieve
+global "score";
+set "awl_factor" "0.5";
+
+query :use "sql" :set ["awl_score", "awl_count"] "SELECT score, count FROM awl WHERE sender = ? AND ip = ?" ["${env.from}", "%{env.remote_ip}"];
+if eval "awl_count > 0" {
+	if not query :use "sql" "UPDATE awl SET score = score + ?, count = count + 1 WHERE sender = ? AND ip = ?" ["%{score}", "${env.from}", "%{env.remote_ip}"] {
+		reject "update query failed";
+		stop;
+	}
+	set "score" "%{score + ((awl_score / awl_count) - score) * awl_factor}";
+} else {
+	if not query :use "sql" "INSERT INTO awl (score, count, sender, ip) VALUES (?, 1, ?, ?)" ["%{score}", "${env.from}", "%{env.remote_ip}"] {
+		reject "insert query failed";
+		stop;
+	}
 }
 ```
 
 ### External programs
 
-The `:binary` tag is used to execute external binaries, for example:
+The `exec` command is used to execute external binaries, for example:
 
 ```sieve
-require "vnd.stalwart.execute";
+require "vnd.stalwart.plugins";
 
-if execute :binary "/opt/stalwart/bin/validate.sh" ["${env.remote_ip}", "${envelope.from}"] {
+if exec "/opt/stalwart/bin/validate.sh" ["${env.remote_ip}", "${envelope.from}"] {
     reject "You are not allowed to send e-mails.";
 }
 
@@ -137,8 +234,8 @@ greylist = '''
 
     set "triplet" "${env.remote_ip}.${envelope.from}.${envelope.to}";
 
-    if not execute :query "SELECT 1 FROM greylist WHERE addr=? LIMIT 1" ["${triplet}"] {
-        execute :query "INSERT INTO greylist (addr) VALUES (?)" ["${triplet}"];
+    if not query "SELECT 1 FROM greylist WHERE addr=? LIMIT 1" ["${triplet}"] {
+        query "INSERT INTO greylist (addr) VALUES (?)" ["${triplet}"];
         reject "422 4.2.2 Greylisted, please try again in a few moments.";
     }
 '''

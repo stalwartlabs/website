@@ -1,0 +1,41 @@
+---
+slug: sieve-expressions
+title: "Advanced Filtering with Sieve Expressions"
+authors: [mdecimus]
+tags: [sieve, expressions, email]
+---
+
+Today we are announcing the latest release of Stalwart Mail Server: version 0.3.6. This update includes multiple enhancements to the Sieve filtering language, including the ability to evaluate arithmetical and logical expressions, and fetch data from SQL or LDAP databases to Sieve variables.
+
+### Arithmetical and Logical Expressions
+
+Stalwart Mail Server now incorporates the ability to evaluate arithmetical and logical operations within Sieve scripts. For instance, the following Sieve script rejects a mail if it satisfies a particular condition:
+
+```sieve
+if test eval "score + ((awl_score / awl_count) - score) * awl_factor > 2.25" {
+    reject "Your message is SPAM.";
+    stop;
+}
+```
+
+Whether you're aiming to refine your filtering mechanisms or just add some mathematical magic to your scripts, this feature is sure to come in handy.
+
+To learn more about expressions in Sieve scripts, check out the [Arithmetical and Logical Expressions](/docs/smtp/filter/sieve#arithmetical-and-logical-expressions) section in the documentation.
+
+### Fetching Data from Databases
+
+Using Sieve scripts, you can now query SQL or LDAP databases and store the results as Sieve variables. This is done using the `query` command with the optional `:set` argument.
+
+Consider this example:
+
+```sieve
+query :use "sql" :set ["awl_score", "awl_count"] "SELECT score, count FROM awl WHERE sender = ? AND ip = ?" ["${env.from}", "%{env.remote_ip}"];
+```
+
+The above Sieve script fetches the `score` and `count` columns from the `awl` table in an SQL database and stores them as the Sieve variables `awl_score` and `awl_count` respectively.
+
+To learn more about fetching data from SQL or LDAP queries, check out the [query extension](/docs/smtp/filter/sieve#directory-queries) documentation.
+
+### Conclusion
+
+These features allow for more advanced filtering mechanisms and more powerful Sieve scripts. We hope you enjoy them!
