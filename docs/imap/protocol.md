@@ -34,12 +34,16 @@ allow-plain-text = false
 
 The `imap.folders` section contains parameters that control folder settings:
 
-- `shared`: Designates the name of the folder that will contain all shared folders.
-- `all`: Specifies the name of the folder that will hold all mail.
+- `all-messages`: Specifies whether the server should create a folder that contains all messages in the user's mailbox.
+- `name.shared`: Designates the name of the folder that will contain all shared folders.
+- `name.all`: Specifies the name of the folder that will hold all mail.
 
 For example:
 
 ```toml
+[imap.folders]
+all-messages = true
+
 [imap.folders.name]
 shared = "Shared Folders"
 all = "All Mail"
