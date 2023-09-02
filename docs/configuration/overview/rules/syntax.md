@@ -6,7 +6,7 @@ sidebar_position: 1
 
 Stalwart Mail Server offers a flexible configuration system through the use of rules. These rules, which consist of single or nested `if` blocks, provide system administrators the ability to tailor the server behavior based on contextual variables such as IP address, sender, recipient and more. Rules can be applied to most parameters of the configuration file and are represented using nested TOML structures containing `if`, `else`, `all-of`, `any-of` and `none-of` attributes. 
 
-A rule is comprised of a TOML array that includes one or multiple single or nested conditional blocks, followed by an `else` block. Each `if` block within a rule evaluates a specific [context variable](/docs/configuration/overview/variables) using a [comparator](/docs/configuration/overview/rules/comparators). If the condition is met, the `then` block is executed. If the condition is not met, the `else` block is executed. is not met.
+A rule is comprised of a TOML array that includes one or multiple single or nested conditional blocks, followed by an `else` block. Each `if` block within a rule evaluates a specific [context variable](/docs/configuration/overview/variables) using a [comparator](/docs/configuration/overview/rules/comparators). If the condition is met, the `then` block is executed. If the condition is not met, the `else` block is executed.
 
 ## ABNF
 
