@@ -14,6 +14,7 @@ SASL authentication is configured using the following attributes which are avail
 - `mechanisms`: A list of [SASL authentication mechanisms](https://www.iana.org/assignments/sasl-mechanisms/sasl-mechanisms.xhtml) offered to clients, or an empty list to disable authentication. Stalwart SMTP currently supports `PLAIN`, `LOGIN`, and `OAUTHBEARER` mechanisms.
 - `directory`: Specifies the [directory](/docs/directory/overview) to use for authentication.
 - `require`: A boolean attribute that specifies whether authentication is necessary to send email messages.
+- `allow-plain-text`: A boolean attribute that specifies whether to allow authentication using the `PLAIN` mechanism over an unencrypted connection. Defaults to `false`.
 - `errors.total`: The maximum number of authentication errors allowed before the session is disconnected.
 - `errors.wait`: The time interval to wait after an authentication failure.
 
@@ -27,6 +28,7 @@ directory = [ { if = "listener", ne = "smtp", then = "ldap" },
            { else = false } ]
 require = [ { if = "listener", ne = "smtp", then = true},
             { else = false } ]
+allow-plain-text = false
 
 [session.auth.errors]
 total = 3
