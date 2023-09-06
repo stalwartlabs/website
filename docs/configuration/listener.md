@@ -58,6 +58,42 @@ The default settings for the server's TLS configuration can be found under the `
 - `ciphers`: Specifies the list of ciphers that the listener should allow clients to use. If left empty, the listener will use the default ciphers defined by the TLS library.
 - `ignore-client-order`: Specifies whether the listener should ignore the order of ciphers presented by the client and use the order specified in the ciphers option. If set to `false`, the listener will use the order presented by the client.
 
+### Supported TLS versions
+
+The following TLS versions are supported:
+
+* `TLSv1.3`
+* `TLSv1.2`
+
+TLS 1.1 is not supported due to its inherent security vulnerabilities and its subsequent deprecation by major standards bodies and browsers. By focusing on more modern and secure protocols, Stalwart ensures robust encryption and the utmost security for its users' communications.
+
+### Supported cipher suites
+
+The following TLS 1.3 cipher suites are supported:
+
+* `TLS13_AES_256_GCM_SHA384`
+* `TLS13_AES_128_GCM_SHA256`
+* `TLS13_CHACHA20_POLY1305_SHA256`
+
+As well as the following TLS 1.2 cipher suites:
+
+* `TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384`
+* `TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256`
+* `TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256`
+* `TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384`
+* `TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256`
+* `TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256`
+
+### Supported exchange groups
+
+The following exchange groups are supported:
+
+* `X25519`
+* `SECP256R1`
+* `SECP384R1`
+
+### Example
+
 The following example defines two SNI subjects (otherdomain.org and otherdomain.net) and specifies the TLS protocols and ciphers to use:
 
 ```toml
@@ -69,7 +105,11 @@ certificate = "default"
 sni = [ { subject = "otherdomain.org", certificate = "otherdomain_org" },
         { subject = "otherdomain.net", certificate = "otherdomain_net" } ]
 protocols = [ "TLSv1.2", "TLSv1.3" ]
-ciphers = [ "TLS13_CHACHA20_POLY1305_SHA256", "TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256" ]
+ciphers = [ "TLS13_AES_256_GCM_SHA384", "TLS13_AES_128_GCM_SHA256",
+            "TLS13_CHACHA20_POLY1305_SHA256", "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384",
+            "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256", "TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256",
+            "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384", "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256",
+            "TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256"]
 ignore-client-order = true
 ```
 
