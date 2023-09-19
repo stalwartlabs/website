@@ -13,6 +13,7 @@ In the configuration file, the method for tracing is defined by the `global.trac
 - `open-telemetry`: Sends tracing information to an OpenTelemetry collector.
 - `log`: Writes tracing information to a log file.
 - `stdout`: Prints tracing information to standard output.
+- `journal`: Sends tracing information to the systemd journal. Only available on Linux/Unix systems.
 
 The level of tracing information recorded is determined by the `global.tracing.level` attribute. The available levels are:
 
