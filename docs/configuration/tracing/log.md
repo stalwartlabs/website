@@ -8,6 +8,7 @@ Stalwart Mail Server provides the ability to log information to a text file that
 
 - `path`: The path to the directory where the log files will be stored.
 - `prefix`: The prefix to be used for each log file.
+- `ansi`: Whether to use ANSI escape sequences to colorize the log output.
 - `rotate`: The frequency of log file rotation. Acceptable values are `daily`, `hourly`, `minutely`, or `never`.
 
 Example:
@@ -19,5 +20,6 @@ path = "/opt/stalwart-mail/logs"
 prefix = "stalwart-mail.log"
 rotate = "daily"
 level = "info"
+ansi = true
 ```
 
