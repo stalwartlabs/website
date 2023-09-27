@@ -88,12 +88,12 @@ nested-includes = 5
 duplicate-expiry = "7d"
 ```
 
-## Arithmetical and Logical Expressions
+## Expressions
 
 The expression extension introduces the ability to evaluate arithmetical and logical operations within Sieve scripts. This is particularly useful for performing calculations on variables or determining the flow based on specific logical conditions.
-Expressions can be evaluated using the `eval` test or the `%{}` tag.
+Expressions can be evaluated using the `eval` test or the `let` instructions. In order to use these features, the `vnd.stalwart.expressions` extension must be enabled in the script.
 
-### Using the `eval` Test
+### Using the `eval` test
 
 Expressions can be evaluated using the `eval` test. This test evaluates the expression within the quotes and returns a boolean value based on the result.
 
@@ -112,23 +112,15 @@ if test eval "score + ((awl_score / awl_count) - score) * awl_factor > 2.25" {
 }
 ```
 
-### Using the `%{}` Tag
+### Using the `let` instruction
 
-Expressions can also be evaluated using the `%{}` tag, which replaces the tag with the result of the expression.
+Expressions can also be evaluated and assigned to a variable using the `let` instruction. This instruction evaluates the expression within the quotes and assigns the result to the specified variable.
 
 For example, to set a variable's value based on an evaluated expression:
 
 ```sieve
-set "score" "%{score + ((awl_score / awl_count) - score) * awl_factor}";
+let "score" "score + ((awl_score / awl_count) - score) * awl_factor";
 ```
-
-Or, to concatenate a string with the evaluated result:
-
-```sieve
-addheader "X-Score" "Calculated score of %{score + ((awl_score / awl_count) - score) * awl_factor}";
-```
-
-In the example above, an "X-Score" header is added to the message with the calculated score.
 
 ## Supported Operators
 
@@ -154,26 +146,23 @@ In the example above, an "X-Score" header is added to the message with the calcu
 
 When working with logical and comparison operators, it is crucial to ensure that the data types being compared are compatible. For instance, comparing a string to a number using an operator like `>` may not yield the expected results. Always ensure that the variables and constants in your expressions have expected and consistent types to avoid unexpected behaviors.
 
-## Plugins extension
+## Functions
 
-Stalwart SMTP adds to the Sieve language the `vnd.stalwart.plugins` extension which allows scripts to execute external commands or SQL queries using the `exec` and `query` commands (and tests). Both commands/tests expects as arguments the command or query name followed by the command arguments or query values.
+Within an expression, the following functions can be used to perform common operations:
 
 ### Directory queries
 
-The `query` command is used to execute an SQL or LDAP query on the directory. It expects as the first argument the query and as second argument the query values. Additionally, the following optional parameters can be specified:
-
-- `:use <directory name>`: Specifies the directory to use for the query. The directory name is defined in the `directory.<name>.lookup` section. If left unspecified, the first directory defined in the configuration file is used.
-- `:set [var1, var2, ..., varn]`: Specifies the variables to set with the query results. The variables are set in the order they are specified in the command.
+The `query` function is used to execute an SQL or LDAP query on the directory. It expects as the first argument the directory name, followed by the query string and as third argument an array with the query values. 
 
 For example:
 
 ```sieve
-require ["vnd.stalwart.plugins", "variables", "envelope", "reject"];
+require ["variables", "vnd.stalwart.expressions", "envelope", "reject"];
 
 set "triplet" "${env.remote_ip}.${envelope.from}.${envelope.to}";
 
-if not query :use \"sql\" "SELECT 1 FROM greylist WHERE addr=? LIMIT 1" ["${triplet}"] {
-    query  :use \"sql\" "INSERT INTO greylist (addr) VALUES (?)" ["${triplet}"];
+if eval "!query('sql', 'SELECT 1 FROM greylist WHERE addr=? LIMIT 1', [triplet])" {
+    eval "query('sql', 'INSERT INTO greylist (addr) VALUES (?)', [triplet])";
     reject "422 4.2.2 Greylisted, please try again in a few moments.";
 }
 ```
@@ -181,32 +170,36 @@ if not query :use \"sql\" "SELECT 1 FROM greylist WHERE addr=? LIMIT 1" ["${trip
 Or, to set the result of the query in a variable:
 
 ```sieve
+require ["variables", "include", "vnd.stalwart.expressions", "reject"];
+
 global "score";
 set "awl_factor" "0.5";
 
-query :use "sql" :set ["awl_score", "awl_count"] "SELECT score, count FROM awl WHERE sender = ? AND ip = ?" ["${env.from}", "%{env.remote_ip}"];
+let "result" "query('sql', 'SELECT score, count FROM awl WHERE sender = ? AND ip = ?', [env.from, env.remote_ip])";
+
+let "awl_score" "result[0]";
+let "awl_count" "result[1]";
+
 if eval "awl_count > 0" {
-	if not query :use "sql" "UPDATE awl SET score = score + ?, count = count + 1 WHERE sender = ? AND ip = ?" ["%{score}", "${env.from}", "%{env.remote_ip}"] {
+	if eval "!query('sql', 'UPDATE awl SET score = score + ?, count = count + 1 WHERE sender = ? AND ip = ?', [score, env.from, env.remote_ip])" {
 		reject "update query failed";
 		stop;
 	}
-	set "score" "%{score + ((awl_score / awl_count) - score) * awl_factor}";
-} else {
-	if not query :use "sql" "INSERT INTO awl (score, count, sender, ip) VALUES (?, 1, ?, ?)" ["%{score}", "${env.from}", "%{env.remote_ip}"] {
-		reject "insert query failed";
-		stop;
-	}
+	let "score" "score + ((awl_score / awl_count) - score) * awl_factor";
+} elsif eval "!query('sql', 'INSERT INTO awl (score, count, sender, ip) VALUES (?, 1, ?, ?)', [score, env.from, env.remote_ip])" {
+	reject "insert query failed";
+	stop;
 }
 ```
 
 ### External programs
 
-The `exec` command is used to execute external binaries, for example:
+The `exec` function is used to execute external binaries, for example:
 
 ```sieve
-require "vnd.stalwart.plugins";
+require "vnd.stalwart.expressions";
 
-if exec "/opt/stalwart/bin/validate.sh" ["${env.remote_ip}", "${envelope.from}"] {
+if eval "!exec('/opt/stalwart/bin/validate.sh', [env.remote_ip, envelope.from])" {
     reject "You are not allowed to send e-mails.";
 }
 
