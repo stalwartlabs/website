@@ -36,6 +36,14 @@ type = "sql"
 address = "sqlite:///opt/stalwart-mail/data/accounts.sqlite3?mode=rwc"
 ```
 
+If your connection string includes passwords, you may also store it in an [environment variable](/docs/configuration/overview/values/environment) instead of in the configuration file as plain text. For example:
+
+```toml
+[directory."mysql"]
+type = "mysql"
+address = !SQL_ADDRESS
+```
+
 ## Lookup queries
 
 The `directory.<id>.query` section contains the SQL queries used to interact with the database. The following SQL queries need to be defined in order to retrieve information about accounts:

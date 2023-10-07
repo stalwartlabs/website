@@ -32,7 +32,7 @@ allow-invalid-certs = false
 The bind credentials can be specified under the `directory.<name>.ldap.bind` key in the configuration file using the following attributes:
 
 - `dn`: The distinguished name of the user account that the server will bind as to connect to the LDAP directory.
-- `secret`: The password associated with the DN account.
+- `secret`: The password associated with the DN account. Can also be specified using an [environment variable](/docs/configuration/overview/values/environment).
 
 If no bind credentials are specified, the server will attempt to connect anonymously.
 
