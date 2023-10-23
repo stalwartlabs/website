@@ -1,0 +1,35 @@
+---
+slug: spam-filter
+title: "Introducing Advanced Spam and Phishing Filtering"
+authors: [mdecimus]
+tags: [spam, phishing, filter, email]
+---
+
+In today's digital age, the safety and authenticity of your emails are paramount. With that in mind, we're happy to announce the release of the **Spam and Phishing filter** in Stalwart Mail Server v0.4.0. This release is packed with features that not only enhance your email security but also ensure a seamless communication experience.
+
+Here's a deep dive into what's new:
+
+- **Comprehensive Filtering Rules**: We've crafted a set of rules that stand shoulder-to-shoulder with the best solutions out there.
+- **Statistical Spam Classifier**: Empower your server with a classifier that constantly learns, adapts, and keeps spam at bay.
+- **DNS Blocklists (DNSBLs)**: Safeguard your users' inboxes from notorious spammers through meticulous checks on IP addresses, domains, and hashes.
+- **Collaborative Digest-Based Filtering**: By integrating digest-based spam filtering, we ensure even greater accuracy in weeding out unwanted emails.
+- **Phishing Protection**: Defend against cunning phishing tactics, from homographic URL attacks to deceptive sender spoofing.
+- **Trusted Replies Tracking**: By recognizing and prioritizing genuine replies, we ensure your genuine conversations remain uninterrupted.
+- **Sender Reputation**: An automated system that assesses sender credibility based on their IP, ASN, domain, and email address.
+- **Greylisting**: An added shield against spam, by temporarily holding back unfamiliar senders.
+- **Spam Traps**: Crafty decoy email addresses that help us catch and scrutinize spam, ensuring your users' inboxes remain clutter-free.
+- **Built-in & Ready to Roll**: No dependency on third-party software. Unbox and deploy – it's that simple!
+
+### Comparative Analysis
+
+While we have immense respect for both RSpamd and SpamAssassin, it's essential to highlight some distinctions. RSpamd stands out for its speed and standalone capabilities but necessitates additional configuration and maintenance. Meanwhile, SpamAssassin, built on Perl, might not deliver the same speed as RSpamd due to its heavy reliance on regular expressions.
+
+Stalwart Mail Server's spam and phishing filter offers a level of protection equivalent to both RSpamd and SpamAssassin with one notable advantage: **speed**. Since the message remains within the server during the entire filtering process, it's considerably quicker. Furthermore, while third-party solutions re-execute checks for DMARC, DKIM, SPF, and ARC, Stalwart has already performed these, making our built-in filter more efficient and streamlined.
+
+In essence, with Stalwart Mail Server, you receive a blend of speed, efficiency, and top-tier protection.
+
+### Conclusion
+
+In essence, with Stalwart Mail Server v0.4.0, you're not just getting an email server, but a comprehensive, fast, and efficient email security solution.
+
+We're committed to continuous innovation and ensuring that your communication remains genuine, secure, and spam-free. Upgrade to Stalwart Mail Server v0.4.0 and experience the difference today!
