@@ -70,7 +70,7 @@ let "SCORE_REJECT_THRESHOLD" "12.0";
 
 ## Directory
 
-The `DOMAIN_DIRECTORY` setting specifies which [directory](/TODO) to use when looking up local domain names. The primary reason for this configuration is to optimize network resources. When the system identifies a domain as local, it can bypass certain checks like DNSBL (DNS-based Block Lists) or phishing verifications. These checks are typically more relevant for external or unfamiliar domains. By avoiding unnecessary checks on local domains, the system can process emails faster and more efficiently, reducing network overhead and enhancing performance.
+The `DOMAIN_DIRECTORY` setting specifies which [directory](/docs/directory/overview) to use when looking up local domain names. The primary reason for this configuration is to optimize network resources. When the system identifies a domain as local, it can bypass certain checks like DNSBL (DNS-based Block Lists) or phishing verifications. These checks are typically more relevant for external or unfamiliar domains. By avoiding unnecessary checks on local domains, the system can process emails faster and more efficiently, reducing network overhead and enhancing performance.
 
 Example:
 

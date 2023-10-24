@@ -24,7 +24,7 @@ For more information, please refer to the [address rewriting](/docs/smtp/rewrite
 
 ## Sieve script
 
-The `session.mail.script` attribute specifies the name of the [Sieve script](/docs/smtp/filter/sieve) to run after a successful `MAIL FROM` command. This can be useful, for instance, for rejecting certain senders or rewriting the sender address.
+The `session.mail.script` attribute specifies the name of the [Sieve script](/docs/sieve/overview) to run after a successful `MAIL FROM` command. This can be useful, for instance, for rejecting certain senders or rewriting the sender address.
 
 Example:
 

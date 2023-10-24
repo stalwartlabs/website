@@ -26,7 +26,7 @@ The supported DNS resolver types for the `resolver.type` value are:
 - `google`: Use Google's public DNS service.
 - `system`: Use the system's default DNS resolver.
 
-Please note that `system` should be used when [DNS block lists](/docs/smtp/filter/dnsbl) are enabled as lookups from public DNS services are not allowed by most DNSBL services.
+Please note that `system` should be used when using [DNS block lists](/docs/spamfilter/dnsbl) as lookups from public DNS services are not allowed by most DNSBL services.
 
 Example:
 
@@ -65,4 +65,19 @@ ipv6 = 1024
 ptr = 1024
 tlsa = 1024
 mta-sts = 1024
+```
+
+## Public Suffix List
+
+The [Public Suffix List](https://publicsuffix.org/) is a list of top-level domain names (or suffixes) under which Internet users can register domain names. This list is used by the SMTP server to determine the root domain of a given domain name. For example, the root domain of `example.com` is `com` and the root domain of `example.co.uk` is `co.uk`.
+
+The URL to the Public Suffix list is configured under the `resolver.public-suffix` key. The list can also be loaded from a local file by using the `file://` URL scheme. When both a remote URL and a local file are specified, the local file will be used as a fallback in case the remote URL is unavailable.
+
+Example:
+
+```toml
+[resolver]
+public-suffix = ["https://publicsuffix.org/list/public_suffix_list.dat", 
+                 "file://%{BASE_PATH}%/etc/spamfilter/maps/suffix_list.dat.gz"]
+
 ```

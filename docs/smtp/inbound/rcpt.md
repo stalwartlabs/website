@@ -62,11 +62,11 @@ For more information, please refer to the [address rewriting](/docs/smtp/rewrite
 
 ## Sieve script
 
-In order to provide more flexibility and control over the handling of incoming messages, [Sieve scripts](/docs/smtp/filter/sieve) can also be executed during the `RCPT TO` stage of the SMTP transaction. Typically, Sieve scripts are run at the delivery stage, but running them during the `RCPT TO` stage opens up more possibilities. At this stage, the sending server is indicating who the email is for. With the ability to manipulate this with Sieve scripts, administrators have an array of tools at their disposal.
+In order to provide more flexibility and control over the handling of incoming messages, [Sieve scripts](/docs/sieve/overview) can also be executed during the `RCPT TO` stage of the SMTP transaction. Typically, Sieve scripts are run at the delivery stage, but running them during the `RCPT TO` stage opens up more possibilities. At this stage, the sending server is indicating who the email is for. With the ability to manipulate this with Sieve scripts, administrators have an array of tools at their disposal.
 
 For instance, scripts can be configured to reject certain recipients based on specific criteria, such as the recipient address or domain. This can be useful in managing email traffic and preventing unwanted emails. [Address rewriting](/docs/smtp/rewrite/address#sieve) is another option, allowing for automatic correction of common misspellings or redirecting emails from one address to another. Additionally, more advanced functionality like greylisting, a common method of defending against spam, can be implemented. This involves temporarily rejecting emails from unknown sources and asking the sender to try again later - a test most spam sources fail. 
 
-The `session.rcpt.script` attribute specifies the Sieve script to execute during the RCPT TO stage. For more information, please refer to the [Sieve scripts](/docs/smtp/filter/sieve) documentation.
+The `session.rcpt.script` attribute specifies the Sieve script to execute during the RCPT TO stage. For more information, please refer to the [Sieve scripts](/docs/sieve/overview) documentation.
 
 For example, the following script implements greylisting using an SQL database:
 

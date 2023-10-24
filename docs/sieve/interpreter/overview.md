@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Overview
 
-The Sieve interpreter is responsible to processing and executing Sieve scripts. Sieve scripts, primarily used in email filtering, are a powerful tool for automatically organizing, filtering, and responding to incoming emails based on predefined conditions. In Stalwart Mail Server, the Sieve interpreter consists of two main parts, a **compiler** and a **runtime**:
+The Sieve interpreter is responsible of processing and executing Sieve scripts. Sieve scripts, primarily used in email filtering, are a powerful tool for automatically organizing, filtering, and responding to incoming emails based on predefined conditions. In Stalwart Mail Server, the Sieve interpreter consists of two main parts, a **compiler** and a **runtime**:
 
 - **Compiler**: The Sieve compiler is responsible for translating the human-readable Sieve script into bytecode. Bytecode is a set of instructions that can be directly executed by the Sieve runtime. This conversion ensures that the Sieve scripts are optimized for faster execution and enhanced performance.
 - **Runtime**: The Sieve runtime is the environment where the compiled bytecode is executed. It reads the instructions from the bytecode and performs the necessary actions as dictated by the original Sieve script.

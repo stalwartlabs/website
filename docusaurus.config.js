@@ -114,6 +114,10 @@ const config = {
                 label: 'SMTP Server',
                 to: '/docs/smtp/overview',
               },
+              {
+                label: 'Spam Filter',
+                to: '/docs/spamfilter/overview',
+              },
             ],
           },
           {

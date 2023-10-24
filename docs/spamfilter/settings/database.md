@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # Database
 
-The spam filter requires a database in order to maintain and manage various crucial pieces of information. The database to use is configured as a [directory](/TODO) named `spamdb` under the `etc/smtp/spamfilter.toml` configuration file.
+The spam filter requires a database in order to maintain and manage various crucial pieces of information. The database to use is configured as a [directory](/docs/directory/overview) named `spamdb` under the `etc/smtp/spamfilter.toml` configuration file.
 
 This database serves multiple purposes:
 
@@ -100,7 +100,7 @@ CREATE TABLE IF NOT EXISTS reputation (
 
 ## Queries
 
-The spam filter relies on a series of queries to interact with the database, which are defined under the `etc/smtp/spamfilter.toml` configuration file. Please refer to the [directory](/TODO) documentation for more information on how to configure SQL databases.
+The spam filter relies on a series of queries to interact with the database, which are defined under the `etc/smtp/spamfilter.toml` configuration file. Please refer to the [directory](/docs/directory/overview) documentation for more information on how to configure SQL databases.
 
 ### SQLite
 

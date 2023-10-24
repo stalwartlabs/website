@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Scores
 
-As mentioned in the [tags and scores](/TODO) section, the spam filter's analysis of incoming messages yields a series of tags, each with a corresponding score. To determine the email's overall classification (spam or ham), scores associated with these tags play a crucial role.
+As mentioned in the [tags and scores](/docs/spamfilter/overview#tags-and-scores) section, the spam filter's analysis of incoming messages yields a series of tags, each with a corresponding score. To determine the email's overall classification (spam or ham), scores associated with these tags play a crucial role.
 
 The configuration of these scores is done in the `etc/spamfilter/maps/scores.map` file. Each line in the `scores.map` file denotes a tag and its corresponding action or score. The format used is:
 

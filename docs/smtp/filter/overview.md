@@ -10,7 +10,7 @@ Stalwart SMTP supports various filtering mechanisms, which allow a high degree o
 
 - [Spam filter](/docs/smtp/filter/spam): Stalwart SMTP Server includes a comprehensive Spam and Phishing filter that provides a robust defense against such unwanted emails.
 
-- [Sieve scripts](/docs/smtp/filter/sieve): These are scripts written in the Sieve language, a powerful, yet straightforward language specifically designed for mail filtering. Sieve scripts allow both [administrators](/docs/smtp/filter/sieve.md) and [users](/docs/jmap/sieve) to specify rules for how incoming mail should be handled.
+- [Sieve scripts](/docs/sieve/overview): These are scripts written in the Sieve language, a powerful, yet straightforward language specifically designed for mail filtering. Sieve scripts allow both [administrators](/docs/sieve/overview.md) and [users](/docs/jmap/sieve) to specify rules for how incoming mail should be handled.
 
 - [Milter](/docs/smtp/filter/milter): Milter (short for "mail filter") is a dynamic extension for mail servers, which allows external software to inspect or modify messages as they're being processed. Milters can be used for a wide range of purposes, such as spam filtering, virus scanning, or adding footers to outgoing messages.
 

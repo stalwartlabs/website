@@ -8,7 +8,7 @@ Address rewriting is a process where the email addresses in the envelope of a me
 
 Address rewriting can be used for several purposes. For instance, you might want to change outgoing mail addresses to match a specific domain for branding purposes or adjust incoming mail addresses to redirect certain emails to a different inbox.
 
-Address rewriting rules can be defined using regular expressions, providing a powerful and flexible tool for matching and transforming addresses based on patterns. And, for instances where even greater control is needed, is is also possible to manage address rewriting from within [Sieve scripts](/docs/smtp/filter/sieve).
+Address rewriting rules can be defined using regular expressions, providing a powerful and flexible tool for matching and transforming addresses based on patterns. And, for instances where even greater control is needed, is is also possible to manage address rewriting from within [Sieve scripts](/docs/sieve/overview).
 
 Stalwart SMTP supports comprehensive address rewriting, allowing changes to both sender and recipient parts of the envelope. This flexibility allows complex manipulations of email traffic to suit a variety of needs. 
 
@@ -34,11 +34,11 @@ In the configuration file, address rewriting rules are defined in the `session.m
 
 ## Sieve
 
-In situations where the task of address rewriting cannot be accomplished using regular expressions alone, Stalwart SMTP offers the flexibility to use [Sieve scripts](/docs/smtp/filter/sieve). Sieve is a powerful scripting language designed specifically for mail filtering. It is easy to write and understand, making it a versatile tool for mail server administrators. Stalwart SMTP supports the `envelope` Sieve extension, which provides access to details of the message envelope such as sender and recipient addresses, as well as other envelope information such as Delivery Status Notifications (DSN).
+In situations where the task of address rewriting cannot be accomplished using regular expressions alone, Stalwart SMTP offers the flexibility to use [Sieve scripts](/docs/sieve/overview). Sieve is a powerful scripting language designed specifically for mail filtering. It is easy to write and understand, making it a versatile tool for mail server administrators. Stalwart SMTP supports the `envelope` Sieve extension, which provides access to details of the message envelope such as sender and recipient addresses, as well as other envelope information such as Delivery Status Notifications (DSN).
 
 In order to modify parts of the envelope within a Sieve script, the `set` command is used. The `set` command allows you to define and modify variables within your script, which can then be applied to elements of the envelope. This opens up an extensive range of possibilities for address rewriting, providing the power to construct elaborate rules for customizing how your mail server processes and directs incoming and outgoing messages.
 
-Rewriting rules defined in Sieve scripts are configured in the `sieve.scripts` section of the configuration file. The `sieve.scripts` section is a table of key-value pairs, where the key is the name of the script and the value is the script itself. The name of the script is used to refer to it in the `session.mail.script` and `session.rcpt.script` sections. For more details please refer to the [Sieve scripts](/docs/smtp/filter/sieve), [MAIL FROM](/docs/smtp/inbound/mail) stage and [RCPT TO](/docs/smtp/inbound/rcpt) stage sections of the documentation.
+Rewriting rules defined in Sieve scripts are configured in the `sieve.scripts` section of the configuration file. The `sieve.scripts` section is a table of key-value pairs, where the key is the name of the script and the value is the script itself. The name of the script is used to refer to it in the `session.mail.script` and `session.rcpt.script` sections. For more details please refer to the [Sieve scripts](/docs/sieve/overview), [MAIL FROM](/docs/smtp/inbound/mail) stage and [RCPT TO](/docs/smtp/inbound/rcpt) stage sections of the documentation.
 
 ## Examples
 

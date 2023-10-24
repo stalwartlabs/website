@@ -48,7 +48,7 @@ Yes, [relay hosts](/docs/smtp/outbound/routing#relay-host) are supported for sen
 
 ### Is greylisting supported?
 
-Yes, greylisting can be implemented as a Sieve filter. You can find an example [here](/docs/smtp/filter/sieve#greylisting).
+Yes, greylisting can be implemented as a Sieve filter. You can find an example [here](/docs/sieve/overview#greylisting).
 
 
 ## Encryption
@@ -80,6 +80,44 @@ S/MIME certificates can be imported in DER or PEM formats. However, if importing
 ### I have enabled encryption at rest. How can I test if it's working?
 
 Once you have enabled encryption at rest, it is recommended that you send a test email to yourself. This allows you to confirm that your email client can properly decrypt the message.
+
+
+## Spam & Phishing Filter
+
+### What makes Stalwart's Spam filter different from other solutions?
+
+Stalwart Mail Server's spam filter is built-in and doesn't require any third-party software. It's designed for speed and efficiency, keeping messages within the server during the filtering process. It also offers comprehensive filtering rules on par with popular solutions like RSpamd and SpamAssassin.
+
+### How does the spam classifier work?
+
+Our spam classifier uses statistical techniques, including Naive Bayes and Inverse Chi-Square. It automatically trains itself, ensuring improved accuracy over time. 
+
+### How does Stalwart handle phishing attempts?
+Stalwart offers robust phishing protection by checking against databases like OpenPhish and PhishTank, identifying homographic URL attacks, sender spoofing, and other deceptive techniques. It also detects and flags suspicious URL patterns.
+
+### What are DNSBLs, and why are they important?
+
+DNS Blocklists (DNSBLs) are databases that track IP addresses known for sending spam. Stalwart checks IP addresses, domains, and even hashes against several DNSBLs to filter out potential spam sources.
+
+### How can I customize the spam filter settings?
+
+Administrators can easily customize settings from the `etc/spamfilter/scripts/` directory. Several configuration files, such as `config.sieve`, `rbl.sieve`, and `pyzor.sieve`, allow for granular control over the spam filter's behavior.
+
+### What is greylisting, and how does it help?
+
+Greylisting temporarily defers emails from unknown senders. If the sender is legitimate, they'll typically resend the email after a short delay, whereas most spammers won't. This process helps in reducing spam.
+
+### How can I set up spam traps?
+
+You can set up decoy email addresses to catch and analyze spam. Any messages sent to these addresses are considered spam. The list of spamtrap email addresses can be configured from the `etc/spamfilter/maps/spam_trap.list`.
+
+### I've heard about sender reputation tracking. How does that work in Stalwart?
+
+Stalwart tracks the previous spam scores of senders based on their IP address, ASN, domain, and email address. It uses this data to adjust the spam score of incoming messages, helping in more accurate spam identification.
+
+### Does Stalwart support collaborative spam filtering mechanisms like Pyzor?
+
+Yes! Stalwart integrates with collaborative digest-based spam filtering tools like Pyzor to enhance its spam detection capabilities.
 
 ## General
 

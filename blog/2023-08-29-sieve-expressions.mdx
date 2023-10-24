@@ -20,7 +20,7 @@ if test eval "score + ((awl_score / awl_count) - score) * awl_factor > 2.25" {
 
 Whether you're aiming to refine your filtering mechanisms or just add some mathematical magic to your scripts, this feature is sure to come in handy.
 
-To learn more about expressions in Sieve scripts, check out the [Arithmetical and Logical Expressions](/docs/smtp/filter/sieve#arithmetical-and-logical-expressions) section in the documentation.
+To learn more about expressions in Sieve scripts, check out the [Arithmetical and Logical Expressions](/docs/sieve/overview#arithmetical-and-logical-expressions) section in the documentation.
 
 ### Fetching Data from Databases
 
@@ -34,7 +34,7 @@ query :use "sql" :set ["awl_score", "awl_count"] "SELECT score, count FROM awl W
 
 The above Sieve script fetches the `score` and `count` columns from the `awl` table in an SQL database and stores them as the Sieve variables `awl_score` and `awl_count` respectively.
 
-To learn more about fetching data from SQL or LDAP queries, check out the [query extension](/docs/smtp/filter/sieve#directory-queries) documentation.
+To learn more about fetching data from SQL or LDAP queries, check out the [query extension](/docs/sieve/overview#directory-queries) documentation.
 
 ### Conclusion
 

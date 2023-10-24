@@ -8,11 +8,11 @@ The `DATA` command is used to initiate the data transfer phase of the email deli
 
 ## Filtering
 
-Once a message has been submitted either with the `DATA` or `BDAT` command, it is possible to run [sieve scripts](/docs/smtp/filter/sieve), [milter filters](/docs/smtp/filter/milter) or [pipes](/docs/smtp/filter/pipe) that accept, reject or modify the message's contents. When multiple filter types are configured, Stalwart SMTP will execute first the Milter filters, then the Sieve scripts and finally the Pipes.
+Once a message has been submitted either with the `DATA` or `BDAT` command, it is possible to run [sieve scripts](/docs/sieve/overview), [milter filters](/docs/smtp/filter/milter) or [pipes](/docs/smtp/filter/pipe) that accept, reject or modify the message's contents. When multiple filter types are configured, Stalwart SMTP will execute first the Milter filters, then the Sieve scripts and finally the Pipes.
 
 ### Sieve
 
-The `session.data.script` attribute in the configuration file specifies the name of the [Sieve script](/docs/smtp/filter/sieve) to be executed. For example:
+The `session.data.script` attribute in the configuration file specifies the name of the [Sieve script](/docs/sieve/overview) to be executed. For example:
 
 ```toml
 [session.data]

@@ -106,6 +106,19 @@ blocked_ip = "SELECT 1 FROM blocked_ip WHERE id=? LIMIT 1"
 greylist = "SELECT 1 FROM greylisted_senders WHERE addr=? LIMIT 1"
 ```
 
+## Scheduled queries
+
+Scheduled queries are useful for performing maintenance tasks on the SQL database such as updating the status of accounts or cleaning up old data. They are defined under the `directory.<name>.schedule.query` key and are executed periodically based on the frequency specified by the `directory.<name>.schedule.frequency` key using a [cron-like syntax](/docs/configuration/overview/values/cron). 
+
+For example:
+
+```toml
+[directory."spamdb".schedule]
+query = ["DELETE FROM seen_ids WHERE ttl < CURRENT_TIMESTAMP", 
+         "DELETE FROM reputation WHERE ttl < CURRENT_TIMESTAMP"]
+frequency = "0 3 *"
+```
+
 ## Sample directory schema
 
 This section provides a sample SQL database schema that can be used as a directory server for Stalwart Mail Server. The schema is provided as a reference and is not intended to be used as-is. You will need to modify the schema to suit your needs.

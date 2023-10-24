@@ -6,7 +6,7 @@ sidebar_position: 5
 
 Stalwart SMTP supports filtering messages using external executable files, referred to as "pipes". Pipes operate by receiving the email message through standard input (`stdin`), processing or modifying it as required, and then returning the adjusted message via standard output (`stdout`). 
 
-It's generally recommended that message filtering using pipes should be employed only when it's not feasible to use a [sieve script](/docs/smtp/filter/sieve) or a [Milter filter](/docs/smtp/filter/milter). Both sieve scripts and Milter filters are specifically designed for email filtering and manipulation tasks, and they typically offer a more straightforward and safer approach to achieving common email handling requirements. Nevertheless, the pipe feature offers a flexible backup option for scenarios where more specialized or unconventional processing is required.
+It's generally recommended that message filtering using pipes should be employed only when it's not feasible to use a [sieve script](/docs/sieve/overview) or a [Milter filter](/docs/smtp/filter/milter). Both sieve scripts and Milter filters are specifically designed for email filtering and manipulation tasks, and they typically offer a more straightforward and safer approach to achieving common email handling requirements. Nevertheless, the pipe feature offers a flexible backup option for scenarios where more specialized or unconventional processing is required.
 
 ## Configuration
 
