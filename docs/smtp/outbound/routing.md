@@ -77,6 +77,14 @@ implicit = false
 allow-invalid-certs = false
 ```
 
+**Note**: When using a relay host, make sure both [MTA-STS](/docs/smtp/outbound/tls#mta-sts) and [DANE](/docs/smtp/outbound/tls#dane) are disabled in the configuration file:
+
+```toml
+[queue.outbound.tls]
+mta-sts = "disable"
+dane = "disable"
+```
+
 ### LMTP delivery
 
 The Local Mail Transfer Protocol (LMTP) is a derivative of the Simple Mail Transfer Protocol (SMTP), designed for the specific purpose of delivering email to a local recipient's mail store, such as a maildir or mbox file. Unlike SMTP, which is used to transport emails across the Internet between servers, LMTP is intended for the final delivery of email to a user's mailbox within a local network or system.
