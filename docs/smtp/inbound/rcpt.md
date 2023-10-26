@@ -75,7 +75,7 @@ For example, the following script implements greylisting using an SQL database:
 script = [ { if = "authenticated-as", eq = "", then = "greylist" }, 
            { else = false } ]
 
-[sieve.scripts]
+[sieve.trusted.scripts]
 greylist = '''
     require ["variables", "vnd.stalwart.execute", "envelope", "reject"];
 

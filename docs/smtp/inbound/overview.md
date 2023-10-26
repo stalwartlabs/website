@@ -44,7 +44,7 @@ Example:
 [session.connect]
 script = "connect_filter"
 
-[sieve.scripts]
+[sieve.trusted.scripts]
 connect_filter = '''
 require ["variables", "reject"];
 

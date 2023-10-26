@@ -18,7 +18,7 @@ The `session.data.script` attribute in the configuration file specifies the name
 [session.data]
 script = "data"
 
-[sieve.scripts]
+[sieve.trusted.scripts]
 data = '''
     require ["envelope", "variables", "replace", "mime", "foreverypart", "editheader", "extracttext"];
 

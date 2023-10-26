@@ -32,7 +32,7 @@ Example:
 [session.connect]
 mail = "return_path_filter"
 
-[sieve.scripts]
+[sieve.trusted.scripts]
 return_path_filter = '''
   require ["variables", "envelope", "reject"];
 

@@ -23,7 +23,7 @@ reject-non-fqdn = [ { if = "listener", eq = "smtp", then = true},
                     { else = false } ]
 script = "ehlo"
 
-[sieve.scripts]
+[sieve.trusted.scripts]
 ehlo = '''
     require ["variables", "extlists", "reject"];
 

@@ -38,7 +38,7 @@ In situations where the task of address rewriting cannot be accomplished using r
 
 In order to modify parts of the envelope within a Sieve script, the `set` command is used. The `set` command allows you to define and modify variables within your script, which can then be applied to elements of the envelope. This opens up an extensive range of possibilities for address rewriting, providing the power to construct elaborate rules for customizing how your mail server processes and directs incoming and outgoing messages.
 
-Rewriting rules defined in Sieve scripts are configured in the `sieve.scripts` section of the configuration file. The `sieve.scripts` section is a table of key-value pairs, where the key is the name of the script and the value is the script itself. The name of the script is used to refer to it in the `session.mail.script` and `session.rcpt.script` sections. For more details please refer to the [Sieve scripts](/docs/sieve/overview), [MAIL FROM](/docs/smtp/inbound/mail) stage and [RCPT TO](/docs/smtp/inbound/rcpt) stage sections of the documentation.
+Rewriting rules defined in Sieve scripts are configured in the `sieve.trusted.scripts` section of the configuration file. The `sieve.trusted.scripts` section is a table of key-value pairs, where the key is the name of the script and the value is the script itself. The name of the script is used to refer to it in the `session.mail.script` and `session.rcpt.script` sections. For more details please refer to the [Sieve scripts](/docs/sieve/overview), [MAIL FROM](/docs/smtp/inbound/mail) stage and [RCPT TO](/docs/smtp/inbound/rcpt) stage sections of the documentation.
 
 ## Examples
 
@@ -52,7 +52,7 @@ In Stalwart SMTP, you can accomplish the same effect using Sieve scripts.
 [session.rcpt]
 script = "remove-dots"
 
-[sieve.scripts]
+[sieve.trusted.scripts]
 remove-dots = '''require ["variables", "envelope", "regex"];
 
 if allof( envelope :localpart :contains "to" ".",
@@ -93,7 +93,7 @@ Now, let's consider an example where you might want to disable Delivery Status N
 [session.rcpt]
 script = "silent-bounce"
 
-[sieve.scripts]
+[sieve.trusted.scripts]
 silent-bounce = '''require ["variables", "envelope"];
 
 if envelope :matches "to" "mailer-daemon@*" {
