@@ -92,7 +92,7 @@ default system administrator account ``admin`` is used.
 For example, to authenticate with ``postmaster@example.org`` and password ``secret_pass``:
 
 ```bash
-$ stalwart-cli -u https://jmap.example.org -c postmaster@example.org:secret_pass account list
+$ stalwart-cli -u https://jmap.example.org -c postmaster@example.org:secret_pass database purge
 ```
 
 :::tip Note
@@ -101,7 +101,7 @@ Avoid using the ``-c`` argument to provide the administrator credentials as thes
 will be recorded in the terminal's history. Instead, type the password at the prompt:
 
 ```bash
-$ stalwart-cli -u https://jmap.example.org account list
+$ stalwart-cli -u https://jmap.example.org database purge
 
 Enter admin credentials or press [ENTER] to use OAuth: ******
 ```
