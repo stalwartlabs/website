@@ -3,3 +3,58 @@ sidebar_position: 9
 ---
 
 # Redis
+
+Redis (Remote Dictionary Server) is an in-memory data structure store, used as a database, cache, and message broker. It supports various data structures such as strings, hashes, lists, sets, and sorted sets with range queries, bitmaps, hyperloglogs, geospatial indexes, and streams. Redis has built-in replication, Lua scripting, LRU eviction, transactions, and different levels of on-disk persistence. It's known for its high performance, flexibility, and a wide array of features.
+
+:::tip Note
+
+Redis can only be used as a [lookup store](/docs/storage/lookup) but not for storing the actual data or blobs (binary large objects) within the mail server system.
+
+:::
+
+### Configuration
+
+The following configuration settings are available for Redis, which are specified under the `store.<name>` section of the configuration file:
+
+- `type`: Specifies the type of store, set to `"redis"`.
+- `url`: Configures the connection URL for a single-node Redis setup. It typically includes the Redis scheme, followed by the hostname and port number.
+- `urls`: Used to configure a Redis cluster by providing an array of connection URLs to different Redis nodes.
+- `username`: The username used for authenticating with the Redis server.
+- `password`: The password associated with the specified username.
+- `timeout`: The maximum amount of time to wait for a response from the Redis server. Specified as a duration, such as `"10s"` for 10 seconds.
+- `retries`: The number of attempts to retry a command before giving up.
+- `max-retry-wait`: The maximum duration to wait between retries. Specified as a duration, such as `"1s"` for 1 second.
+- `min-retry-wait`: The minimum duration to wait between retries. Specified as a duration, such as `"500ms"` for 500 milliseconds.
+- `read-from-replicas`: A boolean setting that determines whether the client is allowed to read from replica nodes. Set to `false` to restrict read operations to the primary node only.
+
+
+### Example
+
+Single-node Redis setup:
+
+```toml
+[store."redis"]
+type = "redis"
+url = "redis://127.0.0.1"
+username = "my_username"
+password = "secretpassword"
+timeout = "10s"
+retries = 3
+max-retry-wait = "1s"
+min-retry-wait = "500ms"
+```
+
+Redis cluster setup:
+
+```toml
+[store."redis"]
+type = "redis"
+urls = ["redis://192.168.1.1", "redis://192.168.1.1"] 
+username = "my_username"
+password = "secretpassword"
+timeout = "10s"
+retries = 3
+max-retry-wait = "1s"
+min-retry-wait = "500ms"
+read-from-replicas = false
+```
