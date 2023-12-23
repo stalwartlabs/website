@@ -1,6 +1,6 @@
 {
-    "label": "Blob store",
-    "position": 3,
+    "label": "Backends",
+    "position": 7,
     "link": {
         "type": "generated-index"
     }

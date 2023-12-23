@@ -1,21 +1,10 @@
 ---
-sidebar_position: 5
+sidebar_position: 3
 ---
 
-# Maintenance
+# Blob store
 
-Stalwart Mail Server runs periodically automated tasks that perform essential maintenance to ensure efficient use of storage and optimal database operations. The schedule for these task is configured using a simplified [cron-like syntax](/docs/configuration/overview/values/cron).
 
-## Database compaction
-
-The database compaction task takes care of removing expired entries and compacting logs. The schedule for this task can be configured in the `jmap.purge.schedule.db` section using the simplified cron-like syntax described above.
-
-For example, to run the job every day at 3am local time:
-
-```toml
-[jmap.purge.schedule]
-db = '0 3 *"
-```
 
 ## Blob purging
 

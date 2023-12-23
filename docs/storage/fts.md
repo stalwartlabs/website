@@ -2,7 +2,7 @@
 sidebar_position: 4
 ---
 
-# Full-text search
+# Full-text store
 
 Stalwart Mail Server supports full-text search (FTS) capabilities that greatly improve the user experience when searching through email content. The FTS indexes are stored directly in the database using bloom filters, which are a space-efficient probabilistic data structure that can be used to determine whether an element is a member of a set. It’s important to note that, while bloom filters do not provide encryption, they do offer a level of privacy. This is because bloom filters obscure individual data items while allowing for effective searching, meaning that the content of your emails is not directly exposed in the search index.
 

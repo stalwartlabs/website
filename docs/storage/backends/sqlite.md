@@ -1,8 +1,11 @@
 ---
-sidebar_position: 2
+sidebar_position: 5
 ---
 
 # SQLite
+
+SQLite is typically suited for small to medium-sized installations operating on a single node. It is a self-contained, serverless, and zero-configuration database engine, making it simple to manage. Moreover, its data can be replicated using solutions such as LiteStream, enhancing its flexibility for diverse use cases.
+
 
 SQLite is recommended for single node installations, owing to its simplicity and reliability for such setups. SQLite's features make it an ideal choice for environments where the overhead of a large database system may not be necessary. For redundancy, SQLite's data can be replicated using external solutions such as Litestream, which provides continuous replication of SQLite databases.
 
