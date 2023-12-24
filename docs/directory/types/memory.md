@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 4
 ---
 
 # In-memory
@@ -16,9 +16,10 @@ type = "memory"
 
 ## Users
 
-Users are defined under the `directory.<id>.users` sections of the configuration file using the following attributes:
+Users are defined under the `directory.<id>.principals` sections of the configuration file using the following attributes:
 
 - `name`: Specifies the username of the account.
+- `type`: Specifies the account type. Expected values are `individual` for user accounts and `admin` for administrator accounts.
 - `description`: Provides a description or full name for the user.
 - `secret`: Sets the password for the user account. Passwords can be stored [hashed](/docs/directory/users#passwords) or in plain text (not recommended).
 - `email`: A list of email addresses associated with the user. The first address in the list is considered the primary address.
@@ -29,23 +30,25 @@ Users are defined under the `directory.<id>.users` sections of the configuration
 For example:
 
 ```toml
-[[directory."memory".users]]
+[[directory."memory".principals]]
 name = "admin"
+type = "admin"
 description = "Superuser"
 secret = "changeme"
 email = ["postmaster@example.org"]
-member-of = ["superusers"]
 
-[[directory."memory".users]]
+[[directory."memory".principals]]
 name = "jane"
+type = "individual"
 description = "Jane Doe"
 secret = "abcde"
 email = ["jane@example.org", "jane.doe@example.org"]
 email-list = ["info@example.org"]
 member-of = ["sales", "support"]
 
-[[directory."memory".users]]
+[[directory."memory".principals]]
 name = "bill"
+type = "individual"
 description = "Bill Foobar"
 secret = "$2y$05$bvIG6Nmid91Mu9RcmmWZfO5HJIMCT8riNW0hEp8f6/FuA2/mHZFpe"
 quota = 50000000
@@ -55,20 +58,23 @@ email-list = ["info@example.org"]
 
 ## Groups
 
-Groups are defined under the `directory.<id>.groups` sections of the configuration file using the following attributes:
+Groups are defined under the `directory.<id>.principals` sections of the configuration file using the following attributes:
 
 - `name`: Specifies the name of the group.
+- `type`: Set to `group` to define a group.
 - `description`: Provides a description for the group.
 
 For example:
 
 ```toml
-[[directory."memory".groups]]
+[[directory."memory".principals]]
 name = "sales"
+type = "group"
 description = "Sales Team"
 
-[[directory."memory".groups]]
+[[directory."memory".principals]]
 name = "support"
+type = "group"
 description = "Support Team"
 ```
 

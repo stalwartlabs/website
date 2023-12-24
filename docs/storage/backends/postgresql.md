@@ -17,7 +17,7 @@ The following configuration settings are available for PostgreSQL, which are spe
 - `user`: The username used for authentication with the PostgreSQL server. Example: `"postgres"`.
 - `password`: The password for the specified user. Example: `"mysecretpassword"`.
 - `timeout.connect`: Specifies the maximum time to wait while trying to establish a connection to the PostgreSQL server. It is represented as a string denoting time, e.g., `"15s"` for 15 seconds.
-- `pool.max-connections`: Specifies the maximum number of connections allowed in the pool. This setting helps manage the database's load and resources. In this example, the maximum is set to `10`.
+- `pool.max-connections`: Specifies the maximum number of connections allowed in the pool. This setting helps manage the database's load and resources. For example, `10`.
 
 ### TLS configuration
 

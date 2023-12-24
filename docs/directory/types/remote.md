@@ -1,5 +1,5 @@
 ---
-sidebar_position: 4
+sidebar_position: 5
 ---
 
 # SMTP and IMAP
@@ -39,7 +39,7 @@ implicit = false
 allow-invalid-certs = true
 ```
 
-## Domain lookup lists
+## Domain lookup list
 
 Since external IMAP or SMTP servers are not able to validate which are the local domains that Stalwart SMTP is handling, it is necessary to specify a local domain lookup list. This is done under the `directory.<name>.lookup.domains` key in the configuration file. For example:
 
@@ -47,17 +47,4 @@ Since external IMAP or SMTP servers are not able to validate which are the local
 [directory."smtp".lookup]
 domains = ["example.org", "example.com"]
 ```
-
-## Custom lookup lists
-
-Lookup lists can be defined under the `directory.<name>.lookup.<lookup_name>` section. These lookup lists are used mainly in the SMTP server from rules or Sieve filters.
-
-For example:
-
-```toml
-[directory."imap".lookup]
-blocked_ips = ["10.0.0.20", "192.168.1.7"]
-domains = ["example.org", "example.com"]
-```
-
 

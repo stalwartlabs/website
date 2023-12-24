@@ -21,13 +21,35 @@ protocol = "jmap"
 
 ## Authentication
 
-User authentication is handled by the [directory](/docs/directory/overview) specified in the `jmap.directory` configuration attribute. This means that the credentials provided by a user are validated against the information stored in the designated directory. Depending on your setup, the directory could be configured to authenticate against different sources, such as SQL, LDAP, or a static in-memory directory. 
+User authentication is handled by the [directory](/docs/directory/overview) specified in the `jmap.directory` configuration attribute. This means that the credentials provided by a user are validated against the information stored in the designated directory. Depending on your setup, the directory could be configured to authenticate against different sources, such as the internal directory, SQL, LDAP, or static in-memory directory. 
 
 For example:
 
 ```toml
 [jmap]
 directory = "sql"
+```
+
+## Spam headers
+
+Stalwart JMAP server can be configured to automatically move spam messages to a designated Junk Mail folder. This is done by setting the `jmap.spam.header` configuration attribute to the name of the header that the spam filter uses to identify spam messages. The header name is case-insensitive. If the header is present in an incoming message, the message is moved to the Junk Mail folder. If the header is not present, the message is delivered to the inbox.
+
+For example:
+
+```toml
+[jmap.spam]
+header = "X-Spam-Status: Yes"
+```
+
+## Node ID
+
+When running Stalwart JMAP server in a cluster, the `jmap.cluster.node-id` configuration attribute must be set to a unique identifier for each node. This is required for the server to function properly in a clustered environment. The node ID can be any integer value, but it must be unique across all nodes in the cluster.
+
+For example:
+
+```toml
+[jmap.cluster]
+node-id = 1
 ```
 
 ## HTTP headers

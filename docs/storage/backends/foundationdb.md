@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # FoundationDB
 
-FoundationDB is a distributed database designed to handle large volumes of structured data across a network of machines. It combines the power of ACID (Atomicity, Consistency, Isolation, Durability) transactions with the scalability of NoSQL databases. FoundationDB is engineered to provide high performance, fault tolerance, and easy scalability, making it an ideal choice for distributed systems.
+FoundationDB is a distributed database designed to handle large volumes of data across a network of machines. It combines the power of ACID (Atomicity, Consistency, Isolation, Durability) transactions with the scalability of NoSQL databases. FoundationDB is engineered to provide high performance, fault tolerance, and easy scalability, making it an ideal choice for distributed systems.
 
 FoundationDB is the recommended backend for distributed setups of Stalwart Mail Server due to its ability to manage large-scale, distributed data storage and processing needs effectively.
 

@@ -4,13 +4,16 @@ sidebar_position: 3
 
 # Users and Groups
 
-As stated previously, Stalwart Mail Server doesn't independently manage account details or login credentials but rather defers this responsibility to the configured directory server. As a result, any changes to user accounts or groups in the directory server — such as adding or removing users, changing passwords, or modifying group memberships — are immediately reflected in the Stalwart Mail Server.
+As stated previously, Stalwart Mail Server offers the possibility to use either an internal directory or connect to an external directory service.
+When using an internal directory, all [account management](/docs/TODO) tasks, such as creating new user accounts, updating passwords, and setting quotas, are performed directly within Stalwart Mail Server.
+However, if an external directory is utilized, all user account management must be performed within that external system. Stalwart Mail Server will rely on this external directory for authentication and user information but will not have the ability to directly modify user details.
 
 ## Users
 
 Each time a user logs in, the following information associated with the account is retrieved from the directory server:
 
 - `name`: The username of the account.
+- `type`: The account type, which can be either `individual` for user accounts or `admin` for administrator accounts.
 - `description`: A description or full name for the user.
 - `secret`: The password for the user account. 
 - `email`: A list of email addresses associated with the user.
@@ -35,11 +38,9 @@ Passwords can be stored in the directory hashed or in plain text (not recommende
 
 If the hashed secret does not match any of these known prefixes, it is treated as a plain text password and directly compared to the provided secret.
 
-## Quotas
+## Administrators
 
-Disk quotas are used to limit the amount of disk space a user or group can use. This tool is particularly useful in shared systems where it helps prevent a single user from consuming all the storage resources. Quotas work by monitoring and restricting the amount of disk space used.  When a user reaches their quota, they can no longer receive new emails until they delete some of their existing messages or until their quota is increased.
-
-In Stalwart Mail Server, quota settings are stored in the configured SQL or LDAP [directory](/docs/directory/overview). This means the disk quotas can be centrally managed and adjusted as necessary by the system administrator. Disk quota limits can be set individually for each user or can be applied uniformly across a group of users, depending on the system's needs.
+Accounts that have the `superuser`, `admin` or `administrator` type are granted full administrative privileges over the Stalwart Mail Server. This includes the ability to delete account data, manage message queues as well as other resources.
 
 ## Groups
 
@@ -47,14 +48,9 @@ Groups are used to manage access to resources and to simplify the process of gra
 
 Please refer to the [directory configuration](/docs/category/types) section for more information on how groups are represented in your directory server.
 
-## Administrators
+## Quotas
 
-Accounts that belong to the `superusers` group are granted full administrative privileges over the Stalwart Mail Server. This includes the ability to delete account data, manage message queues as well as other resources.
-The name of the superusers group is defined in the `directory.<name>.options.superuser-group` attribute of the configuration file. For example:
+Disk quotas are used to limit the amount of disk space a user or group can use. This tool is particularly useful in shared systems where it helps prevent a single user from consuming all the storage resources. Quotas work by monitoring and restricting the amount of disk space used.  When a user reaches their quota, they can no longer receive new emails until they delete some of their existing messages or until their quota is increased.
 
-```toml
-[directory."sql".options]
-superuser-group = "superusers"
-```
-
+In Stalwart Mail Server, quota settings are stored in the configured [directory](/docs/directory/overview). This means the disk quotas can be centrally managed and adjusted as necessary by the system administrator. Disk quota limits can be set individually for each user or can be applied uniformly across a group of users, depending on the system's needs.
 

@@ -6,9 +6,9 @@ sidebar_position: 5
 
 This section contains the reference documentation for the functions available from Sieve [expressions](/docs/sieve/expressions) in the trusted interpreter. Currently not all functions are documented, but the list will be expanded over time.
 
-### Directory queries
+### Lookup store queries
 
-The `query` function is used to execute an SQL or LDAP query on the directory. It expects as the first argument the directory name, followed by the query string and as third argument an array with the query values. 
+The `query` function is used to execute an SQL or LDAP query on a [SQL lookup store](/docs/storage/lookup). It expects as the first argument the lookup store name, followed by the query string and as third argument an array with the query values. 
 
 For example:
 

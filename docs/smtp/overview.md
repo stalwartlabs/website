@@ -82,7 +82,7 @@ Management requests must be authenticated and only [administrators](/docs/direct
 
 ```txt
 [management]
-directory = ["ldap"]
+directory = "ldap"
 ```
 
 :::tip Note

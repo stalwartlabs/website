@@ -1,52 +1,23 @@
 ---
-sidebar_position: 1
+sidebar_position: 2
 ---
 
 # SQL Database
 
 Stalwart Mail Server supports using popular SQL database systems such as mySQL, PostgreSQL, and SQLite as a directory server. This allows you to leverage an existing SQL database to handle tasks such as authentication, validating local accounts, and retrieving account-related information.
 
-## Connection string
+## Configuration
 
-The connection string for the SQL database is specified under the `directory.<name>.address` key in the configuration file. This string allows allows Stalwart Mail Server to connect to your SQL database and consists of a combination of parameters including the server location, database name, and login credentials. The exact syntax can vary depending on the type of SQL database you're connecting to, but in general it looks like this:
+The following configuration settings are available for the SQL directory, which are specified under the `directory.<name>` section of the configuration file:
 
-```
-<protocol>://<username>:<password>@<hostname>:<port>/<database_name>?<parameters>
-```
+- `type`: Indicates the type of directory, which has to be set to `"sql"`.
+- `store`: Specifies the name of the [SQL data store](/docs/storage/data) to use as a directory. Only SQL data stores are supported.
 
-- `<protocol>`: This is the name of the SQL database system, such as `postgresql`, `mysql`, `sqlite`, etc.
-- `<username>:<password>`: These are the username and password used to authenticate with the SQL server.
-- `<hostname>:<port>`: This is the network location of your SQL server. The hostname could be an IP address or a domain name, and the port is the network port that the SQL server is listening on.
-- `<database_name>`: This is the name of the database you want to connect to.
-- `<parameters>`: These are optional parameters for the connection. They are usually key-value pairs separated by `&`. The exact parameters available will depend on the SQL database system you're using.
+Any of the supported SQL data stores can be used as an SQL directory. Configuration details for each SQL data store can be found in the [data stores](/docs/storage/data) section.
 
-For example, to connect to a PostgreSQL database named `mydatabase` on `localhost` port `5432` with the username `myuser` and password `mypassword` and using the `sslmode=disable` parameter to disable SSL for the connection:
+### Lookup queries
 
-```toml
-[directory."postgres"]
-type = "sql"
-address = "postgresql://myuser:mypassword@localhost:5432/mydatabase?sslmode=disable"
-```
-
-Or, to use an SQLite database named `accounts.sqlite3` under the `/opt/stalwart-mail/data` directory:
-
-```toml
-[directory."sqlite"]
-type = "sql"
-address = "sqlite:///opt/stalwart-mail/data/accounts.sqlite3?mode=rwc"
-```
-
-If your connection string includes passwords, you may also store it in an [environment variable](/docs/configuration/overview/values/environment) instead of in the configuration file as plain text. For example:
-
-```toml
-[directory."mysql"]
-type = "mysql"
-address = !SQL_ADDRESS
-```
-
-## Lookup queries
-
-The `directory.<id>.query` section contains the SQL queries used to interact with the database. The following SQL queries need to be defined in order to retrieve information about accounts:
+In order to retrieve information about accounts, the following SQL lookup queries need to be defined in the underlying [data store](/docs/storage/data):
 
 - `name`: This query is used to retrieve the `type`, `secret`, `description`, and `quota` of an account by its account `name`.
 - `members`: Fetches the groups that a particular account is a member of. Groups names have to be returned as text.
@@ -56,31 +27,16 @@ The `directory.<id>.query` section contains the SQL queries used to interact wit
 - `expand`: Fetches the email addresses that are associated with a mailing list address. This query is used by the SMTP `EXPN` command.
 - `domains`: Checks if an email domain exists. To be successful, this query has to return at least one row. This query is used by the SMTP server to validate local domains during the `RCPT TO` command.
 
-The exact nature and format of these queries will depend on your SQL database schema. For example, 
+Please refer to the relevant section for each data store for more information on how to define these queries.
 
-```toml
-[directory."sql".query]
-name = "SELECT name, type, secret, description, quota FROM accounts WHERE name = ? AND active = true"
-members = "SELECT member_of FROM group_members WHERE name = ?"
-recipients = "SELECT name FROM emails WHERE address = ?"
-emails = "SELECT address FROM emails WHERE name = ? AND type != 'list' ORDER BY type DESC, address ASC"
-verify = "SELECT address FROM emails WHERE address LIKE '%' || ? || '%' AND type = 'primary' ORDER BY address LIMIT 5"
-expand = "SELECT p.address FROM emails AS p JOIN emails AS l ON p.name = l.name WHERE p.type = 'primary' AND l.address = ? AND l.type = 'list' ORDER BY p.address LIMIT 50"
-domains = "SELECT 1 FROM emails WHERE address LIKE '%@' || ? LIMIT 1"
-```
-
-The `?` character in the queries denotes a parameter that will be filled in at runtime.
-
-## Column mappings
+### Column mappings
 
 The `directory.<name>.columns` section maps the column names in the SQL database to the names used within Stalwart Mail Server:
 
-- `name`: Maps to the 'name' column in the SQL database. This is the login name for the account.
-- `description`: Maps to the 'description' column in the SQL database.
-- `secret`: Maps to the 'secret' column in the SQL database. Passwords can be stored [hashed](/docs/directory/users#passwords) or in plain text (not recommended).
-- `email`: Maps to the 'address' column in the SQL database.
-- `quota`: Maps to the 'quota' column in the SQL database. Expects an integer value in bytes.
 - `type`: Maps to the 'type' column in the SQL database. Expected values are `individual` (or `person`) for user accounts and `group` for group accounts.
+- `secret`: Maps to the 'secret' column in the SQL database. Passwords can be stored [hashed](/docs/directory/users#passwords) or in plain text (not recommended).
+- `description`: Maps to the 'description' column in the SQL database.
+- `quota`: Maps to the 'quota' column in the SQL database. Expects an integer value in bytes.
 
 For example:
 
@@ -92,31 +48,6 @@ secret = "secret"
 email = "address"
 quota = "quota"
 type = "type"
-```
-
-## Custom lookup queries
-
-Custom lookup queries can be defined under the `directory.<name>.lookup.<lookup_name>` section. These custom queries are used mainly in the SMTP server from rules or Sieve filters.
-
-For example:
-
-```toml
-[directory."sql".lookup]
-blocked_ip = "SELECT 1 FROM blocked_ip WHERE id=? LIMIT 1"
-greylist = "SELECT 1 FROM greylisted_senders WHERE addr=? LIMIT 1"
-```
-
-## Scheduled queries
-
-Scheduled queries are useful for performing maintenance tasks on the SQL database such as updating the status of accounts or cleaning up old data. They are defined under the `directory.<name>.schedule.query` key and are executed periodically based on the frequency specified by the `directory.<name>.schedule.frequency` key using a [cron-like syntax](/docs/configuration/overview/values/cron). 
-
-For example:
-
-```toml
-[directory."spamdb".schedule]
-query = ["DELETE FROM seen_ids WHERE ttl < CURRENT_TIMESTAMP", 
-         "DELETE FROM reputation WHERE ttl < CURRENT_TIMESTAMP"]
-frequency = "0 3 *"
 ```
 
 ## Sample directory schema

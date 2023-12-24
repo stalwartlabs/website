@@ -2,21 +2,17 @@
 sidebar_position: 4
 ---
 
-# Addresses
+# E-mail addresses
 
 Stalwart Mail Server supports email aliases, mailing lists as well as catch-all addresses and subaddressing mechanisms within its email handling architecture. These features provide users with an enhanced level of control over email management and routing.
 
 ## Email aliases
 
-An email alias is an alternative email address that is associated with a user's primary email address. In Stalwart Mail Server, email aliases are managed through the configured LDAP or SQL directory. This means that if you want to create, modify, or remove an alias, these operations should be performed directly in the LDAP or SQL directory, not in the mail server itself. 
-
-If you are using an SQL directory with the [sample directory schema](/docs/directory/types/sql#sample-directory-schema), you can find an example of how to create an alias in the [adding email aliases](/docs/directory/types/sql#adding-an-email-alias) section. 
+An email alias is an alternative email address that is associated with a user's primary email address. In Stalwart Mail Server, email aliases are managed through the configured directory. This means that if you want to create, modify, or remove an alias, these operations should be performed directly in the directory. 
 
 ## Mailing lists
 
-A mailing list is a collection of email addresses used to distribute content to multiple recipients simultaneously. It is an efficient way to send newsletters, updates, or other forms of mass communication to a large group of people. Just like aliases, mailing lists are managed through the configured LDAP or SQL directory. This means that if you want to create, modify, or remove a mailing list, these operations should be performed directly in the LDAP or SQL directory, not in the mail server itself. 
-
-If you are using an SQL directory with the [sample directory schema](/docs/directory/types/sql#sample-directory-schema), you can find an example of how to add members to a mailing list in the [mailing list](/docs/directory/types/sql#adding-members-to-a-mailing-list) section. 
+A mailing list is a collection of email addresses used to distribute content to multiple recipients simultaneously. It is an efficient way to send newsletters, updates, or other forms of mass communication to a large group of people. Just like aliases, mailing lists are managed through the configured directory. This means that if you want to create, modify, or remove a mailing list, these operations should be performed directly in the directory. 
 
 ## Subaddressing
 

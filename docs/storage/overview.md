@@ -27,7 +27,7 @@ The following example shows the configuration for a data store using [RocksDB](/
 [store."data"]
 type = "rocksdb"
 path = "/var/data/stalwart/data"
-disable = fakse
+disable = false
 
 [store."data".purge]
 frequency = "0 3 *"

@@ -44,7 +44,7 @@ is-blocked = '''
     }
 '''
 
-[directory."sql".lookup]
+[store."sql".query]
 blocked-domains = "SELECT 1 FROM blocked_domains WHERE domain=? LIMIT 1"
 
 ```

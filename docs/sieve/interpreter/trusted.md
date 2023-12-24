@@ -17,31 +17,47 @@ The trusted interpreter is configured with the following parameters which are av
 - `sign`: Lists the [DKIM](/docs/smtp/authentication/dkim/overview) signatures to add to email notifications sent from a Sieve script.
 - `hostname`: Sets the local hostname to use when generating a `Message-Id` header. If no value is set, the `server.hostname` value is used instead.
 - `no-capability-check`: If set to `true`, language extensions can be used without being explicitly declared using the `require` statement.
-- `limits.redirects`: Specifies the maximum number of `redirect` commands that a Sieve script can execute.
-- `limits.out-messages`: Specifies the maximum number of outgoing email messages that a Sieve script is allowed to send.
-- `limits.received-headers`: Specifies the maximum number of `Received` headers that a message can contain.
-- `limits.cpu`: Specifies the maximum number of instructions that a Sieve script can execute.
-- `limits.nested-includes`: Specifies the maximum number of nested includes that a script can perform.
-- `limits.duplicate-expiry`: Specifies the default expiration time for the expiry Sieve test.
-- `limits.variable-size`: Specifies the maximum size of a variable in bytes.
 
-Example:
+### Limits
+
+The following parameters are available under the `sieve.trusted.limits` key:
+
+- `redirects`: Specifies the maximum number of `redirect` commands that a Sieve script can execute.
+- `out-messages`: Specifies the maximum number of outgoing email messages that a Sieve script is allowed to send.
+- `received-headers`: Specifies the maximum number of `Received` headers that a message can contain.
+- `cpu`: Specifies the maximum number of instructions that a Sieve script can execute.
+- `nested-includes`: Specifies the maximum number of nested includes that a script can perform.
+- `duplicate-expiry`: Specifies the default expiration time for the expiry Sieve test.
+- `variable-size`: Specifies the maximum size of a variable in bytes.
+
+### Default stores
+
+The default lookup store and directory to use for Sieve scripts can be configured under the `sieve.trusted.default` key:
+
+- `store`: Specifies the default [lookup store](/docs/storage/lookup) to use for Sieve scripts.
+- `directory`: Specifies the default [directory](/docs/directory/overview) to use for Sieve scripts.
+
+### Example
 
 ```toml
-[sieve]
+[sieve.trusted]
 from-name = "Automated Message"
 from-addr = "no-reply@foobar.org"
 return-path = ""
 hostname = "mx.foobar.org"
 sign = ["rsa"]
 
-[sieve.limits]
+[sieve.trusted.limits]
 redirects = 3
 out-messages = 5
 received-headers = 50
 cpu = 10000
 nested-includes = 5
 duplicate-expiry = "7d"
+
+[sieve.trusted.default]
+directory = "internal"
+store = "foundationdb"
 ```
 
 ## Scripts

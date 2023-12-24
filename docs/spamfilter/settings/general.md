@@ -77,3 +77,17 @@ Example:
 ```sieve
 let "DOMAIN_DIRECTORY" "'default'";
 ```
+
+If left unspecified, the [default directory](/docs/sieve/interpreter/trusted#default-stores) will be used.
+
+## Spam database
+
+The `SPAM_DB` setting specifies which [lookup store](/docs/storage/lookup) to use as the [spam filter database](/docs/spamfilter/settings/database). This database is used to store sender reputation information, bayesian classifier models, greylist data, message reply tracking and other similar data.
+
+Example:
+
+```sieve
+let "SPAM_DB" "'redis'";
+```
+
+If left unspecified, the [default lookup store](/docs/sieve/interpreter/trusted#default-stores) will be used.

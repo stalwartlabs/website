@@ -9,18 +9,18 @@ Comparators are functions that evaluate the contents of a variable against a spe
 - `eq` / `ne`: Tests for equality / non-equality of the value.
 - `starts-with` / `not-starts-with`: Tests whether a string starts with / does not start with a specified value.
 - `ends-with` / `not-ends-with`: Tests whether a string ends with / does not end with a specified value.
-- `in-list` / `not-in-list`: Tests whether a value is present / not present in a [directory](/docs/directory/overview).
+- `in-list` / `not-in-list`: Tests whether a value is present / not present in a [lookup store](/docs/storage/lookup) or [directory](/docs/directory/overview).
 - `matches` / `not-matches`: Tests whether a value matches a regular expression / does not match a regular expression.
 
 ## Lookup Lists
 
-Lookups allow the evaluation of queries against a [SQL database](/docs/directory/types/sql#custom-lookup-queries), [LDAP directory](/docs/directory/types/ldap#custom-lookup-queries) or [local lists](/docs/directory/types/memory#custom-lookup-lists). Lookups are useful for validating recipients, authenticating accounts, verifying addresses, expanding mailing lists or checking the presence of a value in a table. 
-Queries and lists are defined under the `directory.<name>.lookup.<lookup_name>` section of the configuration file, where `<name>` is the identifier of the directory and `<lookup_name>` is the name of the lookup. To reference a lookup from a rule, use the `in-list = "<name>/<lookup_name>"` comparator to check if a value is contained in the lookup list.
+Lookups are useful for validating recipients, authenticating accounts, verifying addresses, expanding mailing lists against a [directory](/docs/directory/overview) or checking the presence of a value in any of the supported [lookup stores](/docs/storage/lookup). 
+To reference a lookup from a rule, use the `in-list = "<lookup_name>"` comparator to check if a value is contained in the lookup list where `lookup_name` is the name of the lookup store or directory to use.
 
-For example, the following configuration defines a lookup named `trusted_ips` that checks if the remote IP address is present in the `trusted_ips` table of a mySQL database:
+For example, the following configuration defines a lookup query named `trusted_ips` that checks if the remote IP address is present in the `trusted_ips` table of a mySQL database:
 
 ```toml
-[directory."mysql".lookup]
+[store."mysql".query]
 trusted_ips = "SELECT 1 FROM trusted_ips WHERE address=? LIMIT 1"
 
 [session.rcpt]
@@ -29,18 +29,26 @@ relay = [ { any-of = [ { if = "remote-ip", in-list = "mysql/trusted_ips" },
           { else = false } ]
 ```
 
-Lookup lists can also be defined in the configuration file using the `memory` directory type under the `directory.<name>.lookup.<lookup_name>` section. For example:
+Lookup lists can also be used to check the presence of a value in a lookup store or directory. For example:
 
 ```toml
-[directory."lists"]
-type = "memory"
+[directory."ldap"]
+type = "ldap"
+address = "ldap://localhost:3893"
+base-dn = "dc=example,dc=org"
 
-[directory."lists".lookup]
-can_vrfy = ["john@example.org", "jane@example.org"]
+[store."can_vrfy"]
+type = "memory"
+format = "list"
+values = ["john@example.org", "jane@example.org"]
 
 [session.extensions]
-vrfy = [ { if = "authenticated-as", in-list = "lists/can_vrfy", then = true},
+vrfy = [ { if = "authenticated-as", in-list = "can_vrfy", then = true},
         { else = false } ]
+
+[queue.outbound]
+next-hop = [ { if = "rcpt-domain", in-list = "ldap/domains", then = "local" }, 
+             { else = false } ]     
 
 ```
 
