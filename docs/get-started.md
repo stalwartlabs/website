@@ -15,12 +15,29 @@ Stalwart Mail server is distributed as a single binary that includes JMAP, IMAP,
 - **IMAP Server**: Standalone package containing IMAP and JMAP server.
 - **SMTP Server**: Standalone package for those needing only an SMTP server.
 
-## Choosing a database backend
+## Choosing storage backends
 
-With the exception of the SMTP server-only version, when installing Stalwart Mail server you will be asked to select a database backend. This database serves as the storage for indexes and metadata, but it does not store any email messages. The available options are:
+When installing Stalwart Mail server you will be asked to specify a backend for each one of the four store types:
 
-- **SQLite**: Ideal for small to medium-sized installations. Designed for single-node setups, you can still ensure data redundancy using solutions like Litestream. 
-- **FoundationDB**: Suitable for distributed, multi-server installations. It can support millions of users, making it an excellent choice for larger organizations.
+- [Data store](/docs/storage/data): Where email metadata, folders, and various settings are stored. Essentially, it contains all the data except for large binary objects (blobs).
+- [Blob store](/docs/storage/blob): Used for storing large binary objects such as emails, sieve scripts, and other files.
+- [Full-text search store](/docs/storage/fts): Dedicated to indexing for full-text search, enhancing the speed and efficiency of text-based queries
+- [Lookup store](/docs/storage/lookup): A key-value storage used primarily by the SMTP server and anti-spam components. It stores sender reputation information, bayesian classifier models, greylist data, message reply tracking and other similar data.
+
+The following table summarizes the supported backends available for each store type:
+
+|                 | Data store         | Blob store         | Full-text store    | Lookup store       |
+|-----------------|--------------------|--------------------|--------------------|--------------------|
+| RocksDB         | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| FoundationDB    | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| PostgreSQL      | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| MySQL / MariaDB | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| SQLite          | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| S3/MinIO        |                    | :white_check_mark: |                    |                    |
+| Filesystem      |                    | :white_check_mark: |                    |                    |
+| ElasticSearch   |                    |                    | :white_check_mark: |                    |
+| Redis           |                    |                    |                    | :white_check_mark: |
+| In-memory       |                    |                    |                    | :white_check_mark: |
 
 :::tip Note
 
@@ -28,24 +45,17 @@ Be aware that changing the database backend at a later time will require migrati
 
 :::
 
-## Supported blob stores
+## Choosing an authentication backend
 
-The blob store is where email messages and other data such as Sieve scripts are stored. Unless you opt for the SMTP-only version, a blob storage backend has to be selected. Available options are:
+A database or directory server is required for authentication, validating local accounts, and obtaining account-related information such as names, group membership or disk quotas. Available options are:
 
-- **Local Storage**: Store blobs and messages locally. Email messages are stored using the Maildir format.
-- **S3-Compatible Distributed Storage**: Store blobs and messages on an S3-compatible server, including Amazon S3, Google Cloud, or MinIO.
-
-## Supported authentication backends
-
-A database or directory server is required for authentication, validating local accounts, and obtaining account-related information such as names or disk quotas. Available options are:
-
+- **Internal**: An internal directory that is automatically created and managed by Stalwart Mail server. It uses the same database backend as the data store.
 - **LDAP**: LDAP servers, including OpenLDAP and Active Directory.
-- **SQL**: SQL databases, including MySQL, PostgreSQL and SQLite.
+- **SQL**: SQL databases, including PostgreSQL, MySQL and SQLite.
 
-:::tip Tip
+:::tip Note
 
-In the event that you don't have an existing directory server or authentication database, the installation script can automatically create an SQLite authentication database for you.
+- When the internal directory is used, Stalwart Mail Server manages all user-related data within its own system. In this setup, all account management tasks, such as creating new user accounts, updating passwords, and setting quotas, are performed directly within Stalwart Mail Server.
+- When an external LDAP or SQL directory is utilized, all user account management must be performed within that external system. Stalwart Mail Server will rely on this external directory for authentication and user information but will not have the ability to directly modify user details.
 
 :::
-
-

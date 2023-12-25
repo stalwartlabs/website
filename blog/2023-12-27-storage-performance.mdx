@@ -1,0 +1,32 @@
+---
+slug: storage-performance
+title: "Elevating Performance and Flexibility"
+authors: [mdecimus]
+tags: [storage, performance, flexibility]
+---
+
+We are excited to announce the release of Stalwart Mail Server v0.5.0. As we approach the end of the year, this significant update marks a major advancement in our journey to provide a robust, efficient, and versatile mail server solution. This latest version incorporates a range of performance enhancements, storage layer improvements, and new features, designed to elevate your email server experience.
+
+### Performance Enhancements
+
+In the realm of performance, Stalwart v0.5.0 introduces multiple improvements in how messages are handled and stored. Messages are now parsed only once, with their offsets stored in the database. This approach eliminates the need for parsing messages on every `FETCH` request, significantly boosting server efficiency and response time. Moreover, the server now performs full-text indexing in the background, seamlessly enhancing search capabilities. We have also optimized our database access functions, ensuring smoother and faster interactions with the underlying data store.
+
+### Storage Layer Improvements
+
+Stalwart v0.5.0 expands the options for storage backends. In addition to `FoundationDB` and `SQLite`, users can now choose `RocksDB`, `PostgreSQL`, or `MySQL` as their storage backend, offering flexibility to suit different operational needs. Blob storage has also been made more versatile, allowing blobs to be stored in any of the supported data stores, not just limited to the file system or S3/MinIO. This update provides more integrated data management solutions. Full-text search capabilities have been enhanced, with options to conduct searches internally or delegate them to `ElasticSearch`. Additionally, spam databases can now be stored in any of the supported data stores or `Redis`, removing the requirement for an SQL server for spam filter usage.
+
+### Internal Directory
+
+With the introduction of an internal directory in Stalwart v0.5.0, user account, group, and mailing list management can now be conducted directly within Stalwart, eliminating the dependency on external LDAP or SQL directories. This feature is complemented by the addition of an HTTP API, offering a more accessible and programmable interface for managing users, groups, domains, and mailing lists.
+
+### Additional Features
+
+Enhancing compatibility with older IMAP clients, Stalwart v0.5.0 now supports the IMAP4rev1 `Recent` flag, ensuring a smoother user experience. The server also accommodates LDAP bind authentication, catering to LDAP servers like `lldap` that do not expose the userPassword attribute. Another significant improvement is the automated handling of spam – messages marked as spam by the filter can now be automatically moved to the user's `Junk Mail` folder.
+
+### Conclusion
+
+As we release Stalwart Mail Server v0.5.0, we also want to take a moment to wish everyone a Happy New Year. This new version is a testament to our continuous efforts to evolve and adapt to the needs of our users. We believe that Stalwart v0.5.0 will not only meet but exceed your expectations, whether you're setting up a new mail server or upgrading an existing one.
+
+For more details, visit our website, and don't forget to join our Discord community to share your experiences, get support, and connect with other Stalwart users.
+
+Here's to a new year filled with success, innovation, and secure email communications!

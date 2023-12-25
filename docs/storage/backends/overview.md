@@ -8,7 +8,7 @@ Stalwart Mail Server offers support for multiple database and storage backends. 
 
 The following table summarizes the backend options available for each store type:
 
-|                 | Data store         | Blob storage       | Full-text store    | Lookup store       |
+|                 | Data store         | Blob store         | Full-text store    | Lookup store       |
 |-----------------|--------------------|--------------------|--------------------|--------------------|
 | RocksDB         | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | FoundationDB    | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |

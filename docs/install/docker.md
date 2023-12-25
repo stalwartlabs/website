@@ -47,15 +47,28 @@ $ docker exec -it stalwart-mail /bin/sh /usr/local/bin/configure.sh
 
 ### Choose where to store your data
 
-Next, unless you are installing only the SMTP server, you will be asked to select a [blob store](/docs/get-started#supported-blob-stores) where you want to store your e-mails and blobs:
+Next, you will be asked to select a backend for the [data](/docs/storage/data), [blob](/docs/storage/blob), [full-text](/docs/storage/fts) and [lookup](/docs/storage/lookup) stores. Read the [get started](/docs/get-started#choosing-storage-backends) section for more details on the available options. If you are not sure which backend is right for you, use `RocksDB` for all stores.
 
 ```txt
-? Where would you like to store e-mails and blobs? ›
-❯ Local disk using Maildir
-  MinIO (or any S3-compatible object storage)
-  Amazon S3
-  Google Cloud Storage
-  Azure Blob Storage
+? Which database would you like to use? ›
+❯ RocksDB (recommended for single-node setups)
+  FoundationDB (recommended for distributed environments)
+  SQLite
+  PostgreSQL
+  MySQL
+
+? Where would you like to store e-mails and other large binaries? ›
+❯ RocksDB
+  Local file system
+  S3, MinIO or any S3-compatible object storage
+
+? Where would you like to store the full-text index? ›
+❯ RocksDB
+  ElasticSearch
+
+? Where would you like to store the anti-spam database? ›
+❯ RocksDB
+  Redis
 ```
 
 Use the arrow keys to select the option you want to use and press `Enter` to continue.
@@ -65,18 +78,15 @@ Use the arrow keys to select the option you want to use and press `Enter` to con
 Next, you will be asked to select an [authentication backend](/docs/get-started#supported-authentication-backends):
 
 ```txt
-? Do you already have a directory or database containing your accounts? ›
-  Yes, it's an SQL database
-  Yes, it's an LDAP directory
-❯ No, create a new directory for me
+? Do you already have a directory or database containing your user accounts? ›
+❯ No, I want Stalwart to store my user accounts in RocksDB
+  Yes, it's an LDAP server
+  Yes, it's an PostgreSQL database
+  Yes, it's an MySQL database
+  Yes, it's an SQLite database
 ```
 
-:::tip Note
-
-- If you select the option to create a new directory, the installation program will create an SQLite database under `<STALWART_DIR>/data/accounts.sqlite3` using the [sample directory schema](/docs/directory/types/sql#sample-directory-schema). You will need SQLite to manage your accounts, you can install it by running `sudo apt install sqlite3`.
-- If you are installing the SMTP only package, you will be able to select remote LMTP or IMAP server as the authentication backend as well.
-
-:::
+If you are installing the SMTP only package, you will be able to select remote LMTP or IMAP server as the authentication backend as well.
 
 ### Enter your domain and server hostname
 
@@ -104,16 +114,6 @@ _dmarc.yourdomain.org. IN TXT "v=DMARC1; p=none; rua=mailto:postmaster@yourdomai
 
 If you already have a DKIM certificate simply ignore these instructions and refer to the [DKIM section](/docs/smtp/authentication/dkim/overview) for instructions on how to add a new DKIM signature
 
-### Take note of the administrator credentials
-
-If you have chosen to create an authentication database, the installation script will print out the credentials for the administrator account that has been created for you:
-
-```txt
-🔑 The administrator account is 'admin' with password 'DbCyfJtQ9b4j'.
-```
-
-If you have chosen to use an existing LDAP directory or SQL database for authentication, refer to the [administrators](/docs/directory/users#administrators) section for instructions on how to designate an account as administrator.
-
 ### Add your TLS certificate
 
 Before starting the Stalwart Mail Server container, you need to make sure to have a valid TLS certificate for your server. 
@@ -133,11 +133,23 @@ The installation script will create the configuration file under `STALWART_DIR/e
 
 :::tip In particular, you will need to:
 
-- If you have selected to use an external directory or database as authentication backend, add to the configuration file the connection details for your LDAP directory or SQL database. For detailed instructions on how to configure your directory, refer to the [LDAP directory](/docs/directory/types/ldap) or [SQL database](/docs/directory/types/sql) sections.
-- If you have selected to use an S3-compatible blob store, add to the configuration file the connection details for your blob store. For instructions on how to configure an S3-compatible store, refer to the [Blob store](/docs/storage/blob/s3) section.
+- If you have selected to use an external database as one of the stores, you will have to configure the connection details for your database. For detailed instructions on how to configure stores, refer to the [storage settings](/docs/storage/overview) section.
+- If you have selected to use an external directory server, add to the configuration file the connection details for your LDAP directory or SQL database. For detailed instructions on how to configure your directory, refer to the [LDAP directory](/docs/directory/types/ldap) or [SQL database](/docs/directory/types/sql) sections.
 - If you are installing the SMTP only package, add to the configuration file the LMTP server details where messages for local accounts will be delivered to. For more details refer to the [Routing configuration](/docs/smtp/outbound/routing) section.
 
 :::
+
+### Create an administrator account
+
+If you have chosen to use the [internal directory](/docs/directory/types/internal), the installation script will generate a random password for the administrator account and print out the instructions to create the account:
+
+```txt
+🔑 To create the administrator account 'admin' with password 'ESl1l10IT2Nt', execute:
+🔑 
+🔑 SET_ADMIN_USER="admin" SET_ADMIN_PASS="$6$gg25awGBMePuZCww$weaIqpoKAt0hoELAMfhvA9Ju2zsasGN9DEGEkRh2fcUlWQ5qQw4MDfAYQRSf/INwf21J1rEt3VSaVdBOK.4Vd/" /opt/stalwart-mail/bin/stalwart-mail --config=/opt/stalwart-mail/etc/config.toml
+```
+
+If you have chosen to use an existing LDAP directory or SQL database for authentication, refer to the [administrators](/docs/directory/users#administrators) section for instructions on how to designate an account as administrator.
 
 ### Start the container
 
@@ -149,8 +161,10 @@ $ docker start stalwart-mail
 
 ### Next steps
 
+If you have selected to use the internal directory, you can now [add your domains](/docs/management/directory/domains) and [create user accounts](/docs/management/directory/accounts) using the [command line interface](/docs/management/overview).
+
 If everything went well, your users should now be able to connect to the server and send and receive emails. If you are unable to connect to the server, check the log files under `STALWART_DIR/logs` for any errors.
 
-Now that you have Stalwart Mail Server up and running, you may want to configure the [Directory](/docs/directory/overview), [JMAP](/docs/jmap/overview), [IMAP](/docs/imap/overview) or [SMTP](/docs/smtp/overview) components.
+Now that you have Stalwart Mail Server up and running, you may want to configure your [Stores](/docs/storage/overview), [JMAP](/docs/jmap/overview), [IMAP](/docs/imap/overview) or [SMTP](/docs/smtp/overview) components.
 
 If you have questions please check the [FAQ](/docs/faq) section or start a discussion in the [community forum](https://github.com/stalwartlabs/mail-server/discussions).
