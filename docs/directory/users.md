@@ -5,7 +5,7 @@ sidebar_position: 3
 # Users and Groups
 
 As stated previously, Stalwart Mail Server offers the possibility to use either an internal directory or connect to an external directory service.
-When using an internal directory, all [account management](/docs/TODO) tasks, such as creating new user accounts, updating passwords, and setting quotas, are performed directly within Stalwart Mail Server.
+When using an internal directory, all [account management](/docs/management/directory/overview) tasks, such as creating new user accounts, updating passwords, and setting quotas, are performed directly within Stalwart Mail Server.
 However, if an external directory is utilized, all user account management must be performed within that external system. Stalwart Mail Server will rely on this external directory for authentication and user information but will not have the ability to directly modify user details.
 
 ## Users

@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Overview
 
-The Stalwart Command Line Interface (CLI) allows system administrators to perform tasks such as managing queues, migrating information and more. 
+The Stalwart Command Line Interface (CLI) allows system administrators to perform tasks such as managing the internal directory, queues, migrating information and more. 
 Future versions will include a web-based management interface, but for the time being the CLI is the main tool to manage a Stalwart Mail server.
 
 ## Installation
@@ -24,6 +24,10 @@ Stalwart Mail Server CLI
 Usage: stalwart-cli [OPTIONS] --url <URL> <COMMAND>
 
 Commands:
+  account   Manage user accounts
+  domain    Manage domains
+  list      Manage mailing lists
+  group     Manage groups
   import    Import JMAP accounts and Maildir/mbox mailboxes
   export    Export JMAP accounts
   database  Manage JMAP database
@@ -34,6 +38,7 @@ Commands:
 Options:
   -u, --url <URL>                  JMAP or SMTP server base URL
   -c, --credentials <CREDENTIALS>  Authentication credentials
+  -t, --timeout <TIMEOUT>          Connection timeout in seconds
   -h, --help                       Print help
   -V, --version                    Print version
 ```

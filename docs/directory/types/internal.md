@@ -17,5 +17,4 @@ The following configuration settings are available for the internal directory, w
 
 ## Account management
 
-Please refer to the [account management](/docs/TODO) section for more information on how to manage user accounts in Stalwart Mail Server.
-
+Please refer to the [Directory management](/docs/management/directory/overview) section for more information on how to manage user and group accounts in Stalwart Mail Server.

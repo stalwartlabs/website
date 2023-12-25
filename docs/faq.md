@@ -4,17 +4,43 @@ sidebar_position: 13
 
 # FAQ
 
+## General
+
+### Can Stalwart be used in production?
+
+Stalwart Mail Server is currently being utilized in various production systems globally. To date, there have been no reports of data loss or crashes attributed to Stalwart Mail Server. This track record speaks to the stability and reliability of Stalwart as a production-level mail server solution.
+
+Users who are considering Stalwart for their production environments are encouraged to join our Discord channel or Reddit. Here, they can directly engage with other users who are actively running Stalwart in their production environments. This community-driven approach provides real-world insights and experiences, offering valuable perspectives on the effectiveness and reliability of Stalwart in diverse operational scenarios.
+
+However, it's important to note that Stalwart is currently in version 0.x. As with any software in its early stages, certain aspects are still being refined and optimized. Before reaching the milestone of version 1.0, there may be changes to Stalwart's data layout and configuration files. These changes could necessitate data migration or adjustments in setup and users should be prepared for these potential updates and the accompanying requirements.
+
+### Is my data safe?
+
+Stalwart Mail Server is built upon well-established and proven database systems such as RocksDB, FoundationDB and PostgreSQL. The use of these trusted database systems ensures that Stalwart Mail Server has a strong and reliable foundation for data storage and management. These databases are widely recognized for their stability, security, and performance, contributing significantly to the overall safety of data within Stalwart.
+
+In addition to this, before each release, Stalwart Mail Server undergoes extensive stress testing. This testing is crucial to identify and resolve any issues related to concurrency or other potential problems that could lead to data loss. The stress tests simulate various operational conditions, including high-load scenarios and concurrent access, to ensure that Stalwart can handle real-world demands without compromising data integrity or system stability.
+
+### Where is my data stored?
+
+This depends on storage backends you are using. Please refer to the [storage documentation](/docs/storage/overview) for detailed information.
+
+### Can it handle large volumes of users and emails?
+
+Yes. When using [FoundationDB](/docs/storage/database/foundationdb) as the backend, Stalwart Mail Server can scale to support millions of users without sacrificing performance.
+
+### Does it have a web interface?
+
+Not yet, but it is planned for a future release.
+
 ## Management
+
 ### How do I create and manage users?
 
-Stalwart Mail Server doesn't store any account details or login credentials but rather defers this responsibility to a [directory](/docs/directory/overview) server. 
-This allows you to leverage an existing [LDAP](/docs/directory/types/ldap) directory or [SQL](/docs/directory/types/sql) database to handle tasks such as authentication, validating local accounts, and retrieving account-related information.
-Any changes to user accounts or groups in the directory server — such as adding or removing users, changing passwords, or modifying group memberships — are immediately reflected in the Stalwart Mail Server.
-If you don't currently have a directory server, you can create an SQLite directory during installation which uses the [sample directory schema](/docs/directory/types/sql#sample-directory-schema).
+It depends on the directory backend you are using. If you are using the [internal directory](/docs/directory/types/internal), you can create and manage users using the [command line interface](/docs/management/directory/overview). If you are using an external directory such as [LDAP](/docs/directory/types/ldap) or [SQL](/docs/directory/types/sql), you will need to use the tools provided by that directory server.
 
 ### How do I add a new domain?
 
-It is not necessary to configure new domain names in order to start receiving emails for it. Just like user accounts, your local domains are also retrieved the directory server. For [SQL](/docs/directory/types/sql) servers this is done by executing the `domains` [lookup query](/docs/directory/types/sql#lookup-queries) and in [LDAP](/docs/directory/types/ldap) servers this is done by searching for objects using `domain` [lookup query](/docs/directory/types/ldap#lookup-queries).
+It also depends on the directory backend you are using. If you are using the [internal directory](/docs/directory/types/internal), you can create and manage domains using the [command line interface](/docs/management/directory/overview). If you are using an external directory such as [LDAP](/docs/directory/types/ldap) or [SQL](/docs/directory/types/sql), it is not necessary to configure new domain names in order to start receiving emails for it. Just like user accounts, your local domains are also retrieved the directory server. For [SQL](/docs/directory/types/sql) servers this is done by executing the `domains` [lookup query](/docs/directory/types/sql#lookup-queries) and in [LDAP](/docs/directory/types/ldap) servers this is done by searching for objects using `domain` [lookup query](/docs/directory/types/ldap#lookup-queries).
 
 Sending emails from a new domain does not require any additional configuration either, but to improve deliverability it is recommended that you [create a new DKIM key](/docs/smtp/authentication/dkim/sign#generating-dkim-keys), add it to your [DNS records](/docs/smtp/authentication/dkim/sign#publishing-dkim-keys) and [enable DKIM signing](/docs/smtp/authentication/dkim/sign#multiple-domains) for the new domain.
 
@@ -25,16 +51,6 @@ Stalwart Mail Server includes a command line interface to facilitate [data migra
 ### How do I backup my data?
 
 The backup procedure depends on which database and blob storage backend you are using. Please refer to the [backup documentation](/docs/management/backup) for detailed instructions.
-
-## Storage
-
-### Where is my data stored?
-
-This depends on the database and blob storage backends you are using. Settings, indexes and other metadata can be stored either in [SQLite](/docs/storage/database/sqlite) or [FoundationDB](/docs/storage/database/foundationdb) database backends. Emails and blobs can be stored either [locally using Maidir](/docs/storage/blob/local) or in [S3-compatible storage](/docs/storage/blob/s3) solutions.
-
-### Can it handle large volumes of users and emails?
-
-Yes. When using [FoundationDB](/docs/storage/database/foundationdb) as the backend, Stalwart Mail Server can scale to support millions of users without sacrificing performance.
 
 ## E-mail
 
@@ -118,12 +134,5 @@ Stalwart tracks the previous spam scores of senders based on their IP address, A
 ### Does Stalwart support collaborative spam filtering mechanisms like Pyzor?
 
 Yes! Stalwart integrates with collaborative digest-based spam filtering tools like Pyzor to enhance its spam detection capabilities.
-
-## General
-
-### Does it have a web interface?
-
-Not yet, but it is planned for a future release.
-
 
 

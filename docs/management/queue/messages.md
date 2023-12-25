@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# Manage Queue
+# Messages
 
 The SMTP message queue is managed using the `queue` CLI command which accepts the following arguments:
 

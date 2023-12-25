@@ -1,10 +1,10 @@
 ---
-sidebar_position: 8
+sidebar_position: 2
 ---
 
 # Migrate
 
-When transitioning from an older version of the Stalwart Mail Server or switching the database backend (such as moving from SQLite to FoundationDB), data migration becomes a necessary step. This ensures that user account information, emails, and settings are accurately transferred and preserved in the new environment.
+When transitioning from an older version of the Stalwart Mail Server or switching the database backend (such as moving from RocksDB to FoundationDB), data migration becomes a necessary step. This ensures that user account information, emails, and settings are accurately transferred and preserved in the new environment.
 
 To conduct the data migration, administrators need to follow a two-step process using the Stalwart CLI tools. The first step involves exporting the user account data from the current system using the [export account](/docs/management/export) command. This command produces a JSON file containing all the user data, including emails, mailboxes, sieve scripts, identities, and vacation responses. For example:
 
