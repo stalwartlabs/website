@@ -130,18 +130,6 @@ The installation script will create the configuration file under `<INSTALL_DIR>/
 
 :::
 
-### Create an administrator account
-
-If you have chosen to use the [internal directory](/docs/directory/types/internal), the installation script will generate a random password for the administrator account and print out the instructions to create the account:
-
-```txt
-🔑 To create the administrator account 'admin' with password 'ESl1l10IT2Nt', execute:
-🔑 
-🔑 SET_ADMIN_USER="admin" SET_ADMIN_PASS="$6$gg25awGBMePuZCww$weaIqpoKAt0hoELAMfhvA9Ju2zsasGN9DEGEkRh2fcUlWQ5qQw4MDfAYQRSf/INwf21J1rEt3VSaVdBOK.4Vd/" /opt/stalwart-mail/bin/stalwart-mail --config=/opt/stalwart-mail/etc/config.toml
-```
-
-If you have chosen to use an existing LDAP directory or SQL database for authentication, refer to the [administrators](/docs/directory/users#administrators) section for instructions on how to designate an account as administrator.
-
 ### Restart service
 
 Once you have completed the setup instructions, restart the Stalwart Mail server:
@@ -157,6 +145,24 @@ $ sudo launchctl kickstart -k stalwart.mail
 ```
 
 Note: If you have installed any of the standalone packages, the name of the service will be `stalwart-<package>` instead of `stalwart-mail`. For example, the service name for SMTP only package will be `stalwart-smtp`.
+
+### Take note of the administrator password
+
+If you have chosen to use the [internal directory](/docs/directory/types/internal), an administrator account will be created for you with a random password. The password will be in the log files under `<INSTALL_DIR>/logs`. For example:
+
+```bash
+$ grep password /opt/stalwart-mail/logs/*
+Created default administrator account "admin" with password "TV5GRUR2ub5b".
+```
+
+Then change the password using the [command line interface](/docs/management/overview) `account update` command:
+
+```bash
+$ /opt/stalwart-mail/bin/stalwart-cli -u https://127.0.0.1:8080 -c admin:TV5GRUR2ub5b account update admin -p my_new_password
+Successfully updated account "admin".
+```
+
+If you have chosen to use an existing LDAP directory or SQL database for authentication, refer to the [administrators](/docs/directory/users#administrators) section for instructions on how to designate an account as administrator.
 
 ### Next steps
 
