@@ -45,4 +45,4 @@ UuZhEDktxnY6Ehz3aB7FawA=
 -----END PGP PUBLIC KEY BLOCK-----
 ```
 
-Once the certificates have been obtained, they can be imported using the [management interface](/docs/storage/encryption/manage).
+Once the certificates have been obtained, they can be imported using the [management interface](/docs/encryption/manage).

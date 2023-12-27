@@ -26,7 +26,7 @@ This depends on storage backends you are using. Please refer to the [storage doc
 
 ### Can it handle large volumes of users and emails?
 
-Yes. When using [FoundationDB](/docs/storage/database/foundationdb) as the backend, Stalwart Mail Server can scale to support millions of users without sacrificing performance.
+Yes. When using [FoundationDB](/docs/storage/backends/foundationdb) as the backend, Stalwart Mail Server can scale to support millions of users without sacrificing performance.
 
 ### Does it have a web interface?
 
@@ -46,11 +46,11 @@ Sending emails from a new domain does not require any additional configuration e
 
 ### How can I migrate from another server?
 
-Stalwart Mail Server includes a command line interface to facilitate [data migration](/docs/management/migrate) from a previous version of the server or from third-party servers.
+Stalwart Mail Server includes a command line interface to facilitate [data migration](/docs/management/database/migrate) from a previous version of the server or from third-party servers.
 
 ### How do I backup my data?
 
-The backup procedure depends on which database and blob storage backend you are using. Please refer to the [backup documentation](/docs/management/backup) for detailed instructions.
+The backup procedure depends on which database and blob storage backend you are using. Please refer to the [backup documentation](/docs/management/database/backup) for detailed instructions.
 
 ## E-mail
 

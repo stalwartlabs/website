@@ -76,5 +76,5 @@ JqYkB7Zad06ngFl0G0FHON+7
 -----END CERTIFICATE-----
 ```
 
-Once the certificates have been obtained, they can be imported using the [management interface](/docs/storage/encryption/manage).
+Once the certificates have been obtained, they can be imported using the [management interface](/docs/encryption/manage).
 
