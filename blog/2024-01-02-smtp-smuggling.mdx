@@ -1,0 +1,31 @@
+---
+slug: smtp-smuggling
+title: "SMTP Smuggling: What it is and how Stalwart is protected"
+authors: [mdecimus]
+tags: [smtp, smuggling, email, spoofing]
+---
+
+In the world of email security, a recent concern has arisen known as [SMTP Smuggling](https://sec-consult.com/blog/detail/smtp-smuggling-spoofing-e-mails-worldwide/), a vulnerability that can be exploited to spoof emails. This blog post will explain what SMTP smuggling is and how Stalwart Mail Server is designed to be immune to this vulnerability. We'll also discuss a new feature we've implemented to protect other servers that might be vulnerable.
+
+### Understanding SMTP Smuggling
+
+SMTP smuggling is an exploitation technique that manipulates SMTP conversations to send spoofed emails from arbitrary addresses. It leverages interpretation differences in the SMTP protocol to bypass security checks like SPF alignment. The technique was identified as effective against multiple email providers and could have significant implications for email security.
+
+Traditionally, the end of data in an SMTP conversation is indicated by a sequence `<CRLF>.<CRLF>` (CRLF stands for Carriage Return and Line Feed, standard text delimiters). However, if an SMTP server improperly interprets this sequence, it can be tricked into starting a new email within the content of an existing email, allowing attackers to inject malicious content and spoof emails that bypass SPF alignment checks.
+
+This vulnerability has led to calls for increased vigilance and improved email server configurations to prevent such exploits. For a detailed understanding of SMTP smuggling, please refer to the full article on [SEC Consult's blog](https://sec-consult.com/blog/detail/smtp-smuggling-spoofing-e-mails-worldwide/).
+
+### How Stalwart is Protected
+
+Stalwart Mail Server is designed with robust security measures that inherently protect it from SMTP smuggling attacks. Stalwart only accepts `<CRLF>.<CRLF>` as the terminating sequence for a `DATA` command. This strict adherence to protocol specifications prevents the ambiguity that can lead to smuggling attacks. Furthermore, when sending outgoing messages, Stalwart Mail Server utilizes the `BDAT` command whenever available. The `BDAT` command is not susceptible to SMTP smuggling issues, as it specifies the exact amount of data being sent, leaving no room for misinterpretation.
+
+### Protecting other Servers
+
+While Stalwart Mail Server itself is not vulnerable to SMTP smuggling, we recognize that other servers might be. To help protect the broader email ecosystem, we have introduced a feature to sanitize outgoing messages that might attempt to exploit this bug in other servers. This feature involves applying the transparency procedure described in RFC5321 to outgoing messages even when these messages do not use CRLF as line terminators, which prevents the exploitation of SMTP smuggling vulnerabilities in other servers.
+
+### Conclusion
+
+In summary, Stalwart Mail Server's architecture and its strict adherence to SMTP protocol specifications inherently protect it against SMTP smuggling attacks. Furthermore, our commitment to the security of the email infrastructure extends beyond our server. The new feature to sanitize outgoing messages demonstrates our proactive approach to safeguarding against vulnerabilities and contributing to a more secure email environment.
+
+Stay up to date with the latest in email security and Stalwart Mail Server's features by following our blog and updates.
+

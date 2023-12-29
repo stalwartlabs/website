@@ -15,7 +15,7 @@ Each store can be configured to use a different backend, allowing you to choose 
 
 ## Configuration
 
-In the configuration file, each store is defined under the `store.<ID>` section, where `<ID>` is a unique identifier for the store. The following attributes are common to all stores:
+In the configuration file, each store is defined under the `store.<name>` section, where `<name>` is a unique identifier for the store. The following attributes are common to all stores:
 
 - `type`: The type of store. This is the only required attribute.
 - `disable`: A boolean value that determines whether the store is enabled or disabled. The default value is `false`.
