@@ -5,7 +5,7 @@ authors: [mdecimus]
 tags: [smtp, smuggling, email, spoofing]
 ---
 
-In the world of email security, a recent concern has arisen known as [SMTP Smuggling](https://sec-consult.com/blog/detail/smtp-smuggling-spoofing-e-mails-worldwide/), a vulnerability that can be exploited to spoof emails. This blog post will explain what SMTP smuggling is and how Stalwart Mail Server is designed to be immune to this vulnerability. We'll also discuss a new feature we've implemented to protect other servers that might be vulnerable.
+In the world of email security, a recent concern has arisen known as [SMTP Smuggling](https://sec-consult.com/blog/detail/smtp-smuggling-spoofing-e-mails-worldwide/), a vulnerability that can be exploited to spoof emails. This blog post will explain what SMTP smuggling is and how [Stalwart Mail Server](https://github.com/stalwartlabs/mail-server) is designed to be immune to this vulnerability. We'll also discuss a new feature we've implemented to protect other servers that might be vulnerable.
 
 ### Understanding SMTP Smuggling
 
@@ -19,21 +19,21 @@ This vulnerability has led to calls for increased vigilance and improved email s
 
 ### How Stalwart is Protected
 
-Stalwart Mail Server is designed with robust security measures that inherently protect it from SMTP smuggling attacks. Stalwart only accepts `<CR><LF>.<CR><LF>` as the terminating sequence for a `DATA` command. This strict adherence to protocol specifications prevents the ambiguity that can lead to smuggling attacks. Furthermore, when sending outgoing messages, Stalwart Mail Server utilizes the `BDAT` command whenever available. The `BDAT` command is not susceptible to SMTP smuggling issues, as it specifies the exact amount of data being sent, leaving no room for misinterpretation.
+[Stalwart Mail Server](https://github.com/stalwartlabs/mail-server) is designed with robust security measures that inherently protect it from SMTP smuggling attacks. Stalwart only accepts `<CR><LF>.<CR><LF>` as the terminating sequence for a `DATA` command. This strict adherence to protocol specifications prevents the ambiguity that can lead to smuggling attacks. Furthermore, when sending outgoing messages, [Stalwart Mail Server](https://github.com/stalwartlabs/mail-server) utilizes the `BDAT` command whenever available. The `BDAT` command is not susceptible to SMTP smuggling issues, as it specifies the exact amount of data being sent, leaving no room for misinterpretation.
 
 ### Protecting other Servers
 
-While Stalwart Mail Server itself is not vulnerable to SMTP smuggling, we recognize that other servers might be. To help protect the broader email ecosystem, we have introduced in version `0.5.1` a feature to sanitize outgoing messages that might attempt to exploit this bug in other servers. This feature involves applying the transparency procedure described in [RFC5321](https://datatracker.ietf.org/doc/html/rfc5321#section-4.5.2) to outgoing messages even when these messages do not use CRLF as line terminators, which prevents the exploitation of SMTP smuggling vulnerabilities in other servers.
+While [Stalwart Mail Server](https://github.com/stalwartlabs/mail-server) itself is not vulnerable to SMTP smuggling, we recognize that other servers might be. To help protect the broader email ecosystem, we have introduced in version `0.5.1` a feature to sanitize outgoing messages that might attempt to exploit this bug in other servers. This feature involves applying the transparency procedure described in [RFC5321](https://datatracker.ietf.org/doc/html/rfc5321#section-4.5.2) to outgoing messages even when these messages do not use CRLF as line terminators, which prevents the exploitation of SMTP smuggling vulnerabilities in other servers.
 
 ### MECSA Compliance
 
-In our ongoing efforts to enhance email security, we are proud to announce that Stalwart Mail Server `0.5.1` is now compliant with the [My Email Communications Security Assessment](https://mecsa.jrc.ec.europa.eu/en/about) (MECSA) set by the European Union. MECSA compliance signifies a robust level of security in email communication, and one of the key features in achieving this compliance is the implementation of SMTP sender validation for authenticated users.
+In our ongoing efforts to enhance email security, we are proud to announce that [Stalwart Mail Server](https://github.com/stalwartlabs/mail-server) `0.5.1` is now compliant with the [My Email Communications Security Assessment](https://mecsa.jrc.ec.europa.eu/en/about) (MECSA) set by the European Union. MECSA compliance signifies a robust level of security in email communication, and one of the key features in achieving this compliance is the implementation of SMTP sender validation for authenticated users.
 
 SMTP sender validation ensures that authenticated users can only issue `MAIL FROM` commands that match their login name or any of the email addresses associated with their accounts. Previously, implementing this level of validation required the creation of a Sieve script. However, with our latest update, this functionality is now a straightforward boolean entry in the system settings, defaulting to true for maximum security.
 
 ### Conclusion
 
-In summary, Stalwart Mail Server's architecture and its strict adherence to SMTP protocol specifications inherently protect it against SMTP smuggling attacks. Furthermore, our commitment to the security of the email infrastructure extends beyond our server. The new feature to sanitize outgoing messages and our MECSA compliance demonstrate our proactive approach to safeguarding against vulnerabilities and contributing to a more secure email environment
+In summary, [Stalwart Mail Server](https://github.com/stalwartlabs/mail-server)'s architecture and its strict adherence to SMTP protocol specifications inherently protect it against SMTP smuggling attacks. Furthermore, our commitment to the security of the email infrastructure extends beyond our server. The new feature to sanitize outgoing messages and our MECSA compliance demonstrate our proactive approach to safeguarding against vulnerabilities and contributing to a more secure email environment
 
-Stay up to date with the latest in email security and Stalwart Mail Server's features by following our blog and updates.
+Stay up to date with the latest in email security and [Stalwart Mail Server](https://github.com/stalwartlabs/mail-server)'s features by following our [blog](https://stalw.art/blog) and updates.
 
