@@ -157,7 +157,7 @@ Created default administrator account "admin" with password "TV5GRUR2ub5b".
 Then change the password using the [command line interface](/docs/management/overview) `account update` command:
 
 ```bash
-$ /opt/stalwart-mail/bin/stalwart-cli -u https://127.0.0.1:8080 -c admin:TV5GRUR2ub5b account update admin -p my_new_password
+$ /opt/stalwart-mail/bin/stalwart-cli -u https://127.0.0.1:443 -c admin:TV5GRUR2ub5b account update admin -p my_new_password
 Successfully updated account "admin".
 ```
 
