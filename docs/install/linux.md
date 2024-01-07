@@ -4,9 +4,7 @@ sidebar_position: 1
 
 # Linux / MacOS
 
-Before proceeding with the installation of Stalwart Mail Server, you need to make sure to have a valid TLS certificate for your server. 
-If you do not have one, you can obtain a free TLS certificate from [Let's Encrypt](https://letsencrypt.org/).
-Once you have obtained your certificate, execute the following command in your terminal:
+To install Stalwart Mail Server on Linux or MacOS, execute the following command in your terminal:
 
 ```bash
 $ curl --proto '=https' --tlsv1.2 -sSf https://get.stalw.art/install.sh | sudo sh
@@ -94,18 +92,19 @@ Next, you will be asked to enter your domain name and server hostname:
 
 You will be able to add other domains later on from the configuration file.
 
-### Configure your TLS certificate
+### Enable ACME TLS certificates
 
-Finally, you will be asked to enter the path to your TLS certificate and private key:
+Finally, you will be asked whether you want to enable automatic TLS certificates from Let's Encrypt using [ACME](/docs/server/tls/acme). If you are running Stalwart behind a reverse [proxy](/docs/server/proxy) such as Caddy, HAProxy or Traefik, you should disable this option and configure TLS in your reverse proxy instead.
 
 ```txt
-? Where is the TLS certificate for 'mail.yourdomain.org' located? (/etc/letsencrypt/live/mail.yourdomain.org/fullchain.pem) ›
-? Where is the TLS private key for 'mail.yourdomain.org' located? (/etc/letsencrypt/live/mail.yourdomain.org/privkey.pem) ›
+Do you want the TLS certificates for mail.yourdomain.org to be obtained automatically from Let's Encrypt using ACME? [Y/n] 
 ```
+
+If you choose to enable [ACME](/docs/server/tls/acme), make sure that your server hostname is resolvable from the internet and that port 443 is open. If you wish to manually configure your TLS certificates, you can do so later on from the [configuration](/docs/server/tls/certificates) file.
 
 ### Enable DKIM, SPF and DMARC
 
-DomainKeys Identified Mail (DKIM) is a method of email authentication that allows a receiving email server to verify that an email message was actually sent by the owner of the domain from which it appears to have been sent. It is highly recommended that you enable DKIM (as well as SPF and DMARC) for your domain. The installation script will automatically generate a 2048 bits RSA certificate for your domain and print out the instructions to enable DKIM, SPF and DMARC in your DNS server:
+DomainKeys Identified Mail ([DKIM](/docs/smtp/authentication/dkim/overview)) is a method of email authentication that allows a receiving email server to verify that an email message was actually sent by the owner of the domain from which it appears to have been sent. It is highly recommended that you enable [DKIM](/docs/smtp/authentication/dkim/overview) (as well as [SPF](/docs/smtp/authentication/spf) and [DMARC](/docs/smtp/authentication/dmarc)) for your domain. The installation script will automatically generate a 2048 bits RSA certificate for your domain and print out the instructions to enable DKIM, SPF and DMARC in your DNS server:
 
 ```txt
 ✅ Add the following DNS records to your domain in order to enable DKIM, SPF and DMARC:

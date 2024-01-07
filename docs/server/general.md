@@ -1,8 +1,8 @@
 ---
-sidebar_position: 3
+sidebar_position: 1
 ---
 
-# General settings
+# General
 
 This section of the configuration manual deals with some of the general settings of Stalwart Mail Server.
 

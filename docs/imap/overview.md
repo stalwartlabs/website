@@ -8,7 +8,7 @@ Stalwart IMAP supports the most recent [IMAP4rev2 protocol](https://www.rfc-edit
 
 ## Listener
 
-In order to be able to accept IMAP4 connections, a [listener](/docs/configuration/listener) has to be created with the `protocol` attribute set to `imap`. 
+In order to be able to accept IMAP4 connections, a [listener](/docs/server/listener) has to be created with the `protocol` attribute set to `imap`. 
 
 For example, to create a listener that accepts plain-text IMAP4 connections on port 143 and another one that accepts implicit TLS connections on port 993:
 

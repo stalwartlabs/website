@@ -99,9 +99,19 @@ Next, you will be asked to enter your domain name and server hostname:
 
 You will be able to add other domains later on from the configuration file.
 
+### Enable ACME TLS certificates
+
+Finally, you will be asked whether you want to enable automatic TLS certificates from Let's Encrypt using [ACME](/docs/server/tls/acme). If you are running Stalwart behind a reverse [proxy](/docs/server/proxy) such as Caddy, HAProxy or Traefik, you should disable this option and configure TLS in your reverse proxy instead.
+
+```txt
+Do you want the TLS certificates for mail.yourdomain.org to be obtained automatically from Let's Encrypt using ACME? [Y/n] 
+```
+
+If you choose to enable [ACME](/docs/server/tls/acme), make sure that your server hostname is resolvable from the internet and that port 443 is open. If you wish to manually configure your TLS certificates, you can do so later on from the [configuration](/docs/server/tls/certificates) file.
+
 ### Enable DKIM, SPF and DMARC
 
-DomainKeys Identified Mail (DKIM) is a method of email authentication that allows a receiving email server to verify that an email message was actually sent by the owner of the domain from which it appears to have been sent. It is highly recommended that you enable DKIM (as well as SPF and DMARC) for your domain. The installation script will automatically generate a 2048 bits RSA certificate for your domain and print out the instructions to enable DKIM, SPF and DMARC in your DNS server:
+DomainKeys Identified Mail ([DKIM](/docs/smtp/authentication/dkim/overview)) is a method of email authentication that allows a receiving email server to verify that an email message was actually sent by the owner of the domain from which it appears to have been sent. It is highly recommended that you enable [DKIM](/docs/smtp/authentication/dkim/overview) (as well as [SPF](/docs/smtp/authentication/spf) and [DMARC](/docs/smtp/authentication/dmarc)) for your domain. The installation script will automatically generate a 2048 bits RSA certificate for your domain and print out the instructions to enable DKIM, SPF and DMARC in your DNS server:
 
 ```txt
 ✅ Add the following DNS records to your domain in order to enable DKIM, SPF and DMARC:
@@ -113,19 +123,6 @@ _dmarc.yourdomain.org. IN TXT "v=DMARC1; p=none; rua=mailto:postmaster@yourdomai
 ```
 
 If you already have a DKIM certificate simply ignore these instructions and refer to the [DKIM section](/docs/smtp/authentication/dkim/overview) for instructions on how to add a new DKIM signature
-
-### Add your TLS certificate
-
-Before starting the Stalwart Mail Server container, you need to make sure to have a valid TLS certificate for your server. 
-If you do not have one, you can obtain a free TLS certificate from [Let's Encrypt](https://letsencrypt.org/).
-Once you have obtained your certificate, copy your TLS certificate and private key to the following paths on your host machine:
-
-```bash
-$ cp /path/to/fullchain.pem <STALWART_DIR>/etc/certs/<SERVER_NAME>/fullchain.pem
-$ cp /path/to/privkey.pem <STALWART_DIR>/etc/certs/<SERVER_NAME>/privkey.pem
-```
-
-Make sure to replace `<STALWART_DIR>` with the path to the directory you created above and `<SERVER_NAME>` with the hostname of your server.
 
 ### Review the configuration file
 

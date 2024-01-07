@@ -8,7 +8,7 @@ Stalwart SMTP server is enabled by creating one or more listeners. A listener es
 
 The behavior of each listener can be customized by the administrator. This includes defining which types of connections are accepted, the specific actions to take upon receiving a connection, and the rules and scripts to be applied during the handling of the session. In conventional SMTP server configurations, certain ports are predetermined for specific types of SMTP connections: port 25 is typically used for unencrypted SMTP, port 587 for SMTP submissions, and port 465 for TLS encrypted SMTP submissions. Stalwart SMTP, however, does not impose these specific associations. Instead, it leaves the decision entirely to the administrator, allowing each listener's function to be defined as per specific requirements.
 
-For more information on how to configure listeners, see the main [listeners](/docs/configuration/listener) section.
+For more information on how to configure listeners, see the main [listeners](/docs/server/listener) section.
 
 ## SMTP port
 
@@ -76,7 +76,7 @@ bind = ["127.0.0.1:8080"]
 protocol = "http"
 ```
 
-The management interface will automatically enable the default TLS certificate used by the SMTP listener(s), but this can be [overridden](/docs/configuration/listener#overriding-defaults) from the configuration file.
+The management interface will automatically enable the default TLS certificate used by the SMTP listener(s), but this can be [overridden](/docs/server/listener#overriding-defaults) from the configuration file.
 
 Management requests must be authenticated and only [administrators](/docs/directory/users#administrators) are allowed to access the management interface. The directory service used to authenticate users can be configured through the `management.directory` attribute. For example:
 

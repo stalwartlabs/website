@@ -27,7 +27,7 @@ data = "rocksdb"
 
 ## Maintenance
 
-In order ensure efficient use of storage and optimal database operations, Stalwart Mail Server runs periodically automated tasks that perform essential maintenance such as removing expired entries or compacting logs. The schedule for these tasks is configured using a simplified [cron-like syntax](/docs/configuration/overview/values/cron). The frequency of these tasks is determined by the `store.<id>.purge.frequency` attribute of the configuration file, where `<id>` is the ID of the store you wish to configure.
+In order ensure efficient use of storage and optimal database operations, Stalwart Mail Server runs periodically automated tasks that perform essential maintenance such as removing expired entries or compacting logs. The schedule for these tasks is configured using a simplified [cron-like syntax](/docs/configuration/values/cron). The frequency of these tasks is determined by the `store.<id>.purge.frequency` attribute of the configuration file, where `<id>` is the ID of the store you wish to configure.
 
 For example, to run the job every day at 3am local time on the `foundationdb` store, you would add the following to your configuration file:
 

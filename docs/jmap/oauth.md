@@ -74,7 +74,7 @@ key = !OAUTH_KEY
 - If the encryption key is changed, all existing OAuth tokens will be **immediately revoked**.
 - On distributed systems, all nodes have to use the **exact same encryption key**. Otherwise,
   tokens issued in one node will not be valid in other nodes.
-- The encryption key **must be kept private**. It is recommended that it is specified using an [environment variable](/docs/configuration/overview/values/environment), which will prevent the key from being stored in the configuration file in plain text.
+- The encryption key **must be kept private**. It is recommended that it is specified using an [environment variable](/docs/configuration/values/environment), which will prevent the key from being stored in the configuration file in plain text.
   If using an environment variable is not possible or practical, then make sure that only the Stalwart JMAP process
   has access to the configuration file where it is stored. In Unix systems this can be done
   with the commands:

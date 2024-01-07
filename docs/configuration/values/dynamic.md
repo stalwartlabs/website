@@ -10,7 +10,7 @@ Dynamic Values may reference either positional or environment variables. Positio
 
 ## Positional Variables
 
-These variables refer to the data matched by a regex or other [rules](/docs/configuration/overview/rules/syntax). They are denoted as `${n}`, where `n` is a number that represents the position of the matched group in a regular expression. For instance:
+These variables refer to the data matched by a regex or other [rules](/docs/configuration/rules/syntax). They are denoted as `${n}`, where `n` is a number that represents the position of the matched group in a regular expression. For instance:
 
 ```toml
 [session.rcpt]
@@ -29,7 +29,7 @@ sign = [ { if = "rcpt-domain", eq = "example.org", then = "rsa_${0}" },
 
 ## Environment Variables
 
-Dynamic Values can also be generated using environment variables. Any of the supported [environment variables](/docs/configuration/overview/variables) such as `remote-ip`, `local-ip`, or `listener` can be used. These variables can be referenced directly within the dynamic value string, making them incredibly useful for creating settings that adapt to the environment of the running application. For example:
+Dynamic Values can also be generated using environment variables. Any of the supported [environment variables](/docs/configuration/variables) such as `remote-ip`, `local-ip`, or `listener` can be used. These variables can be referenced directly within the dynamic value string, making them incredibly useful for creating settings that adapt to the environment of the running application. For example:
 
 ```toml
 directory = "sql_${listener}"

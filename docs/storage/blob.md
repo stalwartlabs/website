@@ -25,7 +25,7 @@ blob = "s3"
 
 Stalwart Mail Server runs periodically an automated task on the blob store that removes temporary blobs, which are binary files uploaded by users to the JMAP server. In some instances, these uploaded files may not be used or accessed beyond a certain period of time, known as their [Time-To-Live (TTL)](/docs/jmap/protocol#upload-limits). When a temporary blob exceeds its TTL without being accessed, Stalwart identifies it as "expired". The blob purge task runs at a configurable interval, and during each run, it identifies and deletes these expired temporary blobs, freeing up storage space and reducing clutter in the storage system.
 
-The schedule for these tasks is configured using a simplified [cron-like syntax](/docs/configuration/overview/values/cron). The frequency of these tasks is determined by the `store.<id>.purge.frequency` attribute of the configuration file, where `<id>` is the ID of the store you wish to configure.
+The schedule for these tasks is configured using a simplified [cron-like syntax](/docs/configuration/values/cron). The frequency of these tasks is determined by the `store.<id>.purge.frequency` attribute of the configuration file, where `<id>` is the ID of the store you wish to configure.
 
 For example, to run the job every day at 5:30am local time on the `s3` store, you would add the following to your configuration file:
 

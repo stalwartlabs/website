@@ -19,7 +19,7 @@ In the configuration file, each store is defined under the `store.<name>` sectio
 
 - `type`: The type of store. This is the only required attribute.
 - `disable`: A boolean value that determines whether the store is enabled or disabled. The default value is `false`.
-- `purge.frequency`: The frequency at which the store's maintenance task runs. This is specified using a simplified [cron-like syntax](/docs/configuration/overview/values/cron).
+- `purge.frequency`: The frequency at which the store's maintenance task runs. This is specified using a simplified [cron-like syntax](/docs/configuration/values/cron).
 
 The following example shows the configuration for a data store using [RocksDB](/docs/storage/backends/rocksdb) as the backend:
 

@@ -73,7 +73,7 @@ rate = "25/1h"
 
 ## Rules
 
-Throttle rules enable the imposition of concurrency and rate limits only when a specific condition is met. These [rules](/docs/configuration/overview/rules/syntax) can be configured using the `queue.throttle[].match` attribute. For example, to impose a concurrency and rate limiter by sender only for messages sent to the IP address 10.0.0.20:
+Throttle rules enable the imposition of concurrency and rate limits only when a specific condition is met. These [rules](/docs/configuration/rules/syntax) can be configured using the `queue.throttle[].match` attribute. For example, to impose a concurrency and rate limiter by sender only for messages sent to the IP address 10.0.0.20:
 
 ```toml
 [[queue.throttle]]

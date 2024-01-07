@@ -8,7 +8,7 @@ JMAP (JSON Meta Application Protocol) is a modern, efficient, and stateful proto
 
 ## Listener
 
-In order to be able to accept JMAP connections, a [listener](/docs/configuration/listener) has to be created with the `protocol` attribute set to `jmap`. The JMAP listener expects an additional attribute `url` to be set, which is the URL that JMAP clients will use to connect to the server. 
+In order to be able to accept JMAP connections, a [listener](/docs/server/listener) has to be created with the `protocol` attribute set to `jmap`. The JMAP listener expects an additional attribute `url` to be set, which is the URL that JMAP clients will use to connect to the server. 
 
 For example:
 

@@ -4,7 +4,7 @@ sidebar_position: 4
 
 # Variables
 
-Context or environment variables may be used in certain settings of the configuration file that accept [rules](/docs/configuration/overview/rules/syntax) or [dynamic values](/docs/configuration/overview/values/dynamic). The available context variables for evaluation vary depending on the setting and can include:
+Context or environment variables may be used in certain settings of the configuration file that accept [rules](/docs/configuration/rules/syntax) or [dynamic values](/docs/configuration/values/dynamic). The available context variables for evaluation vary depending on the setting and can include:
 
 - `remote-ip`: The IP address of the client for inbound sessions and the remote server's IP address for outbound sessions.
 - `local-ip`: The local server's IP address used in an outbound connection (available only when a source IP is specified).

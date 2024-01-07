@@ -14,7 +14,7 @@ Stalwart SMTP supports comprehensive address rewriting, allowing changes to both
 
 ## Rules
 
-Address rewriting in Stalwart SMTP is based on the use of [rules](/docs/configuration/overview/rules/syntax) and regular expressions (regex), a powerful tool for pattern matching in strings. If the regular expression matches the email address, the components of the address that are captured by the regex can be rearranged or modified to form a new address.
+Address rewriting in Stalwart SMTP is based on the use of [rules](/docs/configuration/rules/syntax) and regular expressions (regex), a powerful tool for pattern matching in strings. If the regular expression matches the email address, the components of the address that are captured by the regex can be rearranged or modified to form a new address.
 
 The capture groups in the regex, which are delineated by parentheses, are numbered sequentially from 0. The 0th group always refers to the entire address that is matched by the regex, while subsequent numbers correspond to the respective groups in the order they appear.
 

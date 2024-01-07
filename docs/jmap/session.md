@@ -25,7 +25,7 @@ size = 100
 
 Stalwart Mail Server runs periodically an automated task for purging expired sessions. A session is considered expired when it has not been accessed for a certain period of time, known as its Time-To-Live (TTL). When a session exceeds its TTL without being accessed, Stalwart identifies it as "expired". The cleanup task runs at a configurable interval, and during each run, it identifies and deletes these expired sessions, freeing up memory and reducing clutter in the system.
 
-The schedule for this task can be configured in the `jmap.purge.sessions.frequency` section using a simplified [cron-like syntax](/docs/configuration/overview/values/cron).
+The schedule for this task can be configured in the `jmap.purge.sessions.frequency` section using a simplified [cron-like syntax](/docs/configuration/values/cron).
 
 For example, to run the job every hour at 15 minutes past the hour:
 

@@ -1,0 +1,24 @@
+---
+slug: acme-tls
+title: "ACME Integration for Effortless TLS Certificates"
+authors: [mdecimus]
+tags: [acme, tls, security, email]
+---
+
+[ACME](/docs/server/tls/acme) (Automatic Certificate Management Environment) represents a breakthrough in managing TLS (Transport Layer Security) certificates. This protocol automates the process of obtaining, installing, and renewing TLS/SSL certificates, which are crucial for securing network communications. TLS certificates provide authentication and encryption, ensuring that data transferred between users and servers remains private and secure.
+
+ACME's ability to automate these tasks greatly simplifies certificate management, particularly for services like mail servers that require ongoing security maintenance. The protocol interacts with Certificate Authorities (CAs) such as Let's Encrypt to automate the verification of domain ownership and the issuance of certificates, significantly reducing manual effort and the risk of human error.
+
+We are thrilled to announce the release of [Stalwart Mail Server](https://github.com/stalwartlabs/mail-server) 0.5.2, which brings two significant advancements: the integration of the [ACME](/docs/server/tls/acme) protocol for automatic TLS certificate deployment and support for the [HAProxy Protocol](/docs/server/proxy). These features mark a substantial step forward in our commitment to enhancing the security and efficiency of [Stalwart Mail Server](https://github.com/stalwartlabs/mail-server).
+
+### The Power of ACME 
+
+The integration of ACME into [Stalwart Mail Server](https://github.com/stalwartlabs/mail-server) simplifies the complexities of TLS certificate management. It ensures that the certificates are always up-to-date, thereby enhancing the overall security of your communications. With ACME, the server automatically verifies domain ownership, obtains the necessary certificates, and handles renewals, all without manual intervention. This automation is not only a boon for security but also significantly reduces the administrative burden and the risk of service interruptions due to expired certificates.
+
+### Embracing the Proxy Protocol
+
+The [Proxy Protocol](/docs/server/proxy) is another crucial feature in this release. When running servers behind load balancers or reverse proxies, such as Caddy, HAProxy, or Traefik, the server traditionally only sees the IP address of the proxy, not the actual client. This limitation can impact security and logging functions. By supporting the Proxy Protocol, [Stalwart Mail Server](https://github.com/stalwartlabs/mail-server) 0.5.2 can now accurately identify the original client's IP address and connection details. This capability is essential for maintaining robust security measures and precise logging. It ensures that even in environments where Stalwart is behind a proxy, it retains full visibility over client connections.
+
+### Conclusion
+
+In conclusion, [Stalwart Mail Server](https://github.com/stalwartlabs/mail-server) 0.5.2 is a significant update, offering both ACME for simplified and automated TLS certificate management and the Proxy Protocol for enhanced functionality behind proxy environments. These features underscore our dedication to providing a secure, efficient, and user-friendly mail server solution. We look forward to seeing how our users leverage these new capabilities in their [Stalwart Mail Server](https://github.com/stalwartlabs/mail-server) deployments.

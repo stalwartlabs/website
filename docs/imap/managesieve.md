@@ -10,7 +10,7 @@ Stalwart IMAP includes support for [ManageSieve](https://datatracker.ietf.org/do
 
 ## Enabling ManageSieve
 
-In order to enable ManageSieve, a [listener](/docs/configuration/listener) has to be created with the `protocol` attribute set to `managesieve`.
+In order to enable ManageSieve, a [listener](/docs/server/listener) has to be created with the `protocol` attribute set to `managesieve`.
 
 For example:
 
