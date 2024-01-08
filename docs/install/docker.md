@@ -28,7 +28,7 @@ $ mkdir /var/lib/stalwart-mail
 Once you have completed the setup instructions, start the Stalwart Mail server container:
 
 ```bash
-$ docker run -d -ti -p 8080:8080 \
+$ docker run -d -ti -p 443:443 \
              -p 25:25 -p 587:587 -p 465:465 \
              -p 143:143 -p 993:993 -p 4190:4190 \
              -v <STALWART_DIR>:/opt/stalwart-mail \
