@@ -31,7 +31,7 @@ The following configuration settings are available for the connection pool, whic
 [store."mysql"]
 type = "mysql"
 host = "localhost"
-port = 3307
+port = 3306
 database = "stalwart"
 user = "root"
 password = "password"
