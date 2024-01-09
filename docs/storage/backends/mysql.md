@@ -16,6 +16,7 @@ The following configuration settings are available for mySQL, which are specifie
 - `database`: The name of the database to connect to within the MySQL server.
 - `user`: The username used to log in to the MySQL database.
 - `password`: The password associated with the specified user.
+- `max-allowed-packet`: The maximum size of the packet (specified in bytes) that can be sent to or received from the MySQL server. The default value is `4MB`.
 - `timeout.wait`: Defines the maximum time the system should wait for a response from the MySQL server before timing out. The time is specified as a string, such as `"15s"` for 15 seconds.
 
 ### Connection Pool
@@ -36,6 +37,7 @@ database = "stalwart"
 user = "root"
 password = "password"
 disable = true
+max-allowed-packet = 1073741824
 
 [store."mysql".timeout]
 wait = "15s"

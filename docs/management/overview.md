@@ -14,7 +14,26 @@ If you would like to install the CLI on a different computer, download the [late
 
 ## Usage
 
-The default location of the Stalwart CLI is `/opt/stalwart-mail/bin/stalwart-cli` (or, inside a Docker image `/usr/local/bin/stalwart-cli``). When executed without any parameters, the CLI tool prints a brief help page such as this one:
+The default location of the Stalwart CLI is `/opt/stalwart-mail/bin/stalwart-cli` (or, inside a Docker image `/usr/local/bin/stalwart-cli``) and expects two required arguments: 
+
+- **Base URL of your Stalwart Mail server**: Which is specified with the ``-u`` argument or the `URL` environment variable.
+- **System administrator credentials**: Which are specified with the ``-c`` argument or the `CREDENTIALS` environment variable. If none are provided, the CLI tool will prompt for them.
+
+For example, to force a purge of all expired blobs:
+
+```bash
+$ stalwart-cli -u https://127.0.0.1:9990 -c MySecretPass database purge
+```
+
+Or, using environment variables:
+
+```bash
+$ export URL=https://127.0.0.1:9990
+$ export CREDENTIALS=MySecretPass
+$ stalwart-cli database purge
+```
+
+When executed without any parameters, the CLI tool prints a brief help page such as this one:
 
 ```bash
 $ stalwart-cli
@@ -41,14 +60,6 @@ Options:
   -t, --timeout <TIMEOUT>          Connection timeout in seconds
   -h, --help                       Print help
   -V, --version                    Print version
-```
-
-The CLI tool expects two required arguments: the base URL of your Stalwart Mail server (which is specified with the ``-u`` option) server and the system administrator credentials (which may be specified with the ``-c`` option or at the prompt).
-
-For example, to force a purge of all expired blobs:
-
-```bash
-$ stalwart-cli -u https://127.0.0.1:9990 -c PASSWORD database purge
 ```
 
 ## Authentication
