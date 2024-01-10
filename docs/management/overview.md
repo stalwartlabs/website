@@ -14,7 +14,7 @@ If you would like to install the CLI on a different computer, download the [late
 
 ## Usage
 
-The default location of the Stalwart CLI is `/opt/stalwart-mail/bin/stalwart-cli` (or, inside a Docker image `/usr/local/bin/stalwart-cli``) and expects two required arguments: 
+The Stalwart CLI is located by default at `/opt/stalwart-mail/bin/stalwart-cli` (or, inside a Docker image `/usr/local/bin/stalwart-cli`) and expects two required arguments: 
 
 - **Base URL of your Stalwart Mail server**: Which is specified with the ``-u`` argument or the `URL` environment variable.
 - **System administrator credentials**: Which are specified with the ``-c`` argument or the `CREDENTIALS` environment variable. If none are provided, the CLI tool will prompt for them.
