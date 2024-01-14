@@ -76,14 +76,7 @@ bind = ["127.0.0.1:8080"]
 protocol = "http"
 ```
 
-The management interface will automatically enable the default TLS certificate used by the SMTP listener(s), but this can be [overridden](/docs/server/listener#overriding-defaults) from the configuration file.
-
-Management requests must be authenticated and only [administrators](/docs/directory/users#administrators) are allowed to access the management interface. The directory service used to authenticate users can be configured through the `management.directory` attribute. For example:
-
-```txt
-[management]
-directory = "ldap"
-```
+Management requests must be authenticated and only [administrators](/docs/directory/users#administrators) are allowed to access the management interface. The [default directory](/docs/directory/overview#default-directory) is used to authenticate users.
 
 :::tip Note
 

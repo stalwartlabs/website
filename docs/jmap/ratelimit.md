@@ -21,7 +21,7 @@ When running Stalwart JMAP behind a proxy such as Cloudflare or Amazon CloudFron
 be instructed to obtain the client's IP address from the ``Forwarded`` or ``X-Forwarded-For`` HTTP header rather
 than from the socket source address (which most likely is the proxy's address).
 
-This can be done by setting the ``jmap.rate-limit.use-forwardedr`` parameter to ``true``, for example:
+This can be done by setting the ``jmap.rate-limit.use-forwarded`` parameter to ``true``, for example:
 
 ```toml
 [jmap.rate-limit]

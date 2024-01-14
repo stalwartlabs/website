@@ -32,16 +32,16 @@ It is important to note that when [encryption at rest](/docs/encryption/overview
 
 ## Configuration
 
-To configure the full-text store, you need to specify the ID of the store you wish to use under the `jmap.store.fts` attribute in the configuration file. For example, to use the `postgresql` store as the full-text store:
+To configure the full-text store, you need to specify the ID of the store you wish to use under the `storage.fts` attribute in the configuration file. For example, to use the `postgresql` store as the full-text store:
 
 ```toml
-[jmap.store]
+[storage]
 fts = "postgresql"
 ```
 
-Before indexing a message in the internal store, Stalwart attempts to automatically detect its language. However, in certain scenarios where language detection may not be possible (for instance, if the text is too short or doesn't have clear language characteristics), the system will default to using the configured default language for text processing and indexing determined by the `jmap.fts.default-language` attribute. For example:
+Before indexing a message in the internal store, Stalwart attempts to automatically detect its language. However, in certain scenarios where language detection may not be possible (for instance, if the text is too short or doesn't have clear language characteristics), the system will default to using the configured default language for text processing and indexing determined by the `storage.fts.default-language` attribute. For example:
 
 ```toml
-[jmap.fts]
+[storage.fts]
 default-language = "en"
 ```

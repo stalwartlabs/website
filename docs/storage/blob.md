@@ -14,10 +14,10 @@ The following backends can be utilized as a blob store:
 
 ## Configuration
 
-To configure the blob store, you need to specify the ID of the store you wish to use under the `jmap.store.blob` attribute in the configuration file. For example, to use the `s3` store as the blob store:
+To configure the blob store, you need to specify the ID of the store you wish to use under the `storage.blob` attribute in the configuration file. For example, to use the `s3` store as the blob store:
 
 ```toml
-[jmap.store]
+[storage]
 blob = "s3"
 ```
 

@@ -16,7 +16,14 @@ The following backends can be utilized as a lookup store:
 - [Data store](/docs/storage/data): Any of the supported data store backends can be used as a lookup store, which is useful when you want to minimize the number of external dependencies.
 - [In-memory](/docs/storage/backends/memory): A simple in-memory key-value store. Can only store static data, does not support write operations.
 
-Lookup store do not require any additional configuration as they are referenced by their ID from [rules](/docs/configuration/rules/syntax) and [Sieve scripts](/docs/sieve/overview).
+## Configuration
+
+Lookup stores do not require any additional configuration as they are referenced by their ID from [rules](/docs/configuration/rules/syntax) and [Sieve scripts](/docs/sieve/overview). However, it is possible to define a default lookup store, which is used when no store is specified in a Sieve lookup function. To configure the default lookup store, you need to specify its ID under the `storage.lookup` attribute in the configuration file. For example, to use the `redis` store as the default lookup store:
+
+```toml
+[storage]
+lookup = "redis"
+```
 
 ## Maintenance
 

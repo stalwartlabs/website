@@ -75,7 +75,7 @@ Encryption at rest refers to the process of encrypting data when it is stored, o
 
 ### Is encryption at rest enabled by default?
 
-Yes, encryption at rest is enabled by default and is activated when the user uploads their S/MIME certificate or PGP public key. However, it can be disabled by setting the `jmap.encryption.enable` attribute to `false`.
+Yes, encryption at rest is enabled by default and is activated when the user uploads their S/MIME certificate or PGP public key. However, it can be disabled by setting the `storage.encryption.enable` attribute to `false`.
 
 ### How do I enable or disable encryption at rest?
 

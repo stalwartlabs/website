@@ -81,3 +81,14 @@ For example:
 entries = 500
 ttl = {positive = '1h', negative = '10m'}
 ```
+
+### Default Directory
+
+The default directory to authenticate [JMAP](/docs/jmap/overview), [IMAP](/docs/imap/overview), [ManageSieve](/docs/imap/managesieve) and HTTP API requests against can be configured using the `directory.default` configuration attribute.
+
+For example, to use the `sql` directory as the default directory:
+
+```toml
+[storage]
+directory = "sql"
+```

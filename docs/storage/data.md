@@ -18,10 +18,10 @@ Due to their performance and scalability, [RocksDB](/docs/storage/backends/rocks
 
 ## Configuration
 
-To configure the data store, you need to specify the ID of the store you wish to use under the `jmap.store.data` attribute in the configuration file. For example, to use the `rocksdb` store as the data store:
+To configure the data store, you need to specify the ID of the store you wish to use under the `storage.data` attribute in the configuration file. For example, to use the `rocksdb` store as the data store:
 
 ```toml
-[jmap.store]
+[storage]
 data = "rocksdb"
 ```
 

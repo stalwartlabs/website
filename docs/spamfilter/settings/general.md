@@ -78,7 +78,7 @@ Example:
 let "DOMAIN_DIRECTORY" "'default'";
 ```
 
-If left unspecified, the [default directory](/docs/sieve/interpreter/trusted#default-stores) will be used.
+If left unspecified, the [default directory](/docs/directory/overview#default-directory) will be used.
 
 ## Spam database
 
@@ -90,4 +90,15 @@ Example:
 let "SPAM_DB" "'redis'";
 ```
 
-If left unspecified, the [default lookup store](/docs/sieve/interpreter/trusted#default-stores) will be used.
+If left unspecified, the [default lookup store](/docs/storage/lookup#configuration) will be used.
+
+## Deliver to Junk Mail folder
+
+Stalwart Mail Server server can be configured to automatically move spam messages to a designated Junk Mail folder. This is done by setting the `storage.spam.header` configuration attribute to the name of the header that the spam filter uses to identify spam messages. The header name is case-insensitive. If the header is present in an incoming message, the message is moved to the Junk Mail folder. If the header is not present, the message is delivered to the inbox.
+
+For example:
+
+```toml
+[storage.spam]
+header = "X-Spam-Status: Yes"
+```

@@ -24,4 +24,4 @@ private-key = "file:///opt/stalwart-smtp/etc/private/tls.key"
 
 ## Reloading certificates
 
-When TLS certificates are updated, it is necessary to reload them in order for the changes to take effect. This can be done without stopping the server by using the [command line interface](/docs/management/database/maintenance#tls-certificate-reloading).
+When TLS certificates are updated, it is necessary to reload them in order for the changes to take effect. This can be done without stopping the server by using the [command line interface](/docs/management/config#tls-certificates).

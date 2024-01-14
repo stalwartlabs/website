@@ -30,13 +30,6 @@ The following parameters are available under the `sieve.trusted.limits` key:
 - `duplicate-expiry`: Specifies the default expiration time for the expiry Sieve test.
 - `variable-size`: Specifies the maximum size of a variable in bytes.
 
-### Default stores
-
-The default lookup store and directory to use for Sieve scripts can be configured under the `sieve.trusted.default` key:
-
-- `store`: Specifies the default [lookup store](/docs/storage/lookup) to use for Sieve scripts.
-- `directory`: Specifies the default [directory](/docs/directory/overview) to use for Sieve scripts.
-
 ### Example
 
 ```toml
@@ -54,10 +47,6 @@ received-headers = 50
 cpu = 10000
 nested-includes = 5
 duplicate-expiry = "7d"
-
-[sieve.trusted.default]
-directory = "internal"
-store = "foundationdb"
 ```
 
 ## Scripts
