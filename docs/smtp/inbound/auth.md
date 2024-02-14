@@ -23,11 +23,11 @@ Example using an LDAP directory for authentication:
 
 ```txt
 [session.auth]
-mechanisms = [ { if = "listener", ne = "smtp", then = ["plain", "login"]},
-               { else = [] } ]
-directory = [ { if = "listener", ne = "smtp", then = "ldap" }, 
+mechanisms = [ { if = "listener != 'smtp'", then = "[plain, login]"},
+               { else = false } ]
+directory = [ { if = "listener != 'smtp'", then = "'ldap'" }, 
            { else = false } ]
-require = [ { if = "listener", ne = "smtp", then = true},
+require = [ { if = "listener != 'smtp'", then = true},
             { else = false } ]
 allow-plain-text = false
 must-match-sender = true

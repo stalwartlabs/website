@@ -135,7 +135,7 @@ quota = "diskQuota"
 
 ## Custom lookup queries
 
-Custom lookup filters can be defined under the `directory.<name>.lookup.<lookup_name>` section. These custom queries are used mainly in the SMTP server from rules or Sieve filters.
+Custom lookup filters can be defined under the `directory.<name>.lookup.<lookup_name>` section. These custom queries are used mainly in the SMTP server from expressions or Sieve filters.
 
 For example:
 

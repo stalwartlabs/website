@@ -5,7 +5,7 @@ sidebar_position: 10
 # In-Memory
 
 The in-memory lookup store is a static key value store that is kept entirely in memory. They are defined directly in the configuration file and are useful for storing small amounts of static data that do not change often.
-In-memory stores are used primarily by the SMTP server from rules or Sieve filters and their contents can be defined directly in the configuration file or loaded from local files or from remote HTTP resources.
+In-memory stores are used primarily by the SMTP server from expressions or Sieve filters and their contents can be defined directly in the configuration file or loaded from local files or from remote HTTP resources.
 
 ## Configuration
 

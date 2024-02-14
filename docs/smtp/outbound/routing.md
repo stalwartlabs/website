@@ -43,7 +43,7 @@ For example, the following configuration can be used to deliver messages for loc
 
 ```toml
 [queue.outbound]
-next-hop = [ { if = "rcpt-domain", in-list = "sql/domains", then = "local" }, 
+next-hop = [ { if = "is_local_domain('', rcpt_domain)", then = "'local'" }, 
              { else = false } ]
 ```
 
@@ -93,7 +93,7 @@ To deliver messages to a local mail store over LMTP, the following configuration
 
 ```toml
 [queue.outbound]
-next-hop = [ { if = "rcpt-domain", in-list = "sql/domains", then = "lmtp" }, 
+next-hop = [ { if = "is_local_domain('', rcpt_domain)", then = "'lmtp'" }, 
              { else = false } ]
 
 [remote."lmtp"]

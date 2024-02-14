@@ -8,15 +8,13 @@ The `MAIL FROM` command is used to initiate an SMTP message transfer by identify
 
 ## Address rewriting
 
-Rewriting rules can be used to modify the sender address of an email. This can be useful, for instance, for obfuscating the sender address for privacy reasons, or for changing the domain in an address to match a company's branding. Sender address rewriting is configured using the `session.mail.rewrite` attribute.
+Rewriting expressions can be used to modify the sender address of an email. This can be useful, for instance, for obfuscating the sender address for privacy reasons, or for changing the domain in an address to match a company's branding. Sender address rewriting is configured using the `session.mail.rewrite` attribute.
 
 For example, the following configuration will remove any subdomain from the sender address:
 
 ```toml
 [session.mail]
-rewrite = [ { all-of = [ { if = "listener", ne = "smtp" },
-                         { if = "rcpt", matches = "^([^.]+)@([^.]+)\.(.+)$"}, 
-                       ], then = "${1}@${3}" }, 
+rewrite = [ { if = "listener != 'smtp' & matches('^([^.]+)@([^.]+)\.(.+)$', rcpt)", then = "$1 + '@' + $3" },
             { else = false } ]
 ```
 
@@ -30,7 +28,7 @@ Example:
 
 ```toml
 [session.connect]
-mail = "return_path_filter"
+mail = "'return_path_filter'"
 
 [sieve.trusted.scripts]
 return_path_filter = '''

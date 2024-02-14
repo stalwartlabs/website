@@ -71,13 +71,13 @@ key = ["rcpt-domain"]
 rate = "25/1h"
 ```
 
-## Rules
+## Expressions
 
-Throttle rules enable the imposition of concurrency and rate limits only when a specific condition is met. These [rules](/docs/configuration/rules/syntax) can be configured using the `queue.throttle[].match` attribute. For example, to impose a concurrency and rate limiter by sender only for messages sent to the IP address 10.0.0.20:
+Throttle expressions enable the imposition of concurrency and rate limits only when a specific condition is met. These [expressions](/docs/configuration/expressions/overview) can be configured using the `queue.throttle[].match` attribute. For example, to impose a concurrency and rate limiter by sender only for messages sent to the IP address 10.0.0.20:
 
 ```toml
 [[queue.throttle]]
-match = {if = "remote-ip", eq = "10.0.0.20"}
+match = "remote_ip = '10.0.0.20'"
 key = ["sender", "rcpt-domain"]
 concurrency = 5
 rate = "100/1h"

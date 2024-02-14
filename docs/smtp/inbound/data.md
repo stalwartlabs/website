@@ -16,7 +16,7 @@ The `session.data.script` attribute in the configuration file specifies the name
 
 ```toml
 [session.data]
-script = "data"
+script = "'data'"
 
 [sieve.trusted.scripts]
 data = '''
@@ -77,15 +77,15 @@ Example:
 
 ```toml
 [session.data.add-headers]
-received = [ { if = "listener", eq = "smtp", then = true }, 
+received = [ { if = "listener = 'smtp'", then = true }, 
              { else = false } ]
-received-spf = [ { if = "listener", eq = "smtp", then = true }, 
+received-spf = [ { if = "listener = 'smtp'", then = true }, 
                  { else = false } ]
-auth-results = [ { if = "listener", eq = "smtp", then = true }, 
+auth-results = [ { if = "listener = 'smtp'", then = true }, 
                  { else = false } ]
-message-id = [ { if = "listener", eq = "smtp", then = false }, 
+message-id = [ { if = "listener = 'smtp'", then = false }, 
                { else = true } ]
-date = [ { if = "listener", eq = "smtp", then = false }, 
+date = [ { if = "listener = 'smtp'", then = false }, 
          { else = true } ]
 return-path = false
 ```

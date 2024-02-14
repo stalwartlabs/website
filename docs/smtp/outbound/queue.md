@@ -6,27 +6,18 @@ sidebar_position: 1
 
 Queues are essentially a holding area for outbound messages in an SMTP server. When a message arrives, it is placed in the queue until it can be delivered to its final destination. Stalwart SMTP supports an unlimited number of virtual queues, which means that a system administrator can create and configure multiple queues with different settings and behaviors. This allows for a high degree of flexibility and customization in managing incoming messages. For example, different queues can be created for different types of messages, such as messages from high-priority senders or messages with specific content, and these queues can be processed differently, such as by assigning more resources or prioritizing delivery.
 
-## Queue Path
+Queues in Stalwart Mail Server are distributed and fault-tolerant, meaning that they can be distributed across multiple servers and are designed to continue operating even if one or more servers fail.
 
-Queued messages that are waiting to be delivered are stored in the file system. The path to the message queue is specified with the `queue.path` attribute. It is also possible to hash the queued messages under multiple sub-folders by specifying a hash value in the `queue.hash` attribute.
+## Storage
 
-Example:
+The message queue can be stored in any of the supported [data store](/docs/storage/data) backends while message contents are stored separately in any of the supported [blob store](/docs/storage/blob) backends. To specify the storage backend for the queue, use the `storage.data` and `storage.blob` attributes in the configuration file.
 
-```toml
-[queue]
-path = "/opt/stalwart-smtp/queue"
-hash = 64
-```
-
-[DKIM](/docs/smtp/authentication/dkim/overview), [SPF](/docs/smtp/authentication/spf), [DMARC](/docs/smtp/authentication/dmarc) and [TLS](/docs/smtp/outbound/tls) reports queued for delivery are stored in a different location which is specified with the `report.path` attribute. Just like with the message queue, it is possible to hash the queued reports under multiple sub-folders by specifying a hash value in the `report.hash` attribute. Additionally, the report submitter address can be configured using the `report.submitter` attribute or left blank to use the value specified in `server.hostname`.
-
-Example:
+For example, to use the `foundationdb` store as the queue storage:
 
 ```toml
-[report]
-path = "/opt/stalwart-smtp/reports"
-hash = 64
-submitter = "mx.foobar.org"
+[storage]
+data = "foundationdb"
+blob = "foundationdb"
 ```
 
 ## Schedule
@@ -37,14 +28,14 @@ The queue scheduling settings determine the frequency of delivery attempts, the 
 - `notify`: A list of durations specifying when to notify the sender of any delivery problems.
 - `expire`: The maximum duration that a message can remain in the queue before it expires and is returned to the sender.
 
-Additionally, these scheduling settings can be made dynamic using [rules](/docs/configuration/rules/syntax).
+Additionally, these scheduling settings can be made dynamic using [expressions](/docs/configuration/expressions/overview).
 
 Example:
 
 ```toml
 [queue.schedule]
-retry = ["2m", "5m", "10m", "15m", "30m", "1h", "2h"]
-notify = ["1d", "3d"]
+retry = "[2m, 5m, 10m, 15m, 30m, 1h, 2h]"
+notify = "[1d, 3d]"
 expire = "5d"
 ```
 
@@ -64,7 +55,7 @@ Example:
 [report.dsn]
 from-name = "Mail Delivery Subsystem"
 from-address = "MAILER-DAEMON@foobar.org"
-sign = ["rsa"]
+sign = "['rsa']"
 ```
 
 

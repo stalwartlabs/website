@@ -12,9 +12,9 @@ Address rewriting rules can be defined using regular expressions, providing a po
 
 Stalwart SMTP supports comprehensive address rewriting, allowing changes to both sender and recipient parts of the envelope. This flexibility allows complex manipulations of email traffic to suit a variety of needs. 
 
-## Rules
+## Expressions
 
-Address rewriting in Stalwart SMTP is based on the use of [rules](/docs/configuration/rules/syntax) and regular expressions (regex), a powerful tool for pattern matching in strings. If the regular expression matches the email address, the components of the address that are captured by the regex can be rearranged or modified to form a new address.
+Address rewriting in Stalwart SMTP is based on the use of [expressions](/docs/configuration/expressions/overview) and regular expressions (regex), a powerful tool for pattern matching in strings. If the regular expression matches the email address, the components of the address that are captured by the regex can be rearranged or modified to form a new address.
 
 The capture groups in the regex, which are delineated by parentheses, are numbered sequentially from 0. The 0th group always refers to the entire address that is matched by the regex, while subsequent numbers correspond to the respective groups in the order they appear.
 
@@ -24,13 +24,13 @@ In the given example:
 
 ```toml
 [session.rcpt]
-rewrite = [ { if = "rcpt", matches = "^([^.]+)@([^.]+)\.(.+)$", then = "${1}+${2}@${3}" }, 
-            { else = false } ]"
+rewrite = [ { if = "is_local_domain('%{DEFAULT_DIRECTORY}%', rcpt_domain) & matches('^([^.]+)\.([^.]+)@(.+)$', rcpt)", then = "$1 + '+' + $2 + '@' + $3" },
+            { else = false } ]
 ```
 
 The configuration is set to rewrite recipient addresses (`if = "rcpt"`). If an address matches the regular expression in the `matches` attribute, it's then rewritten according to the pattern in the `then` attribute, which uses the `${pos}` syntax to refer to the captured groups. If an address does not match the regular expression, as indicated by `{ else = false }`, no rewriting occurs.
 
-In the configuration file, address rewriting rules are defined in the `session.mail.rewrite` and `session.rcpt.rewrite` sections. The `session.mail.rewrite` section is used to rewrite the sender address, while the `session.rcpt.rewrite` section is used to rewrite the recipient address.
+In the configuration file, address rewriting expressions are defined in the `session.mail.rewrite` and `session.rcpt.rewrite` sections. The `session.mail.rewrite` section is used to rewrite the sender address, while the `session.rcpt.rewrite` section is used to rewrite the recipient address.
 
 ## Sieve
 

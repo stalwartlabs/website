@@ -18,13 +18,20 @@ Example:
 
 ```toml
 [auth.dmarc]
-verify = [ { if = "listener", eq = "smtp", then = "relaxed" }, 
+verify = [ { if = "listener = 'smtp'", then = "relaxed" }, 
            { else = "disable" } ]
 ```
 
 ## Reporting
 
-Stalwart SMTP [automatically analyzes](/docs/smtp/authentication/analysis) received DMARC failure and aggregate reports from external hosts and can also generate its own DMARC reports to inform other hosts about the authentication outcomes of the DKIM signatures and SPF policies it has processed.
+Stalwart SMTP [automatically analyzes](/docs/smtp/authentication/analysis) received DMARC failure and aggregate reports from external hosts and can also generate its own DMARC reports to inform other hosts about the authentication outcomes of the DKIM signatures and SPF policies it has processed. 
+
+The report submitter address can be configured using the `report.submitter` attribute or left blank to use the value specified in `server.hostname`. For example:
+
+```toml
+[report]
+submitter = "mx.foobar.org"
+```
 
 ### Failures
 
@@ -72,5 +79,5 @@ org-name = "The Foobar Organization"
 contact-info = "jane@foobar.org"
 send = "daily"
 max-size = 26214400 # 25mb
-sign = ["rsa"]
+sign = "['rsa']"
 ```

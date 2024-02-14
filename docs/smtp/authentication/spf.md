@@ -22,9 +22,9 @@ Example:
 
 ```toml
 [auth.spf.verify]
-ehlo = [ { if = "listener", eq = "smtp", then = "relaxed" }, 
+ehlo = [ { if = "listener = 'smtp'", then = "relaxed" }, 
          { else = "disable" } ]
-mail-from = [ { if = "listener", eq = "smtp", then = "relaxed" }, 
+mail-from = [ { if = "listener = 'smtp'", then = "relaxed" }, 
               { else = "disable" } ]
 ```
 

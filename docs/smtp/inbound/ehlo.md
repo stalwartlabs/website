@@ -19,7 +19,7 @@ Example:
 ```toml
 [session.ehlo]
 require = true
-reject-non-fqdn = [ { if = "listener", eq = "smtp", then = true},
+reject-non-fqdn = [ { if = "listener = 'smtp'", then = true },
                     { else = false } ]
 script = "ehlo"
 
@@ -32,8 +32,10 @@ ehlo = '''
     }
 '''
 
-[list]
-blocked-domains = ["mail.spammer.com", "mail.spammer.net"]
+[store."list/blocked-domains"]
+type = "memory"
+format = "list"
+values = ["mail.spammer.com", "mail.spammer.net"]
 ```
 
 ## SMTP Extensions
@@ -61,16 +63,16 @@ pipelining = true
 chunking = true
 requiretls = true
 no-soliciting = ""
-dsn = [ { if = "authenticated-as", ne = "", then = true},
+dsn = [ { if = "!is_empty(authenticated_as)", then = true},
         { else = false } ]
-future-release = [ { if = "authenticated-as", ne = "", then = "7d"},
+future-release = [ { if = "!is_empty(authenticated_as)", then = "7d"},
                    { else = false } ]
-deliver-by = [ { if = "authenticated-as", ne = "", then = "15d"},
+deliver-by = [ { if = "!is_empty(authenticated_as)", then = "15d"},
                { else = false } ]
-mt-priority = [ { if = "authenticated-as", ne = "", then = "mixer"},
+mt-priority = [ { if = "!is_empty(authenticated_as)", then = "mixer"},
                 { else = false } ]
-vrfy = [ { if = "authenticated-as", ne = "", then = true},
+vrfy = [ { if = "!is_empty(authenticated_as)", then = true},
                 { else = false } ]
-expn = [ { if = "authenticated-as", ne = "", then = true},
+expn = [ { if = "!is_empty(authenticated_as)", then = true},
                 { else = false } ]                
 ```

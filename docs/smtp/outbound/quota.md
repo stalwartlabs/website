@@ -24,6 +24,7 @@ For example, to create a global queue quota of 100,000 messages and 10gb:
 messages = 100000
 size = 10737418240 # 10gb
 ```
+
 Please note that the above example will impose a global limit on all queues, to apply a more granular quota please refer to the [quota groups](#groups) section below.
 
 ## Groups
@@ -31,9 +32,9 @@ Please note that the above example will impose a global limit on all queues, to 
 The `queue.quota[].key` attribute enables the creation of quota groups based on a combination of context variables. Available context variables are:
 
 - `sender`: The return path specified in the `MAIL FROM` command.
-- `sender-domain`: The domain component of the return path specified in the `MAIL FROM` command.
+- `sender_domain`: The domain component of the return path specified in the `MAIL FROM` command.
 - `rcpt`: The recipient's address specified in the `RCPT TO` command.
-- `rcpt-domain`: The domain component of the recipient's address specified in the `RCPT TO` command.
+- `rcpt_domain`: The domain component of the recipient's address specified in the `RCPT TO` command.
 
 For example, to limit to 10 the total number of queued messages for any recipient:
 
@@ -47,17 +48,17 @@ And, to limit the queue size to 5MB for a combination of sender and recipient do
 
 ```toml
 [[queue.quota]]
-key = ["sender-domain", "rcpt-domain"]
+key = ["sender_domain", "rcpt_domain"]
 size = 5242880 # 5mb
 ```
 
-## Rules
+## Expressions
 
-Rules enable the imposition of quotas on the message queue only when a specific condition is met. These [rules](/docs/configuration/rules/syntax) can be configured using the `queue.quota[].match` attribute. For example, to impose a 900 messages and 7mb quota by recipient only for messages sent from the domain "foobar.org":
+Expressions enable the imposition of quotas on the message queue only when a specific condition is met. These [expressions](/docs/configuration/expressions/overview) can be configured using the `queue.quota[].match` attribute. For example, to impose a 900 messages and 7mb quota by recipient only for messages sent from the domain "foobar.org":
 
 ```toml
 [[queue.quota]]
-match = {if = "sender-domain", eq = "foobar.org"}
+match = "sender_domain = 'foobar.org'"
 key = ["rcpt"]
 messages = 900
 size = 7340032 # 7mb

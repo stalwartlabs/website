@@ -34,13 +34,13 @@ In the context of Stalwart SMTP, the `relay` parameter dictates whether the serv
 
 This functionality can be beneficial in various scenarios, such as when Stalwart SMTP is configured as a front-end server in a larger email infrastructure. However, care must be taken to properly secure relay functionality, as an open relay can be exploited for spamming purposes. Thus, it's crucial to ensure only authorized users or networks are allowed to use Stalwart SMTP for relaying messages.
 
-The `session.rcpt.relay` setting specifies whether the SMTP server should relay messages for non-local domain names. This attribute is useful when configured as a [rule](/docs/configuration/rules/syntax) that only allows relaying for authenticated users.
+The `session.rcpt.relay` setting specifies whether the SMTP server should relay messages for non-local domain names. This attribute is useful when configured as an [expression](/docs/configuration/expressions/overview) that only allows relaying for authenticated users.
 
 For example:
 
 ```toml
 [session.rcpt]
-relay = [ { if = "authenticated-as", ne = "", then = true }, 
+relay = [ { if = "!is_empty(authenticated_as)", then = true }, 
           { else = false } ]
 ```
 
@@ -52,9 +52,7 @@ Recipient address rewriting is configured using the `session.rcpt.rewrite` attri
 
 ```toml
 [session.rcpt]
-rewrite = [ { all-of = [ { if = "rcpt-domain", in-list = "sql/domains" },
-                         { if = "rcpt", matches = "^([^.]+)\.([^.]+)@(.+)$"}, 
-                       ], then = "${1}+${2}@${3}" }, 
+rewrite = [ { if = "is_local_domain('', rcpt_domain) & matches('^([^.]+)\.([^.]+)@(.+)$', rcpt)", then = "$1 + '+' + $2 + '@' + $3" },
             { else = false } ]
 ```
 
@@ -72,7 +70,7 @@ For example, the following script implements greylisting using an SQL database:
 
 ```toml
 [session.rcpt]
-script = [ { if = "authenticated-as", eq = "", then = "greylist" }, 
+script = [ { if = "is_empty(authenticated-as")", then = "'greylist'" }, 
            { else = false } ]
 
 [sieve.trusted.scripts]

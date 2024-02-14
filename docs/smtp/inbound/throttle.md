@@ -47,20 +47,20 @@ Please note that the above example will impose a global rate limiter, to apply a
 
 The `session.throttle[].key` attribute enables the creation of throttle groups based on a combination of context variables. Available context variables are:
 
-- `remote-ip`: The IP address of the client.
+- `remote_ip`: The IP address of the client.
 - `listener`: The identifier of the listener that received the connection.
-- `helo-domain`: The domain name used in the `EHLO` command.
+- `helo_domain`: The domain name used in the `EHLO` command.
 - `sender`: The return path specified in the `MAIL FROM` command.
-- `sender-domain`: The domain component of the return path specified in the `MAIL FROM` command.
+- `sender_domain`: The domain component of the return path specified in the `MAIL FROM` command.
 - `rcpt`: The recipient's address specified in the `RCPT TO` command.
-- `rcpt-domain`: The domain component of the recipient's address specified in the `RCPT TO` command.
-- `authenticated-as`: The username used for authentication.
+- `rcpt_domain`: The domain component of the recipient's address specified in the `RCPT TO` command.
+- `authenticated_as`: The username used for authentication.
 
 For example, to implement a concurrency limiter per remote IP address:
 
 ```toml
 [[session.throttle]]
-key = ["remote-ip"]
+key = ["remote_ip"]
 concurrency = 5
 ```
 
@@ -68,18 +68,18 @@ And, to limit the rate at which a domain name can send messages to any given rec
 
 ```toml
 [[session.throttle]]
-key = ["sender-domain", "rcpt"]
+key = ["sender_domain", "rcpt"]
 rate = "25/1h"
 ```
 
-## Rules
+## Expressions
 
-Throttle rules enable the imposition of concurrency and rate limits only when a specific condition is met. These [rules](/docs/configuration/rules/syntax) can be configured using the `session.throttle[].match` attribute. For example, to impose a concurrency and rate limiter by sender only for messages coming from the IP address 10.0.0.20:
+Throttle expressions enable the imposition of concurrency and rate limits only when a specific condition is met. These [expressions](/docs/configuration/expressions/overview) can be configured using the `session.throttle[].match` attribute. For example, to impose a concurrency and rate limiter by sender only for messages coming from the IP address 10.0.0.20:
 
 ```toml
 [[session.throttle]]
-match = {if = "remote-ip", eq = "10.0.0.20"}
-key = ["sender", "rcpt-domain"]
+match = "remote_ip = '10.0.0.20'"
+key = ["sender", "rcpt_domain"]
 concurrency = 5
 rate = "100/1h"
 ```

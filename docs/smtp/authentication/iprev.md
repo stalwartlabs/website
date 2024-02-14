@@ -18,6 +18,6 @@ Example:
 
 ```toml
 [auth.iprev]
-verify = [ { if = "listener", eq = "smtp", then = "relaxed" }, 
+verify = [ { if = "listener = 'smtp'", then = "relaxed" }, 
            { else = "disable" } ]
 ```

@@ -10,8 +10,8 @@ For example, to sign each message with both RSA and ED25519 signatures:
 
 ```toml
 [auth.dkim]
-sign = [ { if = "listener", ne = "smtp", then = ["rsa", "ed25519"] }, 
-         { else = [] } ]
+sign = [ { if = "listener != 'smtp'", then = "['rsa', 'ed25519']" }, 
+         { else = false } ]
 ```
 
 ## Signatures
@@ -62,21 +62,21 @@ report = false
 
 Although a single DKIM key may be used to sign multiple domains using [Authorized Third-Party Signatures](https://www.ietf.org/rfc/rfc6541.html), it is recommended to use a separate key for each domain. This allows for more granular control over the DKIM signing process and makes it easier to identify the source of any issues that may arise.
 
-To select which signature to use depending on the sender's domain, you can use a [configuration rule](/docs/configuration/rules/syntax) that evaluates the `sender-domain` variable and selects the appropriate signature. Then, to select the appropriate signature a [dynamic value](/docs/configuration/values/dynamic) may be used. For example:
+To select which signature to use depending on the sender's domain, you can use a [configuration expression](/docs/configuration/expressions/overview) that evaluates the `sender_domain` variable and selects the appropriate signature. Then, to select the appropriate signature a [dynamic value](/docs/configuration/expressions/values) may be used. For example:
 
 ```toml
 [auth.dkim]
-sign = [ { if = "sender-domain", in-list = "sql/domains", then = "rsa_${0}" }, 
-         { else = [] } ]
+sign = [ { if = "is_local_domain('', sender-domain)", then = "'rsa_' + sender_domain" }, 
+         { else = false } ]
 ```
 
-Alternatively, you may also configure rules that select the correct signature without using dynamic values as follows:
+Alternatively, you may also configure expressions that select the correct signature without using dynamic values as follows:
 
 ```toml
 [auth.dkim]
-sign = [ { if = "sender-domain", eq = "foobar.org", then = "rsa_foo" }, 
-         { if = "sender-domain", eq = "example.org", then = "rsa_example" }, 
-         { else = [] } ]
+sign = [ { if = "sender_domain = 'foobar.org'", then = "'rsa_foo'" }, 
+         { if = "sender_domain = 'example.org'", then = "'rsa_example'" }, 
+         { else = false } ]
 ```
 
 ## Generating keys

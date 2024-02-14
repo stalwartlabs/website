@@ -1,0 +1,29 @@
+---
+slug: distributed-smtp-queues
+title: "Introducing Distributed SMTP Queues & Expressions"
+authors: [mdecimus]
+tags: [distributed, smtp, mail, server]
+---
+
+This Valentine's Day, we're not just celebrating love and companionship; we're also celebrating the groundbreaking advancements in the [Stalwart Mail Server](https://github.com/stalwartlabs/mail-server) with the release of version `0.6.0`. In a world where reliability and flexibility in mail server management are more critical than ever, Stalwart Mail Server takes a significant leap forward with the introduction of distributed SMTP queues and the integration of expressions in configuration files. Let's delve into how these features transform your mail server experience, making it more robust, efficient, and customizable than ever before.
+
+### Distributed SMTP Queues: A Heartbeat of Reliability
+
+The latest iteration of Stalwart Mail Server introduces a feature that's set to be the cornerstone of reliability and fault tolerance—distributed SMTP [queues](/docs/smtp/outbound/queue). Gone are the days when your SMTP queue was confined to the local hard drive, a vulnerability that could lead to data loss or downtime in the event of a server crash. With version `0.6.0`, Stalwart Mail Server stores your SMTP queues in the database, a move that not only enhances fault tolerance but also paves the way for queue load distribution across multiple servers in a cluster.
+
+Imagine your mail server as the heart of your organization's communication. Just as the heart's reliability is critical to the body's overall function, so is your SMTP queue's reliability to your organization's communication flow. Distributed SMTP queues ensure that if one server in the cluster experiences issues, the heartbeat of your communication doesn't skip a beat. This feature allows other servers in the cluster to pick up the load, ensuring uninterrupted mail flow and significantly reducing the risk of data loss.
+
+This approach allows for a more balanced and efficient handling of email traffic, making your mail server cluster more resilient to individual failures and capable of handling higher volumes of email more effectively.
+
+### Expressions: A Language of Flexibility
+
+The second headline feature of version `0.6.0` is the support for [expressions](/docs/configuration/expressions/overview) in configuration files. This addition opens up a new realm of flexibility, allowing you to define complex, dynamic criteria for evaluating and handling email messages based on various attributes, such as recipient, sender, remote IP addresses, and other variables.
+
+With expressions, configuring your Stalwart Mail Server becomes akin to coding the DNA of your mail server's behavior. Whether it's routing, filtering, or processing rules, expressions enable you to tailor the mail server's operations to meet your specific needs with precision and adaptability. Consider a scenario where you want to apply specific actions only to emails from a certain domain or IP range, or perhaps to messages that meet a combination of criteria. With expressions, these complex conditions can be easily defined and integrated into your server's configuration, making it smarter and more aligned with your organizational policies.
+
+### Celebrate With Us
+
+As we release Stalwart Mail Server version `0.6.0` this Valentine's Day, we invite you to celebrate not just a day of love but also a milestone in mail server technology. With distributed SMTP queues and expressions in configuration files, we're not just sending you a token of our affection—we're equipping you with the tools to make your mail server environment more resilient, efficient, and tailored to your needs.
+
+So here's to love, to innovation, and to a future where your mail server's reliability and flexibility are the foundation of your organization's communication success. Happy Valentine's Day, and welcome to the new era of [Stalwart Mail Server](https://github.com/stalwartlabs/mail-server).
+

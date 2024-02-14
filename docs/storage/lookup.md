@@ -6,9 +6,10 @@ sidebar_position: 5
 
 Although the term "lookup store" might initially sound ambiguous, it essentially refers to a key-value store. Lookup stores are primarily utilized by the SMTP server to rapidly and efficiently retrieve data. They serve various functions such as:
 
-- [Rules](/docs/configuration/rules/syntax): Lookup stores are used from rules to dynamically configure different settings and perform routing decisions.
+- [Expressions](/docs/configuration/expressions/overview): Lookup stores are used from expressions to dynamically configure different settings and perform routing decisions.
 - [Sieve scripts](/docs/sieve/overview): Sieve scripts, used for filtering and organizing incoming emails, have the possibility to store and retrieve data from lookup stores. 
 - [Spam filter database](/docs/spamfilter/settings/database): One of the critical uses of lookup stores is in managing spam filter databases. This includes sender reputation information, bayesian classifier models, greylist data, message reply tracking and other similar data.
+- [Rate limiting](/docs/smtp/inbound/throttle) and [Fail2ban](/docs/server/fail2ban): Lookup stores are used to store and retrieve rate limiting data, such as the number of messages sent by a specific sender or the number of connections from a specific IP address.
 
 The following backends can be utilized as a lookup store:
 
@@ -18,7 +19,7 @@ The following backends can be utilized as a lookup store:
 
 ## Configuration
 
-Lookup stores do not require any additional configuration as they are referenced by their ID from [rules](/docs/configuration/rules/syntax) and [Sieve scripts](/docs/sieve/overview). However, it is possible to define a default lookup store, which is used when no store is specified in a Sieve lookup function. To configure the default lookup store, you need to specify its ID under the `storage.lookup` attribute in the configuration file. For example, to use the `redis` store as the default lookup store:
+Lookup stores do not require any additional configuration as they are referenced by their ID from [expressions](/docs/configuration/expressions/overview) and [Sieve scripts](/docs/sieve/overview). However, it is possible to define a default lookup store, which is used when no store is specified in a Sieve lookup function. To configure the default lookup store, you need to specify its ID under the `storage.lookup` attribute in the configuration file. For example, to use the `redis` store as the default lookup store:
 
 ```toml
 [storage]

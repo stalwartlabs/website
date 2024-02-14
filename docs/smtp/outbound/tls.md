@@ -82,7 +82,14 @@ org-name = "The Foobar Organization"
 contact-info = "jane@foobar.org"
 send = "daily"
 max-size = 26214400 # 25 mb
-sign = ["rsa"]
+sign = "['rsa']"
+```
+
+The report submitter address can be configured using the `report.submitter` attribute or left blank to use the value specified in `server.hostname`. For example:
+
+```toml
+[report]
+submitter = "mx.foobar.org"
 ```
 
 ## Invalid certificates

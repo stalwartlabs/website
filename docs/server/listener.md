@@ -31,7 +31,7 @@ Listeners require the `protocol` attribute to be set to the protocol that the li
 - `smtp`: SMTP protocol.
 - `lmtp`: LMTP protocol.
 - `managesieve`: ManageSieve protocol.
-- `https`: HTTP protocol, user for the SMTP management interface.
+- `http`: HTTP protocol, user for the SMTP management interface.
 
 For example, to start an SMTP server on port 25 and an IMAP server on port 143, you can use the following configuration:
 
