@@ -32,6 +32,11 @@ The following functions are available for use in expressions in Stalwart Mail Se
 
 ### Lookup Store Functions
 
+#### `sql_query`
+- **Description**: Executes an SQL query against a specified lookup store and returns the result.
+- **Arguments**: 3 (Lookup Store ID, Query, Arguments)
+- **Example**: `sql_query("", "SELECT disk_usage FROM quotas WHERE user = ? AND domain = ?", [authenticated_as, rcpt_domain])` would retrieve the value of the`disk_usage` column from the SQL database.
+
 #### `key_get`
 - **Description**: Retrieves the value associated with a given key from a specified lookup store or the default lookup store if none is specified.
 - **Arguments**: 2 (Lookup Store ID, Key Name)
