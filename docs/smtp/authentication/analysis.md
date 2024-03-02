@@ -12,7 +12,7 @@ The configuration for report analysis can be found under the `report.analysis` k
 
 - `addresses`: A list of addresses (which may include wildcards) from which reports will be intercepted and analyzed.
 - `forward`: Whether reports should be forwarded to their final recipient after analysis.
-- `store`: The location where incoming reports will be stored. If no path is specified, the reports will not be stored.
+- `store`: The duration for which reports should be stored before being deleted, of `false` to disable storage.
 
 Example:
 
@@ -20,5 +20,5 @@ Example:
 [report.analysis]
 addresses = ["dmarc@*", "abuse@*"]
 forward = true
-store = "/opt/stalwart-smtp/incoming"
+store = "30d"
 ```

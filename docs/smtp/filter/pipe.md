@@ -20,8 +20,8 @@ For example:
 
 ```toml
 [session.data.pipe."my-filter"]
-command = "/path/to/my-filter"
-arguments = []
+command = "'/path/to/my-filter'"
+arguments = "['-f', '/path/to/my/script.php']"
 timeout = "10s"
 ```
 
@@ -31,7 +31,7 @@ As mentioned before, it is generally recommended to use sieve scripts or Milter 
 
 ```toml
 [session.data.pipe."spam-assassin"]
-command = "spamc"
-arguments = []
+command = "'spamc'"
+arguments = "[]"
 timeout = "10s"
 ```
