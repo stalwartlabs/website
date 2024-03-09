@@ -14,16 +14,16 @@ An IP strategy determines which type of source and remote IP addressed to use wh
 
 The remote IP strategy determines which type of IP address to use when delivering emails to a remote SMTP server. The IP strategy is configured with the `queue.outbound.ip-strategy` parameter and can be set to use only IPv4 addresses, only IPv6 addresses, or both IPv4 and IPv6 addresses:
 
-- `ipv4-only`: Use only IPv4 addresses.
-- `ipv6-only`: Use only IPv6 addresses.
-- `ipv6-then-ipv4`: Try first using IPv6 addresses and fallback to IPv4 if unavailable.
-- `ipv4-then-ipv6`: Try first using IPv4 addresses and fallback to IPv6 if unavailable.
+- `ipv4_only`: Use only IPv4 addresses.
+- `ipv6_only`: Use only IPv6 addresses.
+- `ipv6_then_ipv4`: Try first using IPv6 addresses and fallback to IPv4 if unavailable.
+- `ipv4_then_ipv6`: Try first using IPv4 addresses and fallback to IPv6 if unavailable.
 
 Example:
 
 ```toml
 [queue.outbound]
-ip-strategy = "ipv4-then-ipv6"
+ip-strategy = "ipv4_then_ipv6"
 ```
 
 ### Source IP
