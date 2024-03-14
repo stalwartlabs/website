@@ -66,7 +66,7 @@ To select which signature to use depending on the sender's domain, you can use a
 
 ```toml
 [auth.dkim]
-sign = [ { if = "is_local_domain('', sender-domain)", then = "'rsa_' + sender_domain" }, 
+sign = [ { if = "is_local_domain('', sender_domain)", then = "'rsa_' + sender_domain" }, 
          { else = false } ]
 ```
 
