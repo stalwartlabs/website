@@ -47,19 +47,19 @@ Please note that the above example will impose a global rate limiter, to apply a
 
 The `queue.throttle[].key` attribute enables the creation of throttle groups based on a combination of context variables. Available context variables are:
 
-- `remote-ip`: The remote IP address.
-- `local-ip`: The local IP address (only available when a [source IP](/docs/smtp/outbound/transport#source-ip) is configured).
+- `remote_ip`: The remote IP address.
+- `local_ip`: The local IP address (only available when a [source IP](/docs/smtp/outbound/transport#source-ip) is configured).
 - `mx`: The remote host's MX hostname.
 - `sender`: The return path specified in the `MAIL FROM` command.
-- `sender-domain`: The domain component of the return path specified in the `MAIL FROM` command.
+- `sender_domain`: The domain component of the return path specified in the `MAIL FROM` command.
 - `rcpt`: The recipient's address specified in the `RCPT TO` command.
-- `rcpt-domain`: The domain component of the recipient's address specified in the `RCPT TO` command.
+- `rcpt_domain`: The domain component of the recipient's address specified in the `RCPT TO` command.
 
 For example, to implement a concurrency limiter per remote IP address:
 
 ```toml
 [[queue.throttle]]
-key = ["remote-ip"]
+key = ["remote_ip"]
 concurrency = 5
 ```
 
@@ -67,7 +67,7 @@ And, to limit the rate at which messages are sent to any domain name to 25 messa
 
 ```toml
 [[queue.throttle]]
-key = ["rcpt-domain"]
+key = ["rcpt_domain"]
 rate = "25/1h"
 ```
 
@@ -78,7 +78,7 @@ Throttle expressions enable the imposition of concurrency and rate limits only w
 ```toml
 [[queue.throttle]]
 match = "remote_ip = '10.0.0.20'"
-key = ["sender", "rcpt-domain"]
+key = ["sender", "rcpt_domain"]
 concurrency = 5
 rate = "100/1h"
 ```
