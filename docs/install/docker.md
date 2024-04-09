@@ -23,7 +23,7 @@ $ docker run -d -ti -p 443:443 -p 8080:8080 \
              -p 25:25 -p 587:587 -p 465:465 \
              -p 143:143 -p 993:993 -p 4190:4190 \
              -v <STALWART_DIR>:/opt/stalwart-mail \
-             --name stalwart-mail stalwart-mail:latest
+             --name stalwart-mail stalwartlabs/mail-server:latest
 ```
 
 Make sure to replace `<STALWART_DIR>` with the path to the directory you created above.
