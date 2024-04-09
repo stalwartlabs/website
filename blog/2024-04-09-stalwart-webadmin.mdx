@@ -1,0 +1,33 @@
+---
+slug: stalwart-webadmin
+title: "Goodbye SSH: Discover Stalwart's Web-Based Admin Interface"
+authors: [mdecimus]
+tags: [webadmin, mail, server]
+---
+
+We're thrilled to announce the release of [Stalwart Mail Server](https://github.com/stalwartlabs/mail-server) version `0.7.0`, a significant update that brings a wealth of features and improvements to enhance the performance and manageability of your email services. This release marks a pivotal moment in our journey to provide an email server solution that combines ease of use with robust performance, ensuring that your email infrastructure is both secure and efficient.
+
+### Introducing Web-Based Administration
+
+![Setup screencast](/img/screencast-setup.gif)
+
+At the heart of version `0.7.0` is the introduction of a new, web-based administration tool. Developed in Rust, this single-page application (SPA) represents a monumental shift in how you interact with Stalwart Mail Server. Gone are the days of relying on SSH connections or command-line interfaces for routine administration tasks. Now, every aspect of your mail server can be managed from the convenience of a web browser.
+
+The new web administration tool is designed to streamline and simplify the management of your mail server, offering a wide array of features:
+
+- **Complete Control Over Accounts and Domains**: Easily manage user accounts, domains, groups, and mailing lists, all from a user-friendly interface.
+- **Advanced Queue Management**: Monitor and manage your SMTP queues with ease, including messages and outbound DMARC and TLS reports, ensuring timely delivery and compliance.
+- **Insightful Report Visualization**: Gain valuable insights into your email security with a dedicated interface for visualizing received DMARC, TLS-RPT, and Failure (ARF) reports.
+- **Full Configuration Flexibility**: Adjust and fine-tune every aspect of your mail server settings directly from the webadmin, tailored to meet your specific requirements.
+- **Enhanced Log Viewing and Searching**: Navigate through logs effortlessly with advanced search and filtering capabilities, making it easier to pinpoint issues or monitor activity.
+- **Self-Service Portal for Users**: Empower your users with a self-service portal for password resets and managing encryption-at-rest keys, enhancing security and convenience.
+
+This transformative approach to mail server management not only elevates the administration experience but also significantly reduces the complexity and time required to manage your email infrastructure.
+
+### Enhanced Performance and Efficiency
+
+Beyond management improvements, Stalwart Mail Server `0.7.0` introduces significant performance enhancements to ensure swift and efficient email delivery. A major focus has been placed on optimizing mailbox retrieval speeds to accommodate IMAP clients, particularly those without client-side caching, ensuring that large mailboxes are displayed promptly. This version also integrates automatic compression for messages and binaries stored in the blob store using LZ4, a move that conservatively manages storage space while improving access and transfer speeds. These enhancements collectively ensure that Stalwart Mail Server `0.7.0` delivers unparalleled performance, making it faster and more efficient than ever before.
+
+### Embracing the Future
+
+With the release of version `0.7.0`, Stalwart Mail Server sets a new standard for email server solutions. The introduction of a web-based administration tool and significant performance improvements underscore our commitment to innovation and excellence. We invite you to experience the future of email server management and performance with Stalwart Mail Server `0.7.0`. 
