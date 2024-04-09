@@ -15,35 +15,6 @@ from each IP address as well as the time elapsed between each request. If there 
 given IP within a configured timeframe, Stalwart JMAP will reject all further requests coming from that IP address 
 for some time until the limit is restored.
 
-## Proxy Setup
-
-When running Stalwart JMAP behind a proxy such as Cloudflare or Amazon CloudFront, the rate limiter needs to
-be instructed to obtain the client's IP address from the ``Forwarded`` or ``X-Forwarded-For`` HTTP header rather
-than from the socket source address (which most likely is the proxy's address).
-
-This can be done by setting the ``jmap.rate-limit.use-forwarded`` parameter to ``true``, for example:
-
-```toml
-[jmap.rate-limit]
-use-forwarded = false
-```
-
-When not using a proxy server, make sure that this parameter is set to ``false`` to avoid malicious clients
-from forging their source IP address.
-
-## Authentication Limits
-
-The setting ``jmap.rate-limit.authentication`` controls the amount of authentication requests that can be made
-in a timeframe by a given IP address. The format of this parameter is ``<number_of_requests>/<time>``
-and the default value is ``10/1m`` (10 requests per minute).
-
-Example:
-
-```toml
-[jmap.rate-limit]
-authentication = "10/1m"
-```
-
 ## Anonymous Limits
 
 The setting ``jmap.rate-limit.anonymous`` controls the amount of requests that an anonymous IP address can make
@@ -92,13 +63,4 @@ Example:
 ```toml
 [jmap.protocol.upload]
 max-concurrent = 4
-```
-
-## Cache Size
-
-The parameter ``jmap.rate-limit.cache.size`` controls the default size of the rate limiting cache. For example:
-
-```toml
-[jmap.rate-limit.cache]
-size = 1024
 ```

@@ -21,8 +21,8 @@ For more information about DMARC, SPF, DKIM or ARC, please refer to the [E-mail 
 
 To further refine the email authentication process and ensure that legitimate messages from known senders are not inadvertently flagged as suspicious, Stalwart Mail Server employs allow lists specifically tailored for DMARC, SPF, and DKIM checks. These lists serve as trusted repositories of domains that are known to have implemented and consistently pass the specified authentication checks.
 
-- **DMARC Allow List**: Located under `etc/spamfilter/maps/allow_dmarc.list`, this file contains one domain per line. Each domain listed here is expected to consistently pass DMARC authentication checks.
-- **SPF and DKIM Allow List**: This list is available at `etc/spamfilter/maps/allow_spf_dkim.list` and, similar to the DMARC allow list, comprises one domain per line. Domains present here are recognized for their consistent adherence to SPF and DKIM authentication standards.
+- **DMARC Allow List**: Defined in the `spam-dmarc` lookup store, this store contains one domain per entry. Each domain listed here is expected to consistently pass DMARC authentication checks.
+- **SPF and DKIM Allow List**: Defined in the `spam-spkf` lookup store and, similar to the DMARC allow list, comprises one domain per entry. Domains present here are recognized for their consistent adherence to SPF and DKIM authentication standards.
 
 When an incoming email undergoes SPF or DKIM validation:
 

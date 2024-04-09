@@ -44,9 +44,9 @@ Example:
 
 ```toml
 [report.spf]
-from-name = "Report Subsystem"
-from-address = "noreply-spf@foobar.org"
-subject = "SPF Authentication Failure Report"
+from-name = "'Report Subsystem'"
+from-address = "'noreply-spf@foobar.org'"
+subject = "'SPF Authentication Failure Report'"
 sign = ["rsa"]
 send = "1/1d"
 ```

@@ -61,25 +61,3 @@ protocol = "lmtp"
 ```
 
 There is no need to enable LMTP if you are only using Stalwart SMTP to receive email from other mail servers. LMTP is only necessary if you are not using Stalwart SMTP as your primary mail server.
-
-## Management port
-
-Stalwart SMTP features an HTTP-based management API that provides system administrators with the ability to manage message queues and scheduled DMARC and TLS aggregate reports. The API can be utilized through the [Command Line Interface](/docs/management/overview), using curl, or even automated through scripts.
-
-To enable the management interface in Stalwart SMTP, a special type of listener that uses the HTTP protocol has to be created. This can be done by specifying the IP address(es) and port(s) for the management API to listen for incoming connections in the `server.listener.<id>.bind` attribute and setting the `server.listener.<id>.protocol` attribute to `http`.
-
-For instance, to enable the HTTP management API on 127.0.0.1 port 8080:
-
-```toml
-[server.listener."management"]
-bind = ["127.0.0.1:8080"]
-protocol = "http"
-```
-
-Management requests must be authenticated and only [administrators](/docs/directory/users#administrators) are allowed to access the management interface. The [default directory](/docs/directory/overview#default-directory) is used to authenticate users.
-
-:::tip Note
-
-The HTTP management interface is disabled when running the all-in-one mail server as the JMAP listener already supports handling SMTP management requests.
-
-:::

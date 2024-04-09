@@ -6,16 +6,7 @@ sidebar_position: 1
 
 **Stalwart Mail Server** is an open-source mail server solution with JMAP, IMAP4, and SMTP support and a wide range of modern features. It is written in Rust and aims to be secure, fast, robust and scalable.
 
-## Choosing a package
-
-Stalwart Mail server is distributed as a single binary that includes JMAP, IMAP, and SMTP servers and also as standalone packages for those who need only one of these servers:
-
-- **All-in-one Mail Server**: A single binary that bundles JMAP, IMAP, and SMTP servers. This version is for those who need a complete, out-of-the-box solution.
-- **JMAP Server**: Standalone package containing only the JMAP server.
-- **IMAP Server**: Standalone package containing IMAP and JMAP server.
-- **SMTP Server**: Standalone package for those needing only an SMTP server.
-
-## Choosing storage backends
+## Choosing a storage backend
 
 When installing Stalwart Mail server you will be asked to specify a backend for each one of the four store types:
 

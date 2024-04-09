@@ -24,11 +24,11 @@ The primary criterion for greylisting is a triplet: the sender's IP address, the
 
 ## Configuration
 
-The parameters governing greylisting, including the triplet criteria, can be fine-tuned to suit specific requirements from the `etc/spamfilter/scripts/greylist.sieve` file.
+The parameters governing greylisting, including the triplet criteria, can be fine-tuned to suit specific requirements from the `greylist` Sieve script.
 
 :::tip Note
 
-By default, greylisting is disabled in Stalwart Mail Server to ensure immediate email delivery. Administrators wishing to employ greylisting need to uncomment the `session.rcpt.script` setting within the `etc/smtp/session.toml` configuration file.
+By default, greylisting is disabled in Stalwart Mail Server to ensure immediate email delivery. Administrators wishing to employ greylisting need to uncomment the `session.rcpt.script` setting within the configuration file.
 
 :::
 

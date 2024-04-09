@@ -31,33 +31,9 @@ ACME in configured in the `acme.<name>` section of the configuration file. The f
 - `directory`: The directory URL of the ACME provider you're using. For Let's Encrypt, the live directory URL is `https://acme-v02.api.letsencrypt.org/directory` and is used for actual certificate issuance. The staging directory URL is `https://acme-staging-v02.api.letsencrypt.org/directory` and is primarily used for testing. 
 - `contact`: Specifies the contact email address, which is used for important communications regarding your ACME account and certificates. 
 - `cache`: Specifies the directory where ACME-related data will be stored. 
-- `port`: ACME needs to verify domain ownership, which, for the `TLS-ALPN-01` challenge, is done via port `443`. If you're using a a reverse proxy and have configured Stalwart to listen on a different port, you can specify the port to use for the challenge here.
 - `renew-before`: Determines how early before expiration the certificate should be renewed. The default setting is `30d`, which means that renewal attempts will start 30 days before the certificate expires.
-
-The following example configures Stalwart to use Let's Encrypt's live directory URL:
-
-```toml
-[acme."letsencrypt"]
-directory = "https://acme-v02.api.letsencrypt.org/directory"
-contact = ["postmaster@%{DEFAULT_DOMAIN}%"]
-cache = "%{BASE_PATH}%/etc/acme"
-port = 443
-renew-before = "30d"
-```
-
-ACME can be enabled globally by setting the `server.tls.acme` parameter to the name of the ACME provider you're using, for example:
-
-```toml
-[server.tls]
-acme = "letsencrypt"
-```
-
-Or on a per-listener basis by setting the `server.listener.<id>.tls.acme` parameter in the listener's configuration:
-
-```toml
-[server.listener."smtp".tls]
-acme = "letsencrypt"
-```
+- `domains`: A list of subject names for which the certificate should be issued.
+- `default`: If set to `true`, certificate obtained by this ACME provided will be used when the client does not provide an SNI server name.
 
 :::tip Note
 
@@ -66,3 +42,16 @@ acme = "letsencrypt"
 - It's recommended to initially use the staging environment to ensure your configuration works correctly before switching to the live environment to avoid hitting rate limits.
 
 :::
+
+## Example
+
+The following example configures Stalwart to use Let's Encrypt's live directory URL:
+
+```toml
+[acme."letsencrypt"]
+directory = "https://acme-v02.api.letsencrypt.org/directory"
+contact = ["postmaster@%{DEFAULT_DOMAIN}%"]
+domains = ["mail.example.org", "imap.example.org", "mx.example.org"]
+cache = "%{BASE_PATH}%/etc/acme"
+renew-before = "30d"
+```

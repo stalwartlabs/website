@@ -76,20 +76,22 @@ Example:
 
 ```toml
 [report.tls.aggregate]
-from-name = "TLS Report"
-from-address = "noreply-tls@foobar.org"
-org-name = "The Foobar Organization"
-contact-info = "jane@foobar.org"
+from-name = "'TLS Report'"
+from-address = "'noreply-tls@foobar.org'"
+org-name = "'The Foobar Organization'"
+contact-info = "'jane@foobar.org'"
 send = "daily"
 max-size = 26214400 # 25 mb
 sign = "['rsa']"
 ```
 
-The report submitter address can be configured using the `report.submitter` attribute or left blank to use the value specified in `server.hostname`. For example:
+The report submitter address can be configured using the `report.submitter` attribute. If not specified, the `key_get('default', 'hostname')` expression is be used.
+
+For example:
 
 ```toml
 [report]
-submitter = "mx.foobar.org"
+submitter = "'mx.foobar.org'"
 ```
 
 ## Invalid certificates

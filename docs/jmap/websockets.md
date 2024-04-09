@@ -22,7 +22,7 @@ JMAP over WebSocket is enabled by default in Stalwart JMAP and is available to J
 
 ## Configuration
 
-The WebSocket following parameters can be configured under the `jmap.web-sockets` section:
+The WebSocket following parameters can be configured under the `jmap.web-socket` section:
 
 - ``timeout``: Connection timeout for WS clients, the amount of seconds before a WS connection times out. Defaults to 10 seconds.
 - ``heartbeat``: Heartbeat interval, the amount of seconds between heartbeat packets sent to WS clients. Defaults to 5 seconds.
@@ -31,7 +31,7 @@ The WebSocket following parameters can be configured under the `jmap.web-sockets
 Example:
 
 ```toml
-[jmap.web-sockets]
+[jmap.web-socket]
 throttle = "1s"
 timeout = "10m"
 heartbeat = "1m"

@@ -21,7 +21,7 @@ Ensuring the efficiency of the spam classifier necessitates regular training, ad
 - **Manual Training**: Users or administrators can manually feed the classifier with samples of spam and legitimate emails. This hands-on approach allows for targeted refinement, especially useful when addressing specific or novel types of unsolicited emails.
 - **Automatic Training**: The classifier is also designed to self-train, automatically refining its parameters when an email's spam score surpasses a predetermined threshold. This automated approach ensures that the classifier remains up-to-date with minimal human intervention.
 
-Central to this training process is the configuration of the **AUTOLEARN_SPAM_HAM_BALANCE** variable, accessible via the `config.sieve` file. This variable plays a pivotal role in ensuring the balance between learned spam (unsolicited) and ham (legitimate) emails.
+Central to this training process is the configuration of the **AUTOLEARN_SPAM_HAM_BALANCE** variable, accessible via the `spam-filter` Sieve script. This variable plays a pivotal role in ensuring the balance between learned spam (unsolicited) and ham (legitimate) emails.
 
 ```sieve
 # Keep difference for spam/ham learns for at least this value
@@ -32,7 +32,7 @@ The spam/ham balance is essentially a mechanism to maintain a relative equilibri
 
 ## Classification
 
-For the spam classifier to function at its optimum, it relies on a set of parameters that guide its decision-making process. These parameters are finely tunable, allowing administrators to adapt the classifier to specific environments or challenges. The parameters for the classifier are configurable from the `etc/spamfilter/scripts/bayes_classify.sieve` sieve script. 
+For the spam classifier to function at its optimum, it relies on a set of parameters that guide its decision-making process. These parameters are finely tunable, allowing administrators to adapt the classifier to specific environments or challenges. The parameters for the classifier are configurable from the `spam-filter` sieve script. 
 
 The key parameters are:
 
@@ -49,7 +49,7 @@ The process of training the spam classifier doesn't always necessitate manual in
 
 Here's how autolearning works: If an incoming message's score significantly exceeds or falls below certain thresholds, the system will automatically treat it as a sample of spam or ham, respectively, and use it to train the classifier. This approach leverages the system's current understanding to further refine its future judgments.
 
-Key parameters governing the autolearn feature can be configured from the `etc/spamfilter/scripts/config.sieve` file:
+Key parameters governing the autolearn feature can be configured from the `spam-filter` Sieve script:
 
 - **AUTOLEARN_ENABLE (default: "true")**: This parameter determines whether the autolearn feature is active. By setting this to "true", the system will automatically train the classifier based on the defined score thresholds.
 - **AUTOLEARN_HAM_THRESHOLD (default: "-0.5")**: If an email's score is equal to or greater than this threshold (in this case, -0.5), it is deemed to be a legitimate email or 'ham'. The classifier will then use this message to learn characteristics of legitimate emails.

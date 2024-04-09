@@ -27,7 +27,7 @@ An important component of Stalwart Mail Server's phishing filter is its reliance
 - **OpenPhish**: A community-driven platform that gathers, verifies, and shares phishing URLs. OpenPhish's extensive list is derived from various sources, including industry partners, voluntary contributors, and automated crawlers.
 - **PhishTank**: Operated by the cybersecurity company OpenDNS, PhishTank allows users to submit, verify, and share phishing URLs. It's a collaborative platform where the community actively participates in identifying and flagging phishing attempts.
 
-To ensure optimal protection, it's crucial that the phishing filter references the most recent data. The frequency with which Stalwart Mail Server refreshes its connection to these databases can be configured by administrators. The configuration settings for this refresh rate are located in the `etc/spamfilter/scripts/url.sieve` script.
+To ensure optimal protection, it's crucial that the phishing filter references the most recent data. The frequency with which Stalwart Mail Server refreshes its connection to these databases can be configured by administrators. The configuration settings for this refresh rate are located in the `spam-filter` script.
 
 ### Zero Width Spaces
 

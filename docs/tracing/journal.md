@@ -14,11 +14,12 @@ The journal logs are stored in **journal files**. By default, these files are lo
 If the directory `/var/log/journal/` exists, logs will be stored persistently; otherwise, they will remain volatile.
 It's important to note that, due to its binary nature, the content of the journal cannot be read using regular text tools like `cat` or `less`. Instead, you would use the `journalctl` command to access, read, and query the logs.
 
-To enable journal logging, set the `global.tracing.method` attribute to `journal` in the configuration file. For example:
+To enable journal logging, set the `tracer.<id>.type` attribute to `journal` in the configuration file. For example:
 
 ```toml
-[global.tracing]
-method = "journal"
+[tracer.journal]
+type = "journal"
 level = "info"
+enable = true
 ```
 

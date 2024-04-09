@@ -26,12 +26,11 @@ bind = "[::]:25"
 
 Listeners require the `protocol` attribute to be set to the protocol that the listener should use to receive incoming connections:
 
-- `jmap`: JMAP protocol.
+- `http`: HTTP protocol.
 - `imap`: IMAP protocol.
 - `smtp`: SMTP protocol.
 - `lmtp`: LMTP protocol.
 - `managesieve`: ManageSieve protocol.
-- `http`: HTTP protocol, user for the SMTP management interface.
 
 For example, to start an SMTP server on port 25 and an IMAP server on port 143, you can use the following configuration:
 

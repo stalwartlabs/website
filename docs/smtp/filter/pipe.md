@@ -21,7 +21,7 @@ For example:
 ```toml
 [session.data.pipe."my-filter"]
 command = "'/path/to/my-filter'"
-arguments = "['-f', '/path/to/my/script.php']"
+arguments = "['-f', '/path/to/my/data.txt']"
 timeout = "10s"
 ```
 

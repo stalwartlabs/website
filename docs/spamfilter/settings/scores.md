@@ -6,7 +6,7 @@ sidebar_position: 2
 
 As mentioned in the [tags and scores](/docs/spamfilter/overview#tags-and-scores) section, the spam filter's analysis of incoming messages yields a series of tags, each with a corresponding score. To determine the email's overall classification (spam or ham), scores associated with these tags play a crucial role.
 
-The configuration of these scores is done in the `etc/spamfilter/maps/scores.map` file. Each line in the `scores.map` file denotes a tag and its corresponding action or score. The format used is:
+The configuration of these scores is done in the `spam-scores` lookup store. Each entry in this store denotes a tag and its corresponding action or score. The format used is:
 
 ```
 TAG [score|"discard"|"reject"]
@@ -17,7 +17,7 @@ TAG [score|"discard"|"reject"]
    - **"discard"**: If an email contains a tag with this flag, the entire message will be discarded, meaning it won't reach the recipient's mailbox.
    - **"reject"**: When an email is found with a tag having this flag, the message will be rejected. Typically, the sending server will be notified of this rejection.
 
-For example, consider the following entries from the `scores.map` file:
+For example, consider the following entries in the `spam-scores` lookup store:
 
 ```
 BAYES_HAM -3.0

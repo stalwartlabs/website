@@ -18,7 +18,6 @@ sign = [ { if = "listener != 'smtp'", then = "['rsa', 'ed25519']" },
 
 DKIM signatures are defined under the `signature.<name>` key with the following attributes:
 
-- `public-key`: The contents or location of the public key file used to sign messages (required only for ED25519).
 - `private-key`: The contents or location of the private key file used to sign messages.
 - `domain`: The domain associated with the DKIM signature.
 - `selector`: The selector used to identify the DKIM public key.
@@ -36,7 +35,7 @@ Example:
 
 ```toml
 [signature."rsa"]
-private-key = "file:///opt/stalwart-smtp/etc/private/dkim-rsa.key"
+private-key = "%{file:/opt/stalwart-smtp/etc/private/dkim-rsa.key}%"
 domain = "foobar.org"
 selector = "rsa_default"
 headers = ["From", "To", "Date", "Subject", "Message-ID"]
@@ -47,8 +46,7 @@ set-body-length = false
 report = true
 
 [signature."ed25519"]
-public-key = "11qYAYKxCrfVS/7TyWQHOg7hcvPapiMlrwIaaPcHURo="
-private-key = "file:///opt/stalwart-smtp/etc/private/dkim-ed.key"
+private-key = "%{file:/opt/stalwart-smtp/etc/private/dkim-ed.key}"
 domain = "foobar.org"
 selector = "ed_default"
 headers = ["From", "To", "Date", "Subject", "Message-ID"]
@@ -80,6 +78,8 @@ sign = [ { if = "sender_domain = 'foobar.org'", then = "'rsa_foo'" },
 ```
 
 ## Generating keys
+
+The simplest way to generate and publish a DKIM key pair is using the [web-admin](/docs/management/webadmin/overview). However, you can also generate the keys manually using the `openssl` command.
 
 ### RSA
 

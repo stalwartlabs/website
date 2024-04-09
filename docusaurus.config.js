@@ -73,7 +73,7 @@ const config = {
         title: 'Stalwart',
         logo: {
           alt: 'Stalwart Labs',
-          src: 'img/logo.png',
+          src: 'img/logo.svg',
           href: 'https://stalw.art',
           target: '_self',
         },

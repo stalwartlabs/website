@@ -17,7 +17,8 @@ The following configuration settings are available for mySQL, which are specifie
 - `user`: The username used to log in to the MySQL database.
 - `password`: The password associated with the specified user.
 - `max-allowed-packet`: The maximum size of the packet (specified in bytes) that can be sent to or received from the MySQL server. The default value is `4MB`.
-- `timeout.wait`: Defines the maximum time the system should wait for a response from the MySQL server before timing out. The time is specified as a string, such as `"15s"` for 15 seconds.
+- `timeout`: Defines the maximum time the system should wait for a response from the MySQL server before timing out. The time is specified as a string, such as `"15s"` for 15 seconds.
+- `tls.allow-invalid-certs`: If set to `true`, allows the use of self-signed certificates or certificates signed by unknown certificate authorities. This is useful for testing or development environments.
 
 ### Connection Pool
 
@@ -38,9 +39,7 @@ user = "root"
 password = "password"
 disable = true
 max-allowed-packet = 1073741824
-
-[store."mysql".timeout]
-wait = "15s"
+timeout = "15s"
 
 [store."mysql".pool]
 max-connections = 10
@@ -49,7 +48,7 @@ min-connections = 5
 
 ## Lookup queries
 
-When mySQL is used as a [directory](/docs/directory/overview) or [lookup store](/docs/storage/lookup), SQL queries can be mapped to lookup ids. This is done by specifying the query under `store.<name>.query.<lookup_name>` where `<name>` is the mySQL store ID and `<lookup_name>` it the lookup ID to map the query to. 
+When mySQL is used as a [directory](/docs/auth/directory/overview) or [lookup store](/docs/storage/lookup), SQL queries can be mapped to lookup ids. This is done by specifying the query under `store.<name>.query.<lookup_name>` where `<name>` is the mySQL store ID and `<lookup_name>` it the lookup ID to map the query to. 
 
 For example:
 

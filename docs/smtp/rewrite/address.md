@@ -50,7 +50,7 @@ In Stalwart SMTP, you can accomplish the same effect using Sieve scripts.
 
 ```toml
 [session.rcpt]
-script = "remove-dots"
+script = "'remove-dots'"
 
 [sieve.trusted.scripts]
 remove-dots = '''require ["variables", "envelope", "regex"];
@@ -91,7 +91,7 @@ Now, let's consider an example where you might want to disable Delivery Status N
 
 ```toml
 [session.rcpt]
-script = "silent-bounce"
+script = "'silent-bounce'"
 
 [sieve.trusted.scripts]
 silent-bounce = '''require ["variables", "envelope"];
@@ -106,5 +106,3 @@ Here is a breakdown of how the script works:
 - The script itself begins by requiring the "variables" and "envelope" extensions.
 - The conditional `if envelope :matches "to" "mailer-daemon@*"` checks if the recipient address matches the pattern "mailer-daemon@*". If it does, the script proceeds to execute the `set` command within the `if` block.
 - The line `set "envelope.notify" "NEVER";` sets the envelope's NOTIFY parameter to "NEVER", thereby disabling DSNs for emails sent to any "mailer-daemon" address. This would ensure that no DSNs are sent for emails directed to these addresses, thereby suppressing unnecessary notifications.
-
-

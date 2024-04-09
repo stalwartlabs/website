@@ -14,5 +14,5 @@ The underlying principle is straightforward: if one user in the network identifi
 
 Pyzor is a prominent example of a collaborative spam detection system. It's an open-source tool that uses collective intelligence to identify and filter out spam. When users across the network mark emails as spam, Pyzor creates and shares their hashes. Conversely, it can also recognize legitimate emails, ensuring that genuine communications are not mistakenly flagged.
 
-Pyzor is enabled by default in Stalwart Mail Server and it is configured to use the public Pyzor server at `public.pyzor.org` with a lookup timeout of 5 seconds. These settings can be changed from the `etc/spamfilter/scripts/pyzor.sieve` script.
+Pyzor is enabled by default in Stalwart Mail Server and it is configured to use the public Pyzor server at `public.pyzor.org` with a lookup timeout of 5 seconds. These settings can be changed from the `spam-filter` script.
 

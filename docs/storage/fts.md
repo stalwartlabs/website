@@ -39,9 +39,9 @@ To configure the full-text store, you need to specify the ID of the store you wi
 fts = "postgresql"
 ```
 
-Before indexing a message in the internal store, Stalwart attempts to automatically detect its language. However, in certain scenarios where language detection may not be possible (for instance, if the text is too short or doesn't have clear language characteristics), the system will default to using the configured default language for text processing and indexing determined by the `storage.fts.default-language` attribute. For example:
+Before indexing a message in the internal store, Stalwart attempts to automatically detect its language. However, in certain scenarios where language detection may not be possible (for instance, if the text is too short or doesn't have clear language characteristics), the system will default to using the configured default language for text processing and indexing determined by the `storage.full-text.default-language` attribute. For example:
 
 ```toml
-[storage.fts]
+[storage.full-text]
 default-language = "en"
 ```

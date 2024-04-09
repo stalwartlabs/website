@@ -30,17 +30,6 @@ max-failures = 3
 allow-plain-text = false
 ```
 
-## UIDPLUS extension
-
-The UIDPLUS IMAP extension enhances the functionality of the IMAP protocol by providing additional features for handling email message identifiers (UIDs). It introduces new capabilities, such as the ability to assign unique identifiers to messages upon their creation or copying. This extension enables clients to more efficiently manage and synchronize changes to mailboxes, such as detecting newly added messages or ensuring the consistency of operations like moving messages between folders. UIDPLUS simplifies client-server interactions by providing more detailed information about the results of certain commands, thereby improving the overall efficiency of email management in IMAP.
-
-The `imap.protocol.uidplus` setting enables the `UIDPLUS` extension, for example:
-
-```toml
-[imap.protocol]
-uidplus = true
-```
-
 ## Folders
 
 The `imap.folders` section contains parameters that control folder settings:

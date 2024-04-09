@@ -4,13 +4,15 @@ sidebar_position: 1
 
 # Configuration
 
-The general settings for the spam filter can be found in the `etc/spamfilter/scripts/config.sieve` script. In this script, each configuration parameter is defined using the Sieve scripting language's variable mechanism. To set a variable, the `let` keyword is employed, followed by the variable's name, and then its designated value.
+The general settings for the spam filter can be found in the `spam-filter` Sieve script. Each configuration parameter is defined using the Sieve scripting language's variable mechanism. To set a variable, the `let` keyword is employed, followed by the variable's name, and then its designated value.
 
 For example:
 
 ```sieve
 let "ADD_HEADER_SPAM" "true";
 ```
+
+By default, all SPAM filter settings are obtained from the `spam-config` [in-memory lookup store](/docs/storage/backends/memory).
 
 ## Headers
 
@@ -70,7 +72,7 @@ let "SCORE_REJECT_THRESHOLD" "12.0";
 
 ## Directory
 
-The `DOMAIN_DIRECTORY` setting specifies which [directory](/docs/directory/overview) to use when looking up local domain names. The primary reason for this configuration is to optimize network resources. When the system identifies a domain as local, it can bypass certain checks like DNSBL (DNS-based Block Lists) or phishing verifications. These checks are typically more relevant for external or unfamiliar domains. By avoiding unnecessary checks on local domains, the system can process emails faster and more efficiently, reducing network overhead and enhancing performance.
+The `DOMAIN_DIRECTORY` setting specifies which [directory](/docs/auth/directory/overview) to use when looking up local domain names. The primary reason for this configuration is to optimize network resources. When the system identifies a domain as local, it can bypass certain checks like DNSBL (DNS-based Block Lists) or phishing verifications. These checks are typically more relevant for external or unfamiliar domains. By avoiding unnecessary checks on local domains, the system can process emails faster and more efficiently, reducing network overhead and enhancing performance.
 
 Example:
 
@@ -78,7 +80,7 @@ Example:
 let "DOMAIN_DIRECTORY" "'default'";
 ```
 
-If left unspecified, the [default directory](/docs/directory/overview#default-directory) will be used.
+If left unspecified, the [default directory](/docs/auth/directory/overview#default-directory) will be used.
 
 ## Spam database
 
@@ -94,11 +96,11 @@ If left unspecified, the [default lookup store](/docs/storage/lookup#configurati
 
 ## Deliver to Junk Mail folder
 
-Stalwart Mail Server server can be configured to automatically move spam messages to a designated Junk Mail folder. This is done by setting the `storage.spam.header` configuration attribute to the name of the header that the spam filter uses to identify spam messages. The header name is case-insensitive. If the header is present in an incoming message, the message is moved to the Junk Mail folder. If the header is not present, the message is delivered to the inbox.
+Stalwart Mail Server server can be configured to automatically move spam messages to a designated Junk Mail folder. This is done by setting the `spam.header.is-spam` configuration attribute to the name of the header that the spam filter uses to identify spam messages. The header name is case-insensitive. If the header is present in an incoming message, the message is moved to the Junk Mail folder. If the header is not present, the message is delivered to the inbox.
 
 For example:
 
 ```toml
-[storage.spam]
-header = "X-Spam-Status: Yes"
+[spam.header]
+is-spam = "X-Spam-Status: Yes"
 ```

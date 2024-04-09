@@ -18,9 +18,9 @@ Example:
 
 ```toml
 [report.dkim]
-from-name = "Report Subsystem"
-from-address = "noreply-dkim@foobar.org"
-subject = "DKIM Authentication Failure Report"
+from-name = "'Report Subsystem'"
+from-address = "'noreply-dkim@foobar.org'"
+subject = "'DKIM Authentication Failure Report'"
 sign = ["rsa"]
 send = "1/1d"
 ```

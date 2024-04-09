@@ -17,8 +17,6 @@ For each remote host, the following parameters can be specified as sub-keys of `
 - `address`: The fully-qualified domain name of the remote server, for example "mail.domain.org".
 - `port`: The port on the remote server that should be used for the connection.
 - `protocol`: The communication protocol to use, with valid options being `lmtp` or `smtp`.
-- `concurrency`: The maximum number of open connections to the remote host that can be established at any given time (default is `10`).
-- `timeout`: The time limit for establishing a connection to the remote host (default is `60s`).
 
 ### TLS Options
 
@@ -32,7 +30,7 @@ The configuration of TLS for remote servers is managed through the following par
 Authentication can be configured using the following parameters located under the `remote.<id>.auth` key in the configuration file:
 
 - `username`: The username to be used for authentication.
-- `secret`: The password to be used for authentication. Can also be specified using an [environment variable](/docs/configuration/values/environment).
+- `secret`: The password to be used for authentication. Can also be specified using an [environment variable](/docs/configuration/macros).
 
 ## Local host
 
@@ -69,8 +67,6 @@ next-hop = "relay"
 address = "relay.example.org"
 port = 25
 protocol = "smtp"
-concurrency = 10
-timeout = "1m"
 
 [remote."relay".tls]
 implicit = false
@@ -100,8 +96,6 @@ next-hop = [ { if = "is_local_domain('', rcpt_domain)", then = "'lmtp'" },
 address = "localhost"
 port = 24
 protocol = "lmtp"
-concurrency = 10
-timeout = "1m"
 
 [remote."lmtp".tls]
 implicit = false

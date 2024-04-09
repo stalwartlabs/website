@@ -14,14 +14,14 @@ Stalwart Mail Server offers support for both versions 1 and 2 of the HAProxy pro
 
 ```toml
 [server.proxy]
-trusted-networks = {"127.0.0.0/8", "::1", "10.0.0.0/8"}
+trusted-networks = ["127.0.0.0/8", "::1", "10.0.0.0/8"]
 ```
 
 It is also possible to define trusted networks on a per-listener basis by setting the `server.listener.<id>.proxy.trusted-networks` parameter in the listener's configuration, for example:
 
 ```toml
 [server.listener."smtp".proxy]
-trusted-networks = {"127.0.0.0/8", "::1", "10.0.0.0/8"}
+trusted-networks = ["127.0.0.0/8", "::1", "10.0.0.0/8"]
 ```
 
 By defining these trusted networks, Stalwart Mail Server can accurately identify and accept incoming connections that are relayed through a proxy.

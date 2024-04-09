@@ -14,6 +14,7 @@ Stalwart SMTP supports an unlimited number of queue quotas, which can be dynamic
 - `size`: Specifies the maximum queue size in bytes.
 - `key`: An optional list of context variables that determine where this quota should be enforced.
 - `match`: An optional rule that indicates the conditions under which this quota should be enforced.
+- `enable`: An boolean attribute that specifies whether the quota is enabled. If not specified, the quota is ignored.
 
 Quotas can either define both a message limit and size limit, or just one of the two.
 
@@ -23,6 +24,7 @@ For example, to create a global queue quota of 100,000 messages and 10gb:
 [[queue.quota]]
 messages = 100000
 size = 10737418240 # 10gb
+enable = true
 ```
 
 Please note that the above example will impose a global limit on all queues, to apply a more granular quota please refer to the [quota groups](#groups) section below.
@@ -42,6 +44,7 @@ For example, to limit to 10 the total number of queued messages for any recipien
 [[queue.quota]]
 key = ["rcpt"]
 messages = 10
+enable = true
 ```
 
 And, to limit the queue size to 5MB for a combination of sender and recipient domain:
@@ -50,6 +53,7 @@ And, to limit the queue size to 5MB for a combination of sender and recipient do
 [[queue.quota]]
 key = ["sender_domain", "rcpt_domain"]
 size = 5242880 # 5mb
+enable = true
 ```
 
 ## Expressions
@@ -62,4 +66,5 @@ match = "sender_domain = 'foobar.org'"
 key = ["rcpt"]
 messages = 900
 size = 7340032 # 7mb
+enable = true
 ```

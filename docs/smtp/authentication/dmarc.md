@@ -26,11 +26,13 @@ verify = [ { if = "listener = 'smtp'", then = "relaxed" },
 
 Stalwart SMTP [automatically analyzes](/docs/smtp/authentication/analysis) received DMARC failure and aggregate reports from external hosts and can also generate its own DMARC reports to inform other hosts about the authentication outcomes of the DKIM signatures and SPF policies it has processed. 
 
-The report submitter address can be configured using the `report.submitter` attribute or left blank to use the value specified in `server.hostname`. For example:
+The report submitter address can be configured using the `report.submitter` attribute. If not specified, the `key_get('default', 'hostname')` expression is be used.
+
+For example:
 
 ```toml
 [report]
-submitter = "mx.foobar.org"
+submitter = "'mx.foobar.org'"
 ```
 
 ### Failures
@@ -49,9 +51,9 @@ Example:
 
 ```toml
 [report.dmarc]
-from-name = "Report Subsystem"
-from-address = "noreply-dmarc@foobar.org"
-subject = "DMARC Authentication Failure Report"
+from-name = "'Report Subsystem'"
+from-address = "'noreply-dmarc@foobar.org'"
+subject = "'DMARC Authentication Failure Report'"
 send = "1/1d"
 sign = ["rsa"]
 ```
@@ -73,10 +75,10 @@ Example:
 
 ```toml
 [report.dmarc.aggregate]
-from-name = "DMARC Report"
-from-address = "noreply-dmarc@foobar.org"
-org-name = "The Foobar Organization"
-contact-info = "jane@foobar.org"
+from-name = "'DMARC Report'"
+from-address = "'noreply-dmarc@foobar.org'"
+org-name = "'The Foobar Organization'"
+contact-info = "'jane@foobar.org'"
 send = "daily"
 max-size = 26214400 # 25mb
 sign = "['rsa']"

@@ -9,50 +9,21 @@ In-memory stores are used primarily by the SMTP server from expressions or Sieve
 
 ## Configuration
 
-The following configuration settings are available for in-memory stores, which are specified under the `store.<name>` section of the configuration file:
+Lookup stores are specified in the configuration file under the `lookup.<name>` section, where `<name>` is the unique identifier for the lookup store. Keys under the `lookup.<name>` section define the entries in the lookup store, where the key is the lookup key and the value is the lookup value. 
 
-- `type`: Specifies the type of database, set to `memory` for in-memory stores.
-- `format`: Specifies the type of the lookup. Can be either `list`, `map`, `glob` or `regex`.
-- `values`: The list or map contents or the URL to the list or map, for example `file:///etc/spamfilter/maps/spam_trap.list` or `https://get.stalw.art/maps/mime_types.map`.
-- `comment`: Lines beginning with this character are ignored. Defaults to `#`.
-- `separator`: For maps, the character that separates the key from the value. Defaults to space.
-
-Supported in-memory lookup formats are:
-
-- `list`: A list of values.
-- `glob`: A list of glob patterns (for example `*.domain.org`, `user@*`, or `test@domain?.org`).
-- `regex`: A list of regular expressions.
-- `map`: A map of key/value pairs.
-
-The `values` key also supports the special URL `file+fallback://` which defines a local fallback file to be used when a remote resource is unavailable.
-
-## Example
+For example, to create the `allow-list-domain` lookup store with the keys `example.com` and `example.org`, the configuration would look like this:
 
 ```toml
-[store."blocked_ips"]
-type = "memory"
-format = "list"
-values = ["10.0.0.20", "192.168.1.7"]
+[lookup."allow-list-domain"]
+example.com = true
+example.org = true
+```
 
-[store."domains"]
-type = "memory"
-format = "list"
-values = ["example.org", "example.com"]
+It is also possible to use glob patterns in the keys to match multiple entries. For example, to create a lookup store that matches all subdomains of `example.com` and all mail exchangers of `example.org`, the configuration would look like this:
 
-[store."redirectors"]
-type = "memory"
-format = "glob"
-comment = '#'
-values = ["https://get.stalw.art/resources/config/spamfilter/maps/url_redirectors.list", 
-          "file+fallback://%{BASE_PATH}%/etc/spamfilter/maps/url_redirectors.list"]
-
-[store."mime-types"]
-type = "memory"
-format = "map"
-comment = '#'
-separator = ' '
-values = ["https://get.stalw.art/resources/config/spamfilter/maps/mime_types.map", 
-          "file+fallback://%{BASE_PATH}%/etc/spamfilter/maps/mime_types.map"]
-
+```toml
+[lookup."allow-list-domain"]
+"*.example.com" = true
+"mx?.example.org" = true
 ```
 

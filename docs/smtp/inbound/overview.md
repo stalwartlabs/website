@@ -6,7 +6,7 @@ sidebar_position: 1
 
 In Stalwart SMTP Server, a "session" refers to a single incoming SMTP connection. Each SMTP session progresses through a series of distinct stages, each with its own distinct function and relevance. The stages of an SMTP session include the following:
 
-- [Connect](#connect-stage): This is the initial stage, where the server and client establish a connection. 
+- [Connect](/docs/smtp/inbound/connect): This is the initial stage, where the server and client establish a connection. 
 - [EHLO](/docs/smtp/inbound/ehlo): This stage is where the client introduces itself to the server.
 - [AUTH](/docs/smtp/inbound/auth): In this stage, the client provides authentication details to prove its identity to the server.
 - [MAIL](/docs/smtp/inbound/mail): During the MAIL stage, the client specifies the sender of the email message.
@@ -32,24 +32,4 @@ Example:
 timeout = "5m"
 transfer-limit = 262144000 # 250 MB
 duration = "10m"
-```
-
-## Connect stage
-
-Currently, the only configuration option available for the connect stage is the `session.connect.script` attribute, which specifies the name of the [Sieve script](/docs/sieve/overview) to run before the SMTP session begins. This can be useful for filtering connections based on their remote IP address, for example.
-
-Example:
-
-```toml
-[session.connect]
-script = "connect_filter"
-
-[sieve.trusted.scripts]
-connect_filter = '''
-require ["variables", "reject"];
-
-if string "${env.remote_ip}" "10.0.0.88" {
-    reject "Your IP '${env.remote_ip}' is not welcomed here.";
-}
-'''
 ```

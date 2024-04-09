@@ -9,7 +9,7 @@ In the realm of email security and spam filtering, two powerful tools stand out 
 - **DNSBL (DNS-based Block List)**: This is a list of IP addresses or domain names published through the Internet Domain Name System. The primary purpose of a DNSBL is to catalog IP addresses or domain names known to be sources of spam, malicious activities, or other undesirable content. When an email server receives an incoming email, it queries the DNSBL to check if the sender is on the blacklist. If a match is found, the email can be flagged, rejected, or subjected to further checks based on the server's configuration.
 - **DNSWL (DNS-based Allowlist)**: Operating in contrast to DNSBL, a DNSWL is a list of trusted IP addresses or domain names. These are typically IP addresses, ranges or domain names known to send legitimate emails. By querying a DNSWL, email servers can quickly identify and prioritize emails from trusted senders, reducing false positives and ensuring that genuine messages reach their intended recipients without unnecessary delays.
 
-For organizations and administrators aiming to tailor their spam filtering to specific needs or threats, Stalwart Mail Server offers the flexibility to customize the DNSBLs and DNSWLs used for checking from the `etc/spamfilter/scripts/rbl.sieve` script.
+For organizations and administrators aiming to tailor their spam filtering to specific needs or threats, Stalwart Mail Server offers the flexibility to customize the DNSBLs and DNSWLs used for checking from the `spam-filter` script.
 
 ## IP Address Checks
 

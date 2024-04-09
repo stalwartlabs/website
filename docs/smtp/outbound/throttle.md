@@ -14,6 +14,7 @@ Stalwart SMTP supports an unlimited number of outbound throttles, which can be d
 - `rate`: Specifies the rate limit that the throttle will impose.
 - `key`: An optional list of context variables that determine where this throttle should be applied.
 - `match`: An optional rule that indicates the conditions under which this throttle should be applied.
+- `enable`: An boolean attribute that specifies whether the throttle is enabled. If not specified, the throttle is ignored.
 
 Throttles can either include both a concurrency limit and rate limit, or just one of the two strategies.
 
@@ -26,6 +27,7 @@ The `queue.throttle[].concurrency` attribute determines the number of concurrent
 ```toml
 [[queue.throttle]]
 concurrency = 5
+enable = true
 ```
 
 Please note that the above example will impose a global concurrency limiter, to apply a more granular limiter please refer to the [throttle groups](#groups) section below.
@@ -39,6 +41,7 @@ The `queue.throttle[].rate` attribute determines the number of outgoing messages
 ```toml
 [[queue.throttle]]
 rate = "100/1s"
+enable = true
 ```
 
 Please note that the above example will impose a global rate limiter, to apply a more granular limiter please refer to the [throttle groups](#groups) section below.
@@ -61,6 +64,7 @@ For example, to implement a concurrency limiter per remote IP address:
 [[queue.throttle]]
 key = ["remote_ip"]
 concurrency = 5
+enable = true
 ```
 
 And, to limit the rate at which messages are sent to any domain name to 25 messages per hour:
@@ -69,6 +73,7 @@ And, to limit the rate at which messages are sent to any domain name to 25 messa
 [[queue.throttle]]
 key = ["rcpt_domain"]
 rate = "25/1h"
+enable = true
 ```
 
 ## Expressions
@@ -81,6 +86,5 @@ match = "remote_ip = '10.0.0.20'"
 key = ["sender", "rcpt_domain"]
 concurrency = 5
 rate = "100/1h"
+enable = true
 ```
-
-

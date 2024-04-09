@@ -14,8 +14,8 @@ The following configuration settings are available for RocksDB, which are specif
 
 - `type`: Specifies the type of store to be used. For RocksDB, this is set to `"rocksdb"`.
 - `path`: Defines the file system path where the RocksDB data will be stored. Example: `"/var/lib/data"`.
-- `settings.min-blob-size`: This setting determines the minimum size of a blob (Binary Large OBject) in RocksDB. It affects how data is stored and retrieved. The value is set in bytes.
-- `settings.write-buffer-size`: Defines the size of the in-memory write buffer. A larger buffer can improve write performance but consumes more memory. The value is set in bytes.
+- `min-blob-size`: This setting determines the minimum size of a blob (Binary Large OBject) in RocksDB. It affects how data is stored and retrieved. The value is set in bytes.
+- `write-buffer-size`: Defines the size of the in-memory write buffer. A larger buffer can improve write performance but consumes more memory. The value is set in bytes.
 - `pool.workers`: Specifies the number of worker threads in the pool. This setting controls the level of concurrency for database operations, with a higher number potentially leading to better performance, especially on systems with multiple cores. The default value is the number of CPU cores available on the system.
 
 ## Example
@@ -24,8 +24,6 @@ The following configuration settings are available for RocksDB, which are specif
 [store."rocksdb"]
 type = "rocksdb"
 path = "/opt/stalwart/data"
-
-[store."rocksdb".settings]
 min-blob-size = 16834
 write-buffer-size = 134217728
 

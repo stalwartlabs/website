@@ -16,7 +16,7 @@ The following configuration settings are available for PostgreSQL, which are spe
 - `database`: The name of the database to connect to, for example, `"stalwart"`.
 - `user`: The username used for authentication with the PostgreSQL server. Example: `"postgres"`.
 - `password`: The password for the specified user. Example: `"mysecretpassword"`.
-- `timeout.connect`: Specifies the maximum time to wait while trying to establish a connection to the PostgreSQL server. It is represented as a string denoting time, e.g., `"15s"` for 15 seconds.
+- `timeout`: Specifies the maximum time to wait while trying to establish a connection to the PostgreSQL server. It is represented as a string denoting time, e.g., `"15s"` for 15 seconds.
 - `pool.max-connections`: Specifies the maximum number of connections allowed in the pool. This setting helps manage the database's load and resources. For example, `10`.
 
 ### TLS configuration
@@ -36,9 +36,7 @@ port = 5432
 database = "stalwart"
 user = "postgres"
 password = "mysecretpassword"
-
-[store."postgresql".timeout]
-connect = "15s"
+timeout = "15s"
 
 [store."postgresql".tls]
 enable = false
@@ -50,7 +48,7 @@ max-connections = 10
 
 ## Lookup queries
 
-When PostgreSQL is used as a [directory](/docs/directory/overview) or [lookup store](/docs/storage/lookup), SQL queries can be mapped to lookup ids. This is done by specifying the query under `store.<name>.query.<lookup_name>` where `<name>` is the PostgreSQL store ID and `<lookup_name>` it the lookup ID to map the query to. 
+When PostgreSQL is used as a [directory](/docs/auth/directory/overview) or [lookup store](/docs/storage/lookup), SQL queries can be mapped to lookup ids. This is done by specifying the query under `store.<name>.query.<lookup_name>` where `<name>` is the PostgreSQL store ID and `<lookup_name>` it the lookup ID to map the query to. 
 
 For example:
 

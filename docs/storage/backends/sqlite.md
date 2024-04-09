@@ -34,7 +34,7 @@ workers = 10
 
 ## Lookup queries
 
-When SQLite is used as a [directory](/docs/directory/overview) or [lookup store](/docs/storage/lookup), SQL queries can be mapped to lookup ids. This is done by specifying the query under `store.<name>.query.<lookup_name>` where `<name>` is the SQLite store ID and `<lookup_name>` it the lookup ID to map the query to. 
+When SQLite is used as a [directory](/docs/auth/directory/overview) or [lookup store](/docs/storage/lookup), SQL queries can be mapped to lookup ids. This is done by specifying the query under `store.<name>.query.<lookup_name>` where `<name>` is the SQLite store ID and `<lookup_name>` it the lookup ID to map the query to. 
 
 For example:
 

@@ -40,13 +40,13 @@ v6 = ["a::b", "a::c"]
 
 ## EHLO hostname
 
-The `queue.outbound.hostname` parameter indicates which EHLO hostname to use when sending messages to remote SMTP servers. If this parameter is missing, the hostname specified in `server.hostname` is used instead.
+The `queue.outbound.hostname` parameter indicates which EHLO hostname to use when sending messages to remote SMTP servers. If not specified, the `key_get('default', 'hostname')` expression is be used.
 
 Example:
 
 ```toml
 [queue.outbound]
-hostname = "mx.mydomain.net"
+hostname = "'mx.mydomain.net'"
 ```
 
 ## Limits

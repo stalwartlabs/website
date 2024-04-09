@@ -37,5 +37,5 @@ Upon determining the `new_score`, the original score (before adjustment) is arch
 
 ## Configuration
 
-Administrators have the liberty to fine-tune the reputation factors and weights to best suit their needs. These settings are accessible from the `etc/spamfilter/scripts/reputation.sieve` file. The diminishing factor, ensuring that newer scores have more weight, is configured within the SQL update query located in the `etc/smtp/spamfilter.toml` file.
+Administrators have the liberty to fine-tune the reputation factors and weights to best suit their needs. These settings are accessible from the `spam-filter` Sieve script. The diminishing factor, ensuring that newer scores have more weight, is configured within the SQL update query located in the configuration file.
 

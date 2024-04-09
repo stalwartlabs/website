@@ -21,6 +21,17 @@ To configure the blob store, you need to specify the ID of the store you wish to
 blob = "s3"
 ```
 
+## Compression
+
+Stalwart supports the compression of blobs to reduce storage space and improve performance. The `compression` attribute in the blob store configuration can be set to either `none` to disable compression or `lz4` to enable [LZ4](https://en.wikipedia.org/wiki/LZ4_(compression_algorithm)) compression. The default value is `none`. 
+
+For example, to enable LZ4 compression on the `s3` store:
+
+```toml
+[store."s3"]
+compression = "lz4"
+```
+
 ## Maintenance
 
 Stalwart Mail Server runs periodically an automated task on the blob store that removes temporary blobs, which are binary files uploaded by users to the JMAP server. In some instances, these uploaded files may not be used or accessed beyond a certain period of time, known as their [Time-To-Live (TTL)](/docs/jmap/protocol#upload-limits). When a temporary blob exceeds its TTL without being accessed, Stalwart identifies it as "expired". The blob purge task runs at a configurable interval, and during each run, it identifies and deletes these expired temporary blobs, freeing up storage space and reducing clutter in the storage system.
