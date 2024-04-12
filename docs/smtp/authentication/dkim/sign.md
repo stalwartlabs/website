@@ -109,10 +109,16 @@ Make sure to keep your private key safe and secure.
 
 Once you have the public key, you can publish it in your DNS records as a TXT record. The name of this record should be in the form `selector._domainkey.yourdomain.org`, where selector is a string that you choose, and `yourdomain.org` is your domain.
 
-In order to obtain the DKIM public key in a format suitable to be published in a DNS TXT record execute:
+In order to obtain the RSA DKIM public key in a format suitable to be published in a DNS TXT record execute:
 
 ```bash
 $ openssl rsa -in private.key -pubout -outform der 2>/dev/null | openssl base64 -A
+```
+
+Or, for the ED25519 DKIM public key:
+
+```bash
+$ openssl asn1parse -in ed_public.key -offset 12 -noout -out /dev/stdout | base64
 ```
 
 This will output the public key encoded in `base64`. The next step is to add a TXT record to your DNS zone file with the following format. For example, to publish an RSA key:
