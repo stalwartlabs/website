@@ -10,6 +10,18 @@ Stalwart Mail Server includes a comprehensive Spam and Phishing filter that prov
 
 It's worth noting that Stalwart's Spam and Phishing filter offers a protection level on par with popular tools such as RSpamd and SpamAssassin. This level of protection is no coincidence; the bulk of the spam/phishing rules present in Stalwart Mail Server have been ported directly from RSpamd, with a handful also derived from SpamAssassin. This synthesis of top-tier rules, combined with the customization offered by Sieve scripts, ensures that Stalwart Mail Server delivers an unparalleled email filtering experience.
 
+## Installation and updates
+
+Upon the initial execution of Stalwart, the Spam filter rules are automatically retrieved from the GitHub repository and stored locally as part of the configuration file. This ensures that the Spam filter is readily available and updated without manual intervention. 
+
+Staying current with the latest Spam filter rules is simple. Administrators can download and update new rule updates automatically by navigating to `Maintenance` > `Update SPAM rules` within the [Webadmin](/docs/management/webadmin/overview) interface. This feature ensures that the Spam filter remains up-to-date with the latest rules and security enhancements.
+
+:::tip Note
+
+By default the Spam filter rules are downloaded from `https://get.stalw.art/resources/config/spamfilter.toml`, but this can be changed by setting the `config.resource.spam-filter` key to a different URL or a local file (specified as `file:///path/to/spamfilter.toml`).
+
+:::
+
 ## Tags and Scores
 
 Every time a message arrives, the filter thoroughly analyzes both its content and the sender. Each facet of this analysis yields a tag, reflecting the specific characteristic or outcome of that evaluation. For instance, if a message is composed solely of HTML without a corresponding text part, the filter assigns the tag `MIME_HTML_ONLY`. Similarly, when a message successfully clears DMARC checks, it is labeled with the tag `DMARC_POLICY_ALLOW`.
