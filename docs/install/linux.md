@@ -60,11 +60,11 @@ TXT _dmarc.example.org.               v=DMARC1; p=reject; rua=mailto:postmaster@
 
 ### Enable TLS
 
-If you already have a TLS certificate for your server, you can upload it in the `Settings` > `Server` > `TLS` > `Certificates` section. 
+Stalwart Mail Server requires a valid TLS certificate to secure the connection between the server and the client. You can enable TLS in one of the following ways:
 
-If you don't have a certificate, you can enable automatic TLS certificates from Let's Encrypt using [ACME](/docs/server/tls/acme). To enable ACME, go to the `Settings` > `Server` > `TLS` > `ACME Providers` section and add Let's Encrypt as your ACME provider making sure that your server hostname is listed as one of the Subject Names. Please note that only the `tls-alpn-01` challenge is supported at the moment, for that reason it is important to make sure that port 443 is open and that your server is reachable from the internet.
-
-If you are running Stalwart behind a reverse [proxy](/docs/server/proxy) such as Caddy, HAProxy or Traefik, you should skip this step and configure TLS in your reverse proxy instead.
+- If you already have a TLS certificate for your server, you can upload it in the `Settings` > `Server` > `TLS` > `Certificates` section. 
+- If you don't have a certificate, you can enable automatic TLS certificates from Let's Encrypt using [ACME](/docs/server/tls/acme/overview). To enable ACME, go to the `Settings` > `Server` > `TLS` > `ACME Providers` section and add Let's Encrypt as your ACME provider making sure that your server hostname is listed as one of the Subject Names. Stalwart supports the `tls-alpn-01`, `dns-01` and `http-01` challenges, if you are unsure which one to use, read the [ACME challenge types](/docs/server/tls/acme/challenges) documentation.
+- If you are running Stalwart behind a reverse [proxy](/docs/server/proxy) such as Caddy, HAProxy or Traefik, you should skip this step and configure TLS in your reverse proxy instead.
 
 ### Restart service
 
