@@ -46,7 +46,7 @@ set-body-length = false
 report = true
 
 [signature."ed25519"]
-private-key = "%{file:/opt/stalwart-smtp/etc/private/dkim-ed.key}"
+private-key = "%{file:/opt/stalwart-smtp/etc/private/dkim-ed.key}%"
 domain = "foobar.org"
 selector = "ed_default"
 headers = ["From", "To", "Date", "Subject", "Message-ID"]
