@@ -67,7 +67,7 @@ To understand this better, let's take a look at the following example:
 
 ```toml
 [session.rcpt]
-sub-addressing = [ { if = "matches('^([^.]+)\.([^.]+)@(.+)$', address)", then = "$2 + '@' + $3" }, 
+sub-addressing = [ { if = "matches('^([^.]+)\.([^.]+)@(.+)$', rcpt)", then = "$2 + '@' + $3" }, 
                   { else = false } ]
 ```
 
@@ -96,7 +96,7 @@ Let's examine this example:
 
 ```toml
 [session.rcpt]
-catch-all = [ { if = "matches('(.+)@(.+)$', address)", then = "'info@' + $2" },
+catch-all = [ { if = "matches('(.+)@(.+)$', rcpt)", then = "'info@' + $2" },
               { else = false } ]
 ```
 

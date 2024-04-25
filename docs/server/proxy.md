@@ -33,3 +33,76 @@ By defining these trusted networks, Stalwart Mail Server can accurately identify
 - The implementation of the Proxy Protocol may vary slightly depending on the proxy used. Consult the documentation of your specific proxy for detailed setup instructions.
 
 :::
+
+### Traefik Example
+
+The following example demonstrates how to configure Traefik to use the Proxy Protocol with Stalwart Mail Server:
+
+```yaml
+networks:
+###
+  stalwart:
+    driver: bridge
+    attachable: true
+    internal: true
+    driver_opts:
+      com.docker.network.driver.mtu: 9000
+###
+services:
+###
+  traefik:
+###
+    container_name: traefik
+    read_only: true
+    tmpfs:
+      - /run
+      - /var/run
+    command:
+###
+      - "--entrypoints.smtpsecure.address=:465"
+      - "--entrypoints.imapsecure.address=:993"
+###
+      - "--providers.docker"
+###
+    ports:
+      - "465:465/tcp"
+      - "993:993/tcp"
+    networks:
+      - internet
+      - stalwart
+###
+  stalwart:
+###
+    container_name: stalwart
+    read_only: true
+    tmpfs:
+      - /run
+      - /var/run
+###
+    ports:
+      - "25:25/tcp"
+      - "587:587/tcp"
+###
+    labels:
+###
+      - "traefik.enable=true"
+      - "traefik.tcp.routers.smtpsecure.tls=true"
+      - "traefik.tcp.routers.smtpsecure.tls.certresolver=letsencrypt"
+      - "traefik.tcp.routers.smtpsecure.entrypoints=smtpsecure"
+      - "traefik.tcp.routers.smtpsecure.rule=HostSNI(`mail.example.com`)"
+      - "traefik.tcp.routers.smtpsecure.service=smtp"
+      - "traefik.tcp.services.smtp.loadbalancer.server.port=587"
+      - "traefik.tcp.services.smtp.loadbalancer.proxyprotocol.version=2"
+      - "traefik.tcp.routers.imapsecure.tls=true"
+      - "traefik.tcp.routers.imapsecure.tls.certresolver=letsencrypt"
+      - "traefik.tcp.routers.imapsecure.entrypoints=imapsecure"
+      - "traefik.tcp.routers.imapsecure.rule=HostSNI(`mail.example.com`)"
+      - "traefik.tcp.routers.imapsecure.service=imap"
+      - "traefik.tcp.services.imap.loadbalancer.server.port=143"
+      - "traefik.tcp.services.imap.loadbalancer.proxyprotocol.version=2"
+      - "traefik.docker.network=docker_stalwart-internal"
+###
+    networks:
+      - internet
+      - stalwart
+```
