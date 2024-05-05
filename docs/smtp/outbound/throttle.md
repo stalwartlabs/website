@@ -82,7 +82,7 @@ Throttle expressions enable the imposition of concurrency and rate limits only w
 
 ```toml
 [[queue.throttle]]
-match = "remote_ip = '10.0.0.20'"
+match = "remote_ip = '192.0.2.20'"
 key = ["sender", "rcpt_domain"]
 concurrency = 5
 rate = "100/1h"
