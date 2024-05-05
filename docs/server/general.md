@@ -13,7 +13,7 @@ This setting is configured using the `lookup.default.hostname` parameter in the 
 
 ```toml
 [lookup.default]
-hostname = "mail.mydomain.org"
+hostname = "mail.example.org"
 ```
 
 ## Cluster Node ID
@@ -54,15 +54,15 @@ IP addresses and ranges can be blocked by the server to reject connections from 
 
 ```toml
 [server]
-blocked-ip = { "192.168.0.20", "10.0.0.0/8" }
+blocked-ip = { "192.0.2.20", "203.0.113.0/24" }
 ```
 
 Since sets are not supported in TOML, if you are using an editor that fails to parse the above syntax, you can use the following format instead:
 
 ```toml
 [server.blocked-ip]
-"192.168.0.20" = ""
-"10.0.0.0/8" = ""
+"192.0.2.20" = ""
+"203.0.113.0/24" = ""
 ```
 
 If [fail2ban](/docs/auth/security#fail2ban) is enabled, the server will automatically block IP addresses that exceed the configured number of failed authentication attempts. The most practical way to manage blocked IPs in the `server.blocked-ip` setting is through the [web-admin](/docs/management/webadmin/overview) or the [command-line interface](/docs/management/cli/overview). 
