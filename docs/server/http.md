@@ -49,7 +49,7 @@ CORS, or Cross-Origin Resource Sharing, is a security feature implemented by web
 
 Web pages make requests to servers using the XMLHttpRequest or Fetch APIs. By default, web browsers restrict these requests to the same origin for security reasons. However, there are legitimate scenarios where a web page from one domain needs to request resources from another domain (e.g., loading fonts, accessing APIs). CORS provides a mechanism for servers to tell browsers which cross-origin requests should be allowed.
 
-The server communicates its CORS policy to the browser through specific HTTP headers. The browser then decides whether to allow the web page to make the cross-origin request based on these headers. For example, if a web page from `example-client.com` tries to fetch data from `example-api.com`, the server at `example-api.com` would need to include the appropriate CORS headers in its response to allow this.
+The server communicates its CORS policy to the browser through specific HTTP headers. The browser then decides whether to allow the web page to make the cross-origin request based on these headers. For example, if a web page from `example.com` tries to fetch data from `api.example.bet`, the server at `api.example.net` would need to include the appropriate CORS headers in its response to allow this.
 
 A permissive CORS policy might be necessary when managing Stalwart Mail Server using a webadmin interface hosted on a different domain. To set a permissive CORS policy that allows any origin to access the resources on the server, you would need to set the `server.http.permissive-cors` headers to `true`. Here's how you can set this in the configuration file:
 
