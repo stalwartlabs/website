@@ -35,7 +35,7 @@ ehlo = '''
 [store."list/blocked-domains"]
 type = "memory"
 format = "list"
-values = ["mail.spammer.com", "mail.spammer.net"]
+values = ["mail.spammer.test", "mail.spammer.example"]
 ```
 
 ## SMTP Extensions
