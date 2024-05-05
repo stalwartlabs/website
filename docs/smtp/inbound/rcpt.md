@@ -71,7 +71,7 @@ sub-addressing = [ { if = "matches('^([^.]+)\.([^.]+)@(.+)$', rcpt)", then = "$2
                   { else = false } ]
 ```
 
-Here, the `if` expression uses a regex pattern designed to capture three groups separated by the '.' and '@' symbols in the incoming email address. The `then` expression then reassembles these captured groups in a new format. In this specific example, the configuration is rewriting the recipient address by removing the first part before the dot, essentially transforming 'alias.user@domain.com' to 'user@domain.com'. 
+Here, the `if` expression uses a regex pattern designed to capture three groups separated by the '.' and '@' symbols in the incoming email address. The `then` expression then reassembles these captured groups in a new format. In this specific example, the configuration is rewriting the recipient address by removing the first part before the dot, essentially transforming 'alias.user@example.com' to 'user@example.com'. 
 
 ## Catch-all addresses
 
@@ -100,7 +100,7 @@ catch-all = [ { if = "matches('(.+)@(.+)$', rcpt)", then = "'info@' + $2" },
               { else = false } ]
 ```
 
-In this configuration, the `if` expression is using a regular expression designed to capture the local part and the domain part of an incoming email address. The `then` expression then creates the catch-all address by replacing the local part with 'info' while retaining the original domain. For instance, if a message is sent to 'nonexistent@domain.com' and there's no such recipient, the email would be redirected to 'info@domain.com'. 
+In this configuration, the `if` expression is using a regular expression designed to capture the local part and the domain part of an incoming email address. The `then` expression then creates the catch-all address by replacing the local part with 'info' while retaining the original domain. For instance, if a message is sent to 'nonexistent@example.com' and there's no such recipient, the email would be redirected to 'info@example.com'. 
 
 ## Address rewriting
 
