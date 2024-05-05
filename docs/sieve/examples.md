@@ -61,7 +61,7 @@ script = "modify-message"
 modify-message = '''
     require ["envelope", "variables", "replace", "mime", "foreverypart", "editheader", "extracttext"];
 
-    if envelope :domain :is "to" "foobar.net" {
+    if envelope :domain :is "to" "example.net" {
         set "counter" "a";
         foreverypart {
             if header :mime :contenttype "content-type" "text/html" {
