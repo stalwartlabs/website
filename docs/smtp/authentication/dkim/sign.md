@@ -36,7 +36,7 @@ Example:
 ```toml
 [signature."rsa"]
 private-key = "%{file:/opt/stalwart-smtp/etc/private/dkim-rsa.key}%"
-domain = "foobar.org"
+domain = "example.org"
 selector = "rsa_default"
 headers = ["From", "To", "Date", "Subject", "Message-ID"]
 algorithm = "rsa-sha256"
@@ -47,7 +47,7 @@ report = true
 
 [signature."ed25519"]
 private-key = "%{file:/opt/stalwart-smtp/etc/private/dkim-ed.key}"
-domain = "foobar.org"
+domain = "example.org"
 selector = "ed_default"
 headers = ["From", "To", "Date", "Subject", "Message-ID"]
 algorithm = "ed25519-sha256"
@@ -72,7 +72,7 @@ Alternatively, you may also configure expressions that select the correct signat
 
 ```toml
 [auth.dkim]
-sign = [ { if = "sender_domain = 'foobar.org'", then = "'rsa_foo'" }, 
+sign = [ { if = "sender_domain = 'example.org'", then = "'rsa_foo'" }, 
          { if = "sender_domain = 'example.org'", then = "'rsa_example'" }, 
          { else = false } ]
 ```
