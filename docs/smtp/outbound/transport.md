@@ -34,8 +34,8 @@ Example:
 
 ```toml
 [queue.outbound.source-ip]
-v4 = ["10.0.0.10", "10.0.0.11"]
-v6 = ["a::b", "a::c"]
+v4 = ["192.0.2.10", "192.0.2.11"]
+v6 = ["2001:db8::a", "2001:db8::b"]
 ```
 
 ## EHLO hostname
@@ -46,7 +46,7 @@ Example:
 
 ```toml
 [queue.outbound]
-hostname = "'mx.mydomain.net'"
+hostname = "'mx.example.org'"
 ```
 
 ## Limits
