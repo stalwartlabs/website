@@ -53,7 +53,7 @@ Stalwart Mail Server doesn't just stop at analyzing the content and URLs of a me
 
 A spoofed sender address involves the use of a deceptive "From" name that appears to come from a legitimate or trusted domain, but the actual email address (enclosed in angle brackets) belongs to a different domain. This tactic is designed to exploit users' trust in familiar names or brands.
 
-For example, a message might display the sender as `From: "user@my-bank.com" <user@cybercriminal.com>`. Here, while the displayed name suggests the email is from "my-bank.com", the actual sender's address is from "cybercriminal.com". Upon detecting such discrepancies between the displayed name and the actual email address, the phishing filter flags the message as suspicious, alerting users to the potential threat.
+For example, a message might display the sender as `From: "user@my-bank.test" <user@cybercriminal.test>`. Here, while the displayed name suggests the email is from "my-bank.test", the actual sender's address is from "cybercriminal.test". Upon detecting such discrepancies between the displayed name and the actual email address, the phishing filter flags the message as suspicious, alerting users to the potential threat.
 
 ### Spoofed Reply-To
 
