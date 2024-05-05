@@ -20,7 +20,7 @@ To accommodate database storage, the hierarchical TOML structure is flattened in
 
 ```toml
 [server.listener."smtp"]
-bind = ["127.0.0.1:25", "192.168.1.1:25"]
+bind = ["127.0.0.1:25", "192.0.2.1:25"]
 tls.implicit = false
 ```
 
@@ -28,7 +28,7 @@ In the database, this configuration would be represented as:
 
 ```
 server.listener.smtp.bind.0 = "127.0.0.1:25"
-server.listener.smtp.bind.1 = "192.168.1.1:25"
+server.listener.smtp.bind.1 = "192.0.2.1:25"
 server.listener.smtp.tls.implicit = false
 ```
 
