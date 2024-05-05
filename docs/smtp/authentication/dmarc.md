@@ -32,7 +32,7 @@ For example:
 
 ```toml
 [report]
-submitter = "'mx.foobar.org'"
+submitter = "'mx.example.org'"
 ```
 
 ### Failures
@@ -52,7 +52,7 @@ Example:
 ```toml
 [report.dmarc]
 from-name = "'Report Subsystem'"
-from-address = "'noreply-dmarc@foobar.org'"
+from-address = "'noreply-dmarc@example.org'"
 subject = "'DMARC Authentication Failure Report'"
 send = "1/1d"
 sign = ["rsa"]
@@ -76,9 +76,9 @@ Example:
 ```toml
 [report.dmarc.aggregate]
 from-name = "'DMARC Report'"
-from-address = "'noreply-dmarc@foobar.org'"
-org-name = "'The Foobar Organization'"
-contact-info = "'jane@foobar.org'"
+from-address = "'noreply-dmarc@example.org'"
+org-name = "'The example Organization'"
+contact-info = "'jane@example.org'"
 send = "daily"
 max-size = 26214400 # 25mb
 sign = "['rsa']"
