@@ -58,11 +58,11 @@ enable = true
 
 ## Expressions
 
-Expressions enable the imposition of quotas on the message queue only when a specific condition is met. These [expressions](/docs/configuration/expressions/overview) can be configured using the `queue.quota[].match` attribute. For example, to impose a 900 messages and 7mb quota by recipient only for messages sent from the domain "foobar.org":
+Expressions enable the imposition of quotas on the message queue only when a specific condition is met. These [expressions](/docs/configuration/expressions/overview) can be configured using the `queue.quota[].match` attribute. For example, to impose a 900 messages and 7mb quota by recipient only for messages sent from the domain "example.org":
 
 ```toml
 [[queue.quota]]
-match = "sender_domain = 'foobar.org'"
+match = "sender_domain = 'example.org'"
 key = ["rcpt"]
 messages = 900
 size = 7340032 # 7mb

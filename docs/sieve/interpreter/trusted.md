@@ -35,9 +35,9 @@ The following parameters are available under the `sieve.trusted.limits` key:
 ```toml
 [sieve.trusted]
 from-name = "'Automated Message'"
-from-addr = "'no-reply@foobar.org"'
+from-addr = "'no-reply@example.org"'
 return-path = ""
-hostname = "mx.foobar.org"
+hostname = "mx.example.org"
 sign = "['rsa']"
 
 [sieve.trusted.limits]

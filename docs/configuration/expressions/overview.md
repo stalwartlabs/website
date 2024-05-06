@@ -20,10 +20,10 @@ The syntax for expressions in Stalwart Mail Server is designed to be intuitive a
 
 ## Example
 
-A simple expression to enable the `CHUNKING` extension only for the IP address 10.0.0.25 would look like this:
+A simple expression to enable the `CHUNKING` extension only for the IP address 192.0.2.1 would look like this:
 
 ```toml
-chunking = [ { if = "remote_ip == '10.0.0.25'", then = true},
+chunking = [ { if = "remote_ip == '192.0.2.1'", then = true},
              { else = false } ]
 ```
 
@@ -31,9 +31,9 @@ Or, an example of a complex expression that combines nested operations could loo
 
 ```toml
 chunking = [ { if = "rcpt_domain == 'example.org' || 
-                     starts_with(remote_ip, '192.168.0.') || 
+                     starts_with(remote_ip, '192.0.2.') || 
                      ( starts_with(rcpt, 'no-reply@') && 
-                       ends_with(sender, '@domain.org') && 
+                       ends_with(sender, '@example.org') && 
                        !(priority = 1 || priority = -2)
                      )", then = false},
              { else = true } ]

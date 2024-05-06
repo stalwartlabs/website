@@ -60,7 +60,7 @@ Redis cluster setup:
 [store."redis"]
 type = "redis"
 redis-type = "cluster"
-urls = ["redis://192.168.1.1", "redis://192.168.1.1"] 
+urls = ["redis://192.0.2.1", "redis://192.0.2.2"] 
 user = "my_username"
 password = "secretpassword"
 timeout = "10s"

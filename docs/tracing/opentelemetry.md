@@ -39,7 +39,7 @@ Example:
 [tracer.otel]
 type = "open-telemetry"
 transport = "http"
-endpoint = "https://tracing.mydomain.net/v1/otel"
+endpoint = "https://tracing.mydomain.test/v1/otel"
 headers = ["Authorization: <place_auth_here>"]
 level = "debug"
 enable = true

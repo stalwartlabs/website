@@ -77,9 +77,9 @@ Example:
 ```toml
 [report.tls.aggregate]
 from-name = "'TLS Report'"
-from-address = "'noreply-tls@foobar.org'"
+from-address = "'noreply-tls@example.org'"
 org-name = "'The Foobar Organization'"
-contact-info = "'jane@foobar.org'"
+contact-info = "'jane@example.org'"
 send = "daily"
 max-size = 26214400 # 25 mb
 sign = "['rsa']"
@@ -91,7 +91,7 @@ For example:
 
 ```toml
 [report]
-submitter = "'mx.foobar.org'"
+submitter = "'mx.example.org'"
 ```
 
 ## Invalid certificates

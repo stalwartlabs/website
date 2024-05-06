@@ -48,5 +48,5 @@ Let's say you want to ban an IP address after it has made 100 failed authenticat
 fail2ban = "100/1d"
 ```
 
-Blocked IP addresses are stored using the `server.blocked-ip` prefix followed by the IP address. For example, the blocked IP address `192.168.1.1` would be stored as `server.blocked-ip.192.168.1.1`.
+Blocked IP addresses are stored using the `server.blocked-ip` prefix followed by the IP address. For example, the blocked IP address `192.0.2.1` would be stored as `server.blocked-ip.192.0.2.1`.
 

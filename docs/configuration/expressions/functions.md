@@ -217,20 +217,20 @@ These functions expand the capabilities of Stalwart Mail Server, allowing for dy
 #### `is_ip_addr`
 - **Description**: Checks if the given string is a valid IP address (IPv4 or IPv6).
 - **Arguments**: 1 (String)
-- **Example**: `is_ip_addr("192.168.1.1")` would return `true`.
+- **Example**: `is_ip_addr("192.0.2.1")` would return `true`.
 
 #### `is_ipv4_addr`
 - **Description**: Determines if the given string is a valid IPv4 address.
 - **Arguments**: 1 (String)
-- **Example**: `is_ipv4_addr("192.168.1.1")` would return `true`.
+- **Example**: `is_ipv4_addr("192.0.2.1")` would return `true`.
 
 #### `is_ipv6_addr`
 - **Description**: Checks if the given string is a valid IPv6 address.
 - **Arguments**: 1 (String)
-- **Example**: `is_ipv6_addr("::1")` would return `true`.
+- **Example**: `is_ipv6_addr("2001:db8::")` would return `true`.
 
 #### `ip_reverse_name`
 - **Description**: Generates the reverse DNS notation for an IP address.
 - **Arguments**: 1 (IP Address)
-- **Example**: `ip_reverse_name("1.2.3.4")` would return `"4.3.2.1"`.
+- **Example**: `ip_reverse_name("192.0.2.1")` would return `"1.2.0.192"`.
 

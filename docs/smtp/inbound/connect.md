@@ -42,7 +42,7 @@ script = "'connect_filter'"
 connect_filter = '''
 require ["variables", "reject"];
 
-if string "${env.remote_ip}" "10.0.0.88" {
+if string "${env.remote_ip}" "192.0.2.88" {
     reject "Your IP '${env.remote_ip}' is not welcomed here.";
 }
 '''

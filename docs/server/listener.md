@@ -12,7 +12,7 @@ Listeners are set up in the configuration file using the `server.listener.<id>.b
 
 ```toml
 [server.listener."smtp"]
-bind = ["10.0.0.21:25", "10.0.0.22:25", "a:3f::2"]
+bind = ["192.0.2.1:25", "203.0.113.9:25", "2001:db8::2"]
 ```
 
 Or, to bind a listener to all interfaces:

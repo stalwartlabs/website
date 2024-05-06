@@ -19,7 +19,7 @@ Example:
 ```toml
 [report.dkim]
 from-name = "'Report Subsystem'"
-from-address = "'noreply-dkim@foobar.org'"
+from-address = "'noreply-dkim@example.org'"
 subject = "'DKIM Authentication Failure Report'"
 sign = ["rsa"]
 send = "1/1d"

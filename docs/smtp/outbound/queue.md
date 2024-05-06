@@ -54,7 +54,7 @@ Example:
 ```toml
 [report.dsn]
 from-name = "'Mail Delivery Subsystem'"
-from-address = "'MAILER-DAEMON@foobar.org'"
+from-address = "'MAILER-DAEMON@example.org'"
 sign = "['rsa']"
 ```
 

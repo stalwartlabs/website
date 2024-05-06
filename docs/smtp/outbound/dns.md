@@ -31,7 +31,7 @@ When using a custom DNS resolver, the list of DNS servers have to be specified u
 
 ```toml
 [resolver]
-custom = ["udp://192.168.1.1:55", "tcp://192.168.1.3:55", "8.8.8.8"]
+custom = ["udp://192.0.2.1:55", "tcp://192.0.2.3:55", "8.8.8.8"]
 ```
 
 Please note that `system` or `custom` should be used when using [DNS block lists](/docs/spamfilter/dnsbl) as lookups from public DNS services are not allowed by most DNSBL services.
@@ -50,7 +50,7 @@ try-tcp-on-error = true
 
 ## Public Suffix List
 
-The [Public Suffix List](https://publicsuffix.org/) is a list of top-level domain names (or suffixes) under which Internet users can register domain names. This list is used by the SMTP server to determine the root domain of a given domain name. For example, the root domain of `example.com` is `com` and the root domain of `example.co.uk` is `co.uk`.
+The [Public Suffix List](https://publicsuffix.org/) is a list of top-level domain names (or suffixes) under which Internet users can register domain names. This list is used by the SMTP server to determine the root domain of a given domain name. For example, the root domain of `example.com` is `com` and the root domain of a domain ending in `.co.uk` is `co.uk`.
 
 The URL to the Public Suffix list is configured under the `resolver.public-suffix` key. For example:
 
