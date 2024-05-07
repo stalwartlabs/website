@@ -18,7 +18,7 @@ Process:
 
 - **Token Creation**: The ACME server generates a token and sends it to the Stalwart Mail Server.
 - **File Creation**: Stalwart Mail Server creates a file containing the token and a key authorization derived from the token and the server’s ACME account key.
-- **File Placement**: This file is at `http://<YOUR_DOMAIN>/.well-known/acme-challenge/<TOKEN>`, whish is accessible via the web on port 80.
+- **File Placement**: This file is at `http://<YOUR_DOMAIN>/.well-known/acme-challenge/<TOKEN>`, which is accessible via the web on port 80.
 - **Verification**: The ACME server accesses the URL. If the server retrieves the correct response, the domain validation is considered successful.
 
 Considerations:
