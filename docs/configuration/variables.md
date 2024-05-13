@@ -20,4 +20,13 @@ Context or environment variables may be used in certain settings of the configur
 - `recipients`: An array of recipient addresses.
 - `priority`: The priority provided using the MT-PRIORITY extension.
 - `authenticated_as`: The account name used to authenticate the session for inbound sessions, or an empty value if the session is unauthenticated.
+
+## Queue Variables
+
+The following additional variables are available for use in queue expressions:
+
 - `mx`: The remote mail exchanger's hostname for outbound sessions.
+- `retry_num`: The number of times the message has been retried.
+- `notify_num`: The number of times the sender of the message has been notified.
+- `last_error`: The last error message type encountered during delivery attempts.
+- `last_status`: The last status code returned by the remote server during delivery attempts.

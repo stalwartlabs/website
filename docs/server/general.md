@@ -16,27 +16,6 @@ This setting is configured using the `lookup.default.hostname` parameter in the 
 hostname = "mail.example.org"
 ```
 
-## Cluster Node ID
-
-When running Stalwart Mail server in a cluster, the `cluster.node-id` configuration attribute must be set to a unique identifier for each node. This is required for the server to function properly in a clustered environment. The node ID can be any integer value, but it must be unique across all nodes in the cluster.
-
-For example:
-
-```toml
-[cluster]
-node-id = 1
-```
-
-## Run as user
-
-On Unix/Linux systems, Stalwart Mail Server requires the `root` user's privileges to bind to privileged ports. Afterward, these privileges are dropped, and Stalwart operates using the UID/GID of a non-privileged account. The non-privileged account's UID is configured with the `server.run-as.user` attribute, while the GID is configured with the `server.run-as.group` attribute. For example:
-
-```toml
-[server.run-as]
-user = "stalwart-smtp"
-group = "stalwart-smtp"
-```
-
 ## Thread pool size
 
 Stalwart Mail Server utilizes a thread pool for the execution of CPU-intensive tasks. The default size of the thread pool is equal to the number of CPUs available on the server. However, the size of the thread pool can be manually adjusted using the `global.thread-pool` parameter in the configuration file:
@@ -66,3 +45,7 @@ Since sets are not supported in TOML, if you are using an editor that fails to p
 ```
 
 If [fail2ban](/docs/auth/security#fail2ban) is enabled, the server will automatically block IP addresses that exceed the configured number of failed authentication attempts. The most practical way to manage blocked IPs in the `server.blocked-ip` setting is through the [web-admin](/docs/management/webadmin/overview) or the [command-line interface](/docs/management/cli/overview). 
+
+## Run as user
+
+On Linux systems, Stalwart Mail Server requires the `CAP_NET_BIND_SERVICE` capability to bind to privileged ports (ports below 1024). However, in older systems where this capability is not supported, Stalwart Mail Server can also be run as the `root` user and then drop privileges to a non-privileged user. The non-privileged account and group name can be configured using the `RUN_AS_USER` and `RUN_AS_GROUP` environment variables, respectively.

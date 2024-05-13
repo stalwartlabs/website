@@ -23,3 +23,11 @@ Example:
 user = "admin"
 secret = "$6$MM1wz7Y8.L8O4eN0$ti3/072t3T5SJ6xryK45RvpW38dW2hSH86cBcV0XHtgnBYCCAFjqibS84OsdxfAITd6.VkKfhfUhlfVczdkFx1"
 ```
+
+## Master User
+
+The master user is a special account that is granted full access to all mailboxes on the server. This account is typically used for system maintenance and monitoring purposes, allowing administrators to perform tasks that require access to all mailboxes. The master user is a powerful tool that should be used judiciously and only for legitimate system administration tasks.
+
+In order to enable master user access for the fallback administrator, the `authentication.fallback-admin.enable-master` setting must be set to `true`. This setting grants the fallback administrator full access to all mailboxes on the server.
+
+Once master user access is enabled, the fallback administrator can access any mailbox on the server using `<account_name>%<fallback_admin_user>` as the login username. For example, if the fallback administrator username is `admin`, the master user can access the mailbox for `john` by logging in as `john%admin`.

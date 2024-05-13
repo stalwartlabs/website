@@ -81,6 +81,22 @@ mta-sts = "disable"
 dane = "disable"
 ```
 
+### Failover delivery
+
+Failover delivery is a mechanism used to ensure that messages are delivered using an alternative host when the delivery to the primary host fails. This is achieved by configuring an expression that forwards messages to a secondary host after the `nth` delivery attempt. The following example demonstrates how to configure failover delivery after the second delivery attempt:
+
+```toml
+[queue.outbound]
+next-hop = [ { if = "is_local_domain('', rcpt_domain)", then = "'local'" }, 
+             { if = "retry_num > 1", then = "'fallback'" }, 
+             { else = false } ]
+
+[remote."fallback"]
+address = "fallback.example.org"
+port = 25
+protocol = "smtp"
+```
+
 ### LMTP delivery
 
 The Local Mail Transfer Protocol (LMTP) is a derivative of the Simple Mail Transfer Protocol (SMTP), designed for the specific purpose of delivering email to a local recipient's mail store, such as a maildir or mbox file. Unlike SMTP, which is used to transport emails across the Internet between servers, LMTP is intended for the final delivery of email to a user's mailbox within a local network or system.

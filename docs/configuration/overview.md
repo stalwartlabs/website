@@ -41,7 +41,7 @@ If no `config.local-keys` are specified, the default configuration is as follows
 local-keys = [ "store.*", "directory.*", "tracer.*", "server.*", "!server.blocked-ip.*",
                "authentication.fallback-admin.*", "cluster.node-id", "storage.data", 
                "storage.blob", "storage.lookup",  "storage.fts", "storage.directory", 
-               "lookup.default.hostname"]
+               "lookup.default.hostname", "certificate.*"]
 ```
 
 It is important to note that certain keys, specifically those matching `store.*`, `storage.*`, and `server.*` patterns, must always be stored locally. Stalwart Mail Server relies on these local configurations to initialize and start correctly. Excluding these key patterns from local storage will prevent the server from starting.

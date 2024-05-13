@@ -18,6 +18,7 @@ The following configuration settings are available for mySQL, which are specifie
 - `password`: The password associated with the specified user.
 - `max-allowed-packet`: The maximum size of the packet (specified in bytes) that can be sent to or received from the MySQL server. The default value is `4MB`.
 - `timeout`: Defines the maximum time the system should wait for a response from the MySQL server before timing out. The time is specified as a string, such as `"15s"` for 15 seconds.
+- `tls.enable`: If set to `true`, enables TLS encryption for the connection to the MySQL server.
 - `tls.allow-invalid-certs`: If set to `true`, allows the use of self-signed certificates or certificates signed by unknown certificate authorities. This is useful for testing or development environments.
 
 ### Connection Pool
