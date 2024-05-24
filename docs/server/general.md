@@ -46,6 +46,17 @@ Since sets are not supported in TOML, if you are using an editor that fails to p
 
 If [fail2ban](/docs/auth/security#fail2ban) is enabled, the server will automatically block IP addresses that exceed the configured number of failed authentication attempts. The most practical way to manage blocked IPs in the `server.blocked-ip` setting is through the [web-admin](/docs/management/webadmin/overview) or the [command-line interface](/docs/management/cli/overview). 
 
+## IP address allowlist
+
+Conversely, IP addresses and ranges can be allowed by the server to accept connections from specific sources and do not enforce any restrictions such as fail2ban on them. This is done by updating the `server.allowed-ip` setting in the configuration file, which accepts a list of IP addresses or network masks that should be allowed. For example:
+
+```toml
+[server]
+allowed-ip = { "192.0.2.30" }
+```
+
+By default the localhost IP address `127.0.0.1` and `::1` are on this list to prevent accidental lockouts.
+
 ## Run as user
 
 On Linux systems, Stalwart Mail Server requires the `CAP_NET_BIND_SERVICE` capability to bind to privileged ports (ports below 1024). However, in older systems where this capability is not supported, Stalwart Mail Server can also be run as the `root` user and then drop privileges to a non-privileged user. The non-privileged account and group name can be configured using the `RUN_AS_USER` and `RUN_AS_GROUP` environment variables, respectively.

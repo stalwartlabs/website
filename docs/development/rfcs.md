@@ -73,6 +73,14 @@ The following RFCs are implemented by Stalwart Mail Server.
 - [RFC 8689 - SMTP Require TLS Option](https://datatracker.ietf.org/doc/html/rfc8689)
 - [RFC 2831 - Using Digest Authentication as a SASL Mechanism](https://www.rfc-editor.org/rfc/rfc2831)
 
+## POP3 and Extensions
+
+- [RFC 1939 - Post Office Protocol - Version 3](https://datatracker.ietf.org/doc/html/rfc1939)
+- [RFC 2449 - POP3 Extension Mechanism](https://datatracker.ietf.org/doc/html/rfc2449)
+- [RFC 5034 - POP3 SASL Authentication Mechanism](https://datatracker.ietf.org/doc/html/rfc5034)
+- [RFC 6856 - Post Office Protocol Version 3 (POP3) Support for UTF-8](https://datatracker.ietf.org/doc/html/rfc6856)
+- [RFC 2595 - Using TLS with IMAP, POP3 and ACAP](https://datatracker.ietf.org/doc/html/rfc2595)
+
 ## Message Encryption
 
 - [RFC 8551 - Secure/Multipurpose Internet Mail Extensions (S/MIME) Version 4.0 Message Specification](https://datatracker.ietf.org/doc/html/rfc8551)

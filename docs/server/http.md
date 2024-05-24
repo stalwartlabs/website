@@ -43,6 +43,21 @@ use-x-forwarded = false
 
 Care must be taken when enabling this feature. It should only be used if Stalwart is behind a trusted proxy. Untrusted sources can easily forge these headers, potentially leading to security vulnerabilities or incorrect logging information. When not using a proxy server, make sure that this parameter is set to ``false`` to avoid malicious clients from forging their source IP address.
 
+## Strict Transport Security
+
+HTTP Strict Transport Security (HSTS) is a web security policy mechanism that helps to protect websites against man-in-the-middle attacks such as protocol downgrade attacks and cookie hijacking. It allows web servers to declare that web browsers (or other complying user agents) should interact with it using only secure HTTPS connections, and not via the insecure HTTP protocol. This ensures that all communications between the server and the user are encrypted and secure.
+
+Implementing HSTS increases the security of your server by ensuring that all connections are made over HTTPS, thus preventing attackers from exploiting any unsecured entry points during data transmission. This is particularly important to mitigate the risk of attacks that rely on intercepting or modifying data in transit, such as active eavesdropping or session hijacking.
+
+In the Stalwart Mail Server, HSTS can be easily enabled by setting `server.http.hsts` to `true`. This setting forces the server to use HTTPS exclusively, providing an additional layer of security for the administrative interface and any other web-based services it offers.
+
+Example:
+
+```toml
+[server.http]
+hsts = true
+```
+
 ## Permissive CORS Policy
 
 CORS, or Cross-Origin Resource Sharing, is a security feature implemented by web browsers to control how web pages in one domain (origin) can request and interact with resources in a different domain. It's designed to safeguard against potentially harmful cross-site request behaviors that could compromise user data or website integrity.

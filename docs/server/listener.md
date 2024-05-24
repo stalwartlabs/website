@@ -29,6 +29,7 @@ Listeners require the `protocol` attribute to be set to the protocol that the li
 - `http`: HTTP protocol.
 - `imap`: IMAP protocol.
 - `smtp`: SMTP protocol.
+- `pop3`: POP3 protocol.
 - `lmtp`: LMTP protocol.
 - `managesieve`: ManageSieve protocol.
 

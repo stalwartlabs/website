@@ -28,6 +28,12 @@ secret = "$6$MM1wz7Y8.L8O4eN0$ti3/072t3T5SJ6xryK45RvpW38dW2hSH86cBcV0XHtgnBYCCAF
 
 The master user is a special account that is granted full access to all mailboxes on the server. This account is typically used for system maintenance and monitoring purposes, allowing administrators to perform tasks that require access to all mailboxes. The master user is a powerful tool that should be used judiciously and only for legitimate system administration tasks.
 
-In order to enable master user access for the fallback administrator, the `authentication.fallback-admin.enable-master` setting must be set to `true`. This setting grants the fallback administrator full access to all mailboxes on the server.
+The username for the master user is specified in the `authentication.master.user` setting, while the password is defined in `authentication.master.secret`. The master user account should be secured with a strong, unique password to prevent unauthorized access. Example:
 
-Once master user access is enabled, the fallback administrator can access any mailbox on the server using `<account_name>%<fallback_admin_user>` as the login username. For example, if the fallback administrator username is `admin`, the master user can access the mailbox for `john` by logging in as `john%admin`.
+```toml
+[authentication.master]
+user = "master"
+secret = "$6$MM1wz7Y8.L8O4eN0$ti3/072t3T5SJ6xryK45RvpW38dW2hSH86cBcV0XHtgnBYCCAFjqibS84OsdxfAITd6.VkKfhfUhlfVczdkFx1"
+```
+
+Once master user access is enabled, any mailbox on the server can be accessed using `<account_name>%<master_user>` as the login username. For example, if the master user is `master`, the master user can access the mailbox for `john` by logging in as `john%master`.

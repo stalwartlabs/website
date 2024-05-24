@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Protocol
 
-The IMAP Protocol settings section covers the configuration parameters for the IMAP server. These parameters influence various aspects of the protocol's behavior, such as request handling, authentication and mailbox settings, and event processing. 
+The IMAP Protocol settings section covers the configuration parameters for the IMAP server. Some of these settings also apply to the POP3 server, as they share the same configuration structure. These parameters influence various aspects of the protocol's behavior, such as request handling, authentication and mailbox settings, and event processing. 
 
 ## Request size
 

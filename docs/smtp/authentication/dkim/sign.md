@@ -4,9 +4,15 @@ sidebar_position: 2
 
 # Signing
 
-Stalwart SMTP can be configured to automatically sign outgoing messages with one or multiple signatures using the `ED25519-SHA256` (Edwards-Curve Digital Signature Algorithm), `RSA-SHA256` or `RSA-SHA1` algorithms. The list of signatures to use is configured by the `auth.dkim.sign` parameter.
+Stalwart Mail Server can be configured to automatically sign outgoing messages with one or multiple signatures using any of the following algorithms:
 
-For example, to sign each message with both RSA and ED25519 signatures:
+- `ED25519-SHA256`: This algorithm uses the Edwards-Curve Digital Signature Algorithm, which is known for its strong security and efficiency in processing.
+- `RSA-SHA256`: Provides robust security by combining RSA encryption with the SHA-256 hashing algorithm, making it suitable for modern security demands.
+- `RSA-SHA1`: Although supported, it is less secure than RSA-SHA256 and is generally not recommended for use. RSA-SHA1 can still be used for legacy systems that require compatibility.
+
+When using RSA-based DKIM signatures, it is recommended that the key length be no less than 1024 bits. However, for enhanced security, keys larger than 1024 bits are advised. RSA keys of smaller lengths are more susceptible to cryptographic attacks, thereby compromising the security integrity of the email verification process.
+
+The list of signatures to use is configured by the `auth.dkim.sign` parameter. For example, to sign each message with both RSA and ED25519 signatures:
 
 ```toml
 [auth.dkim]
