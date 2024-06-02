@@ -26,6 +26,14 @@ Example:
 ip-strategy = "ipv4_then_ipv6"
 ```
 
+In some cases administrators might want to dynamically change the IP strategy and, for example, attempt to use exclusively IPv6 and fall back to IPv4 after a failed delivery attempt. This can be achieved by using expressions:
+
+```toml
+[queue.outbound]
+ip-strategy = [ { if = "retry_num == 0", then = "ipv6_only" }, 
+                { else = "ipv4_only" } ]
+```
+
 ### Source IP
 
 The source IP strategy determines a list of local IPv4 and IPv6 addresses to use when delivery emails to remote SMTP servers. If multiple source addresses are provided, Stalwart SMTP will randomly choose one from the list each time a new connection is established. The list of local IPv4 addresses to use is configured with the `queue.outbound.source-ip.v4` parameter while IPv6 addresses are configured under the `queue.outbound.source-ip.v6` parameter.

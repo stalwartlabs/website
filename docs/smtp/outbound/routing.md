@@ -61,7 +61,8 @@ In Stalwart SMTP, messages can be routed to a relay host by adding it as the nex
 
 ```toml
 [queue.outbound]
-next-hop = "'relay'"
+next-hop = [ { if = "is_local_domain('', rcpt_domain)", then = "'relay'" }, 
+             { else = false } ]
 
 [remote."relay"]
 address = "relay.example.org"
