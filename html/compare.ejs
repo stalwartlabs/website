@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+        <%- include('include-meta.ejs', { title: 'Compare editions | Stalwart Labs' ,
+                description: 'Discover the differences between the open source and enterprise editions of our mail server solution.'
+                }) %>,
+
+                <!-- google fonts -->
+                <link rel="preconnect" href="https://fonts.googleapis.com">
+                <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+                <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Manrope:wght@400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+                        rel="stylesheet">
+                <!-- fonts -->
+                <link rel="stylesheet" type="text/css" href="/fonts/unicons/unicons.css">
+                <link rel="stylesheet" href="/css/plugins.css">
+                <link rel="stylesheet" href="/css/style.css">
+
+</head>
+
+<body>
+        <div class="grow shrink-0">
+                <header class="relative wrapper bg-soft-primary !bg-[#edf2fc]">
+                        <%- include('include-header.ejs') %>
+                </header>
+                <!-- /header -->
+                <section class="wrapper !bg-[#edf2fc]">
+                        <div
+                                class="container pt-10 pb-36 xl:pt-[4.5rem] lg:pt-[4.5rem] md:pt-[4.5rem] xl:pb-20 lg:pb-20 md:pb-20 !text-center">
+                                <div class="flex flex-wrap mx-[-15px]">
+                                        <div
+                                                class="md:w-8/12 lg:w-7/12 xl:w-6/12 xxl:w-5/12 w-full flex-[0_0_auto] px-[15px] max-w-full !mx-auto mb-12">
+                                                <h1
+                                                        class="text-[calc(1.365rem_+_1.38vw)] font-bold leading-[1.2] xl:text-[2.4rem] !mb-3">
+                                                        Compare editions
+                                                </h1>
+                                                <p
+                                                        class="lead leading-[1.65] text-[0.9rem] font-medium lg:!px-7 xl:!px-7 xxl:!px-6">
+                                                        Discover the differences between the
+                                                        <span
+                                                                class="relative z-[2] whitespace-nowrap after:content-[''] after:block after:absolute after:w-[102.5%] after:h-[30%] after:left-[-1.5%] after:z-[-1] after:transition-all after:duration-[0.2s] after:ease-in-out after:mt-0 after:rounded-[5rem] after:bottom-[9%] motion-reduce:after:transition-none after:bg-[rgba(63,120,224,.12)]">open
+                                                                source and enterprise</span>
+                                                        editions.
+                                                </p>
+                                        </div>
+                                        <!-- /column -->
+                                </div>
+                                <!-- /.row -->
+                        </div>
+                        <!-- /.container -->
+                </section>
+                <!-- /section -->
+                <section
+                        class="wrapper !bg-[#ffffff]  angled upper-end !relative border-0 before:top-[-4rem] before:border-l-transparent before:border-r-[100vw] before:border-t-[4rem] before:border-[#fefefe] before:content-[''] before:block before:absolute before:z-0 before:!border-y-transparent before:border-0 before:border-solid before:right-0 after:top-[-4rem] after:border-l-transparent after:border-r-[100vw] after:border-t-[4rem] after:border-[#fefefe] after:content-[''] after:block after:absolute after:z-0 after:!border-y-transparent after:border-0 after:border-solid after:right-0">
+                        <div class="container !pb-[4.5rem] xl:!pb-24 lg:!pb-24 md:!pb-24">
+
+
+
+
+
+                                <div
+                                        class="container pt-20 xl:pt-28 lg:pt-28 md:pt-28 pb-12 xl:pb-14 lg:pb-14 md:pb-14">
+                                        <h2
+                                                class="text-[calc(1.305rem_+_0.66vw)] font-bold xl:text-[1.8rem] leading-[1.3] !mb-3">
+                                                Features
+                                                comparison
+                                        </h2>
+                                        <p class="lead !text-[1.05rem] !leading-[1.6] font-medium">
+                                                Compare the comprehensive features of our open source and enterprise
+                                                editions.</p>
+                                        <div class="flex flex-wrap mx-[-15px]">
+                                                <div
+                                                        class="xl:w-4/12 lg:w-4/12 w-full flex-[0_0_auto] px-[15px] max-w-full">
+                                                        <p>Features marked with yellow checkmarks are currently under
+                                                                development. For scheduled
+                                                                release dates,
+                                                                please check our <a
+                                                                        href="https://github.com/stalwartlabs/mail-server/issues"
+                                                                        class="hover" target="_blank">GitHub
+                                                                        page</a>.
+
+                                                        </p>
+                                                </div>
+                                                <!--/column -->
+                                        </div>
+                                        <!--/.row -->
+
+                                        <div class="table-responsive mt-10 xl:!mt-0 lg:!mt-0">
+                                                <table class="table table-borderless !text-center">
+                                                        <thead>
+                                                                <tr>
+                                                                        <th class="!w-[22.5rem]"></th>
+                                                                        <th>
+                                                                                <div class="h4 !mb-1">Open-source</div>
+                                                                                <div
+                                                                                        class="!text-[.75rem] font-medium text-[#aab0bc]">
+                                                                                        Free</div>
+                                                                        </th>
+                                                                        <th>
+                                                                                <div class="h4 !mb-1">Enterprise</div>
+                                                                                <div
+                                                                                        class="!text-[.75rem] font-medium text-[#aab0bc]">
+                                                                                        Pricing upon request
+                                                                                </div>
+                                                                        </th>
+                                                                </tr>
+                                                        </thead>
+                                                        <tbody>
+
+                                                                <tr style="background-color: #edf2fc;">
+                                                                        <td class="option text-left"><b>Message
+                                                                                        Store</b></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">JMAP Core</td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">JMAP Mail</td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">JMAP for WebSockets
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">JMAP Blob</td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">JMAP for Quotas
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">IMAP4rev1</td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">IMAP4rev2</td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">POP3</td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">Full-text search
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">Autoconfig</td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">Disk quotas</td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">Sub-addressing &
+                                                                                Catch-all</td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">Mailing lists &
+                                                                                Aliases</td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr style="background-color: #edf2fc;">
+                                                                        <td class="option text-left"><b>MTA</b></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">Programmable</td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">Rate & concurrency
+                                                                                limiting</td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">Distributed &
+                                                                                fault-tolerant queues</td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">Queue quotas</td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">Milter integration
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">Unlimited virtual
+                                                                                queues</td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">Delayed & priority
+                                                                                delivery</td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">Envelope rewriting
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">DKIM</td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">SPF</td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">ARC</td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">DMARC</td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">DANE</td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">MTA-STS</td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">TLS Reporting</td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">Report analysis
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr style="background-color: #edf2fc;">
+                                                                        <td class="option text-left"><b>Scripting &
+                                                                                        customization</b></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">Sieve Support</td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">ManageSieve</td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">JMAP for Sieve
+                                                                                Scripts</td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">REST API</td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">Webhooks</td>
+                                                                        <td><i class="uil uil-check !bg-[#fff8ee] text-[#fab758]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#fff8ee] text-[#fab758]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr style="background-color: #edf2fc;">
+                                                                        <td class="option text-left"><b>Spam & fishing
+                                                                                        filtering</b></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">Spam rules</td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">Statistical
+                                                                                classifier</td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">DNSBL</td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">Collaborative
+                                                                                filtering</td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">Phishing protection
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">Trusted reply
+                                                                                tracking</td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">Sender reputation
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">Greylisting</td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">Spam traps</td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">AI classifier</td>
+                                                                        <td>-
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#fff8ee] text-[#fab758]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr style="background-color: #edf2fc;">
+                                                                        <td class="option text-left"><b>Contacts &
+                                                                                        Calendars</b></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">CardDAV</td>
+                                                                        <td><i class="uil uil-check !bg-[#fff8ee] text-[#fab758]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#fff8ee] text-[#fab758]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">CalDAV</td>
+                                                                        <td><i class="uil uil-check !bg-[#fff8ee] text-[#fab758]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#fff8ee] text-[#fab758]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">JMAP for Contacts
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#fff8ee] text-[#fab758]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#fff8ee] text-[#fab758]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">JMAP for Calendars
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#fff8ee] text-[#fab758]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#fff8ee] text-[#fab758]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">JMAP Tasks</td>
+                                                                        <td><i class="uil uil-check !bg-[#fff8ee] text-[#fab758]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#fff8ee] text-[#fab758]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">ActiveSync</td>
+                                                                        <td><i class="uil uil-check !bg-[#fff8ee] text-[#fab758]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#fff8ee] text-[#fab758]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr style="background-color: #edf2fc;">
+                                                                        <td class="option text-left"><b>Backend
+                                                                                        support</b></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">RocksDB</td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">FoundationDB</td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">mySQL/MariaDB</td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">SQLite</td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">S3-compatible</td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">Redis</td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">ElasticSearch</td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">OpenTelemetry</td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">Prometheus</td>
+                                                                        <td>-
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#fff8ee] text-[#fab758]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr style="background-color: #edf2fc;">
+                                                                        <td class="option text-left">
+                                                                                <b>Authentication</b>
+                                                                        </td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">LDAP</td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">SQL</td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">OAuth</td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">OIDC & SAML</td>
+                                                                        <td>-
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#fff8ee] text-[#fab758]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">Two-factor
+                                                                                authentication</td>
+                                                                        <td>-
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#fff8ee] text-[#fab758]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">App passwords</td>
+                                                                        <td>-
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#fff8ee] text-[#fab758]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr style="background-color: #edf2fc;">
+                                                                        <td class="option text-left"><b>Security &
+                                                                                        Encryption</b></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">Encryption-at-rest
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">ACME</td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">Access Control
+                                                                                Lists</td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">Fail2ban</td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">Rate limiting</td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">Security Audited
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">Memory safe</td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr style="background-color: #edf2fc;">
+                                                                        <td class="option text-left"><b>Web-admin</b>
+                                                                        </td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">Account management
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">Queue management
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">Report
+                                                                                visualization</td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">Configuration
+                                                                                management</td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">Self-service portal
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">Log viewer</td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">Dashboard</td>
+                                                                        <td>-
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#fff8ee] text-[#fab758]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">Metrics</td>
+                                                                        <td>-
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#fff8ee] text-[#fab758]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">Alerts</td>
+                                                                        <td>-
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#fff8ee] text-[#fab758]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr style="background-color: #edf2fc;">
+                                                                        <td class="option text-left"><b>Cluster & HA</b>
+                                                                        </td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">Distributed</td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">Fault tolerant</td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">Coordinator-less
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">Proxy protocol</td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr style="background-color: #edf2fc;">
+                                                                        <td class="option text-left"><b>Enteprise
+                                                                                        features</b></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">Multi-tenancy</td>
+                                                                        <td>-
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#fff8ee] text-[#fab758]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">Branding</td>
+                                                                        <td>-
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#fff8ee] text-[#fab758]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">AI-powered</td>
+                                                                        <td>-
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#fff8ee] text-[#fab758]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">Lawful interception
+                                                                        </td>
+                                                                        <td>-
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#fff8ee] text-[#fab758]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                                </i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr style="background-color: #edf2fc;">
+                                                                        <td class="option text-left"><b>Support</b></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">Community support
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">Premium support
+                                                                        </td>
+                                                                        <td>-
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">Dedicated Support
+                                                                                Engineer</td>
+                                                                        <td>-
+                                                                        </td>
+                                                                        <td>On demand
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">Custom SLA</td>
+                                                                        <td>-
+                                                                        </td>
+                                                                        <td>On demand
+                                                                        </td>
+                                                                </tr>
+
+                                                        </tbody>
+                                                        <tfoot>
+                                                                <tr>
+                                                                        <th class="!w-[22.5rem]"></th>
+                                                                        <th><a href="/open-source"
+                                                                                        class="btn btn-soft-primary !rounded-[50rem] mt-1">Learn
+                                                                                        More</a>
+                                                                        </th>
+                                                                        <th><a href="/enterprise"
+                                                                                        class="btn btn-soft-primary !rounded-[50rem] mt-1">Learn
+                                                                                        More</a>
+                                                                        </th>
+                                                                </tr>
+                                                        </tfoot>
+                                                </table>
+                                        </div>
+                                        <!-- /.table-responsive -->
+                                </div>
+
+
+                        </div>
+                        <!-- /.container -->
+                </section>
+
+                <!-- /section -->
+        </div>
+        <!-- /.content-wrapper -->
+        <%- include('include-footer.ejs', { cta: 'Ready to Upgrade?' ,
+                ctaSub: 'Contact us today to get started with the Enterprise Edition and unlock premium features.' ,
+                ctaButton: 'Contact us' , ctaLink: '/contact' }) %>
+</body>
+
+</html>

@@ -4,10 +4,10 @@
 <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Open-source mail server solution with JMAP, IMAP4, POP3, and SMTP support and a wide range of modern features. Written in Rust and designed to be secure, fast, robust and scalable.">
+<meta name="description" content="State-of-the-art SMTP server built for unmatched security, enhanced speed, superior scalability, and extensive customization capabilities.">
 <meta name="author" content="Stalwart Labs Ltd.">
 <title>
-    Stalwart Mail Server
+    SMTP Server | Stalwart Labs
 </title>
 <meta http-equiv="x-ua-compatible" content="ie=edge">
 
@@ -44,13 +44,52 @@
         <link rel="stylesheet" type="text/css" href="/fonts/unicons/unicons.css">
         <link rel="stylesheet" href="/css/plugins.css">
         <link rel="stylesheet" href="/css/style.css">
-        <link rel="stylesheet" href="/css/colors/grape.css">
+        <link rel="stylesheet" href="/css/colors/sky.css">
         <link rel="preload" href="/fonts/urbanist/urbanist.css" as="style" onload="this.rel='stylesheet'">
+        <style>
+            .swiper-container.nav-color .swiper-button.swiper-button-disabled,
+            .swiper-container.nav-color .swiper-slide figure .item-link.swiper-button-disabled {
+                background: #5eb9f0b3 !important;
+            }
+
+            .swiper-container.nav-color .swiper-button,
+            .swiper-container.nav-color .swiper-slide figure .item-link {
+                background: #5eb9f0e6 !important;
+                color: #ffffff !important;
+            }
+
+            .swiper-container.nav-color .swiper-button:hover,
+            .swiper-container.nav-color .swiper-slide figure .item-link:hover {
+                background: #5eb9f0 !important;
+            }
+
+            .navbar.navbar-light.fixed .btn:not(.btn-expand):not(.btn-gradient) {
+                background: #5eb9f0 !important;
+                border-color: #5eb9f0 !important;
+                color: #ffffff !important;
+            }
+
+            .accordion-wrapper .card-header button {
+                color: #5eb9f0;
+            }
+
+            @media (min-width: 992px) {
+                .navbar-expand-lg.navbar-light .dropdown:not(.dropdown-submenu)>.dropdown-toggle:after {
+                    color: #5eb9f0;
+                }
+            }
+
+            @media (max-width: 991.98px) {
+                .navbar-expand-lg .navbar-collapse .dropdown-toggle:after {
+                    color: #ffffff !important;
+                }
+            }
+        </style>
 </head>
 
-<body class="!font-urbanist !text-[.85rem]">
+<body>
     <div class="grow shrink-0">
-        <header class="relative wrapper">
+        <header class="relative wrapper !bg-[#ffffff] ">
             <nav class="navbar navbar-expand-lg center-nav transparent navbar-light caret-none">
     <div class="container xl:flex-row lg:flex-row !flex-nowrap items-center">
         <div class="navbar-brand w-full">
@@ -295,372 +334,152 @@
     </div>
     <!-- /.container -->
 </nav>
+
         </header>
         <!-- /header -->
         <section class="wrapper !bg-[#ffffff]">
-            <div class="container-card">
-                <div class="card image-wrapper bg-full bg-image bg-overlay bg-overlay-light-500 !mt-2 mb-5 [background-size:100%] bg-[center_center] bg-no-repeat !bg-scroll relative z-0 before:content-[''] before:block before:absolute before:z-[1] before:w-full before:h-full before:left-0 before:top-0 before:bg-[rgba(255,255,255,.5)] xxl:!rounded-[.8rem] rounded-0"
-                    data-image-src="/img/photos/bg22.png">
-                    <div class="card-body py-[4.5rem] px-0">
-                        <div class="container">
-                            <div
-                                class="flex flex-wrap mx-[-15px] md:mx-[-20px] lg:mx-[-20px] xl:mx-[-35px] mt-[-50px] items-center text-center lg:text-left xl:text-left">
-                                <div class="lg:w-6/12 xl:w-6/12 w-full flex-[0_0_auto] px-[15px] md:px-[20px] lg:px-[20px] xl:px-[35px] mt-[50px] max-w-full"
-                                    data-cues="slideInDown" data-group="page-title" data-delay="900">
-                                    <h1
-                                        class="xl:text-[2.3rem] text-[calc(1.355rem_+_1.26vw)] font-semibold !leading-[1.2] tracking-[normal] mb-4 xl:!mr-5 xxl:!mr-0">
-                                        Unlock the <span class="text-gradient gradient-1">future</span> of email with
-                                        <span class="text-gradient gradient-1">Stalwart</span>
-                                    </h1>
-                                    <p class="lead !text-[1.15rem] !leading-[1.5] font-medium mb-7 xxl:!pr-20">
-                                        Step into the future with Stalwart, the open-source powerhouse blending
-                                        modern
-                                        features with
-                                        unparalleled security, speed, and scalability.
-                                    </p>
-                                    <div><a href="#all-in-one"
-                                            class="btn btn-lg btn-gradient gradient-1 rounded">Explore Now</a></div>
-                                </div>
-                                <!--/column -->
-                                <div
-                                    class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] px-[15px] md:px-[20px] lg:px-[20px] xl:px-[35px] mt-[50px] max-w-full">
-                                    <img class="max-w-full h-auto mb-[-8rem]" src="/img/clipart/home_01.png"
-                                        srcset="/img/clipart/home_01.png 2x" data-cue="fadeIn" data-delay="300"
-                                        alt="image">
-                                </div>
-                                <!--/column -->
-                            </div>
-                            <!-- /.row -->
-                        </div>
-                        <!-- /.container -->
-                    </div>
-                    <!--/.card-body -->
-                </div>
-                <!--/.card -->
-            </div>
-            <!-- /.container-card -->
-        </section>
-
-
-        <section class="wrapper !bg-[#ffffff]">
-            <div class="container pt-20 xl:pt-28 lg:pt-28 md:pt-28 pb-10 xl:pb-10 lg:pb-10 md:pb-10">
-                <!-- /div -->
-                <div class="flex flex-wrap mx-[-15px]">
+            <div
+                class="container pt-10 xl:pt-[4.5rem] lg:pt-[4.5rem] md:pt-[4.5rem] pb-[4.5rem] xl:pb-12 lg:pb-12 md:pb-12 !text-center">
+                <div
+                    class="flex flex-wrap mx-[-15px] xl:mx-[-35px] lg:mx-[-20px] mt-[-50px] xl:mt-0 !mb-[4.5rem] items-center">
                     <div
-                        class="md:w-10/12 lg:w-8/12 xl:w-7/12 xxl:w-6/12 w-full flex-[0_0_auto] px-[15px] max-w-full !mx-auto !text-center">
-                        <h2
-                            class="text-[0.8rem] !tracking-[0.02rem] !leading-[1.35] uppercase text-gradient gradient-1 !mb-3">
-                            Stalwart Mail
-                            Server</h2>
-                        <h3
-                            class="xl:text-[1.9rem] text-[calc(1.315rem_+_0.78vw)] font-semibold !leading-[1.25] tracking-[normal] mb-9 xl:!px-12">
-                            Revolutionize your
-                            email infrastructure</h3>
+                        class="xl:w-7/12 lg:w-7/12 w-full flex-[0_0_auto] px-[15px] xl:px-[35px] lg:px-[20px] mt-[50px] xl:mt-0 max-w-full xl:!order-2 lg:!order-2">
+                        <figure class="m-0 p-0"><img class="max-w-none h-auto" src="/img/clipart/mta_01.png"
+                                srcset="/img/clipart/mta_01.png 2x" alt="image"></figure>
+                    </div>
+                    <!-- /column -->
+                    <div
+                        class="md:w-10/12 md:!ml-[8.33333333%] lg:!ml-0 lg:w-5/12 xl:!ml-0 xl:w-5/12 w-full flex-[0_0_auto] px-[15px] xl:px-[35px] lg:px-[20px] mt-[50px] xl:mt-0 max-w-full text-center lg:text-left xl:text-left">
+                        <h1
+                            class="xl:text-[2.7rem] text-[calc(1.395rem_+_1.74vw)] !leading-[1.15] mb-5 md:mx-[-1.25rem] lg:mx-0 mt-7">
+                            Next-generation, programmable MTA</h1>
+                        <p class="lead !text-[1.1rem] !leading-[1.55] font-medium mb-7">State-of-the-art SMTP server
+                            built for
+                            unmatched
+                            security, enhanced speed, superior scalability, and extensive customization capabilities.
+                        </p>
+                        <span><a href="#mta"
+                                class="btn btn-lg btn-sky text-white !bg-[#5eb9f0] border-[#5eb9f0] hover:text-white hover:!bg-[#5eb9f0] hover:border-[#5eb9f0] focus:shadow-[rgba(88,167,216,1)] active:text-white active:!bg-[#5eb9f0] active:border-[#5eb9f0] disabled:text-white disabled:!bg-[#5eb9f0] disabled:border-[#5eb9f0]  !rounded-[50rem] !mr-2">Learn
+                                More</a></span>
                     </div>
                     <!-- /column -->
                 </div>
-                <!-- /.row -->
+            </div>
+            <!-- /.container -->
+            <div class="overflow-hidden">
+                <div class="divider text-[#f0f8fe] mx-[-0.5rem]">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 100">
+                        <path fill="currentColor"
+                            d="M1260,1.65c-60-5.07-119.82,2.47-179.83,10.13s-120,11.48-180,9.57-120-7.66-180-6.42c-60,1.63-120,11.21-180,16a1129.52,1129.52,0,0,1-180,0c-60-4.78-120-14.36-180-19.14S60,7,30,7H0v93H1440V30.89C1380.07,23.2,1319.93,6.15,1260,1.65Z" />
+                    </svg>
+                </div>
+            </div>
+            <!-- /.overflow-hidden -->
+        </section>
+        <!-- /section -->
+        <section class="wrapper bg-gradient-sky">
+            <div class="container pt-14 xl:pt-8 lg:pt-8 pb-[4.5rem] xl:pb-14 lg:pb-14 md:pb-14" id="mta">
+
+
                 <div
-                    class="flex flex-wrap mx-[-15px] xl:mx-[-20px] lg:mx-[-20px] md:mx-[-20px] mt-[-40px] !text-center !mb-[4.5rem] xl:!mb-[7rem] lg:!mb-[7rem] md:!mb-[7rem]">
-                    <div
-                        class="md:w-6/12 lg:w-3/12 xl:w-3/12 w-full flex-[0_0_auto] px-[15px] xl:px-[20px] lg:px-[20px] md:px-[20px] mt-[40px] max-w-full">
-                        <div
-                            class="icon btn btn-circle btn-lg btn-primary text-[#605dba] !bg-[#e2e2f3] border-[#e2e2f3] hover:text-[#605dba] hover:bg-[#e2e2f3] hover:border-[#e2e2f3] focus:shadow-[rgba(92,140,229,1)] active:text-[#605dba] active:bg-[#e2e2f3] active:border-[#e2e2f3] disabled:text-[#605dba] disabled:bg-[#e2e2f3] disabled:border-[#e2e2f3] pointer-events-none mb-5 !w-[3rem] !h-[3rem] xl:text-[1.3rem] text-[calc(1.255rem_+_0.06vw)] !inline-flex !items-center !justify-center !leading-none !p-0 !rounded-[100%]">
-                            <i class="uil uil-sitemap before:content-['\ecd2']" style="color: #605dba;"></i>
-                        </div>
-                        <h4>All-in-One Platform</h4>
-                        <p class="!mb-3">Comprehensive support for modern email protocols along with robust spam and
-                            phishing
-                            defenses in
-                            an integrated package.</p>
-                        <a href="#all-in-one" class="more hover" style="color: #f857a6;">Learn More</a>
-                    </div>
-                    <!--/column -->
-                    <div
-                        class="md:w-6/12 lg:w-3/12 xl:w-3/12 w-full flex-[0_0_auto] px-[15px] xl:px-[20px] lg:px-[20px] md:px-[20px] mt-[40px] max-w-full">
-                        <div
-                            class="icon btn btn-circle btn-lg btn-primary text-[#605dba] !bg-[#e2e2f3] border-[#e2e2f3] hover:text-[#605dba] hover:bg-[#e2e2f3] hover:border-[#e2e2f3] focus:shadow-[rgba(92,140,229,1)] active:text-[#605dba] active:bg-[#e2e2f3] active:border-[#e2e2f3] disabled:text-[#605dba] disabled:bg-[#e2e2f3] disabled:border-[#e2e2f3] pointer-events-none mb-5 !w-[3rem] !h-[3rem] xl:text-[1.3rem] text-[calc(1.255rem_+_0.06vw)] !inline-flex !items-center !justify-center !leading-none !p-0 !rounded-[100%]">
-                            <i class="uil uil-shield-exclamation before:content-['\ecb3']" style="color: #605dba;"></i>
-                        </div>
-                        <h4>Enhanced Security</h4>
-                        <p class="!mb-3">Features encryption-at-rest, strong transport security, sender authentication,
-                            and
-                            proactive
-                            security measures.</p>
-                        <a href="#security" class="more hover" style="color: #f857a6;">Learn More</a>
-                    </div>
-                    <!--/column -->
-                    <div
-                        class="md:w-6/12 lg:w-3/12 xl:w-3/12 w-full flex-[0_0_auto] px-[15px] xl:px-[20px] lg:px-[20px] md:px-[20px] mt-[40px] max-w-full">
-                        <div
-                            class="icon btn btn-circle btn-lg btn-primary text-[#605dba] !bg-[#e2e2f3] border-[#e2e2f3] hover:text-[#605dba] hover:bg-[#e2e2f3] hover:border-[#e2e2f3] focus:shadow-[rgba(92,140,229,1)] active:text-[#605dba] active:bg-[#e2e2f3] active:border-[#e2e2f3] disabled:text-[#605dba] disabled:bg-[#e2e2f3] disabled:border-[#e2e2f3] pointer-events-none mb-5 !w-[3rem] !h-[3rem] xl:text-[1.3rem] text-[calc(1.255rem_+_0.06vw)] !inline-flex !items-center !justify-center !leading-none !p-0 !rounded-[100%]">
-                            <i class="uil uil-puzzle-piece before:content-['\ec77']" style="color: #605dba;"></i>
-                        </div>
-                        <h4>Highly Flexible</h4>
-                        <p class="!mb-3">Supports extensive scripting, multi-language search, dynamic configuration
-                            rules, and a
-                            wide range of storage options.</p>
-                        <a href="#flexible" class="more hover" style="color: #f857a6;">Learn More</a>
-                    </div>
-                    <!--/column -->
-                    <div
-                        class="md:w-6/12 lg:w-3/12 xl:w-3/12 w-full flex-[0_0_auto] px-[15px] xl:px-[20px] lg:px-[20px] md:px-[20px] mt-[40px] max-w-full">
-                        <div
-                            class="icon btn btn-circle btn-lg btn-primary text-[#605dba] !bg-[#e2e2f3] border-[#e2e2f3] hover:text-[#605dba] hover:bg-[#e2e2f3] hover:border-[#e2e2f3] focus:shadow-[rgba(92,140,229,1)] active:text-[#605dba] active:bg-[#e2e2f3] active:border-[#e2e2f3] disabled:text-[#605dba] disabled:bg-[#e2e2f3] disabled:border-[#e2e2f3] pointer-events-none mb-5 !w-[3rem] !h-[3rem] xl:text-[1.3rem] text-[calc(1.255rem_+_0.06vw)] !inline-flex !items-center !justify-center !leading-none !p-0 !rounded-[100%]">
-                            <i class="uil uil-chart-line before:content-['\e9d3']" style="color: #605dba;"></i>
-                        </div>
-                        <h4>Built to Scale</h4>
-                        <p class="!mb-3">Ensures continuous operation with load balancing, partition-resistant fault
-                            tolerance, and
-                            intelligent
-                            system-wide coordination.</p>
-                        <a href="#scale" class="more hover" style="color: #f857a6;">Learn More</a>
-                    </div>
-                    <!--/column -->
-                </div>
-            </div>
-        </section>
-
-        <!-- /section -->
-        <section class="wrapper !bg-[#ffffff] " id="all-in-one">
-            <div class="container  pb-16 xl:pb-20 lg:pb-20 md:pb-20">
-                <div class="flex flex-wrap mx-[-15px] xl:mx-[-35px] lg:mx-[-20px] mt-[-50px] items-center">
-
-                    <div
-                        class="xl:w-5/12 lg:w-5/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] px-[15px] mt-[50px] max-w-full">
-                        <h2
-                            class="text-[0.8rem] !tracking-[0.02rem] !leading-[1.35] uppercase text-gradient gradient-1 !mb-3">
-                            All-in-one solution</h2>
-                        <h3 class="text-[calc(1.305rem_+_0.66vw)] font-bold xl:text-[1.8rem] !leading-[1.3] mb-5">
-                            Integrated email
-                            infrastructure for secure and efficient messaging.</h3>
-                        <p>Unlike any other solution on the market, Stalwart redefines the email server landscape.
-                            Traditionally,
-                            operating a mail server required piecing together multiple components—such as MTA, message
-                            store, and spam
-                            filter—each developed over 20 years ago with their own configuration formats. Stalwart
-                            streamlines this
-                            process into a single, efficient binary with a unified configuration. Furthermore, it is
-                            crafted in Rust,
-                            a language celebrated for its memory safety, ensuring a robust and secure email
-                            infrastructure.</p>
-
-                    </div>
-
-
-                    <div
-                        class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-0 lg:px-0 px-[15px] max-w-full mt-[50px]">
-                        <div class="flex flex-wrap mx-[-15px] mt-[-30px] !text-center">
-                            <div
-                                class="xl:w-6/12 lg:w-6/12 md:w-6/12 w-full flex-[0_0_auto] px-[15px] max-w-full mt-[30px]">
-                                <div class="flex flex-wrap mx-[-15px]">
-                                    <div class="w-full flex-[0_0_auto] px-[15px] max-w-full">
-                                        <div class="card !shadow-[0_0.25rem_1.75rem_rgba(30,34,40,0.07)] !mb-6">
-                                            <div class="card-body flex-[1_1_auto] p-[40px]">
-                                                <img src="/img/icons/solid/emails.svg"
-                                                    class="svg-inject icon-svg !w-[2.2rem] !h-[2.2rem]  solid-duo text-purple-aqua !mb-3 m-[0_auto]"
-                                                    alt="image">
-                                                <h3>JMAP</h3>
-                                                <p class="!mb-2">Embrace modern email with JMAP, enhancing the way
-                                                    email clients sync with mail
-                                                    servers.
-                                                </p>
-                                                <a href="/mail-server"
-                                                    class="more hover text-[#f857a6] focus:text-[#f857a6] hover:text-[#f857a6]">Learn
-                                                    More</a>
-                                            </div>
-                                            <!--/.card-body -->
-                                        </div>
-                                        <!--/.card -->
-                                    </div>
-                                    <!-- /column -->
-
-                                    <div class="w-full flex-[0_0_auto] px-[15px] max-w-full">
-                                        <div class="card !shadow-[0_0.25rem_1.75rem_rgba(30,34,40,0.07)]">
-                                            <div class="card-body flex-[1_1_auto] p-[40px]">
-                                                <img src="/img/icons/solid/cloud-network.svg"
-                                                    class="svg-inject icon-svg !w-[2.2rem] !h-[2.2rem]  solid-duo text-purple-aqua !mb-3 m-[0_auto]"
-                                                    alt="image">
-                                                <h3>SMTP</h3>
-                                                <p class="!mb-2">MTA built for unmatched security, speed, and extensive
-                                                    customization.
-                                                </p>
-                                                <a href="/mta"
-                                                    class="more hover text-[#f857a6] focus:text-[#f857a6] hover:text-[#f857a6]">Learn
-                                                    More</a>
-                                            </div>
-                                            <!--/.card-body -->
-                                        </div>
-                                        <!--/.card -->
-                                    </div>
-                                    <!-- /column -->
-                                </div>
-                                <!-- /.row -->
-                            </div>
-                            <!-- /column -->
-                            <div
-                                class="xl:w-6/12 lg:w-6/12 md:w-6/12 w-full flex-[0_0_auto] px-[15px] max-w-full mt-[30px]">
-                                <div class="flex flex-wrap mx-[-15px]">
-                                    <div
-                                        class="w-full flex-[0_0_auto] px-[15px] max-w-full xl:!order-2 lg:!order-2 md:!order-2">
-                                        <div
-                                            class="card !shadow-[0_0.25rem_1.75rem_rgba(30,34,40,0.07)] !mb-6 xl:mb-0 lg:mb-0 xl:mb-0 lg:mb-0 md:mb-0">
-                                            <div class="card-body flex-[1_1_auto] p-[40px]">
-                                                <img src="/img/icons/lineal/shield.svg"
-                                                    class="svg-inject icon-svg !w-[2.2rem] !h-[2.2rem]  solid-duo text-purple-aqua !mb-3 m-[0_auto]"
-                                                    alt="image">
-                                                <h3>Anti-spam</h3>
-                                                <p class="!mb-2">Effectively block
-                                                    unwanted emails and protect against phishing attempts.
-                                                </p>
-                                                <a href="/anti-spam"
-                                                    class="more hover text-[#f857a6] focus:text-[#f857a6] hover:text-[#f857a6]">Learn
-                                                    More</a>
-                                            </div>
-                                            <!--/.card-body -->
-                                        </div>
-                                        <!--/.card -->
-                                    </div>
-                                    <!-- /column -->
-                                    <div class="w-full flex-[0_0_auto] px-[15px] max-w-full">
-                                        <div
-                                            class="card !shadow-[0_0.25rem_1.75rem_rgba(30,34,40,0.07)] xl:!mb-6 lg:!mb-6 md:!mb-6 lg:!mt-6 xl:!mt-6">
-                                            <div class="card-body flex-[1_1_auto] p-[40px]">
-                                                <img src="/img/icons/lineal/email.svg"
-                                                    class="svg-inject icon-svg !w-[2.2rem] !h-[2.2rem]  solid-duo text-purple-aqua !mb-3 m-[0_auto]"
-                                                    alt="image">
-                                                <h3>IMAP4 & POP3</h3>
-                                                <p class="!mb-2">
-
-                                                    Seamless support for both cutting-edge and legacy email protocols.
-                                                </p>
-                                                <a href="/mail-server"
-                                                    class="more hover text-[#f857a6] focus:text-[#f857a6] hover:text-[#f857a6]">Learn
-                                                    More</a>
-                                            </div>
-                                            <!--/.card-body -->
-                                        </div>
-                                        <!--/.card -->
-                                    </div>
-                                    <!-- /column -->
-                                </div>
-                                <!-- /.row -->
-                            </div>
-                            <!-- /column -->
-                        </div>
-                        <!-- /.row -->
-                    </div>
-                    <!--/column -->
-                </div>
-                <!--/.row -->
-            </div>
-        </section>
-        <!-- /section -->
-
-        <section class="wrapper !bg-[#ffffff]">
-            <div class="container">
-
-
-
-                <div class="flex flex-wrap mx-[-15px] xsm:mt-[-50px] mt-[-80px] md:mx-[-20px] xl:mx-[-35px] items-center mb-10 xl:!mb-14 lg:!mb-14 md:!mb-14"
-                    id="security">
+                    class="flex flex-wrap mx-[-15px] xsm:mt-[-50px] mt-[-80px] md:mx-[-20px] xl:mx-[-35px] items-center mb-10 xl:!mb-14 lg:!mb-14 md:!mb-14">
 
                     <div
                         class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
-                        <figure class="m-0 p-0"><img class="w-auto" src="/img/clipart/secure_encryption.png"
-                                srcset="/img/clipart/secure_encryption.png 2x" alt="image"></figure>
-                        <!--/.row -->
+                        <figure class="m-0 p-0"><img class="w-auto" src="/img/clipart/authentication.png"
+                                srcset="/img/clipart/authentication.png 2x" alt="image"></figure>
                     </div>
-
                     <div
                         class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
                         <h2
                             class="text-[0.8rem] !tracking-[0.02rem] !leading-[1.35] uppercase text-gradient gradient-1 !mb-3">
-                            Enhanced Security</h2>
+                            Sender & Message Authentication</h2>
                         <h3
                             class="xl:text-[1.9rem] text-[calc(1.315rem_+_0.78vw)] font-semibold !leading-[1.25] tracking-[normal] mb-4">
-                            Unmatched email security for modern threats.</h3>
-                        <p class="!mb-6">Stalwart stands at the forefront of secure email technology, providing an
-                            unparalleled
-                            level of protection for your communications. It employs advanced security measures designed
-                            to safeguard
-                            data both at rest and in transit, ensuring comprehensive defense against modern threats.
-                            With a focus on
-                            robust encryption, stringent access controls, and proactive security protocols, Stalwart
-                            delivers peace of
-                            mind, underlining its commitment to maintaining the highest standards of email security.</p>
+                            Comprehensive sender and message authentication.</h3>
+                        <p class="!mb-6">Stalwart supports the latest standards in sender and message
+                            authentication, including DMARC, SPF, DKIM, and ARC. This comprehensive support ensures that
+                            every email
+                            sent and received is verified for authenticity, enhancing security and trustworthiness.
+                            Stalwart also
+                            excels in proactive communication with other servers by sending
+                            and analyzing authentication reports. This automatic exchange and examination of reports
+                            allows Stalwart
+                            to
+                            identify and alert administrators of potential issues promptly, providing an additional
+                            layer of security
+                            and
+                            maintaining the integrity of your email communications.</p>
 
                         <ul class="pl-0 list-none bullet-bg bullet-soft-primary">
                             <li class="relative pl-6"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Encryption
-                                at rest with S/MIME or OpenPGP.</li>
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Domain-based
+                                Message Authentication, Reporting, and Conformance (DMARC) verification and reporting.
+                            </li>
                             <li class="relative pl-6 mt-[0.35rem]"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Strong
-                                transport security through DANE, MTA-STS and TLS Reporting.</li>
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>DomainKeys
+                                Identified Mail (DKIM) verification, signing and failure reporting.</li>
+                            <li class="relative pl-6 mt-[0.35rem]"><i
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Sender
+                                Policy Framework (SPF) policy evaluation and failure reporting.</li>
+                            <li class="relative pl-6 mt-[0.35rem]"><i
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Authenticated
+                                Received Chain (ARC) verification and sealing.</li>
+                            <li class="relative pl-6 mt-[0.35rem]"><i
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Reverse
+                                IP (iprev) validation.</li>
                             <li class="relative pl-6 mt-[0.35rem]"><i
                                     class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Automatic
-                                TLS certificate provisioning with ACME.</li>
-                            <li class="relative pl-6 mt-[0.35rem]"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Granular
-                                access control lists,
-                                rate limiting and fail2ban.</li>
-                            <li class="relative pl-6 mt-[0.35rem]"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Memory
-                                safe.</li>
-                            <li class="relative pl-6 mt-[0.35rem]"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Security
-                                audited.</li>
+                                analysis of received authentication failure and abuse reports.</li>
                         </ul>
                         <!--/.row -->
                     </div>
                 </div>
 
-                <div class="flex flex-wrap mx-[-15px] xsm:mt-[-50px] mt-[-80px] md:mx-[-20px] xl:mx-[-35px] items-center mb-10 xl:!mb-14 lg:!mb-14 md:!mb-14"
-                    id="flexible">
+                <div
+                    class="flex flex-wrap mx-[-15px] xsm:mt-[-50px] mt-[-80px] md:mx-[-20px] xl:mx-[-35px] items-center mb-10 xl:!mb-14 lg:!mb-14 md:!mb-14">
                     <div
                         class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
                         <h2
                             class="text-[0.8rem] !tracking-[0.02rem] !leading-[1.35] uppercase text-gradient gradient-1 !mb-3">
-                            Highly flexible</h2>
+                            Strong transport security</h2>
                         <h3
                             class="xl:text-[1.9rem] text-[calc(1.315rem_+_0.78vw)] font-semibold !leading-[1.25] tracking-[normal] mb-4">
-                            Next-level email capabilities for dynamic environments.</h3>
-                        <p class="!mb-6">From sophisticated scripting and dynamic programmability to multilingual search
-                            options and
-                            versatile storage solutions, Stalwart ensures that your email infrastructure is not only
-                            robust and
-                            secure but also incredibly adaptable and user-friendly.
-                            Whether you're
-                            scaling up or drilling down into your data, Stalwart is designed to provide you with a
-                            superior email
-                            experience.</p>
+                            Robust email security at the transport layer.</h3>
+                        <p class="!mb-6">Stalwart incorporates robust transport security features designed to safeguard
+                            email
+                            communications at the transport layer. By utilizing protocols such as DANE and MTA-STS,
+                            Stalwart ensures
+                            that email data remains secure during transit, preventing interception and
+                            tampering. Additionally, the platform automatically analyzes incoming TLS reports, enhancing
+                            its ability
+                            to identify and react to potential security threats. This proactive approach to security not
+                            only
+                            maintains the confidentiality and integrity of email data but also fortifies the email
+                            infrastructure
+                            against evolving cyber threats.
+                        </p>
 
                         <ul class="pl-0 list-none bullet-bg bullet-soft-primary">
                             <li class="relative pl-6"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Enhanced
-                                Sieve scripting capabilities.</li>
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>DNS-Based
+                                Authentication of Named Entities (DANE) Transport Layer Security.</li>
                             <li class="relative pl-6 mt-[0.35rem]"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Fully
-                                programmable with dynamic configuration rules.</li>
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>SMTP
+                                MTA Strict Transport Security (MTA-STS).</li>
                             <li class="relative pl-6 mt-[0.35rem]"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Powerful
-                                full-text search capabilities across 17 languages.</li>
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>SMTP
+                                TLS Reporting (TLSRPT) delivery and analysis.</li>
                             <li class="relative pl-6 mt-[0.35rem]"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Broad
-                                array of storage & authentication backends options.</li>
-                            <li class="relative pl-6 mt-[0.35rem]"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Intuitive
-                                web-based interface and self-service portal.</li>
-                            <li class="relative pl-6 mt-[0.35rem]"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Hassle-free
-                                automatic account configuration and discovery.</li>
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>
+                                Automatic analysis of incoming TLS aggregate reports.</li>
                         </ul>
                         <!--/.row -->
                     </div>
                     <div
                         class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
-                        <figure class="m-0 p-0"><img class="w-auto" src="/img/clipart/customize.png"
-                                srcset="/img/clipart/customize.png 2x" alt="image"></figure>
+                        <figure class="m-0 p-0"><img class="w-auto" src="/img/clipart/secure_transport.png"
+                                srcset="/img/clipart/secure_transport.png 2x" alt="image"></figure>
                     </div>
                 </div>
 
@@ -669,117 +488,261 @@
                     class="flex flex-wrap mx-[-15px] xsm:mt-[-50px] mt-[-80px] md:mx-[-20px] xl:mx-[-35px] items-center mb-10 xl:!mb-14 lg:!mb-14 md:!mb-14">
                     <div
                         class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
-                        <figure class="m-0 p-0"><img class="w-auto" src="/img/clipart/secure_shield.png"
-                                srcset="/img/clipart/secure_shield.png 2x" alt="image"></figure>
+                        <figure class="m-0 p-0"><img class="w-auto" src="/img/clipart/rewrite.png"
+                                srcset="/img/clipart/rewrite.png 2x" alt="image"></figure>
                     </div>
                     <div
                         class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
                         <h2
                             class="text-[0.8rem] !tracking-[0.02rem] !leading-[1.35] uppercase text-gradient gradient-1 !mb-3">
-                            Spam & Phishing filter</h2>
+                            Advanced filtering</h2>
                         <h3
                             class="xl:text-[1.9rem] text-[calc(1.315rem_+_0.78vw)] font-semibold !leading-[1.25] tracking-[normal] mb-4">
-                            Robust defense against spam and phishing threats.</h3>
-                        <p class="!mb-6">Leveraging
-                            sophisticated filtering techniques, and real-time threat detection
-                            mechanisms, Stalwart ensures your email environment is not only secure but also resilient
-                            against evolving
-                            email threats. From advanced spam detection to proactive phishing defenses, these tools work
-                            in concert
-                            to maintain the integrity and reliability of your email exchanges, effectively shielding
-                            your organization
-                            from both nuisance and malicious threats..</p>
+                            Enhanced filtering and rewriting.</h3>
+                        <p class="!mb-6">Stalwart is equipped with a comprehensive set of filtering capabilities
+                            designed to enhance
+                            email security and management. Its robust spam and phishing filters effectively block
+                            malicious and
+                            unwanted content, maintaining the integrity of your communications. Additionally, the
+                            platform's support
+                            for the Sieve scripting language allows for intricate customization of filtering rules.
+                            Stalwart also
+                            incorporates advanced
+                            control features such as inbound concurrency and rate limiting to manage and optimize the
+                            flow of incoming
+                            emails, ensuring efficient and secure email handling.</p>
 
                         <ul class="pl-0 list-none bullet-bg bullet-soft-primary">
                             <li class="relative pl-6"><i
                                     class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Built-in
-                                DMARC, DKIM, SPF and ARC support for sender authentication.</li>
+                                SPAM and Phishing filtering.</li>
                             <li class="relative pl-6 mt-[0.35rem]"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Comprehensive
-                                set of filtering rules on par with popular solutions.</li>
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Sieve
+                                scripting with support for all registered extensions.</li>
                             <li class="relative pl-6 mt-[0.35rem]"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Statistical
-                                spam classifier with automatic training capabilities.</li>
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Milter
+                                support for integration with external content filtering systems.</li>
                             <li class="relative pl-6 mt-[0.35rem]"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>DNS
-                                Blocklists checking of IP addresses, domains, and hashes.</li>
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Filtering,
+                                rewriting, modification and removal of message parts, envelope or headers.</li>
                             <li class="relative pl-6 mt-[0.35rem]"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Collaborative
-                                digest-based spam filtering.</li>
-                            <li class="relative pl-6 mt-[0.35rem]"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Phishing
-                                protection against homographic, spoofing and other attacks.</li>
-                            <li class="relative pl-6 mt-[0.35rem]"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Trusted
-                                reply tracking to recognize and prioritize genuine email replies.</li>
-                            <li class="relative pl-6 mt-[0.35rem]"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Sender
-                                reputation monitoring by IP address, ASN, domain and email address.</li>
-                            <li class="relative pl-6 mt-[0.35rem]"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Greylisting
-                                to temporarily defer unknown senders.</li>
-                            <li class="relative pl-6 mt-[0.35rem]"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Spam
-                                traps to set up decoy email addresses that catch and analyze spam.</li>
-
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Inbound
+                                concurrency & rate limiting.</li>
                         </ul>
                         <!--/.row -->
                     </div>
                 </div>
 
-
-                <div class="flex flex-wrap mx-[-15px] xsm:mt-[-50px] mt-[-80px] md:mx-[-20px] xl:mx-[-35px] items-center mb-10 xl:!mb-14 lg:!mb-14 md:!mb-14"
-                    id="scale">
+                <div
+                    class="flex flex-wrap mx-[-15px] xsm:mt-[-50px] mt-[-80px] md:mx-[-20px] xl:mx-[-35px] items-center mb-10 xl:!mb-14 lg:!mb-14 md:!mb-14">
                     <div
                         class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
                         <h2
                             class="text-[0.8rem] !tracking-[0.02rem] !leading-[1.35] uppercase text-gradient gradient-1 !mb-3">
-                            Built to scale</h2>
+                            Flexible queues</h2>
                         <h3
                             class="xl:text-[1.9rem] text-[calc(1.315rem_+_0.78vw)] font-semibold !leading-[1.25] tracking-[normal] mb-4">
-                            Seamless scalability for millions of mailboxes.</h3>
-                        <p class="!mb-6">Unlike traditional mail servers, which often rely on coordinators and proxies
-                            to scale and
-                            are
-                            limited by ancient storage formats like Maildir that tie user accounts to a single server,
-                            Stalwart is
-                            engineered to scale effortlessly from the start. When paired with modern storage backends
-                            such as
-                            FoundationDB, Stalwart can seamlessly handle millions of mailboxes. This design not only
-                            eliminates the
-                            need for complex scaling solutions but also ensures robust performance and reliability
-                            across extensive
-                            email infrastructures.</p>
+                            Advanced queue management for efficient delivery.</h3>
+                        <p class="!mb-6">Stalwart enhances SMTP operations with sophisticated message queueing features
+                            designed to
+                            optimize and secure email delivery. The system utilizes distributed and fault-tolerant
+                            queues that ensure
+                            reliable message handling across diverse network conditions. With support for unlimited
+                            virtual queues,
+                            dynamic routing rules, and specialized delivery options, Stalwart
+                            can meet varied organizational needs. Additionally, it
+                            helps manage the flow and volume of outgoing messages, preventing bottlenecks and
+                            maintaining system
+                            efficiency.</p>
 
                         <ul class="pl-0 list-none bullet-bg bullet-soft-primary">
                             <li class="relative pl-6"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Seamless
-                                load balancing and fault tolerance.</li>
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Distributed
+                                and fault-tolerant message queues.
+                            </li>
                             <li class="relative pl-6 mt-[0.35rem]"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Node
-                                autodiscovery, streamlining network expansion.</li>
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Unlimited
+                                virtual queues.
+                            </li>
                             <li class="relative pl-6 mt-[0.35rem]"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Network
-                                partition-tolerant failure detection.</li>
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Dynamic
+                                routing rules.
+                            </li>
                             <li class="relative pl-6 mt-[0.35rem]"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Simplified
-                                architecture without coordinators or proxies.</li>
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Delayed
+                                & priority delivery support.
+                            </li>
+                            <li class="relative pl-6 mt-[0.35rem]"><i
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Outbound
+                                throttling.
+                            </li>
+                            <li class="relative pl-6 mt-[0.35rem]"><i
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Queue
+                                quotas.
+                            </li>
+
                         </ul>
                         <!--/.row -->
                     </div>
+                    <div
+                        class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
+                        <figure class="m-0 p-0"><img class="w-auto" src="/img/clipart/queue.png"
+                                srcset="/img/clipart/queue.png 2x" alt="image"></figure>
+                    </div>
+                </div>
+
+
+                <div
+                    class="flex flex-wrap mx-[-15px] xsm:mt-[-50px] mt-[-80px] md:mx-[-20px] xl:mx-[-35px] items-center mb-10 xl:!mb-14 lg:!mb-14 md:!mb-14">
+                    <div
+                        class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
+                        <figure class="m-0 p-0"><img class="w-auto" src="/img/clipart/automation.png"
+                                srcset="/img/clipart/automation.png 2x" alt="image"></figure>
+                    </div>
+                    <div
+                        class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
+                        <h2
+                            class="text-[0.8rem] !tracking-[0.02rem] !leading-[1.35] uppercase text-gradient gradient-1 !mb-3">
+                            Flexible</h2>
+                        <h3
+                            class="xl:text-[1.9rem] text-[calc(1.315rem_+_0.78vw)] font-semibold !leading-[1.25] tracking-[normal] mb-4">
+                            Programmable MTA for modern email systems.</h3>
+                        <p class="!mb-6">Stalwart stands out for its exceptional flexibility and programmability,
+                            tailored to
+                            meet the unique demands of any modern messaging infrastructure. It allows for extensive
+                            customization
+                            through dynamic configuration rules, enabling administrators to fine-tune behaviors and
+                            settings in real
+                            time. Additionally, the message queue is highly adaptable, supported by a wide range of
+                            storage backends.
+                            This versatility ensures that regardless of the scale or
+                            complexity of your needs, Stalwart can be configured to deliver optimal performance and
+                            reliability.
+                        </p>
+
+                        <ul class="pl-0 list-none bullet-bg bullet-soft-primary">
+                            <li class="relative pl-6"><i
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Programmable
+                                with dynamic configuration rules.</li>
+                            <li class="relative pl-6 mt-[0.35rem]"><i
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>FoundationDB,
+                                RocksDB, Redis, LDAP, PostgreSQL, MySQL, and SQLite support.</li>
+                            <li class="relative pl-6 mt-[0.35rem]"><i
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>OpenTelemetry
+                                support for monitoring, tracing, and performance analysis.</li>
+                            <li class="relative pl-6 mt-[0.35rem]"><i
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>REST
+                                API for management.</li>
+                        </ul>
+                        <!--/.row -->
+                    </div>
+                </div>
+
+                <div
+                    class="flex flex-wrap mx-[-15px] xsm:mt-[-50px] mt-[-80px] md:mx-[-20px] xl:mx-[-35px] items-center mb-10 xl:!mb-14 lg:!mb-14 md:!mb-14">
+                    <div
+                        class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
+                        <h2
+                            class="text-[0.8rem] !tracking-[0.02rem] !leading-[1.35] uppercase text-gradient gradient-1 !mb-3">
+                            Web-based admin</h2>
+                        <h3
+                            class="xl:text-[1.9rem] text-[calc(1.315rem_+_0.78vw)] font-semibold !leading-[1.25] tracking-[normal] mb-4">
+                            Real-time web-based MTA monitoring.</h3>
+                        <p class="!mb-6">Stalwart offers comprehensive web-based management capabilities, allowing for
+                            complete
+                            control of the email queue directly from your browser. Its webadmin tool simplifies the
+                            administration of email queues and provides detailed insights into DMARC, TLS-RPT, and ARF
+                            reports,
+                            enhancing visibility into email performance and security. Developed as a Single Page
+                            Application (SPA),
+                            the webadmin interface is exceptionally responsive and fast, ensuring a smooth and efficient
+                            management
+                            experience.
+                        </p>
+
+                        <ul class="pl-0 list-none bullet-bg bullet-soft-primary">
+                            <li class="relative pl-6"><i
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Web-based
+                                queue management for messages and outbound DMARC and TLS reports.</li>
+                            <li class="relative pl-6 mt-[0.35rem]"><i
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Report
+                                visualization interface for received DMARC, TLS-RPT and ARF reports.</li>
+                            <li class="relative pl-6 mt-[0.35rem]"><i
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Configuration
+                                of every aspect of the SMTP server.</li>
+                            <li class="relative pl-6 mt-[0.35rem]"><i
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Log
+                                viewer with search and filtering capabilities.</li>
+                        </ul>
+                        <!--/.row -->
+                    </div>
+                    <div
+                        class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
+                        <figure class="m-0 p-0"><img class="w-auto" src="/img/clipart/dashboard.png"
+                                srcset="/img/clipart/dashboard.png 2x" alt="image"></figure>
+                    </div>
+                </div>
+
+                <div
+                    class="flex flex-wrap mx-[-15px] xsm:mt-[-50px] mt-[-80px] md:mx-[-20px] xl:mx-[-35px] items-center mb-10 xl:!mb-14 lg:!mb-14 md:!mb-14">
                     <div
                         class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
                         <figure class="m-0 p-0"><img class="w-auto" src="/img/clipart/scalable.png"
                                 srcset="/img/clipart/scalable.png 2x" alt="image"></figure>
                     </div>
+                    <div
+                        class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
+                        <h2
+                            class="text-[0.8rem] !tracking-[0.02rem] !leading-[1.35] uppercase text-gradient gradient-1 !mb-3">
+                            High availability</h2>
+                        <h3
+                            class="xl:text-[1.9rem] text-[calc(1.315rem_+_0.78vw)] font-semibold !leading-[1.25] tracking-[normal] mb-4">
+                            Seamless failover with distributed queues.</h3>
+                        <p class="!mb-6">With its advanced distributed message queue system, Stalwart is engineered for
+                            high
+                            availability. Unlike other MTAs that rely on local storage
+                            for message queues, Stalwart utilizes a distributed approach. This design allows any node
+                            within the
+                            cluster to seamlessly take over message delivery duties if another node fails, ensuring no
+                            interruption in
+                            service. Such redundancy guarantees that all messages will be reliably received, maintaining
+                            continuous
+                            communication even in the face of hardware or network failures. This robust framework
+                            provides an extra
+                            layer of reliability and efficiency, making Stalwart an ideal choice for businesses that
+                            cannot afford any
+                            downtime.</p>
+
+                        <ul class="pl-0 list-none bullet-bg bullet-soft-primary">
+                            <li class="relative pl-6"><i
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Distributed
+                                and fault tolerant SMTP queue.
+                            </li>
+                            <li class="relative pl-6 mt-[0.35rem]"><i
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Node
+                                autodiscovery, streamlining network expansion.
+                            </li>
+                            <li class="relative pl-6 mt-[0.35rem]"><i
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Network
+                                partition-tolerant failure detection.
+                            </li>
+                            <li class="relative pl-6 mt-[0.35rem]"><i
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Simplified
+                                architecture without coordinators or proxies.
+                            </li>
+                        </ul>
+                        <!--/.row -->
+                    </div>
                 </div>
 
-            </div>
 
+                <!--/.row -->
+            </div>
+            <!-- /.overflow-hidden -->
         </section>
 
     </div>
-
+    <!-- /.content-wrapper -->
     <footer class="!bg-[#ffffff] ">
     <div class="container-card">
         <div class="card image-wrapper bg-full bg-image bg-overlay bg-overlay-light-500 !mb-[4.5rem] [background-size:100%] bg-[center_center] bg-no-repeat !bg-scroll relative z-0 before:content-[''] before:block before:absolute before:z-[1] before:w-full before:h-full before:left-0 before:top-0 before:bg-[rgba(255,255,255,.5)] xxl:rounded-[.8rem] rounded-0"
@@ -920,7 +883,6 @@
 
     gtag('config', 'G-NTKTV3G55G');
 </script>
-
 </body>
 
 </html>

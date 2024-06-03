@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('include-meta.ejs', { title: 'Jobs | Stalwart Labs' ,
+        description: 'Join the Stalwart team and shape the future of email with us. We offer career growth opportunities, competitive salaries, and a great work culture.'
+        }) %>
+
+        <!-- google fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link
+            href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Manrope:wght@400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+            rel="stylesheet">
+        <!-- fonts -->
+        <link rel="stylesheet" type="text/css" href="/fonts/unicons/unicons.css">
+        <link rel="stylesheet" href="/css/plugins.css">
+        <link rel="stylesheet" href="/css/style.css">
+        <style>
+            .accordion-wrapper .card-header button.collapsed {
+                color: #343f52 !important;
+            }
+
+            .accordion-wrapper .card-header button:hover,
+            .accordion-wrapper .card-header button {
+                color: #3f78e0 !important;
+            }
+        </style>
+</head>
+
+<body>
+    <div class="grow shrink-0">
+        <header class="relative wrapper bg-soft-primary !bg-[#edf2fc]">
+            <%- include('include-header.ejs') %>
+        </header>
+        <!-- /header -->
+        <section class="wrapper !bg-[#edf2fc]">
+            <div
+                class="container pt-10 pb-[4rem] md:!pb-[5rem] xl:!pt-[4.5rem] lg:!pt-[4.5rem] md:!pt-[4.5rem] xl:!pb-[6rem] lg:!pb-[6rem] !text-center">
+                <div class="flex flex-wrap mx-[-15px]">
+                    <div class="xl:w-8/12 lg:w-8/12 w-full flex-[0_0_auto] px-[15px] max-w-full !mx-auto mb-12">
+                        <h1 class="!text-[.75rem] uppercase text-[#3f78e0] tracking-[0.02rem] !mb-3 !leading-[1.3]">Join
+                            the
+                            Stalwart Team</h1>
+                        <h3 class="text-[calc(1.365rem_+_1.38vw)] font-bold !leading-[1.2] xl:text-[2.4rem]">Shape the
+                            future of
+                            email with us.</h3>
+                    </div>
+                    <!-- /column -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.container -->
+        </section>
+        <!-- /section -->
+        <section class="wrapper !bg-[#ffffff]">
+            <div class="container ">
+
+                <!-- /.row -->
+                <div class="flex flex-wrap pt-20 pb-10 mx-[-15px] xl:mx-[-35px] lg:mx-[-20px] mt-[-40px]">
+                    <div
+                        class="md:w-6/12 lg:w-4/12 xl:w-4/12 w-full flex-[0_0_auto] px-[15px] max-w-full mt-[40px] xl:px-[35px] lg:px-[20px]">
+                        <div class="flex flex-row">
+                            <div>
+                                <img src="/img/icons/solid/target.svg"
+                                    class="svg-inject icon-svg !w-[2.2rem] !h-[2.2rem]  solid-mono text-[#3f78e0]  !mr-4"
+                                    alt="image">
+                            </div>
+                            <div>
+                                <h4 class="!mb-1">Career Growth</h4>
+                                <p class="!mb-0">Join us for ample career growth opportunities, including continuous
+                                    learning and
+                                    development to help you achieve your professional aspirations.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/column -->
+                    <div
+                        class="md:w-6/12 lg:w-4/12 xl:w-4/12 w-full flex-[0_0_auto] px-[15px] max-w-full mt-[40px] xl:px-[35px] lg:px-[20px]">
+                        <div class="flex flex-row">
+                            <div>
+                                <img src="/img/icons/solid/video-chat.svg"
+                                    class="svg-inject icon-svg !w-[2.2rem] !h-[2.2rem]  solid-mono text-[#3f78e0]  !mr-4"
+                                    alt="image">
+                            </div>
+                            <div>
+                                <h4 class="!mb-1">Work From Anywhere</h4>
+                                <p class="!mb-0">Embrace the freedom to work from anywhere, ensuring you maintain a
+                                    perfect balance
+                                    between your professional and personal life.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/column -->
+                    <div
+                        class="md:w-6/12 lg:w-4/12 xl:w-4/12 w-full flex-[0_0_auto] px-[15px] max-w-full mt-[40px] xl:px-[35px] lg:px-[20px]">
+                        <div class="flex flex-row">
+                            <div>
+                                <img src="/img/icons/solid/wallet.svg"
+                                    class="svg-inject icon-svg !w-[2.2rem] !h-[2.2rem]  solid-mono text-[#3f78e0]  !mr-4"
+                                    alt="image">
+                            </div>
+                            <div>
+                                <h4 class="!mb-1">Competitive Salary</h4>
+                                <p class="!mb-0">Enjoy a competitive salary that reflects your skills and experience,
+                                    rewarding your
+                                    contributions to our innovative email solutions.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/column -->
+                    <div
+                        class="md:w-6/12 lg:w-4/12 xl:w-4/12 w-full flex-[0_0_auto] px-[15px] max-w-full mt-[40px] xl:px-[35px] lg:px-[20px]">
+                        <div class="flex flex-row">
+                            <div>
+                                <img src="/img/icons/solid/building.svg"
+                                    class="svg-inject icon-svg !w-[2.2rem] !h-[2.2rem]  solid-mono text-[#3f78e0]  !mr-4"
+                                    alt="image">
+                            </div>
+                            <div>
+                                <h4 class="!mb-1">Global Insurance</h4>
+                                <p class="!mb-0">Benefit from comprehensive worldwide medical insurance, providing you
+                                    and your family
+                                    with peace of mind and excellent healthcare coverage.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/column -->
+                    <div
+                        class="md:w-6/12 lg:w-4/12 xl:w-4/12 w-full flex-[0_0_auto] px-[15px] max-w-full mt-[40px] xl:px-[35px] lg:px-[20px]">
+                        <div class="flex flex-row">
+                            <div>
+                                <img src="/img/icons/solid/alarm.svg"
+                                    class="svg-inject icon-svg !w-[2.2rem] !h-[2.2rem]  solid-mono text-[#3f78e0]  !mr-4"
+                                    alt="image">
+                            </div>
+                            <div>
+                                <h4 class="!mb-1">Flexible Hours</h4>
+                                <p class="!mb-0">Take advantage of flexible working hours, allowing you to create a
+                                    schedule that fits
+                                    your lifestyle and maximizes productivity.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/column -->
+                    <div
+                        class="md:w-6/12 lg:w-4/12 xl:w-4/12 w-full flex-[0_0_auto] px-[15px] max-w-full mt-[40px] xl:px-[35px] lg:px-[20px]">
+                        <div class="flex flex-row">
+                            <div>
+                                <img src="/img/icons/solid/employees.svg"
+                                    class="svg-inject icon-svg !w-[2.2rem] !h-[2.2rem]  solid-mono text-[#3f78e0]  !mr-4"
+                                    alt="image">
+                            </div>
+                            <div>
+                                <h4 class="!mb-1">Great Work Culture</h4>
+                                <p class="!mb-0">Experience an amazing work culture that fosters collaboration,
+                                    creativity, and mutual
+                                    respect, making every day at work fulfilling and enjoyable.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/column -->
+                </div>
+
+            </div>
+            <!-- /.container -->
+
+            <div class="container py-[4.5rem] xl:!py-24 lg:!py-24 md:!py-24">
+                <div class="flex flex-wrap mx-[-15px]">
+                    <div
+                        class="lg:w-11/12 xl:w-11/12 xxl:w-10/12 w-full flex-[0_0_auto] px-[15px] max-w-full !mx-auto !text-center">
+                        <h2 class="!text-[.75rem] uppercase text-[#3f78e0] tracking-[0.02rem] leading-[1.35] !mb-3">Job
+                            Positions
+                        </h2>
+                        <h3
+                            class="text-[calc(1.305rem_+_0.66vw)] font-bold xl:text-[1.8rem] !leading-[1.3] mb-10 lg:!px-14 xl:!px-10 xxl:!px-20">
+                            We're
+                            seeking exceptional talent to join our team.</h3>
+                    </div>
+                    <!--/column -->
+                </div>
+                <!--/.row -->
+                <div class="flex flex-wrap mx-[-15px]">
+                    <div class="xl:w-7/12 lg:w-7/12 w-full flex-[0_0_auto] px-[15px] max-w-full !mx-auto">
+                        <div id="accordion-3" class="accordion-wrapper">
+                            <div class="card accordion-item !shadow-[0_0.25rem_1.75rem_rgba(30,34,40,0.07)] mb-5">
+                                <div class="card-header mb-0 !p-[.9rem_1.3rem_.85rem] !border-0 bg-inherit"
+                                    id="accordion-heading-3-1">
+                                    <button
+                                        class="!text-[#343f52] !text-[0.9rem] hover:!text-[#3f78e0] before:!text-[#3f78e0] collapsed"
+                                        data-bs-toggle="collapse" data-bs-target="#accordion-collapse-3-1"
+                                        aria-expanded="false" aria-controls="accordion-collapse-3-1">Senior backend
+                                        developer (Rust) - Remote</button>
+                                </div>
+                                <!-- /.card-header -->
+                                <div id="accordion-collapse-3-1" class="collapse"
+                                    aria-labelledby="accordion-heading-3-1" data-bs-target="#accordion-3">
+                                    <div class="card-body flex-[1_1_auto]  p-[0_1.25rem_.25rem_2.35rem]">
+                                        <p>We are seeking a skilled Rust Backend Developer to join our dynamic team.
+                                            This is a remote
+                                            position that offers you the flexibility to work from anywhere.</p>
+
+                                        <p><b>Responsibilities:</b></p>
+
+                                        <ul>
+                                            <li>- Develop and maintain backend services using Rust.</li>
+                                            <li>- Collaborate with cross-functional teams to design and implement new
+                                                features.</li>
+                                            <li>- Optimize and enhance the performance and scalability of our email
+                                                server solutions.</li>
+                                            <li>- Troubleshoot and resolve issues in a timely manner.</li>
+                                            <li>- Write clean, maintainable, and well-documented code.</li>
+                                        </ul>
+
+                                        <p><b>Requirements:</b></p>
+                                        <ul>
+                                            <li>- At least 3 years of experience with Rust programming.</li>
+                                            <li>- Strong understanding of backend development and system architecture.
+                                            </li>
+                                            <li>- Experience with email protocols (IMAP, SMTP, JMAP) is a plus.</li>
+                                            <li>- Ability to work independently and in a team environment.</li>
+                                            <li>- Excellent problem-solving skills and attention to detail.</li>
+                                        </ul>
+
+                                        <p><b>How to Apply:</b></p>
+                                        <p>If you meet the above qualifications and are excited about the opportunity to
+                                            work on innovative
+                                            email solutions, please send your CV and salary expectations to <a
+                                                href="mailto:jobs@stalw.art">jobs@stalw.art</a>. We look forward
+                                            to hearing from you!</p>
+
+
+                                    </div>
+                                    <!-- /.card-body -->
+                                </div>
+                                <!-- /.collapse -->
+                            </div>
+                            <!-- /.card -->
+                            <div class="card accordion-item !shadow-[0_0.25rem_1.75rem_rgba(30,34,40,0.07)] mb-5">
+                                <div class="card-header mb-0 !p-[.9rem_1.3rem_.85rem] !border-0 bg-inherit"
+                                    id="accordion-heading-3-2">
+                                    <button
+                                        class="!text-[#343f52] !text-[0.9rem] hover:!text-[#3f78e0] before:!text-[#3f78e0] collapsed"
+                                        data-bs-toggle="collapse" data-bs-target="#accordion-collapse-3-2"
+                                        aria-expanded="false" aria-controls="accordion-collapse-3-2">Senior frontend
+                                        developer (Rust) - Remote</button>
+                                </div>
+                                <!-- /.card-header -->
+                                <div id="accordion-collapse-3-2" class="collapse"
+                                    aria-labelledby="accordion-heading-3-2" data-bs-target="#accordion-3">
+                                    <div class="card-body flex-[1_1_auto]  p-[0_1.25rem_.25rem_2.35rem]">
+                                        <p>We are seeking a skilled Rust Frontend Developer to join our dynamic team.
+                                            This is a remote
+                                            position that offers you the flexibility to work from anywhere.</p>
+
+                                        <p><b>Responsibilities:</b></p>
+
+                                        <ul>
+                                            <li>- Develop and maintain frontend applications using Rust.</li>
+                                            <li>- Collaborate with cross-functional teams to design and implement new
+                                                features.</li>
+                                            <li>- Optimize and enhance the performance and responsiveness of our web
+                                                applications.</li>
+                                            <li>- Troubleshoot and resolve issues in a timely manner.</li>
+                                            <li>- Write clean, maintainable, and well-documented code.</li>
+                                        </ul>
+
+                                        <p><b>Requirements:</b></p>
+                                        <ul>
+                                            <li>- At least 3 years of experience with Rust programming.</li>
+                                            <li>- Strong understanding of frontend development and user interface
+                                                design.</li>
+                                            <li>- Experience with Tauri or Leptos is a plus.</li>
+                                            <li>- Ability to work independently and in a team environment.</li>
+                                            <li>- Excellent problem-solving skills and attention to detail.</li>
+                                        </ul>
+
+                                        <p><b>How to Apply:</b></p>
+                                        <p>If you meet the above qualifications and are excited about the opportunity to
+                                            work on innovative
+                                            email solutions, please send your CV and salary expectations to <a
+                                                href="mailto:jobs@stalw.art">jobs@stalw.art</a>. We look forward
+                                            to hearing from you!</p>
+                                    </div>
+                                    <!-- /.card-body -->
+                                </div>
+                                <!-- /.collapse -->
+                            </div>
+                            <!-- /.card -->
+                            <div class="card accordion-item !shadow-[0_0.25rem_1.75rem_rgba(30,34,40,0.07)] mb-5">
+                                <div class="card-header mb-0 !p-[.9rem_1.3rem_.85rem] !border-0 bg-inherit"
+                                    id="accordion-heading-3-3">
+                                    <button
+                                        class="!text-[#343f52] !text-[0.9rem] hover:!text-[#3f78e0] before:!text-[#3f78e0] collapsed"
+                                        data-bs-toggle="collapse" data-bs-target="#accordion-collapse-3-3"
+                                        aria-expanded="false" aria-controls="accordion-collapse-3-3">Technical support
+                                        engineer - Remote</button>
+                                </div>
+                                <!-- /.card-header -->
+                                <div id="accordion-collapse-3-3" class="collapse"
+                                    aria-labelledby="accordion-heading-3-3" data-bs-target="#accordion-3">
+                                    <div class="card-body flex-[1_1_auto]  p-[0_1.25rem_.25rem_2.35rem]">
+                                        <p>We are seeking a dedicated Technical Support Engineer to join our team and
+                                            support mail server
+                                            installations worldwide. This is a remote position, offering you the
+                                            flexibility to work from
+                                            anywhere.</p>
+
+                                        <p><b>Responsibilities:</b></p>
+
+                                        <ul>
+                                            <li>- Provide technical support for mail server installations across the
+                                                globe.</li>
+                                            <li>- Manage and troubleshoot Linux/Unix servers in a distributed
+                                                environment.</li>
+                                            <li>- Collaborate with customers to resolve technical issues and ensure
+                                                optimal performance.</li>
+                                            <li>- Monitor server performance and implement improvements as needed.</li>
+                                            <li>- Document and maintain support procedures and best practices.</li>
+                                        </ul>
+
+                                        <p><b>Requirements:</b></p>
+                                        <ul>
+                                            <li>- At least 3 years of experience managing Linux/Unix servers.</li>
+                                            <li>- Experience with distributed environments.</li>
+                                            <li>- Strong problem-solving skills and ability to work under pressure.</li>
+                                            <li>- Excellent communication skills and customer service orientation.</li>
+                                            <li>- Ability to work independently and in a team environment.</li>
+                                        </ul>
+
+                                        <p><b>How to Apply:</b></p>
+                                        <p>If you meet the above qualifications and are passionate about providing
+                                            top-notch technical
+                                            support, please send your CV and salary expectations to <a
+                                                href="mailto:jobs@stalw.art">jobs@stalw.art</a>. We look forward
+                                            to hearing from you!</p>
+                                    </div>
+                                    <!-- /.card-body -->
+                                </div>
+                                <!-- /.collapse -->
+                            </div>
+                            <!-- /.card -->
+                            <div class="card accordion-item !shadow-[0_0.25rem_1.75rem_rgba(30,34,40,0.07)] mb-5">
+                                <div class="card-header mb-0 !p-[.9rem_1.3rem_.85rem] !border-0 bg-inherit"
+                                    id="accordion-heading-3-4">
+                                    <button
+                                        class="!text-[#343f52] !text-[0.9rem] hover:!text-[#3f78e0] before:!text-[#3f78e0] collapsed"
+                                        data-bs-toggle="collapse" data-bs-target="#accordion-collapse-3-4"
+                                        aria-expanded="false" aria-controls="accordion-collapse-3-4">Sales
+                                        Representative - Remote</button>
+                                </div>
+                                <!-- /.card-header -->
+                                <div id="accordion-collapse-3-4" class="collapse"
+                                    aria-labelledby="accordion-heading-3-4" data-bs-target="#accordion-3">
+                                    <div class="card-body flex-[1_1_auto]  p-[0_1.25rem_.25rem_2.35rem]">
+                                        <p>We are seeking a dynamic and results-driven Sales Representative to join our
+                                            growing team. This
+                                            is a remote position, offering you the flexibility to work from
+                                            anywhere.</p>
+
+                                        <p><b>Responsibilities:</b></p>
+
+                                        <ul>
+                                            <li>- Identify and develop new business opportunities to expand our customer
+                                                base.</li>
+                                            <li>- Build and maintain strong relationships with existing clients.</li>
+                                            <li>- Present and promote our email server solutions to prospective
+                                                customers.</li>
+                                            <li>- Conduct product demonstrations and sales presentations.</li>
+                                            <li>- Negotiate contracts and close sales to meet or exceed targets.</li>
+                                            <li>- Collaborate with the marketing team to align sales strategies with
+                                                promotional activities.
+                                            </li>
+                                            <li>- Provide feedback on market trends and customer needs to inform product
+                                                development.</li>
+                                        </ul>
+
+                                        <p><b>Requirements:</b></p>
+                                        <ul>
+                                            <li>- Proven experience as a Sales Representative or similar role.</li>
+                                            <li>- Excellent communication, negotiation, and interpersonal skills.</li>
+                                            <li>- Ability to understand and present technical products effectively.</li>
+                                            <li>- Self-motivated with a results-driven approach.</li>
+                                            <li>- Strong organizational and time-management skills.</li>
+                                            <li>- Familiarity with CRM software and sales processes.</li>
+                                            <li>- Ability to work independently and as part of a team.</li>
+                                        </ul>
+
+                                        <p><b>How to Apply:</b></p>
+                                        <p>If you meet the above qualifications and are excited about the opportunity to
+                                            drive sales for
+                                            cutting-edge email solutions, please send your CV and salary expectations to
+                                            <a href="mailto:jobs@stalw.art">jobs@stalw.art</a>. We look forward
+                                            to hearing from you!
+                                        </p>
+                                    </div>
+                                    <!-- /.card-body -->
+                                </div>
+                                <!-- /.collapse -->
+                            </div>
+                            <!-- /.card -->
+                        </div>
+                        <!-- /.accordion-wrapper -->
+                    </div>
+                    <!-- /column -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.container -->
+        </section>
+        <!-- /section -->
+
+
+
+    </div>
+    <!-- /.content-wrapper -->
+    <%- include('include-footer.ejs', { cta: 'Canʹt find the right position?' ,
+        ctaSub: 'If the job youʹre looking for isnʹt listed, weʹd still love to hear from you.' ,
+        ctaButton: 'Contact us' , ctaLink: '/contact' }) %>
+</body>
+
+</html>

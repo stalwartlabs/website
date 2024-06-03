@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('include-meta.ejs', { title: 'Anti-spam & Phishing Protection | Stalwart Labs' ,
+        description: 'Shield your inbox with Stalwart Mail Server, keeping your emails safe from threats and intrusions.'
+        }) %>
+
+        <!-- google fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link
+            href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Manrope:wght@400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+            rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/fonts/unicons/unicons.css">
+        <link rel="stylesheet" href="/css/plugins.css">
+        <link rel="stylesheet" href="/css/style.css">
+        <link rel="stylesheet" href="/css/colors/sky.css">
+        <link rel="preload" href="/fonts/urbanist/urbanist.css" as="style" onload="this.rel='stylesheet'">
+        <style>
+            .swiper-container.nav-color .swiper-button.swiper-button-disabled,
+            .swiper-container.nav-color .swiper-slide figure .item-link.swiper-button-disabled {
+                background: #5eb9f0b3 !important;
+            }
+
+            .swiper-container.nav-color .swiper-button,
+            .swiper-container.nav-color .swiper-slide figure .item-link {
+                background: #5eb9f0e6 !important;
+                color: #ffffff !important;
+            }
+
+            .swiper-container.nav-color .swiper-button:hover,
+            .swiper-container.nav-color .swiper-slide figure .item-link:hover {
+                background: #5eb9f0 !important;
+            }
+
+            .navbar.navbar-light.fixed .btn:not(.btn-expand):not(.btn-gradient) {
+                background: #5eb9f0 !important;
+                border-color: #5eb9f0 !important;
+                color: #ffffff !important;
+            }
+
+            .accordion-wrapper .card-header button {
+                color: #5eb9f0;
+            }
+
+            @media (min-width: 992px) {
+                .navbar-expand-lg.navbar-light .dropdown:not(.dropdown-submenu)>.dropdown-toggle:after {
+                    color: #5eb9f0;
+                }
+            }
+
+            @media (max-width: 991.98px) {
+                .navbar-expand-lg .navbar-collapse .dropdown-toggle:after {
+                    color: #ffffff !important;
+                }
+            }
+        </style>
+</head>
+
+<body>
+    <div class="grow shrink-0">
+        <header class="relative wrapper !bg-[#ffffff] ">
+            <%- include('include-header.ejs') %>
+        </header>
+        <!-- /header -->
+        <section class="wrapper !bg-[#ffffff]">
+            <div
+                class="container pt-10 xl:pt-[4.5rem] lg:pt-[4.5rem] md:pt-[4.5rem] pb-[4.5rem] xl:pb-12 lg:pb-12 md:pb-12 !text-center">
+                <div
+                    class="flex flex-wrap mx-[-15px] xl:mx-[-35px] lg:mx-[-20px] mt-[-50px] xl:mt-0 !mb-[4.5rem] items-center">
+                    <div
+                        class="xl:w-7/12 lg:w-7/12 w-full flex-[0_0_auto] px-[15px] xl:px-[35px] lg:px-[20px] mt-[50px] xl:mt-0 max-w-full xl:!order-2 lg:!order-2">
+                        <figure class="m-0 p-0"><img class="img-auto" src="/img/clipart/spam_01.png"
+                                srcset="/img/clipart/spam_01.png 2x" alt="image"></figure>
+                    </div>
+                    <!-- /column -->
+                    <div
+                        class="md:w-10/12 md:!ml-[8.33333333%] lg:!ml-0 lg:w-5/12 xl:!ml-0 xl:w-5/12 w-full flex-[0_0_auto] px-[15px] xl:px-[35px] lg:px-[20px] mt-[50px] xl:mt-0 max-w-full text-center lg:text-left xl:text-left">
+                        <h1
+                            class="xl:text-[2.7rem] text-[calc(1.395rem_+_1.74vw)] !leading-[1.15] mb-5 md:mx-[-1.25rem] lg:mx-0 mt-7">
+                            Advanced spam and phishing protection</h1>
+                        <p class="lead !text-[1.1rem] !leading-[1.55] font-medium mb-7">Shield your inbox with Stalwart,
+                            keeping
+                            your emails safe from threats and intrusions.</p>
+                        <span><a href="#spam"
+                                class="btn btn-lg btn-sky text-white !bg-[#5eb9f0] border-[#5eb9f0] hover:text-white hover:!bg-[#5eb9f0] hover:border-[#5eb9f0] focus:shadow-[rgba(88,167,216,1)] active:text-white active:!bg-[#5eb9f0] active:border-[#5eb9f0] disabled:text-white disabled:!bg-[#5eb9f0] disabled:border-[#5eb9f0]  !rounded-[50rem] !mr-2">Learn
+                                More</a></span>
+                    </div>
+                    <!-- /column -->
+                </div>
+            </div>
+            <!-- /.container -->
+            <div class="overflow-hidden">
+                <div class="divider text-[#f0f8fe] mx-[-0.5rem]">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 100">
+                        <path fill="currentColor"
+                            d="M1260,1.65c-60-5.07-119.82,2.47-179.83,10.13s-120,11.48-180,9.57-120-7.66-180-6.42c-60,1.63-120,11.21-180,16a1129.52,1129.52,0,0,1-180,0c-60-4.78-120-14.36-180-19.14S60,7,30,7H0v93H1440V30.89C1380.07,23.2,1319.93,6.15,1260,1.65Z" />
+                    </svg>
+                </div>
+            </div>
+            <!-- /.overflow-hidden -->
+        </section>
+        <!-- /section -->
+        <section class="wrapper bg-gradient-sky">
+            <div class="container pt-14 xl:pt-8 lg:pt-8 pb-[4.5rem] xl:pb-14 lg:pb-14 md:pb-14" id="spam">
+
+
+                <div
+                    class="flex flex-wrap mx-[-15px] xsm:mt-[-50px] mt-[-80px] md:mx-[-20px] xl:mx-[-35px] items-center mb-10 xl:!mb-14 lg:!mb-14 md:!mb-14">
+                    <div
+                        class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
+                        <figure class="m-0 p-0"><img class="w-auto" src="/img/clipart/hacker.png"
+                                srcset="/img/clipart/hacker.png 2x" alt="image"></figure>
+                    </div>
+                    <div
+                        class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
+                        <h2
+                            class="text-[0.8rem] !tracking-[0.02rem] !leading-[1.35] uppercase text-gradient gradient-1 !mb-3">
+                            Efficient filtering</h2>
+                        <h3
+                            class="xl:text-[1.9rem] text-[calc(1.315rem_+_0.78vw)] font-semibold !leading-[1.25] tracking-[normal] mb-4">
+                            Fast and reliable filtering for today's threat landscape.</h3>
+                        <p class="!mb-6">Stalwart's spam and phishing filters provide robust protection that rivals the
+                            most popular
+                            solutions in the market, featuring a comprehensive set of filtering rules to keep your inbox
+                            clean and
+                            secure. Unlike other spam filters, which can slow down message delivery due
+                            to their
+                            heavy reliance on regular expressions, Stalwart's built-in filters operate at a
+                            significantly faster
+                            pace. This is because everything is integrated and optimized within the system itself,
+                            eliminating the
+                            need for repetitive checks and excessive parsing typically encountered when using external
+                            filtering
+                            solutions. With
+                            Stalwart, you get speedy and efficient email filtering without the usual overhead, ensuring
+                            your
+                            communications are both swift and secure.</p>
+                        <!--/.row -->
+                    </div>
+                </div>
+
+
+                <div
+                    class="flex flex-wrap mx-[-15px] xsm:mt-[-50px] mt-[-80px] md:mx-[-20px] xl:mx-[-35px] items-center mb-10 xl:!mb-14 lg:!mb-14 md:!mb-14">
+                    <div
+                        class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
+                        <h2
+                            class="text-[0.8rem] !tracking-[0.02rem] !leading-[1.35] uppercase text-gradient gradient-1 !mb-3">
+                            AI-enhanced filtering</h2>
+                        <h3
+                            class="xl:text-[1.9rem] text-[calc(1.315rem_+_0.78vw)] font-semibold !leading-[1.25] tracking-[normal] mb-4">
+                            Harness AI for unmatched spam and phishing defense.</h3>
+                        <p class="!mb-6">Stalwart's spam and phishing filtering capabilities harness the power of AI to
+                            provide
+                            unparalleled protection for your email environment. The open-source edition of Stalwart
+                            features a robust
+                            statistical spam classifier that learns and adapts automatically, enhancing its
+                            effectiveness over time.
+                            For organizations seeking even more advanced filtering, the enterprise version takes this a
+                            step further
+                            by integrating AI-powered spam and phishing defenses. This version allows seamless
+                            connectivity with
+                            leading AI providers like OpenAI and Anthropic, as well as compatibility with self-hosted
+                            large language
+                            models like Llama. With these cutting-edge technologies, Stalwart ensures that your inbox
+                            remains secure
+                            against the most sophisticated threats, all while maintaining swift and accurate filtering.
+                        </p>
+                        <!--/.row -->
+                    </div>
+                    <div
+                        class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
+                        <figure class="m-0 p-0"><img class="w-auto" src="/img/clipart/ai.png"
+                                srcset="/img/clipart/ai.png 2x" alt="image"></figure>
+                    </div>
+                </div>
+
+                <div
+                    class="flex flex-wrap mx-[-15px] xsm:mt-[-50px] mt-[-80px] md:mx-[-20px] xl:mx-[-35px] items-center mb-10 xl:!mb-14 lg:!mb-14 md:!mb-14">
+                    <div
+                        class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
+                        <figure class="m-0 p-0"><img class="w-auto" src="/img/clipart/secure_shield.png"
+                                srcset="/img/clipart/secure_shield.png 2x" alt="image"></figure>
+                    </div>
+                    <div
+                        class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
+                        <h2
+                            class="text-[0.8rem] !tracking-[0.02rem] !leading-[1.35] uppercase text-gradient gradient-1 !mb-3">
+                            DNSBL support</h2>
+                        <h3
+                            class="xl:text-[1.9rem] text-[calc(1.315rem_+_0.78vw)] font-semibold !leading-[1.25] tracking-[normal] mb-4">
+                            Enhanced email defense with extensive screening.</h3>
+                        <p class="!mb-6">Stalwart takes email security to the next level with its comprehensive DNS
+                            Blocklists
+                            (DNSBLs) integration. In addition to checking the sender IP addresses against DNSBLs,
+                            Stalwart goes further by scrutinizing every single email address, URL, and domain mentioned
+                            within the
+                            message contents. This thorough approach ensures that even the most subtle threats are
+                            detected and
+                            blocked, providing robust protection against spam and malicious content. By leveraging
+                            DNSBLs extensively,
+                            Stalwart significantly enhances your email security, keeping your inbox safe from a wider
+                            range of
+                            potential threats. </p>
+                        <!--/.row -->
+                    </div>
+                </div>
+
+
+                <div
+                    class="flex flex-wrap mx-[-15px] xsm:mt-[-50px] mt-[-80px] md:mx-[-20px] xl:mx-[-35px] items-center mb-10 xl:!mb-14 lg:!mb-14 md:!mb-14">
+                    <div
+                        class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
+                        <h2
+                            class="text-[0.8rem] !tracking-[0.02rem] !leading-[1.35] uppercase text-gradient gradient-1 !mb-3">
+                            Digest-Based Filtering</h2>
+                        <h3
+                            class="xl:text-[1.9rem] text-[calc(1.315rem_+_0.78vw)] font-semibold !leading-[1.25] tracking-[normal] mb-4">
+                            Boost spam detection with collaborative filtering.</h3>
+                        <p class="!mb-6">Stalwart enhances its spam filtering capabilities with collaborative
+                            digest-based spam
+                            filtering, a powerful technique that improves detection accuracy by leveraging shared
+                            information about
+                            known spam across multiple sources. This method involves creating digests of email content
+                            and comparing
+                            them against a database of known spam digests, effectively identifying and blocking unwanted
+                            messages.
+                            Stalwart supports this advanced filtering approach right out of the box and integrates
+                            seamlessly with
+                            databases like Pyzor. This integration ensures that your email environment benefits from
+                            collective
+                            intelligence, providing robust protection against spam and keeping your inbox clean and
+                            secure.</p>
+                        <!--/.row -->
+                    </div>
+                    <div
+                        class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
+                        <figure class="m-0 p-0"><img class="w-auto" src="/img/clipart/collaborate.png"
+                                srcset="/img/clipart/collaborate.png 2x" alt="image"></figure>
+                    </div>
+                </div>
+
+
+                <div
+                    class="flex flex-wrap mx-[-15px] xsm:mt-[-50px] mt-[-80px] md:mx-[-20px] xl:mx-[-35px] items-center mb-10 xl:!mb-14 lg:!mb-14 md:!mb-14">
+                    <div
+                        class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
+                        <figure class="m-0 p-0"><img class="w-auto" src="/img/clipart/phishing.png"
+                                srcset="/img/clipart/phishing.png 2x" alt="image"></figure>
+                    </div>
+                    <div
+                        class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
+                        <h2
+                            class="text-[0.8rem] !tracking-[0.02rem] !leading-[1.35] uppercase text-gradient gradient-1 !mb-3">
+                            Anti-phishing</h2>
+                        <h3
+                            class="xl:text-[1.9rem] text-[calc(1.315rem_+_0.78vw)] font-semibold !leading-[1.25] tracking-[normal] mb-4">
+                            Guarding your inbox from deceptive phishing tactics.</h3>
+                        <p class="!mb-6">Stalwart provides robust phishing protection, designed to guard against various
+                            sophisticated phishing techniques, including homographic URL attacks and sender spoofing.
+                            Homographic URL
+                            attacks involve using visually similar characters to deceive users into clicking on
+                            malicious links that
+                            appear legitimate. Sender spoofing, on the other hand, involves forging the sender's address
+                            to make an
+                            email appear as if it comes from a trusted source. Stalwart's comprehensive phishing
+                            protection detects
+                            and mitigates these threats, ensuring your email communications remain secure and
+                            trustworthy. By
+                            leveraging advanced detection mechanisms, Stalwart effectively shields your inbox from
+                            deceptive tactics
+                            and enhances overall email security.</p>
+
+
+                        <!--/.row -->
+                    </div>
+                </div>
+
+                <div
+                    class="flex flex-wrap mx-[-15px] xsm:mt-[-50px] mt-[-80px] md:mx-[-20px] xl:mx-[-35px] items-center mb-10 xl:!mb-14 lg:!mb-14 md:!mb-14">
+                    <div
+                        class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
+                        <h2
+                            class="text-[0.8rem] !tracking-[0.02rem] !leading-[1.35] uppercase text-gradient gradient-1 !mb-3">
+                            Reputation monitoring</h2>
+                        <h3
+                            class="xl:text-[1.9rem] text-[calc(1.315rem_+_0.78vw)] font-semibold !leading-[1.25] tracking-[normal] mb-4">
+                            Proactive spam defense with reputation tracking.</h3>
+                        <p class="!mb-6">Stalwart takes email security a step further with its sophisticated sender
+                            reputation
+                            monitoring system. By tracking the reputation of senders based on IP address, ASN, domain,
+                            and email
+                            address, Stalwart ensures a proactive approach to spam prevention. The system automatically
+                            adjusts spam
+                            scores according to the monitored sender reputation, effectively filtering out suspicious
+                            emails and
+                            enhancing the accuracy of spam detection. This dynamic adjustment mechanism helps maintain a
+                            clean and
+                            secure inbox, providing robust protection against unwanted and potentially harmful emails.
+                        </p>
+
+
+                        <!--/.row -->
+                    </div>
+                    <div
+                        class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
+                        <figure class="m-0 p-0"><img class="w-auto" src="/img/clipart/tracking.png"
+                                srcset="/img/clipart/tracking.png 2x" alt="image"></figure>
+                    </div>
+                </div>
+
+
+
+                <div
+                    class="flex flex-wrap mx-[-15px] xsm:mt-[-50px] mt-[-80px] md:mx-[-20px] xl:mx-[-35px] items-center mb-10 xl:!mb-14 lg:!mb-14 md:!mb-14">
+                    <div
+                        class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
+                        <figure class="m-0 p-0"><img class="w-auto" src="/img/clipart/version_control.png"
+                                srcset="/img/clipart/version_control.png 2x" alt="image"></figure>
+                    </div>
+                    <div
+                        class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
+                        <h2
+                            class="text-[0.8rem] !tracking-[0.02rem] !leading-[1.35] uppercase text-gradient gradient-1 !mb-3">
+                            Reply tracking & greylisting</h2>
+                        <h3
+                            class="xl:text-[1.9rem] text-[calc(1.315rem_+_0.78vw)] font-semibold !leading-[1.25] tracking-[normal] mb-4">
+                            Effective handling of genuine senders and unknown sources.</h3>
+                        <p class="!mb-6">Stalwart incorporates advanced features to enhance email handling and security.
+                            One such
+                            feature is trusted reply tracking, which ensures that genuine email replies are recognized
+                            and
+                            prioritized, preventing them from being misclassified as spam. Additionally, Stalwart
+                            employs greylisting,
+                            a technique that temporarily defers emails from unknown senders, giving legitimate servers
+                            the chance to
+                            resend while deterring spam bots. These combined capabilities help maintain the integrity of
+                            your inbox by
+                            accurately identifying authentic communications and effectively managing unknown sources.
+                        </p>
+                        <!--/.row -->
+                    </div>
+                </div>
+
+                <div
+                    class="flex flex-wrap mx-[-15px] xsm:mt-[-50px] mt-[-80px] md:mx-[-20px] xl:mx-[-35px] items-center mb-10 xl:!mb-14 lg:!mb-14 md:!mb-14">
+                    <div
+                        class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
+                        <h2
+                            class="text-[0.8rem] !tracking-[0.02rem] !leading-[1.35] uppercase text-gradient gradient-1 !mb-3">
+                            Spam traps</h2>
+                        <h3
+                            class="xl:text-[1.9rem] text-[calc(1.315rem_+_0.78vw)] font-semibold !leading-[1.25] tracking-[normal] mb-4">
+                            Refining spam filtering with targeted spam traps.</h3>
+                        <p class="!mb-6">Stalwart employs advanced spam trap features to enhance its spam filtering
+                            capabilities.
+                            Spam traps, also known as honey pots, are email addresses specifically created to attract
+                            and identify
+                            spam. These addresses are not used for any legitimate communication, so any email they
+                            receive is
+                            automatically considered spam. Stalwart leverages these spam traps to automatically train
+                            its spam
+                            classifier, improving its accuracy and effectiveness over time. By analyzing the messages
+                            caught in the
+                            spam traps, Stalwart continuously refines its filtering algorithms, ensuring robust
+                            protection against
+                            unwanted and malicious emails.</p>
+
+
+                        <!--/.row -->
+                    </div>
+                    <div
+                        class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
+                        <figure class="m-0 p-0"><img class="w-auto" src="/img/clipart/void.png"
+                                srcset="/img/clipart/void.png 2x" alt="image"></figure>
+                    </div>
+                </div>
+
+
+
+
+                <!--/.row -->
+            </div>
+            <!-- /.overflow-hidden -->
+        </section>
+
+    </div>
+    <!-- /.content-wrapper -->
+    <%- include('include-footer.ejs', { cta: 'Ready to elevate your email?' ,
+        ctaSub: 'Step into the future of messaging and try us out today.' , ctaButton: 'Get Stalwart' ,
+        ctaLink: '/docs/install/linux' }) %>
+</body>
+
+</html>
