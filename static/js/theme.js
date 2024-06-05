@@ -781,25 +781,30 @@ var theme = {
               // Send message only if the form has class .contact-form
               var isContactForm = form.classList.contains('contact-form');
               if (isContactForm) {
+                var status = document.getElementById("my-form-status");
                 var data = new FormData(form);
-                var alertClass = 'alert-danger';
                 fetch("https://formspree.io/f/mgegjlob", {
                   method: "post",
-                  body: data
-                }).then((data) => {
-                  if (data.ok) {
-                    alertClass = 'alert-success';
+                  body: data,
+                  headers: {
+                    'Accept': 'application/json'
                   }
-                  return data.text();
-                }).then((txt) => {
-                  var alertBox = '<div class="alert ' + alertClass + ' alert-dismissible fade show"><button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>' + txt + '</div>';
-                  if (alertClass && txt) {
-                    form.querySelector(".messages").insertAdjacentHTML('beforeend', alertBox);
-                    form.reset();
-                    grecaptcha.reset();
+                }).then(response => {
+                  if (response.ok) {
+                    form.classList.add("hidden");
+                    status.innerHTML = "Thanks for your submission!";
+                    form.reset()
+                  } else {
+                    response.json().then(data => {
+                      if (Object.hasOwn(data, 'errors')) {
+                        status.innerHTML = data["errors"].map(error => error["message"]).join(", ")
+                      } else {
+                        status.innerHTML = "Oops! There was a problem submitting your form"
+                      }
+                    })
                   }
-                }).catch((err) => {
-                  console.log(err);
+                }).catch(error => {
+                  status.innerHTML = "Oops! There was a problem submitting your form"
                 });
               }
             }
