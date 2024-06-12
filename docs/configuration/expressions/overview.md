@@ -6,7 +6,7 @@ sidebar_position: 1
 
 Expressions in Stalwart Mail Server allow administrators to define complex, dynamic criteria for evaluating and handling email messages based on various attributes of the emails themselves and contextual variables such as IP address, sender, recipient and more. These expressions enable fine-grained control over mail routing, filtering, and processing rules, making them a powerful tool for customizing mail server behavior. Expressions can be applied to most parameters of the configuration file and and also used from [Sieve scripts](/docs/sieve/overview). 
 
-In the configuration file, Expressions are specified within a a TOML array that includes one or multiple conditional `if` blocks, followed by an `else` block. Each `if` block evaluates an expression that references one or multiple [context variables](/docs/configuration/variables). If the condition is met, the `then` block is executed. If the condition is not met, the `else` block is executed.
+In the configuration file, Expressions are specified within a TOML array that includes one or multiple conditional `if` blocks, followed by an `else` block. Each `if` block evaluates an expression that references one or multiple [context variables](/docs/configuration/variables). If the condition is met, the `then` block is executed. If the condition is not met, the `else` block is executed.
 
 ## Syntax
 
