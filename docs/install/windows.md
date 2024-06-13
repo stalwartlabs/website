@@ -30,7 +30,7 @@ To run Stalwart Mail as a service, follow these instructions:
   ```
   Path: C:\Program Files\Stalwart Mail\bin\stalwart-mail.exe
   Startup directory: C:\Program Files\Stalwart Mail
-  Arguments: --config=C:\Program Files\Stalwart Mail\etc\config.toml
+  Arguments: --config="C:\Program Files\Stalwart Mail\etc\config.toml"
   ```
 - Click on the Install Service button.
 

@@ -121,7 +121,7 @@ These records help mail clients such as Outlook or Thunderbird locate email serv
 SRV	_imap._tcp.example.org.	0 1 110 mail.example.org.
 SRV	_imaps._tcp.example.org.	0 1 993 mail.example.org.
 SRV	_submissions._tcp.example.org.	0 1 465 mail.example.org.
-SRV	_submission._tcp.example.org.	0 1 567 mail.example.org.
+SRV	_submission._tcp.example.org.	0 1 587 mail.example.org.
 ```
 
 These records facilitate [automatic configuration](/docs/server/autoconfig) of mail clients:
