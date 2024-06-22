@@ -14,4 +14,6 @@ Stalwart SMTP supports various filtering mechanisms, which allow a high degree o
 
 - [Milter](/docs/smtp/filter/milter): Milter (short for "mail filter") is a dynamic extension for mail servers, which allows external software to inspect or modify messages as they're being processed. Milters can be used for a wide range of purposes, such as spam filtering, virus scanning, or adding footers to outgoing messages.
 
+- [MTA Hooks](/docs/smtp/filter/mtahooks): MTA Hooks is a modern replacement for the milter protocol, designed to provide enhanced flexibility and ease of use for managing and processing email transactions within Mail Transfer Agents (MTAs). Unlike milter, which operates at a lower level and uses a custom protocol, MTA Hooks leverages the ubiquitous HTTP protocol, making it simpler to integrate and deploy.
+
 - [Pipes](/docs/smtp/filter/pipe): For more specialized or complex filtering needs, Stalwart SMTP allows the use of external executable files, called "pipes". These pipes can take an email message, perform some operation, and return the modified message.

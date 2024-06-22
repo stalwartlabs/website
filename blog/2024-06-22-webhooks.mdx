@@ -1,0 +1,44 @@
+---
+slug: webhooks
+title: "Introducing Webhooks and MTA Hooks"
+authors: [mdecimus]
+tags: [webhook, mtahook, milter, mail, server]
+---
+
+We are happy to announce the release of [Stalwart Mail Server](https://github.com/stalwartlabs/mail-server) version 0.8.2, an update that brings powerful new features designed to enhance the flexibility and responsiveness of your email infrastructure. The highlight of this release is the introduction of [Webhooks](/docs/server/webhooks) and [MTA Hooks](/docs/smtp/filter/mtahooks), two significant additions that offer greater control and automation for email processing.
+
+### Webhooks: Real-Time Notifications for Your Email System
+
+Webhooks provide a modern way to receive real-time notifications about various events in your email system. By setting up HTTP callbacks, you can automatically trigger actions or receive alerts when specific events occur. This feature is invaluable for maintaining the health and security of your email operations.
+
+With Stalwart Mail Server's Webhooks, you can be notified about a range of events, including:
+
+- **Message Receipt and Delivery**: Stay informed when emails are received by or delivered from your server, allowing you to track email flow in real-time.
+- **User Authentication**: Receive alerts for successful logins, authentication failures, or attempts by banned users, helping you monitor and secure user access.
+- **Account Quota Management**: Get notified when an account exceeds its quota, enabling proactive management of storage limits and user activities.
+- **DMARC and TLS Reports**: Keep track of email security by receiving notifications for incoming DMARC reports and TLS reports, ensuring you stay updated on your email authentication status.
+
+By leveraging Webhooks, you can enhance the automation and responsiveness of your email infrastructure, making it easier to manage and monitor various aspects of email activity and security.
+
+### MTA Hooks: A Modern Replacement for Milter
+
+Stalwart Mail Server version 0.8.2 also introduces MTA Hooks, an exciting new protocol developed by Stalwart Labs to replace the traditional milter protocol. MTA Hooks offers a more flexible and straightforward way to handle email processing at various stages of the SMTP transaction.
+
+#### What are MTA Hooks?
+
+MTA Hooks is an HTTP-based protocol that uses POST requests to submit a JSON payload containing details about the SMTP transaction. It supports comprehensive coverage of SMTP stages, from the initial connection to final message delivery. By using JSON, MTA Hooks provides a clear and human-readable format, making it easier to implement and debug.
+
+#### Benefits of MTA Hooks
+
+- **Enhanced Flexibility**: MTA Hooks can be invoked at any stage of the SMTP transaction, allowing for precise control over email processing.
+- **Ease of Integration**: Using standard HTTP and JSON makes it simpler to integrate MTA Hooks into your existing infrastructure.
+- **Real-Time Processing**: MTA Hooks enables real-time processing and modification of email transactions, ensuring immediate response to critical events.
+
+#### Standardization Efforts
+
+Stalwart Labs is actively working to have MTA Hooks standardized as an IETF RFC, aiming to establish it as a new industry standard for email processing. This effort underscores our commitment to innovation and leadership in the email infrastructure space.
+
+### Looking Ahead
+
+We invite you to upgrade to Stalwart Mail Server version 0.8.2 and experience the benefits of Webhooks and MTA Hooks. These new features are designed to provide you with greater control, automation, and real-time capabilities, making your email infrastructure more robust and responsive.
+

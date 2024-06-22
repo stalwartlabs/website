@@ -38,12 +38,14 @@ ip-strategy = [ { if = "retry_num == 0", then = "ipv6_only" },
 
 The source IP strategy determines a list of local IPv4 and IPv6 addresses to use when delivery emails to remote SMTP servers. If multiple source addresses are provided, Stalwart SMTP will randomly choose one from the list each time a new connection is established. The list of local IPv4 addresses to use is configured with the `queue.outbound.source-ip.v4` parameter while IPv6 addresses are configured under the `queue.outbound.source-ip.v6` parameter.
 
+Proper configuration of the `queue.outbound.source-ip` setting is crucial for successful email delivery. If your server uses multiple IP addresses, it is essential to specify these addresses to ensure optimal deliverability. When multiple IPs are available, failing to configure this setting appropriately might result in the selection of an undesired IP, potentially affecting the deliverability of your emails. Therefore, to maintain consistent and reliable email delivery, it is recommended to configure this setting carefully when using multiple IP addresses.
+
 Example:
 
 ```toml
 [queue.outbound.source-ip]
-v4 = ["192.0.2.10", "192.0.2.11"]
-v6 = ["2001:db8::a", "2001:db8::b"]
+v4 = "['192.0.2.10', '192.0.2.11']"
+v6 = "['2001:db8::a', '2001:db8::b']"
 ```
 
 ## EHLO hostname

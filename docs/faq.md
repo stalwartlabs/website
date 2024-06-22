@@ -1,5 +1,5 @@
 ---
-sidebar_position: 17
+sidebar_position: 18
 ---
 
 # FAQ
@@ -30,7 +30,7 @@ Yes. When using [FoundationDB](/docs/storage/backends/foundationdb) as the backe
 
 ### Does it have a web interface?
 
-Not yet, but it is planned for a future release.
+Yes, Stalwart Mail Server includes a web interface that allows users to manage their accounts, settings, and preferences. The web interface is accessible via a web browser and provides a user-friendly way to interact with the mail server.
 
 ## Management
 
@@ -56,7 +56,7 @@ The backup procedure depends on which database and blob storage backend you are 
 
 ### How is anti-spam handled?
 
-Stalwart SMTP can easily integrate with popular anti-spam solutions such as SpamAssassin and RSPAMD using [milter](/docs/smtp/filter/milter) as well as other [filtering mechanisms](/docs/smtp/filter/overview).
+Stalwart includes its own built-in spam filter that uses statistical techniques like Naive Bayes. It also supports DNS Blocklists (DNSBLs) and collaborative digest-based spam filtering tools like Pyzor. Additionally, Stalwart can easily integrate with popular anti-spam solutions such as SpamAssassin and RSPAMD using [milter](/docs/smtp/filter/milter) as well as other [filtering mechanisms](/docs/smtp/filter/overview).
 
 ### Does it support relay hosts?
 

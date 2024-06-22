@@ -4,7 +4,7 @@ sidebar_position: 4
 
 # HTTP
 
-Stalwart Mail Server includes a built-in HTTP server, which primarily serves two functions: handling [JMAP](/docs/jmap/overview) (JSON Meta Application Protocol) requests and processing requests to the [REST management API](/docs/management/api/overview). JMAP is a modern, JSON-based API for synchronizing emails, contacts, calendars, and tasks. In addition to JMAP, Stalwart's HTTP server provides a RESTful management API. This API offers administrators a convenient way to configure and manage the mail server's operations remotely. 
+Stalwart Mail Server includes a built-in HTTP server, which primarily serves two functions: handling [JMAP](/docs/jmap/overview) (JSON Meta Application Protocol) requests and processing requests to the [REST management API](/docs/api/management/overview). JMAP is a modern, JSON-based API for synchronizing emails, contacts, calendars, and tasks. In addition to JMAP, Stalwart's HTTP server provides a RESTful management API. This API offers administrators a convenient way to configure and manage the mail server's operations remotely. 
 
 ## URL
 

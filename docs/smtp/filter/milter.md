@@ -10,26 +10,28 @@ When a mail is received and reaches the [DATA stage](/docs/smtp/inbound/data), S
 
 ## Configuration
 
-Milters are defined under the `session.data.milter.<id>` section and are configured using the following attributes:
+Milters are defined under the `session.milter.<id>` section and are configured using the following attributes:
 
-- `enable`: Determines whether this Milter support is turned on or off. This setting can be dynamically set using [expressions](/docs/configuration/expressions/overview) which allows a certain Milter to be enabled or disabled based on the specific circumstances of an SMTP transaction.
+- `enable`: Determines whether this Milter is turned on or off. This setting can be dynamically set using [expressions](/docs/configuration/expressions/overview) which allows a certain Milter to be enabled or disabled based on the specific circumstances of an SMTP transaction.
 - `hostname`: Hostname or IP address of the server where the Milter filter is running.
 - `port`: Network port on the Milter filter host server. 
+- `stages`: This parameter is a list of stages at which this Milter will be called. The supported stages are `connect`, `ehlo`, `mail`, `rcpt` and `data`.
 - `tls`: Whether to use Transport Layer Security (TLS) for the connection between Stalwart SMTP and the Milter filter. Usually Milters are run on the same server as the mail server, so this setting should be set to `false` unless the Milter filter is running on a different server
 - `allow-invalid-certs`: Whether Stalwart SMTP should accept connections to a Milter filter server that has an invalid TLS certificate. If set to `true`, it allows connections even if the Milter filter server's certificate is expired, self-signed, or otherwise not trusted. This should generally be set to `false`, except perhaps in testing environments, to maintain the security of the connection.
 
 For example, to filter messages received on the SMTP listener through both Rspamd and ClamAV using milter:
 
 ```toml
-[session.data.milter."rspamd"]
+[session.milter."rspamd"]
 enable = [ { if = "listener = 'smtp'", then = true }, 
            { else = false } ]
 hostname = "127.0.0.1"
 port = 11332
+stages = ["connect", "ehlo", "mail", "rcpt", "data"]
 tls = false
 allow-invalid-certs = false
 
-[session.data.milter."clamav"]
+[session.milter."clamav"]
 enable = [ { if = "listener = 'smtp'", then = true }, 
            { else = false } ]
 hostname = "127.0.0.1"
@@ -40,7 +42,7 @@ allow-invalid-certs = false
 
 ### Timeout settings
 
-The timeout settings define the maximum amount of time that Stalwart SMTP will wait for certain types of responses from a Milter. The following attributes can be configured under the `session.data.milter.<id>.timeout` section:
+The timeout settings define the maximum amount of time that Stalwart SMTP will wait for certain types of responses from a Milter. The following attributes can be configured under the `session.milter.<id>.timeout` section:
 
 - `connect`: Defines the maximum amount of time that Stalwart SMTP will wait to establish a connection with a Milter server. 
 - `command`: Determines how long Stalwart SMTP will wait to send a command to the Milter server. 
@@ -49,7 +51,7 @@ The timeout settings define the maximum amount of time that Stalwart SMTP will w
 For example:
 
 ```toml
-[session.data.milter."rspamd".timeout]
+[session.milter."rspamd".timeout]
 connect = "30s"
 command = "30s"
 data = "60s"
@@ -57,7 +59,7 @@ data = "60s"
 
 ### Options
 
-The following configuration options for a Milter filter can be set under the `session.data.milter.<id>.options` section:
+The following configuration options for a Milter filter can be set under the `session.milter.<id>.options` section:
 
 - `tempfail-on-error`: If this setting is enabled, Stalwart SMTP will respond with a temporary failure (typically a 4xx SMTP status code) when it encounters an error while communicating with a Milter server. This tells the sending mail server to try delivering the message again later.
 - `max-response-size`: Maximum size, in bytes, of a response that Stalwart SMTP will accept from a Milter server. If a Milter server sends a response that exceeds this size, Stalwart SMTP will consider it an error and handle it according to the `tempfail-on-error` setting.
@@ -68,12 +70,12 @@ The following configuration options for a Milter filter can be set under the `se
 For example:
 
 ```toml
-[session.data.milter."rspamd".options]
+[session.milter."rspamd".options]
 tempfail-on-error = true
 max-response-size = 52428800 # 50mb
 version = 6
 
-[session.data.milter."rspamd".options.flags]
+[session.milter."rspamd".options.flags]
 actions = 255
 protocol = 66
 ```

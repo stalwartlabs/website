@@ -32,15 +32,37 @@ allow-plain-text = false
 
 ## Folders
 
-The `imap.folders` section contains parameters that control folder settings:
+The `jmap.folders.<special-use>` section contains parameters that control special use folder settings. The special use folders are predefined folders that have specific purposes, such as the inbox, drafts, sent, and trash folders. The following special use folders are supported:
 
-- `name.shared`: Designates the name of the folder that will contain all shared folders.
+- `inbox`: The inbox folder.
+- `drafts`: The drafts folder.
+- `sent`: The sent folder.
+- `trash`: The trash folder.
+- `archive`: The archive folder.
+- `junk`: The junk folder.
+- `shared`: The shared folder.
+
+The parameters that can be configured for each special use folder are:
+
+- `name`: The name of the folder.
+- `create`: When set to `true`, the folder will be created if it does not exist.
+- `subscribe`: When set to `true`, the folder will be subscribed to by default.
 
 For example:
 
 ```toml
-[imap.folders.name]
-shared = "Shared Folders"
+[jmap.folders.sent]
+name = "Sent Items"
+create = true
+subscribe = true
+
+[jmap.folders.junk]
+name = "SPAM"
+create = true
+subscribe = false
+
+[jmap.folders.shared]
+name = "Shared Folders"
 ```
 
 ## Timeouts
