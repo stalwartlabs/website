@@ -32,7 +32,7 @@ While this option provides flexibility in customizing response headers, administ
 
 ## Use Forwarded IP
 
-When running Stalwart Mail Server behind a proxy such as Cloudflare or Amazon CloudFront, the server needs to be instructed to obtain the client's IP address from the ``Forwarded`` or ``X-Forwarded-For`` HTTP header rather than from the socket source address (which most likely is the proxy's address). This setting should not be enabled when the [proxy protocol](/docs/server/proxy) is being used.
+When running Stalwart Mail Server behind a proxy such as Cloudflare or Amazon CloudFront, the server needs to be instructed to obtain the client's IP address from the ``Forwarded`` or ``X-Forwarded-For`` HTTP header rather than from the socket source address (which most likely is the proxy's address). This setting should not be enabled when the [proxy protocol](/docs/server/reverse-proxy/proxy-protocol) is being used.
 
 This can be done by setting the ``server.http.use-x-forwarded`` parameter to ``true``, for example:
 

@@ -9,7 +9,7 @@ tags: [acme, tls, security, email]
 
 ACME's ability to automate these tasks greatly simplifies certificate management, particularly for services like mail servers that require ongoing security maintenance. The protocol interacts with Certificate Authorities (CAs) such as Let's Encrypt to automate the verification of domain ownership and the issuance of certificates, significantly reducing manual effort and the risk of human error.
 
-We are thrilled to announce the release of [Stalwart Mail Server](https://github.com/stalwartlabs/mail-server) 0.5.2, which brings two significant advancements: the integration of the [ACME](/docs/server/tls/acme/overview) protocol for automatic TLS certificate deployment and support for the [HAProxy Protocol](/docs/server/proxy). These features mark a substantial step forward in our commitment to enhancing the security and efficiency of [Stalwart Mail Server](https://github.com/stalwartlabs/mail-server).
+We are thrilled to announce the release of [Stalwart Mail Server](https://github.com/stalwartlabs/mail-server) 0.5.2, which brings two significant advancements: the integration of the [ACME](/docs/server/tls/acme/overview) protocol for automatic TLS certificate deployment and support for the [HAProxy Protocol](/docs/server/reverse-proxy/proxy-protocol). These features mark a substantial step forward in our commitment to enhancing the security and efficiency of [Stalwart Mail Server](https://github.com/stalwartlabs/mail-server).
 
 ### The Power of ACME 
 
@@ -17,7 +17,7 @@ The integration of ACME into [Stalwart Mail Server](https://github.com/stalwartl
 
 ### Embracing the Proxy Protocol
 
-The [Proxy Protocol](/docs/server/proxy) is another crucial feature in this release. When running servers behind load balancers or reverse proxies, such as Caddy, HAProxy, or Traefik, the server traditionally only sees the IP address of the proxy, not the actual client. This limitation can impact security and logging functions. By supporting the Proxy Protocol, [Stalwart Mail Server](https://github.com/stalwartlabs/mail-server) 0.5.2 can now accurately identify the original client's IP address and connection details. This capability is essential for maintaining robust security measures and precise logging. It ensures that even in environments where Stalwart is behind a proxy, it retains full visibility over client connections.
+The [Proxy Protocol](/docs/server/reverse-proxy/proxy-protocol) is another crucial feature in this release. When running servers behind load balancers or reverse proxies, such as Caddy, HAProxy, or Traefik, the server traditionally only sees the IP address of the proxy, not the actual client. This limitation can impact security and logging functions. By supporting the Proxy Protocol, [Stalwart Mail Server](https://github.com/stalwartlabs/mail-server) 0.5.2 can now accurately identify the original client's IP address and connection details. This capability is essential for maintaining robust security measures and precise logging. It ensures that even in environments where Stalwart is behind a proxy, it retains full visibility over client connections.
 
 ### Conclusion
 

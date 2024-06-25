@@ -80,7 +80,7 @@ Stalwart Mail Server requires a valid TLS certificate to secure the connection b
 
 - If you already have a TLS certificate for your server, you can upload it in the `Settings` > `Server` > `TLS` > `Certificates` section. 
 - If you don't have a certificate, you can enable automatic TLS certificates from Let's Encrypt using [ACME](/docs/server/tls/acme/overview). To enable ACME, go to the `Settings` > `Server` > `TLS` > `ACME Providers` section and add Let's Encrypt as your ACME provider making sure that your server hostname is listed as one of the Subject Names. Stalwart supports the `tls-alpn-01`, `dns-01` and `http-01` challenges, if you are unsure which one to use, read the [ACME challenge types](/docs/server/tls/acme/challenges) documentation.
-- If you are running Stalwart behind a reverse [proxy](/docs/server/proxy) such as Caddy, HAProxy or Traefik, you should skip this step and configure TLS in your reverse proxy instead.
+- If you are running Stalwart behind a [reverse proxy](/docs/server/reverse-proxy/overview) such as Traefik, Caddy, HAProxy or NGINX, you should skip this step and configure TLS in your reverse proxy instead.
 
 ### Restart the container
 
