@@ -6,9 +6,18 @@ sidebar_position: 3
 
 Kubernetes, often referred to as "K8s", is an open-source platform designed to automate the deployment, scaling, and management of containerized applications. It orchestrates computing, networking, and storage infrastructure on behalf of user workloads. This means it handles the deployment of applications, maintains their desired state, scales them as needed, and manages updates and service discovery within the cluster. A Kubernetes cluster consists of at least one master node and multiple worker nodes that host the pods (the smallest deployable units that can be created, scheduled, and managed).
 
-## Running Stalwart on Kubernetes
-
 Running Stalwart in a Kubernetes environment enables scalable and resilient deployment, benefiting from Kubernetes' management features such as automated rollouts, rollbacks, scaling, and self-healing. This ensures that Stalwart can be effectively integrated into modern cloud infrastructures, enhancing its deployment flexibility and operational efficiency.
+
+## Liveness and Readiness Endpoints
+
+In Kubernetes, liveness and readiness probes are mechanisms designed to ensure that containers are running properly and are ready to handle requests. The liveness probe checks if an application is running and if it fails, Kubernetes will kill the container and restart it, assuming something has gone wrong. This feature helps recover from situations where an application might be running but is stuck or unable to continue its work.
+
+On the other hand, the readiness probe determines if an application is ready to start accepting traffic. When the readiness probe fails, Kubernetes will temporarily remove the pod from its service endpoints, preventing it from receiving any traffic. This is particularly useful for scenarios where an application might need some initialization time before it can serve requests or when it needs to shut down gracefully.
+Stalwart Mail Server Endpoints
+
+In Stalwart Mail Server, the endpoints for these probes are predefined as follows: the liveness endpoint is located at `/healthz/live`, and the readiness endpoint can be found at `/healthz/ready`. These endpoints can be configured in your Kubernetes deployment files to ensure that the Stalwart Mail Server containers are properly monitored and managed.
+
+## Helm Chart
 
 Below are the steps to create a Helm chart, which is a package containing all the necessary files and configurations to deploy Stalwart Mail Server on Kubernetes. This Helm chart will simplify the process of setting up Stalwart in a Kubernetes cluster by defining all the required resources in a cohesive and structured format.
 
@@ -95,6 +104,18 @@ spec:
       - name: stalwart-mail
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
+        livenessProbe:
+          httpGet:
+            path: /healthz/live
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /healthz/ready
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 10        
         ports:
         - containerPort: 8080
         - containerPort: 443
