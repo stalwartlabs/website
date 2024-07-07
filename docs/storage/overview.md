@@ -31,3 +31,29 @@ path = "/var/data/stalwart/data"
 frequency = "0 3 *"
 ```
 
+## Un-deleting emails 💎
+
+Stalwart Mail Server Enterprise edition provides a powerful feature that allows the recovery of emails deleted by users, even after these emails have been expunged from the Deleted Items or Junk Mail folders. This ensures that crucial emails can be retrieved within a specified period, adding an extra layer of security and data recovery for your organization.
+
+:::tip Enterprise feature
+
+This feature is available exclusively in the Enterprise Edition of Stalwart Mail Server and not included in the Community Edition.
+
+:::
+
+### Configuration
+
+The un-delete feature is controlled through the `enterprise.undelete-period` setting in the server's configuration file. This setting determines the number of days that deleted emails will be retained and available for recovery. This feature can be disabled by setting the value to `false`.
+
+For example, to enable the un-delete feature and retain deleted emails for 30 days:
+
+```toml
+[enterprise]
+undelete-period = "30d"
+```
+
+### Recovery
+
+Administrators can easily restore deleted emails using the [web-based administration panel](/docs/management/webadmin/overview). This user-friendly interface provides a straightforward way to search for and recover emails within the retention period specified in the configuration.
+
+For more advanced users or automated systems, the REST API provides a flexible method to recover deleted emails. Detailed documentation on the specific API endpoints and usage can be found in the [API documentation](/docs/api/management/overview).

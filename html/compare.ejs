@@ -3,7 +3,7 @@
 
 <head>
         <%- include('include-meta.ejs', { title: 'Compare editions | Stalwart Labs' ,
-                description: 'Discover the differences between the open source and enterprise editions of our mail server solution.'
+                description: 'Discover the differences between the community and enterprise editions of our mail server solution.'
                 }) %>,
 
                 <!-- google fonts -->
@@ -38,8 +38,8 @@
                                                         class="lead leading-[1.65] text-[0.9rem] font-medium lg:!px-7 xl:!px-7 xxl:!px-6">
                                                         Discover the differences between the
                                                         <span
-                                                                class="relative z-[2] whitespace-nowrap after:content-[''] after:block after:absolute after:w-[102.5%] after:h-[30%] after:left-[-1.5%] after:z-[-1] after:transition-all after:duration-[0.2s] after:ease-in-out after:mt-0 after:rounded-[5rem] after:bottom-[9%] motion-reduce:after:transition-none after:bg-[rgba(63,120,224,.12)]">open
-                                                                source and enterprise</span>
+                                                                class="relative z-[2] whitespace-nowrap after:content-[''] after:block after:absolute after:w-[102.5%] after:h-[30%] after:left-[-1.5%] after:z-[-1] after:transition-all after:duration-[0.2s] after:ease-in-out after:mt-0 after:rounded-[5rem] after:bottom-[9%] motion-reduce:after:transition-none after:bg-[rgba(63,120,224,.12)]">
+                                                                community and enterprise</span>
                                                         editions.
                                                 </p>
                                         </div>
@@ -66,7 +66,7 @@
                                                 comparison
                                         </h2>
                                         <p class="lead !text-[1.05rem] !leading-[1.6] font-medium">
-                                                Compare the comprehensive features of our open source and enterprise
+                                                Compare the comprehensive features of our community and enterprise
                                                 editions.</p>
                                         <div class="flex flex-wrap mx-[-15px]">
                                                 <div
@@ -93,7 +93,7 @@
                                                                 <tr>
                                                                         <th class="!w-[22.5rem]"></th>
                                                                         <th>
-                                                                                <div class="h4 !mb-1">Open-source</div>
+                                                                                <div class="h4 !mb-1">Community</div>
                                                                                 <div
                                                                                         class="!text-[.75rem] font-medium text-[#aab0bc]">
                                                                                         Free</div>
@@ -102,7 +102,7 @@
                                                                                 <div class="h4 !mb-1">Enterprise</div>
                                                                                 <div
                                                                                         class="!text-[.75rem] font-medium text-[#aab0bc]">
-                                                                                        Pricing upon request
+                                                                                        starting at $330 per year
                                                                                 </div>
                                                                         </th>
                                                                 </tr>
@@ -811,7 +811,7 @@
                                                                         </td>
                                                                 </tr>
                                                                 <tr style="background-color: #edf2fc;">
-                                                                        <td class="option text-left"><b>Enteprise
+                                                                        <td class="option text-left"><b>Enterprise
                                                                                         features</b></td>
                                                                         <td></td>
                                                                         <td></td>
@@ -828,6 +828,14 @@
                                                                         <td>-
                                                                         </td>
                                                                         <td><i class="uil uil-check !bg-[#fff8ee] text-[#fab758]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td class="option text-left">Un-delete emails
+                                                                        </td>
+                                                                        <td>-
+                                                                        </td>
+                                                                        <td><i class="uil uil-check !bg-[#e0e9fa] text-[#3f78e0]  !rounded-[50%] p-1 before:content-['\e9dd']"></i>
                                                                         </td>
                                                                 </tr>
                                                                 <tr>
@@ -975,7 +983,7 @@
                                                                                         version as well.</p>
 
                                                                                 <p>It's important to note that the
-                                                                                        open-source version of Stalwart
+                                                                                        community edition of Stalwart
                                                                                         Mail Server already boasts more
                                                                                         features than any other
                                                                                         open-source or paid mail server
@@ -1186,6 +1194,43 @@
                                                                                         you have any questions or need
                                                                                         further assistance, please don't
                                                                                         hesitate to reach out to us.</p>
+                                                                        </div>
+                                                                        <!-- /.card-body -->
+                                                                </div>
+                                                                <!-- /.collapse -->
+                                                        </div>
+                                                        <div
+                                                                class="card accordion-item !shadow-[0_0.25rem_1.75rem_rgba(30,34,40,0.07)] mb-5">
+                                                                <div class="card-header mb-0 !p-[.9rem_1.3rem_.85rem] !border-0 bg-inherit"
+                                                                        id="accordion-heading-3-5">
+                                                                        <button class="!text-[#343f52] !text-[0.9rem] hover:!text-[#3f78e0] before:!text-[#3f78e0] collapsed"
+                                                                                data-bs-toggle="collapse"
+                                                                                data-bs-target="#accordion-collapse-3-5"
+                                                                                aria-expanded="false"
+                                                                                aria-controls="accordion-collapse-3-5">What
+                                                                                happens if I decide to cancel my
+                                                                                Enterprise subscription?</button>
+                                                                </div>
+                                                                <!-- /.card-header -->
+                                                                <div id="accordion-collapse-3-5" class="collapse"
+                                                                        aria-labelledby="accordion-heading-3-5"
+                                                                        data-bs-target="#accordion-3">
+                                                                        <div
+                                                                                class="card-body flex-[1_1_auto]  p-[0_1.25rem_.25rem_2.35rem]">
+
+                                                                                <p>If you decide to cancel your Stalwart
+                                                                                        Enterprise Edition subscription,
+                                                                                        the server will automatically
+                                                                                        revert to the Community Edition.
+                                                                                        This transition will disable all
+                                                                                        Enterprise features but will not
+                                                                                        cause any data loss or interrupt
+                                                                                        the service. Your existing data
+                                                                                        and emails will remain intact
+                                                                                        and accessible, ensuring a
+                                                                                        seamless experience for your
+                                                                                        users without any disruption.
+                                                                                </p>
                                                                         </div>
                                                                         <!-- /.card-body -->
                                                                 </div>
