@@ -29,13 +29,18 @@ $ cd mail-server
 
 ## Install required dependencies
 
-- Install `protoc`:
+The following build dependencies are required:
+
+- `gcc`
+- `clang`
+- `make`
+- `protoc`
 
 ```bash
-$ sudo apt-get install protobuf-compiler
+$ sudo apt-get install gcc clang make protobuf-compiler
 ```
 
-- If you are compiling the Foundation DB backend, download and install the[ Foundation DB client library](https://github.com/apple/foundationdb/releases).
+- If you are compiling the Foundation DB backend, download and install the [Foundation DB client library](https://github.com/apple/foundationdb/releases).
 
 ## Compile
 
