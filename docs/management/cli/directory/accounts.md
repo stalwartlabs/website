@@ -12,7 +12,7 @@ General usage:
 stalwart-cli --url <URL> account <COMMAND>
 ```
 
-- `--url <URL>`: Specifies the URL of the Stalwart Mail Server.
+- `--url <URL>`: Specifies the URL of Stalwart Mail Server.
 - `<COMMAND>`: The specific account management command to execute.
 
 :::tip Note

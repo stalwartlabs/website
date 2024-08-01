@@ -12,10 +12,10 @@ Additionally, it's worth noting that Stalwart Mail Server uses the PGP/MIME form
 
 ## Obtaining a key pair
 
-In order to utilize the OpenPGP encryption capabilities of the Stalwart Mail Server, users must first generate their own OpenPGP key pairs. This task is typically performed by the user's email client or via an external encryption tool that supports the OpenPGP standard. 
+In order to utilize the OpenPGP encryption capabilities of Stalwart Mail Server, users must first generate their own OpenPGP key pairs. This task is typically performed by the user's email client or via an external encryption tool that supports the OpenPGP standard. 
 An OpenPGP key pair consists of a private key, which must be kept secret, and a public key, which can be freely shared. Both keys are essential to the OpenPGP encryption and decryption process. The private key is used to decrypt messages that have been encrypted using its corresponding public key.
 
-After generating an OpenPGP key pair, the user can then export their public key. This exported public key is what is used by the Stalwart Mail Server when it encrypts messages destined for that user. It's important to note that the user's private key should never be uploaded to the server or shared with anyone else. It should be stored securely and used only by the intended recipient to decrypt incoming messages.
+After generating an OpenPGP key pair, the user can then export their public key. This exported public key is what is used by Stalwart Mail Server when it encrypts messages destined for that user. It's important to note that the user's private key should never be uploaded to the server or shared with anyone else. It should be stored securely and used only by the intended recipient to decrypt incoming messages.
 
 :::tip Note
 

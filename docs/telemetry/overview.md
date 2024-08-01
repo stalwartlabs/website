@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Overview
 
-Telemetry is the automated process of collecting, transmitting, and analyzing data from a system to monitor its performance, diagnose issues, and optimize operations. In the context of the Stalwart Mail Server, telemetry is crucial for gaining insights into system behavior, tracking performance metrics, and ensuring the reliability and security of the mail service.
+Telemetry is the automated process of collecting, transmitting, and analyzing data from a system to monitor its performance, diagnose issues, and optimize operations. In the context of Stalwart Mail Server, telemetry is crucial for gaining insights into system behavior, tracking performance metrics, and ensuring the reliability and security of the mail service.
 
 Stalwart offers several mechanisms to facilitate the collection of logs, traces, and metrics, enabling administrators and developers to comprehensively monitor and analyze the system's performance. The available telemetry mechanisms include:
 
@@ -15,4 +15,4 @@ Stalwart offers several mechanisms to facilitate the collection of logs, traces,
 - [Console](/docs/telemetry/tracing/console): The standard output and error streams where Stalwart can display real-time logs and messages. This is useful for debugging and monitoring the system during active sessions.
 - [HTTP Event Streams](/docs/telemetry/overview): A mechanism for streaming real-time events over HTTP. This allows clients to subscribe to specific events and receive updates as they occur, facilitating real-time monitoring and alerting.
 
-By leveraging these telemetry mechanisms, administrators can gain valuable insights into the operational state of the Stalwart Mail Server, quickly identify and resolve issues, and optimize performance for better user experiences.
+By leveraging these telemetry mechanisms, administrators can gain valuable insights into the operational state of Stalwart Mail Server, quickly identify and resolve issues, and optimize performance for better user experiences.

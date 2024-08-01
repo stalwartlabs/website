@@ -27,7 +27,7 @@ rate-limit = "10/1m"
 
 Fail2Ban is an essential intrusion prevention software framework designed to protect computer servers from brute-force attacks. This tool functions by monitoring server log files for patterns of malicious behavior, such as repeated password failures or seeking exploits, and then implements security measures to block the offending IP addresses. In a typical setup, Fail2Ban adjusts the server's firewall rules to reject new connections from these IP addresses for a set duration, providing a dynamic defense against various types of cyber attacks.
 
-In Stalwart Mail Server, the implementation of a fail2ban-like system takes a unique approach, tailored to the specific needs and architecture of the mail server. This integrated system is not dependent on the traditional Fail2Ban software; instead, it is a built-in feature of the Stalwart Mail Server, designed to enhance its security from within.
+In Stalwart Mail Server, the implementation of a fail2ban-like system takes a unique approach, tailored to the specific needs and architecture of the mail server. This integrated system is not dependent on the traditional Fail2Ban software; instead, it is a built-in feature of Stalwart Mail Server, designed to enhance its security from within.
 
 Unlike the conventional Fail2Ban approach, which primarily modifies firewall rules to block offending IP addresses, the Stalwart Mail Server's fail2ban system operates by directly dropping further connections from any banned IP address. This means that once an IP address is identified as a threat based on predefined criteria, the server immediately ceases to accept any further connections from that IP, effectively isolating it from the server.
 

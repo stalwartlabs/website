@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Overview
 
-The command-line interface includes a Directory Management tool which enables administrators to directly manage user accounts and groups within the Stalwart Mail Server. It provides functionalities like creating new users, updating passwords, managing email addresses, setting disk quotas, and handling group memberships. However, the availability and functionality of this tool depend significantly on the type of directory being used – whether it's the server's internal directory or an external directory system like LDAP or SQL.
+The command-line interface includes a Directory Management tool which enables administrators to directly manage user accounts and groups within Stalwart Mail Server. It provides functionalities like creating new users, updating passwords, managing email addresses, setting disk quotas, and handling group memberships. However, the availability and functionality of this tool depend significantly on the type of directory being used – whether it's the server's internal directory or an external directory system like LDAP or SQL.
 
 ## Internal Directory
 

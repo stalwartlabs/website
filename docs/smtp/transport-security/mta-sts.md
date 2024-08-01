@@ -42,7 +42,7 @@ Stalwart Mail Server can automate the publication of MTA-STS policy files for al
 
 :::tip Note
 
-To automatically publish MTA-STS policies, it is essential to have port 443 (the standard port for HTTPS traffic) open. This port allows the Stalwart Mail Server to serve the MTA-STS policy files via HTTPS, complying with the protocol's requirements and ensuring that the policies are accessible to other mail servers performing policy checks.
+To automatically publish MTA-STS policies, it is essential to have port 443 (the standard port for HTTPS traffic) open. This port allows Stalwart Mail Server to serve the MTA-STS policy files via HTTPS, complying with the protocol's requirements and ensuring that the policies are accessible to other mail servers performing policy checks.
 
 :::
 

@@ -49,7 +49,7 @@ HTTP Strict Transport Security (HSTS) is a web security policy mechanism that he
 
 Implementing HSTS increases the security of your server by ensuring that all connections are made over HTTPS, thus preventing attackers from exploiting any unsecured entry points during data transmission. This is particularly important to mitigate the risk of attacks that rely on intercepting or modifying data in transit, such as active eavesdropping or session hijacking.
 
-In the Stalwart Mail Server, HSTS can be easily enabled by setting `server.http.hsts` to `true`. This setting forces the server to use HTTPS exclusively, providing an additional layer of security for the administrative interface and any other web-based services it offers.
+In Stalwart Mail Server, HSTS can be easily enabled by setting `server.http.hsts` to `true`. This setting forces the server to use HTTPS exclusively, providing an additional layer of security for the administrative interface and any other web-based services it offers.
 
 Example:
 

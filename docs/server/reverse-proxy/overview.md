@@ -12,7 +12,7 @@ Stalwart Mail Server is designed to operate efficiently behind a reverse proxy. 
 
 The [Proxy Protocol](/docs/server/reverse-proxy/proxy-protocol), developed by HAProxy, is a simple and efficient way to transport connection information from the client to the server across multiple layers of proxies. This protocol provides the server with important details about the original client connection, including the client's IP address and the status of the TLS connection.
 
-While Stalwart Mail Server does not require the Proxy Protocol to function behind a reverse proxy, enabling it is highly recommended. The Proxy Protocol ensures that the Stalwart server receives crucial information about the client connection, which is essential for several key functions.
+While Stalwart Mail Server does not require the Proxy Protocol to function behind a reverse proxy, enabling it is highly recommended. The Proxy Protocol ensures that Stalwart server receives crucial information about the client connection, which is essential for several key functions.
 
 Firstly, the client’s remote IP address is necessary to perform sender authentication checks such as SPF (Sender Policy Framework) and DMARC (Domain-based Message Authentication, Reporting & Conformance). These checks help verify that the email comes from an authorized source and is not a spoofed or fraudulent email.
 

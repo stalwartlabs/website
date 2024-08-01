@@ -37,5 +37,5 @@ hostname = "mail.%{cfg:lookup.default.domain}%"
 
 ## Limitations
 
-It's important to note that macros are only supported in [local configuration keys](/docs/configuration/overview#local-and-database-settings). Configuration settings stored in a database do not support macro expansion. This design choice is due to the nature of how database-stored settings are accessed and managed by the Stalwart Mail Server. Macros, being dynamically resolved, are best kept within the local configuration scope to ensure their values are processed and applied correctly at the server startup or reload.
+It's important to note that macros are only supported in [local configuration keys](/docs/configuration/overview#local-and-database-settings). Configuration settings stored in a database do not support macro expansion. This design choice is due to the nature of how database-stored settings are accessed and managed by Stalwart Mail Server. Macros, being dynamically resolved, are best kept within the local configuration scope to ensure their values are processed and applied correctly at the server startup or reload.
 

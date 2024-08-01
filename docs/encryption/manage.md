@@ -20,7 +20,7 @@ Upon successful submission of the form, the system processes the information and
 
 After enabling encryption at rest, it is recommended to send a test email to yourself. This will help you verify that your email client is properly set up to decrypt the encrypted messages. When you receive this test email, it should arrive encrypted. Use your email client's decryption feature to decrypt the message. If you can successfully decrypt and read the message, it means that your email client is correctly configured to work with the encryption system in place.
 
-Remember that, to decrypt messages, your email client must have access to the corresponding private key for the public key you've uploaded to the mail server (in case of OpenPGP), or the private key of your S/MIME certificate. Make sure these are properly installed and configured in your email client. If you encounter any issues or the message does not decrypt properly, double-check your email client's encryption settings and the key or certificate you uploaded to the Stalwart Mail Server. 
+Remember that, to decrypt messages, your email client must have access to the corresponding private key for the public key you've uploaded to the mail server (in case of OpenPGP), or the private key of your S/MIME certificate. Make sure these are properly installed and configured in your email client. If you encounter any issues or the message does not decrypt properly, double-check your email client's encryption settings and the key or certificate you uploaded to Stalwart Mail Server. 
 
 ## Disabling Encryption
 

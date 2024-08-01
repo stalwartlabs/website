@@ -15,7 +15,7 @@ We are thrilled to announce that **Stalwart Mail Server** has undergone a compre
 
 ### What Were the Results?
 
-We are proud to share that the audit concluded with no vulnerabilities or unsafe code identified in the Stalwart Mail Server. Such an outcome underscores our commitment to offering a safe and secure open-source mail server solution to our users.
+We are proud to share that the audit concluded with no vulnerabilities or unsafe code identified in Stalwart Mail Server. Such an outcome underscores our commitment to offering a safe and secure open-source mail server solution to our users.
 
 For those who would like a deep dive into the audit's findings, the full report is accessible [here](./ros-report.pdf).
 

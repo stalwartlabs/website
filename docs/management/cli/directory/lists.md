@@ -12,7 +12,7 @@ General Usage:
 stalwart-cli --url <URL> list <COMMAND>
 ```
 
-- `--url <URL>`: The URL of the Stalwart Mail Server.
+- `--url <URL>`: The URL of Stalwart Mail Server.
 - `<COMMAND>`: The specific mailing list management command to execute.
 
 ## Create a Mailing List

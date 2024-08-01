@@ -12,7 +12,7 @@ General Usage:
 stalwart-cli --url <URL> group <COMMAND>
 ```
 
-- `--url <URL>`: The URL of the Stalwart Mail Server.
+- `--url <URL>`: The URL of Stalwart Mail Server.
 - `<COMMAND>`: The specific group management command to execute.
 
 ## Create a Group
