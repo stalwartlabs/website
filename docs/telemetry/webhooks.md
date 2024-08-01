@@ -1,5 +1,5 @@
 ---
-sidebar_position: 8
+sidebar_position: 4
 ---
 
 # Webhooks 
@@ -15,7 +15,7 @@ Overall, by leveraging the webhook functionality in Stalwart Mail Server, you ca
 Webhooks are configured in the `webhook.<id>` section of the configuration file, where `<id>` is a unique identifier for the webhook. The following parameters can be configured for webhooks:
 
 - `url`: This parameter specifies the endpoint to which the webhook POST requests will be sent. The URL should be a valid HTTP or HTTPS address where your webhook handler is located.
-- `events`: This parameter is a list of events that will trigger the webhook.
+- `events`: This parameter is a list of [events](/docs/telemetry/events#event-types) that will trigger the webhook. Wildcards can be used to match multiple events (e.g., `"*"` for all events or `"auth.*"` for all authentication events).
 - `timeout`: This parameter defines the maximum time the server will wait for a response from the webhook endpoint. The value is specified in seconds (e.g., "30s").
 - `throttle`: This parameter determines the frequency with which requests are sent to the webhook endpoint. Events occurring within this period are grouped and sent in batches. The value is specified in seconds (e.g., "1s").
 - `signature-key`: This optional parameter provides an HMAC key used to sign the body of the webhook request. The signature is encoded in base64 and included in the `X-Signature` header. This allows for verification of the request's authenticity at the receiving endpoint.
@@ -23,38 +23,20 @@ Webhooks are configured in the `webhook.<id>` section of the configuration file,
 - `allow-invalid-certs`: This boolean parameter indicates whether to allow requests to endpoints with invalid SSL certificates. Setting this to `false` ensures that only valid SSL certificates are accepted, enhancing security.
 - `auth.username`: This parameter specifies the username for HTTP basic authentication. It is used in conjunction with the `secret` parameter to authenticate the webhook request at the receiving endpoint.
 - `auth.secret`: This parameter specifies the password or secret for HTTP basic authentication. It works with the `username` parameter to authenticate the webhook request.
+- `lossy`: When set to `true`, this parameter allows the system to drop events if the webhook endpoint is unreachable or returns an error. This can help prevent backlogs of events in case of temporary issues with the endpoint.
 
-The following event types are supported for webhooks:
-
-- `auth.success`: Authentication success.
-- `auth.failure`: Authentication failure.
-- `auth.banned`: IP address banned after multiple authentication failures (fail2ban).
-- `auth.error`: Authentication error (due to database failure, etc).
-- `message.accepted`: Message accepted for delivery.
-- `message.rejected`: Message rejected.
-- `message.appended`: Message appended to a mailbox.
-- `account.over-quota`: Account over quota.
-- `dsn`: Delivery Status Notification (DSN).
-- `double-bounce`: Double bounce message.
-- `report.incoming.dmarc`: Incoming DMARC report.
-- `report.incoming.tls`: Incoming TLS report.
-- `report.incoming.arf`: Incoming ARF report.
-- `report.outgoing`: Outgoing DMARC or TLS report.
+For a full list of supported events and their descriptions, refer to the [Event Types](/docs/telemetry/events#event-types) documentation.
 
 ## API Documentation
 
-Please refer to the [Webhooks API](/docs/api/webhooks/overview) documentation for detailed information on the webhook API, including request and response formats, event types, and examples.
+Please refer to the [Webhooks API](/docs/api/webhooks) documentation for detailed information on the webhook API, including request and response formats, event types, and examples.
 
 ## Example
 
 ```toml
 [webhook."my-webhook"]
 url = "https://example.com/webhook"
-events = [ "auth.success", "auth.failure", "auth.banned" , "auth.error"
-           "message.accepted", "message.rejected", "message.appended"
-           "account.over-quota", "dsn", "double-bounce"
-           "report.incoming.dmarc", "report.incoming.tls", "report.incoming.arf"
-           "report.outgoing" ]
+events = [ "auth.success", "store.ingest" ]
 timeout = "30s"
 throttle = "1s"
 signature-key = "my-secret-key"

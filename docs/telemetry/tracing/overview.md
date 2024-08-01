@@ -12,7 +12,7 @@ In the configuration file, the method each tracer is defined with the the `trace
 
 - `open-telemetry`: Sends tracing information to an OpenTelemetry collector.
 - `log`: Writes tracing information to a log file.
-- `stdout`: Prints tracing information to standard output.
+- `console`: Prints tracing information to the console.
 - `journal`: Sends tracing information to the systemd journal. Only available on Linux/Unix systems.
 
 The level of tracing information recorded is determined by the `tracer.<id>.level` attribute. The available levels are:
@@ -22,5 +22,6 @@ The level of tracing information recorded is determined by the `tracer.<id>.leve
 - `info`: Log informational messages, which provide a general overview of the system's behavior.
 - `debug`: Used for debugging purposes and provides detailed information about the system's internal operations.
 - `trace`: This level is the most verbose logging level and provides an extremely detailed log of all events that occur in the system.
+- `disable`: Disables the tracer.
 
 Tracers can be enabled or disabled by setting the `tracer.<id>.enable` attribute to `true` or `false`, respectively. When a tracer is disabled, no tracing information will be recorded by that tracer.

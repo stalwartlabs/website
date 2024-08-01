@@ -10,6 +10,8 @@ Stalwart Mail Server provides the ability to log information to a text file that
 - `prefix`: The prefix to be used for each log file.
 - `ansi`: Whether to use ANSI escape sequences to colorize the log output.
 - `rotate`: The frequency of log file rotation. Acceptable values are `daily`, `hourly`, `minutely`, or `never`.
+- `multiline`: Whether to log messages on multiple lines.
+- `lossy`: Whether to drop log messages when the queue is full.
 
 Example:
 

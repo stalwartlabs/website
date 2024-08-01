@@ -1,5 +1,5 @@
 {
-    "label": "Tracing & Logging",
+    "label": "Telemetry",
     "position": 14,
     "link": {
         "type": "generated-index"

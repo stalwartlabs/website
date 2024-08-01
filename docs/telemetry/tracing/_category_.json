@@ -1,6 +1,6 @@
 {
-    "label": "Webhooks",
-    "position": 2,
+    "label": "Tracing & Logging",
+    "position": 3,
     "link": {
         "type": "generated-index"
     }
