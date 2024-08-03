@@ -18,13 +18,13 @@ Example:
 
 ```toml
 [auth.dmarc]
-verify = [ { if = "listener = 'smtp'", then = "relaxed" }, 
+verify = [ { if = "listener = 'smtp'", then = "relaxed" },
            { else = "disable" } ]
 ```
 
 ## Reporting
 
-Stalwart SMTP [automatically analyzes](/docs/smtp/authentication/analysis) received DMARC failure and aggregate reports from external hosts and can also generate its own DMARC reports to inform other hosts about the authentication outcomes of the DKIM signatures and SPF policies it has processed. 
+Stalwart SMTP [automatically analyzes](/docs/smtp/authentication/analysis) received DMARC failure and aggregate reports from external hosts and can also generate its own DMARC reports to inform other hosts about the authentication outcomes of the DKIM signatures and SPF policies it has processed.
 
 The report submitter address can be configured using the `report.submitter` attribute. If not specified, the `key_get('default', 'hostname')` expression is be used.
 
@@ -44,8 +44,8 @@ Outgoing DMARC failure reports are configured under the `report.dmarc` key using
 - `from-name`: The name that will be used in the `From` header of the DMARC report email.
 - `from-address`: The email address that will be used in the `From` header of the DMARC report email.
 - `subject`: The subject name that will be used in the DMARC report email.
-- `send`: The rate at which DMARC reports will be sent to a given email address. When this rate is exceeded, no further DMARC failure reports will be sent to that address.
-- `sign`: The list of [DKIM](/docs/smtp/authentication/dkim/overview) signatures to use when signing the DMARC report. 
+- `send`: The rate at which DMARC reports will be sent to a given email address. When this rate is exceeded, no further DMARC failure reports will be sent to that address. Set to `false` to disable DMARC authentication failure reporting.
+- `sign`: The list of [DKIM](/docs/smtp/authentication/dkim/overview) signatures to use when signing the DMARC report.
 
 Example:
 
@@ -69,7 +69,7 @@ Outgoing DMARC aggregate reports are configured under the `report.dmarc.aggregat
 - `org-name`: The name of the organization to be included in the report.
 - `send`: The frequency at which the DMARC aggregate reports will be sent. The options are `hourly`, `daily`, `weekly`, or `never` to disable reporting.
 - `max-size`: The maximum size of the DMARC aggregate report in bytes.
-- `sign`: The list of [DKIM](/docs/smtp/authentication/dkim/overview) signatures to use when signing the DMARC aggregate report. 
+- `sign`: The list of [DKIM](/docs/smtp/authentication/dkim/overview) signatures to use when signing the DMARC aggregate report.
 
 Example:
 

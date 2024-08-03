@@ -11,8 +11,8 @@ Stalwart SMTP [automatically analyzes](/docs/smtp/authentication/analysis) recei
 - `from-name`: The name that will be used in the `From` header of the DKIM report email.
 - `from-address`: The email address that will be used in the `From` header of the DKIM report email.
 - `subject`: The subject name that will be used in the DKIM report email.
-- `send`: The rate at which DKIM reports will be sent to a given email address. When this rate is exceeded, no further DKIM failure reports will be sent to that address.
-- `sign`: The list of DKIM signatures to use when signing the DKIM report. 
+- `send`: The rate at which DKIM reports will be sent to a given email address. When this rate is exceeded, no further DKIM failure reports will be sent to that address. Set to `false` to disable DKIM authentication failure reporting.
+- `sign`: The list of DKIM signatures to use when signing the DKIM report.
 
 Example:
 
@@ -24,4 +24,3 @@ subject = "'DKIM Authentication Failure Report'"
 sign = ["rsa"]
 send = "1/1d"
 ```
-
