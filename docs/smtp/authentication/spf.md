@@ -22,9 +22,9 @@ Example:
 
 ```toml
 [auth.spf.verify]
-ehlo = [ { if = "listener = 'smtp'", then = "relaxed" }, 
+ehlo = [ { if = "listener = 'smtp'", then = "relaxed" },
          { else = "disable" } ]
-mail-from = [ { if = "listener = 'smtp'", then = "relaxed" }, 
+mail-from = [ { if = "listener = 'smtp'", then = "relaxed" },
               { else = "disable" } ]
 ```
 
@@ -37,8 +37,8 @@ Stalwart SMTP [automatically analyzes](/docs/smtp/authentication/analysis) recei
 - `from-name`: The name that will be used in the `From` header of the SPF report email.
 - `from-address`: The email address that will be used in the `From` header of the SPF report email.
 - `subject`: The subject name that will be used in the SPF report email.
-- `send`: The rate at which SPF reports will be sent to a given email address. When this rate is exceeded, no further SPF failure reports will be sent to that address.
-- `sign`: The list of [DKIM](/docs/smtp/authentication/dkim/overview) signatures to use when signing the SPF report. 
+- `send`: The rate at which SPF reports will be sent to a given email address. When this rate is exceeded, no further SPF failure reports will be sent to that address. Set to `false` to disable SPF authentication failure reporting.
+- `sign`: The list of [DKIM](/docs/smtp/authentication/dkim/overview) signatures to use when signing the SPF report.
 
 Example:
 
@@ -50,4 +50,3 @@ subject = "'SPF Authentication Failure Report'"
 sign = ["rsa"]
 send = "1/1d"
 ```
-
