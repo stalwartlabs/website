@@ -29,6 +29,7 @@ $ docker run -d -ti -p 443:443 -p 8080:8080 \
 
 Make sure to replace `<STALWART_DIR>` with the path to the directory you created above. Please note that it is not necessary to expose all these ports, read the [get started](/docs/get-started#choosing-network-ports) documentation for more information.
 
+
 ### Log in to the web interface
 
 Execute `docker logs stalwart-mail` to obtain the system the administrator account and password: 
@@ -40,6 +41,16 @@ $ docker logs stalwart-mail
 ```
 
 With this information, you can log in to the web interface at `http://yourserver.org:8080/login`.
+
+> IMPORTANT: prevent stalwart blocking its own internal docker ip: whitelist IP's, **especially the docker IP** (webinterface: Settings > Security > Allowed IP):
+
+```
+$ docker exec -it stalwart-mail apt-get update
+$ docker exec -it stalwart-mail apt-get install iproute2
+$ docker exec -it stalwart-mail ip a | awk '/scope global/ {print $2}'
+xx.xxx.xx.xx           <-- add this ipv4
+xxxx:xxxx:xxxx:xxxx    <-- add this ipv6 
+```
 
 ### Choose where to store your data
 
