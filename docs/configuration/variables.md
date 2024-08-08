@@ -30,3 +30,12 @@ The following additional variables are available for use in queue expressions:
 - `notify_num`: The number of times the sender of the message has been notified.
 - `last_error`: The last error message type encountered during delivery attempts.
 - `last_status`: The last status code returned by the remote server during delivery attempts.
+
+## HTTP Variables
+
+The following additional variables are available for use in HTTP expressions:
+
+- `url`: The URL of the HTTP request.
+- `url_path`: The path component of the URL.
+- `headers`: An array of HTTP headers in the format `Header-Name: Header-Value`.
+- `method`: The HTTP method used in the request (`GET`, `POST`, etc.).

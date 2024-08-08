@@ -6,6 +6,13 @@ sidebar_position: 1
 
 Stalwart Mail Server provides detailed tracing and logging information to help users monitor and understand its behavior. The logging mechanisms can be configured to output to a file, standard output, or send tracing information to OpenTelemetry. It is possible to configure multiple loggers to output to different destinations, and the level of detail can be adjusted per logger. This makes it easier for users to diagnose issues and understand the inner workings of the software.
 
+The available tracing mechanisms include:
+
+- [OpenTelemetry](/docs/telemetry/tracing/opentelemetry): A vendor-neutral standard that provides a set of tools and APIs for collecting distributed traces and metrics. It enables seamless integration with various observability platforms, allowing for consistent monitoring across different systems and services.
+- [Log Files](/docs/telemetry/tracing/log): Traditional text-based files where Stalwart records detailed logs of system events and activities. These logs can be stored locally and accessed for troubleshooting, auditing, or analysis.
+- [Journald](/docs/telemetry/tracing/journal): A system service for collecting and managing log data, particularly in Linux environments. Journald provides structured and centralized logging, making it easier to search, filter, and manage logs.
+- [Console](/docs/telemetry/tracing/console): The standard output and error streams where Stalwart can display real-time logs and messages. This is useful for debugging and monitoring the system during active sessions.
+
 ## Tracing method
 
 In the configuration file, the method each tracer is defined with the the `tracer.<id>.type` attribute, where `<id>` is a unique identifier for the tracer. The supported tracers are:

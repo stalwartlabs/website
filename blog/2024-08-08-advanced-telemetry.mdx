@@ -1,0 +1,32 @@
+---
+slug: advanced-telemetry
+title: "Boost Your Insights with Advanced Telemetry"
+authors: [mdecimus]
+tags: [telemetry, metrics, opentelemetry, prometheus, stalwart, mail, server]
+---
+
+We are thrilled to announce the release of [Stalwart Mail Server](https://github.com/stalwartlabs/mail-server) version 0.9.1, which comes packed with significant enhancements to our telemetry capabilities. This release marks a major milestone in our ongoing efforts to provide robust and efficient monitoring and logging solutions, ensuring our users can achieve optimal server performance and reliability.
+
+### Enhanced Tracing
+
+In previous versions of Stalwart, tracing and logging provided valuable insights but lacked the detail and comprehensiveness needed for thorough monitoring. With version 0.9.1, we have completely rewritten the [tracing and logging](/docs/telemetry/tracing/overview) layer, resulting in a faster and more detailed system. The new implementation leverages a lock-free data structure, enabling Stalwart to record thousands of events per second without impacting server performance. This major upgrade ensures that every significant event is captured, providing a comprehensive view of the server's operations.
+
+Stalwart now generates over [600 different types of events](/docs/telemetry/events#event-types), significantly expanding the granularity and depth of our telemetry data. These events can be sent to [OpenTelemetry](/docs/telemetry/tracing/opentelemetry) or [Webhooks](/docs/telemetry/webhooks), offering flexibility in how they are processed and analyzed. Additionally, events can be recorded in [log files](/docs/telemetry/tracing/log), sent to [journald](/docs/telemetry/tracing/journal), or written directly to the [console](/docs/telemetry/tracing/console), providing multiple avenues for accessing and utilizing this detailed information.
+
+### Comprehensive Metrics
+
+The highlight of Stalwart Mail Server version 0.9.1 is the introduction of support for hundreds of different [metrics](/docs/telemetry/metrics/overview). This enhancement enables administrators to gain deeper insights into the server's performance and health. Metrics can be exported to [OpenTelemetry](/docs/telemetry/metrics/opentelemetry) using a push mechanism, allowing for real-time monitoring and analysis. Alternatively, they can be collected using [Prometheus](/docs/telemetry/metrics/prometheus) via a pull method, integrating seamlessly with existing monitoring infrastructures.
+
+This robust metrics support ensures that users can monitor a wide range of server parameters, from resource usage to request handling, enabling proactive maintenance and troubleshooting. By providing comprehensive metrics, Stalwart Mail Server empowers administrators to make informed decisions, optimize performance, and maintain high levels of reliability.
+
+### HTTP Access Controls
+
+In addition to these telemetry improvements, Stalwart Mail Server version 0.9.1 introduces a highly requested feature: [HTTP endpoint access controls](/docs/server/http/access-control). This new capability allows administrators to limit access to HTTP endpoints based on various criteria, such as remote IP or IP range, HTTP method, listener ID, and more. This fine-grained control enhances security and ensures that only authorized users can access specific server functionalities.
+
+The introduction of HTTP endpoint access controls responds directly to user feedback, demonstrating our commitment to continually enhancing the server based on real-world needs and experiences. This feature provides an additional layer of security and customization, making Stalwart Mail Server more versatile and robust.
+
+### Conclusion
+
+Stalwart Mail Server version 0.9.1 represents a significant leap forward in our telemetry capabilities, offering faster, more detailed tracing and logging, comprehensive metrics support, and new HTTP endpoint access controls. These improvements underscore our dedication to providing a powerful, efficient, and secure mail server solution.
+
+Upgrade to version 0.9.1 today and experience the next level of telemetry with Stalwart Mail Server!
