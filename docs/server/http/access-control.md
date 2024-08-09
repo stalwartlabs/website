@@ -64,7 +64,7 @@ The following example disables JMAP access unless the request is an `OPTIONS` re
 
 ```toml
 [server.http]
-allowed-endpoint = [ { if = "starts_with( url, '/jmap' ) || method == 'OPTIONS'", 
+allowed-endpoint = [ { if = "!starts_with( url, '/jmap' ) || method == 'OPTIONS'", 
                        then = "200"},
                      { else = "400" } ]
 ```
