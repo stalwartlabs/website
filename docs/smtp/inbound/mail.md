@@ -20,6 +20,17 @@ rewrite = [ { if = "listener != 'smtp' & matches('^([^.]+)@([^.]+)\.(.+)$', rcpt
 
 For more information, please refer to the [address rewriting](/docs/smtp/rewrite/address) documentation.
 
+## Allowed senders
+
+The `session.mail.is-allowed` attribute specifies an expression that determines whether the sender is allowed to send mail. If the expression evaluates to `false`, the sender is rejected. This can be useful, for instance, for rejecting certain senders or domains.
+
+For example, to block domains present in the `spam-block` list:
+
+```toml
+[session.mail]
+is-allowed = "!key_exists('spam-block', sender_domain)"
+```
+
 ## Sieve script
 
 The `session.mail.script` attribute specifies the name of the [Sieve script](/docs/sieve/overview) to run after a successful `MAIL FROM` command. This can be useful, for instance, for rejecting certain senders or rewriting the sender address.
@@ -30,8 +41,8 @@ Example:
 [session.connect]
 mail = "'return_path_filter'"
 
-[sieve.trusted.scripts]
-return_path_filter = '''
+[sieve.trusted.scripts.return_path_filter]
+contents = '''
   require ["variables", "envelope", "reject"];
 
   if envelope :localpart :is "from" "known_spammer" {

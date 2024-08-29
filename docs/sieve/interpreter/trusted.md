@@ -51,16 +51,18 @@ duplicate-expiry = "7d"
 
 ## Scripts
 
-Sieve scripts are specified under the `sieve.trusted.scripts.<name>` key and can be invoked directly from any of the stages of an SMTP transaction or imported from other scripts using the `include` command. In the configuration file, Sieve scripts can be either embedded as text or loaded from external files using a `file://` URL, for example:
+Sieve scripts are specified under the `sieve.trusted.scripts.<name>.contents` key and can be invoked directly from any of the stages of an SMTP transaction or imported from other scripts using the `include` command. In the configuration file, Sieve scripts can be either embedded as text or loaded from external files using a `file://` URL, for example:
 
 ```toml
-[sieve.trusted.scripts]
-script_one = '''
+[sieve.trusted.scripts.script_one]
+contents = '''
     require ["variables", "extlists", "reject"];
 
     if string :list "${env.helo_domain}" "list/blocked-domains" {
         reject "551 5.1.1 Your domain '${env.helo_domain}' has been blocklisted.";
     }
 '''
-script_two = "file:///opt/stalwart-smtp/etc/sieve/my-script.sieve"
+
+[sieve.trusted.scripts.script_two]
+contents = "file:///opt/stalwart-smtp/etc/sieve/my-script.sieve"
 ```

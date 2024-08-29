@@ -38,8 +38,8 @@ Example:
 [session.connect]
 script = "'connect_filter'"
 
-[sieve.trusted.scripts]
-connect_filter = '''
+[sieve.trusted.scripts.connect_filter]
+contents = '''
 require ["variables", "reject"];
 
 if string "${env.remote_ip}" "192.0.2.88" {

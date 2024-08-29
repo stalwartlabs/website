@@ -52,8 +52,8 @@ In Stalwart SMTP, you can accomplish the same effect using Sieve scripts.
 [session.rcpt]
 script = "'remove-dots'"
 
-[sieve.trusted.scripts]
-remove-dots = '''require ["variables", "envelope", "regex"];
+[sieve.trusted.scripts.remove-dots]
+contents = '''require ["variables", "envelope", "regex"];
 
 if allof( envelope :localpart :contains "to" ".",
           envelope :regex "to" "(.+)@(.+)$") {
@@ -93,8 +93,8 @@ Now, let's consider an example where you might want to disable Delivery Status N
 [session.rcpt]
 script = "'silent-bounce'"
 
-[sieve.trusted.scripts]
-silent-bounce = '''require ["variables", "envelope"];
+[sieve.trusted.scripts.silent-bounce]
+contents = '''require ["variables", "envelope"];
 
 if envelope :matches "to" "mailer-daemon@*" {
     set "envelope.notify" "NEVER";

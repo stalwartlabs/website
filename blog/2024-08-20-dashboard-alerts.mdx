@@ -1,0 +1,38 @@
+---
+slug: dashboard-alerts
+title: "Announcing Dashboards and Strengthened Security"
+authors: [mdecimus]
+tags: [dashboard, alerts, stalwart, mail, server]
+---
+
+We're excited to announce the release of [Stalwart Mail Server](https://github.com/stalwartlabs/mail-server) version 0.9.3! Whether you're using the Community or Enterprise version of Stalwart Mail Server, this update brings powerful new features to enhance your email infrastructure's security, performance, and monitoring capabilities. Let's dive into what's new:
+
+### Comprehensive Dashboard
+
+A major highlight of this release for [Enterprise](https://stalw.art/enterprise/) users is the introduction of the new [Dashboard](/docs/telemetry/history#metrics-configuration) feature. This tool provides real-time insights into your server's operations, allowing you to monitor critical metrics and trends at a glance. The Dashboard is divided into five distinct sections: Overview, Network, Delivery, Security, and Performance. The Overview dashboard offers a comprehensive summary of general mail server statistics, giving you a quick snapshot of the server's health and activity. The Network dashboard focuses on the number of total and active connections, enabling you to monitor network traffic and identify potential issues with server load. The Delivery dashboard provides detailed information on mail flow, including queued messages and the number of messages sent and received, ensuring that your mail delivery processes are running smoothly. The Security dashboard is dedicated to tracking your server’s defenses, presenting statistics on banned IPs, blocked requests, and spam filtering effectiveness. Finally, the Performance dashboard allows you to monitor key performance indicators such as memory usage, database latency, and DNS latency, helping you optimize the server's performance and address any bottlenecks.
+
+### Customizable Alerts
+
+Also new to the [Enterprise](https://stalw.art/enterprise/) version is the [Alerts](/docs/telemetry/alerts) feature, which ensures that you are always in the loop when important metrics reach critical thresholds. Whether it's a spike in memory usage, an increase in queued messages, or any other significant change, Alerts can notify you via email or webhooks the moment these events occur.
+
+Alerts are highly configurable, allowing you to set up complex conditions that trigger notifications only when specific combinations of metrics are met. For example, you could set an alert for when server memory usage exceeds a certain amount and the message queue count rises above a defined level, helping you to react swiftly and prevent potential disruptions.
+
+### Security Enhancements
+
+Security remains a top priority in this release, and version 0.9.3 introduces two new features that enhance the defenses of both the Community and Enterprise versions.
+
+#### RCPT Brute Force Protection
+
+Enhance your server's security with our new [RCPT brute force protection](/docs/server/fail2ban#rcpt-to-failures). This feature automatically bans IP addresses attempting to discover valid email recipients through brute force attacks—a common tactic used by spammers. By implementing this protection, Stalwart Mail Server adds another layer of defense to your email infrastructure, helping to maintain the integrity of your user list and prevent potential security breaches.
+
+#### Loitering Connection Protection
+
+Defend against SYN Flood attacks with our [loitering connection protection](/docs/server/fail2ban#loitering-connections). This smart feature blocks IP addresses that repeatedly keep connections open without meaningful activity, helping to prevent resource exhaustion attacks. By identifying and mitigating these potential threats, Stalwart Mail Server ensures that your server resources are used efficiently and remain available for legitimate email traffic.
+
+## Conclusion
+
+Stalwart Mail Server version 0.9.3 is a significant step forward in our commitment to providing a secure, efficient, and easy-to-manage mail server solution. Whether you are leveraging the powerful new monitoring and alerting tools in the Enterprise version or benefiting from the enhanced security features available across both versions, this update offers valuable enhancements that will help you better manage and protect your mail server.
+
+We encourage all users to upgrade to version 0.9.3 and take advantage of these exciting new features. As always, we remain dedicated to improving Stalwart Mail Server and providing you with the best possible tools to manage your email infrastructure.
+
+Thank you for your continued support, and we look forward to bringing you more updates and features in the future!

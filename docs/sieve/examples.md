@@ -12,10 +12,10 @@ The following script implements a simple greylisting filter using an SQL databas
 
 ```toml
 [session.rcpt]
-script = "greylist"
+script = "'greylist'"
 
-[sieve.trusted.scripts]
-greylist = '''
+[sieve.trusted.scripts.greylist]
+contents = '''
     require ["variables", "vnd.stalwart.expressions", "envelope", "reject"];
 
     set "triplet" "${env.remote_ip}.${envelope.from}.${envelope.to}";
@@ -33,10 +33,10 @@ The following script implements a domain blocklisting filter during the [EHLO](/
 
 ```toml
 [session.ehlo]
-script = "is-blocked"
+script = "'is-blocked'"
 
-[sieve.trusted.scripts]
-is-blocked = '''
+[sieve.trusted.scripts.is-blocked]
+contents = '''
     require ["variables", "extlists", "reject"];
 
     if string :list "${env.helo_domain}" "sql/blocked-domains" {
@@ -55,10 +55,10 @@ The following example modifies the incoming message by replacing the content of 
 
 ```toml
 [session.data]
-script = "modify-message"
+script = "'modify-message'"
 
-[sieve.trusted.scripts]
-modify-message = '''
+[sieve.trusted.scripts.modify-message]
+contents = '''
     require ["envelope", "variables", "replace", "mime", "foreverypart", "editheader", "extracttext"];
 
     if envelope :domain :is "to" "example.net" {

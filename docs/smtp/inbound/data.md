@@ -18,8 +18,8 @@ The `session.data.script` attribute in the configuration file specifies the name
 [session.data]
 script = "'data'"
 
-[sieve.trusted.scripts]
-data = '''
+[sieve.trusted.scripts.data]
+contents = '''
     require ["envelope", "variables", "replace", "mime", "foreverypart", "editheader", "extracttext"];
 
     if envelope :domain :is "to" "foobar.net" {

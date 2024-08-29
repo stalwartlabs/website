@@ -21,10 +21,10 @@ Example:
 require = true
 reject-non-fqdn = [ { if = "listener = 'smtp'", then = true },
                     { else = false } ]
-script = "ehlo"
+script = "'ehlo'"
 
-[sieve.trusted.scripts]
-ehlo = '''
+[sieve.trusted.scripts.ehlo]
+contents = '''
     require ["variables", "extlists", "reject"];
 
     if string :list "${env.helo_domain}" "list/blocked-domains" {

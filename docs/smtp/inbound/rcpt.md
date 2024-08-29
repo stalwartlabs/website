@@ -131,8 +131,8 @@ For example, the following script implements greylisting using an SQL database:
 script = [ { if = "is_empty(authenticated-as")", then = "'greylist'" }, 
            { else = false } ]
 
-[sieve.trusted.scripts]
-greylist = '''
+[sieve.trusted.scripts.greylist]
+contents = '''
     require ["variables", "vnd.stalwart.execute", "envelope", "reject"];
 
     set "triplet" "${env.remote_ip}.${envelope.from}.${envelope.to}";
