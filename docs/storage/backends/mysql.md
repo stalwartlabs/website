@@ -49,7 +49,7 @@ min-connections = 5
 
 ## Lookup queries
 
-When mySQL is used as a [directory](/docs/auth/directory/overview) or [lookup store](/docs/storage/lookup), SQL queries can be mapped to lookup ids. This is done by specifying the query under `store.<name>.query.<lookup_name>` where `<name>` is the mySQL store ID and `<lookup_name>` it the lookup ID to map the query to. 
+When mySQL is used as a [directory](/docs/directory/backend/overview) or [lookup store](/docs/storage/lookup), SQL queries can be mapped to lookup ids. This is done by specifying the query under `store.<name>.query.<lookup_name>` where `<name>` is the mySQL store ID and `<lookup_name>` it the lookup ID to map the query to. 
 
 For example:
 

@@ -11,9 +11,7 @@ Macros in the configuration files allow you to dynamically assign values based o
 Stalwart supports three types of macros:
 
 1. **Configuration Setting References:** To reference other configuration settings within the file, use the syntax `%{cfg:key_name}%`. This allows the value of one setting to be reused in another, ensuring consistency and ease of updates.
-
 2. **Environment Variable Retrieval:** To incorporate the value of an environment variable into your configuration, use `%{env:ENVIRONMENT_VAR_NAME}%`. This is particularly useful for including sensitive information like secrets or tokens, which should not be hard-coded into the configuration file.
-
 3. **Local Text File Content Expansion:** For including the content of a local text file directly into a configuration value, use `%{file:/path/to/file.txt}%`. This method is ideal for inserting certificate data or other external configuration snippets that are managed separately from the Stalwart configuration file.
 
 ## Example

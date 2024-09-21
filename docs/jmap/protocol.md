@@ -104,16 +104,3 @@ Example:
 max-attachment-size = 50000000
 max-size = 75000000
 ```
-
-## Principal lookups
-
-Principal lookups control whether a user can perform lookups of other users' details. The following parameter can be configured under the `jmap.principal` section:
-
-- `allow-lookups`: Specifies whether authenticated users can perform lookups of other users' details.
-
-Example:
-    
-```toml
-[jmap.principal]
-allow-lookups = true
-```

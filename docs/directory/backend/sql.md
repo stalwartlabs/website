@@ -34,7 +34,7 @@ Please refer to the relevant section for each data store for more information on
 The `directory.<name>.columns` section maps the column names in the SQL database to the names used within Stalwart Mail Server:
 
 - `class`: Maps to the 'type' column in the SQL database. Expected values are `individual` (or `person`) for user accounts and `group` for group accounts.
-- `secret`: Maps to the 'secret' column in the SQL database. Passwords can be stored [hashed](//docs/auth/users#passwords) or in plain text (not recommended).
+- `secret`: Maps to the 'secret' column in the SQL database. Passwords can be stored [hashed](//docs/directory/authentication/password) or in plain text (not recommended).
 - `description`: Maps to the 'description' column in the SQL database.
 - `quota`: Maps to the 'quota' column in the SQL database. Expects an integer value in bytes.
 

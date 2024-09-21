@@ -60,7 +60,7 @@ The essential ports are:
 - **Port 25 (SMTP)**: Used for receiving incoming emails from other mail servers. It is essential to keep this port open to ensure your mail server can receive emails from the internet.
 - **Port 465 (SMTPS)**: SMTP submission with implicit TLS. This port is used for sending outgoing emails securely. It is recommended to keep this port open to allow secure email submission from email clients.
 - **Port 993 (IMAPS)**: IMAP4 with implicit TLS. This port is used by IMAP clients to fetch emails securely. Keeping this port open is necessary for providing secure email access to your users.
-- **Port 443 (HTTPS)**: A crucial port used for secure [web administration](/docs/management/webadmin/overview) access, [JMAP](/docs/jmap/overview), [REST API](/docs/api/management/overview) access, [OAuth](/docs/auth/oauth) authentication, [ACME TLS-ALPN-01](/docs/server/tls/acme/challenges#tls-alpn-01) challenges, [autoconfig](/docs/server/autoconfig), and [MTA-STS policy](/docs/smtp/transport-security/mta-sts#policy-publishing) retrieval. This port must remain open as it supports multiple critical functionalities.
+- **Port 443 (HTTPS)**: A crucial port used for secure [web administration](/docs/management/webadmin/overview) access, [JMAP](/docs/jmap/overview), [REST API](/docs/api/management/overview) access, [OAuth](/docs/directory/authentication/oauth) authentication, [ACME TLS-ALPN-01](/docs/server/tls/acme/challenges#tls-alpn-01) challenges, [autoconfig](/docs/server/autoconfig), and [MTA-STS policy](/docs/smtp/transport-security/mta-sts#policy-publishing) retrieval. This port must remain open as it supports multiple critical functionalities.
 
 The non-essential ports are:
 

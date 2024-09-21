@@ -12,7 +12,7 @@ SASL (Simple Authentication and Security Layer) is a framework for authenticatio
 SASL authentication is configured using the following attributes which are available under the `session.auth` key:
 
 - `mechanisms`: A list of [SASL authentication mechanisms](https://www.iana.org/assignments/sasl-mechanisms/sasl-mechanisms.xhtml) offered to clients, or an empty list to disable authentication. Stalwart SMTP currently supports `PLAIN`, `LOGIN`, and `OAUTHBEARER` mechanisms.
-- `directory`: Specifies the [directory](/docs/auth/directory/overview) to use for authentication.
+- `directory`: Specifies the [directory](/docs/directory/backend/overview) to use for authentication.
 - `require`: A boolean attribute that specifies whether authentication is necessary to send email messages.
 - `must-match-sender`: A boolean attribute that specifies whether the authenticated user or any of their associated e-mail addresses must match the sender of the email message.
 - `errors.total`: The maximum number of authentication errors allowed before the session is disconnected.

@@ -1,6 +1,6 @@
 {
-    "label": "Directories",
-    "position": 2,
+    "label": "Authentication",
+    "position": 3,
     "link": {
         "type": "generated-index"
     }

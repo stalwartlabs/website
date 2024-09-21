@@ -107,3 +107,32 @@ The default expiration time for IDs stored by the ``vacation`` and ``duplicate``
 vacation = "30d"
 duplicate = "7d"
 ```
+
+## Global Scripts
+
+Global user Sieve scripts are specified under the `sieve.untrusted.scripts.<name>.contents` key and can be imported from user scripts using the `include :global` command. In the configuration file, Sieve scripts can be either embedded as text or loaded from external files using a the [file macro](/docs/configuration/macros), for example:
+
+```toml
+[sieve.untrusted.scripts.global_one]
+contents = '''
+    # Declare the extensions used by this script.
+    #
+    require ["reject"];
+
+    # Messages bigger than 100K will be rejected with an error message
+    #
+    if size :over 100K {
+        reject "I'm sorry, I do not accept mail over 100kb in size. Please upload larger files to a server and send me a link. Thanks.";
+    }
+
+'''
+
+[sieve.untrusted.scripts.global_two]
+contents = "%{file:/opt/stalwart-smtp/etc/sieve/global-script.sieve}%"
+```
+
+:::tip Note
+
+If you use a file macro to load an external script, make sure to add `sieve.untrusted.*` as a [local configuration key](/docs/configuration/overview#local-and-database-settings) in the configuration file. Otherwise, the file macro will not be expanded.
+
+:::

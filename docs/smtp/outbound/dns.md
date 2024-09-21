@@ -47,16 +47,3 @@ timeout = "5s"
 attempts = 2
 try-tcp-on-error = true
 ```
-
-## Public Suffix List
-
-The [Public Suffix List](https://publicsuffix.org/) is a list of top-level domain names (or suffixes) under which Internet users can register domain names. This list is used by the SMTP server to determine the root domain of a given domain name. For example, the root domain of `example.com` is `com` and the root domain of a domain ending in `.co.uk` is `co.uk`.
-
-The URL to the Public Suffix list is configured under the `resolver.public-suffix` key. For example:
-
-```toml
-[resolver]
-public-suffix = ["https://publicsuffix.org/list/public_suffix_list.dat", 
-                 "https://raw.githubusercontent.com/publicsuffix/list/master/public_suffix_list.dat"]
-
-```

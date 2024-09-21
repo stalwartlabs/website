@@ -8,7 +8,7 @@ Stalwart Mail Server features a self-service portal designed to empower users wi
 
 ## Changing Passwords
 
-One of the primary functionalities available through the self-service portal is the ability for users to change their passwords. To do so, users are required to authenticate themselves by entering their current password followed by the new password they wish to set. The process is designed to ensure security and verify the identity of the user making the request. If the entered current password is correctly matched with the user's existing password, the system proceeds to update the account with the new password. It's important to note that this password change functionality is available exclusively to users who are managed through Stalwart's [internal directory](/docs/auth/directory/internal).
+One of the primary functionalities available through the self-service portal is the ability for users to change their passwords. To do so, users are required to authenticate themselves by entering their current password followed by the new password they wish to set. The process is designed to ensure security and verify the identity of the user making the request. If the entered current password is correctly matched with the user's existing password, the system proceeds to update the account with the new password. It's important to note that this password change functionality is available exclusively to users who are managed through Stalwart's [internal directory](/docs/directory/backend/internal).
 
 ## Enabling Encryption-at-Rest
 

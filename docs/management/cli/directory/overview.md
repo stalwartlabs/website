@@ -8,7 +8,7 @@ The command-line interface includes a Directory Management tool which enables ad
 
 ## Internal Directory
 
-The Directory Management tool in Stalwart Mail Server is exclusively available when using the [internal directory](/docs/auth/directory/internal). With the internal directory, all aspects of user and group management are integrated within Stalwart Mail Server. This integration offers a streamlined and cohesive management experience.
+The Directory Management tool in Stalwart Mail Server is exclusively available when using the [internal directory](/docs/directory/backend/internal). With the internal directory, all aspects of user and group management are integrated within Stalwart Mail Server. This integration offers a streamlined and cohesive management experience.
 
 ## External Directory
 

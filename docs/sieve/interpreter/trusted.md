@@ -51,7 +51,7 @@ duplicate-expiry = "7d"
 
 ## Scripts
 
-Sieve scripts are specified under the `sieve.trusted.scripts.<name>.contents` key and can be invoked directly from any of the stages of an SMTP transaction or imported from other scripts using the `include` command. In the configuration file, Sieve scripts can be either embedded as text or loaded from external files using a `file://` URL, for example:
+Sieve scripts are specified under the `sieve.trusted.scripts.<name>.contents` key and can be invoked directly from any of the stages of an SMTP transaction or imported from other trusted scripts using the `include` command. In the configuration file, Sieve scripts can be either embedded as text or loaded from external files using a the [file macro](/docs/configuration/macros), for example:
 
 ```toml
 [sieve.trusted.scripts.script_one]
@@ -64,5 +64,11 @@ contents = '''
 '''
 
 [sieve.trusted.scripts.script_two]
-contents = "file:///opt/stalwart-smtp/etc/sieve/my-script.sieve"
+contents = "%{file:/opt/stalwart-smtp/etc/sieve/my-script.sieve}%"
 ```
+
+:::tip Note
+
+If you use a file macro to load an external script, make sure to add `sieve.trusted.*` as a [local configuration key](/docs/configuration/overview#local-and-database-settings) in the configuration file. Otherwise, the file macro will not be expanded.
+
+:::

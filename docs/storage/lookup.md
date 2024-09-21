@@ -9,8 +9,8 @@ Although the term "lookup store" might initially sound ambiguous, it essentially
 - [Expressions](/docs/configuration/expressions/overview): Lookup stores are used from expressions to dynamically configure different settings and perform routing decisions.
 - [Sieve scripts](/docs/sieve/overview): Sieve scripts, used for filtering and organizing incoming emails, have the possibility to store and retrieve data from lookup stores. 
 - [Spam filter database](/docs/spamfilter/settings/database): One of the critical uses of lookup stores is in managing spam filter databases. This includes sender reputation information, bayesian classifier models, greylist data, message reply tracking and other similar data.
-- [Rate limiting](/docs/smtp/inbound/throttle) and [Fail2ban](/docs/auth/security#fail2ban): Lookup stores are used to store and retrieve rate limiting data, such as the number of messages sent by a specific sender or the number of connections from a specific IP address.
-- [OAuth auth codes](/docs/auth/oauth): OAuth authorization codes are stored in lookup stores to validate the authorization process.
+- [Rate limiting](/docs/smtp/inbound/throttle) and [Fail2ban](/docs/directory/authentication/security#fail2ban): Lookup stores are used to store and retrieve rate limiting data, such as the number of messages sent by a specific sender or the number of connections from a specific IP address.
+- [OAuth auth codes](/docs/directory/authentication/oauth): OAuth authorization codes are stored in lookup stores to validate the authorization process.
 
 The following backends can be utilized as a lookup store:
 
