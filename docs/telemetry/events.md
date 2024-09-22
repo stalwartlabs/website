@@ -92,15 +92,14 @@ The following are the event types that Stalwart Mail Server captures along with 
 |`cluster.peer-alive`|A peer is alive|`INFO`|
 |`cluster.peer-back-online`|A peer came back online|`INFO`|
 |`cluster.peer-discovered`|A new peer was discovered|`INFO`|
-|`cluster.peer-has-config-changes`|A peer has configuration changes|`DEBUG`|
-|`cluster.peer-has-list-changes`|A peer has list changes|`DEBUG`|
+|`cluster.peer-has-changes`|A peer has reported changes|`DEBUG`|
 |`cluster.peer-leaving`|A peer is leaving the cluster|`INFO`|
 |`cluster.peer-offline`|A peer went offline|`INFO`|
 |`cluster.peer-suspected`|A peer is suspected to be offline|`INFO`|
 |`cluster.peer-suspected-is-alive`|A suspected peer is actually alive|`INFO`|
 |`config.already-up-to-date`|Configuration already up to date|`DEBUG`|
 |`config.build-error`|Configuration build error|`ERROR`|
-|`config.build-warning`|Configuration build warning|`DEBUG`|
+|`config.build-warning`|Configuration build warning|`WARN`|
 |`config.default-applied`|Default configuration applied|`DEBUG`|
 |`config.external-key-ignored`|External configuration key ignored|`DEBUG`|
 |`config.fetch-error`|Configuration fetch error|`ERROR`|
@@ -108,7 +107,7 @@ The following are the event types that Stalwart Mail Server captures along with 
 |`config.macro-error`|Configuration macro error|`ERROR`|
 |`config.missing-setting`|Missing configuration setting|`DEBUG`|
 |`config.parse-error`|Configuration parse error|`ERROR`|
-|`config.parse-warning`|Configuration parse warning|`DEBUG`|
+|`config.parse-warning`|Configuration parse warning|`WARN`|
 |`config.unused-setting`|Unused configuration setting|`DEBUG`|
 |`config.write-error`|Configuration write error|`ERROR`|
 |`dane.authentication-failure`|DANE authentication failed|`INFO`|
@@ -197,8 +196,8 @@ The following are the event types that Stalwart Mail Server captures along with 
 |`housekeeper.schedule`|Housekeeper task scheduled|`DEBUG`|
 |`housekeeper.start`|Housekeeper process started|`INFO`|
 |`housekeeper.stop`|Housekeeper process stopped|`INFO`|
-|`http.connection-end`|HTTP connection ended|`INFO`|
-|`http.connection-start`|HTTP connection started|`INFO`|
+|`http.connection-end`|HTTP connection ended|`DEBUG`|
+|`http.connection-start`|HTTP connection started|`DEBUG`|
 |`http.error`|HTTP error occurred|`DEBUG`|
 |`http.request-body`|HTTP request body|`TRACE`|
 |`http.request-url`|HTTP request URL|`DEBUG`|
@@ -207,8 +206,8 @@ The following are the event types that Stalwart Mail Server captures along with 
 |`imap.append`|IMAP APPEND command|`DEBUG`|
 |`imap.capabilities`|IMAP CAPABILITIES command|`DEBUG`|
 |`imap.close`|IMAP CLOSE command|`DEBUG`|
-|`imap.connection-end`|IMAP connection ended|`INFO`|
-|`imap.connection-start`|IMAP connection started|`INFO`|
+|`imap.connection-end`|IMAP connection ended|`DEBUG`|
+|`imap.connection-start`|IMAP connection started|`DEBUG`|
 |`imap.copy`|IMAP COPY command|`DEBUG`|
 |`imap.create-mailbox`|IMAP CREATE mailbox command|`DEBUG`|
 |`imap.delete-mailbox`|IMAP DELETE mailbox command|`DEBUG`|
@@ -290,6 +289,7 @@ The following are the event types that Stalwart Mail Server captures along with 
 |`limit.quota`|Quota limit reached|`DEBUG`|
 |`limit.size-request`|Request size limit reached|`DEBUG`|
 |`limit.size-upload`|Upload size limit reached|`DEBUG`|
+|`limit.tenant-quota`|Tenant quota limit reached|`INFO`|
 |`limit.too-many-requests`|Too many requests|`WARN`|
 |`mail-auth.base64`|Base64 error during mail authentication|`DEBUG`|
 |`mail-auth.crypto`|Crypto error during mail authentication|`DEBUG`|
@@ -303,8 +303,8 @@ The following are the event types that Stalwart Mail Server captures along with 
 |`mail-auth.policy-not-aligned`|Policy not aligned|`DEBUG`|
 |`manage-sieve.capabilities`|ManageSieve CAPABILITIES command|`DEBUG`|
 |`manage-sieve.check-script`|ManageSieve CHECK script command|`DEBUG`|
-|`manage-sieve.connection-end`|ManageSieve connection ended|`INFO`|
-|`manage-sieve.connection-start`|ManageSieve connection started|`INFO`|
+|`manage-sieve.connection-end`|ManageSieve connection ended|`DEBUG`|
+|`manage-sieve.connection-start`|ManageSieve connection started|`DEBUG`|
 |`manage-sieve.create-script`|ManageSieve CREATE script command|`DEBUG`|
 |`manage-sieve.delete-script`|ManageSieve DELETE script command|`DEBUG`|
 |`manage-sieve.error`|ManageSieve error occurred|`DEBUG`|
@@ -391,8 +391,8 @@ The following are the event types that Stalwart Mail Server captures along with 
 |`outgoing-report.tls-aggregate`|TLS aggregate report sent|`INFO`|
 |`outgoing-report.unauthorized-reporting-address`|Unauthorized reporting address|`INFO`|
 |`pop3.capabilities`|POP3 CAPABILITIES command|`DEBUG`|
-|`pop3.connection-end`|POP3 connection ended|`INFO`|
-|`pop3.connection-start`|POP3 connection started|`INFO`|
+|`pop3.connection-end`|POP3 connection ended|`DEBUG`|
+|`pop3.connection-start`|POP3 connection started|`DEBUG`|
 |`pop3.delete`|POP3 DELETE command|`DEBUG`|
 |`pop3.error`|POP3 error occurred|`DEBUG`|
 |`pop3.fetch`|POP3 FETCH command|`DEBUG`|
@@ -439,9 +439,10 @@ The following are the event types that Stalwart Mail Server captures along with 
 |`security.brute-force-ban`|Banned due to brute force attack|`INFO`|
 |`security.ip-blocked`|Blocked IP address|`INFO`|
 |`security.loiter-ban`|Banned due to loitering|`INFO`|
+|`security.unauthorized`|Unauthorized access|`INFO`|
 |`server.licensing`|Server licensing event|`INFO`|
-|`server.shutdown`|Shutting down Stalwart Mail Server v0.9.3|`INFO`|
-|`server.startup`|Starting Stalwart Mail Server v0.9.3|`INFO`|
+|`server.shutdown`|Shutting down Stalwart Mail Server v0.10.0|`INFO`|
+|`server.startup`|Starting Stalwart Mail Server v0.10.0|`INFO`|
 |`server.startup-error`|Server startup error|`ERROR`|
 |`server.thread-error`|Server thread error|`ERROR`|
 |`sieve.action-accept`|Sieve action: Accept|`DEBUG`|
@@ -452,7 +453,7 @@ The following are the event types that Stalwart Mail Server captures along with 
 |`sieve.message-too-large`|Sieve message too large|`WARN`|
 |`sieve.not-supported`|Sieve action not supported|`WARN`|
 |`sieve.quota-exceeded`|Sieve quota exceeded|`WARN`|
-|`sieve.runtime-error`|Sieve runtime error|`WARN`|
+|`sieve.runtime-error`|Sieve runtime error|`DEBUG`|
 |`sieve.script-not-found`|Sieve script not found|`WARN`|
 |`sieve.send-message`|Sieve sending message|`INFO`|
 |`sieve.unexpected-error`|Unexpected Sieve error|`ERROR`|
@@ -464,8 +465,8 @@ The following are the event types that Stalwart Mail Server captures along with 
 |`smtp.auth-not-allowed`|Authentication not allowed|`INFO`|
 |`smtp.command-not-implemented`|Command not implemented|`DEBUG`|
 |`smtp.concurrency-limit-exceeded`|Concurrency limit exceeded|`INFO`|
-|`smtp.connection-end`|SMTP connection ended|`INFO`|
-|`smtp.connection-start`|SMTP connection started|`INFO`|
+|`smtp.connection-end`|SMTP connection ended|`DEBUG`|
+|`smtp.connection-start`|SMTP connection started|`DEBUG`|
 |`smtp.deliver-by-disabled`|DELIVERBY extension disabled|`DEBUG`|
 |`smtp.deliver-by-invalid`|Invalid DELIVERBY parameter|`DEBUG`|
 |`smtp.did-not-say-ehlo`|Client did not say EHLO|`DEBUG`|
