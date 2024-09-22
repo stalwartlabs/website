@@ -3,7 +3,7 @@
 
 <head>
         <%- include('include-meta.ejs', { title: 'Compare editions | Stalwart Labs' ,
-                description: 'Discover the differences between the community and enterprise editions of our mail server solution.'
+                description: 'Discover the differences between the community, small business and enterprise editions of our mail server solution.'
                 }) %>,
 
                 <!-- google fonts -->
@@ -27,66 +27,79 @@ const features = [
       {
         "name": "JMAP Core",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "JMAP Mail",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "JMAP for WebSockets",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "JMAP Blob",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "JMAP for Quotas",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "IMAP4rev1",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "IMAP4rev2",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "POP3",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "Full-text search",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "Autoconfig",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "Disk quotas",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "Sub-addressing & Catch-all",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "Mailing lists & Aliases",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
@@ -96,81 +109,97 @@ const features = [
       {
         "name": "Programmable",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "Rate & concurrency limiting",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "Distributed & fault-tolerant queues",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "Queue quotas",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "Milter integration",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "Unlimited virtual queues",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "Delayed & priority delivery",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "Envelope rewriting",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "DKIM",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "SPF",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "ARC",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "DMARC",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "DANE",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "MTA-STS",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "TLS Reporting",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "Report analysis",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
@@ -180,26 +209,31 @@ const features = [
       {
         "name": "Sieve Support",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "ManageSieve",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "JMAP for Sieve Scripts",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "REST API",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "MTA hooks",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
@@ -209,51 +243,61 @@ const features = [
       {
         "name": "Spam rules",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "Statistical classifier",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "DNSBL",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "Collaborative filtering",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "Phishing protection",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "Trusted reply tracking",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "Sender reputation",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "Greylisting",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "Spam traps",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "AI classifier",
         "standard": "-",
+        "sbe": "pending",
         "enterprise": "pending"
       },
       {
@@ -263,31 +307,37 @@ const features = [
       {
         "name": "CardDAV",
         "standard": "pending",
+        "sbe": "pending",
         "enterprise": "pending"
       },
       {
         "name": "CalDAV",
         "standard": "pending",
+        "sbe": "pending",
         "enterprise": "pending"
       },
       {
         "name": "JMAP for Contacts",
         "standard": "pending",
+        "sbe": "pending",
         "enterprise": "pending"
       },
       {
         "name": "JMAP for Calendars",
         "standard": "pending",
+        "sbe": "pending",
         "enterprise": "pending"
       },
       {
         "name": "JMAP Tasks",
         "standard": "pending",
+        "sbe": "pending",
         "enterprise": "pending"
       },
       {
         "name": "ActiveSync",
         "standard": "pending",
+        "sbe": "pending",
         "enterprise": "pending"
       },
       {
@@ -297,41 +347,49 @@ const features = [
       {
         "name": "RocksDB",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "FoundationDB",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "PostgreSQL/AlloyDB",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "mySQL/MariaDB",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "SQLite",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "S3-compatible",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "Redis",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "ElasticSearch",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
@@ -341,41 +399,49 @@ const features = [
       {
         "name": "LDAP",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "SQL",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "OAuth",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "OIDC",
         "standard": "pending",
+        "sbe": "pending",
         "enterprise": "pending"
       },
       {
         "name": "Two-factor authentication (2FA)",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "App passwords",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "Third-party OIDC providers",
         "standard": "-",
+        "sbe": "pending",
         "enterprise": "pending"
       },
       {
         "name": "SAML",
         "standard": "-",
+        "sbe": "pending",
         "enterprise": "pending"
       },
       {
@@ -385,36 +451,43 @@ const features = [
       {
         "name": "Encryption-at-rest",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "ACME",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "Access Control Lists",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "Fail2ban",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "Rate limiting",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "Security Audited",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "Memory safe",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
@@ -424,41 +497,49 @@ const features = [
       {
         "name": "Tracing & Logging",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "Metrics",
         "standard": "Limited",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "Log viewer",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "Webhooks",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "Dashboard",
         "standard": "-",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "Message delivery history",
         "standard": "-",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "Live telemetry",
         "standard": "-",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "Alerts",
         "standard": "-",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
@@ -468,36 +549,43 @@ const features = [
       {
         "name": "Distributed",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "Fault tolerant",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "Coordinator-less",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "Proxy protocol",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "Kubernetes support",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "Read replicas",
         "standard": "-",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "Distributed blob storage",
         "standard": "-",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
@@ -507,26 +595,31 @@ const features = [
       {
         "name": "Multi-tenancy",
         "standard": "-",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "Branding",
         "standard": "-",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "Un-delete emails",
         "standard": "-",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "AI-powered",
         "standard": "-",
+        "sbe": "pending",
         "enterprise": "pending"
       },
       {
         "name": "Lawful interception",
         "standard": "-",
+        "sbe": "pending",
         "enterprise": "pending"
       },
       {
@@ -536,21 +629,25 @@ const features = [
       {
         "name": "Community support",
         "standard": "yes",
+        "sbe": "yes",
         "enterprise": "yes"
       },
       {
         "name": "Premium support",
         "standard": "-",
+        "sbe": "-",
         "enterprise": "yes"
       },
       {
         "name": "Dedicated Support Engineer",
         "standard": "-",
+        "sbe": "-",
         "enterprise": "On demand"
       },
       {
         "name": "Custom SLA",
         "standard": "-",
+        "sbe": "-",
         "enterprise": "On demand"
       }
 ];
@@ -588,7 +685,7 @@ function getIcon(status) {
                                                         Discover the differences between the
                                                         <span
                                                                 class="relative z-[2] whitespace-nowrap after:content-[''] after:block after:absolute after:w-[102.5%] after:h-[30%] after:left-[-1.5%] after:z-[-1] after:transition-all after:duration-[0.2s] after:ease-in-out after:mt-0 after:rounded-[5rem] after:bottom-[9%] motion-reduce:after:transition-none after:bg-[rgba(63,120,224,.12)]">
-                                                                community and enterprise</span>
+                                                                community, small business and enterprise</span>
                                                         editions.
                                                 </p>
                                         </div>
@@ -610,7 +707,7 @@ function getIcon(status) {
                                                 comparison
                                         </h2>
                                         <p class="lead !text-[1.05rem] !leading-[1.6] font-medium">
-                                                Compare the comprehensive features of our community and enterprise
+                                                Compare the comprehensive features of our community, small business and enterprise
                                                 editions.</p>
                                         <div class="flex flex-wrap mx-[-15px]">
                                                 <div
@@ -643,23 +740,31 @@ function getIcon(status) {
                                                                                         Free</div>
                                                                         </th>
                                                                         <th>
-                                                                                <div class="h4 !mb-1">Enterprise</div>
+                                                                                <div class="h4 !mb-1">Small Business</div>
                                                                                 <div
                                                                                         class="!text-[.75rem] font-medium text-[#aab0bc]">
                                                                                         starting at $120 per year
                                                                                 </div>
                                                                         </th>
-                                                                </tr>
+                                                                        <th>
+                                                                          <div class="h4 !mb-1">Enterprise</div>
+                                                                          <div
+                                                                                  class="!text-[.75rem] font-medium text-[#aab0bc]">
+                                                                                  starting at $360 per year
+                                                                          </div>
+                                                                        </th>
+                                                          </tr>
                                                         </thead>
                                                         <tbody>
                                                                 <% features.forEach(feature => { if (feature.isHeader) { %>
                                                                           <tr style="background-color: #edf2fc;">
-                                                                            <td class="option text-left" colspan="3"><b><%= feature.name %></b></td>
+                                                                            <td class="option text-left" colspan="4"><b><%= feature.name %></b></td>
                                                                           </tr>
                                                                         <% } else { %>
                                                                           <tr>
                                                                             <td class="option text-left"><%= feature.name %></td>
                                                                             <td><%- getIcon(feature.standard) %></td>
+                                                                            <td><%- getIcon(feature.sbe) %></td>
                                                                             <td><%- getIcon(feature.enterprise) %></td>
                                                                           </tr>
                                                                 <% }  }); %>
@@ -668,6 +773,10 @@ function getIcon(status) {
                                                                 <tr>
                                                                         <th class="!w-[22.5rem]"></th>
                                                                         <th><a href="/open-source"
+                                                                                        class="btn btn-soft-primary !rounded-[50rem] mt-1">Learn
+                                                                                        More</a>
+                                                                        </th>
+                                                                        <th><a href="/small-business"
                                                                                         class="btn btn-soft-primary !rounded-[50rem] mt-1">Learn
                                                                                         More</a>
                                                                         </th>
@@ -1030,7 +1139,7 @@ function getIcon(status) {
         </div>
         <!-- /.content-wrapper -->
         <%- include('include-footer.ejs', { cta: 'Ready to Upgrade?' ,
-                ctaSub: 'Contact us today to get started with the Enterprise Edition and unlock premium features.' ,
+                ctaSub: 'Contact us today to get started with the Small Business or Enterprise Edition and unlock premium features.' ,
                 ctaButton: 'Contact us' , ctaLink: '/contact' }) %>
 </body>
 
