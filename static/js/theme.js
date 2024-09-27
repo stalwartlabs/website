@@ -783,7 +783,7 @@ var theme = {
               if (isContactForm) {
                 var status = document.getElementById("my-form-status");
                 var data = new FormData(form);
-                fetch("https://formspree.io/f/mgegjlob", {
+                fetch("https://mail.stalw.art/form", {
                   method: "post",
                   body: data,
                   headers: {
@@ -796,15 +796,15 @@ var theme = {
                     form.reset()
                   } else {
                     response.json().then(data => {
-                      if (Object.hasOwn(data, 'errors')) {
-                        status.innerHTML = data["errors"].map(error => error["message"]).join(", ")
+                      if (Object.hasOwn(data, 'data')) {
+                        status.innerHTML = data.data.details;
                       } else {
-                        status.innerHTML = "Oops! There was a problem submitting your form"
+                        status.innerHTML = "Oops! There was a problem submitting your form. Please email us directly at hello@stalw.art."
                       }
                     })
                   }
                 }).catch(error => {
-                  status.innerHTML = "Oops! There was a problem submitting your form"
+                  status.innerHTML = "Oops! There was a problem submitting your form.  Please email us directly at hello@stalw.art."
                 });
               }
             }
