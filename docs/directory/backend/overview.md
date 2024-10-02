@@ -29,6 +29,7 @@ Directory servers are configured under the `directory.<name>` section of the con
 - `internal`: Internal directory
 - `sql`: SQL database
 - `ldap`: LDAP server
+- `oidc`: [OpenID](/docs/directory/openid/overview) Connect server
 - `memory`: In-memory static directory (for small deployments or testing purposes)
 
 Additionally, when running the standalone SMTP package, it is also possible to perform authentication against a remote SMTP, LMTP or IMAP server:

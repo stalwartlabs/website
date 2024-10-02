@@ -16,6 +16,8 @@ Stalwart Mail Server supports a variety of principal types, which include both t
 - [Domain](/docs/directory/principals/domain): Represents an entire domain within the mail system, enabling the management of domain-wide settings or resources.
 - [Tenant](/docs/directory/multi-tenant): Represents an organizational or logical division within the system, allowing multi-tenant setups.
 - [Role](/docs/directory/authorization/roles): Represents a specific role that users or groups can assume, often used to define permissions or responsibilities.
+- [API Key](/docs/directory/principals/api-key): Represents an API key that can be used to authenticate requests to the mail server.
+- [OAuth Client](/docs/directory/principals/oauth-client): Represents an OAuth client that can be used to authenticate users or applications.
 - **Resource**: Represents physical or digital resources, such as projectors, meeting rooms, or shared file storage.
 - **Location**: Represents a physical location, such as an office or a conference room.
 - **Other**: Represents any other type of principal that does not fall into the predefined categories.

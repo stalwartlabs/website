@@ -2,7 +2,7 @@
 sidebar_position: 5
 ---
 
-# Multi-tenancy
+# Tenants
 
 Multi-tenancy is a feature in Stalwart Mail Server that allows multiple independent organizations, known as **tenants**, to share the same mail server infrastructure while keeping their data and resources completely isolated from one another. A tenant is defined as a logical division within the mail server, representing a specific organization or group that has its own set of users, groups, mailing lists, and domains.
 

@@ -36,27 +36,27 @@ Stalwart Mail Server provides a wide range of permissions that can be assigned t
 
 | Permission | Description | Admin role | Tenant admin role | User role  |
 |-----------------|--------------------|--------------------|--------------------|--------------------|
-|`impersonate`|Allows acting on behalf of another user|:white_check_mark:|||
-|`unlimited-requests`|Removes request limits or quotas|:white_check_mark:|||
-|`unlimited-uploads`|Removes upload size or frequency limits|:white_check_mark:|||
-|`delete-system-folders`|Allows deletion of critical system folders|:white_check_mark:|||
+|`impersonate`|Act on behalf of another user|:white_check_mark:|||
+|`unlimited-requests`|Perform unlimited requests|:white_check_mark:|||
+|`unlimited-uploads`|Upload unlimited data|:white_check_mark:|||
+|`delete-system-folders`|Delete system folders|:white_check_mark:|||
 |`message-queue-list`|View message queue|:white_check_mark:|:white_check_mark:||
 |`message-queue-get`|Retrieve specific messages from the queue|:white_check_mark:|:white_check_mark:||
 |`message-queue-update`|Modify queued messages|:white_check_mark:|:white_check_mark:||
 |`message-queue-delete`|Remove messages from the queue|:white_check_mark:|:white_check_mark:||
-|`outgoing-report-list`|View reports for outgoing emails|:white_check_mark:|:white_check_mark:||
-|`outgoing-report-get`|Retrieve specific outgoing email reports|:white_check_mark:|:white_check_mark:||
-|`outgoing-report-delete`|Remove outgoing email reports|:white_check_mark:|:white_check_mark:||
-|`incoming-report-list`|View reports for incoming emails|:white_check_mark:|:white_check_mark:||
-|`incoming-report-get`|Retrieve specific incoming email reports|:white_check_mark:|:white_check_mark:||
-|`incoming-report-delete`|Remove incoming email reports|:white_check_mark:|:white_check_mark:||
+|`outgoing-report-list`|View outgoing DMARC and TLS reports|:white_check_mark:|:white_check_mark:||
+|`outgoing-report-get`|Retrieve specific outgoing DMARC and TLS reports|:white_check_mark:|:white_check_mark:||
+|`outgoing-report-delete`|Remove outgoing DMARC and TLS reports|:white_check_mark:|:white_check_mark:||
+|`incoming-report-list`|View incoming DMARC, TLS and ARF reports|:white_check_mark:|:white_check_mark:||
+|`incoming-report-get`|Retrieve specific incoming DMARC, TLS and ARF reports|:white_check_mark:|:white_check_mark:||
+|`incoming-report-delete`|Remove incoming DMARC, TLS and ARF reports|:white_check_mark:|:white_check_mark:||
 |`settings-list`|View system settings|:white_check_mark:|||
 |`settings-update`|Modify system settings|:white_check_mark:|||
 |`settings-delete`|Remove system settings|:white_check_mark:|||
 |`settings-reload`|Refresh system settings|:white_check_mark:|||
-|`individual-list`|View list of individual users|:white_check_mark:|:white_check_mark:||
-|`individual-get`|Retrieve specific user information|:white_check_mark:|:white_check_mark:||
-|`individual-update`|Modify user information|:white_check_mark:|:white_check_mark:||
+|`individual-list`|View list of user accounts|:white_check_mark:|:white_check_mark:||
+|`individual-get`|Retrieve specific account information|:white_check_mark:|:white_check_mark:||
+|`individual-update`|Modify user account information|:white_check_mark:|:white_check_mark:||
 |`individual-delete`|Remove user accounts|:white_check_mark:|:white_check_mark:||
 |`individual-create`|Add new user accounts|:white_check_mark:|:white_check_mark:||
 |`group-list`|View list of user groups|:white_check_mark:|:white_check_mark:||
@@ -69,7 +69,7 @@ Stalwart Mail Server provides a wide range of permissions that can be assigned t
 |`domain-create`|Add new email domains|:white_check_mark:|:white_check_mark:||
 |`domain-update`|Modify domain information|:white_check_mark:|:white_check_mark:||
 |`domain-delete`|Remove email domains|:white_check_mark:|:white_check_mark:||
-|`tenant-list`|View list of tenants (in multi-tenant setup)|:white_check_mark:|||
+|`tenant-list`|View list of tenants|:white_check_mark:|||
 |`tenant-get`|Retrieve specific tenant information|:white_check_mark:|||
 |`tenant-create`|Add new tenants|:white_check_mark:|||
 |`tenant-update`|Modify tenant information|:white_check_mark:|||
@@ -84,16 +84,16 @@ Stalwart Mail Server provides a wide range of permissions that can be assigned t
 |`role-create`|Create new roles|:white_check_mark:|:white_check_mark:||
 |`role-update`|Modify role information|:white_check_mark:|:white_check_mark:||
 |`role-delete`|Remove roles|:white_check_mark:|:white_check_mark:||
-|`principal-list`|View list of principals (users or system entities)|:white_check_mark:|:white_check_mark:||
+|`principal-list`|View list of principals|:white_check_mark:|:white_check_mark:||
 |`principal-get`|Retrieve specific principal information|:white_check_mark:|:white_check_mark:||
 |`principal-create`|Create new principals|:white_check_mark:|:white_check_mark:||
 |`principal-update`|Modify principal information|:white_check_mark:|:white_check_mark:||
 |`principal-delete`|Remove principals|:white_check_mark:|:white_check_mark:||
-|`blob-fetch`|Retrieve binary large objects|:white_check_mark:|||
-|`purge-blob-store`|Clear the blob storage|:white_check_mark:|||
-|`purge-data-store`|Clear the data storage|:white_check_mark:|||
-|`purge-lookup-store`|Clear the lookup storage|:white_check_mark:|||
-|`purge-account`|Completely remove an account and all associated data|:white_check_mark:|||
+|`blob-fetch`|Retrieve arbitrary blobs|:white_check_mark:|||
+|`purge-blob-store`|Purge the blob storage|:white_check_mark:|||
+|`purge-data-store`|Purge the data storage|:white_check_mark:|||
+|`purge-lookup-store`|Purge the lookup storage|:white_check_mark:|||
+|`purge-account`|Purge user accounts|:white_check_mark:|||
 |`fts-reindex`|Rebuild the full-text search index|:white_check_mark:|||
 |`undelete`|Restore deleted items|:white_check_mark:|:white_check_mark:||
 |`dkim-signature-create`|Create DKIM signatures for email authentication|:white_check_mark:|:white_check_mark:||
@@ -101,19 +101,19 @@ Stalwart Mail Server provides a wide range of permissions that can be assigned t
 |`update-spam-filter`|Modify spam filter settings|:white_check_mark:|||
 |`update-webadmin`|Modify web admin interface settings|:white_check_mark:|||
 |`logs-view`|Access system logs|:white_check_mark:|||
-|`sieve-run`|Execute Sieve scripts for email filtering|:white_check_mark:|||
+|`sieve-run`|Execute Sieve scripts from the REST API|:white_check_mark:|||
 |`restart`|Restart the email server|:white_check_mark:|||
-|`tracing-list`|View list of system traces|:white_check_mark:|||
+|`tracing-list`|View stored traces|:white_check_mark:|||
 |`tracing-get`|Retrieve specific trace information|:white_check_mark:|||
-|`tracing-live`|View real-time system traces|:white_check_mark:|||
-|`metrics-list`|View list of system metrics|:white_check_mark:|||
-|`metrics-live`|View real-time system metrics|:white_check_mark:|||
-|`authenticate`|Perform authentication|:white_check_mark:|:white_check_mark:|:white_check_mark:|
-|`authenticate-oauth`|Perform OAuth authentication|:white_check_mark:|:white_check_mark:|:white_check_mark:|
+|`tracing-live`|Perform real-time tracing|:white_check_mark:|||
+|`metrics-list`|View stored metrics|:white_check_mark:|||
+|`metrics-live`|View real-time metrics|:white_check_mark:|||
+|`authenticate`|Authenticate|:white_check_mark:|:white_check_mark:|:white_check_mark:|
+|`authenticate-oauth`|Authenticate via OAuth|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 |`email-send`|Send emails|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 |`email-receive`|Receive emails|:white_check_mark:|:white_check_mark:|:white_check_mark:|
-|`manage-encryption`|Handle encryption settings and operations|:white_check_mark:|:white_check_mark:|:white_check_mark:|
-|`manage-passwords`|Manage user passwords|:white_check_mark:|:white_check_mark:|:white_check_mark:|
+|`manage-encryption`|Manage encryption-at-rest settings|:white_check_mark:|:white_check_mark:|:white_check_mark:|
+|`manage-passwords`|Manage account passwords|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 |`jmap-email-get`|Retrieve emails via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 |`jmap-mailbox-get`|Retrieve mailboxes via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 |`jmap-thread-get`|Retrieve email threads via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
@@ -202,3 +202,15 @@ Stalwart Mail Server provides a wide range of permissions that can be assigned t
 |`sieve-rename-script`|Rename Sieve scripts|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 |`sieve-check-script`|Validate Sieve scripts|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 |`sieve-have-space`|Check available space for Sieve scripts|:white_check_mark:|:white_check_mark:|:white_check_mark:|
+|`api-key-list`|View API keys|:white_check_mark:|:white_check_mark:||
+|`api-key-get`|Retrieve specific API keys|:white_check_mark:|:white_check_mark:||
+|`api-key-create`|Create new API keys|:white_check_mark:|:white_check_mark:||
+|`api-key-update`|Modify API keys|:white_check_mark:|:white_check_mark:||
+|`api-key-delete`|Remove API keys|:white_check_mark:|:white_check_mark:||
+|`oauth-client-list`|View OAuth clients|:white_check_mark:|||
+|`oauth-client-get`|Retrieve specific OAuth clients|:white_check_mark:|||
+|`oauth-client-create`|Create new OAuth clients|:white_check_mark:|||
+|`oauth-client-update`|Modify OAuth clients|:white_check_mark:|||
+|`oauth-client-delete`|Remove OAuth clients|:white_check_mark:|||
+|`oauth-client-registration`|Register OAuth clients|:white_check_mark:|||
+|`oauth-client-override`|Override OAuth client settings|:white_check_mark:|||

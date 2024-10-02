@@ -1,0 +1,46 @@
+---
+slug: openid-connect
+title: "OpenID Connect - Secure Authentication Just Got Easier"
+authors: [mdecimus]
+tags: [oidc, openid, stalwart, mail, server]
+---
+
+Today we announce the release of [Stalwart Mail Server](https://github.com/stalwartlabs/mail-server) `v0.10.2`, and it’s a big one! This version brings full **OpenID Connect (OIDC)** support, empowering admins and developers to integrate secure authentication and single sign-on (SSO) with modern identity providers. In addition to OIDC, this release introduces **OpenID Connect Dynamic Client Registration**, **OpenID Connect Discovery**, and **OAuth 2.0 Token Introspection**. Let’s dive into what these features are and why they matter.
+
+## What is OpenID Connect?
+
+[OpenID Connect](/docs/directory/openid/overview) (OIDC) is an identity layer built on top of [OAuth](/docs/directory/oauth/overview) 2.0 that allows clients to verify the identity of users. With OIDC, instead of just authorizing an app to access a resource, the system can also **authenticate** the user securely. This means users can log in to multiple applications with a single set of credentials, making OIDC ideal for **Single Sign-On (SSO)** across services.
+
+Why is this important? Because it saves users from password fatigue, reduces login complexity, and centralizes authentication in a secure manner. Stalwart Mail Server’s new OIDC support allows you to authenticate your users either directly through Stalwart as an OpenID Provider or by integrating with **third-party OIDC providers** like Authentik, Keycloak, or any compliant identity system.
+
+Alongside full OIDC support, Stalwart Mail Server v0.10.2 also introduces several important new features that expand its capabilities:
+
+### OpenID Connect Dynamic Client Registration
+
+Dynamic Client Registration allows clients (applications) to automatically register with the OIDC provider without requiring manual intervention. This feature makes it easier to integrate multiple applications, as clients can dynamically obtain credentials (like client IDs) directly from Stalwart Mail Server. This adds flexibility and reduces administrative overhead.
+
+### OpenID Connect Discovery
+
+With the OpenID Connect Discovery feature, clients can automatically discover the relevant OIDC endpoints and supported capabilities via the `/.well-known/openid-configuration` endpoint. This simplifies the configuration of OIDC clients, as they don’t need to be manually configured with URLs for token, authorization, and userinfo endpoints — they just query the discovery endpoint and set themselves up!
+
+### OAuth 2.0 Token Introspection
+
+OAuth 2.0 Token Introspection allows resource servers (like APIs or mail servers) to validate access tokens provided by clients. This ensures that the token being used is still active, hasn’t expired, and has the right permissions attached. This is particularly useful for securing interactions between various services while verifying that tokens are still valid.
+
+## OpenID Provider or Third-Party OIDC Support
+
+Stalwart Mail Server v0.10.2 can now act as an [OpenID Provider](/docs/directory/openid/provider) (issuing ID tokens and managing authentication), which means your organization can use it to handle authentication for all your internal applications and services. Alternatively, Stalwart can also integrate with [third-party OIDC providers](/docs/directory/backend/oidc), so you can delegate authentication to systems like **Authentik** or **Auth0**, while still using Stalwart to manage your email infrastructure.
+
+This dual functionality gives you the flexibility to choose how you want to manage authentication while taking full advantage of OIDC's security features.
+
+## About OAUTHBEARER...
+
+Now, let’s talk about mail clients and the [OAUTHBEARER SASL mechanism](/docs/directory/oauth/interoperability). While Stalwart fully supports OIDC, the majority of mainstream mail clients (looking at you, Outlook, Thunderbird, and Apple Mail) still don’t support OAUTHBEARER for OAuth-based authentication. Sure, we’ve done our part by adding OpenID support to Stalwart — now it's up to the mail clients to follow suit and add proper support for OIDC authentication. Maybe one day, we’ll see these clients finally catch up, and we can all enjoy the seamless authentication experience that OIDC offers.
+
+In the meantime, users of these clients will need to continue using [App Passwords](/docs/directory/authentication/app-password) to access their email accounts. But hey, maybe this is the gentle nudge the developers of these clients need to jump on the OpenID bandwagon!
+
+## Try It Out
+
+Stalwart Mail Server v0.10.2 is available now, so download it, upgrade your server, and start taking advantage of these new features! Whether you’re setting up Stalwart as your OpenID Provider or integrating with a third-party provider, this release gives you the tools to secure authentication with modern standards like OpenID Connect.
+
+Happy mailing and happy authenticating!
