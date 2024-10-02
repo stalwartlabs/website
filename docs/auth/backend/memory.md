@@ -21,7 +21,7 @@ Users are defined under the `directory.<id>.principals` sections of the configur
 - `name`: Specifies the username of the account.
 - `class`: Specifies the account type. Expected values are `individual` for user accounts and `admin` for administrator accounts.
 - `description`: Provides a description or full name for the user.
-- `secret`: Sets the password for the user account. Passwords can be stored [hashed](//docs/directory/authentication/password) or in plain text (not recommended).
+- `secret`: Sets the password for the user account. Passwords can be stored [hashed](//docs/auth/authentication/password) or in plain text (not recommended).
 - `email`: A list of email addresses associated with the user. The first address in the list is considered the primary address.
 - `email-list`: Optionally, a list of mailing list addresses that the user is a part of.
 - `member-of`: A list of groups that the user is a member of.

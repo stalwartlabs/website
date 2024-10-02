@@ -18,7 +18,7 @@ This feature is available exclusively in the Enterprise Edition of Stalwart Mail
 
 As a mail server, Stalwart expects clients (such as email applications) to authenticate using the **OAUTHBEARER SASL mechanism**. This means the client provides an **access token**—obtained from the third-party OIDC provider—to the mail server when attempting to authenticate. Unlike a typical web-based OIDC client, Stalwart does not participate in the full OIDC authentication flow (such as redirecting users to a login page or handling authorization codes).
 
-Since Stalwart does not initiate the OIDC flow, it does not have direct access to the [ID token](/docs/directory/openid/id-tokens), which typically contains key identity information about the user (such as the username or email). Instead, it operates with the **access token** provided by the client via OAUTHBEARER. Therefore, to retrieve the user’s identity (such as their account name and email address), Stalwart must be configured to query either the OIDC **UserInfo endpoint** or the **OAuth token introspection endpoint** provided by the OIDC server.
+Since Stalwart does not initiate the OIDC flow, it does not have direct access to the [ID token](/docs/auth/openid/id-tokens), which typically contains key identity information about the user (such as the username or email). Instead, it operates with the **access token** provided by the client via OAUTHBEARER. Therefore, to retrieve the user’s identity (such as their account name and email address), Stalwart must be configured to query either the OIDC **UserInfo endpoint** or the **OAuth token introspection endpoint** provided by the OIDC server.
 
 To map the access token received via OAUTHBEARER to the user’s identity, Stalwart Mail Server can be configured to query one of the following endpoints on the third-party OIDC provider:
 
@@ -37,7 +37,7 @@ To avoid this issue, it is necessary to pre-deploy accounts in Stalwart Mail Ser
 
 ### `OAUTHBEARER` SASL
 
-Another limitation relates to the OAUTHBEARER SASL mechanism, which is required for mail clients to authenticate with OAuth tokens. Unfortunately, many mainstream mail clients, such as Outlook, Thunderbird, and Apple Mail, do not support this mechanism. As a result, users of these clients cannot directly authenticate using OAuth tokens. To work around this limitation, administrators need to set up [App Passwords](/docs/directory/authentication/app-password) for these users. These App Passwords allow users to access their mail accounts securely in clients that do not support OAUTHBEARER. For more details on this, refer to the [interoperability](/docs/directory/oauth/interoperability) section of the OAuth documentation.
+Another limitation relates to the OAUTHBEARER SASL mechanism, which is required for mail clients to authenticate with OAuth tokens. Unfortunately, many mainstream mail clients, such as Outlook, Thunderbird, and Apple Mail, do not support this mechanism. As a result, users of these clients cannot directly authenticate using OAuth tokens. To work around this limitation, administrators need to set up [App Passwords](/docs/auth/authentication/app-password) for these users. These App Passwords allow users to access their mail accounts securely in clients that do not support OAUTHBEARER. For more details on this, refer to the [interoperability](/docs/auth/oauth/interoperability) section of the OAuth documentation.
 
 ## Configuration
 

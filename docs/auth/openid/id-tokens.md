@@ -22,7 +22,7 @@ Additionally, ID tokens may include other optional claims, such as the user’s 
 
 ## ID vs Access Tokens
 
-Although ID tokens and [access tokens](/docs/directory/oauth/tokens) are both used in OAuth 2.0 and OpenID Connect, they serve different purposes and contain different information:
+Although ID tokens and [access tokens](/docs/auth/oauth/tokens) are both used in OAuth 2.0 and OpenID Connect, they serve different purposes and contain different information:
 
 - **ID Token (Authentication):** An ID token is designed to authenticate the user and confirm their identity. It contains claims that describe the user and the authentication event (such as when the user logged in and the identity provider that verified them). ID tokens are primarily consumed by the client to understand who the user is.
 - **Access Token (Authorization):** An access token, in contrast, is used to authorize access to protected resources. It grants the client permission to access specific resources on behalf of the user. Access tokens contain scopes and permissions, defining what actions the client can perform (such as reading email or accessing a user’s profile data). Access tokens are consumed by resource servers (such as APIs) to control access to protected data.

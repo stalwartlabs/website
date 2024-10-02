@@ -9,7 +9,7 @@ We are happy to announce that [Stalwart Mail Server](https://github.com/stalwart
 
 ## Multi-Tenancy: Streamlined Management
 
-Multi-tenancy is a game-changer for anyone managing multiple independent organizations on a single instance of Stalwart Mail Server. Whether you’re a hosting provider or an enterprise with multiple departments, [tenants](/docs/directory/multi-tenant) allow you to isolate different organizations, each with its own users, groups, mailing lists, and domains. 
+Multi-tenancy is a game-changer for anyone managing multiple independent organizations on a single instance of Stalwart Mail Server. Whether you’re a hosting provider or an enterprise with multiple departments, [tenants](/docs/auth/authorization/tenants) allow you to isolate different organizations, each with its own users, groups, mailing lists, and domains. 
 
 Each tenant operates within its own secure space, ensuring privacy and separation from other tenants. You can assign **disk quotas** to control how much storage each tenant can use and limit the number of accounts, groups, and domains they can create. This is perfect for keeping resources in check while maintaining an organized, scalable environment. Imagine a scenario where a tenant is given 100GB of disk space. If the users within that tenant collectively consume all 100GB, the system prevents them from receiving more email, ensuring no one overuses resources.
 
@@ -17,9 +17,9 @@ Multi-tenancy offers security, control, and scalability—all in one package.
 
 ## Roles & Permissions: Fine-Tuned Access Control
 
-With the revamped **Roles and Permissions** system, Stalwart Mail Server `0.10.0` gives you unprecedented control over who can do what in your environment. No more blanket admin accounts! Instead, you can assign specific [permissions](/docs/directory/authorization/permissions) to individuals, groups, or entire tenants.
+With the revamped **Roles and Permissions** system, Stalwart Mail Server `0.10.0` gives you unprecedented control over who can do what in your environment. No more blanket admin accounts! Instead, you can assign specific [permissions](/docs/auth/authorization/permissions) to individuals, groups, or entire tenants.
 
-Permissions can be bundled into [roles](/docs/directory/authorization/roles), which makes managing access a breeze. Stalwart comes with three built-in roles to get you started: the **user** role, which grants access to all essential email services; the **admin** role, which has full control over the system; and the **tenant-admin** role, which is perfect for tenant or domain administrators, providing just the right amount of access without overstepping into critical system configurations.
+Permissions can be bundled into [roles](/docs/auth/authorization/roles), which makes managing access a breeze. Stalwart comes with three built-in roles to get you started: the **user** role, which grants access to all essential email services; the **admin** role, which has full control over the system; and the **tenant-admin** role, which is perfect for tenant or domain administrators, providing just the right amount of access without overstepping into critical system configurations.
 
 This granular permissions model ensures that no one has more access than they need, keeping your system secure while allowing users to perform their required tasks. Whether it’s managing users, updating settings, or overseeing mailing lists, the right permissions are always in the right hands.
 

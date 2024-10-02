@@ -20,7 +20,7 @@ Both users and administrators should ensure that the authenticator app is proper
 
 :::tip Note
 
-Two-factor authentication can only be managed from the self-service portal or the webadmin interface when Stalwart Mail Server is configured to use the [internal directory](/docs/directory/backend/internal). If the server is set up to use an external directory, such as LDAP or SQL, administrators need to manually add the OTP Auth URL as one of the account secrets to enable 2FA for user accounts.
+Two-factor authentication can only be managed from the self-service portal or the webadmin interface when Stalwart Mail Server is configured to use the [internal directory](/docs/auth/backend/internal). If the server is set up to use an external directory, such as LDAP or SQL, administrators need to manually add the OTP Auth URL as one of the account secrets to enable 2FA for user accounts.
 
 :::
 
@@ -34,7 +34,7 @@ When using an OAuth authentication flow, the user is prompted for their password
 
 #### Application Passwords
 
-For users with 2FA enabled, it is still possible to use legacy mail clients that do not support `OAUTHBEARER` by creating [Application Passwords](/docs/directory/authentication/app-password). An Application Password is a unique password that can be used in place of the user’s regular password. It allows access to the email account while maintaining the security benefits of 2FA. 
+For users with 2FA enabled, it is still possible to use legacy mail clients that do not support `OAUTHBEARER` by creating [Application Passwords](/docs/auth/authentication/app-password). An Application Password is a unique password that can be used in place of the user’s regular password. It allows access to the email account while maintaining the security benefits of 2FA. 
 
 #### Concatenated Passwords
 

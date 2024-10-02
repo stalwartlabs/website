@@ -9,7 +9,7 @@ Today we announce the release of [Stalwart Mail Server](https://github.com/stalw
 
 ## What is OpenID Connect?
 
-[OpenID Connect](/docs/directory/openid/overview) (OIDC) is an identity layer built on top of [OAuth](/docs/directory/oauth/overview) 2.0 that allows clients to verify the identity of users. With OIDC, instead of just authorizing an app to access a resource, the system can also **authenticate** the user securely. This means users can log in to multiple applications with a single set of credentials, making OIDC ideal for **Single Sign-On (SSO)** across services.
+[OpenID Connect](/docs/auth/openid/overview) (OIDC) is an identity layer built on top of [OAuth](/docs/auth/oauth/overview) 2.0 that allows clients to verify the identity of users. With OIDC, instead of just authorizing an app to access a resource, the system can also **authenticate** the user securely. This means users can log in to multiple applications with a single set of credentials, making OIDC ideal for **Single Sign-On (SSO)** across services.
 
 Why is this important? Because it saves users from password fatigue, reduces login complexity, and centralizes authentication in a secure manner. Stalwart Mail Server’s new OIDC support allows you to authenticate your users either directly through Stalwart as an OpenID Provider or by integrating with **third-party OIDC providers** like Authentik, Keycloak, or any compliant identity system.
 
@@ -29,15 +29,15 @@ OAuth 2.0 Token Introspection allows resource servers (like APIs or mail servers
 
 ## OpenID Provider or Third-Party OIDC Support
 
-Stalwart Mail Server v0.10.2 can now act as an [OpenID Provider](/docs/directory/openid/provider) (issuing ID tokens and managing authentication), which means your organization can use it to handle authentication for all your internal applications and services. Alternatively, Stalwart can also integrate with [third-party OIDC providers](/docs/directory/backend/oidc), so you can delegate authentication to systems like **Authentik** or **Auth0**, while still using Stalwart to manage your email infrastructure.
+Stalwart Mail Server v0.10.2 can now act as an [OpenID Provider](/docs/auth/openid/provider) (issuing ID tokens and managing authentication), which means your organization can use it to handle authentication for all your internal applications and services. Alternatively, Stalwart can also integrate with [third-party OIDC providers](/docs/auth/backend/oidc), so you can delegate authentication to systems like **Authentik** or **Auth0**, while still using Stalwart to manage your email infrastructure.
 
 This dual functionality gives you the flexibility to choose how you want to manage authentication while taking full advantage of OIDC's security features.
 
 ## About OAUTHBEARER...
 
-Now, let’s talk about mail clients and the [OAUTHBEARER SASL mechanism](/docs/directory/oauth/interoperability). While Stalwart fully supports OIDC, the majority of mainstream mail clients (looking at you, Outlook, Thunderbird, and Apple Mail) still don’t support OAUTHBEARER for OAuth-based authentication. Sure, we’ve done our part by adding OpenID support to Stalwart — now it's up to the mail clients to follow suit and add proper support for OIDC authentication. Maybe one day, we’ll see these clients finally catch up, and we can all enjoy the seamless authentication experience that OIDC offers.
+Now, let’s talk about mail clients and the [OAUTHBEARER SASL mechanism](/docs/auth/oauth/interoperability). While Stalwart fully supports OIDC, the majority of mainstream mail clients (looking at you, Outlook, Thunderbird, and Apple Mail) still don’t support OAUTHBEARER for OAuth-based authentication. Sure, we’ve done our part by adding OpenID support to Stalwart — now it's up to the mail clients to follow suit and add proper support for OIDC authentication. Maybe one day, we’ll see these clients finally catch up, and we can all enjoy the seamless authentication experience that OIDC offers.
 
-In the meantime, users of these clients will need to continue using [App Passwords](/docs/directory/authentication/app-password) to access their email accounts. But hey, maybe this is the gentle nudge the developers of these clients need to jump on the OpenID bandwagon!
+In the meantime, users of these clients will need to continue using [App Passwords](/docs/auth/authentication/app-password) to access their email accounts. But hey, maybe this is the gentle nudge the developers of these clients need to jump on the OpenID bandwagon!
 
 ## Try It Out
 

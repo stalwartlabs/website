@@ -79,10 +79,12 @@ The following are the event types that Stalwart Mail Server captures along with 
 |`arc.invalid-cv`|Invalid ARC CV|`DEBUG`|
 |`arc.invalid-instance`|Invalid ARC instance|`DEBUG`|
 |`arc.sealer-not-found`|ARC sealer not found|`WARN`|
+|`auth.client-registration`|OAuth Client registration|`INFO`|
 |`auth.error`|Authentication error|`ERROR`|
 |`auth.failed`|Authentication failed|`DEBUG`|
 |`auth.missing-totp`|Missing TOTP for authentication|`TRACE`|
 |`auth.success`|Authentication successful|`INFO`|
+|`auth.token-expired`|OAuth token expired|`DEBUG`|
 |`auth.too-many-attempts`|Too many authentication attempts|`WARN`|
 |`cluster.decryption-error`|Failed to decrypt a gossip packet|`WARN`|
 |`cluster.empty-packet`|Received an empty gossip packet|`WARN`|
@@ -441,8 +443,8 @@ The following are the event types that Stalwart Mail Server captures along with 
 |`security.loiter-ban`|Banned due to loitering|`INFO`|
 |`security.unauthorized`|Unauthorized access|`INFO`|
 |`server.licensing`|Server licensing event|`INFO`|
-|`server.shutdown`|Shutting down Stalwart Mail Server v0.10.0|`INFO`|
-|`server.startup`|Starting Stalwart Mail Server v0.10.0|`INFO`|
+|`server.shutdown`|Shutting down Stalwart Mail Server v0.10.2|`INFO`|
+|`server.startup`|Starting Stalwart Mail Server v0.10.2|`INFO`|
 |`server.startup-error`|Server startup error|`ERROR`|
 |`server.thread-error`|Server thread error|`ERROR`|
 |`sieve.action-accept`|Sieve action: Accept|`DEBUG`|

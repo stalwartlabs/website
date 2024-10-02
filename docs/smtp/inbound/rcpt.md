@@ -8,7 +8,7 @@ The `RCPT TO` command is a used to specify the recipient of an email message dur
 
 ## Directory
 
-In order to handle mail for local accounts, it's necessary to configure a [directory](/docs/directory/backend/overview). This directory plays a crucial role in managing mail delivery as it fulfills several tasks:
+In order to handle mail for local accounts, it's necessary to configure a [directory](/docs/auth/backend/overview). This directory plays a crucial role in managing mail delivery as it fulfills several tasks:
 
 - **Identifying Local Domains**: Emails destined for these domains are processed and stored by the server.
 - **Validating Recipients**: It checks whether a given recipient's address corresponds to a valid, existing local account before accepting the email for delivery.
@@ -17,7 +17,7 @@ In order to handle mail for local accounts, it's necessary to configure a [direc
 
 Without this directory configured, Stalwart SMTP won't accept any emails, as it has no way of validating or processing them. The only exception would be if [relay functionality](#relay) is enabled, allowing Stalwart SMTP to simply pass on emails to another server for delivery. 
 
-The directory to be used can be configured using the `session.rcpt.directory` attribute. For more information, please refer to the [directory](/docs/directory/backend/overview) documentation.
+The directory to be used can be configured using the `session.rcpt.directory` attribute. For more information, please refer to the [directory](/docs/auth/backend/overview) documentation.
 
 Example:
 
@@ -86,7 +86,7 @@ Catch-all addresses can be enabled by setting the `catch-all` option to `true` i
 catch-all = true
 ```
 
-To designate a specific account as the catch-all address, add `@<DOMAIN_NAME>` as an associated email address for the account. If you are using an SQL directory with the [sample directory schema](/docs/directory/backend/sql#sample-directory-schema), you can find an example of how to create catch-all addresses in the [adding email aliases](/docs/directory/backend/sql#adding-an-email-alias) section. 
+To designate a specific account as the catch-all address, add `@<DOMAIN_NAME>` as an associated email address for the account. If you are using an SQL directory with the [sample directory schema](/docs/auth/backend/sql#sample-directory-schema), you can find an example of how to create catch-all addresses in the [adding email aliases](/docs/auth/backend/sql#adding-an-email-alias) section. 
 
 ### Custom
 

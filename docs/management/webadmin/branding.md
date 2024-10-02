@@ -16,8 +16,8 @@ This feature is available exclusively in the Enterprise Edition of Stalwart Mail
 
 The logo displayed in the webadmin interface is dynamically chosen based on the **hostname** from the HTTP request. Stalwart follows a specific order when selecting which logo to display, ensuring that the most appropriate logo is shown based on the domain or tenant in use.
 
-- **Domain Principal Logo**: When a webadmin user accesses the interface, Stalwart checks the **hostname domain** in the HTTP request. If a [domain principal](/docs/directory/principals/domain) is defined for this domain, and it has a `picture` field containing a valid logo URL, that logo is used.
-- **Tenant Principal Logo**: If the domain principal does not have a logo defined but is linked to a [tenant](/docs/directory/multi-tenant) that has a valid logo URL set in its `picture` field, the tenant's logo is displayed instead. This allows for tenant-wide branding when specific domains do not define their own logos.
+- **Domain Principal Logo**: When a webadmin user accesses the interface, Stalwart checks the **hostname domain** in the HTTP request. If a [domain principal](/docs/auth/principals/domain) is defined for this domain, and it has a `picture` field containing a valid logo URL, that logo is used.
+- **Tenant Principal Logo**: If the domain principal does not have a logo defined but is linked to a [tenant](/docs/auth/authorization/tenants) that has a valid logo URL set in its `picture` field, the tenant's logo is displayed instead. This allows for tenant-wide branding when specific domains do not define their own logos.
 - **System-wide Default Logo**:  If neither the domain principal nor the associated tenant has a valid logo, Stalwart falls back to a system-wide default logo. This is defined by the `enterprise.logo-url` setting in the server configuration. If this setting includes a valid URL, the logo at that URL is used as the default for the system.
 - **Stalwart Default Logo**: If no custom logo is set anywhere (domain, tenant, or system-wide), Stalwart will display its built-in **default logo** in the webadmin interface.
 

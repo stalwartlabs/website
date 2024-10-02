@@ -4,9 +4,9 @@ sidebar_position: 2
 
 # Permissions
 
-Permissions in Stalwart Mail Server determine the specific actions and resources that a user, group, or entity is allowed to access. Permissions allow administrators to control fine-grained access to various operations within the mail server, providing a clear distinction between what actions an entity can or cannot perform. Permissions can be assigned directly to [individuals](/docs/directory/principals/individual), [groups](/docs/directory/principals/group), [roles](/docs/directory/authorization/roles), or even entire [tenants](/docs/directory/multi-tenant), giving administrators comprehensive control over access policies.
+Permissions in Stalwart Mail Server determine the specific actions and resources that a user, group, or entity is allowed to access. Permissions allow administrators to control fine-grained access to various operations within the mail server, providing a clear distinction between what actions an entity can or cannot perform. Permissions can be assigned directly to [individuals](/docs/auth/principals/individual), [groups](/docs/auth/principals/group), [roles](/docs/auth/authorization/roles), or even entire [tenants](/docs/auth/authorization/tenants), giving administrators comprehensive control over access policies.
 
-To simplify the management of permissions, multiple permissions can be grouped together into [roles](/docs/directory/authorization/roles). Assigning roles to users or groups allows administrators to more easily manage access by bundling related permissions rather than having to assign them individually.
+To simplify the management of permissions, multiple permissions can be grouped together into [roles](/docs/auth/authorization/roles). Assigning roles to users or groups allows administrators to more easily manage access by bundling related permissions rather than having to assign them individually.
 
 ## Effective Permissions
 
@@ -32,7 +32,7 @@ In summary, permissions are centrally controlled by administrators to define wha
 
 ## Available Permissions
 
-Stalwart Mail Server provides a wide range of permissions that can be assigned to users, groups, roles, or tenants. These permissions cover various aspects of the mail server, including managing users, domains, settings, and more. The following table lists the available permissions as well as the [built-in roles](/docs/directory/authorization/roles) that include them:
+Stalwart Mail Server provides a wide range of permissions that can be assigned to users, groups, roles, or tenants. These permissions cover various aspects of the mail server, including managing users, domains, settings, and more. The following table lists the available permissions as well as the [built-in roles](/docs/auth/authorization/roles) that include them:
 
 | Permission | Description | Admin role | Tenant admin role | User role  |
 |-----------------|--------------------|--------------------|--------------------|--------------------|
