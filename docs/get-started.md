@@ -40,9 +40,10 @@ Be aware that changing the database backend at a later time will require migrati
 
 A database or directory server is required for authentication, validating local accounts, and obtaining account-related information such as names, group membership or disk quotas. Available options are:
 
-- **Internal**: An internal directory that is automatically created and managed by Stalwart Mail server. It uses the same database backend as the data store.
-- **LDAP**: LDAP servers, including OpenLDAP and Active Directory.
-- **SQL**: SQL databases, including PostgreSQL, MySQL and SQLite.
+- [Internal](/docs/auth/backend/internal): An internal directory that is automatically created and managed by Stalwart Mail server. It uses the same database backend as the data store.
+- [LDAP](/docs/auth/backend/ldap): LDAP servers, including OpenLDAP and Active Directory.
+- [SQL](/docs/auth/backend/sql): SQL databases, including PostgreSQL, MySQL and SQLite.
+- [OpenID Connect](/docs/auth/backend/oidc.md): OpenID Connect servers, including Authentik, Keycloak, etc.
 
 :::tip Note
 
