@@ -57,3 +57,22 @@ However, it is strongly advised that this setting remains disabled (which is the
 Once dynamic client registration is enabled and a client registers successfully, Stalwart Mail Server stores the client’s information in its directory as an [OAuth Client principal](/docs/auth/principals/oauth-client). This stored information includes the client ID, redirect URIs, and other metadata related to the client's access to the OAuth system. The server maintains a detailed record of all registered clients, enabling administrators to manage client credentials, access permissions, and general configurations.
 
 Administrators can modify or remove these registered clients using either the [Webadmin](/docs/management/webadmin/overview) or [REST API](/docs/api/management/overview).
+
+## Webadmin Client
+
+The Stalwart [Webadmin](/docs/management/webadmin/overview) interface, which also includes a [Self-Service Portal](/docs/management/webadmin/selfservice) for user management, relies on OAuth to authenticate users. If the option to require client registration (`oauth.client-registration.require = true`) is enabled, the Webadmin interface will stop functioning unless it is registered as an OAuth client, because its default client ID (`webadmin`) won't be automatically registered.
+
+### Manual Registration
+
+To ensure continued access to the Webadmin interface after enabling client registration, it is necessary to manually register the Webadmin as an OAuth client with the following settings:
+
+- **Client ID**: `webadmin`
+- **Redirect URI**: `stalwart://auth`
+
+By registering the Webadmin client, administrators and users can continue to access the Webadmin and Self-Service Portal without interruption.
+
+### Alternative Solution
+
+If administrators do not wish to register the Webadmin as an OAuth client, there is an alternative solution: granting the `oauth-client-override` [permission](/docs/auth/authorization/permissions) to administrator accounts. This permission allows administrators to bypass the client registration requirement and use any client ID when authenticating. This option provides flexibility for administrators while maintaining the requirement for client registration for other clients.
+
+It is important to note that the `oauth-client-override` permission **should not be granted to regular user accounts**, as it effectively defeats the purpose of requiring client registration. This permission should be reserved exclusively for administrators who need to manage the system or troubleshoot issues.

@@ -60,7 +60,7 @@ Example:
 [directory."oidc-userinfo"]
 type = "oidc"
 timeout = "1s"
-endpoint.url = "https://127.0.0.1:9090/userinfo"
+endpoint.url = "https://accounts.example.org/userinfo"
 endpoint.method = "userinfo"
 fields.email = "email"
 fields.username = "preferred_username"
@@ -79,7 +79,7 @@ Example:
 [directory."oidc-introspect-none"]
 type = "oidc"
 timeout = "1s"
-endpoint.url = "https://127.0.0.1:9090/introspect-none"
+endpoint.url = "https://accounts.example.org/introspect-none"
 endpoint.method = "introspect"
 auth.method = "none"
 fields.email = "email"
@@ -99,7 +99,7 @@ Example:
 [directory."oidc-introspect-basic"]
 type = "oidc"
 timeout = "1s"
-endpoint.url = "https://127.0.0.1:9090/introspect-basic"
+endpoint.url = "https://accounts.example.org/introspect-basic"
 endpoint.method = "introspect"
 auth.method = "basic"
 auth.username = "myuser"
@@ -121,7 +121,7 @@ Example:
 [directory."oidc-introspect-token"]
 type = "oidc"
 timeout = "1s"
-endpoint.url = "https://127.0.0.1:9090/introspect-token"
+endpoint.url = "https://accounts.example.org/introspect-token"
 endpoint.method = "introspect"
 auth.method = "token"
 auth.token = "token_of_gratitude"
@@ -142,7 +142,7 @@ Example:
 [directory."oidc-introspect-user-token"]
 type = "oidc"
 timeout = "1s"
-endpoint.url = "https://127.0.0.1:9090/introspect-user-token"
+endpoint.url = "https://accounts.example.org/introspect-user-token"
 endpoint.method = "introspect"
 auth.method = "user-token"
 fields.email = "email"

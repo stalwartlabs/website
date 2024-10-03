@@ -23,6 +23,7 @@ The following endpoints are available through the HTTP service:
 - `/mail/config-v1.1.xml`: The [autodiscover](/docs/server/autoconfig) endpoint provides email client configuration information.
 - `/autodiscover/autodiscover.xml`: The [autodiscover](/docs/server/autoconfig) endpoint provides email client configuration information.
 - `/metrics/prometheus`: The [Prometheus](/docs/telemetry/metrics/prometheus) metrics endpoint provides metrics for monitoring the server's performance.
+- `/form`: The form endpoint is used for [Form submissions](/docs/server/form-submission).
 - `/healthz/ready`: The health check endpoint indicates whether the server is ready to accept requests.
 - `/healthz/live`: The health check endpoint indicates whether the server is live and operational.
 - `/robots.txt`: The robots.txt file provides instructions to web crawlers and other user agents about the server's content.
