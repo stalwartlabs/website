@@ -4,7 +4,7 @@ sidebar_position: 4
 
 # Expressions
 
-The expression extension, available only from the [trusted interpreter](/docs/sieve/interpreter/trusted), introduces the ability to evaluate arithmetical and logical operations within Sieve scripts. This is particularly useful for performing calculations on variables or determining the flow based on specific logical conditions.
+The expression extension introduces the ability to evaluate arithmetical and logical operations within Sieve scripts. This is particularly useful for performing calculations on variables or determining the flow based on specific logical conditions.
 Expressions can be evaluated using the `eval` test or the `let` and `while` instructions. In order to use these features, the `vnd.stalwart.expressions` extension must be enabled in the script.
 
 The following operators are supported by the expression extension:
@@ -62,7 +62,7 @@ let "score" "score + ((awl_score / awl_count) - score) * awl_factor";
 
 ## Using the `while` instruction
 
-The `while` instruction allows you to execute a block of code repeatedly while a given condition is true. This instruction evaluates the expression within the quotes and executes the block of code if the result is true. The block of code is executed repeatedly until the expression evaluates to false. It is important to ensure that the expression eventually evaluates to false to avoid infinite loops. In order to use while loops, the `vnd.stalwart.while` extension must be enabled in the script.
+The `while` instruction, available only from the [trusted interpreter](/docs/sieve/interpreter/trusted), allows you to execute a block of code repeatedly while a given condition is true. This instruction evaluates the expression within the quotes and executes the block of code if the result is true. The block of code is executed repeatedly until the expression evaluates to false. It is important to ensure that the expression eventually evaluates to false to avoid infinite loops. In order to use while loops, the `vnd.stalwart.while` extension must be enabled in the script.
 
 ```sieve
 let "i" "10";

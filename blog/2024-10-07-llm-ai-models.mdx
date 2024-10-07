@@ -1,0 +1,82 @@
+---
+slug: unlock-llm-email
+title: Revolutionize Your Email Workflow with AI
+authors: [mdecimus]
+tags: [llm, ai, openai, spam, stalwart, mail, server]
+---
+
+We are happy to announce the release of [Stalwart Mail Server](https://github.com/stalwartlabs/mail-server) `v0.10.3`, which introduces support for [AI models](/docs/server/ai-models) —a powerful new feature now available to [Enterprise Edition](https://stalw.art/enterprise/) users as well as our GitHub and OpenCollective sponsors. With this feature, Stalwart Mail Server can be integrated with both self-hosted and cloud-based Large Language Models (LLMs), bringing advanced email processing capabilities like never before.
+
+This integration allows you to use AI models for a variety of tasks, including [enhanced spam filtering](/docs/spamfilter/llm), threat detection, and intelligent email classification. Whether you choose to host your own models with **LocalAI** or leverage cloud-based services like **OpenAI** or **Anthropic**, this release provides the flexibility to incorporate cutting-edge AI into your email infrastructure.
+
+## Unlocking the Power of AI
+
+With the introduction of AI model integration, Stalwart Mail Server can now analyze email content more deeply than traditional filters ever could. For instance, in the realm of spam filtering and threat detection, AI models are highly effective at identifying patterns and detecting malicious or unsolicited content. The system works by analyzing both the subject and body of incoming emails through the lens of an LLM, providing more accurate detection and filtering.
+
+In addition to bolstering security, AI integration enhances email classification. By configuring customized prompts, administrators can instruct AI models to categorize emails based on their content, leading to more precise filtering and organization. This is particularly useful for enterprises managing a high volume of messages that span various topics and departments, as AI-driven filters can quickly and intelligently sort messages into categories like marketing, personal correspondence, or work-related discussions.
+
+The flexibility of using either self-hosted or cloud-based AI models means that Stalwart can be tailored to your infrastructure and performance needs. Self-hosting AI models ensures full control over data and privacy, while cloud-based models offer ease of setup and access to highly optimized, continuously updated language models.
+
+## LLMs in Sieve Scripts
+
+One of the most exciting features of this release is the ability for users and administrators to access AI models directly from [Sieve scripts](/docs/sieve/llm). Stalwart extends the Sieve scripting language by introducing the `llm_prompt` function, which allows users to send prompts and email content to the AI model for advanced processing.
+
+For example, the following Sieve script demonstrates how an AI model can be used to classify emails into specific folders based on the content:
+
+```sieve
+require ["fileinto", "vnd.stalwart.expressions"];
+
+# Base prompt for email classification
+let "prompt" '''You are an AI assistant tasked with classifying personal emails into specific folders. 
+Your job is to analyze the email's subject and body, then determine the most appropriate folder for filing. 
+Use only the folder names provided in your response.
+If the category is not clear, respond with "Inbox".
+
+Classification Rules:
+- Family:
+   * File here if the message is signed by a Doe family member
+   * The recipient's name is John Doe
+- Cycling:
+   * File here if the message is related to cycling
+   * File here if the message mentions the term "MAMIL"
+- Work:
+   * File here if the message mentions "Dunder Mifflin Paper Company, Inc." or any part of this name
+   * File here if the message is related to paper supplies
+   * Only classify as Work if it seems to be part of an existing sales thread or directly related to the company's operations
+- Junk Mail:
+   * File here if the message is trying to sell something and is not work-related
+   * Remember that John lives a minimalistic lifestyle and is not interested in purchasing items
+- Inbox:
+   * Use this if the message doesn't clearly fit into any of the above categories
+
+Analyze the following email and respond with only one of these folder names: Family, Cycling, Work, Junk Mail, or Inbox.
+''';
+
+# Prepare the base Subject and Body
+let "subject" "thread_name(header.subject)";
+let "body" "body.to_text";
+
+# Send the prompt, subject, and body to the AI model
+let "llm_response" "llm_prompt('gpt-4', prompt + '\n\nSubject: ' + subject + '\n\n' + body, 0.6)";
+
+# Set the folder name
+if eval "contains(['Family', 'Cycling', 'Work', 'Junk Mail'], llm_response)" {
+    fileinto "llm_response";
+}
+```
+
+This example demonstrates how the `llm_prompt` function can be used to classify emails into different categories such as **Family**, **Cycling**, **Work**, or **Junk Mail** based on the content. The AI model analyzes the message’s subject and body according to the classification rules defined in the prompt and returns the most appropriate folder name. The email is then automatically filed into the correct folder, making it easier to organize incoming messages based on their content.
+
+## Self-Hosted or Cloud-Based 
+
+With this new feature, Stalwart Mail Server allows for seamless integration with both **self-hosted** and **cloud-based AI models**. If you prefer full control over your infrastructure, you can opt to deploy models on your own hardware using solutions like **LocalAI**. Self-hosting gives you complete ownership over your data and ensures compliance with privacy policies, but it may require significant computational resources, such as GPU acceleration, to maintain high performance.
+
+Alternatively, you can integrate with **cloud-based AI providers** like **OpenAI** or **Anthropic**, which offer access to powerful, pretrained models with minimal setup. Cloud-based models provide cutting-edge language processing capabilities, but you should be aware of potential costs, as these providers typically charge based on the number of tokens processed. Whether you choose self-hosted or cloud-based models, Stalwart gives you the flexibility to tailor the AI integration to your specific needs.
+
+## Available for Enterprise Users and Sponsors
+
+This exciting AI integration feature is exclusively available for [Enterprise Edition](https://stalw.art/enterprise/) users as well as GitHub and [OpenCollective monthly sponsors](https://opencollective.com/stalwart). If you want to harness the full potential of AI-powered email processing in Stalwart Mail Server, upgrading to the Enterprise Edition or becoming a sponsor is a great way to access this feature and other advanced capabilities.
+
+## Try It Out Today!
+
+The release of Stalwart Mail Server v0.10.3 marks a major milestone in our journey toward building intelligent, highly customizable email management solutions. By combining traditional email filtering with the power of LLMs, Stalwart gives you the tools to take your email infrastructure to the next level, enhancing security, organization, and automation in ways that were previously impossible. We’re excited to see how you’ll use this new feature to optimize your email workflows!

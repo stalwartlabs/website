@@ -1,8 +1,8 @@
 ---
-sidebar_position: 9
+sidebar_position: 10
 ---
 
-# Form Submissions
+# Form Handling
 
 Stalwart Mail Server offers a **Form Submissions** feature, which allows you to receive form submissions via HTTP and automatically turn them into email messages. This feature is particularly useful for web forms, such as contact forms or feedback forms, where submissions need to be forwarded to a designated group of local recipients on the mail server. The form data is sent via a **POST** request to the `/form` endpoint, and the server processes this data, converting it into an email message.
 

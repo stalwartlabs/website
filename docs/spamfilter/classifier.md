@@ -2,7 +2,7 @@
 sidebar_position: 3
 ---
 
-# Spam Classifier
+# Bayes Classifier
 
 Built into Stalwart Mail Server is a spam classifier designed to effectively identify and manage unsolicited emails. This classifier is hybrid in nature, leveraging the strengths of two popular statistical methods: **Naive Bayes** and **Inverse Chi-Square**. Depending on the specific characteristics and nuances of a given message, the classifier intelligently chooses between these two methods to ensure optimal accuracy in spam detection.
 
