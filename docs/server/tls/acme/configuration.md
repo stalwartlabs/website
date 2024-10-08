@@ -12,6 +12,8 @@ Stalwart Mail Server supports automatic TLS deployment and renewals using the AC
 - `cache`: Specifies the directory where ACME-related data will be stored. 
 - `renew-before`: Determines how early before expiration the certificate should be renewed. The default setting is `30d`, which means that renewal attempts will start 30 days before the certificate expires.
 - `domains`: A list of subject names for which the certificate should be issued. Wildcard domains are specified using the `*` character, for example, `*.example.org`.
+- `eab.kid`: External Account Binding (EAB) key identifier
+- `eab.hmac-key`: External Account Binding (EAB) HMAC key
 - `default`: If set to `true`, certificate obtained by this ACME provided will be used when the client does not provide an SNI server name.
 
 :::tip Note

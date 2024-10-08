@@ -73,6 +73,8 @@ The following are the event types that Stalwart Mail Server captures along with 
 |`acme.tls-alpn-error`|ACME TLS ALPN error|`WARN`|
 |`acme.tls-alpn-received`|ACME TLS ALPN received|`INFO`|
 |`acme.token-not-found`|ACME token not found|`WARN`|
+|`ai.api-error`|AI API error|`WARN`|
+|`ai.llm-response`|LLM response|`TRACE`|
 |`arc.broken-chain`|Broken ARC chain|`DEBUG`|
 |`arc.chain-too-long`|ARC chain too long|`DEBUG`|
 |`arc.has-header-tag`|ARC has header tag|`DEBUG`|
@@ -437,14 +439,15 @@ The following are the event types that Stalwart Mail Server captures along with 
 |`resource.error`|Resource error|`ERROR`|
 |`resource.not-found`|Resource not found|`DEBUG`|
 |`resource.webadmin-unpacked`|Webadmin resource unpacked|`INFO`|
+|`security.abuse-ban`|Banned due to abuse|`INFO`|
 |`security.authentication-ban`|Banned due to authentication errors|`INFO`|
-|`security.brute-force-ban`|Banned due to brute force attack|`INFO`|
 |`security.ip-blocked`|Blocked IP address|`INFO`|
 |`security.loiter-ban`|Banned due to loitering|`INFO`|
+|`security.scan-ban`|Banned due to scan|`INFO`|
 |`security.unauthorized`|Unauthorized access|`INFO`|
 |`server.licensing`|Server licensing event|`INFO`|
-|`server.shutdown`|Shutting down Stalwart Mail Server v0.10.2|`INFO`|
-|`server.startup`|Starting Stalwart Mail Server v0.10.2|`INFO`|
+|`server.shutdown`|Shutting down Stalwart Mail Server v0.10.3|`INFO`|
+|`server.startup`|Starting Stalwart Mail Server v0.10.3|`INFO`|
 |`server.startup-error`|Server startup error|`ERROR`|
 |`server.thread-error`|Server thread error|`ERROR`|
 |`sieve.action-accept`|Sieve action: Accept|`DEBUG`|
