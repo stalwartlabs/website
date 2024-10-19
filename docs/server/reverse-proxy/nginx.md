@@ -26,28 +26,28 @@ events {
 stream {
     # Proxy SMTP
     server {
-        listen 25 proxy_protocol;
+        listen 25;
         proxy_pass 127.0.0.1:10025;
         proxy_protocol on;
     }
 
     # Proxy IMAPS
     server {
-        listen 993 proxy_protocol;
+        listen 993;
         proxy_pass 127.0.0.1:10993;
         proxy_protocol on;
     }
 
     # Proxy SMTPS
     server {
-        listen 465 proxy_protocol;
+        listen 465;
         proxy_pass 127.0.0.1:10465;
         proxy_protocol on;
     }
 
     # Proxy HTTPS
     server {
-        listen 443 proxy_protocol;
+        listen 443;
         proxy_pass 127.0.0.1:10443;
         proxy_protocol on;
     }
