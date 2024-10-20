@@ -10,12 +10,21 @@ When operating Stalwart Mail Server behind a proxy such as HAProxy, Caddy, NGinx
 
 ## Configuration
 
-Stalwart Mail Server offers support for both versions 1 and 2 of the HAProxy protocol, including the TLV (Type-Length-Value) extensions introduced in version 2. Enabling the Proxy Protocol involves specifying the trusted IP addresses or network masks from which the proxy connections originate. This is done in the `server.proxy.trusted-networks` section of the configuration file, for example:
+Stalwart Mail Server offers support for both versions 1 and 2 of the HAProxy protocol, including the TLV (Type-Length-Value) extensions introduced in version 2. Enabling the Proxy Protocol involves specifying both the trusted IP addresses and network masks from which the proxy connections originate. This is done in the `server.proxy.trusted-networks` section of the configuration file, for example:
 
 ```toml
 [server.proxy]
 trusted-networks = ["127.0.0.0/8", "::1", "10.0.0.0/8"]
 ```
+
+Or, if your reverse proxy resides on a different machine:
+
+```toml
+[server.proxy]
+trusted-networks = ["127.0.0.0/8", "::1", "10.0.0.0/8", "192.168.0.151/24", "255.255.255.0"]
+```
+
+Note that both the ip address of the reverse proxy as well as the network mask need to be present.
 
 It is also possible to define trusted networks on a per-listener basis by setting the `server.listener.<id>.proxy.trusted-networks` parameter in the listener's configuration, for example:
 
