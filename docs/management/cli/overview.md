@@ -42,10 +42,6 @@ Stalwart Mail Server CLI
 Usage: stalwart-cli [OPTIONS] --url <URL> <COMMAND>
 
 Commands:
-  account   Manage user accounts
-  domain    Manage domains
-  list      Manage mailing lists
-  group     Manage groups
   import    Import JMAP accounts and Maildir/mbox mailboxes
   export    Export JMAP accounts
   database  Manage JMAP database

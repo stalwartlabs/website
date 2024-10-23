@@ -17,4 +17,5 @@ The following configuration settings are available for the internal directory, w
 
 ## Account management
 
-Please refer to the [Directory management](/docs/management/cli/directory/overview) section for more information on how to manage user and group accounts in Stalwart Mail Server.
+Account management can be performed using the [web-admin](/docs/management/webadmin/overview) interface or the [REST API](/docs/api/management/overview).
+
