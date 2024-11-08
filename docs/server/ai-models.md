@@ -12,7 +12,7 @@ By integrating with these AI models, Stalwart enhances email security, streamlin
 
 :::tip Enterprise feature
 
-This feature is available exclusively in the Enterprise Edition of Stalwart Mail Server and not included in the Community Edition.
+This feature is available exclusively in the [Enterprise Edition](/docs/server/enterprise) of Stalwart Mail Server and not included in the Community Edition.
 
 :::
 
