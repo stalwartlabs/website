@@ -387,6 +387,12 @@ const features = [
         "enterprise": "yes"
       },
       {
+        "name": "Azure Blob Storage",
+        "standard": "yes",
+        "sbe": "yes",
+        "enterprise": "yes"
+      },
+      {
         "name": "Redis",
         "standard": "yes",
         "sbe": "yes",
@@ -999,7 +1005,7 @@ function getIcon(status) {
                                                                                         on a per-mailbox basis, allowing
                                                                                         you to purchase only what you
                                                                                         need, and charges are applied
-                                                                                        monthly, providing a
+                                                                                        yearly or monthly, providing a
                                                                                         straightforward and predictable
                                                                                         cost structure.</p>
 
@@ -1020,15 +1026,19 @@ function getIcon(status) {
                                                                                         unlocking advanced functionality
                                                                                         and premium support.</p>
 
-                                                                                <p>Our goal is to provide a flexible
-                                                                                        licensing model that grows with
-                                                                                        your organization and offers the
-                                                                                        best value for your investment.
-                                                                                        If you have any questions about
-                                                                                        our licensing options or need
-                                                                                        help selecting the right plan
-                                                                                        for your needs, our support team
-                                                                                        is here to assist you.</p>
+                                                                                <p>
+                                                                                  Enterprise licenses for Stalwart Mail Server are issued to a specific <strong>domain name</strong> and can be used in an unlimited number of servers. This licensing model provides flexibility for enterprises, as a single license can be utilized across multiple servers, provided they share the same registered domain name. 
+                                                                                </p><p>
+                                                                                  For example, if an Enterprise license is issued for <i>*.example.org</i>, it can be used seamlessly across multiple servers configured under this domain, such as <i>mx1.example.org</i>, <i>mx2.example.org</i>, up to any number of <i>X.example.org</i> servers. This setup allows for robust, distributed deployment without requiring additional licenses for each server, as long as they fall under the specified domain.
+                                                                                </p><p>
+                                                                                  
+                                                                                  Although licenses are issued to a specific domain, it is still possible to host an <strong>unlimited number of client domains</strong> within the same environment. This means that even if your Enterprise license is registered for <i>*.example.org</i>, you can still provide email services for any number of other domains on the same server, such as <i>foobar.org</i>, <i>test.org</i>, or any other client domain.
+                                                                                </p><p>
+                                                                                  
+                                                                                  The domain-specific restriction applies solely to the licensed servers’ domain names (e.g., the server hostnames). It does not limit the server's ability to manage and support a variety of client or user domains. This approach provides organizations with the freedom to scale their hosting capabilities, supporting multiple domains while maintaining compliance with the Enterprise license's terms for server deployment.
+
+                                                                                </p>
+        
                                                                         </div>
                                                                         <!-- /.card-body -->
                                                                 </div>
@@ -1052,37 +1062,34 @@ function getIcon(status) {
                                                                         data-bs-target="#accordion-3">
                                                                         <div
                                                                                 class="card-body flex-[1_1_auto]  p-[0_1.25rem_.25rem_2.35rem]">
-                                                                                <p>To upgrade to the Enterprise version
-                                                                                        of Stalwart Mail Server, please
-                                                                                        <a href="/contact">contact
-                                                                                                us</a> using the form
-                                                                                        provided on our website or via
-                                                                                        email. Our team will respond
-                                                                                        promptly with a customized quote
-                                                                                        and payment details based on
-                                                                                        your specific needs and the
-                                                                                        number of mailboxes you wish to
-                                                                                        license.
+                                                                                <p>
+                                                                                  Upgrading to the Enterprise version of Stalwart Mail Server is a simple and fully automated process. We offer instant license issuance for clients who pay by credit card, allowing you to begin using Enterprise features immediately after purchase. To obtain an Enterprise license, visit the <strong>Stalwart Labs Licensing Portal</strong> at <a href="https://license.stalw.art/buy">https://license.stalw.art/buy</a>. </p><p>Once the purchase is complete, your license key will be available instantly, enabling you to access the full suite of Enterprise capabilities on Stalwart Mail Server without delay.
                                                                                 </p>
-
-                                                                                <p>We are actively working on making the
-                                                                                        upgrade process more automated.
-                                                                                        In the future, you will be able
-                                                                                        to manage your Enterprise
-                                                                                        subscription directly from
-                                                                                        Stalwart's web-based management
-                                                                                        interface, providing a seamless
-                                                                                        and convenient upgrade
-                                                                                        experience.</p>
-
-                                                                                <p>For now, our support team is here to
-                                                                                        assist you through the upgrade
-                                                                                        process and ensure you have all
-                                                                                        the information you need to make
-                                                                                        the transition to Enterprise. If
-                                                                                        you have any questions or need
-                                                                                        further assistance, please don't
-                                                                                        hesitate to reach out to us.</p>
+                                                                        </div>
+                                                                        <!-- /.card-body -->
+                                                                </div>
+                                                                <!-- /.collapse -->
+                                                        </div>
+                                                        <!-- /.card -->
+                                                        <div
+                                                                class="card accordion-item !shadow-[0_0.25rem_1.75rem_rgba(30,34,40,0.07)] mb-5">
+                                                                <div class="card-header mb-0 !p-[.9rem_1.3rem_.85rem] !border-0 bg-inherit"
+                                                                        id="accordion-heading-3-4">
+                                                                        <button class="!text-[#343f52] !text-[0.9rem] hover:!text-[#3f78e0] before:!text-[#3f78e0] collapsed"
+                                                                                data-bs-toggle="collapse"
+                                                                                data-bs-target="#accordion-collapse-3-4"
+                                                                                aria-expanded="false"
+                                                                                aria-controls="accordion-collapse-3-4">Can I try Enterprise before I buy?</button>
+                                                                </div>
+                                                                <!-- /.card-header -->
+                                                                <div id="accordion-collapse-3-4" class="collapse"
+                                                                        aria-labelledby="accordion-heading-3-4"
+                                                                        data-bs-target="#accordion-3">
+                                                                        <div
+                                                                                class="card-body flex-[1_1_auto]  p-[0_1.25rem_.25rem_2.35rem]">
+                                                                                <p>
+                                                                                  Yes, we offer a 30-day trial license for clients interested in testing the Enterprise features before committing to a subscription. To obtain a trial license, please visit the <strong>Stalwart Labs Licensing Portal</strong> at <a href="https://license.stalw.art/trial">https://license.stalw.art/trial</a>. </p><p>The trial license provides full access to all Enterprise features, giving you ample time to evaluate Stalwart Mail Server’s premium capabilities in your environment.
+                                                                                </p>
                                                                         </div>
                                                                         <!-- /.card-body -->
                                                                 </div>
