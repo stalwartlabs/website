@@ -43,7 +43,7 @@ Example:
 [signature."rsa"]
 private-key = "%{file:/opt/stalwart-smtp/etc/private/dkim-rsa.key}%"
 domain = "example.org"
-selector = "rsa_default"
+selector = "rsa-default"
 headers = ["From", "To", "Date", "Subject", "Message-ID"]
 algorithm = "rsa-sha256"
 canonicalization = "relaxed/relaxed"
@@ -54,7 +54,7 @@ report = true
 [signature."ed25519"]
 private-key = "%{file:/opt/stalwart-smtp/etc/private/dkim-ed.key}%"
 domain = "example.org"
-selector = "ed_default"
+selector = "ed-default"
 headers = ["From", "To", "Date", "Subject", "Message-ID"]
 algorithm = "ed25519-sha256"
 canonicalization = "simple/simple"
