@@ -1,0 +1,34 @@
+---
+slug: troubleshooting
+title: Diagnose and Resolve Email Issues Faster
+authors: [mdecimus]
+tags: [troubleshoot, delivery, dmarc, stalwart, mail, server]
+---
+
+Today we are announcing the release of [Stalwart Mail Server](https://github.com/stalwartlabs/mail-server) version `0.10.7`, an update that brings two of the most requested features from our users: robust troubleshooting tools and support for external recipients on mailing lists. This update also introduces the ability to store emails and blobs on Azure Blob Storage, alongside several minor fixes and improvements. As always, this release reflects our commitment to implementing the features most requested by our community.
+
+## Advanced Troubleshooting
+
+One of the key highlights of version 0.10.7 is the addition of comprehensive troubleshooting tools designed to help administrators diagnose and resolve email delivery and DMARC-related issues more efficiently. 
+
+The **email delivery troubleshooting tool** provides a step-by-step simulation of the email delivery process. Accessible through the Webadmin interface under `Manage -> Troubleshoot -> Email Delivery`, this tool allows administrators to test delivery paths for any email address or domain. It performs critical tasks like resolving MX records, retrieving IP addresses, validating MTA-STS and DANE policies, upgrading the connection to TLS, and verifying recipient availability. Importantly, this tool does not send actual emails but offers a detailed analysis of the delivery pipeline, displaying each step in real-time and flagging any issues that arise. This ensures that administrators can identify and address problems before they impact actual email traffic.
+
+The **DMARC troubleshooting tool** is another powerful addition. Located under `Manage -> Troubleshoot -> DMARC`, it enables administrators to verify the DMARC setup for both local and remote domains. By simulating the server's authentication process, this tool checks SPF, DKIM, ARC, and DMARC policies while also verifying that the reverse PTR matches the SPF EHLO hostname. Administrators can input details such as the sender address, server IP, EHLO hostname, and optionally, the message body for detailed DKIM and ARC testing. This comprehensive tool mirrors the checks Stalwart performs when receiving emails, making it easier to identify and resolve policy compliance issues.
+
+## External Recipients
+
+Another significant enhancement in version 0.10.7 is the ability to add **external recipients to mailing lists**. In previous versions, mailing lists were restricted to local recipients, limiting their flexibility. With this update, administrators can now include recipients from external domains in mailing lists, enabling broader collaboration and more versatile email distribution. This change reflects our commitment to making Stalwart Mail Server more adaptable to the diverse needs of our users.
+
+## Azure Blob Storage
+
+In addition to the major feature updates, Stalwart Mail Server 0.10.7 introduces support for storing emails and blobs on **Azure Blob Storage**. This new capability provides users with greater flexibility in managing their data storage, especially for organizations already leveraging Azure's robust cloud infrastructure. The release also includes a range of minor fixes to improve overall stability and performance.
+
+## Looking Ahead
+
+As we celebrate the release of version 0.10.7, we are already working on the next major feature: **faster and improved spam filtering**. This enhancement, another highly requested feature, will bring more effective tools to combat unwanted emails while ensuring legitimate messages are processed efficiently. We are eager to share more details in the coming weeks.
+
+## Shape the Future
+
+Stalwart Mail Server continues to evolve based on feedback from our community. New features and improvements are implemented in the order of the votes they receive, ensuring that development aligns with the needs of our users. We invite you to visit our GitHub page to review the current list of enhancement requests and vote for the features you would like to see implemented next. You can find the list at [GitHub Enhancement Requests](https://github.com/stalwartlabs/mail-server/issues?q=is%3Aissue+is%3Aopen+sort%3Areactions-%2B1-desc+label%3Aenhancement).
+
+Thank you for your ongoing support and feedback, which are instrumental in shaping Stalwart Mail Server into the reliable, user-focused solution it is today. We look forward to hearing your thoughts on version 0.10.7 and what you'd like to see in future releases!

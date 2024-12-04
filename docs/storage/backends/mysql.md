@@ -58,10 +58,7 @@ For example:
 name = "SELECT name, type, secret, description, quota FROM accounts WHERE name = ? AND active = true"
 members = "SELECT member_of FROM group_members WHERE name = ?"
 recipients = "SELECT name FROM emails WHERE address = ? ORDER BY name ASC"
-emails = "SELECT address FROM emails WHERE name = ? AND type != 'list' ORDER BY type DESC, address ASC"
-verify = "SELECT address FROM emails WHERE address LIKE CONCAT('%', ?, '%') AND type = 'primary' ORDER BY address LIMIT 5"
-expand = "SELECT p.address FROM emails AS p JOIN emails AS l ON p.name = l.name WHERE p.type = 'primary' AND l.address = ? AND l.type = 'list' ORDER BY p.address LIMIT 50"
-domains = "SELECT 1 FROM emails WHERE address LIKE CONCAT('%@', ?) LIMIT 1"
+emails = "SELECT address FROM emails WHERE name = ? ORDER BY type DESC, address ASC"
 ```
 
 ## Initialization statements

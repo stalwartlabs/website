@@ -57,10 +57,7 @@ For example:
 name = "SELECT name, type, secret, description, quota FROM accounts WHERE name = $1 AND active = true"
 members = "SELECT member_of FROM group_members WHERE name = $1"
 recipients = "SELECT name FROM emails WHERE address = $1 ORDER BY name ASC"
-emails = "SELECT address FROM emails WHERE name = $1 AND type != 'list' ORDER BY type DESC, address ASC"
-verify = "SELECT address FROM emails WHERE address LIKE '%' || $1 || '%' AND type = 'primary' ORDER BY address LIMIT 5"
-expand = "SELECT p.address FROM emails AS p JOIN emails AS l ON p.name = l.name WHERE p.type = 'primary' AND l.address = $1 AND l.type = 'list' ORDER BY p.address LIMIT 50"
-domains = "SELECT 1 FROM emails WHERE address LIKE '%@' || $1 LIMIT 1"
+emails = "SELECT address FROM emails WHERE name = $1 ORDER BY type DESC, address ASC"
 ```
 
 ## Initialization statements

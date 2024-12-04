@@ -19,13 +19,11 @@ Any of the supported SQL data stores can be used as an SQL directory. Configurat
 
 In order to retrieve information about accounts, the following SQL lookup queries need to be defined in the underlying [data store](/docs/storage/data):
 
-- `name`: This query is used to retrieve the `type`, `secret`, `description`, and `quota` of an account by its account `name`.
+- `name`: Retrieves the `type`, `description`, and `quota` fields of an account by its account `name`. Optionally this query can return the account's `email` and `secret` fields as well.
 - `members`: Fetches the groups that a particular account is a member of. Groups names have to be returned as text.
-- `recipients`: Retrieves the account name(s) associated with a specific primary addresses, alias or mailing lists address.
-- `emails`: This query fetches email address(es) associated with a specific account. This query has to return an ordered list containing first the account's primary email address, followed by email aliases and excluding any mailing lists addresses associated with the account.
-- `verify`: Verifies and retrieves the email addresses that contain a certain string. This query is used by the SMTP `VRFY` command.
-- `expand`: Fetches the email addresses that are associated with a mailing list address. This query is used by the SMTP `EXPN` command.
-- `domains`: Checks if an email domain exists. To be successful, this query has to return at least one row. This query is used by the SMTP server to validate local domains during the `RCPT TO` command.
+- `recipients`: Retrieves the account name(s) associated with a specific primary addresses or alias address.
+- `emails`: Fetches email address(es) associated with a specific account. This query has to return an ordered list containing first the account's primary email address, followed by email aliases and excluding any mailing lists addresses associated with the account. This query is optional, a single email address can be returned by the `name` query.
+- `secrets`: Retrieves the account passwords associated with a specific account. This query is optional, a single password can be returned by the `name` query.
 
 Please refer to the relevant section for each data store for more information on how to define these queries.
 
@@ -37,6 +35,7 @@ The `directory.<name>.columns` section maps the column names in the SQL database
 - `secret`: Maps to the 'secret' column in the SQL database. Passwords can be stored [hashed](//docs/auth/authentication/password) or in plain text (not recommended).
 - `description`: Maps to the 'description' column in the SQL database.
 - `quota`: Maps to the 'quota' column in the SQL database. Expects an integer value in bytes.
+- `email`: Maps to the 'email' column in the SQL database. 
 
 For example:
 
@@ -48,6 +47,7 @@ secret = "secret"
 email = "address"
 quota = "quota"
 class = "type"
+email = "email"
 ```
 
 ## Sample directory schema
@@ -103,16 +103,6 @@ Make sure to replace:
  - `<ACCOUNT_FULL_NAME>` with the full name of the account, for example `John Doe`.
  - `<PRIMARY_EMAIL_ADDRESS>` with the primary email address for the account, for example `john@example.org`.
 
-### Creating administrator accounts
-
-Administrator accounts are created in a similar way as regular user accounts, the only difference is that they are added to the `superusers` group:
-
-```sql
-INSERT INTO accounts (name, secret, description, type) VALUES ('admin', '<HASHED_SECRET>', 'Postmaster', 'individual') 
-INSERT INTO emails (name, address, type) VALUES ('admin', 'postmaster@<DOMAIN>', 'primary')
-INSERT INTO group_members (name, member_of) VALUES ('admin', 'superusers')
-```
-
 ### Adding an email alias
 
 To add an email alias to an account, run the following SQL statements:
@@ -134,23 +124,6 @@ Alternatively, you could designate the `postmaster` account as the [catch-all ad
 
 ```sql
 INSERT INTO emails (name, address, type) VALUES ('postmaster', '@example.org', 'alias')
-```
-
-### Adding members to a mailing list
-
-To add a user to a mailing list, run the following SQL statements:
-
-```sql
-INSERT INTO emails (name, address, type) VALUES ('<ACCOUNT_NAME>', '<MAILING_LIST_ADDRESS>', 'list')
-```
-
-Make sure to replace `<ACCOUNT_NAME>` with the name of the account and `<MAILING_LIST_ADDRESS>` with the mailing list address you want to add.
-
-For example, you could add the accounts `john` and `jane` to the mailing list `sales@example.org` as follows:
-
-```sql
-INSERT INTO emails (name, address, type) VALUES ('john', 'sales@example.org', 'list')
-INSERT INTO emails (name, address, type) VALUES ('jane', 'sales@example.org', 'list')
 ```
 
 ### Creating group accounts

@@ -92,13 +92,15 @@ If you have selected to use the internal directory, you can now add your users i
 
 If everything went well, your users should now be able to connect to the server and send and receive emails. If you are unable to connect to the server, check the log files from the web-admin or under `<INSTALL_DIR>/logs` for any errors.
 
-If you have questions please check the [FAQ](/docs/faq) section or start a discussion in the [community forum](https://github.com/stalwartlabs/mail-server/discussions).
+If you encounter any issues, please refer to the [troubleshooting](/docs/management/troubleshoot) section for help. If you have questions please check the [FAQ](/docs/faq) section or start a discussion in the [community forum](https://github.com/stalwartlabs/mail-server/discussions).
 
 :::tip 
 
 Before making your server publicly accessible, it is advisable to disable any [unused services](/docs/get-started#choosing-network-ports) to enhance security.
 
 :::
+
+### Getting Help
 
 ### Setup demonstration
 

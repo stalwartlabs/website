@@ -58,6 +58,7 @@ Bind authentication is a method of verifying user credentials by binding to the 
 
 - `enable`: A boolean setting that enables (`true`) or disables (`false`) bind authentication. When set to `false`, bind authentication is not used for verifying credentials with the LDAP server.
 - `dn`: The distinguished name (DN) template used for binding to the LDAP server. The `?` in the DN template is a placeholder that will be replaced with the username provided during the login process.
+- `search`: Use the bind authentication connection to search for the user's DN. When set to `false`, a new connection to the LDAP server is established using the bind credentials (`directory.<name>.bind.dn`) to search for the user's DN. When set to `true`, the bind authentication connection is used to search for the user's DN.
 
 For example,
 
@@ -65,6 +66,7 @@ For example,
 [directory."ldap".bind.auth]
 enable = false
 dn = "cn=?,ou=svcaccts,dc=example,dc=org"
+search = true
 ```
 
 :::tip Note
@@ -88,20 +90,14 @@ In summary, when integrating LDAP servers with Stalwart Mail Server, the unavail
 The `directory.<name>.filter` section contains the filters used to interact with the LDAP server. The following LDAP filters need to be defined in order to retrieve information about accounts:
 
 - `name`: This filter is used to search for objects based on the account name.
-- `email`: Searches for objects associated with a specific primary addresses, alias or mailing lists address.
-- `verify`: A wildcard search filter to retrieve the objects that contain a certain string in their email addresses. This filter is used by the SMTP `VRFY` command.
-- `expand`: This filter is used to search for objects that belong to a specific mailing list. This filter is used by the SMTP `EXPN` command.
-- `domains`: Searches for objects that have an email address in a specific domain name. This filter is used by the SMTP server to validate local domains during the `RCPT TO` command.
+- `email`: Searches for objects associated with a specific primary addresses or alias.
 
 For example:
 
 ```toml
 [directory."ldap".filter]
 name = "(&(|(objectClass=posixAccount)(objectClass=posixGroup))(uid=?))"
-email = "(&(|(objectClass=posixAccount)(objectClass=posixGroup))(|(mail=?)(mailAlias=?)(mailList=?)))"
-verify = "(&(|(objectClass=posixAccount)(objectClass=posixGroup))(|(mail=*?*)(mailAlias=*?*)))"
-expand = "(&(|(objectClass=posixAccount)(objectClass=posixGroup))(mailList=?))"
-domains = "(&(|(objectClass=posixAccount)(objectClass=posixGroup))(|(mail=*@?)(mailAlias=*@?)))"
+email = "(&(|(objectClass=posixAccount)(objectClass=posixGroup))(|(mail=?)(mailAlias=?)))"
 ```
 
 The `?` character in the queries denotes a parameter that will be filled in at runtime.
@@ -111,7 +107,7 @@ The `?` character in the queries denotes a parameter that will be filled in at r
 The `directory.<name>.attributes` section is used to map the LDAP attributes to Stalwart's internal attributes. The following attributes need to be defined:
 
 - `name`: Maps to the LDAP attribute for the user's account name.
-- `class`: Maps to the LDAP attribute for the user's account type, if missing defaults to `individual`. Expected values are `individual` (or `person`, `posixAccount`, `inetOrgPerson`) for user accounts, `admin` (or `administrator`, `root`, `superuser`) for administrator accounts, and `group` (or `posixGroup`) for group accounts.
+- `class`: Maps to the LDAP attribute for the user's account type, if missing defaults to `individual`. Expected values are `individual` (or `person`, `posixAccount`, `inetOrgPerson`) for user accounts and `group` (or `posixGroup`) for group accounts.
 - `description`: Maps to the LDAP attributes used to store the user's description.
 - `secret`: Maps to the LDAP attribute for the user's password. Passwords can be stored [hashed](/docs/auth/authentication/password) or in plain text (not recommended).
 - `groups`: Maps to the LDAP attributes for the groups that a user belongs to.

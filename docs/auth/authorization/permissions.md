@@ -215,3 +215,4 @@ Stalwart Mail Server provides a wide range of permissions that can be assigned t
 |`oauth-client-registration`|Register OAuth clients|:white_check_mark:|||
 |`oauth-client-override`|Override OAuth client settings|:white_check_mark:|||
 |`ai-model-interact`|Interact with AI models|:white_check_mark:|||
+|`troubleshoot`|Perform Troubleshooting|:white_check_mark:|||

@@ -598,6 +598,7 @@ The following are the event types that Stalwart Mail Server captures along with 
 |`telemetry.webhook-error`|Webhook collector error|`WARN`|
 |`tls-rpt.record-fetch`|Fetched TLS-RPT record|`INFO`|
 |`tls-rpt.record-fetch-error`|Error fetching TLS-RPT record|`INFO`|
+|`tls-rpt.record-not-found`|TLS-RPT record not found|`INFO`|
 |`tls.certificate-not-found`|TLS certificate not found|`DEBUG`|
 |`tls.handshake`|TLS handshake|`INFO`|
 |`tls.handshake-error`|TLS handshake error|`DEBUG`|

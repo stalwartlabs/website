@@ -17,18 +17,19 @@ When installing Stalwart Mail server you will be asked to specify a backend for 
 
 The following table summarizes the supported backends available for each store type:
 
-|                 | Data store         | Blob store         | Full-text store    | Lookup store       |
-|-----------------|--------------------|--------------------|--------------------|--------------------|
-| RocksDB         | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| FoundationDB    | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| PostgreSQL      | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| MySQL / MariaDB | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| SQLite          | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| S3/MinIO        |                    | :white_check_mark: |                    |                    |
-| Filesystem      |                    | :white_check_mark: |                    |                    |
-| ElasticSearch   |                    |                    | :white_check_mark: |                    |
-| Redis           |                    |                    |                    | :white_check_mark: |
-| In-memory       |                    |                    |                    | :white_check_mark: |
+|                    | Data store         | Blob store         | Full-text store    | Lookup store       |
+|--------------------|--------------------|--------------------|--------------------|--------------------|
+| RocksDB            | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| FoundationDB       | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| PostgreSQL         | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| MySQL / MariaDB    | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| SQLite             | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| S3/MinIO           |                    | :white_check_mark: |                    |                    |
+| Azure Blob Storage |                    | :white_check_mark: |                    |                    |
+| Filesystem         |                    | :white_check_mark: |                    |                    |
+| ElasticSearch      |                    |                    | :white_check_mark: |                    |
+| Redis              |                    |                    |                    | :white_check_mark: |
+| In-memory          |                    |                    |                    | :white_check_mark: |
 
 :::tip Note
 
