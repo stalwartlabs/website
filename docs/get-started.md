@@ -94,8 +94,8 @@ TXT	202404r._domainkey.example.org.	v=DKIM1; k=rsa; h=sha256; p=MIIBIjANBgkqhkiG
 These records are used by the [Sender Policy Framework (SPF)](/docs/smtp/authentication/spf) to determine which mail servers are authorized to send emails on behalf of your domain:
 
 ```
-TXT	mail.example.org.	v=spf1 a ra=postmaster -all
-TXT	example.org.	v=spf1 mx ra=postmaster -all
+TXT	mail.example.org.	v=spf1 a -all
+TXT	example.org.	v=spf1 mx -all
 ```
 
 This record specifies the [Domain-based Message Authentication, Reporting, and Conformance (DMARC)](/docs/smtp/authentication/dmarc) security policy for email delivery and reporting:
