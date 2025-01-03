@@ -43,7 +43,7 @@ With this information, you can log in to the web interface at `http://yourserver
 
 ### Choose where to store your data
 
-Once you have logged in, go to the `Settings` > `Storage` section and configure your [data](/docs/storage/data), [blob](/docs/storage/blob), [full-text](/docs/storage/fts) and [lookup](/docs/storage/lookup) stores. Read the [get started](/docs/get-started#choosing-storage-backends) section for more details on the available options. 
+Once you have logged in, go to the `Settings` > `Storage` section and configure your [data](/docs/storage/data), [blob](/docs/storage/blob), [full-text](/docs/storage/fts) and [in-memory](/docs/storage/in-memory) stores. Read the [get started](/docs/get-started#choosing-storage-backends) section for more details on the available options. 
 
 If you would like an external authentication directory such as [LDAP](/docs/auth/backend/ldap.md) or [SQL](/docs/auth/backend/sql), go to the `Settings` > `Authentication` section and configure your [authentication backend](/docs/get-started#supported-authentication-backends).
 

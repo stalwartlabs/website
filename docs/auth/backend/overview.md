@@ -67,11 +67,11 @@ wait = "30s"
 recycle = "30s"
 ```
 
-### Lookup cache
+### Cache
 
-In order to reduce the number of requests made to a directory, it is possible to enable caching for certain directory lookups. Stalwart Mail Server uses a Least Recently Used (LRU) caching strategy and maintains separate positive and negative caches for each query. Successful lookups are stored in the positive cache while failed or non-existent lookups are stored in the negative cache. The directory cache is configured through the following parameters located under the `directory.<name>.cache` key in the configuration file:
+In order to reduce the number of requests made to a directory, it is possible to enable caching for certain directory lookups. Stalwart Mail Server uses S3-FIFO caching and maintains separate positive and negative caches for each query. Successful lookups are stored in the positive cache while failed or non-existent lookups are stored in the negative cache. The directory cache is configured through the following parameters located under the `directory.<name>.cache` key in the configuration file:
 
-- `entries`: Specifies the maximum number of entries that the cache can hold. For example, a value of `500` means that the cache will store the results of the most recent `500` directory lookups.
+- `size`: Specifies the size in bytes of the cache. The cache will automatically evict the least recently used entries when the cache size exceeds this value.
 - `ttl.positive`: Defines how long entries in the positive cache will be kept before they are considered stale and are refreshed. For example, a value of `1h` means that if a directory lookup returns a positive result (i.e., the requested user or account information is found), that result will be kept in the cache for 1 hour. 
 - `ttl.negative`: Defines how long entries in the negative cache will be kept before they are considered stale and are refreshed. For example, a value of `10m` means that if a directory lookup returns a negative result (i.e., the requested user or account information is not found), that result will be kept in the cache for 10 minutes. These settings help balance cache efficiency with data freshness.
 
@@ -79,7 +79,7 @@ For example:
 
 ```toml
 [directory."sql".cache]
-entries = 500
+size = 1048576
 ttl = {positive = '1h', negative = '10m'}
 ```
 

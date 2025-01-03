@@ -45,7 +45,7 @@ frequency = "15 * *"
 
 ## Bayesian filter cache
 
-The Bayesian filter cache is used to reduce the number of requests to the [lookup store](/docs/storage/lookup) when checking if a message is spam. The size of the Bayesian filter cache is controlled by the `cache.bayes.capacity` parameter in the configuration file while the TTL of positive and negative cache entries is controlled by the `cache.byes.ttl.positive` and `cache.bayes.negative` parameters. For example:
+The Bayesian filter cache is used to reduce the number of requests to the [in-memory store](/docs/storage/in-memory) when checking if a message is spam. The size of the Bayesian filter cache is controlled by the `cache.bayes.capacity` parameter in the configuration file while the TTL of positive and negative cache entries is controlled by the `cache.byes.ttl.positive` and `cache.bayes.negative` parameters. For example:
 
 ```toml
 [cache.bayes]

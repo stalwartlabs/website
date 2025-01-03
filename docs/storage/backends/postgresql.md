@@ -26,7 +26,21 @@ The following configuration settings are available for TLS, which are specified 
 - `enable`: A boolean setting that enables (`true`) or disables (`false`) TLS. 
 - `allow-invalid-certs`: Determines whether to allow connections with invalid TLS certificates. A boolean setting and the default value is set to `false` for stricter security.
 
-### Example
+### Directory queries
+
+When PostgreSQL is used as a [directory](/docs/auth/backend/overview), it is necessary to define the SQL queries that will be used to retrieve authentication data from the database. These queries are specified under the `store.<name>.query` section of the configuration file. For more details on the queries, please refer to the [SQL directory queries](/docs/auth/backend/sql#directory-queries) section.
+
+Example:
+
+```toml
+[store."postgresql".query]
+name = "SELECT name, type, secret, description, quota FROM accounts WHERE name = $1 AND active = true"
+members = "SELECT member_of FROM group_members WHERE name = $1"
+recipients = "SELECT name FROM emails WHERE address = $1 ORDER BY name ASC"
+emails = "SELECT address FROM emails WHERE name = $1 ORDER BY type DESC, address ASC"
+```
+
+## Example
 
 ```toml
 [store."postgresql"]
@@ -44,33 +58,4 @@ allow-invalid-certs = false
 
 [store."postgresql".pool]
 max-connections = 10
-```
-
-## Lookup queries
-
-When PostgreSQL is used as a [directory](/docs/auth/backend/overview) or [lookup store](/docs/storage/lookup), SQL queries can be mapped to lookup ids. This is done by specifying the query under `store.<name>.query.<lookup_name>` where `<name>` is the PostgreSQL store ID and `<lookup_name>` it the lookup ID to map the query to. 
-
-For example:
-
-```toml
-[store."postgresql".query]
-name = "SELECT name, type, secret, description, quota FROM accounts WHERE name = $1 AND active = true"
-members = "SELECT member_of FROM group_members WHERE name = $1"
-recipients = "SELECT name FROM emails WHERE address = $1 ORDER BY name ASC"
-emails = "SELECT address FROM emails WHERE name = $1 ORDER BY type DESC, address ASC"
-```
-
-## Initialization statements
-
-On startup, Stalwart Mail Server can execute SQL statements before the first query is executed. This is useful for initializing the database with tables or data. These initialization statements are specified under the `store.<name>.init.execute` section of the configuration file.
-
-For example:
-
-```toml
-[store."postgresql".init]
-execute = [
-    "CREATE TABLE IF NOT EXISTS accounts (name TEXT PRIMARY KEY, secret TEXT, description TEXT, type TEXT NOT NULL, quota INTEGER DEFAULT 0, active BOOLEAN DEFAULT TRUE)",
-    "CREATE TABLE IF NOT EXISTS group_members (name TEXT NOT NULL, member_of TEXT NOT NULL, PRIMARY KEY (name, member_of))",
-    "CREATE TABLE IF NOT EXISTS emails (name TEXT NOT NULL, address TEXT NOT NULL, type TEXT, PRIMARY KEY (name, address))"
-]
 ```

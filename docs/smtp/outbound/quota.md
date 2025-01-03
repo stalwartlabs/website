@@ -4,11 +4,11 @@ sidebar_position: 6
 
 # Quotas
 
-Quotas allows to set limits on the message queue to control its size and total number of messages. Stalwart SMTP supports enforcing dynamic quotas on the message queue, which means that it can limit the total size and number of messages waiting to be delivered based on multiple variables. If a queue quota is exceeded, messages will be temporarily rejected with a 4xx SMTP code. This is useful in preventing the server from becoming overwhelmed by too many messages and ensuring that important messages are delivered promptly.
+Quotas allows to set limits on the message queue to control its size and total number of messages. Stalwart Mail Server supports enforcing dynamic quotas on the message queue, which means that it can limit the total size and number of messages waiting to be delivered based on multiple variables. If a queue quota is exceeded, messages will be temporarily rejected with a 4xx SMTP code. This is useful in preventing the server from becoming overwhelmed by too many messages and ensuring that important messages are delivered promptly.
 
 ## Settings
 
-Stalwart SMTP supports an unlimited number of queue quotas, which can be dynamically configured to limit resource usage based on multiple variables. Quotas are defined as TOML arrays under the `queue.quota[]` keys using the following attributes:
+Stalwart Mail Server supports an unlimited number of queue quotas, which can be dynamically configured to limit resource usage based on multiple variables. Quotas are defined as TOML arrays under the `queue.quota[]` keys using the following attributes:
 
 - `messages`: Specifies the maximum number of messages that will be allowed.
 - `size`: Specifies the maximum queue size in bytes.

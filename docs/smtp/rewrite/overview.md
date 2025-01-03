@@ -10,4 +10,4 @@ There are a variety of scenarios in which you might want to rewrite a message. F
 
 Similarly, modifying the contents of an email is useful for managing how the email is presented to the recipient. You may want to [add, delete, or change headers](/docs/smtp/rewrite/headers) for tracking or compliance purposes, [alter the body](/docs/smtp/rewrite/content) text to append a legal disclaimer or a promotional signature, or even manage attachments for security reasons, such as by removing potentially harmful files.
 
-In all these cases, Stalwart SMTP can provide the required flexibility through its robust support for address rewriting and email content modification.
+In all these cases, Stalwart Mail Server can provide the required flexibility through its robust support for address rewriting and email content modification.

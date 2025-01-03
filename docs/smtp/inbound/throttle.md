@@ -4,11 +4,11 @@ sidebar_position: 11
 
 # Throttling
 
-Throttling refers to limiting the rate at which requests or data are processed by a system, in order to regulate its workload and avoid overloading the system. Concurrency limiting and rate limiting are two techniques used in Stalwart SMTP to control the amount of incoming traffic, ensuring that the server operates efficiently and remains protected from malicious activity.
+Throttling refers to limiting the rate at which requests or data are processed by a system, in order to regulate its workload and avoid overloading the system. Concurrency limiting and rate limiting are two techniques used in Stalwart Mail Server to control the amount of incoming traffic, ensuring that the server operates efficiently and remains protected from malicious activity.
 
 ## Settings
 
-Stalwart SMTP supports an unlimited number of inbound throttles, which can be dynamically configured to limit requests based on multiple variables. Throttles are defined as TOML arrays under the `session.throttle[]` keys using the following attributes:
+Stalwart Mail Server supports an unlimited number of inbound throttles, which can be dynamically configured to limit requests based on multiple variables. Throttles are defined as TOML arrays under the `session.throttle[]` keys using the following attributes:
 
 - `concurrency`: Specifies the maximum number of concurrent requests that the throttle will allow.
 - `rate`: Specifies the rate limit that the throttle will impose.

@@ -28,7 +28,21 @@ The following configuration settings are available for the connection pool, whic
 - `max-connections`: Specifies the maximum number of active connections to the MySQL server that can be maintained in the pool.
 - `min-connections`: Determines the minimum number of active connections that are maintained in the pool, ensuring a baseline level of readiness and resource allocation.
 
-### Example
+### Directory queries
+
+When mySQL is used as a [directory](/docs/auth/backend/overview), it is necessary to define the SQL queries that will be used to retrieve authentication data from the database. These queries are specified under the `store.<name>.query` section of the configuration file. For more details on the queries, please refer to the [SQL directory queries](/docs/auth/backend/sql#directory-queries) section.
+
+Example:
+
+```toml
+[store."mysql".query]
+name = "SELECT name, type, secret, description, quota FROM accounts WHERE name = ? AND active = true"
+members = "SELECT member_of FROM group_members WHERE name = ?"
+recipients = "SELECT name FROM emails WHERE address = ? ORDER BY name ASC"
+emails = "SELECT address FROM emails WHERE name = ? ORDER BY type DESC, address ASC"
+```
+
+## Example
 
 ```toml
 [store."mysql"]
@@ -46,34 +60,3 @@ timeout = "15s"
 max-connections = 10
 min-connections = 5
 ```
-
-## Lookup queries
-
-When mySQL is used as a [directory](/docs/auth/backend/overview) or [lookup store](/docs/storage/lookup), SQL queries can be mapped to lookup ids. This is done by specifying the query under `store.<name>.query.<lookup_name>` where `<name>` is the mySQL store ID and `<lookup_name>` it the lookup ID to map the query to. 
-
-For example:
-
-```toml
-[store."mysql".query]
-name = "SELECT name, type, secret, description, quota FROM accounts WHERE name = ? AND active = true"
-members = "SELECT member_of FROM group_members WHERE name = ?"
-recipients = "SELECT name FROM emails WHERE address = ? ORDER BY name ASC"
-emails = "SELECT address FROM emails WHERE name = ? ORDER BY type DESC, address ASC"
-```
-
-## Initialization statements
-
-On startup, Stalwart Mail Server can execute SQL statements before the first query is executed. This is useful for initializing the database with tables or data. These initialization statements are specified under the `store.<name>.init.execute` section of the configuration file.
-
-For example:
-
-```toml
-[store."mysql".init]
-execute = [
-    "CREATE TABLE IF NOT EXISTS accounts (name VARCHAR(32) PRIMARY KEY, secret VARCHAR(1024), description VARCHAR(1024), type VARCHAR(32) NOT NULL, quota INTEGER DEFAULT 0, active BOOLEAN DEFAULT 1)",
-    "CREATE TABLE IF NOT EXISTS group_members (name VARCHAR(32) NOT NULL, member_of VARCHAR(32) NOT NULL, PRIMARY KEY (name, member_of))",
-    "CREATE TABLE IF NOT EXISTS emails (name VARCHAR(32) NOT NULL, address VARCHAR(128) NOT NULL, type VARCHAR(32), PRIMARY KEY (name, address))"
-]
-```
-
-

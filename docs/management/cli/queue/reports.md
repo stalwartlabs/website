@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Reports
 
-Stalwart SMTP maintains a separate queue for DMARC and TLS aggregate reports until they are ready to delivered. Once a report is ready to be delivered, it is attached to an RFC5322 message and placed in the main message queue. The report queue is managed using the `report` CLI command which accepts the following arguments:
+Stalwart Mail Server maintains a separate queue for DMARC and TLS aggregate reports until they are ready to delivered. Once a report is ready to be delivered, it is attached to an RFC5322 message and placed in the main message queue. The report queue is managed using the `report` CLI command which accepts the following arguments:
 
 ```txt
 $ stalwart-cli -u https://mx.example.org:8080 -c secret report 

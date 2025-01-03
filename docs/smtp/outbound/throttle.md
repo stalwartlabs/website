@@ -4,11 +4,11 @@ sidebar_position: 5
 
 # Throttling
 
-Throttling is a mechanism that restricts the rate at which outbound messages are sent to a remote SMTP server. It is used to prevent the remote SMTP server from being overwhelmed by too many outgoing messages, which can lead to performance degradation, connectivity issues, or even being marked as a spammer by ISPs. Concurrency limiting and rate limiting are two techniques used in Stalwart SMTP to control the amount of outbound traffic.
+Throttling is a mechanism that restricts the rate at which outbound messages are sent to a remote SMTP server. It is used to prevent the remote SMTP server from being overwhelmed by too many outgoing messages, which can lead to performance degradation, connectivity issues, or even being marked as a spammer by ISPs. Concurrency limiting and rate limiting are two techniques used in Stalwart Mail Server to control the amount of outbound traffic.
 
 ## Settings
 
-Stalwart SMTP supports an unlimited number of outbound throttles, which can be dynamically configured to limit email delivery based on multiple variables. Throttles are defined as TOML arrays under the `queue.throttle[]` keys using the following attributes:
+Stalwart Mail Server supports an unlimited number of outbound throttles, which can be dynamically configured to limit email delivery based on multiple variables. Throttles are defined as TOML arrays under the `queue.throttle[]` keys using the following attributes:
 
 - `concurrency`: Specifies the maximum number of concurrent requests that the throttle will allow.
 - `rate`: Specifies the rate limit that the throttle will impose.
@@ -18,11 +18,26 @@ Stalwart SMTP supports an unlimited number of outbound throttles, which can be d
 
 Throttles can either include both a concurrency limit and rate limit, or just one of the two strategies.
 
+Memory usage of the rate limiters is controlled by the `limiter.capacity` and `limiter.shard` attributes in the configuration file. The `limiter.capacity` attribute specifies the maximum number of rate limiter entries that can be stored in memory, while the `limiter.shard` attribute determines the number of shards used to distribute the entries across the memory space. By default the number of shards is set to twice the number of CPUs available on the server. 
+
 ## Concurrency limit
 
-Concurrency limiting is the process of limiting the number of simultaneous connections to a remote server. This is useful in preventing overloading a remote server by establishing too many connections. For example, a rule can be configured to limit the number of concurrent connections to a single IP address to prevent overwhelming the remote host.
+Concurrency limiting is the process of limiting the number of simultaneous connections to a remote server. This is useful in preventing overloading the local or remote server by establishing too many connections. For example, a rule can be configured to limit the number of concurrent connections to a single IP address to prevent overwhelming the remote host.
 
-The `queue.throttle[].concurrency` attribute determines the number of concurrent outbound connections that the throttle will allow. For example, to limit the server to maintain a maximum number of 5 concurrent outgoing connections globally:
+### Global
+
+The global concurrency limit determines the maximum number of concurrent outbound connections that the server will allow. This limit applies to all outgoing connections and is configured in the `queue.outbound.concurrency` attribute. For example, to limit the server to maintain a maximum number of 5 concurrent outgoing connections globally:
+
+```toml
+[queue.outbound]
+concurrency = 5
+```
+
+By default, the global concurrency limit is set to 25.
+
+### Custom
+
+Custom concurrency limits can be imposed based on specific criteria. The `queue.throttle[].concurrency` attribute determines the number of concurrent outbound connections that the throttle will allow. For example, to limit the server to maintain a maximum number of 5 concurrent outgoing connections globally:
 
 ```toml
 [[queue.throttle]]
@@ -30,11 +45,11 @@ concurrency = 5
 enable = true
 ```
 
-Please note that the above example will impose a global concurrency limiter, to apply a more granular limiter please refer to the [throttle groups](#groups) section below.
+Please note that the above example will impose a global concurrency limiter (just like the `queue.outbound.concurrency` attribute), to apply a more granular limiter please refer to the [throttle groups](#groups) section below.
 
 ## Rate limit
 
-Rate limiting is the process of limiting the number of outgoing requests over a specific period of time. This is useful in preventing sending too many messages in a short amount of time, which could result in being marked as spammer by the remote host. For example, a rule can be configured to rate limit the number of outgoing emails per minute to a remote IP address or domain name.
+Rate limiting is the process of limiting the number of outgoing requests over a specific period of time. This is useful in preventing sending too many messages in a short amount of time, which could result in being marked as spammer by the remote host. For example, a rule can be configured to rate limit the number of outgoing emails per minute to a remote IP address or domain name. Rate limiters are stored in the [in-memory store](/docs/storage/in-memory) and are shared across all server instances.
 
 The `queue.throttle[].rate` attribute determines the number of outgoing messages over a period of time that the rate limiter will allow. For example, to limit the server to send a maximum of 100 messages per seconds:
 

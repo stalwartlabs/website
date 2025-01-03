@@ -10,7 +10,7 @@ Authenticated Received Chain (ARC) is a protocol for email authentication that i
 
 ARC sealing is a process in which a receiving mail server adds its own digital signature to the existing ARC chain of a received email message. The signature provides a way for recipient mail servers to verify the authenticity of the message and its previous handling by other mail servers. The sealing process updates the ARC chain by adding new information about the recipient's handling of the message, such as processing results, feedback, and other information. The updated ARC chain can then be passed along with the message as it is forwarded to the next recipient.
 
-Stalwart SMTP can be configured to automatically seal incoming and outgoing messages using the `ED25519-SHA256` (Edwards-Curve Digital Signature Algorithm), `RSA-SHA256` or `RSA-SHA1` algorithms. The signature to use for sealing is configured by the `auth.arc.seal` parameter, for example:
+Stalwart Mail Server can be configured to automatically seal incoming and outgoing messages using the `ED25519-SHA256` (Edwards-Curve Digital Signature Algorithm), `RSA-SHA256` or `RSA-SHA1` algorithms. The signature to use for sealing is configured by the `auth.arc.seal` parameter, for example:
 
 ```toml
 [auth.arc]
@@ -21,7 +21,7 @@ Please refer to the [DKIM section](/docs/smtp/authentication/dkim/overview) for 
 
 ## Verification
 
-Stalwart SMTP supports verifying the ARC seals and signatures of incoming messages using the `ED25519-SHA256` (Edwards-Curve Digital Signature Algorithm), `RSA-SHA256` or `RSA-SHA1` algorithms. The `auth.arc.verify` attribute indicates the ARC verification policy:
+Stalwart Mail Server supports verifying the ARC seals and signatures of incoming messages using the `ED25519-SHA256` (Edwards-Curve Digital Signature Algorithm), `RSA-SHA256` or `RSA-SHA1` algorithms. The `auth.arc.verify` attribute indicates the ARC verification policy:
 
 - `relaxed`: Verify ARC and report the results in the `Authentication-Results` header.
 - `strict`: Reject the message if all ARC seals fail verification, otherwise report the results in the `Authentication-Results` header.

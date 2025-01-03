@@ -39,7 +39,7 @@ Stalwart Mail Server provides a wide range of permissions that can be assigned t
 |`impersonate`|Act on behalf of another user|:white_check_mark:|||
 |`unlimited-requests`|Perform unlimited requests|:white_check_mark:|||
 |`unlimited-uploads`|Upload unlimited data|:white_check_mark:|||
-|`delete-system-folders`|Delete system folders|:white_check_mark:|||
+|`delete-system-folders`|Delete of system folders|:white_check_mark:|||
 |`message-queue-list`|View message queue|:white_check_mark:|:white_check_mark:||
 |`message-queue-get`|Retrieve specific messages from the queue|:white_check_mark:|:white_check_mark:||
 |`message-queue-update`|Modify queued messages|:white_check_mark:|:white_check_mark:||
@@ -92,16 +92,17 @@ Stalwart Mail Server provides a wide range of permissions that can be assigned t
 |`blob-fetch`|Retrieve arbitrary blobs|:white_check_mark:|||
 |`purge-blob-store`|Purge the blob storage|:white_check_mark:|||
 |`purge-data-store`|Purge the data storage|:white_check_mark:|||
-|`purge-lookup-store`|Purge the lookup storage|:white_check_mark:|||
+|`purge-in-memory-store`|Purge the in-memory storage|:white_check_mark:|||
 |`purge-account`|Purge user accounts|:white_check_mark:|||
 |`fts-reindex`|Rebuild the full-text search index|:white_check_mark:|||
 |`undelete`|Restore deleted items|:white_check_mark:|:white_check_mark:||
 |`dkim-signature-create`|Create DKIM signatures for email authentication|:white_check_mark:|:white_check_mark:||
 |`dkim-signature-get`|Retrieve DKIM signature information|:white_check_mark:|:white_check_mark:||
-|`update-spam-filter`|Modify spam filter settings|:white_check_mark:|||
-|`update-webadmin`|Modify web admin interface settings|:white_check_mark:|||
+|`spam-filter-update`|Modify spam filter settings|:white_check_mark:|||
+|`spam-filter-classify`|Classify emails with the spam filter|:white_check_mark:|:white_check_mark:|:white_check_mark:|
+|`spam-filter-train`|Train the spam filter|:white_check_mark:|:white_check_mark:|:white_check_mark:|
+|`webadmin-update`|Modify web admin interface settings|:white_check_mark:|||
 |`logs-view`|Access system logs|:white_check_mark:|||
-|`sieve-run`|Execute Sieve scripts from the REST API|:white_check_mark:|||
 |`restart`|Restart the email server|:white_check_mark:|||
 |`tracing-list`|View stored traces|:white_check_mark:|||
 |`tracing-get`|Retrieve specific trace information|:white_check_mark:|||
@@ -215,4 +216,4 @@ Stalwart Mail Server provides a wide range of permissions that can be assigned t
 |`oauth-client-registration`|Register OAuth clients|:white_check_mark:|||
 |`oauth-client-override`|Override OAuth client settings|:white_check_mark:|||
 |`ai-model-interact`|Interact with AI models|:white_check_mark:|||
-|`troubleshoot`|Perform Troubleshooting|:white_check_mark:|||
+|`troubleshoot`|Perform troubleshooting|:white_check_mark:|||

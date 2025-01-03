@@ -4,7 +4,7 @@ sidebar_position: 7
 
 # SMTP and IMAP
 
-When running the standalone version of Stalwart SMTP, it is possible to use an external SMTP, LMTP or IMAP server as a "virtual" directory. This allows you to delegate authentication and address validation to a third-party mail server.
+When running the standalone version of Stalwart Mail Server, it is possible to use an external SMTP, LMTP or IMAP server as a "virtual" directory. This allows you to delegate authentication and address validation to a third-party mail server.
 It is important to note that external SMTP or IMAP authentication cannot be used when running the all-in-one or JMAP servers.
 
 ## Connection details
@@ -43,7 +43,7 @@ allow-invalid-certs = true
 
 ## Domain lookup list
 
-Since external IMAP or SMTP servers are not able to validate which are the local domains that Stalwart SMTP is handling, it is necessary to specify a local domain lookup list. This is done under the `directory.<name>.lookup.domains` key in the configuration file. For example:
+Since external IMAP or SMTP servers are not able to validate which are the local domains that Stalwart Mail Server is handling, it is necessary to specify a local domain lookup list. This is done under the `directory.<name>.lookup.domains` key in the configuration file. For example:
 
 ```toml
 [directory."smtp".lookup]

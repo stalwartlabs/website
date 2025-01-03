@@ -12,7 +12,7 @@ For example:
 let "ADD_HEADER_SPAM" "true";
 ```
 
-By default, all SPAM filter settings are obtained from the `spam-config` [in-memory lookup store](/docs/storage/backends/memory).
+By default, all SPAM filter settings are obtained from the `spam-config` [in-memory in-memory store](/docs/storage/backends/memory).
 
 ## Headers
 
@@ -84,7 +84,7 @@ If left unspecified, the [default directory](/docs/auth/backend/overview#default
 
 ## Spam database
 
-The `SPAM_DB` setting specifies which [lookup store](/docs/storage/lookup) to use as the [spam filter database](/docs/spamfilter/settings/database). This database is used to store sender reputation information, bayesian classifier models, greylist data, message reply tracking and other similar data.
+The `SPAM_DB` setting specifies which [in-memory store](/docs/storage/in-memory) to use as the [spam filter database](/docs/spamfilter/settings/database). This database is used to store sender reputation information, bayesian classifier models, greylist data, message reply tracking and other similar data.
 
 Example:
 
@@ -92,7 +92,7 @@ Example:
 let "SPAM_DB" "'redis'";
 ```
 
-If left unspecified, the [default lookup store](/docs/storage/lookup#configuration) will be used.
+If left unspecified, the [default in-memory store](/docs/storage/in-memory#configuration) will be used.
 
 ## Deliver to Junk Mail folder
 

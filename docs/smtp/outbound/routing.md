@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Routing
 
-Stalwart SMTP allows to define how messages should be delivered to their final destination through routing rules. Rules are configured under the `queue.outbound.next-hop` parameter, which can either point to a [remote host](#remote-hosts) defined in the configuration file or contain the value `false` which indicates that the message delivery should be done through DNS resolution. Routing rules are useful for tasks such as forwarding messages for local domains to a message store over LMTP.
+Stalwart Mail Server allows to define how messages should be delivered to their final destination through routing rules. Rules are configured under the `queue.outbound.next-hop` parameter, which can either point to a [remote host](#remote-hosts) defined in the configuration file or contain the value `false` which indicates that the message delivery should be done through DNS resolution. Routing rules are useful for tasks such as forwarding messages for local domains to a message store over LMTP.
 
 ## Remote hosts
 
@@ -34,8 +34,8 @@ Authentication can be configured using the following parameters located under th
 
 ## Local host
 
-In a setup where Stalwart SMTP is run together with Stalwart JMAP, a special host type known as `local` is automatically created. This special host is not a traditional mail server with an IP address or domain name. Instead, it represents the local JMAP message store, the primary location where Stalwart Mail Server stores email messages.
-This local host allows Stalwart SMTP to directly deliver messages to the local JMAP message store without the need for any network communication. This mechanism bypasses the typical SMTP or LMTP protocols that are commonly used for transferring messages between servers or to the final mailbox respectively.
+In a setup where Stalwart Mail Server is run together with Stalwart JMAP, a special host type known as `local` is automatically created. This special host is not a traditional mail server with an IP address or domain name. Instead, it represents the local JMAP message store, the primary location where Stalwart Mail Server stores email messages.
+This local host allows Stalwart Mail Server to directly deliver messages to the local JMAP message store without the need for any network communication. This mechanism bypasses the typical SMTP or LMTP protocols that are commonly used for transferring messages between servers or to the final mailbox respectively.
 
 For example, the following configuration can be used to deliver messages for local domains to the local JMAP message store:
 
@@ -57,7 +57,7 @@ Another common usage scenario is when sending emails from a network that's behin
 
 Relay hosts can also be used for security purposes. Emails can be sent to a relay host that scans them for viruses and spam before they are delivered to the final recipient. This way, potentially harmful or unwanted messages can be detected and stopped before they reach their destination.
 
-In Stalwart SMTP, messages can be routed to a relay host by adding it as the next hop in the routing configuration. For example:
+In Stalwart Mail Server, messages can be routed to a relay host by adding it as the next hop in the routing configuration. For example:
 
 ```toml
 [queue.outbound]

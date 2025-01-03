@@ -30,37 +30,37 @@ The following functions are available for use in expressions in Stalwart Mail Se
 - **Arguments**: 2 (Directory ID, Email Address)
 - **Example**: `is_local_address("", "user@example.org")` would verify if `user@example.org` is a local address using the default directory and return `true` if it is.
 
-### Lookup Store Functions
+### In-Memory Store Functions
 
 #### `sql_query`
-- **Description**: Executes an SQL query against a specified lookup store and returns the result.
-- **Arguments**: 3 (Lookup Store ID, Query, Arguments)
+- **Description**: Executes an SQL query against a specified in-memory store and returns the result.
+- **Arguments**: 3 (In-Memory Store ID, Query, Arguments)
 - **Example**: `sql_query("", "SELECT disk_usage FROM quotas WHERE user = ? AND domain = ?", [authenticated_as, rcpt_domain])` would retrieve the value of the `disk_usage` column from the SQL database.
 
 #### `key_get`
-- **Description**: Retrieves the value associated with a given key from a specified lookup store or the default lookup store if none is specified.
-- **Arguments**: 2 (Lookup Store ID, Key Name)
-- **Example**: `key_get("", "config_param")` would retrieve the value of `config_param` from the default lookup store.
+- **Description**: Retrieves the value associated with a given key from a specified in-memory store or the default in-memory store if none is specified.
+- **Arguments**: 2 (In-Memory Store ID, Key Name)
+- **Example**: `key_get("", "config_param")` would retrieve the value of `config_param` from the default in-memory store.
 
 #### `key_exists`
-- **Description**: Checks if a given key exists within a specified lookup store or the default lookup store if none is specified.
-- **Arguments**: 2 (Lookup Store ID, Key Name)
-- **Example**: `key_exists("", "config_param")` would check for the existence of `config_param` in the default lookup store and return `true` if it exists.
+- **Description**: Checks if a given key exists within a specified in-memory store or the default in-memory store if none is specified.
+- **Arguments**: 2 (In-Memory Store ID, Key Name)
+- **Example**: `key_exists("", "config_param")` would check for the existence of `config_param` in the default in-memory store and return `true` if it exists.
 
 #### `key_set`
-- **Description**: Sets the value of a specified key in a lookup store, creating the key if it does not exist.
-- **Arguments**: 3 (Lookup Store ID, Key Name, Value)
-- **Example**: `key_set("", "config_param", "new_value")` would set the value of `config_param` to `new_value` in the default lookup store.
+- **Description**: Sets the value of a specified key in a in-memory store, creating the key if it does not exist.
+- **Arguments**: 3 (In-Memory Store ID, Key Name, Value)
+- **Example**: `key_set("", "config_param", "new_value")` would set the value of `config_param` to `new_value` in the default in-memory store.
 
 #### `counter_get`
-- **Description**: Retrieves the current value of a counter from a specified lookup store or the default lookup store if none is specified.
-- **Arguments**: 2 (Lookup Store ID, Counter Name)
-- **Example**: `counter_get("", "email_count")` would retrieve the current value of the `email_count` counter from the default lookup store.
+- **Description**: Retrieves the current value of a counter from a specified in-memory store or the default in-memory store if none is specified.
+- **Arguments**: 2 (In-Memory Store ID, Counter Name)
+- **Example**: `counter_get("", "email_count")` would retrieve the current value of the `email_count` counter from the default in-memory store.
 
 #### `counter_incr`
-- **Description**: Increments the value of a specified counter in a lookup store by a specified amount, creating the counter if it does not exist.
-- **Arguments**: 3 (Lookup Store ID, Counter Name, Increment Value)
-- **Example**: `counter_incr("", "email_count", 1)` would increment the value of the `email_count` counter by 1 in the default lookup store.
+- **Description**: Increments the value of a specified counter in a in-memory store by a specified amount, creating the counter if it does not exist.
+- **Arguments**: 3 (In-Memory Store ID, Counter Name, Increment Value)
+- **Example**: `counter_incr("", "email_count", 1)` would increment the value of the `email_count` counter by 1 in the default in-memory store.
 
 ### DNS Functions
 

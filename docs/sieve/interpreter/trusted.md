@@ -5,7 +5,7 @@ sidebar_position: 2
 # Trusted Interpreter
 
 The trusted interpreter is specifically for scripts invoked by the SMTP server. These scripts are primarily trusted scripts created by the system administrator.
-Stalwart SMTP compiles all defined Sieve scripts when it starts and executes them on demand using the Sieve runtime.
+Stalwart Mail Server compiles all defined Sieve scripts when it starts and executes them on demand using the Sieve runtime.
 
 ## Configuration
 

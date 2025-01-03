@@ -4,12 +4,12 @@ sidebar_position: 1
 
 # Overview
 
-This section covers the configuration and management of the storage system. Stalwart offers maximum flexibility by supporting four distinct types of storage, each catering to different aspects of server operation. These are the data store, blob store, full-text search store, and lookup store:
+This section covers the configuration and management of the storage system. Stalwart offers maximum flexibility by supporting four distinct types of storage, each catering to different aspects of server operation. These are the data store, blob store, full-text search store, and in-memory store:
 
 - [Data store](/docs/storage/data): The core storage unit where email metadata, folders, and various settings are stored. Essentially, it contains all the data except for large binary objects (blobs).
 - [Blob store](/docs/storage/blob): This store is used for storing large binary objects such as emails, sieve scripts, and other files.
 - [Full-text search store](/docs/storage/fts): This store is dedicated to indexing for full-text search, enhancing the speed and efficiency of text-based queries
-- [Lookup store](/docs/storage/lookup): A key-value storage used primarily by the SMTP server and anti-spam components. It stores sender reputation information, bayesian classifier models, greylist data, message reply tracking and other similar data.
+- [In-memory store](/docs/storage/in-memory): A key-value storage used primarily by the SMTP server and anti-spam components. It stores sender reputation information, bayesian classifier models, greylist data, message reply tracking and other similar data.
 
 Each store can be configured to use a different backend, allowing you to choose the most suitable option for your needs. 
 

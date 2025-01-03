@@ -8,7 +8,7 @@ Redis (Remote Dictionary Server) is an in-memory data structure store, used as a
 
 :::tip Note
 
-Redis can only be used as a [lookup store](/docs/storage/lookup) but not for storing the actual data or blobs (binary large objects) within the mail server system.
+Redis can only be used as a [in-memory store](/docs/storage/in-memory) but not for storing the actual data or blobs (binary large objects) within the mail server system.
 
 :::
 
@@ -50,7 +50,7 @@ Standalone Redis setup:
 [store."redis"]
 type = "redis"
 redis-type = "single"
-url = "redis://my_username:secretpassword@127.0.0.1#insecure"
+urls = "redis://my_username:secretpassword@127.0.0.1#insecure"
 timeout = "10s"
 ```
 

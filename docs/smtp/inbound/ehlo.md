@@ -10,7 +10,7 @@ The `EHLO` (Extended Hello) is sent by an email client to the server to initiate
 
 The `session.ehlo` key in the configuration file controls the behavior of the `EHLO` (and `HELO`, `LHLO`) command. The following attributes are available under this key:
 
-- `require`: Specifies whether the remote client must send an `EHLO` command before starting an SMTP transaction. It is recommended to set this value to `true` to allow Stalwart SMTP to verify the [SPF](/docs/smtp/authentication/spf) EHLO identity of the client.
+- `require`: Specifies whether the remote client must send an `EHLO` command before starting an SMTP transaction. It is recommended to set this value to `true` to allow Stalwart Mail Server to verify the [SPF](/docs/smtp/authentication/spf) EHLO identity of the client.
 - `reject-non-fqdn`: Determines whether to reject `EHLO` commands that do not include a fully-qualified domain name as a parameter. To reduce the amount of spam, it is recommended to enable this option for the standard SMTP port 25, but disable it for authenticated sessions on the SMTP submissions port.
 - `script`: The name of the [Sieve script](/docs/sieve/overview) to run after a successful `EHLO` command.
 
@@ -40,7 +40,7 @@ values = ["mail.spammer.test", "mail.spammer.example"]
 
 ## SMTP Extensions
 
-Stalwart SMTP supports [various SMTP extensions](/docs/development/rfcs#smtp-and-extensions) which can be enabled through the following attributes under the `session.extensions` key:
+Stalwart Mail Server supports [various SMTP extensions](/docs/development/rfcs#smtp-and-extensions) which can be enabled through the following attributes under the `session.extensions` key:
 
 - `pipelining`: This attribute enables SMTP pipelining (RFC 2920), which enables multiple commands to be sent in a single request to speed up communication between the client and server.
 - `chunking`: This attribute enables chunking (RFC 1830), an extension that allows large messages to be transferred in chunks which may reduce the load on the network and server.
@@ -53,7 +53,7 @@ Stalwart SMTP supports [various SMTP extensions](/docs/development/rfcs#smtp-and
 - `vrfy`: This attribute specifies whether to enable the `VRFY` command, which allows the sender to verify the existence of a mailbox. It is recommended to disable this command to prevent spammers from harvesting email addresses.
 - `expn`: This attribute specifies whether to enable the `EXPN` command, which allows the sender to request the membership of a mailing list. It is recommended to disable this command to prevent spammers from harvesting email addresses.
 
-Stalwart SMTP additionally supports the `SIZE`, `ENHANCEDSTATUSCODES`, `8BITMIME`, and `SMTPUTF8` extensions, which are not configurable. However, the `AUTH` extension can be configured from its respective sections within the configuration file.
+Stalwart Mail Server additionally supports the `SIZE`, `ENHANCEDSTATUSCODES`, `8BITMIME`, and `SMTPUTF8` extensions, which are not configurable. However, the `AUTH` extension can be configured from its respective sections within the configuration file.
 
 Example:
 

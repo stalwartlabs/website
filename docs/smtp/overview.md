@@ -4,9 +4,9 @@ sidebar_position: 1
 
 # Overview
 
-Stalwart SMTP server is enabled by creating one or more listeners. A listener essentially acts as a point of entry for SMTP or LMTP connections, listening on a specific port for any incoming connections. Administrators can set up multiple listeners, each potentially serving different roles or catering to different types of connections. Stalwart SMTP imposes no limit on the number of listeners that can be created, providing administrators with the flexibility to manage incoming connections as they see fit.
+Stalwart Mail Server server is enabled by creating one or more listeners. A listener essentially acts as a point of entry for SMTP or LMTP connections, listening on a specific port for any incoming connections. Administrators can set up multiple listeners, each potentially serving different roles or catering to different types of connections. Stalwart Mail Server imposes no limit on the number of listeners that can be created, providing administrators with the flexibility to manage incoming connections as they see fit.
 
-The behavior of each listener can be customized by the administrator. This includes defining which types of connections are accepted, the specific actions to take upon receiving a connection, and the rules and scripts to be applied during the handling of the session. In conventional SMTP server configurations, certain ports are predetermined for specific types of SMTP connections: port 25 is typically used for unencrypted SMTP, port 587 for SMTP submissions, and port 465 for TLS encrypted SMTP submissions. Stalwart SMTP, however, does not impose these specific associations. Instead, it leaves the decision entirely to the administrator, allowing each listener's function to be defined as per specific requirements.
+The behavior of each listener can be customized by the administrator. This includes defining which types of connections are accepted, the specific actions to take upon receiving a connection, and the rules and scripts to be applied during the handling of the session. In conventional SMTP server configurations, certain ports are predetermined for specific types of SMTP connections: port 25 is typically used for unencrypted SMTP, port 587 for SMTP submissions, and port 465 for TLS encrypted SMTP submissions. Stalwart Mail Server, however, does not impose these specific associations. Instead, it leaves the decision entirely to the administrator, allowing each listener's function to be defined as per specific requirements.
 
 For more information on how to configure listeners, see the main [listeners](/docs/server/listener) section.
 
@@ -26,7 +26,7 @@ To change the default SMTP greeting that is sent to connecting clients, set your
 [server.listener."smtp"]
 bind = "[::]:25"
 protocol = "smtp"
-greeting = "Welcome to Stalwart SMTP!"
+greeting = "Welcome to Stalwart Mail Server!"
 ```
 
 ## Submissions port (TLS)
@@ -60,4 +60,4 @@ bind = ["[::]:24"]
 protocol = "lmtp"
 ```
 
-There is no need to enable LMTP if you are only using Stalwart SMTP to receive email from other mail servers. LMTP is only necessary if you are not using Stalwart SMTP as your primary mail server.
+There is no need to enable LMTP if you are only using Stalwart Mail Server to receive email from other mail servers. LMTP is only necessary if you are not using Stalwart Mail Server as your primary mail server.

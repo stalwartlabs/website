@@ -15,9 +15,9 @@ The following configuration settings are available for the SQL directory, which 
 
 Any of the supported SQL data stores can be used as an SQL directory. Configuration details for each SQL data store can be found in the [data stores](/docs/storage/data) section.
 
-### Lookup queries
+### Directory queries
 
-In order to retrieve information about accounts, the following SQL lookup queries need to be defined in the underlying [data store](/docs/storage/data):
+In order to retrieve information about accounts, the following SQL directory queries need to be defined in the underlying [data store](/docs/storage/data):
 
 - `name`: Retrieves the `type`, `description`, and `quota` fields of an account by its account `name`. Optionally this query can return the account's `email` and `secret` fields as well.
 - `members`: Fetches the groups that a particular account is a member of. Groups names have to be returned as text.
