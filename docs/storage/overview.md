@@ -9,7 +9,7 @@ This section covers the configuration and management of the storage system. Stal
 - [Data store](/docs/storage/data): The core storage unit where email metadata, folders, and various settings are stored. Essentially, it contains all the data except for large binary objects (blobs).
 - [Blob store](/docs/storage/blob): This store is used for storing large binary objects such as emails, sieve scripts, and other files.
 - [Full-text search store](/docs/storage/fts): This store is dedicated to indexing for full-text search, enhancing the speed and efficiency of text-based queries
-- [In-memory store](/docs/storage/in-memory): A key-value storage used primarily by the SMTP server and anti-spam components. It stores sender reputation information, bayesian classifier models, greylist data, message reply tracking and other similar data.
+- [In-memory store](/docs/storage/in-memory): A key-value storage used by different security, clustering and anti-spam components. 
 
 Each store can be configured to use a different backend, allowing you to choose the most suitable option for your needs. 
 

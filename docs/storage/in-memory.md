@@ -4,32 +4,83 @@ sidebar_position: 5
 
 # In-memory store
 
-Although the term "in-memory store" might initially sound ambiguous, it essentially refers to a key-value store. In-memory stores are primarily utilized by the SMTP server to rapidly and efficiently retrieve data. They serve various functions such as:
+In-memory data stores (such as Redis) are high-performance databases that store data entirely in memory, enabling extremely fast read and write operations. These systems are often used for caching, message brokering, and as temporary storage for dynamic data that does not require long-term persistence.
 
-- [Expressions](/docs/configuration/expressions/overview): In-memory stores are used from expressions to dynamically configure different settings and perform routing decisions.
-- [Sieve scripts](/docs/sieve/overview): Sieve scripts, used for filtering and organizing incoming emails, have the possibility to store and retrieve data from in-memory stores. 
-- [Spam filter database](/docs/spamfilter/settings/database): One of the critical uses of in-memory stores is in managing spam filter databases. This includes sender reputation information, bayesian classifier models, greylist data, message reply tracking and other similar data.
-- [Rate limiting](/docs/smtp/inbound/throttle) and [Fail2ban](/docs/auth/authentication/security#fail2ban): In-memory stores are used to store and retrieve rate limiting data, such as the number of messages sent by a specific sender or the number of connections from a specific IP address.
-- [OAuth auth codes](/docs/auth/oauth/overview): OAuth authorization codes are stored in in-memory stores to validate the authorization process.
+In Stalwart Mail Server, in-memory stores play a crucial role in handling a wide variety of tasks. They are used for storing:
 
-The following backends can be utilized as a in-memory store:
+- [Spam filter data](/docs/spamfilter/settings/database) such as sender reputation information, bayesian classifier models, greylist data, message reply tracking and other similar data.
+- [Rate limiting](/docs/smtp/inbound/throttle) and [fail2ban](/docs/auth/authentication/security#fail2ban) data, such as the number of messages sent by a specific sender or the number of failed authentication attempts from a specific IP address.
+- Distributed locks for managing concurrent tasks, such as purging accounts, processing email queues, and running housekeeping tasks.
+- [OAuth authorization codes](/docs/auth/oauth/overview) to validate the authorization process.
+- [ACME tokens](/docs/server/tls/acme/overview) for SSL/TLS certificate management.
 
-- [Redis](/docs/storage/backends/redis): A popular in-memory database.
-- [Data store](/docs/storage/data): Any of the supported data store backends can be used as a in-memory store, which is useful when you want to minimize the number of external dependencies.
-- [In-memory](/docs/storage/backends/memory): A simple in-memory key-value store. Can only store static data, does not support write operations.
+Additionally, in-memory stores can be queried and modified from [expressions](/docs/configuration/expressions/overview) and [Sieve scripts](/docs/sieve/overview) using functions such as `key_get`, `key_set`, and related operations. This integration makes in-memory stores a flexible and powerful tool for dynamically influencing server behavior.
+
+## Backends
+
+Stalwart Mail Server supports the following backends as in-memory stores:
+
+- [Redis, Memcached, or compatible](/docs/storage/backends/redis): Ideal for high-performance, distributed, or heavy-load environments. Redis, in particular, is recommended for such cases because of its speed and versatility as a cache, database, and message broker.
+- [Data store](/docs/storage/data): For administrators aiming to minimize external dependencies, any supported data store backend (SQL, FoundationDB, RocksDB) can also function as an in-memory store. While data store backends provide flexibility, Redis is better suited for heavy loads and distributed setups due to its optimized performance.
+
+## Key Prefixes
+
+In-memory stores operate as key-value stores, where each key is prefixed with a unique identifier to prevent conflicts. Stalwart Mail Server uses predefined prefixes for different types of data, ensuring clear organization within the store.
+
+Below is a mapping of key prefixes used by Stalwart Mail Server, including their assigned unsigned integer values:
+
+| **Short name**                 | **Description**                                  | **Integer prefix** |
+|----------------------------|------------------------------------------------------|--------------|
+| `KV_ACME`                  | ACME tokens for SSL/TLS certificate management       | 0            |
+| `KV_OAUTH`                 | OAuth tokens for authentication                      | 1            |
+| `KV_RATE_LIMIT_RCPT`       | Rate limiting data for recipient addresses           | 2            |
+| `KV_RATE_LIMIT_SCAN`       | Rate limiting data for email scanning                | 3            |
+| `KV_RATE_LIMIT_LOITER`     | Rate limiting data for idle connections              | 4            |
+| `KV_RATE_LIMIT_AUTH`       | Rate limiting data for authentication attempts       | 5            |
+| `KV_RATE_LIMIT_HASH`       | Rate limiting data for SMTP throttles         | 6            |
+| `KV_RATE_LIMIT_CONTACT`    | Rate limiting data for contact forms          | 7            |
+| `KV_RATE_LIMIT_HTTP_AUTHENTICATED` | Rate limiting data for authenticated HTTP requests | 8            |
+| `KV_RATE_LIMIT_HTTP_ANONYMOUS`    | Rate limiting data for anonymous HTTP requests     | 9            |
+| `KV_RATE_LIMIT_IMAP`       | Rate limiting data for IMAP connections              | 10           |
+| `KV_REPUTATION_IP`         | Spam filter reputation data for IP addresses         | 12           |
+| `KV_REPUTATION_FROM`       | Spam filter reputation data for senders              | 13           |
+| `KV_REPUTATION_DOMAIN`     | Spam filter reputation data for domains              | 14           |
+| `KV_REPUTATION_ASN`        | Spam filter reputation data for ASNs                 | 15           |
+| `KV_GREYLIST`              | Spam filter greylist tokens                          | 16           |
+| `KV_BAYES_MODEL_GLOBAL`    | Global Bayesian spam filter model                    | 17           |
+| `KV_BAYES_MODEL_USER`      | User-specific Bayesian spam filter models            | 18           |
+| `KV_TRUSTED_REPLY`         | Spam filter trusted replies tracking                 | 19           |
+| `KV_LOCK_PURGE_ACCOUNT`    | Lock for purging accounts                            | 20           |
+| `KV_LOCK_QUEUE_MESSAGE`    | Lock for SMTP message queues                         | 21           |
+| `KV_LOCK_QUEUE_REPORT`     | Lock for report queues                               | 22           |
+| `KV_LOCK_EMAIL_TASK`       | Lock for email-related tasks                         | 23           |
+| `KV_LOCK_HOUSEKEEPER`      | Lock for housekeeping tasks                          | 24           |
+
+This structured approach ensures data integrity and prevents key collisions across different types of operations within the in-memory store.
+
+## Data Persistence
+
+It is generally not necessary to configure the in-memory store for persistent storage of most key prefixes. Many types of data, such as rate limiter and fail2ban information, are transient and do not require recovery after a server restart.
+
+However, it is strongly recommended to persist Bayesian model data (`KV_BAYES_MODEL_GLOBAL` and `KV_BAYES_MODEL_USER`). Persisting this data ensures that the spam filter retains its training and accuracy across restarts. Without persistence, the Bayesian models would need to be retrained from scratch, potentially resulting in degraded spam detection performance until sufficient new data has been processed. 
+
+For setups requiring persistence, Redis and compatible systems support reliable persistence mechanisms, making them a suitable choice for storing critical data like Bayesian models.
+
 
 ## Configuration
 
-In-memory stores do not require any additional configuration as they are referenced by their ID from [expressions](/docs/configuration/expressions/overview) and [Sieve scripts](/docs/sieve/overview). However, it is possible to define a default in-memory store, which is used when no store is specified in a Sieve lookup function. To configure the default in-memory store, you need to specify its ID under the `storage.lookup` attribute in the configuration file. For example, to use the `redis` store as the default in-memory store:
+The main in-memory store is defined under the `storage.lookup` attribute in the configuration file. For example, to use the `redis` store as the default in-memory store:
 
 ```toml
 [storage]
 lookup = "redis"
 ```
 
+Although Stalwart requires a default in-memory store, it is possible to define multiple in-memory stores to be used from expressions](/docs/configuration/expressions/overview) and [Sieve scripts](/docs/sieve/overview). 
+
 ## Maintenance
 
-When using a data store as a in-memory store, it is necessary to periodically run an automated task that removes expired keys from the database. The schedule for these tasks is configured using a simplified [cron-like syntax](/docs/configuration/values/cron). The frequency of these tasks is determined by the `store.<id>.purge.frequency` attribute of the configuration file, where `<id>` is the ID of the store you wish to configure.
+When using a data store as an in-memory store, it is necessary to periodically run an automated task that removes expired keys from the database. The schedule for these tasks is configured using a simplified [cron-like syntax](/docs/configuration/values/cron). The frequency of these tasks is determined by the `store.<id>.purge.frequency` attribute of the configuration file, where `<id>` is the ID of the store you wish to configure.
 
 For example, to run the job every day at 3am local time on the `foundationdb` store, you would add the following to your configuration file:
 
@@ -37,6 +88,3 @@ For example, to run the job every day at 3am local time on the `foundationdb` st
 [store."foundationdb".purge]
 frequency = "0 3 *"
 ```
-
-
-

@@ -48,7 +48,7 @@ The following functions are available for use in expressions in Stalwart Mail Se
 - **Example**: `key_exists("", "config_param")` would check for the existence of `config_param` in the default in-memory store and return `true` if it exists.
 
 #### `key_set`
-- **Description**: Sets the value of a specified key in a in-memory store, creating the key if it does not exist.
+- **Description**: Sets the value of a specified key in an in-memory store, creating the key if it does not exist.
 - **Arguments**: 3 (In-Memory Store ID, Key Name, Value)
 - **Example**: `key_set("", "config_param", "new_value")` would set the value of `config_param` to `new_value` in the default in-memory store.
 
@@ -58,7 +58,7 @@ The following functions are available for use in expressions in Stalwart Mail Se
 - **Example**: `counter_get("", "email_count")` would retrieve the current value of the `email_count` counter from the default in-memory store.
 
 #### `counter_incr`
-- **Description**: Increments the value of a specified counter in a in-memory store by a specified amount, creating the counter if it does not exist.
+- **Description**: Increments the value of a specified counter in an in-memory store by a specified amount, creating the counter if it does not exist.
 - **Arguments**: 3 (In-Memory Store ID, Counter Name, Increment Value)
 - **Example**: `counter_incr("", "email_count", 1)` would increment the value of the `email_count` counter by 1 in the default in-memory store.
 

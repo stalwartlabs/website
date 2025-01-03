@@ -20,8 +20,6 @@ The following table summarizes the backend options available for each store type
 | Filesystem         |                    | :white_check_mark: |                    |                    |
 | ElasticSearch      |                    |                    | :white_check_mark: |                    |
 | Redis              |                    |                    |                    | :white_check_mark: |
-| In-memory          |                    |                    |                    | :white_check_mark: |
-
 
 It's important to note that the support for each of these databases is compiled directly into the Stalwart Mail Server binary. Therefore, to switch to certain backends such as FoundationDB, you'll need to utilize a different binary, corresponding to the desired backend(s).
 
