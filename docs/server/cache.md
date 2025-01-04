@@ -1,84 +1,154 @@
 ---
-sidebar_position: 7
+sidebar_position: 10
 ---
 
-# Cache
+# Caching
 
-Stalwart Mail Server utilizes different caches in order to improve performance. These caches are implemented as an in-memory data structure that is accessible to multiple threads. The default capacity and shard size of each cache is controlled by the `cache.capacity` and `cache.shard` parameters in the configuration file:
+Caching is a technique used to store frequently accessed data in memory, enabling faster retrieval and reducing the load on underlying systems. In Stalwart Mail Server, caching is utilized for various critical operations, including storing IMAP account data, security access tokens, and DNS query results. By caching this information, the server enhances performance, reduces latency, and minimizes resource usage.
+
+Stalwart Mail Server employs an efficient caching algorithm with an advanced eviction policy. The eviction mechanism is a modified version of the Clock-PRO algorithm, which closely resembles the later-published S3-FIFO algorithm. This algorithm is designed to be “scan-resistant,” meaning it avoids cache eviction caused by temporary spikes in access patterns. It provides high cache hit rates, outperforming traditional Least Recently Used (LRU) eviction policies and delivering results comparable to other state-of-the-art algorithms, such as W-TinyLFU. This advanced approach ensures that cached data remains highly relevant, contributing to the server's overall efficiency.
+
+## Memory Usage
+
+The memory usage of the cache is an important consideration, especially in systems with varying hardware configurations and user loads. For systems with ample memory and a high number of users, it is recommended to increase the default cache sizes. Larger cache sizes allow the server to store more data in memory, resulting in fewer evictions and higher hit rates, which improves performance in busy environments.
+
+Conversely, systems with limited memory may need to reduce the default cache sizes to avoid excessive memory consumption. Smaller cache sizes help conserve system resources but may slightly reduce cache efficiency. Administrators should monitor the server’s memory usage and adjust cache sizes to strike a balance between performance and resource availability.
+
+## Configuration
+
+Stalwart Mail Server provides a variety of cache options that can be configured to optimize performance and memory usage. Each cache is configured under the `cache.NAME.size parameter`, where `NAME` is the name of the cache as defined in the system. The size is specified in bytes and controls the maximum memory allocated for each cache.
+
+### Access Token Cache
+
+The Access Token Cache is used to store security access tokens required for authentication purposes. Caching access tokens reduces the need for frequent revalidation, ensuring faster and more efficient authentication processes. It is configured under the `cache.access-token.size` setting and has a default size of 10 MB.
 
 ```toml
 [cache]
-shard = 32
-capacity = 1024
+access-token.size = 10485760
 ```
 
-## Mailbox cache
+### HTTP Authentication Cache
 
-In order to improve JMAP and IMAP performance, Stalwart Mail Server keeps in an LRU (Least Recently Used) cache the message UIDs in a mailbox, the account mailbox structure, and thread IDs. The size of each one of these LRU caches are controlled by the `cache.mailbox.size`, `cache.account.size` and `cache.thread.size` parameters in the configuration file:
+The HTTP Authentication Cache stores temporary data related to HTTP-based authentication. By caching this data, the system speeds up repeated authentication attempts, reducing the overhead for frequent HTTP requests. It is configured under the `cache.http-auth.size` setting and has a default size of 1 MB.
 
 ```toml
 [cache]
-mailbox.size = 2048
-account.size = 2048
-thread.size = 2048
+http-auth.size = 1048576
 ```
 
-## JMAP Session cache
+### Permissions Cache
 
-A session represents the stateful interaction between the client and the server. It maintains the state of a user's actions and can be used to handle user requests more efficiently. When a client connects to the JMAP server, a new session is initiated. This session contains necessary details like account details, permissions, disk quotas, etc. 
-
-The JMAP session cache is a memory data structure that stores active session data for fast access and usage. The `cache.session.ttl` determines how long a session will stay alive in the cache without being accessed before it is considered expired and thus subject to removal. For example:
+The Permissions Cache is used to store role and permission mappings for user accounts. This cache allows the system to quickly verify access rights without repeatedly querying the database. It is configured under the `cache.permission.size` setting and has a default size of 5 MB.
 
 ```toml
-[cache.session]
-ttl = "1h"
+[cache]
+permission.size = 5242880
 ```
 
-Stalwart Mail Server runs periodically an automated task for purging expired sessions from the cache. A session is considered expired when it has not been accessed for a certain period of time, known as its Time-To-Live (TTL). When a session exceeds its TTL without being accessed, Stalwart identifies it as "expired". The cleanup task runs at a configurable interval, and during each run, it identifies and deletes these expired sessions, freeing up memory and reducing clutter in the system.
+### Account Cache
 
-The schedule for this task can be configured in the `jmap.session.purge.frequency` section using a simplified [cron-like syntax](/docs/configuration/values/cron). For example, to run the job every hour at 15 minutes past the hour:
+The Account Cache stores IMAP account data, including account identifiers, general settings, and mailbox information. By caching account data, the system ensures fast and efficient interactions with the IMAP server. It is configured under the `cache.account.size` setting and has a default size of 10 MB.
 
 ```toml
-[jmap.session.purge]
-frequency = "15 * *"
+[cache]
+account.size = 10485760
 ```
 
-## Bayesian filter cache
+### Mailbox Cache
 
-The Bayesian filter cache is used to reduce the number of requests to the [in-memory store](/docs/storage/in-memory) when checking if a message is spam. The size of the Bayesian filter cache is controlled by the `cache.bayes.capacity` parameter in the configuration file while the TTL of positive and negative cache entries is controlled by the `cache.byes.ttl.positive` and `cache.bayes.negative` parameters. For example:
+The Mailbox Cache stores mailbox metadata, such as mailbox states, next states, and message identifiers. This cache improves the performance of mailbox-related operations, such as folder list retrieval and synchronization. It is configured under the `cache.mailbox.size` setting and has a default size of 10 MB.
 
 ```toml
-[cache.bayes]
-capacity = 1024
-
-[cache.bayes.ttl]
-positive = "1h"
-negative = "30m"
+[cache]
+mailbox.size = 10485760
 ```
 
-## DNS cache
+### Thread Cache
 
-DNS caching is a technique used to store DNS query results in a cache to reduce the number of DNS queries and improve the performance of applications that rely on DNS resolution. The cache is stored in memory and is used to quickly answer subsequent queries for the same domain name without the need to query the authoritative DNS servers again.
-
-The caching size is configured under the `resolver.cache` key and indicate the maximum number of items that can be stored in the cache for each of the following DNS record types:
-
-- `txt`: DNS Text (TXT) records.
-- `mx`: DNS Mail Exchange (MX) records.
-- `ipv4`: DNS A (Address) records for IPv4 addresses.
-- `ipv6`: DNS AAAA (Address) records for IPv6 addresses.
-- `ptr`: DNS Pointer (PTR) records.
-- `tlsa`: DNS Transport Layer Security Association (TLSA) records.
-- `mta-sts`: DNS MTA-STS (Mail Transfer Agent Strict Transport Security) records.
-
-Example:
+The Thread Cache stores email threading information, including references to related messages. This cache enhances the speed of operations involving threading, such as displaying conversation views. It is configured under the `cache.thread.size` setting and has a default size of 10 MB.
 
 ```toml
-[cache.resolver]
-txt.size = 2048
-mx.size = 1024
-ipv4.size = 1024
-ipv6.size = 1024
-ptr.size = 1024
-tlsa.size = 1024
-mta-sts.size = 1024
+[cache]
+thread.size = 10485760
+```
+
+### Bayesian Filter Cache
+
+The Bayesian Filter Cache stores token data and associated weights for the spam filter’s Bayesian classifier. Caching this data allows the spam filter to make quick and accurate decisions without frequently accessing the database. It is configured under the `cache.bayes.size` setting and has a default size of 10 MB.
+
+```toml
+[cache]
+bayes.size = 10485760
+```
+
+### TXT DNS Cache
+
+The TXT DNS Cache stores the results of DNS TXT record lookups, which are commonly used for SPF, DKIM, and DMARC verifications. By caching these results, the server reduces the latency of DNS queries. It is configured under the `cache.dns.txt.size` setting and has a default size of 5 MB.
+
+```toml
+[cache]
+dns.txt.size = 5242880
+```
+
+### MX DNS Cache
+
+The MX DNS Cache stores the results of DNS MX record lookups, which are essential for email routing and delivery. Caching these results improves the speed of email processing. It is configured under the `cache.dns.mx.size` setting and has a default size of 5 MB.
+
+```toml
+[cache]
+dns.mx.size = 5242880
+```
+
+### PTR DNS Cache
+
+The PTR DNS Cache stores the results of reverse DNS (PTR) record lookups, which resolve IP addresses to hostnames. This cache enhances the efficiency of reverse DNS queries. It is configured under the `cache.dns.ptr.size` setting and has a default size of 1 MB.
+
+```toml
+[cache]
+dns.ptr.size = 1048576
+```
+
+### IPv4 DNS Cache
+
+The IPv4 DNS Cache stores the results of IPv4 address queries. Caching these results reduces the frequency of DNS lookups, improving overall performance. It is configured under the `cache.dns.ipv4.size` setting and has a default size of 5 MB.
+
+```toml
+[cache]
+dns.ipv4.size = 5242880
+```
+
+### IPv6 DNS Cache
+
+The IPv6 DNS Cache stores the results of IPv6 address queries. Like the IPv4 DNS Cache, it reduces the need for repeated DNS lookups and improves efficiency. It is configured under the `cache.dns.ipv6.size` setting and has a default size of 5 MB.
+
+```toml
+[cache]
+dns.ipv6.size = 5242880
+```
+
+### TLSA DNS Cache
+
+The TLSA DNS Cache stores the results of TLSA record lookups, which are used for DANE authentication. By caching these records, the server ensures faster processing of secure email communication. It is configured under the `cache.dns.tlsa.size` setting and has a default size of 1 MB.
+
+```toml
+[cache]
+dns.tlsa.size = 1048576
+```
+
+### MTA-STS Cache
+
+The MTA-STS Cache stores Mail Transfer Agent Strict Transport Security (MTA-STS) policies, which are used to enforce secure email delivery. This cache reduces the need for frequent policy retrievals. It is configured under the `cache.dns.mta-sts.size` setting and has a default size of 1 MB.
+
+```toml
+[cache]
+dns.mta-sts.size = 1048576
+```
+
+### RBL DNS Cache
+
+The RBL DNS Cache stores the results of Real-Time Blocklist (RBL) queries, which are used to identify and block potentially malicious IP addresses. This cache minimizes the latency of RBL lookups. It is configured under the `cache.dns.rbl.size` setting and has a default size of 5 MB.
+
+```toml
+[cache]
+dns.rbl.size = 5242880
 ```

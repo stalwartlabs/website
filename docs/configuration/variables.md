@@ -12,6 +12,8 @@ Context or environment variables may be used in certain settings of the configur
 - `local_port`: The local server's port number for an inbound connection.
 - `listener`: The listener ID where the connection was initiated for inbound sessions.
 - `is_tls`: A boolean value indicating whether the session is encrypted using TLS.
+- `asn`: The Autonomous System Number of the remote IP address.
+- `country`: The country code of the remote IP address.
 - `protocol`: The protocol used for the session (`smtp`, `imap`, `http`, etc.).
 - `sender`: The return path address specified in the MAIL FROM command for inbound sessions and the sender's address for outbound sessions.
 - `sender_domain`: The return path domain name specified in the MAIL FROM command for inbound sessions and the sender's domain name for outbound sessions.
