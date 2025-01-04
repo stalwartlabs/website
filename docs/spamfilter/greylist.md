@@ -1,16 +1,14 @@
 ---
-sidebar_position: 11
+sidebar_position: 12
 ---
 
 # Greylisting
 
-In the ongoing battle against unwanted emails, greylisting stands as one of the various techniques employed to thwart the efforts of spammers. But like all tools, it comes with its own set of advantages and challenges.
-
-## How it works
-
 Greylisting is a method where an email server temporarily rejects emails from unknown senders. In essence, when an email from an unfamiliar source arrives, the server sends back a "try again later" message. Legitimate email servers, following standard email protocols, will attempt to resend the email after a short delay. Most spammers, on the other hand, don't bother with resending, and hence, the email never gets through.
 
 The primary criterion for greylisting is a triplet: the sender's IP address, the sender's email address, and the recipient's email address. Stalwart Mail Server employs this triplet to apply greylisting for a duration of 30 days.
+
+In the ongoing battle against unwanted emails, greylisting stands as one of the various techniques employed to thwart the efforts of spammers. But like all tools, it comes with its own set of advantages and challenges.
 
 ## Advantages
 
@@ -24,12 +22,11 @@ The primary criterion for greylisting is a triplet: the sender's IP address, the
 
 ## Configuration
 
-The parameters governing greylisting, including the triplet criteria, can be fine-tuned to suit specific requirements from the `greylist` Sieve script.
+Greylisting can be enabled in Stalwart Mail Server by specifying the amount of time a sender should be greylisted. This can be done by setting the `spam-filter.grey-list.duration` property in the configuration file.
 
-:::tip Note
+For example, to greylist a sender for 30 days:
 
-By default, greylisting is disabled in Stalwart Mail Server to ensure immediate email delivery. Administrators wishing to employ greylisting need to uncomment the `session.rcpt.script` setting within the configuration file.
-
-:::
-
-In conclusion, while greylisting can be a potent tool in the anti-spam arsenal, it's essential to weigh its benefits against its potential drawbacks, especially in environments where email timeliness is paramount.
+```toml
+[spam-filter.grey-list]
+duration = "30d"
+```

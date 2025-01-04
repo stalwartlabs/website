@@ -4,11 +4,11 @@ sidebar_position: 4
 
 # MIME Types
 
-Filename extensions along with their expected mime types and associated defined are listed in the `spam-mime` in-memory store. These flags provide the spam filter with guidelines on how to handle emails containing files with these extensions, allowing for a more informed and precise classification of potentially malicious emails.
+Filename extensions along with their expected mime types and associated defined are listed in the `spam-filter.list.file-extensions` setting. These flags provide the spam filter with guidelines on how to handle emails containing files with these extensions, allowing for a more informed and precise classification of potentially malicious emails.
 
 ## Format
 
-Each entry in the `spam-mime` in-memory store represents a specific file extension. Parameters for each extension are separated by the `|` character. The typical structure is as follows:
+Each entry in the `spam-filter.list.file-extensions` list represents a specific file extension. Parameters for each extension are separated by the `|` character. The typical structure is as follows:
 
 ```
 <file extension> <mime type>|<optional flags>
@@ -24,7 +24,7 @@ The spam filter uses these flags to apply rule-based scoring. For instance, if a
 
 ## Examples
 
-Below are some examples from the `spam-mime` in-memory store:
+Below are some examples from the default `spam-filter.list.file-extensions` list:
 
 ```
 pdf application/pdf|application/x-pdf|NZ

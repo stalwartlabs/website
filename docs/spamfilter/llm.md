@@ -33,24 +33,26 @@ In both cases—whether using self-hosted or cloud-based AI models—there are t
 
 ## Configuration
 
+By default, the LLM Classifier is disabled in Stalwart Mail Server. To enable it, set the `spam-filter.llm.enable` option to `true` in the configuration file. This activates the LLM Classifier, allowing it to process incoming emails and assign tags based on the AI model's classification.
+
 ### Model
 
-The LLM Classifier configuration requires specifying the [AI model](/docs/server/ai-models) to be used for processing email content. This is done by setting the `lookup.spam-config.llm-model` option in the configuration file. The value of this option should correspond to the ID of the AI model defined in the `enterprise.ai.<id>` section of the configuration file.
+The LLM Classifier configuration requires specifying the [AI model](/docs/server/ai-models) to be used for processing email content. This is done by setting the `spam-filter.llm.model` option in the configuration file. The value of this option should correspond to the ID of the AI model defined in the `enterprise.ai.<id>` section of the configuration file.
 
 Example:
 
 ```toml
-[lookup.spam-config]
-llm-model = "chat"
+[spam-filter.llm]
+model = "chat"
 ```
 
 ### Prompt
 
-The LLM Classifier's prompt is fully configurable, allowing administrators to adjust the instructions given to the AI model based on the unique requirements of their email environment. Whether the focus is on general spam detection or more specialized content filtering, administrators can fine-tune the model’s behavior to ensure optimal results. The prompt can be customized from the `lookup.spam-config.llm-prompt` setting in the configuration file, for example:
+The LLM Classifier's prompt is fully configurable, allowing administrators to adjust the instructions given to the AI model based on the unique requirements of their email environment. Whether the focus is on general spam detection or more specialized content filtering, administrators can fine-tune the model’s behavior to ensure optimal results. The prompt can be customized from the `spam-filter.llm.prompt` setting in the configuration file, for example:
 
 ```toml
-[lookup.spam-config]
-llm-prompt = "You are an AI assistant specialized in analyzing email content to detect unsolicited, commercial, or harmful messages. Your task is to examine the provided email, including its subject line, and determine if it falls into any of these categories. Please follow these steps:
+[spam-filter.llm]
+prompt = "You are an AI assistant specialized in analyzing email content to detect unsolicited, commercial, or harmful messages. Your task is to examine the provided email, including its subject line, and determine if it falls into any of these categories. Please follow these steps:
 
 - Carefully read the entire email content, including the subject line.
 - Look for indicators of unsolicited messages, such as:
@@ -75,11 +77,52 @@ llm-prompt = "You are an AI assistant specialized in analyzing email content to 
 Here's the email to analyze, please provide your analysis based on the above instructions, ensuring your response is in the specified comma-separated format:"
 ```
 
-### Add headers
+### Temperature
 
-The LLM Classifier allows you to add the `X-Spam-Llm-Result` header to the email, which contains the classification and confidence level determined by the AI model. This header can be used for further processing or analysis of the email content. To enable this feature, set the `lookup.spam-config.add-llm-result` option to `true` in the configuration file:
+The LLM Classifier allows you to adjust the temperature parameter used during the sampling process when generating responses from the AI model. The temperature parameter controls the randomness of the responses, with lower values producing more deterministic outputs and higher values introducing more randomness. By default, the temperature is set to `0.5`, which provides a balance between generating diverse responses and maintaining coherence. To customize the temperature, set the `spam-filter.llm.temperature` option in the configuration file.
+
+Example:
 
 ```toml
-[lookup.spam-config]
-add-llm-result = true
+[spam-filter.llm]
+temperature = "0.5"
+```
+
+### Responses
+
+Response parsing is used to extract the category, confidence level, and explanation from the AI model's output. The LLM Classifier requires this information to assign tags to the email based on the classification and confidence level. The returned category and confidence level are combined to form the tag assigned to the email. The tag is constructed by concatenating the category and confidence level with an underscore `_` in between. For example, if the AI model classifies an email as Unsolicited with a high confidence level, the tag assigned to the email will be `LLM_UNSOLICITED_HIGH`.
+
+The following options are available for response parsing:
+
+- `spam-filter.llm.separator`: The character used to separate the category, confidence level, and explanation in the AI model's response. The default value is `,`.
+- `spam-filter.llm.index.category`: The index of the category in the response string. The default value is `0`.
+- `spam-filter.llm.index.confidence`: The index of the confidence level in the response string. The default value is `1`.
+- `spam-filter.llm.index.explanation`: The index of the explanation in the response string. The default value is `2`.
+- `spam-filter.llm.categories`: A list of categories that the AI model can assign to the email. A response with a category not in this list will be ignored. The default value is `["Unsolicited", "Commercial", "Harmful", "Legitimate"]`.
+- `spam-filter.llm.confidence`: A list of confidence levels that the AI model can assign to the email. A response with a confidence level not in this list will be ignored. The default value is `["High", "Medium", "Low"]`.
+
+Example:
+
+```toml
+[spam-filter.llm]
+separator = ","
+categories = ["Unsolicited", "Commercial", "Harmful", "Legitimate"]
+confidence = ["High", "Medium", "Low"]
+
+[spam-filter.llm.index]
+category = 0
+confidence = 1
+explanation = 2
+```
+
+### Headers
+
+The LLM Classifier allows you to add the `X-Spam-LLM` header to the email, which contains the classification and confidence level determined by the AI model. This header can be used for further processing or analysis of the email content. To enable this feature, set the `spam-filter.header.llm.enable` option to `true` in the configuration file. The name of the header can be customized using the `spam-filter.header.llm.name` option.
+
+Example:
+
+```toml
+[spam-filter.header.llm]
+enable = true
+name = "X-Spam-LLM"
 ```

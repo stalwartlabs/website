@@ -1,5 +1,5 @@
 ---
-sidebar_position: 6
+sidebar_position: 7
 ---
 
 # DMARC Analysis
@@ -19,15 +19,10 @@ For more information about DMARC, SPF, DKIM or ARC, please refer to the [Sender 
 
 ## Allow lists 
 
-To further refine the email authentication process and ensure that legitimate messages from known senders are not inadvertently flagged as suspicious, Stalwart Mail Server employs allow lists specifically tailored for DMARC, SPF, and DKIM checks. These lists serve as trusted repositories of domains that are known to have implemented and consistently pass the specified authentication checks.
+To further refine the email authentication process and ensure that legitimate messages from known senders are not inadvertently flagged as suspicious, Stalwart Mail Server employs an allow list specifically tailored for DMARC checks. Defined in the `lookup.known-dmarc-domains` lookup list, this list serves as trusted repositories of domains that are known to have implemented and consistently pass DMARC authentication checks.
 
-- **DMARC Allow List**: Defined in the `spam-dmarc` in-memory store, this store contains one domain per entry. Each domain listed here is expected to consistently pass DMARC authentication checks.
-- **SPF and DKIM Allow List**: Defined in the `spam-spkf` in-memory store and, similar to the DMARC allow list, comprises one domain per entry. Domains present here are recognized for their consistent adherence to SPF and DKIM authentication standards.
+When an incoming email undergoes DMARC validation:
 
-When an incoming email undergoes SPF or DKIM validation:
-
-- If the domain passes the authentication and is present in the **SPF/DKIM allow list**, it is awarded a **negative (ham) score**. This indicates that the email originates from a trusted domain with consistent authentication practices.
-- However, if the domain fails SPF or DKIM validation but is found in the allow list, it receives a **positive (spam) score**. This scenario signifies an anomaly: a trusted domain that was expected to pass authentication checks has failed to do so, thereby raising suspicion.
-
-The same logic applies to DMARC checks, wherein domains present in the **DMARC allow list** are expected to pass DMARC authentication consistently. Any deviation from this expectation results in score adjustments to flag potential anomalies.
+- If the domain passes the authentication and is present in the **DMARC allow list**, it is awarded a **negative (ham) score**. This indicates that the email originates from a trusted domain with consistent authentication practices.
+- However, if the domain fails DMARC validation but is found in the allow list, it receives a **positive (spam) score**. This scenario signifies an anomaly: a trusted domain that was expected to pass authentication checks has failed to do so, thereby raising suspicion.
 

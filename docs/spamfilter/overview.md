@@ -6,21 +6,9 @@ sidebar_position: 1
 
 Spam filtering is an essential component of any modern mail server, designed to sift through vast amounts of incoming email to identify and segregate unsolicited or potentially harmful messages. These unsolicited messages, commonly known as spam, not only clutter an individual's inbox but can also pose significant security risks. Efficient spam filtering ensures that genuine, legitimate emails reach their intended recipients, while unwanted or malicious emails are quarantined or discarded.
 
-Stalwart Mail Server includes a comprehensive Spam and Phishing filter that provides a robust defense against such unwanted emails. This filter is built into Stalwart Mail Server and consists of multiple Sieve scripts, which allow administrators to effortlessly modify its behavior or introduce new rules to better suit their specific requirements. 
+Stalwart Mail Server includes a comprehensive Spam and Phishing filter that provides a robust defense against such unwanted emails. This filter is built into Stalwart Mail Server and consists of multiple customizable rules, which allow administrators to effortlessly modify its behavior or introduce new rules to better suit their specific requirements. 
 
-It's worth noting that Stalwart's Spam and Phishing filter offers a protection level on par with popular tools such as RSpamd and SpamAssassin. This level of protection is no coincidence; the bulk of the spam/phishing rules present in Stalwart Mail Server have been ported directly from RSpamd, with a handful also derived from SpamAssassin. This synthesis of top-tier rules, combined with the customization offered by Sieve scripts, ensures that Stalwart Mail Server delivers an unparalleled email filtering experience.
-
-## Installation and updates
-
-Upon the initial execution of Stalwart, the Spam filter rules are automatically retrieved from the GitHub repository and stored locally as part of the configuration file. This ensures that the Spam filter is readily available and updated without manual intervention. 
-
-Staying current with the latest Spam filter rules is simple. Administrators can download and update new rule updates automatically by navigating to `Maintenance` > `Update SPAM rules` within the [Webadmin](/docs/management/webadmin/overview) interface. This feature ensures that the Spam filter remains up-to-date with the latest rules and security enhancements.
-
-:::tip Note
-
-By default the Spam filter rules are downloaded from `https://get.stalw.art/resources/config/spamfilter.toml`, but this can be changed by setting the `config.resource.spam-filter` key to a different URL or a local file (specified as `file:///path/to/spamfilter.toml`).
-
-:::
+It's worth noting that Stalwart's Spam and Phishing filter offers a protection level on par with popular tools such as RSpamd and SpamAssassin. This level of protection is no coincidence; the bulk of the spam/phishing rules present in Stalwart Mail Server have been ported directly from RSpamd, with a handful also derived from SpamAssassin. This synthesis of top-tier rules, combined with the customization offered by [expressions](/docs/configuration/expressions/overview), ensures that Stalwart Mail Server delivers an unparalleled email filtering experience.
 
 ## Tags and Scores
 
@@ -39,23 +27,24 @@ The `X-Spam-Status` header succinctly indicates whether the message is classifie
 Here's a practical illustration of what these headers might look like:
 
 ```
-X-Spam-Status: No, score=-0.29
-X-Spam-Result: RCPT_COUNT_ONE (0),
-	R_DKIM_ALLOW (-0.2),
-	DKIM_SIGNED (0),
-	FROM_HAS_DN (0),
-	ARC_NA (0),
-	DMARC_POLICY_ALLOW (-0.5),
-	FORGED_SENDER (0.3),
-	TO_DN_NONE (0),
-	URIBL_BLOCKED (0),
-	MIME_HTML_ONLY (0.2),
-	R_SPF_ALLOW (-0.2),
-	RCVD_COUNT_ZERO (0),
-	TO_MATCH_ENVRCPT_ALL (0),
-	FROM_NEQ_ENVFROM (0),
-	ONCE_RECEIVED (0.1),
-	RCVD_TLS_LAST (0)
+X-Spam-Result: DMARC_POLICY_ALLOW (-0.50),
+	DKIM_ALLOW (-0.20),
+	SPF_ALLOW (-0.20),
+	ONCE_RECEIVED (0.10),
+	RCVD_NO_TLS_LAST (0.10),
+	MV_CASE (0.50),
+	R_MISSING_CHARSET (0.50),
+	URI_COUNT_ODD (0.50),
+	CT_EXTRA_SEMI (1.00),
+	MID_RHS_MATCH_FROM (1.00),
+	RDNS_NONE (1.00),
+	R_PARTS_DIFFER (1.00),
+	RBL_SPAMHAUS_CSS (2.00),
+	RBL_VIRUSFREE_BOTNET (2.00),
+	RBL_BARRACUDA (4.00),
+	ABUSE_SURBL (5.00),
+	DBL_SPAM (6.50)
+X-Spam-Status: Yes, score=13.45
 ```
 
 This detailed feedback empowers users and administrators alike, granting them the capability to make informed decisions about how to handle incoming emails.
