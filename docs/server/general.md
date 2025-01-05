@@ -44,7 +44,7 @@ Since sets are not supported in TOML, if you are using an editor that fails to p
 "203.0.113.0/24" = ""
 ```
 
-If [fail2ban](/docs/auth/authentication/security#fail2ban) is enabled, the server will automatically block IP addresses that exceed the configured number of failed authentication attempts. The most practical way to manage blocked IPs in the `server.blocked-ip` setting is through the [web-admin](/docs/management/webadmin/overview) or the [command-line interface](/docs/management/cli/overview). 
+If [fail2ban](/docs/server/auto-ban) is enabled, the server will automatically block IP addresses that exceed the configured number of failed authentication attempts. The most practical way to manage blocked IPs in the `server.blocked-ip` setting is through the [web-admin](/docs/management/webadmin/overview) or the [command-line interface](/docs/management/cli/overview). 
 
 ## IP address allowlist
 

@@ -32,11 +32,6 @@ The following functions are available for use in expressions in Stalwart Mail Se
 
 ### In-Memory Store Functions
 
-#### `sql_query`
-- **Description**: Executes an SQL query against a specified in-memory store and returns the result.
-- **Arguments**: 3 (In-Memory Store ID, Query, Arguments)
-- **Example**: `sql_query("", "SELECT disk_usage FROM quotas WHERE user = ? AND domain = ?", [authenticated_as, rcpt_domain])` would retrieve the value of the `disk_usage` column from the SQL database.
-
 #### `key_get`
 - **Description**: Retrieves the value associated with a given key from a specified in-memory store or the default in-memory store if none is specified.
 - **Arguments**: 2 (In-Memory Store ID, Key Name)
@@ -61,6 +56,13 @@ The following functions are available for use in expressions in Stalwart Mail Se
 - **Description**: Increments the value of a specified counter in an in-memory store by a specified amount, creating the counter if it does not exist.
 - **Arguments**: 3 (In-Memory Store ID, Counter Name, Increment Value)
 - **Example**: `counter_incr("", "email_count", 1)` would increment the value of the `email_count` counter by 1 in the default in-memory store.
+
+### SQL Store Functions
+
+#### `sql_query`
+- **Description**: Executes an SQL query against a specified in-memory store and returns the result.
+- **Arguments**: 3 (Data Store ID, Query, Arguments)
+- **Example**: `sql_query("", "SELECT disk_usage FROM quotas WHERE user = ? AND domain = ?", [authenticated_as, rcpt_domain])` would retrieve the value of the `disk_usage` column from the SQL database.
 
 ### DNS Functions
 
@@ -163,6 +165,56 @@ These functions expand the capabilities of Stalwart Mail Server, allowing for dy
 - **Arguments**: 2 (String, Substring)
 - **Example**: `ends_with("Hello World", "World")` would return `true`.
 
+#### `lines`
+- **Description**: Splits a string into an array of lines.
+- **Arguments**: 1 (String)
+- **Example**: `lines("hello\nworld")` would return `["hello", "world"]`.
+
+#### `substring`
+- **Description**: Extracts a substring from a string using start and end indices.
+- **Arguments**: 3 (String, Start Index, End Index)
+- **Example**: `substring("hello world", 0, 5)` would return `"hello"`.
+
+#### `strip_prefix`
+- **Description**: Removes a specified prefix from a string if it exists.
+- **Arguments**: 2 (String, Prefix)
+- **Example**: `strip_prefix("hello world", "hello ")` would return `"world"`.
+
+#### `strip_suffix`
+- **Description**: Removes a specified suffix from a string if it exists.
+- **Arguments**: 2 (String, Suffix)
+- **Example**: `strip_suffix("hello world", " world")` would return `"hello"`.
+
+#### `split`
+- **Description**: Splits a string by a delimiter into an array.
+- **Arguments**: 2 (String, Delimiter)
+- **Example**: `split("hello,world", ",")` would return `["hello", "world"]`.
+
+#### `rsplit`
+- **Description**: Splits a string by a delimiter into an array, starting from the right.
+- **Arguments**: 2 (String, Delimiter)
+- **Example**: `rsplit("hello.world.com", ".")` would return `["hello", "world", "com"]`.
+
+#### `split_once`
+- **Description**: Splits a string by a delimiter into two parts at the first occurrence.
+- **Arguments**: 2 (String, Delimiter)
+- **Example**: `split_once("key=value=extra", "=")` would return `["key", "value=extra"]`.
+
+#### `rsplit_once`
+- **Description**: Splits a string by a delimiter into two parts at the last occurrence.
+- **Arguments**: 2 (String, Delimiter)
+- **Example**: `rsplit_once("key=value=extra", "=")` would return `["key=value", "extra"]`.
+
+#### `split_n`
+- **Description**: Splits a string by a delimiter into an array with a maximum number of splits.
+- **Arguments**: 3 (String, Delimiter, Max Splits)
+- **Example**: `split_n("a,b,c,d", ",", 2)` would return `["a", "b", "c,d"]`.
+
+#### `split_words`
+- **Description**: Splits a string into an array of words.
+- **Arguments**: 1 (String)
+- **Example**: `split_words("hello world")` would return `["hello", "world"]`.
+
 ### Array Functions
 
 #### `count`
@@ -204,6 +256,11 @@ These functions expand the capabilities of Stalwart Mail Server, allowing for dy
 
 ### Miscellaneous Functions
 
+#### `hash`
+- **Description**: Generates a hash of the input string using the specified algorithm.
+- **Arguments**: 2 (String, Algorithm)
+- **Example**: `hash("hello", "sha256")`
+
 #### `is_empty`
 - **Description**: Checks if the given value is empty.
 - **Arguments**: 1 (Value)
@@ -234,3 +291,7 @@ These functions expand the capabilities of Stalwart Mail Server, allowing for dy
 - **Arguments**: 1 (IP Address)
 - **Example**: `ip_reverse_name("192.0.2.1")` would return `"1.2.0.192"`.
 
+#### `if_then`
+- **Description**: Conditional operation returning one of two values based on a condition.
+- **Arguments**: 3 (Condition, True Value, False Value)
+- **Example**: `if_then(is_empty(value), "empty", "not empty")`

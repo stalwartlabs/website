@@ -1,0 +1,35 @@
+---
+slug: next-gen-spam-filter
+title: "Goodbye Spam: Introducing Faster, Smarter Spam Filtering"
+authors: [mdecimus]
+tags: [spam, filter, email, security, stalwart, mail, server]
+---
+
+As we step into 2025, we're excited to share some significant enhancements to [Stalwart Mail Server](https://github.com/stalwartlabs/mail-server) version `0.11.0`, starting with a complete overhaul of its built-in spam filter. These changes bring dramatic improvements in speed, ease of use, and flexibility while addressing feedback from our community. Here’s a closer look at what’s new.
+
+## A Faster, Smarter Spam Filter
+
+In earlier versions of Stalwart Mail Server, the spam filter was implemented as a Sieve script. This design choice was inspired by platforms like Rspamd, which use scripting languages like Lua to allow customizations. However, over time, we identified two key challenges with this approach. First, because it was an interpreted script, the spam filter’s performance was slightly slower than we’d like. Second, many users found it complicated to update the script when adding custom rules or configuring custom DNSBL (Domain Name System Blocklist) servers.
+
+To address these issues, we rewrote the spam filter entirely in Rust. The result is a system that is five times faster than before, delivering superior performance while keeping resource usage minimal. Moreover, defining new rules or adding DNSBL servers is now as simple as editing the configuration file—no scripting expertise required. This shift eliminates complexity while maintaining the high level of customization our users expect. For those who still need advanced control, Stalwart continues to support custom Sieve scripts and expressions, ensuring maximum flexibility.
+
+![stalwart spam warrior](./img/social-card.jpg)
+
+## Enhanced Training
+
+One of the most requested features we’ve added is the ability for end users to train their own spam filter Bayesian model. Now, users can customize their spam filtering by simply moving messages to and from the "Junk Mail" folder or by adding and removing the `$Junk` flag. This personalized approach allows each account to maintain its own tailored spam filter, providing greater accuracy and user satisfaction.
+
+## Improved Performance
+
+This update isn’t just about the spam filter. We’ve also made broader performance enhancements to Stalwart Mail Server. Previously, we relied on LRU (Least Recently Used) caches. With this release, we’ve switched to scan-resistant S3-FIFO caches, offering better performance under heavy workloads. Additionally, we’ve optimized Stalwart’s handling of large distributed SMTP queues, ensuring smoother operation in clustered environments. These changes make Stalwart even more capable of handling demanding enterprise setups.
+
+## Meet Us at FOSDEM'25
+
+We’re thrilled to announce that Stalwart Mail Server will be featured at [FOSDEM’25](https://fosdem.org/2025/schedule/event/fosdem-2025-4571-stalwart-mail-server/)! Join us on February 1st at 12:00 PM in Brussels, where we’ll showcase these new features and share insights into what’s coming next for Stalwart. This is a fantastic opportunity to connect with our team, ask questions, and explore how Stalwart can power your email infrastructure.
+
+## Upgrade Today
+
+These improvements are available now, and we’re confident they’ll make a big difference for administrators and users alike. Whether you’re drawn to the speed of the new spam filter, the enhanced training capabilities, or the overall performance boosts, this update is designed to help you get the most out of Stalwart Mail Server.
+
+As always, thank you for choosing Stalwart. We’re committed to delivering a reliable, feature-rich email server that evolves with your needs. Here’s to a productive and spam-free 2025!
+

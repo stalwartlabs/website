@@ -57,6 +57,31 @@ tag = [ { if = "octets[0] != 127", then = "false" },
 		{ else = false } ]
 scope = "ip"
 ```
+## Core DNSBLs
+
+Core DNSBL servers is a list of predefined DNS-based Blocklist (DNSBL) servers maintained by Stalwart Labs. These servers are identified by an ID starting with `STWT_` and include popular DNSBL providers such as Spamhaus, Spamcop, Barracuda, and dozens of others. Core DNSBL servers are regularly updated to ensure they remain effective against the latest spam sources and threats.
+
+The latest version of core DNSBL servers is maintained in the [Spam Filter repository](https://github.com/stalwartlabs/spam-filter). Stalwart Mail Server can be configured to automatically download and apply the latest rule [updates](/docs/spamfilter/settings/general#updates), ensuring the DNSBL checks stay current without manual intervention.
+
+Administrators should avoid modifying `STWT_` core DNSBL server configurations directly, as any changes will be overwritten during the next update. The only exception is the `enable` setting, which allows administrators to control whether a core DNSBL server is active. This setting is preserved across updates. If a core DNSBL server requires modification beyond enabling or disabling it, the recommended approach is to disable the core server and create a custom DNSBL server configuration with the desired changes. This ensures that customizations are retained while still benefiting from updates to the core DNSBL server list.
+
+Example:
+
+```toml
+[spam-filter.dnsbl.server.STWT_DNSBL_SERVER]
+enable = false
+
+[spam-filter.dnsbl.server.STWT_MY_DNSBL_SERVER]
+enable = true
+zone = "zone expression"
+tag = "tag expression"
+scope = "ip"
+```
+
+By following this approach, administrators can customize the behavior of DNSBL server checks while maintaining compatibility with automatic updates. This ensures that the server remains both flexible and equipped with the latest anti-spam resources.
+
+
+
 
 ## Limits
 
@@ -75,5 +100,4 @@ ip = 50
 domain = 50
 email = 50
 url = 50
-
 ```

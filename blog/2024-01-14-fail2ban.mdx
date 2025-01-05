@@ -19,15 +19,15 @@ One key difference in our approach is how we handle the banning of IP addresses.
 
 ### Fully Integrated
 
-Another significant aspect of our [fail2ban](/docs/auth/authentication/security#fail2ban) system is its integration across all mail server services. Whether it be JMAP, IMAP, SMTP, or ManageSieve, authentication failures in any of these services contribute to the ban threshold. This comprehensive coverage ensures that the security of one service is not compromised at the expense of another.
+Another significant aspect of our [fail2ban](/docs/server/auto-ban) system is its integration across all mail server services. Whether it be JMAP, IMAP, SMTP, or ManageSieve, authentication failures in any of these services contribute to the ban threshold. This comprehensive coverage ensures that the security of one service is not compromised at the expense of another.
 
 ### Advanced Tracking Beyond IP Addresses
 
-A standout feature of our [fail2ban](/docs/auth/authentication/security#fail2ban)  system is its ability to track authentication failures not only by IP address but also by login name. This is particularly vital in defending against distributed brute-force attacks, where attackers might use numerous IP addresses to target a single account. Our system intelligently identifies such patterns and, after a certain number of failed attempts, blocks further authentication efforts for that account, regardless of the IP used. This means that an attacker cannot simply hop IP addresses to bypass security measures.
+A standout feature of our [fail2ban](/docs/server/auto-ban)  system is its ability to track authentication failures not only by IP address but also by login name. This is particularly vital in defending against distributed brute-force attacks, where attackers might use numerous IP addresses to target a single account. Our system intelligently identifies such patterns and, after a certain number of failed attempts, blocks further authentication efforts for that account, regardless of the IP used. This means that an attacker cannot simply hop IP addresses to bypass security measures.
 
 ### Conclusion
 
-The introduction of this integrated [fail2ban](/docs/auth/authentication/security#fail2ban)  system in version 0.5.3 is a testament to our dedication to providing top-tier security for our users. This advanced security feature is meticulously designed to address and neutralize a wide array of cyber threats, especially sophisticated brute-force attacks.
+The introduction of this integrated [fail2ban](/docs/server/auto-ban)  system in version 0.5.3 is a testament to our dedication to providing top-tier security for our users. This advanced security feature is meticulously designed to address and neutralize a wide array of cyber threats, especially sophisticated brute-force attacks.
 
 We are proud to bring this new level of security to [Stalwart Mail Server](https://github.com/stalwartlabs/mail-server). This update reflects our ongoing commitment to adapting and evolving in the face of emerging cyber threats. With the integration of our fail2ban system, [Stalwart Mail Server](https://github.com/stalwartlabs/mail-server) version 0.5.3 stands as a more secure, reliable, and resilient solution for your email server needs.
 
