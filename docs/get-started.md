@@ -13,7 +13,7 @@ When installing Stalwart Mail server you will be asked to specify a backend for 
 - [Data store](/docs/storage/data): Where email metadata, folders, and various settings are stored. Essentially, it contains all the data except for large binary objects (blobs).
 - [Blob store](/docs/storage/blob): Used for storing large binary objects such as emails, sieve scripts, and other files.
 - [Full-text search store](/docs/storage/fts): Dedicated to indexing for full-text search, enhancing the speed and efficiency of text-based queries
-- [In-memory store](/docs/storage/in-memory): A key-value storage used primarily by the SMTP server and anti-spam components. It stores sender reputation information, bayesian classifier models, greylist data, message reply tracking and other similar data.
+- [In-memory store](/docs/storage/in-memory): A key-value storage used by different security, clustering and anti-spam components. It stores rate limiters, distributed locks, bayesian classifier models, sender reputation data, message reply tracking and other similar data.
 
 The following table summarizes the supported backends available for each store type:
 

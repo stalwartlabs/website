@@ -61,7 +61,7 @@ let "llm_response" "llm_prompt('gpt-4', prompt + '\n\nSubject: ' + subject + '\n
 
 # Set the folder name
 if eval "contains(['Family', 'Cycling', 'Work', 'Junk Mail'], llm_response)" {
-    fileinto "llm_response";
+    fileinto "${llm_response}";
 }
 ```
 
