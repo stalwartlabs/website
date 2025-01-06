@@ -13,8 +13,6 @@ In earlier versions of Stalwart Mail Server, the spam filter was implemented as 
 
 To address these issues, we rewrote the spam filter entirely in Rust. The result is a system that is five times faster than before, delivering superior performance while keeping resource usage minimal. Moreover, defining new rules or adding DNSBL servers is now as simple as editing the configuration file—no scripting expertise required. This shift eliminates complexity while maintaining the high level of customization our users expect. For those who still need advanced control, Stalwart continues to support custom Sieve scripts and expressions, ensuring maximum flexibility.
 
-![stalwart spam warrior](./img/social-card.jpg)
-
 ## Enhanced Training
 
 One of the most requested features we’ve added is the ability for end users to train their own spam filter Bayesian model. Now, users can customize their spam filtering by simply moving messages to and from the "Junk Mail" folder or by adding and removing the `$Junk` flag. This personalized approach allows each account to maintain its own tailored spam filter, providing greater accuracy and user satisfaction.
