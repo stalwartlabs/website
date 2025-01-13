@@ -8,11 +8,11 @@ Stalwart Mail Server can be configured to automatically sign outgoing messages w
 
 - `ED25519-SHA256`: This algorithm uses the Edwards-Curve Digital Signature Algorithm, which is known for its strong security and efficiency in processing.
 - `RSA-SHA256`: Provides robust security by combining RSA encryption with the SHA-256 hashing algorithm, making it suitable for modern security demands.
-- `RSA-SHA1`: Although supported, it is less secure than RSA-SHA256 and is generally not recommended for use. RSA-SHA1 can still be used for legacy systems that require compatibility.
+- `RSA-SHA1`: Although supported, it is less secure than RSA-SHA256 and is not recommended for use. RSA-SHA1 can still be used for legacy systems that require compatibility.
 
-When using RSA-based DKIM signatures, it is recommended that the key length be no less than 1024 bits. However, for enhanced security, keys larger than 1024 bits are advised. RSA keys of smaller lengths are more susceptible to cryptographic attacks, thereby compromising the security integrity of the email verification process.
+When using RSA-based DKIM signatures, it is recommended that the key size is at least 2048 bits. RSA keys smaller than 1024 bits are more susceptible to cryptographic attacks, thereby compromising the security integrity of the email verification process.
 
-The list of signatures to use is configured by the `auth.dkim.sign` parameter. For example, to sign each message with both RSA and ED25519 signatures:
+The list of signatures to use is configured by the `auth.dkim.sign` parameter. For example, to sign each message with both RSA and Ed25519 signatures:
 
 ```toml
 [auth.dkim]
@@ -29,12 +29,12 @@ DKIM signatures are defined under the `signature.<name>` key with the following 
 - `selector`: The selector used to identify the DKIM public key.
 - `headers`: A list of headers to be signed.
 - `algorithm`: The encryption algorithm used for the DKIM signature. Supported algorithms include `ed25519-sha256`, `rsa-sha-256` and `rsa-sha-1`.
-- `canonicalization`: The method used to canonicalize the signed headers and body of the message. Expects two `simple` or `relaxed` values separated by a `/`.
+- `canonicalization`: The method used to canonicalize the signed headers and body of the message. Expects two `simple` or `relaxed` (recommended) values separated by a `/`.
 - `expire`: The amount of time the DKIM signature is valid for (optional).
 - `third-party`: Authorized third-party signature value (optional).
 - `third-party-algo`: The hashing algorithm used to verify third-party signature DNS records (optional). Supported algorithms include `sha256` and `sha1`.
 - `auid`: The agent user identifier (optional).
-- `set-body-length`: Whether to include the body length in the DKIM signature (optional).
+- `set-body-length`: Whether to include the body length in the DKIM signature (optional, not recommended).
 - `report`: Whether to request reports when the signature verification fails (optional).
 
 Example:
@@ -44,7 +44,7 @@ Example:
 private-key = "%{file:/opt/stalwart-smtp/etc/private/dkim-rsa.key}%"
 domain = "example.org"
 selector = "rsa-default"
-headers = ["From", "To", "Date", "Subject", "Message-ID"]
+headers = ["From", "To", "Cc", "Date", "Subject", "Message-ID", "Organization", "MIME-Version", "Content-Type", "In-Reply-To", "References", "List-Id", "User-Agent", "Thread-Topic", "Thread-Index"]
 algorithm = "rsa-sha256"
 canonicalization = "relaxed/relaxed"
 expire = "10d"
@@ -55,10 +55,10 @@ report = true
 private-key = "%{file:/opt/stalwart-smtp/etc/private/dkim-ed.key}%"
 domain = "example.org"
 selector = "ed-default"
-headers = ["From", "To", "Date", "Subject", "Message-ID"]
+headers = ["From", "To", "Cc", "Date", "Subject", "Message-ID", "Organization", "MIME-Version", "Content-Type", "In-Reply-To", "References", "List-Id", "User-Agent", "Thread-Topic", "Thread-Index"]
 algorithm = "ed25519-sha256"
-canonicalization = "simple/simple"
-set-body-length = true
+canonicalization = "relaxed/relaxed"
+set-body-length = false
 report = false
 ```
 
@@ -101,14 +101,14 @@ Make sure to keep your private key safe and secure.
 
 ### Edwards-curve Digital Signature Algorithm
 
-Similarly, you can generate a new ED25519 DKIM key pair using the `openssl` command:
+Similarly, you can generate a new Ed25519 DKIM key pair using the `openssl` command:
 
 ```bash
 openssl genpkey -algorithm ed25519 -out ed_private.key
 openssl pkey -in ed_private.key -pubout -out ed_public.key
 ```
 
-These commands will generate a ED25519 private key and output it to a file named `ed_private.key`. The public key will be output to a file named `ed_public.key`.
+These commands will generate a Ed25519 private key and output it to a file named `ed_private.key`. The public key will be output to a file named `ed_public.key`.
 Make sure to keep your private key safe and secure.
 
 ## Publishing DKIM keys
@@ -121,7 +121,7 @@ In order to obtain the RSA DKIM public key in a format suitable to be published 
 $ openssl rsa -in private.key -pubout -outform der 2>/dev/null | openssl base64 -A
 ```
 
-Or, for the ED25519 DKIM public key:
+Or, for the Ed25519 DKIM public key:
 
 ```bash
 $ openssl asn1parse -in ed_public.key -offset 12 -noout -out /dev/stdout | base64
