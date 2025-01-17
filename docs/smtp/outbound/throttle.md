@@ -20,22 +20,27 @@ Throttles can either include both a concurrency limit and rate limit, or just on
 
 Memory usage of the rate limiters is controlled by the `limiter.capacity` and `limiter.shard` attributes in the configuration file. The `limiter.capacity` attribute specifies the maximum number of rate limiter entries that can be stored in memory, while the `limiter.shard` attribute determines the number of shards used to distribute the entries across the memory space. By default the number of shards is set to twice the number of CPUs available on the server. 
 
+## Delivery Threads
+
+Stalwart maintains a pool of delivery threads that are used to send messages both locally and to remote SMTP servers. It is important to configure the number of delivery threads to ensure that the server can handle the required load. A number too low can result in slow message delivery, while a number too high can lead to high memory usage and CPU load.
+
+The number of threads used to deliver messages to remote SMTP servers is controlled by the `queue.outbound.threads` attribute and the default value is set to 25 threads. For example, to increase the number of threads to 50:
+
+```toml
+[queue.threads]
+remote = 50
+```
+
+The number of threads used to deliver messages locally is controlled by the `queue.local.threads` attribute and the default value is set to 10 threads. For example, to increase the number of threads to 20:
+
+```toml
+[queue.threads]
+local = 20
+```
+
 ## Concurrency limit
 
 Concurrency limiting is the process of limiting the number of simultaneous connections to a remote server. This is useful in preventing overloading the local or remote server by establishing too many connections. For example, a rule can be configured to limit the number of concurrent connections to a single IP address to prevent overwhelming the remote host.
-
-### Global
-
-The global concurrency limit determines the maximum number of concurrent outbound connections that the server will allow. This limit applies to all outgoing connections and is configured in the `queue.outbound.concurrency` attribute. For example, to limit the server to maintain a maximum number of 5 concurrent outgoing connections globally:
-
-```toml
-[queue.outbound]
-concurrency = 5
-```
-
-By default, the global concurrency limit is set to 25.
-
-### Custom
 
 Custom concurrency limits can be imposed based on specific criteria. The `queue.throttle[].concurrency` attribute determines the number of concurrent outbound connections that the throttle will allow. For example, to limit the server to maintain a maximum number of 5 concurrent outgoing connections globally:
 
@@ -45,7 +50,7 @@ concurrency = 5
 enable = true
 ```
 
-Please note that the above example will impose a global concurrency limiter (just like the `queue.outbound.concurrency` attribute), to apply a more granular limiter please refer to the [throttle groups](#groups) section below.
+Please note that the above example will impose a global concurrency limiter, to apply a more granular limiter please refer to the [throttle groups](#groups) section below.
 
 ## Rate limit
 

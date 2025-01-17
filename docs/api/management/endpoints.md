@@ -2301,7 +2301,7 @@ print(r.json())
 ```json
 {
   "data": {
-    "lookup.default.hostname": "mx.fr.email"
+    "server.hostname": "mx.fr.email"
   }
 }
 ```
@@ -2319,7 +2319,7 @@ Status Code **200**
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
 |» data|object|false|none|none|
-|»» lookup.default.hostname|string|false|none|none|
+|»» server.hostname|string|false|none|none|
 
 <aside class="success">
 This operation does not require authentication

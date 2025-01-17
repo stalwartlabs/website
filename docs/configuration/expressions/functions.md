@@ -295,3 +295,8 @@ These functions expand the capabilities of Stalwart Mail Server, allowing for dy
 - **Description**: Conditional operation returning one of two values based on a condition.
 - **Arguments**: 3 (Condition, True Value, False Value)
 - **Example**: `if_then(is_empty(value), "empty", "not empty")`
+
+#### `config_get`
+- **Description**: Retrieves the value of a configuration parameter.
+- **Arguments**: 1 (Parameter Name)
+- **Example**: `config_get("server.hostname")`

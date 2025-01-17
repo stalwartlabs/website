@@ -8,13 +8,14 @@ This section of the configuration manual deals with some of the general settings
 
 ## Server Hostname
 
-The default server hostname is utilized in SMTP `EHLO` commands, as well as included in message headers and reports.
-This setting is configured using the `lookup.default.hostname` parameter in the configuration file:
+The default server hostname is utilized in SMTP `EHLO` commands, as well as included in message headers and reports. This setting is configured using the `server.hostname` parameter in the configuration file:
 
 ```toml
-[lookup.default]
+[server]
 hostname = "mail.example.org"
 ```
+
+If a `server.hostname` setting is not provided, the server will attempt to determine the hostname from the system configuration.
 
 ## Thread pool size
 

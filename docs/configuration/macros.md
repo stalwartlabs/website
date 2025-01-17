@@ -28,9 +28,11 @@ key = "%{env:OAUTH_SECRET}%"
 cert = "%{file:/etc/letsencrypt/live/mail.example.org/fullchain.pem}%"
 
 # Dynamic hostname using another configuration setting
-[lookup.default]
+[server]
+hostname = "mail.%{cfg:report.domain}%"
+
+[report]
 domain = "example.org"
-hostname = "mail.%{cfg:lookup.default.domain}%"
 ```
 
 ## Limitations

@@ -11,7 +11,7 @@ TLS Reporting is a mechanism for reporting on the certificate validation outcome
 Stalwart Mail Server [automatically analyzes](/docs/smtp/authentication/analysis) TLS reports received from external hosts and can also generate aggregate reports to inform other hosts about the results of TLS validation. Outgoing TLS reports are configured under the `report.tls.aggregate` key using the following options:
 
 - `from-name`: The name that will be used in the `From` header of the TLS report email.
-- `from-address`: The email address that will be used in the `From` header of the TLS report email.
+- `from-address`: The email address that will be used in the `From` header of the TLS report email. The default value is the expression `'noreply-tls@' + config_get('report.domain')`.
 - `org-name`: The name of the organization to be included in the report.
 - `send`: The frequency at which the TLS reports will be sent. The options are `hourly`, `daily`, `weekly`, or `never` to disable reporting.
 - `max-size`: The maximum size of the TLS report in bytes.

@@ -35,7 +35,7 @@ SPF authentication failure reporting refers to the process of generating reports
 Stalwart Mail Server [automatically analyzes](/docs/smtp/authentication/analysis) received SPF failure reports from external hosts and can also generate its own SPF reports to inform other hosts about the authentication outcomes of the signatures it has processed. Outgoing SPF failure reports are configured under the `report.spf` key using the following options:
 
 - `from-name`: The name that will be used in the `From` header of the SPF report email.
-- `from-address`: The email address that will be used in the `From` header of the SPF report email.
+- `from-address`: The email address that will be used in the `From` header of the SPF report email. The default value is the expression `'noreply-spf@' + config_get('report.domain')`.
 - `subject`: The subject name that will be used in the SPF report email.
 - `send`: The rate at which SPF reports will be sent to a given email address. When this rate is exceeded, no further SPF failure reports will be sent to that address. Set to `false` to disable SPF authentication failure reporting.
 - `sign`: The list of [DKIM](/docs/smtp/authentication/dkim/overview) signatures to use when signing the SPF report.

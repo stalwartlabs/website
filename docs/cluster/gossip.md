@@ -26,6 +26,17 @@ In order to start the gossip service, the following settings need to be specifie
 - `cluster.heartbeat`: This configuration defines how frequently the node will send a ping message to other nodes to maintain and verify network connectivity and node status. Default is 1 second.
 - `cluster.seed-nodes`: Seed nodes are essentially initial contact points for a node entering the cluster. These are typically stable and reliable nodes known to be part of the cluster network. When a new node starts, it connects to these seed nodes to get the current state of the cluster and to announce its presence to other nodes.
 
+## Node Roles
+
+In a cluster, nodes can take on different roles based on their responsibilities and capabilities. These roles help distribute the workload and ensure that the cluster operates efficiently. The following settings determine the roles that a node can perform within the cluster:
+
+- `cluster.roles.purge.stores`: A list of one or more node ids responsible for purging expired data from the database. This role ensures that the database remains clean and optimized by removing outdated or unnecessary data.
+- `cluster.roles.purge.accounts`: A list of one or more node ids responsible for purging accounts from the system. This role ensures that deleted emails and old changelogs are removed from the system to free up resources.
+- `cluster.roles.acme.renew`: A list of one or more node ids responsible for renewing ACME certificates. This role ensures that TLS certificates are kept up-to-date and valid.
+- `cluster.roles.metrics.calculate`: A list of one or more node ids responsible for calculating metrics and statistics for the cluster. This role involves processing and aggregating data to generate meaningful insights about the cluster's performance.
+- `cluster.roles.metrics.push`: A list of one or more node ids responsible for pushing metrics and statistics to external monitoring systems. This role involves sending data to monitoring tools for analysis and visualization.
+
+
 ## Example
 
 Here is an example of a configuration file with the necessary settings for the gossip service:
@@ -39,4 +50,15 @@ advertise-addr = "10.0.0.1"
 key = "my-secret-key"
 heartbeat = "5s"
 seed-nodes = ["10.0.0.5", "10.0.0.6"]
+
+[cluste.roles.purge]
+stores = [1, 2]
+accounts = [1, 2]
+
+[cluste.roles.acme]
+renew = [5]
+
+[cluste.roles.metrics]
+calculate = [3, 4]
+push = [4]
 ```

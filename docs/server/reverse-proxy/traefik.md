@@ -192,7 +192,7 @@ In the example below the proxy protocol is enabled on all mail ports except for 
 certificate.default.cert = "%{file:/data/certs/mail.example.com/cert.pem}%"
 certificate.default.default = true
 certificate.default.private-key = "%{file:/data/certs/mail.example.com/key.pem}%"
-lookup.default.hostname = "mail.example.com"
+server.hostname = "mail.example.com"
 server.http.hsts = true
 server.http.permissive-cors = false
 server.http.url = "protocol + '://' + key_get('default', 'hostname') + ':' + local_port"

@@ -42,6 +42,7 @@ Below is a mapping of key prefixes used by Stalwart Mail Server, including their
 | `KV_RATE_LIMIT_HTTP_AUTHENTICATED` | Rate limiting data for authenticated HTTP requests | 8            |
 | `KV_RATE_LIMIT_HTTP_ANONYMOUS`    | Rate limiting data for anonymous HTTP requests     | 9            |
 | `KV_RATE_LIMIT_IMAP`       | Rate limiting data for IMAP connections              | 10           |
+| `KV_TOKEN_REVISION`        | Revision number for access tokens                    | 11           |
 | `KV_REPUTATION_IP`         | Spam filter reputation data for IP addresses         | 12           |
 | `KV_REPUTATION_FROM`       | Spam filter reputation data for senders              | 13           |
 | `KV_REPUTATION_DOMAIN`     | Spam filter reputation data for domains              | 14           |
