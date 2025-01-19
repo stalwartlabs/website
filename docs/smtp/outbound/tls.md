@@ -1,10 +1,10 @@
 ---
-sidebar_position: 4
+sidebar_position: 3
 ---
 
 # TLS
 
-Stalwart Mail Server implements robust TLS support to ensure secure transmission of emails over the internet. TLS (Transport Layer Security) is essential for protecting data in transit, providing encryption, authentication, and integrity to prevent unauthorized access and tampering of email messages. Stalwart Mail Server’s TLS configuration is built on rustls, a modern, high-performance TLS library that prioritizes safety and correctness.
+Stalwart Mail Server implements TLS support to ensure secure transmission of emails over the internet. TLS (Transport Layer Security) is essential for protecting data in transit, providing encryption, authentication, and integrity to prevent unauthorized access and tampering of email messages. Stalwart Mail Server’s TLS configuration is built on rustls, a modern, high-performance TLS library that prioritizes safety and correctness.
 
 Stalwart Mail Server offers a range of configurable options for TLS, allowing administrators to fine-tune the security settings for both inbound and outbound email communication. The default configuration emphasizes security by rejecting outdated, insecure protocols and cipher suites. However, Stalwart also provides flexible mechanisms to adapt to real-world environments where some remote servers may have misconfigured or obsolete TLS setups.
 

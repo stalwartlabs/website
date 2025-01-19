@@ -4,13 +4,35 @@ sidebar_position: 2
 
 # Routing
 
-Stalwart Mail Server allows to define how messages should be delivered to their final destination through routing rules. Rules are configured under the `queue.outbound.next-hop` parameter, which can either point to a [remote host](#remote-hosts) defined in the configuration file or contain the value `false` which indicates that the message delivery should be done through DNS resolution. Routing rules are useful for tasks such as forwarding messages for local domains to a message store over LMTP.
+Message routing is the process of determining the final destination host to which an email message should be delivered. This step is essential for ensuring that messages are delivered to their intended recipients accurately and efficiently. In a mail server, routing involves resolving the recipient domain's address to identify the mail server responsible for accepting messages for that domain.
 
-## Remote hosts
+By default, **Stalwart Mail Server** uses **MX (Mail Exchange) resolution** to determine where to deliver outgoing messages. MX resolution is a DNS-based process that retrieves Mail Exchange records associated with the recipient's domain. These records specify which mail servers are authorized to handle email for that domain, along with their priority levels. During this process, Stalwart Mail Server queries the DNS for MX records of the recipient's domain. If multiple MX records are found, they are sorted based on their priority values, with the lowest number indicating the highest priority. The server attempts delivery to the highest-priority host first and, if that fails, proceeds to try the next available host in the sorted list.
 
-Remote hosts enable the definition of external SMTP and LMTP servers for the purpose of relaying messages. These servers are specified in the configuration file using the `remote.<id>` keys, where `<id>` is the internal identifier for the host.
+While MX resolution is the default mechanism, Stalwart Mail Server also provides a flexible way to customize routing behavior. Administrators can define specific delivery rules to override MX lookups, tailoring the routing process to fit unique organizational needs. These custom rules allow messages to be directed based on various criteria, such as the recipient domain, sender domain, network conditions, or even specific message content. This flexibility enables Stalwart Mail Server to support advanced routing requirements and adapt to complex email delivery scenarios.
 
-### Host Settings
+## Configuration
+
+Message routing is controlled through the `queue.outbound.next-hop` setting. This setting determines how the server selects the relay host for delivering messages. It expects an [expression](/docs/configuration/expressions/overview) which dynamically evaluates and returns the name of the relay host to use for message delivery. 
+
+When the `queue.outbound.next-hop` expression is evaluated, it must return the identifier of the desired relay host. This identifier specifies the host to which the message will be forwarded for delivery. If the expression evaluates to `false` instead of a relay host identifier, Stalwart Mail Server defaults to using **MX (Mail Exchange) resolution** to determine the delivery target. This fallback behavior ensures that the server can still route messages based on standard DNS records when no custom routing is explicitly defined.
+
+### Local delivery
+
+To route a message for local delivery, the `queue.outbound.next-hop` expression can return the special internal identifier `local`. When this identifier is returned, Stalwart Mail Server interprets it as an instruction to bypass MX resolution and deliver the message directly to a local mailbox or domain hosted on the server. This mechanism is particularly useful for ensuring that messages addressed to locally managed domains are handled entirely within the server, without attempting to route them through external hosts.
+
+For example, the following configuration can be used to deliver messages for local domains:
+
+```toml
+[queue.outbound]
+next-hop = [ { if = "is_local_domain('', rcpt_domain)", then = "'local'" }, 
+             { else = false } ]
+```
+
+### Relay hosts
+
+Relay hosts enable the definition of external SMTP and LMTP servers for the purpose of relaying messages. These servers are specified in the configuration file using the `remote.<id>` keys, where `<id>` is the internal identifier for the host.
+
+#### Host Settings
 
 For each remote host, the following parameters can be specified as sub-keys of `remote.<id>`:
 
@@ -18,31 +40,29 @@ For each remote host, the following parameters can be specified as sub-keys of `
 - `port`: The port on the remote server that should be used for the connection.
 - `protocol`: The communication protocol to use, with valid options being `lmtp` or `smtp`.
 
-### TLS Options
+#### TLS Options
 
 The configuration of TLS for remote servers is managed through the following parameters, which are located under the `remote.<id>.tls` key in the configuration file:
 
 - `implicit`: Specifies whether TLS should be implicitly established upon connecting to the remote host, or if it should be negotiated on a clear-text connection using the `STARTTLS` command (defaults to `true`).
 - `allow-invalid-certs`: A flag indicating whether self-signed and invalid certificates should be accepted (defaults to `false`).
 
-### Authentication
+#### Authentication
 
 Authentication can be configured using the following parameters located under the `remote.<id>.auth` key in the configuration file:
 
 - `username`: The username to be used for authentication.
 - `secret`: The password to be used for authentication. Can also be specified using an [environment variable](/docs/configuration/macros).
 
-## Local host
+### EHLO hostname
 
-In a setup where Stalwart Mail Server is run together with Stalwart JMAP, a special host type known as `local` is automatically created. This special host is not a traditional mail server with an IP address or domain name. Instead, it represents the local JMAP message store, the primary location where Stalwart Mail Server stores email messages.
-This local host allows Stalwart Mail Server to directly deliver messages to the local JMAP message store without the need for any network communication. This mechanism bypasses the typical SMTP or LMTP protocols that are commonly used for transferring messages between servers or to the final mailbox respectively.
+The `queue.outbound.hostname` parameter indicates which EHLO hostname to use when sending messages to remote SMTP servers. If not specified, the `config_get('server.hostname')` expression is be used.
 
-For example, the following configuration can be used to deliver messages for local domains to the local JMAP message store:
+Example:
 
 ```toml
 [queue.outbound]
-next-hop = [ { if = "is_local_domain('', rcpt_domain)", then = "'local'" }, 
-             { else = false } ]
+hostname = "'mx.example.org'"
 ```
 
 ## Examples

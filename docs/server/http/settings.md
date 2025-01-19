@@ -14,7 +14,7 @@ If unspecified, the server will use the following setting:
 
 ```toml
 [server.http]
-url = "protocol + '://' + key_get('default', 'hostname') + ':' + local_port"
+url = "protocol + '://' + config_get('server.hostname') + ':' + local_port"
 ```
 
 ## Response headers

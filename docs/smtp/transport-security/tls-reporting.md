@@ -30,7 +30,7 @@ max-size = 26214400 # 25 mb
 sign = "['rsa']"
 ```
 
-The report submitter address can be configured using the `report.submitter` attribute. If not specified, the `key_get('default', 'hostname')` expression is be used.
+The report submitter address can be configured using the `report.submitter` attribute. If not specified, the `config_get('server.hostname')` expression is be used.
 
 For example:
 

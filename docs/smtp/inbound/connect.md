@@ -14,7 +14,7 @@ Example:
 
 ```toml
 [session.connect]
-hostname = "key_get('default', 'hostname')"
+hostname = "config_get('server.hostname')"
 ```
 
 ## Greeting

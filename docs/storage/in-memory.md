@@ -9,7 +9,7 @@ In-memory data stores (such as Redis) are high-performance databases that store 
 In Stalwart Mail Server, in-memory stores play a crucial role in handling a wide variety of tasks. They are used for storing:
 
 - [Spam filter data](/docs/spamfilter/settings/database) such as sender reputation information, bayesian classifier models, greylist data, message reply tracking and other similar data.
-- [Rate limiting](/docs/smtp/inbound/throttle) and [fail2ban](/docs/server/auto-ban) data, such as the number of messages sent by a specific sender or the number of failed authentication attempts from a specific IP address.
+- [Rate limiting](/docs/smtp/queue/limits/rate-limit) and [fail2ban](/docs/server/auto-ban) data, such as the number of messages sent by a specific sender or the number of failed authentication attempts from a specific IP address.
 - Distributed locks for managing concurrent tasks, such as purging accounts, processing email queues, and running housekeeping tasks.
 - [OAuth authorization codes](/docs/auth/oauth/overview) to validate the authorization process.
 - [ACME tokens](/docs/server/tls/acme/overview) for SSL/TLS certificate management.
@@ -37,7 +37,7 @@ Below is a mapping of key prefixes used by Stalwart Mail Server, including their
 | `KV_RATE_LIMIT_SCAN`       | Rate limiting data for email scanning                | 3            |
 | `KV_RATE_LIMIT_LOITER`     | Rate limiting data for idle connections              | 4            |
 | `KV_RATE_LIMIT_AUTH`       | Rate limiting data for authentication attempts       | 5            |
-| `KV_RATE_LIMIT_HASH`       | Rate limiting data for SMTP throttles         | 6            |
+| `KV_RATE_LIMIT_SMTP`       | Rate limiting data for SMTP throttles         | 6            |
 | `KV_RATE_LIMIT_CONTACT`    | Rate limiting data for contact forms          | 7            |
 | `KV_RATE_LIMIT_HTTP_AUTHENTICATED` | Rate limiting data for authenticated HTTP requests | 8            |
 | `KV_RATE_LIMIT_HTTP_ANONYMOUS`    | Rate limiting data for anonymous HTTP requests     | 9            |

@@ -26,7 +26,7 @@ verify = [ { if = "listener = 'smtp'", then = "relaxed" },
 
 Stalwart Mail Server [automatically analyzes](/docs/smtp/authentication/analysis) received DMARC failure and aggregate reports from external hosts and can also generate its own DMARC reports to inform other hosts about the authentication outcomes of the DKIM signatures and SPF policies it has processed.
 
-The report submitter address can be configured using the `report.submitter` attribute. If not specified, the `key_get('default', 'hostname')` expression is be used.
+The report submitter address can be configured using the `report.submitter` attribute. If not specified, the `config_get('server.hostname')` expression is be used.
 
 For example:
 
