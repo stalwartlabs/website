@@ -31,7 +31,7 @@ path = "/var/data/stalwart/data"
 frequency = "0 3 *"
 ```
 
-## Un-deleting emails ⭐
+## Un-deleting emails
 
 Stalwart Mail Server Enterprise edition provides a powerful feature that allows the recovery of emails deleted by users, even after these emails have been expunged from the Deleted Items or Junk Mail folders. This ensures that crucial emails can be retrieved within a specified period, adding an extra layer of security and data recovery for your organization.
 

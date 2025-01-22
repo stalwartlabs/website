@@ -100,8 +100,6 @@ Before making your server publicly accessible, it is advisable to disable any [u
 
 :::
 
-### Getting Help
-
 ### Setup demonstration
 
 ![Setup screencast](/img/screencast-setup.gif)

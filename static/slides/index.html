@@ -1,0 +1,657 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>Stalwart Mail Server Presentation</title>
+
+	<link rel="stylesheet" href="css/reset.css">
+	<link rel="stylesheet" href="css/reveal.css">
+	<link rel="stylesheet" href="css/stalwart.css">
+	<link rel="stylesheet" href="css/monokai.css">
+
+	<style>
+		body:after {
+			content: url(./img/logo-white.png);
+			position: fixed;
+			display: block;
+			top: 0px;
+			right: 0px;
+			transform: scale(0.5);
+			transform-origin: top right;
+			z-index: 100;
+		}
+
+		.reveal .slides section img.slide-image {
+			max-width: min(95%, 760px) !important;
+			max-height: none !important;
+			width: auto !important;
+			height: auto !important;
+			display: block;
+			margin: auto;
+		}
+
+		.fragment.blur {
+			filter: blur(5px);
+		}
+
+		.fragment.blur.visible {
+			filter: none;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="reveal">
+		<div class="slides">
+
+			<section data-auto-animate>
+				<img src="img/logo-white.svg" />
+			</section>
+
+			<section data-auto-animate>
+				<h3><span>Introduction</span></h3>
+				<p><span>The email landscape before Stalwart</span></p>
+			</section>
+
+			<section style="text-align: left;" data-auto-animate>
+				<h4><span>Postfix + Dovecot: A Relic of Complexity</span></h4>
+				<small>Decades-old software, scattered tools, and a never-ending struggle to keep it
+					all running.<br />&nbsp;</small>
+				<ul style="font-size: 0.6em;">
+					<li class="fragment fade-in-then-semi-out">Mail server software remains largely unchanged for
+						over 20 years</li>
+					<li class="fragment fade-in-then-semi-out">Requires multiple tools, each with its own
+						configuration file and quirks</li>
+					<li class="fragment fade-in-then-semi-out">Maintenance demands expertise across a wide range of
+						unrelated systems</li>
+					<li class="fragment fade-in-then-semi-out">Debugging issues often involves sifting through
+						scattered logs and configurations</li>
+					<li class="fragment fade-in-then-semi-out">Dependencies across tools create fragile setups prone
+						to breaking</li>
+					<li class="fragment fade-in-then-semi-out">No unified interface, admins must juggle
+						numerous separate UIs and CLI tools</li>
+					<li class="fragment fade-in-then-semi-out">Not designed for scalability or modern email
+						protocols</li>
+				</ul>
+			</section>
+
+			<section style="text-align: left;" data-auto-animate>
+				<h4><span>Mail-in-a-box: Simplified, yet still Complex</span></h4>
+				<small>Solutions like Mail-in-a-Box attempt to simplify but
+					only mask the complexity.</small>
+				<ul style="font-size: 0.6em;">
+					<li class="fragment fade-in-then-semi-out">A quick fix that doesn't solve the long-term
+						headaches of traditional mail servers.</li>
+					<li class="fragment fade-in-then-semi-out">Wraps complexity in a box, but the challenges of
+						maintenance and scaling remain.</li>
+					<li class="fragment fade-in-then-semi-out">Streamlines setup but leaves the underlying
+						fragmentation untouched.
+					</li>
+					<li class="fragment fade-in-then-semi-out">Running a mail server shouldn’t feel like
+						assembling a jigsaw puzzle with a thousand pieces...
+					</li>
+				</ul>
+				<p style="font-size: 0.6em; text-align: center;"><span class="fragment fade-in-then-semi-out">Dovecot
+						(IMAP)</span>
+					<span class="fragment fade-in-then-semi-out">+ Postfix (MTA)</span>
+					<span class="fragment fade-in-then-semi-out">+ SpamAssassin
+					</span>
+					<span class="fragment fade-in-then-semi-out">+ postgrey
+					</span>
+					<span class="fragment fade-in-then-semi-out">+ OpenDKIM
+					</span>
+					<span class="fragment fade-in-then-semi-out">+ OpenDMARC
+					</span>
+					<span class="fragment fade-in-then-semi-out">+ OpenSSL
+					</span>
+					<span class="fragment fade-in-then-semi-out">+ Fail2ban
+					</span>
+					<span class="fragment fade-in-then-semi-out">+ Certbot
+					</span>
+					<span class="fragment fade-in-then-semi-out">+ Munin
+					</span>
+					<span class="fragment fade-in-then-semi-out">+ Nginx
+					</span>
+					<span class="fragment fade-in-then-semi-out">+ PHP
+					</span>
+				</p>
+			</section>
+
+			<section data-auto-animate>
+				<h3>Say Goodbye to Complexity</h3>
+			</section>
+
+			<section data-auto-animate data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h4>... and say EHLO to <span data-id="cplx">Stalwart</span></h4>
+				<pre data-id="code-animation"><code class="markdown" data-trim><script type="text/template">
+220 mail.stalw.art Stalwart ESMTP at your service</script>
+</code></pre>
+			</section>
+
+			<section data-auto-animate data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h4>... and say EHLO to <span data-id="cplx">Stalwart</span></h4>
+				<pre data-id="code-animation"><code class="sh" data-trim>
+220 mail.stalw.art Stalwart ESMTP at your service
+EHLO fosdem.org
+</code></pre>
+			</section>
+
+			<section data-auto-animate data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h4>... and say EHLO to <span data-id="cplx">Stalwart</span></h4>
+				<pre data-id="code-animation"><code class="sh" data-trim>
+220 mail.stalw.art Stalwart ESMTP at your service
+EHLO fosdem.org
+250-mail.stalw.art you had me at EHLO
+250-STARTTLS
+250-SMTPUTF8
+250-SIZE 104857600
+250-REQUIRETLS
+250-PIPELINING
+250-NO-SOLICITING
+250-ENHANCEDSTATUSCODES
+250-CHUNKING
+250-BINARYMIME
+250 8BITMIME
+</code></pre>
+			</section>
+
+
+			<section data-auto-animate data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h3><span data-id="stalwart">Stalwart Mail Server</span></h3>
+				<p><span data-id="text">Secure and Modern All-in-One Mail Server</span></p>
+			</section>
+
+			<section style="text-align: left;" data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)"
+				data-auto-animate>
+				<h4><span data-id="stalwart">Stalwart Mail Server</span></h4>
+				<small data-id="text"><span data-id="text">Secure and Modern All-in-One Mail Server</span>
+					featuring:</small>
+				<ul style="font-size: 0.8em;">
+					<li class="fragment custom blur">SMTP, JMAP, IMAP4, POP3 and ManageSieve server</li>
+					<li class="fragment custom blur">Built-in spam and phishing filter</li>
+					<li class="fragment custom blur">Web-based administration</li>
+					<li class="fragment custom blur">Scalable & Robust</li>
+					<li class="fragment custom blur">Modern & Programmable</li>
+					<li class="fragment custom blur">Secure & Memory safe</li>
+					<li class="fragment custom blur">Available for Unix, Windows and Docker</li>
+				</ul>
+			</section>
+
+			<section data-auto-animate data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h4><span data-id="stalwart">Stalwart Mail Server</span></h4>
+				<small data-id="text">A streamlined, all-in-one mail server that’s ready in
+					minutes.</small>
+				<pre data-id="code-animation2"><code class="sh" data-trim style="font-size: 0.8em;"><script type="text/template">
+$ curl --proto '=https' --tlsv1.2 -sSf https://get.stalw.art/install.sh -o install.sh</script>
+</code></pre>
+			</section>
+
+			<section data-auto-animate data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h4><span data-id="stalwart">Stalwart Mail Server</span></h4>
+				<small data-id="text">A streamlined, all-in-one mail server that’s ready in
+					minutes.</small>
+				<pre data-id="code-animation2"><code class="sh" data-trim style="font-size: 0.8em;"><script type="text/template">
+$ curl --proto '=https' --tlsv1.2 -sSf https://get.stalw.art/install.sh -o install.sh
+$ sudo sh install.sh /opt/stalwart-mail
+</script></code></pre>
+			</section>
+
+			<section data-auto-animate data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h4><span data-id="stalwart">Stalwart Mail Server</span></h4>
+				<small data-id="text">A streamlined, all-in-one mail server that’s ready in
+					minutes.</small>
+				<pre data-id="code-animation2"><code class="sh" data-trim style="font-size: 0.8em;"><script type="text/template">
+$ curl --proto '=https' --tlsv1.2 -sSf https://get.stalw.art/install.sh -o install.sh
+$ sudo sh install.sh /opt/stalwart-mail
+✅ Configuration file written to /opt/stalwart-mail/etc/config.toml
+🔑 Your administrator account is 'admin' with password 'w95Yuiu36E'.
+🎉 Installation complete! Continue the setup at http://example.org:8080/login
+</script></code></pre>
+			</section>
+
+			<section data-auto-animate data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h4><span data-id="stalwart">Stalwart Mail Server</span></h4>
+				<small data-id="text">A streamlined, all-in-one mail server that’s ready in
+					minutes.</small>
+				<img src="img/s_install.gif" class="slide-image" />
+			</section>
+
+			<section data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h3>Protocol-rich Message Store</h3>
+				<p>Compatible with modern and legacy protocols.</p>
+			</section>
+
+			<section style="text-align: left;" data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h4>JSON Meta Application Protocol</h4>
+				<small>Full implementation of JMAP and most extensions:</small>
+				<ul style="font-size: 0.8em;">
+					<li class="fragment custom blur">JMAP Core (<em>RFC 8620</em>)</li>
+					<li class="fragment custom blur">JMAP for Mail (<em>RFC 8621</em>)</li>
+					<li class="fragment custom blur">JMAP for Sieve Scripts (<em>draft-22</em>)</li>
+					<li class="fragment custom blur">JMAP for WebSocket (<em>RFC 8887</em>)</li>
+					<li class="fragment custom blur">JMAP Blob Management (<em>RFC 9404</em>)</li>
+					<li class="fragment custom blur">JMAP for Quotas (<em>RFC 9425</em>)</li>
+					<li class="fragment custom blur">JMAP for Calendars and Contacts (<em>coming Q4 2025</em>)</li>
+				</ul>
+			</section>
+
+			<section style="text-align: left;" data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h4>Internet Message Access Protocol</h4>
+				<small>Modern IMAP implementation including:</small>
+				<ul style="font-size: 0.8em;">
+					<li class="fragment custom blur">IMAP4 revision 2 support (<em>RFC 9051</em>)</li>
+					<li class="fragment custom blur">IMAP4 revision 1 (<em>RFC 3501</em>) compatible</li>
+					<li class="fragment custom blur">Conditional Store and Quick Resynchronization (<em>RFC
+							7162</em>)</li>
+					<li class="fragment custom blur">Access Control Lists (<em>RFC 4314</em>)</li>
+					<li class="fragment custom blur">... and dozens of other IMAP extensions</li>
+				</ul>
+			</section>
+
+			<section style="text-align: left;" data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h4>Legacy Protocols</h4>
+				<small>Broad compatibility with legacy protocols such as:</small>
+				<ul style="font-size: 0.8em;">
+					<li class="fragment custom blur">POP3 (<em>RFC 1936</em>)</li>
+					<li class="fragment custom blur">POP3 extensions including SASL and TLS</li>
+					<li class="fragment custom blur">ManageSieve (<em>RFC 5804</em>) for remotely managing Sieve
+						scripts</li>
+				</ul>
+			</section>
+
+			<section data-auto-animate data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h3>SMTP Server</h3>
+				<p><span data-id="program">Programmable</span> <span data-id="mta">MTA</span> for modern email
+					systems.</p>
+			</section>
+
+			<section style="text-align: left;" data-auto-animate
+				data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h4><span data-id="program">Programmable</span></h4>
+				<small>Exceptional flexibility and filtering capabilities</small>
+				<ul style="font-size: 0.8em;">
+					<li class="fragment custom blur">Dynamic configuration rules with Expressions</li>
+					<li class="fragment custom blur">Sieve scripting from every SMTP stage</li>
+					<li class="fragment custom blur">Milter filters support</li>
+					<li class="fragment custom blur"><span data-id="mta">MTA</span> Hooks (modern Milter
+						replacement)</li>
+					<li class="fragment custom blur">Envelope rewriting and message modification</li>
+				</ul>
+			</section>
+
+			<section style="text-align: left;" data-auto-animate
+				data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h4>Sender and Message Authentication</h4>
+				<small>Every email sent and received is verified for authenticity</small>
+				<ul style="font-size: 0.8em;">
+					<li class="fragment custom blur"><span data-id="dmarc">DMARC</span> verification and reporting
+					</li>
+					<li class="fragment custom blur">DKIM verification, signing and failure reporting</li>
+					<li class="fragment custom blur">SPF policy evaluation and failure reporting</li>
+					<li class="fragment custom blur">ARC verification and sealing</li>
+					<li class="fragment custom blur">Reverse IP validation</li>
+					<li class="fragment custom blur">Automatic analysis of DMARC reports</li>
+				</ul>
+			</section>
+
+			<section data-auto-animate data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h4>Delivery & <span data-id="dmarc">DMARC</span> Troubleshooting</h4>
+				<img src="img/s_troubleshoot.gif" class="slide-image" />
+			</section>
+
+			<section style="text-align: left;" data-auto-animate
+				data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h4>Transport Security</h4>
+				<small>Safeguards email communications at the transport layer</small>
+				<ul style="font-size: 0.8em;">
+					<li class="fragment custom blur">DANE Transport Layer Security</li>
+					<li class="fragment custom blur"> MTA Strict Transport Security (MTA-STS)</li>
+					<li class="fragment custom blur">TLS Reporting (<span data-id="tlsrpt">TLS-RPT</span>) delivery
+						and <span data-id="analysis">analysis</span></li>
+					<li class="fragment custom blur">Automatic analysis of incoming TLS reports</li>
+				</ul>
+			</section>
+
+			<section data-auto-animate data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h4>DMARC & <span data-id="tlsrpt">TLS-RPT</span> <span data-id="analysis">Analysis</span></h4>
+				<img src="img/s_reports.gif" class="slide-image" />
+			</section>
+
+			<section style="text-align: left;" data-auto-animate
+				data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h4>Powerful Message Queues</h4>
+				<small>Advanced <span data-id="queue">queue management</span> for efficient delivery</small>
+				<ul style="font-size: 0.8em;">
+					<li class="fragment custom blur">Distributed and fault-tolerant message queues</li>
+					<li class="fragment custom blur">Inbound & outbound rate limiting</li>
+					<li class="fragment custom blur">Quotas</li>
+					<li class="fragment custom blur">Dynamic routing rules</li>
+					<li class="fragment custom blur">Delayed & priority delivery support</li>
+					<li class="fragment custom blur">Unlimited virtual queues</li>
+				</ul>
+			</section>
+
+			<section data-auto-animate data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h4>Web-based <span data-id="queue">Queue Management</span></h4>
+				<img src="img/s_queue.gif" class="slide-image" />
+			</section>
+
+			<section data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h4>Message Delivery History</h4>
+				<img src="img/s_history.gif" class="slide-image" />
+			</section>
+
+			<section data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h3>Spam & Phishing Filter</h3>
+				<p>Keeps your emails safe from threats and publicity.</p>
+			</section>
+
+			<section style="text-align: left;" data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h4>Advanced Spam and Phishing Protection</h4>
+				<small>Fast and reliable filtering for today's threat landscape</small>
+				<ul style="font-size: 0.8em;">
+					<li class="fragment custom blur">Built-in filter: does not require third party software</li>
+					<li class="fragment custom blur">Fast: Rules are compiled, no <em>regular expressions</em> are
+						used</li>
+					<li class="fragment custom blur">Protection that rivals popular solutions in the market</li>
+					<li class="fragment custom blur">Proactive spam defense with community maintained rules</li>
+				</ul>
+			</section>
+
+			<section style="text-align: left;" data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h4>Efficient Filtering</h4>
+				<small>Filtering tools to keep your inbox clean and secure</small>
+				<ul style="font-size: 0.8em;">
+					<li class="fragment custom blur">Protection against URL attacks, sender spoofing, etc.
+					</li>
+					<li class="fragment custom blur">DNSBLs</li>
+					<li class="fragment custom blur">Collaborative digest-based spam filtering (<em>Pyzor</em>)</li>
+					<li class="fragment custom blur">Trusted reply tracking</li>
+					<li class="fragment custom blur">Sender reputation monitoring</li>
+					<li class="fragment custom blur">Greylisting & spam traps</li>
+				</ul>
+			</section>
+
+			<section style="text-align: left;" data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h4>AI-Enhanced Filtering</h4>
+				<small>Harness machine learning for unmatched spam and phishing defense</small>
+				<ul style="font-size: 0.8em;">
+					<li class="fragment custom blur">Bayes spam classifier (global and per-user)</li>
+					<li class="fragment custom blur">Automatic training of classifiers</li>
+					<li class="fragment custom blur">LLM-driven filtering and analysis (self-hosted or cloud)</li>
+					<li class="fragment custom blur">BERT models for spam classification (<em>coming Q4 2025</em>)
+					</li>
+				</ul>
+			</section>
+
+			<section data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h3>Secure and Robust</h3>
+				<p>Safeguards data both at rest and in transit.</p>
+			</section>
+
+			<section style="text-align: left;" data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h4>Encryption-at-Rest</h4>
+				<small>Asymmetric encryption at rest using open standards</small>
+				<ul style="font-size: 0.8em;">
+					<li class="fragment custom blur">OpenPGP and S/MIME support</li>
+					<li class="fragment custom blur">Automatic encryption of plain text messages</li>
+					<li class="fragment custom blur">Optional obfuscation in full text search store</li>
+					<li class="fragment custom blur">Unlike other solutions, no private keys are stored</li>
+					<li class="fragment custom blur">Administrators can't read user's encrypted data</li>
+				</ul>
+			</section>
+
+			<section data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h4>Encryption-at-Rest in Action</h4>
+				<img src="img/s_encrypt.gif" class="slide-image" />
+			</section>
+
+			<section style="text-align: left;" data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h4>Security and Access Control</h4>
+				<small>Proactive security mechanisms and enhanced authorization</small>
+				<ul style="font-size: 0.8em;">
+					<li class="fragment custom blur">Automated blocking of IP addresses that attack or abuse</li>
+					<li class="fragment custom blur">Rate and concurrency limiting</li>
+					<li class="fragment custom blur">Permissions</li>
+					<li class="fragment custom blur">Access Control Lists (ACLs)</li>
+					<li class="fragment custom blur">Roles & Groups</li>
+					<li class="fragment custom blur">Memory safe (thanks to Rust)</li>
+				</ul>
+			</section>
+
+			<section data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h3>Feature-rich and Customizable</h3>
+				<p>Next-level capabilities for dynamic environments.</p>
+			</section>
+
+			<section style="text-align: left;" data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h4>Pluggable Storage Backends</h4>
+				<small>Diverse storage options for every need</small>
+				<ul style="font-size: 0.8em;">
+					<li class="fragment custom blur">FoundationDB for distributed data storage</li>
+					<li class="fragment custom blur">PostgreSQL and MySQL for relational data storage</li>
+					<li class="fragment custom blur">RocksDB and SQLite for fast, local data storage</li>
+					<li class="fragment custom blur">Redis for caching and lookup storage</li>
+					<li class="fragment custom blur">S3 and Azure for distributed blob storage</li>
+					<li class="fragment custom blur">Filesystem for local blob storage</li>
+					<li class="fragment custom blur">ElasticSearch for full-text search</li>
+					<li class="fragment custom blur">LDAP for authentication</li>
+				</ul>
+			</section>
+
+			<section style="text-align: left;" data-auto-animate
+				data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h4><span data-id="expr">Expressions</span></h4>
+				<small>Dynamic configuration rules based on context</small>
+				<ul style="font-size: 0.8em;">
+					<li class="fragment custom blur">Used in settings for conditional logic and data transformation
+					</li>
+					<li class="fragment custom blur">Compiled at startup and fast to evaluate</li>
+					<li class="fragment custom blur">Control various aspects of the server's behavior</li>
+					<li class="fragment custom blur">i.e. routing, authentication, spam rules, and more</li>
+				</ul>
+			</section>
+
+			<section data-auto-animate data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h4 data-id="code-title"><span data-id="expr">Expressions</span></h4>
+				<pre data-id="code-animation"><code class="toml" data-trim data-line-numbers="1-4|6-10|12-17|19-23|25-33"><script type="text/template">
+[session.auth]
+mechanisms = [ { if = "local_port != 25 && is_tls", 
+                 then = "[plain, login, oauthbearer]" },
+               { else = false } ]
+
+[session.mail]
+rewrite = [ { if = "listener != 'smtp' && 
+                    matches('^([^.]+)@([^.]+)\.(.+)$', rcpt)", 
+              then = "$1 + '@' + $3" },
+            { else = false } ]
+
+[queue.outbound]
+next-hop = [ { if = "is_local_domain('', rcpt_domain)", 
+               then = "'local'" }, 
+             { if = "retry_num > 1", 
+               then = "'fallback'" }, 
+             { else = false } ]
+
+[queue.outbound.tls]
+allow-invalid-certs = "retry_num > 0 && last_error == 'tls'"
+starttls = [ { if = "retry_num > 1 && last_error == 'tls'",
+               then = "disable" },
+             { else = "require" } ]
+
+[spam-filter.rule.fake-reply]
+enable = true
+scope = "any"
+priority = 24
+condition = [ { if = "contains_ignore_case(['re', 'aw', 'antw', 'sv'], 
+                                           split_once(subject, ':')[0]) &&
+                      !$X_HDR_IN_REPLY_TO && !$X_HDR_REFERENCES", 
+                then = "'FAKE_REPLY'" },
+              { else = false } ]
+						</script></code></pre>
+			</section>
+
+			<section style="text-align: left;" data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h4>Feature-rich</h4>
+				<small>Modern features for a modern email server</small>
+				<ul style="font-size: 0.8em;">
+					<li class="fragment custom blur">Full-text search in 17 languages (built-in)</li>
+					<li class="fragment custom blur">Sieve scripting with support for all extensions</li>
+					<li class="fragment custom blur">Email aliases & Mailing lists</li>
+					<li class="fragment custom blur">Sub-addressing & Catch-all addresses</li>
+					<li class="fragment custom blur">Automatic account configuration and discovery
+					</li>
+					<li class="fragment custom blur">Automatic TLS certificate provisioning with ACME</li>
+					<li class="fragment custom blur">Multi-tenancy support with domain and tenant isolation</li>
+					<li class="fragment custom blur">Disk quotas per user and tenant</li>
+					<li class="fragment custom blur">REST API and many more features...</li>
+				</ul>
+			</section>
+
+			<section data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h3>Enterprise ready</h3>
+				<p>Designed to meet the demands of mailbox providers and enterprise environments.</p>
+			</section>
+
+			<section style="text-align: left;" data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h4>Built to Scale</h4>
+				<small>Engineered to scale effortlessly from the start</small>
+				<ul style="font-size: 0.8em;">
+					<li class="fragment custom blur">Seamless load balancing and high availability for millions of
+						mailboxes
+					</li>
+					<li class="fragment custom blur">Coordinator-free architecture with automatic node discovery
+					</li>
+					<li class="fragment custom blur">Recovers from failures with minimal operational impact</li>
+					<li class="fragment custom blur">Partition-tolerant failure detection</li>
+					<li class="fragment custom blur">Kubernetes support for automated scaling</li>
+					<li class="fragment custom blur">Read replicas and sharded storage backends</li>
+				</ul>
+			</section>
+
+			<section style="text-align: left;" data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h4>Authentication</h4>
+				<small>
+					Modern authentication mechanisms for secure access
+				</small>
+				<ul style="font-size: 0.8em;">
+					<li class="fragment custom blur">OpenID Connect authentication</li>
+					<li class="fragment custom blur">OAuth 2.0 authorization with code and device flows</li>
+					<li class="fragment custom blur">LDAP, OIDC or SQL authentication backend support</li>
+					<li class="fragment custom blur">Two-factor authentication with TOTP</li>
+					<li class="fragment custom blur">Application passwords</li>
+				</ul>
+			</section>
+
+			<section data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h4>Self-service Password Management</h4>
+				<img src="img/s_service_portal.gif" class="slide-image" />
+			</section>
+
+			<section style="text-align: left;" data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h4>Observability</h4>
+				<small>
+					Comprehensive monitoring and observability tools
+				</small>
+				<ul style="font-size: 0.8em;">
+					<li class="fragment custom blur">Logging and tracing to OpenTelemetry, journald, log, etc.</li>
+					<li class="fragment custom blur">Metrics with OpenTelemetry and Prometheus integration</li>
+					<li class="fragment custom blur">Webhooks for event-driven automation</li>
+					<li class="fragment custom blur">Alerts with email and webhook notifications</li>
+					<li class="fragment custom blur">Live tracing and metrics</li>
+				</ul>
+			</section>
+
+			<section data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h4>Log Viewer</h4>
+				<img src="img/s_logs.gif" class="slide-image" />
+			</section>
+
+			<section data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h4>Live Tracing</h4>
+				<img src="img/s_live_trace.gif" class="slide-image" />
+			</section>
+
+			<section data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h3>Web-based Administration</h3>
+				<p>
+					Modern and intuitive web interface for managing your mail server.
+				</p>
+			</section>
+
+			<section style="text-align: left;" data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h4>Web-based Administration</h4>
+				<small>
+					Effortless web-based management at your fingertips
+				</small>
+				<ul style="font-size: 0.8em;">
+					<li class="fragment custom blur">Full control over the mail server directly from a web browser
+					</li>
+					<li class="fragment custom blur">
+						No need to SSH into the server for common tasks
+					</li>
+					<li class="fragment custom blur">Self-service portal for password and encryption-at-rest
+						management</li>
+					<li class="fragment custom blur">Developed in Rust as a Single Page Application (SPA)</li>
+					<li class="fragment custom blur">Fast and responsive</li>
+				</ul>
+			</section>
+
+			<section style="text-align: left;" data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h4>Web-based Administration Features</h4>
+				<small>
+					Comprehensive features for managing your mail server
+				</small>
+				<ul style="font-size: 0.8em;">
+					<li class="fragment custom blur">Dashboard with real-time statistics and monitoring</li>
+					<li class="fragment custom blur">Account, domain, group and mailing list management</li>
+					<li class="fragment custom blur">SMTP queue management for messages and outbound DMARC and TLS
+						reports</li>
+					<li class="fragment custom blur">Report visualization interface for received DMARC, TLS-RPT and
+						ARF reports
+					</li>
+					<li class="fragment custom blur">Configuration of every aspect of the mail server</li>
+					<li class="fragment custom blur">Log viewer with search and filtering capabilities</li>
+				</ul>
+			</section>
+
+			<section data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h4>Web-based Configuration</h4>
+				<img src="img/s_settings.gif" class="slide-image" />
+			</section>
+
+			<section data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h4>Account Management</h4>
+				<img src="img/s_directory.gif" class="slide-image" />
+			</section>
+
+			<section data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h4>Dashboard</h4>
+				<img src="img/s_dashboard.gif" class="slide-image" />
+			</section>
+
+			<section data-auto-animate data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<img src="img/logo-white.svg" />
+				<p>https://stalw.art</p>
+				<p>hello@stalw.art</p>
+			</section>
+
+		</div>
+	</div>
+
+	<script src="js/reveal.js"></script>
+	<script src="js/notes.js"></script>
+	<script src="js/markdown.js"></script>
+	<script src="js/highlight.js"></script>
+	<script>
+		Reveal.initialize({
+			hash: true,
+			plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+		});
+	</script>
+</body>
+
+</html>
