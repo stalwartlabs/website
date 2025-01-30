@@ -52,8 +52,8 @@
 			</section>
 
 			<section data-auto-animate>
-				<h3><span>Introduction</span></h3>
-				<p><span>The email landscape before Stalwart</span></p>
+				<h4><span>The email landscape before Stalwart</span></h4>
+				<p style="font-size: 0.6em;"><span>Self-hosting your email shouldn't require a PhD</span></p>
 			</section>
 
 			<section style="text-align: left;" data-auto-animate>
@@ -383,7 +383,10 @@ $ sudo sh install.sh /opt/stalwart-mail
 				<ul style="font-size: 0.8em;">
 					<li class="fragment custom blur">Bayes spam classifier (global and per-user)</li>
 					<li class="fragment custom blur">Automatic training of classifiers</li>
-					<li class="fragment custom blur">LLM-driven filtering and analysis (self-hosted or cloud)</li>
+					<li class="fragment custom blur">LLM-driven filtering and analysis (self-hosted or cloud)
+						<sup>*</sup>
+					</li>
+					<li class="fragment custom blur">LLM-assisted Sieve scripts <sup>*</sup></li>
 					<li class="fragment custom blur">BERT models for spam classification (<em>coming Q4 2025</em>)
 					</li>
 				</ul>
@@ -507,7 +510,8 @@ condition = [ { if = "contains_ignore_case(['re', 'aw', 'antw', 'sv'],
 					<li class="fragment custom blur">Automatic account configuration and discovery
 					</li>
 					<li class="fragment custom blur">Automatic TLS certificate provisioning with ACME</li>
-					<li class="fragment custom blur">Multi-tenancy support with domain and tenant isolation</li>
+					<li class="fragment custom blur">Multi-tenancy support with domain and tenant isolation <sup>*</sup>
+					</li>
 					<li class="fragment custom blur">Disk quotas per user and tenant</li>
 					<li class="fragment custom blur">REST API and many more features...</li>
 				</ul>
@@ -530,7 +534,7 @@ condition = [ { if = "contains_ignore_case(['re', 'aw', 'antw', 'sv'],
 					<li class="fragment custom blur">Recovers from failures with minimal operational impact</li>
 					<li class="fragment custom blur">Partition-tolerant failure detection</li>
 					<li class="fragment custom blur">Kubernetes support for automated scaling</li>
-					<li class="fragment custom blur">Read replicas and sharded storage backends</li>
+					<li class="fragment custom blur">Read replicas and sharded storage backends <sup>*</sup></li>
 				</ul>
 			</section>
 
@@ -563,7 +567,7 @@ condition = [ { if = "contains_ignore_case(['re', 'aw', 'antw', 'sv'],
 					<li class="fragment custom blur">Metrics with OpenTelemetry and Prometheus integration</li>
 					<li class="fragment custom blur">Webhooks for event-driven automation</li>
 					<li class="fragment custom blur">Alerts with email and webhook notifications</li>
-					<li class="fragment custom blur">Live tracing and metrics</li>
+					<li class="fragment custom blur">Live tracing and metrics <sup>*</sup></li>
 				</ul>
 			</section>
 
@@ -608,7 +612,8 @@ condition = [ { if = "contains_ignore_case(['re', 'aw', 'antw', 'sv'],
 					Comprehensive features for managing your mail server
 				</small>
 				<ul style="font-size: 0.8em;">
-					<li class="fragment custom blur">Dashboard with real-time statistics and monitoring</li>
+					<li class="fragment custom blur">Dashboard with real-time statistics and monitoring <sup>*</sup>
+					</li>
 					<li class="fragment custom blur">Account, domain, group and mailing list management</li>
 					<li class="fragment custom blur">SMTP queue management for messages and outbound DMARC and TLS
 						reports</li>
@@ -633,6 +638,25 @@ condition = [ { if = "contains_ignore_case(['re', 'aw', 'antw', 'sv'],
 			<section data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
 				<h4>Dashboard</h4>
 				<img src="img/s_dashboard.gif" class="slide-image" />
+			</section>
+
+			<section data-auto-animate data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h4><span data-id="stalwart">Thanks for Listening!</span></h4>
+				<small data-id="text">Simplify your life. Install Stalwart. Sleep better.</small>
+				<pre data-id="code-animation2"><code class="text" data-trim style="font-size: 0.8em;"><script type="text/template">
+A001 LOGOUT</script>
+</code></pre>
+			</section>
+
+			<section data-auto-animate data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h4><span data-id="stalwart">Thanks for Listening!</span></h4>
+				<small data-id="text">Simplify your life. Install Stalwart. Sleep better.</small>
+				<pre data-id="code-animation2"><code class="text" data-trim style="font-size: 0.8em;"><script type="text/template">
+A001 LOGOUT
+* BYE Stalwart IMAP4rev2 v0.11.4 bids you farewell.
+A001 OK LOGOUT completed
+Connection closed by foreign host.</script>
+</code></pre>
 			</section>
 
 			<section data-auto-animate data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
