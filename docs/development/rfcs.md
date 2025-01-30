@@ -11,6 +11,9 @@ The following RFCs are implemented by Stalwart Mail Server.
 - [RFC 8620 - The JSON Meta Application Protocol (JMAP)](https://www.rfc-editor.org/rfc/rfc8620)
 - [RFC 8621 - The JSON Meta Application Protocol (JMAP) for Mail](https://www.rfc-editor.org/rfc/rfc8621)
 - [RFC 8887 - A JSON Meta Application Protocol (JMAP) Subprotocol for WebSocket](https://www.rfc-editor.org/rfc/rfc8887)
+- [RFC 9404 - JSON Meta Application Protocol (JMAP) Blob Management Extension](https://www.rfc-editor.org/rfc/rfc9404.html)
+- [RFC 9425 - JSON Meta Application Protocol (JMAP) for Quotas](https://www.rfc-editor.org/rfc/rfc9425.html)
+- [Draft-22 - JMAP for Sieve Scripts](https://www.ietf.org/archive/id/draft-ietf-jmap-sieve-22.html)
 
 ## IMAP4 and extensions
 
@@ -51,6 +54,7 @@ The following RFCs are implemented by Stalwart Mail Server.
 - [RFC 8457 - "$Important" Keyword and "\Important" Special-Use Attribute](https://datatracker.ietf.org/doc/html/rfc8457)
 - [RFC 8474 - Extension for Object Identifiers](https://datatracker.ietf.org/doc/html/rfc8474)
 - [RFC 8970 - Message Preview Generation](https://datatracker.ietf.org/doc/html/rfc8970)
+- [RFC 9208 - IMAP QUOTA Extension](https://datatracker.ietf.org/doc/html/rfc9208)
 
 ## SMTP and Extensions
 
@@ -215,7 +219,6 @@ The following RFCs are implemented by Stalwart Mail Server.
 
 ## Planned Extensions
 
-- [RFC 2087 - IMAP4 QUOTA extension](https://datatracker.ietf.org/doc/html/rfc2087)
 - [RFC 2192 - IMAP URL Scheme](https://datatracker.ietf.org/doc/html/rfc2192)
 - [RFC 4467 - URLAUTH Extension](https://datatracker.ietf.org/doc/html/rfc4467)
 - [RFC 4469 - IMAP CATENATE Extension](https://datatracker.ietf.org/doc/html/rfc4469)
