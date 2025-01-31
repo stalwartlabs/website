@@ -8,12 +8,6 @@ Stalwart Mail Server can be configured to authenticate users against a third-par
 
 However, as Stalwart is primarily a **mail server** rather than a traditional web application, there are important distinctions in how it handles the OIDC authentication process. Specifically, Stalwart expects to receive **access tokens** directly via the **OAUTHBEARER SASL mechanism** and does not initiate the OIDC authentication flow itself. As a result, it relies on external means to retrieve user identity information, since it does not directly handle the **ID token** issued by the OIDC server.
 
-:::tip Enterprise feature
-
-This feature is available exclusively in the [Enterprise Edition](/docs/server/enterprise) of Stalwart Mail Server and not included in the Community Edition.
-
-:::
-
 ## Authentication Flow
 
 As a mail server, Stalwart expects clients (such as email applications) to authenticate using the **OAUTHBEARER SASL mechanism**. This means the client provides an **access token**—obtained from the third-party OIDC provider—to the mail server when attempting to authenticate. Unlike a typical web-based OIDC client, Stalwart does not participate in the full OIDC authentication flow (such as redirecting users to a login page or handling authorization codes).
