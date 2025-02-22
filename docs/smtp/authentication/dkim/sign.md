@@ -133,7 +133,7 @@ This will output the public key encoded in `base64`. The next step is to add a T
 v=DKIM1; k=rsa; p=PUBLIC_KEY
 ```
 
-For example, if your domain is `example.org`, your selector is `default` and your RSA public key is `ABCDEFG` (your actual key will be much longer than this), the DNS TXT record would look like this:
+For example, if your domain is `example.org`, your selector is `default` and your RSA public key is `ABCDEFG` (your actual key will be much longer than this and would be necessary to split the value adding more more TXT entries to the same record), the DNS TXT record would look like this:
 
 ```txt
 default._domainkey.example.org. IN TXT "v=DKIM1; k=rsa; p=ABCDEFG"
