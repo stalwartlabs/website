@@ -88,7 +88,7 @@ When importing Maildir mailboxes with hundreds of subfolders, some systems may r
 Failed to read Maildir folder: Too many open files (os error 24)
 ```
 
-To increate the maximum number of open files use the ``ulimit`` command, for example:
+To increase the maximum number of open files use the ``ulimit`` command, for example:
 
 ```bash
 $ ulimit -n 65535
