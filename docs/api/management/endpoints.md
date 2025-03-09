@@ -1136,7 +1136,7 @@ Status Code **200**
 This operation does not require authentication
 </aside>
 
-## Quere Log Files
+## Query Log Files
 
 > Code samples
 
@@ -1154,7 +1154,7 @@ print(r.json())
 
 `GET /logs`
 
-<h3 id="quere-log-files-parameters">Parameters</h3>
+<h3 id="query-log-files-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -1245,13 +1245,13 @@ print(r.json())
 }
 ```
 
-<h3 id="quere-log-files-responses">Responses</h3>
+<h3 id="query-log-files-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|Inline|
 
-<h3 id="quere-log-files-responseschema">Response Schema</h3>
+<h3 id="query-log-files-responseschema">Response Schema</h3>
 
 Status Code **200**
 
