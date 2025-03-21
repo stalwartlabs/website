@@ -1,0 +1,44 @@
+---
+slug: nlnet-grant-collaboration
+title: "Stalwart Receives NLNet Grant to Build Collaboration Server"
+authors: [mdecimus]
+tags: [nlnet, ngi0, grant, collaboration, caldav, carddav, webdav, jmap]
+---
+
+We’re happy to announce that **Stalwart Labs** has been awarded a [new grant](https://nlnet.nl/project/Stalwart-Collaboration/) from the [NGI0 Core Fund](https://nlnet.nl/core/), established by [NLnet](https://nlnet.nl) with financial support from the **European Commission’s Next Generation Internet programme**. This funding will support the development of essential collaboration features, marking a major milestone in Stalwart’s evolution from a modern email server into a complete, self-hosted collaboration platform.
+
+This is the second grant Stalwart has received from NLnet, following the initial support we received in March 2023 from the NGI0 Entrust Fund. We are deeply grateful to the NLnet Foundation for their continued trust in our mission to modernize and decentralize communication infrastructure.
+
+## Expanding the Vision: From Email to Collaboration
+
+Stalwart Mail Server was created to address the challenges of self-hosting email by offering a secure, easy-to-maintain, and high-performance solution. With native support for JMAP, IMAP4, POP3, and SMTP, it already serves as a powerful alternative to traditional email solutions, giving individuals and organizations full control over their email systems.
+
+With the help of this new grant, we are now expanding the Stalwart platform beyond email. Development is officially underway on the **Stalwart Collaboration Server**, a new component that will integrate seamlessly with Stalwart Mail Server. This addition will provide support for calendaring through CalDAV and JMAP for Calendars, contact management using CardDAV and JMAP for Contacts, and file storage and sharing using WebDAV and JMAP for File Management. Together, these features will form the foundation of a fully integrated, open-source collaboration suite.
+
+Our goal is to offer a privacy-focused, vendor-neutral alternative to platforms like Microsoft Exchange. By consolidating email, calendar, contacts, and file sharing into one unified system, Stalwart will give users the ability to self-host their entire collaboration stack without sacrificing modern functionality, scalability, or security.
+
+## What the Grant Will Fund
+
+The new funding will support a series of developments that will be released gradually throughout the year under the AGPL-3.0 license:
+
+- A full-featured CalDAV and CardDAV server will be implemented, allowing users to manage their calendars and contacts directly within Stalwart. This means there will be no need to rely on external software to provide these functions. Users will be able to keep all of their collaboration data in one place, within a single, tightly integrated platform.
+
+- In addition, we will extend Stalwart’s existing JMAP implementation to support JMAP for Calendars and JMAP for Contacts. This will involve developing parsers for JSCalendar and JSContact, as well as creating bidirectional converters between JSCalendar and iCalendar, and JSContact and vCard.
+
+- File storage and management will also become a first-class feature of the platform. A WebDAV-based file storage system will be built on top of Stalwart’s internal blob store. Alongside this, we will implement support for JMAP for File Management, allowing users to upload, organize, and share files using either standard WebDAV clients or JMAP-based applications. The JMAP support will align with the ongoing efforts to standardize file management within the JMAP ecosystem.
+
+- Finally, the grant will fund the implementation of the three most requested features by the Stalwart community. These include support for the IMAP XAPPLEPUSHSERVICE extension, which enables push notifications on iOS devices; automatic DKIM record updates via RFC2136, making it easier to manage DNS records dynamically; and support for exporting Maildir mailboxes with nested folders, improving compatibility and backup workflows.
+
+## Acknowledgements
+
+We would like to express our sincere thanks to the [NLnet Foundation](https://nlnet.nl) and the **European Commission** for making this work possible. The project is funded through the [NGI0 Core Fund](https://nlnet.nl/core/), a fund established by NLnet with financial support from the **European Commission’s Next Generation Internet programme**, under the aegis of **DG Communications Networks, Content and Technology**, as part of **grant agreement No. 101092990**.
+
+This support plays a vital role in advancing open-source infrastructure and helps ensure that secure, decentralized alternatives remain viable and accessible to everyone.
+
+## Looking Ahead
+
+As we roll out these new features throughout the year, we remain committed to the core values that drive Stalwart’s development: privacy, performance, transparency, and user empowerment. The Stalwart Collaboration Server will transform the platform into a comprehensive, modern collaboration suite — one that is open, scalable, and fully self-hosted.
+
+We look forward to sharing more progress soon. In the meantime, we invite developers, testers, and curious users to follow our work, contribute ideas, and help shape the future of self-hosted collaboration.
+
+Stay tuned, and thank you for your continued support.
