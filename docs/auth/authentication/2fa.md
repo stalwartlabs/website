@@ -26,7 +26,7 @@ Two-factor authentication can only be managed from the self-service portal or th
 
 ## Using 2FA
 
-Two-factor authentication (2FA) can only be used with mail clients that support OAuth authentication and the `OAUTHBEARER` SASL mechanism. This is because, without OAuth, users would need to enter a new TOTP code each time they retrieve or send a message, which is impractical and in some cases impossible.
+Two-factor authentication (2FA) can only be used with mail clients that support OAuth authentication and the `OAUTHBEARER` or `XOAUTH2` SASL mechanism. This is because, without OAuth, users would need to enter a new TOTP code each time they retrieve or send a message, which is impractical and in some cases impossible.
 
 When using an OAuth authentication flow, the user is prompted for their password and a TOTP code during the initial setup. Once authentication is successful, an OAuth token is granted. This token can be automatically refreshed by the client, allowing continuous access without needing to re-enter a new TOTP code each time.
 
@@ -34,7 +34,7 @@ When using an OAuth authentication flow, the user is prompted for their password
 
 #### Application Passwords
 
-For users with 2FA enabled, it is still possible to use legacy mail clients that do not support `OAUTHBEARER` by creating [Application Passwords](/docs/auth/authentication/app-password). An Application Password is a unique password that can be used in place of the user’s regular password. It allows access to the email account while maintaining the security benefits of 2FA. 
+For users with 2FA enabled, it is still possible to use legacy mail clients that do not support `OAUTHBEARER` or `XOAUTH2` by creating [Application Passwords](/docs/auth/authentication/app-password). An Application Password is a unique password that can be used in place of the user’s regular password. It allows access to the email account while maintaining the security benefits of 2FA. 
 
 #### Concatenated Passwords
 

@@ -25,7 +25,7 @@ Context or environment variables may be used in certain settings of the configur
 
 ## Queue Variables
 
-The following additional variables are available for use in [queue](/docs/smtp/queue/overview) expressions:
+The following additional variables are available for use in [queue](/docs/mta/queue/overview) expressions:
 
 - `mx`: The remote mail exchanger's hostname for outbound sessions.
 - `retry_num`: The number of times the message has been retried.

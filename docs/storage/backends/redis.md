@@ -41,6 +41,7 @@ The following configuration settings are available for Redis Cluster, which are 
 - `retry.max-wait`: The maximum duration to wait between retries. Specified as a duration, such as `"1s"` for 1 second.
 - `retry.min-wait`: The minimum duration to wait between retries. Specified as a duration, such as `"500ms"` for 500 milliseconds.
 - `read-from-replicas`: A boolean setting that determines whether the client is allowed to read from replica nodes. Set to `false` to restrict read operations to the primary node only.
+- `protocol-version`: The Redis protocol version to use, supported versions are `resp2` and `resp3`. The default is `resp2`.
 
 ### Example
 
@@ -65,6 +66,7 @@ user = "my_username"
 password = "secretpassword"
 timeout = "10s"
 read-from-replicas = false
+protocol-version = "resp3"
 
 [store."redis".retry]
 total = 3

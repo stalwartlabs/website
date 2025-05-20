@@ -10,20 +10,20 @@ Stalwart employs a user-centric encryption strategy where each user's plain-text
 
 ## Configuration
 
-Encryption at rest is enabled by default on Stalwart. This means that all incoming messages via SMTP or LMTP are automatically encrypted before they are written to disk, provided the user has uploaded their S/MIME certificate or OpenPGP public key. System administrators can disable this default encryption by setting the `storage.encryption.enable` attribute to `false`.
+Encryption at rest is enabled by default on Stalwart. This means that all incoming messages via SMTP or LMTP are automatically encrypted before they are written to disk, provided the user has uploaded their S/MIME certificate or OpenPGP public key. System administrators can disable this default encryption by setting the `email.encryption.enable` attribute to `false`.
 
 For example:
 
 ```toml
-[storage.encryption]
+[email.encryption]
 enable = true
 ```
 
-While the server by default encrypts all incoming messages, it's important to note that it does not automatically encrypt messages that are manually appended by the user using JMAP or IMAP. This is to give the user flexibility in managing their messages. However, if you would like to have all their messages encrypted, regardless of how they are added to the mailbox, they can simply set the `storage.encryption.append` attribute to `true`. 
+While the server by default encrypts all incoming messages, it's important to note that it does not automatically encrypt messages that are manually appended by the user using JMAP or IMAP. This is to give the user flexibility in managing their messages. However, if you would like to have all their messages encrypted, regardless of how they are added to the mailbox, they can simply set the `email.encryption.append` attribute to `true`. 
 
 For example:
 
 ```toml
-[storage.encryption]
+[email.encryption]
 append = true
 ```

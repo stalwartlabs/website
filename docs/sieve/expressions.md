@@ -67,7 +67,7 @@ The `while` instruction, available only from the [trusted interpreter](/docs/sie
 ```sieve
 let "i" "10";
 while "i > 0" {
-    eval "print('Counter is ' + i)";
+    addheader :last "X-Header-${i}" "Counter is ${i}";
     let "i" "i - 1";
 }
 ```
@@ -81,7 +81,7 @@ while "true" {
     if eval "i == 0" {
         break;
     }
-    eval "print('Counter is ' + i)";
+    addheader :last "X-Header-${i}" "Counter is ${i}";
 }
 ```
 
@@ -94,7 +94,7 @@ while "true" {
     if eval "contains([1, 3, 5, 7, 9], i)" {
         continue;
     }
-    eval "print('Counter is ' + i)";
+    addheader :last "X-Header-${i}" "Counter is ${i}";
 }
 ```
 

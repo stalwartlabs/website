@@ -4,7 +4,7 @@ sidebar_position: 4
 
 # App Passwords
 
-Application Passwords are unique passwords that allow users to access their email accounts on devices or applications that do not support [Two-Factor Authentication](/docs/auth/authentication/2fa) (2FA). These passwords provide a secure way to use legacy mail clients or other applications that do not support the `OAUTHBEARER` SASL mechanism while maintaining the enhanced security provided by 2FA.
+Application Passwords are unique passwords that allow users to access their email accounts on devices or applications that do not support [Two-Factor Authentication](/docs/auth/authentication/2fa) (2FA). These passwords provide a secure way to use legacy mail clients or other applications that do not support the `OAUTHBEARER` or `XOAUTH2` SASL mechanisms while maintaining the enhanced security provided by 2FA.
 
 Application Passwords are particularly useful in several scenarios. For instance, older email clients that do not support OAuth authentication cannot prompt for a TOTP code, making it impractical to use them with standard 2FA. Application Passwords enable these clients to access the email account securely. Similarly, various third-party applications and services that need access to the email account might not support modern authentication methods. Application Passwords allow these services to connect without compromising security. Additionally, automated scripts and tools that require access to email accounts cannot interact with interactive authentication prompts. Application Passwords provide a way for these scripts to authenticate and perform necessary actions.
 

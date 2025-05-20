@@ -1188,7 +1188,7 @@ print(r.json())
         "level": "TRACE",
         "event": "Expression evaluation result",
         "event_id": "eval.result",
-        "details": "listenerId = \"http\", localPort = 1443, remoteIp = ::1, remotePort = 57223, id = \"server.http.allowed-endpoint\", result = \"Integer(200)\""
+        "details": "listenerId = \"http\", localPort = 1443, remoteIp = ::1, remotePort = 57223, id = \"http.allowed-endpoint\", result = \"Integer(200)\""
       },
       {
         "timestamp": "2025-01-05T14:06:29Z",
@@ -1230,7 +1230,7 @@ print(r.json())
         "level": "TRACE",
         "event": "Expression evaluation result",
         "event_id": "eval.result",
-        "details": "listenerId = \"http\", localPort = 1443, remoteIp = ::1, remotePort = 57223, id = \"server.http.allowed-endpoint\", result = \"Integer(200)\""
+        "details": "listenerId = \"http\", localPort = 1443, remoteIp = ::1, remotePort = 57223, id = \"http.allowed-endpoint\", result = \"Integer(200)\""
       },
       {
         "timestamp": "2025-01-05T14:06:23Z",

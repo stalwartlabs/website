@@ -1,5 +1,5 @@
 ---
-sidebar_position: 18
+sidebar_position: 19
 ---
 
 # FAQ
@@ -42,7 +42,7 @@ It depends on the directory backend you are using. If you are using the [interna
 
 It also depends on the directory backend you are using. If you are using the [internal directory](/docs/auth/backend/internal), you can create and manage domains using the [web-admin](/docs/management/webadmin/overview) interface. If you are using an external directory such as [LDAP](/docs/auth/backend/ldap) or [SQL](/docs/auth/backend/sql), it is not necessary to configure new domain names in order to start receiving emails for it. Just like user accounts, your local domains are also retrieved the directory server. For [SQL](/docs/auth/backend/sql) servers this is done by executing the `domains` [lookup query](/docs/auth/backend/sql#lookup-queries) and in [LDAP](/docs/auth/backend/ldap) servers this is done by searching for objects using `domain` [lookup query](/docs/auth/backend/ldap#lookup-queries).
 
-Sending emails from a new domain does not require any additional configuration either, but to improve deliverability it is recommended that you [create a new DKIM key](/docs/smtp/authentication/dkim/sign#generating-dkim-keys), add it to your [DNS records](/docs/smtp/authentication/dkim/sign#publishing-dkim-keys) and [enable DKIM signing](/docs/smtp/authentication/dkim/sign#multiple-domains) for the new domain.
+Sending emails from a new domain does not require any additional configuration either, but to improve deliverability it is recommended that you [create a new DKIM key](/docs/mta/authentication/dkim/sign#generating-dkim-keys), add it to your [DNS records](/docs/mta/authentication/dkim/sign#publishing-dkim-keys) and [enable DKIM signing](/docs/mta/authentication/dkim/sign#multiple-domains) for the new domain.
 
 ### How can I migrate from another server?
 
@@ -56,11 +56,11 @@ The backup procedure depends on which database and blob storage backend you are 
 
 ### How is anti-spam handled?
 
-Stalwart includes its own built-in spam filter that uses statistical techniques like Naive Bayes. It also supports DNS Blocklists (DNSBLs) and collaborative digest-based spam filtering tools like Pyzor. Additionally, Stalwart can easily integrate with popular anti-spam solutions such as SpamAssassin and RSPAMD using [milter](/docs/smtp/filter/milter) as well as other [filtering mechanisms](/docs/smtp/filter/overview).
+Stalwart includes its own built-in spam filter that uses statistical techniques like Naive Bayes. It also supports DNS Blocklists (DNSBLs) and collaborative digest-based spam filtering tools like Pyzor. Additionally, Stalwart can easily integrate with popular anti-spam solutions such as SpamAssassin and RSPAMD using [milter](/docs/mta/filter/milter) as well as other [filtering mechanisms](/docs/mta/filter/overview).
 
 ### Does it support relay hosts?
 
-Yes, [relay hosts](/docs/smtp/outbound/routing#relay-host) are supported for sending emails to external domains.
+Yes, [relay hosts](/docs/mta/outbound/routing#relay-host) are supported for sending emails to external domains.
 
 ### Is greylisting supported?
 
@@ -75,7 +75,7 @@ Encryption at rest refers to the process of encrypting data when it is stored, o
 
 ### Is encryption at rest enabled by default?
 
-Yes, encryption at rest is enabled by default and is activated when the user uploads their S/MIME certificate or PGP public key. However, it can be disabled by setting the `storage.encryption.enable` attribute to `false`.
+Yes, encryption at rest is enabled by default and is activated when the user uploads their S/MIME certificate or PGP public key. However, it can be disabled by setting the `email.encryption.enable` attribute to `false`.
 
 ### How do I enable or disable encryption at rest?
 

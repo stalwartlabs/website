@@ -120,7 +120,7 @@ INSERT INTO emails (name, address, type) VALUES ('john', 'john.doe@example.org',
 INSERT INTO emails (name, address, type) VALUES ('john', 'jdoe@example.org', 'alias')
 ```
 
-Alternatively, you could designate the `postmaster` account as the [catch-all address](/docs/smtp/inbound/rcpt#catch-all-addresses) for the `example.org` domain by adding `@example.org` as an email alias for the `postmaster` account:
+Alternatively, you could designate the `postmaster` account as the [catch-all address](/docs/mta/inbound/rcpt#catch-all-addresses) for the `example.org` domain by adding `@example.org` as an email alias for the `postmaster` account:
 
 ```sql
 INSERT INTO emails (name, address, type) VALUES ('postmaster', '@example.org', 'alias')

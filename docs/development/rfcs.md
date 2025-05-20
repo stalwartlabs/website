@@ -13,7 +13,7 @@ The following RFCs are implemented by Stalwart.
 - [RFC 8887 - A JSON Meta Application Protocol (JMAP) Subprotocol for WebSocket](https://www.rfc-editor.org/rfc/rfc8887)
 - [RFC 9404 - JSON Meta Application Protocol (JMAP) Blob Management Extension](https://www.rfc-editor.org/rfc/rfc9404.html)
 - [RFC 9425 - JSON Meta Application Protocol (JMAP) for Quotas](https://www.rfc-editor.org/rfc/rfc9425.html)
-- [Draft-22 - JMAP for Sieve Scripts](https://www.ietf.org/archive/id/draft-ietf-jmap-sieve-22.html)
+- [RFC 9661 - JMAP for Sieve Scripts](https://www.rfc-editor.org/rfc/rfc9661.html)
 
 ## IMAP4 and extensions
 
@@ -55,6 +55,7 @@ The following RFCs are implemented by Stalwart.
 - [RFC 8474 - Extension for Object Identifiers](https://datatracker.ietf.org/doc/html/rfc8474)
 - [RFC 8970 - Message Preview Generation](https://datatracker.ietf.org/doc/html/rfc8970)
 - [RFC 9208 - IMAP QUOTA Extension](https://datatracker.ietf.org/doc/html/rfc9208)
+- [RFC 9698 - The JMAPACCESS Extension for IMAP](https://datatracker.ietf.org/doc/html/rfc9698)
 
 ## SMTP and Extensions
 
@@ -159,6 +160,49 @@ The following RFCs are implemented by Stalwart.
 - [RFC 2369 - The Use of URLs as Meta-Syntax for Core Mail List Commands and their Transport through Message Header Fields](https://datatracker.ietf.org/doc/html/rfc2369)
 - [RFC 2919 - List-Id: A Structured Field and Namespace for the Identification of Mailing Lists](https://datatracker.ietf.org/doc/html/rfc2919)
 - [RFC 3339 - Date and Time on the Internet: Timestamps](https://datatracker.ietf.org/doc/html/rfc3339)
+
+## Collaboration
+
+### Calendars
+
+- [RFC 5545 - Internet Calendaring and Scheduling Core Object Specification (iCalendar)](https://datatracker.ietf.org/doc/html/rfc5545)
+- [RFC 5546 - iCalendar Transport-Independent Interoperability Protocol (iTIP)](https://datatracker.ietf.org/doc/html/rfc5546)
+- [RFC 6047 - iCalendar Message-Based Interoperability Protocol (iMIP)](https://datatracker.ietf.org/doc/html/rfc6047)
+- [RFC 7953 - Calendar Availability](https://datatracker.ietf.org/doc/html/rfc7953)
+- [RFC 9073 - Event Publishing Extensions to iCalendar](https://datatracker.ietf.org/doc/html/rfc9073)
+- [RFC 7808 - Time Zone Data Distribution Service](https://datatracker.ietf.org/doc/html/rfc7808)
+- [RFC 7986 - New Properties for iCalendar](https://datatracker.ietf.org/doc/html/rfc7986)
+- [RFC 9073 - Event Publishing Extensions to iCalendar](https://datatracker.ietf.org/doc/html/rfc9073)
+- [RFC 9074 - "VALARM" Extensions for iCalendar](https://datatracker.ietf.org/doc/html/rfc9074)
+- [RFC 9253 - Support for iCalendar Relationships](https://datatracker.ietf.org/doc/html/rfc9253)
+- [RFC 7953 - Calendar Availability](https://datatracker.ietf.org/doc/html/rfc7953)
+
+### Contacts
+
+- [RFC 6350 - vCard Format Specification](https://datatracker.ietf.org/doc/html/rfc6350)
+- [RFC 6474 - vCard Format Extensions: Place of Birth, Place and Date of Death](https://datatracker.ietf.org/doc/html/rfc6474)
+- [RFC 6715 - vCard Format Extensions: Representing vCard Extensions Defined by the Open Mobile Alliance (OMA) Converged Address Book (CAB) Group](https://datatracker.ietf.org/doc/html/rfc6715)
+- [RFC 8605 - vCard Format Extensions: ICANN Extensions for the Registration Data Access Protocol (RDAP)](https://datatracker.ietf.org/doc/html/rfc8605)
+- [RFC 9554 - vCard Format Extensions for JSContact](https://datatracker.ietf.org/doc/html/rfc9554)
+- [RFC 9555 - JSContact: Converting from and to vCard](https://datatracker.ietf.org/doc/html/rfc9555)
+- [RFC 6473 - vCard KIND:application](https://datatracker.ietf.org/doc/html/rfc6473)
+- [RFC 6869 - vCard KIND:device](https://datatracker.ietf.org/doc/html/rfc6869)
+- [RFC 7852 - Additional Data Related to an Emergency Call](https://datatracker.ietf.org/doc/html/rfc7852)
+
+### WebDAV
+
+- [RFC 4918 - HTTP Extensions for Web Distributed Authoring and Versioning (WebDAV)](https://datatracker.ietf.org/doc/html/rfc4918)
+- [RFC 5689 - Extended MKCOL for Web Distributed Authoring and Versioning (WebDAV)](https://datatracker.ietf.org/doc/html/rfc5689)
+- [RFC 6578 - Collection Synchronization for Web Distributed Authoring and Versioning (WebDAV)](https://datatracker.ietf.org/doc/html/rfc6578)
+- [RFC 3744 - Web Distributed Authoring and Versioning (WebDAV) Access Control Protocol](https://datatracker.ietf.org/doc/html/rfc3744)
+- [RFC 4331 - Quota and Size Properties for Distributed Authoring and Versioning (DAV) Collections](https://datatracker.ietf.org/doc/html/rfc4331)
+- [RFC 5397 - WebDAV Current Principal Extension](https://datatracker.ietf.org/doc/html/rfc5397)
+- [RFC 8144 - Use of the Prefer Header Field in Web Distributed Authoring and Versioning (WebDAV)](https://datatracker.ietf.org/doc/html/rfc8144)
+- [RFC 4791 - Calendaring Extensions to WebDAV (CalDAV)](https://datatracker.ietf.org/doc/html/rfc4791)
+- [RFC 7809 - Calendaring Extensions to WebDAV (CalDAV) Time Zones by Reference](https://datatracker.ietf.org/doc/html/rfc7809)
+- [RFC 6638 - Scheduling Extensions to CalDAV](https://datatracker.ietf.org/doc/html/rfc6638)
+- [RFC 6352 - CardDAV vCard Extensions to Web Distributed Authoring and Versioning (WebDAV)](https://datatracker.ietf.org/doc/html/rfc6352)
+- [RFC 6764 - Locating Services for Calendaring Extensions to WebDAV (CalDAV) and vCard Extensions to WebDAV (CardDAV)](https://datatracker.ietf.org/doc/html/rfc6764)
 
 ## WebSocket
 

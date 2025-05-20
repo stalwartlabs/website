@@ -31,7 +31,7 @@ To avoid this issue, it is necessary to pre-deploy accounts in Stalwart before u
 
 ### `OAUTHBEARER` SASL
 
-Another limitation relates to the OAUTHBEARER SASL mechanism, which is required for mail clients to authenticate with OAuth tokens. Unfortunately, many mainstream mail clients, such as Outlook, Thunderbird, and Apple Mail, do not support this mechanism. As a result, users of these clients cannot directly authenticate using OAuth tokens. To work around this limitation, administrators need to set up [App Passwords](/docs/auth/authentication/app-password) for these users. These App Passwords allow users to access their mail accounts securely in clients that do not support OAUTHBEARER. For more details on this, refer to the [interoperability](/docs/auth/oauth/interoperability) section of the OAuth documentation.
+Another limitation relates to the `OAUTHBEARER` (or `XOAUTH2`) SASL mechanism, which is required for mail clients to authenticate with OAuth tokens. Unfortunately, many mainstream mail clients, such as Outlook, Thunderbird, and Apple Mail, do not support this mechanism. As a result, users of these clients cannot directly authenticate using OAuth tokens. To work around this limitation, administrators need to set up [App Passwords](/docs/auth/authentication/app-password) for these users. These App Passwords allow users to access their mail accounts securely in clients that do not support `OAUTHBEARER` (or `XOAUTH2`). For more details on this, refer to the [interoperability](/docs/auth/oauth/interoperability) section of the OAuth documentation.
 
 ## Configuration
 

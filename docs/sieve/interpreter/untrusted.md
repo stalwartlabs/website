@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # Untrusted Interpreter
 
-The untrusted interpreter is used to execute Sieve scripts that are created by end-users. Stalwart includes support for [JMAP for Sieve Scripts](https://www.ietf.org/archive/id/draft-ietf-jmap-sieve-12.html) as well as [ManageSieve](https://datatracker.ietf.org/doc/html/rfc5804), which allows users to upload and manage their Sieve scripts.
+The untrusted interpreter is used to execute Sieve scripts that are created by end-users. Stalwart includes support for [JMAP for Sieve Scripts](https://www.rfc-editor.org/rfc/rfc9661.html) as well as [ManageSieve](https://datatracker.ietf.org/doc/html/rfc5804), which allows users to upload and manage their Sieve scripts.
 
 ## Limits
 

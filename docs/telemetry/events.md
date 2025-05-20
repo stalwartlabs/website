@@ -88,24 +88,21 @@ The following are the event types that Stalwart captures along with their defaul
 |`auth.success`|Authentication successful|`INFO`|
 |`auth.token-expired`|OAuth token expired|`DEBUG`|
 |`auth.too-many-attempts`|Too many authentication attempts|`WARN`|
-|`cluster.decryption-error`|Failed to decrypt a gossip packet|`WARN`|
-|`cluster.empty-packet`|Received an empty gossip packet|`WARN`|
-|`cluster.error`|A cluster error occurred|`WARN`|
-|`cluster.invalid-packet`|Received an invalid gossip packet|`WARN`|
-|`cluster.one-or-more-peers-offline`|One or more peers are offline|`DEBUG`|
-|`cluster.peer-alive`|A peer is alive|`INFO`|
-|`cluster.peer-back-online`|A peer came back online|`INFO`|
-|`cluster.peer-discovered`|A new peer was discovered|`INFO`|
-|`cluster.peer-has-changes`|A peer has reported changes|`DEBUG`|
-|`cluster.peer-leaving`|A peer is leaving the cluster|`INFO`|
-|`cluster.peer-offline`|A peer went offline|`INFO`|
-|`cluster.peer-suspected`|A peer is suspected to be offline|`INFO`|
-|`cluster.peer-suspected-is-alive`|A suspected peer is actually alive|`INFO`|
+|`calendar.rule-expansion-error`|Calendar rule expansion error|`DEBUG`|
+|`cluster.message-invalid`|Invalid PubSub message|`ERROR`|
+|`cluster.message-received`|PubSub message received|`TRACE`|
+|`cluster.message-skipped`|PubSub message skipped|`TRACE`|
+|`cluster.publisher-error`|PubSub publisher error|`ERROR`|
+|`cluster.publisher-start`|PubSub publisher started|`INFO`|
+|`cluster.publisher-stop`|PubSub publisher stopped|`INFO`|
+|`cluster.subscriber-disconnected`|PubSub subscriber disconnected|`WARN`|
+|`cluster.subscriber-error`|PubSub subscriber error|`ERROR`|
+|`cluster.subscriber-start`|PubSub subscriber started|`INFO`|
+|`cluster.subscriber-stop`|PubSub subscriber stopped|`INFO`|
 |`config.already-up-to-date`|Configuration already up to date|`DEBUG`|
 |`config.build-error`|Configuration build error|`ERROR`|
 |`config.build-warning`|Configuration build warning|`WARN`|
 |`config.default-applied`|Default configuration applied|`DEBUG`|
-|`config.external-key-ignored`|External configuration key ignored|`DEBUG`|
 |`config.fetch-error`|Configuration fetch error|`ERROR`|
 |`config.import-external`|Importing external configuration|`INFO`|
 |`config.macro-error`|Configuration macro error|`ERROR`|
@@ -213,6 +210,7 @@ The following are the event types that Stalwart captures along with their defaul
 |`imap.expunge`|IMAP EXPUNGE command|`DEBUG`|
 |`imap.fetch`|IMAP FETCH command|`DEBUG`|
 |`imap.get-acl`|IMAP GET ACL command|`DEBUG`|
+|`imap.get-quota`|IMAP GETQUOTA command|`DEBUG`|
 |`imap.id`|IMAP ID command|`DEBUG`|
 |`imap.idle-start`|IMAP IDLE start|`DEBUG`|
 |`imap.idle-stop`|IMAP IDLE stop|`DEBUG`|
@@ -413,6 +411,7 @@ The following are the event types that Stalwart captures along with their defaul
 |`push-subscription.error`|Push subscription error|`DEBUG`|
 |`push-subscription.not-found`|Push subscription not found|`DEBUG`|
 |`push-subscription.success`|Push subscription successful|`TRACE`|
+|`queue.back-pressure`|Queue backpressure detected|`WARN`|
 |`queue.blob-not-found`|Message blob not found|`DEBUG`|
 |`queue.concurrency-limit-exceeded`|Concurrency limit exceeded|`INFO`|
 |`queue.locked`|Queue event is locked by another process|`DEBUG`|
@@ -436,8 +435,8 @@ The following are the event types that Stalwart captures along with their defaul
 |`security.scan-ban`|Banned due to scan|`INFO`|
 |`security.unauthorized`|Unauthorized access|`INFO`|
 |`server.licensing`|Server licensing event|`INFO`|
-|`server.shutdown`|Shutting down Stalwart|`INFO`|
-|`server.startup`|Starting Stalwart|`INFO`|
+|`server.shutdown`|Shutting down Stalwart Server|`INFO`|
+|`server.startup`|Starting Stalwart Server|`INFO`|
 |`server.startup-error`|Server startup error|`ERROR`|
 |`server.thread-error`|Server thread error|`ERROR`|
 |`sieve.action-accept`|Sieve action: Accept|`DEBUG`|
@@ -537,12 +536,12 @@ The following are the event types that Stalwart captures along with their defaul
 |`spam.classify`|Classifying message for spam|`DEBUG`|
 |`spam.classify-error`|Not enough training data for spam filter|`DEBUG`|
 |`spam.dnsbl`|DNSBL query|`DEBUG`|
-|`spam.dnsbl-error`|Error querying DNSBL|`WARN`|
+|`spam.dnsbl-error`|Error querying DNSBL|`DEBUG`|
 |`spam.pyzor`|Pyzor success|`DEBUG`|
-|`spam.pyzor-error`|Pyzor error|`WARN`|
+|`spam.pyzor-error`|Pyzor error|`DEBUG`|
 |`spam.train`|Training spam filter|`DEBUG`|
 |`spam.train-balance`|Spam filter model balance verify|`DEBUG`|
-|`spam.train-error`|Error training spam filter|`WARN`|
+|`spam.train-error`|Error training spam filter|`DEBUG`|
 |`spf.fail`|SPF check failed|`DEBUG`|
 |`spf.neutral`|SPF neutral result|`DEBUG`|
 |`spf.none`|No SPF record|`DEBUG`|
@@ -556,6 +555,10 @@ The following are the event types that Stalwart captures along with their defaul
 |`store.blob-missing-marker`|Blob missing marker|`WARN`|
 |`store.blob-read`|Blob read operation|`TRACE`|
 |`store.blob-write`|Blob write operation|`TRACE`|
+|`store.cache-hit`|Cache hit|`DEBUG`|
+|`store.cache-miss`|Cache miss|`DEBUG`|
+|`store.cache-stale`|Cache is stale|`DEBUG`|
+|`store.cache-update`|Cache update|`DEBUG`|
 |`store.crypto-error`|Store crypto error|`ERROR`|
 |`store.data-corruption`|Data corruption detected|`ERROR`|
 |`store.data-iterate`|Data store iteration operation|`TRACE`|
@@ -571,6 +574,7 @@ The following are the event types that Stalwart captures along with their defaul
 |`store.ldap-error`|LDAP error|`ERROR`|
 |`store.ldap-query`|LDAP query executed|`TRACE`|
 |`store.mysql-error`|MySQL error|`ERROR`|
+|`store.nats-error`|NATS error|`ERROR`|
 |`store.not-configured`|Store not configured|`ERROR`|
 |`store.not-found`|Record not found in database|`DEBUG`|
 |`store.not-supported`|Operation not supported by store|`ERROR`|
@@ -603,6 +607,24 @@ The following are the event types that Stalwart captures along with their defaul
 |`tls.multiple-certificates-available`|Multiple TLS certificates available|`WARN`|
 |`tls.no-certificates-available`|No TLS certificates available|`WARN`|
 |`tls.not-configured`|TLS not configured|`ERROR`|
+|`web-dav.acl`|WebDAV ACL request|`DEBUG`|
+|`web-dav.copy`|WebDAV COPY request|`DEBUG`|
+|`web-dav.delete`|WebDAV DELETE request|`DEBUG`|
+|`web-dav.error`|WebDAV error|`DEBUG`|
+|`web-dav.get`|WebDAV GET request|`DEBUG`|
+|`web-dav.head`|WebDAV HEAD request|`DEBUG`|
+|`web-dav.lock`|WebDAV LOCK request|`DEBUG`|
+|`web-dav.mkcalendar`|WebDAV MKCALENDAR request|`DEBUG`|
+|`web-dav.mkcol`|WebDAV MKCOL request|`DEBUG`|
+|`web-dav.move`|WebDAV MOVE request|`DEBUG`|
+|`web-dav.options`|WebDAV OPTIONS request|`DEBUG`|
+|`web-dav.patch`|WebDAV PATCH request|`DEBUG`|
+|`web-dav.post`|WebDAV POST request|`DEBUG`|
+|`web-dav.propfind`|WebDAV PROPFIND request|`DEBUG`|
+|`web-dav.proppatch`|WebDAV PROPPATCH request|`DEBUG`|
+|`web-dav.put`|WebDAV PUT request|`DEBUG`|
+|`web-dav.report`|WebDAV REPORT request|`DEBUG`|
+|`web-dav.unlock`|WebDAV UNLOCK request|`DEBUG`|
 
 ## Key Types
 

@@ -1,5 +1,5 @@
 ---
-sidebar_position: 8
+sidebar_position: 9 
 ---
 
 # Examples
@@ -29,7 +29,7 @@ contents = '''
 
 ## Domain blocklisting
 
-The following script implements a domain blocklisting filter during the [EHLO](/docs/smtp/inbound/ehlo) phase:
+The following script implements a domain blocklisting filter during the [EHLO](/docs/mta/inbound/ehlo) phase:
 
 ```toml
 [session.ehlo]

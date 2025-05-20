@@ -103,16 +103,16 @@ const config = {
                 to: '/docs/get-started',
               },
               {
-                label: 'JMAP Server',
-                to: '/docs/jmap/overview',
+                label: 'Email Store',
+                to: '/docs/email/overview',
               },
               {
-                label: 'IMAP Server',
-                to: '/docs/imap/overview',
+                label: 'MTA',
+                to: '/docs/mta/overview',
               },
               {
-                label: 'SMTP Server',
-                to: '/docs/smtp/overview',
+                label: 'Collaboration',
+                to: '/docs/collaboration/overview',
               },
               {
                 label: 'Spam Filter',
@@ -142,10 +142,6 @@ const config = {
               {
                 label: 'Twitter',
                 href: 'https://twitter.com/stalwartlabs',
-              },
-              {
-                label: 'Threads',
-                href: 'https://www.threads.net/@stalwartlabs',
               },
             ],
           },

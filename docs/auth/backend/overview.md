@@ -85,7 +85,7 @@ ttl = {positive = '1h', negative = '10m'}
 
 ### Default Directory
 
-The default directory to authenticate [JMAP](/docs/jmap/overview), [IMAP](/docs/imap/overview), [ManageSieve](/docs/sieve/managesieve) and HTTP API requests against can be configured using the `storage.directory` configuration attribute.
+The default directory to authenticate [JMAP](/docs/http/jmap/overview), [IMAP](/docs/email/imap), [ManageSieve](/docs/sieve/managesieve) and HTTP API requests against can be configured using the `storage.directory` configuration attribute.
 
 For example, to use the `sql` directory as the default directory:
 

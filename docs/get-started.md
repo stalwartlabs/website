@@ -61,7 +61,7 @@ The essential ports are:
 - **Port 25 (SMTP)**: Used for receiving incoming emails from other mail servers. It is essential to keep this port open to ensure your mail server can receive emails from the internet.
 - **Port 465 (SMTPS)**: SMTP submission with implicit TLS. This port is used for sending outgoing emails securely. It is recommended to keep this port open to allow secure email submission from email clients.
 - **Port 993 (IMAPS)**: IMAP4 with implicit TLS. This port is used by IMAP clients to fetch emails securely. Keeping this port open is necessary for providing secure email access to your users.
-- **Port 443 (HTTPS)**: A crucial port used for secure [web administration](/docs/management/webadmin/overview) access, [JMAP](/docs/jmap/overview), [REST API](/docs/api/management/overview) access, [OAuth](/docs/auth/oauth/overview) authentication, [ACME TLS-ALPN-01](/docs/server/tls/acme/challenges#tls-alpn-01) challenges, [autoconfig](/docs/server/autoconfig), and [MTA-STS policy](/docs/smtp/transport-security/mta-sts#policy-publishing) retrieval. This port must remain open as it supports multiple critical functionalities.
+- **Port 443 (HTTPS)**: A crucial port used for secure [web administration](/docs/management/webadmin/overview) access, [JMAP](/docs/http/jmap/overview), [REST API](/docs/api/management/overview) access, [OAuth](/docs/auth/oauth/overview) authentication, [ACME TLS-ALPN-01](/docs/server/tls/acme/challenges#tls-alpn-01) challenges, [autoconfig](/docs/server/autoconfig), and [MTA-STS policy](/docs/mta/transport-security/mta-sts#policy-publishing) retrieval. This port must remain open as it supports multiple critical functionalities.
 
 The non-essential ports are:
 
@@ -83,34 +83,34 @@ This record directs email traffic to the correct mail server:
 MX	example.org.	10 mail.example.org.
 ```
 
-These records are vital for the [DomainKeys Identified Mail (DKIM)](/docs/smtp/authentication/dkim/overview) setup, which helps prevent email spoofing:
+These records are vital for the [DomainKeys Identified Mail (DKIM)](/docs/mta/authentication/dkim/overview) setup, which helps prevent email spoofing:
 
 ```
 TXT	202404e._domainkey.example.org.	v=DKIM1; k=ed25519; h=sha256; p=N/BkJD6xbEiMb39v7JW6AwdPHO5gKB3fcCnod4zQ31U=
 TXT	202404r._domainkey.example.org.	v=DKIM1; k=rsa; h=sha256; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqlddLN3BjInvBqI1KpdouG7feBsEt5t233jWQJW7FaY7sR/MfWNxuzTObLoZ3l76DFq3xPjVhmy/YYiOAnMOtq9hUFqgBVTSwUNHYPz1YUEcrI5+Ban7P7LV8kggvTAaWhAI3iSXJIFaUq78K8YYr/zrGyBlg5HCPpd+DMRAB8j1ID8bcWFaVebwAOrartXOO/f8Bn9jrRrLhjP3c8UlmkJLXkSncXPp69R9VpevrKJtpBjaFxKtx7DXGie821MHuWJ7pWMdU1Uf3z8UBKF9bnrCZ5v0SdiaFkPXR1Iiq/gR6bMwdlWvST9V6ePnqZqX+Iv4FA28byOot73/CIINFwIDAQAB
 ```
 
-These records are used by the [Sender Policy Framework (SPF)](/docs/smtp/authentication/spf) to determine which mail servers are authorized to send emails on behalf of your domain:
+These records are used by the [Sender Policy Framework (SPF)](/docs/mta/authentication/spf) to determine which mail servers are authorized to send emails on behalf of your domain:
 
 ```
 TXT	mail.example.org.	v=spf1 a ra=postmaster -all
 TXT	example.org.	v=spf1 mx ra=postmaster -all
 ```
 
-This record specifies the [Domain-based Message Authentication, Reporting, and Conformance (DMARC)](/docs/smtp/authentication/dmarc) security policy for email delivery and reporting:
+This record specifies the [Domain-based Message Authentication, Reporting, and Conformance (DMARC)](/docs/mta/authentication/dmarc) security policy for email delivery and reporting:
 
 ```
 TXT	_dmarc.example.org.	v=DMARC1; p=reject; rua=mailto:postmaster@example.org; ruf=mailto:postmaster@example.org
 ```
 
-These records specify the [Mail Transfer Agent Strict Transport Security (MTA-STS)](/docs/smtp/transport-security/mta-sts) policy for secure email transmission:
+These records specify the [Mail Transfer Agent Strict Transport Security (MTA-STS)](/docs/mta/transport-security/mta-sts) policy for secure email transmission:
 
 ```
 CNAME	mta-sts.example.org.	mail.example.org.
 TXT	_mta-sts.example.org.	v=STSv1; id=16561011793845132961
 ```
 
-This record helps with [reporting](/docs/smtp/transport-security/tls-reporting) issues related to the transport layer security of SMTP:
+This record helps with [reporting](/docs/mta/transport-security/tls-reporting) issues related to the transport layer security of SMTP:
 
 ```
 TXT	_smtp._tls.example.org.	v=TLSRPTv1; rua=mailto:postmaster@example.org
@@ -132,7 +132,7 @@ CNAME	autoconfig.example.org.	mail.example.org.
 CNAME	autodiscover.example.org.	mail.example.org.
 ```
 
-TLSA records are used for [DNS-based Authentication of Named Entities (DANE)](/docs/smtp/transport-security/dane) and are optional but recommended if you aim to enhance the security of TLS connections. These records link TLS certificates specifically to DNS, enhancing trust and preventing interception:
+TLSA records are used for [DNS-based Authentication of Named Entities (DANE)](/docs/mta/transport-security/dane) and are optional but recommended if you aim to enhance the security of TLS connections. These records link TLS certificates specifically to DNS, enhancing trust and preventing interception:
 
 ```
 TLSA	_25._tcp.mail.example.org.	3 0 1 064dbc632f1ba7d0a2a3faeadeedfebd6f90f850dfb852c97ee9df9b6e5c5e7c

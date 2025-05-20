@@ -15,14 +15,14 @@ The following environment variables can be accessed from within a Sieve script e
 - `env.helo_domain`: The domain name used in the EHLO/LHLO command.
 - `env.authenticated_as`: The account name used for authentication.
 - `env.from`: The sender's email address specified in the `From` header.
-- `env.spf.result`: The result of the [SPF MAIL FROM](/docs/smtp/authentication/spf) check.
-- `env.spf_ehlo.result`: The result of the [SPF EHLO](/docs/smtp/authentication/spf) check.
-- `env.dkim`: The result of the [DKIM](/docs/smtp/authentication/dkim/overview) check.
+- `env.spf.result`: The result of the [SPF MAIL FROM](/docs/mta/authentication/spf) check.
+- `env.spf_ehlo.result`: The result of the [SPF EHLO](/docs/mta/authentication/spf) check.
+- `env.dkim`: The result of the [DKIM](/docs/mta/authentication/dkim/overview) check.
 - `env.dkim.domains`: The domains names that have passed DKIM validation.
-- `env.arc.result`: The result of the [ARC](/docs/smtp/authentication/arc) check.
-- `env.dmarc.result`: The result of the [DMARC](/docs/smtp/authentication/dmarc) check.
+- `env.arc.result`: The result of the [ARC](/docs/mta/authentication/arc) check.
+- `env.dmarc.result`: The result of the [DMARC](/docs/mta/authentication/dmarc) check.
 - `env.dmarc.policy`: The DMARC policy that was applied.
-- `env.iprev.result`: The result of the [reverse IP](/docs/smtp/authentication/iprev) check.
+- `env.iprev.result`: The result of the [reverse IP](/docs/mta/authentication/iprev) check.
 - `env.iprev.ptr`: The host name returned by the reverse IP check.
 - `env.tls.version`: The TLS version used for the current session.
 - `env.tls.cipher`: The TLS cipher used for the current session.

@@ -14,7 +14,7 @@ The trusted interpreter is configured with the following parameters which are av
 - `from-name`: Defines the default name to use for the from field in email notifications sent from a Sieve script.
 - `from-addr`: Defines the default email address to use for the from field in email notifications sent from a Sieve script.
 - `return-path`: Defines the default return path to use in email notifications sent from a Sieve script.
-- `sign`: Lists the [DKIM](/docs/smtp/authentication/dkim/overview) signatures to add to email notifications sent from a Sieve script.
+- `sign`: Lists the [DKIM](/docs/mta/authentication/dkim/overview) signatures to add to email notifications sent from a Sieve script.
 - `hostname`: Sets the local hostname to use when generating a `Message-Id` header. If no value is set, the `server.hostname` value is used instead.
 - `no-capability-check`: If set to `true`, language extensions can be used without being explicitly declared using the `require` statement.
 

@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Overview
 
-The spam filter is enabled by default in Stalwart, providing a robust defense against unwanted emails. However, administrators can disable it globally by setting the `spam-filter.enable` setting to `false`. Alternatively, it can be disabled dynamically using an [expression](/docs/configuration/expressions/overview) at the [SMTP DATA](/docs/smtp/inbound/data#spam-filtering) stage. Additionally, spam filtering can be disabled for specific users by removing the `spam-filter-classify` [permission](/docs/auth/authorization/permissions) from their user account or the [tenant](/docs/auth/authorization/tenants) they belong to.
+The spam filter is enabled by default in Stalwart, providing a robust defense against unwanted emails. However, administrators can disable it globally by setting the `spam-filter.enable` setting to `false`. Alternatively, it can be disabled dynamically using an [expression](/docs/configuration/expressions/overview) at the [SMTP DATA](/docs/mta/inbound/data#spam-filtering) stage. Additionally, spam filtering can be disabled for specific users by removing the `spam-filter-classify` [permission](/docs/auth/authorization/permissions) from their user account or the [tenant](/docs/auth/authorization/tenants) they belong to.
 
 ## Headers
 

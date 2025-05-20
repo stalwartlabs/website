@@ -45,7 +45,7 @@ Expressions can chain multiple conditions to handle different scenarios and each
 For example, the expression bellow allows access to HTTP endpoints if the IP starts with `192.180.1.` or the path contains specific filenames:
 
 ```toml
-[server.http]
+[http]
 allowed-endpoint = [ 
     { if = "starts_with(remote_ip, '192.180.1.') || contains(['robots.txt', '.well-known'], split(url_path, '/')[1])", 
       then = "200" },
