@@ -8,33 +8,79 @@ Caddy is an open-source, HTTP/2-enabled web server that is renowned for its simp
 
 Stalwart Mail Server supports Caddy, allowing you to leverage Caddy's robust feature set to manage and route traffic to your email server seamlessly. Using Caddy as a reverse proxy, you can benefit from its automatic HTTPS configuration, easy-to-use syntax, and powerful performance enhancements to ensure that your Stalwart Mail Server operates efficiently and securely.
 
-## Note on Proxy Protocol
+## Note on Layer 4 support
 
-Caddy, while being a powerful and easy-to-use web server and reverse proxy, does not natively support the [Proxy Protocol](/docs/server/reverse-proxy/proxy-protocol). This protocol is typically used to pass client connection information such as IP addresses and TLS connection statuses through multiple layers of proxies. To achieve this functionality, you would need to integrate [HAProxy](/docs/server/reverse-proxy/haproxy) or [NGINX](/docs/server/reverse-proxy/nginx), which can handle the Proxy Protocol and forward traffic to Caddy for further processing.
+Caddy does not natively support routing raw TCP/UDP streams (layer 4), which would be necessary for SMTP(S) and IMAP(S). You could either let [HAProxy](/docs/server/reverse-proxy/haproxy) or [NGINX](/docs/server/reverse-proxy/nginx) these ports, or make a custom Caddy build with non-standard modules which bring support for layer 4.
 
-In a typical setup, [HAProxy](/docs/server/reverse-proxy/haproxy) or [NGINX](/docs/server/reverse-proxy/nginx) would listen on the required ports (such as 25 for SMTP, 143 for IMAP, 465 for SMTPS, 993 for IMAPS, and 443 for HTTPS), use the Proxy Protocol to send the necessary client connection details, and forward the traffic to Caddy running on alternate ports. Caddy would then handle the reverse proxy duties and forward the traffic to the respective Stalwart Mail Server ports.
-
-For those looking to enable Proxy Protocol support directly within Caddy, there is a community-contributed plugin called [proxy_protocol](https://github.com/mastercactapus/caddy2-proxyprotocol). This plugin is a listener wrapper for Caddy 2 that adds support for PROXY headers on new connections, allowing Caddy to handle the Proxy Protocol directly without the need for HAProxy.
+For examle, using `xcaddy`:
+```txt
+xcaddy build --with github.com/mholt/caddy-l4/modules/l4proxy \
+    --with github.com/mholt/caddy-l4/modules/l4tls \
+    --with github.com/mholt/caddy-l4/modules/l4proxyprotocol
+```
 
 ## Configuration
 
-### Caddy configuration
+With this custom Caddy, the following Caddyfile should work:
 
 ```txt
-mail.example.com {
-	redir https://example.com{uri}
+{
+    layer4 {
+        0.0.0.0:25 {
+            route {
+                proxy {
+                    proxy_protocol v2
+                    upstream 127.0.0.1:10025
+                }
+            }
+        }
+
+        0.0.0.0:993 {
+            route {
+                proxy {
+                    proxy_protocol v2
+                    upstream 127.0.0.1:10993
+                }
+            }
+        }
+
+        0.0.0.0:465 {
+            route {
+                proxy {
+                    proxy_protocol v2
+                    upstream 127.0.0.1:10465
+                }
+            }
+        }
+
+        0.0.0.0:4190 {
+            route {
+                proxy {
+                    proxy_protocol v2
+                    upstream 127.0.0.1:14190
+                }
+            }
+        }
+    }
 }
 
 example.com {
-	# Set this path to your site's directory.
-	root * /usr/share/caddy
+    redir https://www.example.com{uri}
+}
 
-	# Enable the static file server.
-	file_server
+www.example.com {
+    root * /var/www/imkerei
+
+    file_server
 }
 
 mail.example.com {
-	reverse_proxy 127.0.0.1:8080
+    reverse_proxy https://127.0.0.1:10443 {
+        transport http {
+            proxy_protocol v2
+            tls_server_name mail.example.com
+        }
+    }
 }
 ```
 
@@ -45,6 +91,39 @@ The following crontab entries can be used to automate copying the certificates o
 ```bash
 0 3 * * * cat /var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/example.com/example.com.crt > /opt/stalwart-mail/cert/example.com.pem
 0 3 * * * cat /var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/example.com/example.com.key > /opt/stalwart-mail/cert/example.com.priv.pem
+```
+
+### Systemd
+
+As an alternative to crontab, it is also possible to let systemd watch the certificate file for updates, copy the renewed certificate files and restart Stalwart:
+
+*stalwart.path:*
+
+```
+[Unit]
+Description=import certs from caddy to stalwart
+
+[Path]
+PathModified=/var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/mail.example.com/mail.example.com.crt
+
+[Install]
+WantedBy=multi-user.target
+```
+
+*stalwart.service:*
+
+```
+[Unit]
+Description=imports certs from caddy to stalwart
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/cp -f /var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/mail.example.com/mail.example.com.pem /opt/stalwart-mail/cert/
+ExecStart=/usr/bin/cp -f /var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/mail.example.com/mail.example.com.priv.pem /opt/stalwart-mail/cert/
+ExecStart=/usr/bin/curl -X GET -H "Accept: aplication/json" -H "Authorization: Bearer <TOKEN>"  https://mail.example.com/api/reload/certificate 
+
+[Install]
+WantedBy=multi-user.target
 ```
 
 ### Stalwart configuration
