@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Certificates
 
-When deploying TLS encryption with manually provided certificates, Stalwart Mail Server automatically parses each certificate to extract all available subject names embedded within the certificate. These subject names indicate the domains and subdomains for which the certificate is valid, essentially determining the scope of its applicability for securing connections.
+When deploying TLS encryption with manually provided certificates, Stalwart automatically parses each certificate to extract all available subject names embedded within the certificate. These subject names indicate the domains and subdomains for which the certificate is valid, essentially determining the scope of its applicability for securing connections.
 
 During the TLS handshake process (the initial phase of establishing a TLS-secured connection) the server dynamically selects the appropriate certificate to present based on the server name provided by the client via the Server Name Indication (SNI) extension. SNI is a TLS extension that allows a client to specify the host it is trying to connect to at the start of the handshake process. This capability is crucial for servers hosting multiple domains or services under a single IP address, enabling them to present the correct certificate matching the requested domain.
 

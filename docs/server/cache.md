@@ -4,9 +4,9 @@ sidebar_position: 10
 
 # Caching
 
-Caching is a technique used to store frequently accessed data in memory, enabling faster retrieval and reducing the load on underlying systems. In Stalwart Mail Server, caching is utilized for various critical operations, including storing IMAP account data, security access tokens, and DNS query results. By caching this information, the server enhances performance, reduces latency, and minimizes resource usage.
+Caching is a technique used to store frequently accessed data in memory, enabling faster retrieval and reducing the load on underlying systems. In Stalwart, caching is utilized for various critical operations, including storing IMAP account data, security access tokens, and DNS query results. By caching this information, the server enhances performance, reduces latency, and minimizes resource usage.
 
-Stalwart Mail Server employs an efficient caching algorithm with an advanced eviction policy. The eviction mechanism is a modified version of the Clock-PRO algorithm, which closely resembles the later-published S3-FIFO algorithm. This algorithm is designed to be “scan-resistant,” meaning it avoids cache eviction caused by temporary spikes in access patterns. It provides high cache hit rates, outperforming traditional Least Recently Used (LRU) eviction policies and delivering results comparable to other state-of-the-art algorithms, such as W-TinyLFU. This advanced approach ensures that cached data remains highly relevant, contributing to the server's overall efficiency.
+Stalwart employs an efficient caching algorithm with an advanced eviction policy. The eviction mechanism is a modified version of the Clock-PRO algorithm, which closely resembles the later-published S3-FIFO algorithm. This algorithm is designed to be “scan-resistant,” meaning it avoids cache eviction caused by temporary spikes in access patterns. It provides high cache hit rates, outperforming traditional Least Recently Used (LRU) eviction policies and delivering results comparable to other state-of-the-art algorithms, such as W-TinyLFU. This advanced approach ensures that cached data remains highly relevant, contributing to the server's overall efficiency.
 
 ## Memory Usage
 
@@ -16,7 +16,7 @@ Conversely, systems with limited memory may need to reduce the default cache siz
 
 ## Configuration
 
-Stalwart Mail Server provides a variety of cache options that can be configured to optimize performance and memory usage. Each cache is configured under the `cache.NAME.size parameter`, where `NAME` is the name of the cache as defined in the system. The size is specified in bytes and controls the maximum memory allocated for each cache.
+Stalwart provides a variety of cache options that can be configured to optimize performance and memory usage. Each cache is configured under the `cache.NAME.size parameter`, where `NAME` is the name of the cache as defined in the system. The size is specified in bytes and controls the maximum memory allocated for each cache.
 
 ### Access Token Cache
 

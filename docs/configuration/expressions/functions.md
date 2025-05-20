@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # Functions
 
-Functions are integral components of expressions in Stalwart Mail Server. They perform specific operations on one or more operands (parameters) and are used to construct dynamic and powerful expressions for evaluating conditions and generating dynamic values. Functions can vary in the number of parameters they require, from zero to multiple, and each has a distinct purpose in processing and decision-making logic.
+Functions are integral components of expressions in Stalwart. They perform specific operations on one or more operands (parameters) and are used to construct dynamic and powerful expressions for evaluating conditions and generating dynamic values. Functions can vary in the number of parameters they require, from zero to multiple, and each has a distinct purpose in processing and decision-making logic.
 
 A function in an expression typically follows this syntax:
 
@@ -16,7 +16,7 @@ Where function_name is the name of the function being called, and `parameter1`, 
 
 ## Supported Functions
 
-The following functions are available for use in expressions in Stalwart Mail Server:
+The following functions are available for use in expressions in Stalwart:
 
 ### Directory Functions
 
@@ -71,7 +71,7 @@ The following functions are available for use in expressions in Stalwart Mail Se
 - **Arguments**: 2 (Record Name, Record Type)
 - **Example**: `dns_query("example.org", "mx")` would perform an MX record lookup for `example.org` and return the record's contents.
 
-These functions expand the capabilities of Stalwart Mail Server, allowing for dynamic interactions with local directories, key-value stores, and DNS records. By utilizing these functions, administrators can implement sophisticated logic for email routing, filtering, and verification based on domain, address validity, configuration parameters, and DNS lookup results.
+These functions expand the capabilities of Stalwart, allowing for dynamic interactions with local directories, key-value stores, and DNS records. By utilizing these functions, administrators can implement sophisticated logic for email routing, filtering, and verification based on domain, address validity, configuration parameters, and DNS lookup results.
 
 ### Text Functions
 

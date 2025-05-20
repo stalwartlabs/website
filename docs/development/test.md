@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Test
 
-The following subsections cover the different tests available on Stalwart Mail Server.
+The following subsections cover the different tests available on Stalwart.
 Before running these tests, make sure you have Rust installed by following the instructions
 in the [compile section](/docs/development/compile).
 
@@ -127,10 +127,10 @@ Compliance with the JMAP protocol may also be tested using Fastmail's JMAP-TestS
 
 ### IMAP4 protocol compliance
 
-Stalwart IMAP's protocol compliance may be also tested with Dovecot's ImapTest:
+Stalwart's IMAP protocol compliance may be also tested with Dovecot's ImapTest:
 
 - Download [ImapTest](https://www.imapwiki.org/ImapTest/Installation).
-- Start a test Stalwart Mail Server instance by running:
+- Start a test Stalwart instance by running:
     ```bash
     $ cargo run --manifest-path=crates/main/Cargo.toml -- --config=./tests/resources/test_config.toml
     ```
@@ -146,10 +146,10 @@ IMAP4rev2 specification.
 
 ### IMAP4 Stress tests
 
-Stress testing Stalwart IMAP can be done with Dovecot's ImapTest:
+Stress testing Stalwart can be done with Dovecot's ImapTest:
 
 - Download [ImapTest](https://www.imapwiki.org/ImapTest/Installation).
-- Start a test Stalwart Mail Server instance by running:
+- Start a test Stalwart instance by running:
     ```bash
     $ cargo run --manifest-path=crates/main/Cargo.toml -- --config=./tests/resources/test_config.toml
     ```

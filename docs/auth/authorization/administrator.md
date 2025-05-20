@@ -4,7 +4,7 @@ sidebar_position: 4
 
 # Administrators
 
-In Stalwart Mail Server, there is no specific concept of dedicated "administrator accounts" within the directory. Instead, [regular accounts](/docs/auth/principals/individual) can be selectively granted specific [permissions](/docs/auth/authorization/permissions) to perform management tasks. This approach provides a more secure and flexible way to manage access, as it avoids giving users blanket administrative privileges. Instead of an "all-or-nothing" approach, permissions can be carefully tailored to individual needs, ensuring that users only have access to the functions they require.
+In Stalwart, there is no specific concept of dedicated "administrator accounts" within the directory. Instead, [regular accounts](/docs/auth/principals/individual) can be selectively granted specific [permissions](/docs/auth/authorization/permissions) to perform management tasks. This approach provides a more secure and flexible way to manage access, as it avoids giving users blanket administrative privileges. Instead of an "all-or-nothing" approach, permissions can be carefully tailored to individual needs, ensuring that users only have access to the functions they require.
 
 By assigning permissions to regular user accounts, Stalwart allows administrators to distribute management responsibilities without compromising security. For example, an account may be granted the ability to manage email settings or user accounts without being given full control over the entire mail server. This principle of **least privilege** ensures that no account has more access than necessary, reducing the risk of accidental or malicious changes to critical system components.
 
@@ -23,7 +23,7 @@ While Stalwart relies on regular accounts with specific permissions for day-to-d
 
 ### Best Practices
 
-When managing administrative access in Stalwart Mail Server, it is essential to follow best practices to ensure the security and integrity of the system. Some key recommendations include:
+When managing administrative access in Stalwart, it is essential to follow best practices to ensure the security and integrity of the system. Some key recommendations include:
 
 - **Use regular accounts with granular permissions**: Instead of relying on a single, all-powerful account, create multiple accounts with only the necessary management permissions for each administrator.
 - **Restrict use of the fallback administrator**: This account should only be used for initial setup or emergencies. Once regular accounts are configured, the fallback administrator should be set aside and not used for daily tasks.

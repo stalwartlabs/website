@@ -8,7 +8,7 @@ S/MIME, which stands for Secure/Multipurpose Internet Mail Extensions, is a wide
 
 S/MIME uses the principles of public key cryptography. Each user has a pair of keys - a public key, which is made publicly available and used by anyone to encrypt the message, and a private key, which is kept secret by the user and used to decrypt any messages received. To use S/MIME, users must obtain a digital certificate from a trusted certificate authority (CA). The certificate includes the user's public key and is used to verify the identity of the user. The private key is kept securely by the user and is never shared.
 
-Stalwart Mail Server supports S/MIME and can use it to encrypt messages using either AES256-CBC or AES128-CBC symmetric encryption. The choice between AES256-CBC and AES128-CBC depends on the level of security required and the computational resources available. AES256-CBC provides a higher level of security but requires more computational resources, while AES128-CBC is less resource-intensive but still provides a strong level of security.
+Stalwart supports S/MIME and can use it to encrypt messages using either AES256-CBC or AES128-CBC symmetric encryption. The choice between AES256-CBC and AES128-CBC depends on the level of security required and the computational resources available. AES256-CBC provides a higher level of security but requires more computational resources, while AES128-CBC is less resource-intensive but still provides a strong level of security.
 
 ## Obtaining a key pair
 
@@ -46,7 +46,7 @@ This command will export the public certificate from the PFX file (`path_to_pfx_
 
 ## Importing certificates
 
-Stalwart Mail Server supports encrypting messages using either a single certificate or multiple certificates. This is particularly useful for scenarios like key rotation, where it may be necessary to transition from an old certificate to a new one, while still maintaining the ability to decrypt messages encrypted with the old certificate.
+Stalwart supports encrypting messages using either a single certificate or multiple certificates. This is particularly useful for scenarios like key rotation, where it may be necessary to transition from an old certificate to a new one, while still maintaining the ability to decrypt messages encrypted with the old certificate.
 
 Stalwart supports both DER and PEM formats for importing certificates. DER format is a binary form of the certificate, whereas PEM (Privacy Enhanced Mail) is a Base64 encoded version of the same certificate, typically encapsulated between "`-----BEGIN CERTIFICATE-----`" and "`-----END CERTIFICATE-----`" statements. Importing a single certificate can be done be in either DER or PEM format. However, when importing multiple certificates, the PEM format must be used. 
 

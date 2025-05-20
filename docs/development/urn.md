@@ -6,7 +6,7 @@ sidebar_position: 4
 
 ## Overview
 
-This document describes the 'stalwart' Uniform Resource Name (URN) namespace, which provides persistent, location-independent identifiers for resources related to the Stalwart Mail and Collaboration Server.
+This document describes the 'stalwart' Uniform Resource Name (URN) namespace, which provides persistent, location-independent identifiers for resources related to the Stalwart and Collaboration Server.
 
 The namespace identifier (NID) is: `stalwart`
 
@@ -94,7 +94,7 @@ URNs in the 'stalwart' namespace are assigned by Stalwart Labs LLC. Assignment f
 
 ## Usage Policy
 
-Use of the 'stalwart' URN namespace within the scope of projects related to or derived from the Stalwart Mail and Collaboration Server is permitted according to the terms of the server's license.
+Use of the 'stalwart' URN namespace within the scope of projects related to or derived from the Stalwart and Collaboration Server is permitted according to the terms of the server's license.
 
 ## Version History
 
@@ -106,4 +106,4 @@ For questions or concerns regarding the 'stalwart' URN namespace, please contact
 
 - **Organization**: Stalwart Labs LLC
 - **Email**: hello@stalw.art
-- **Website**: https://github.com/stalwartlabs/mail-server
+- **Website**: https://github.com/stalwartlabs/stalwart

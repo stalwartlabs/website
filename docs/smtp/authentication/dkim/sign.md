@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Signing
 
-Stalwart Mail Server can be configured to automatically sign outgoing messages with one or multiple signatures using any of the following algorithms:
+Stalwart can be configured to automatically sign outgoing messages with one or multiple signatures using any of the following algorithms:
 
 - `ED25519-SHA256`: This algorithm uses the Edwards-Curve Digital Signature Algorithm, which is known for its strong security and efficiency in processing.
 - `RSA-SHA256`: Provides robust security by combining RSA encryption with the SHA-256 hashing algorithm, making it suitable for modern security demands.

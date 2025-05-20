@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Webhooks
 
-Stalwart Mail Server provides a webhook API to notify your application of various events related to email delivery and authentication. This document describes the structure and types of webhook events that can be received.
+Stalwart provides a webhook API to notify your application of various events related to email delivery and authentication. This document describes the structure and types of webhook events that can be received.
 
 ## Response object
 

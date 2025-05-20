@@ -8,7 +8,7 @@ Branding allows system administrators to customize the appearance of the **webad
 
 :::tip Enterprise feature
 
-This feature is available exclusively in the [Enterprise Edition](/docs/server/enterprise) of Stalwart Mail Server and not included in the Community Edition.
+This feature is available exclusively in the [Enterprise Edition](/docs/server/enterprise) of Stalwart and not included in the Community Edition.
 
 :::
 
@@ -21,7 +21,7 @@ The logo displayed in the webadmin interface is dynamically chosen based on the 
 - **System-wide Default Logo**:  If neither the domain principal nor the associated tenant has a valid logo, Stalwart falls back to a system-wide default logo. This is defined by the `enterprise.logo-url` setting in the server configuration. If this setting includes a valid URL, the logo at that URL is used as the default for the system.
 - **Stalwart Default Logo**: If no custom logo is set anywhere (domain, tenant, or system-wide), Stalwart will display its built-in **default logo** in the webadmin interface.
 
-The branding feature in Stalwart Mail Server allows administrators to apply custom logos, either globally or tailored to specific tenants and domains, providing a seamless and branded experience across the web administration interface. This hierarchical logo selection process ensures that the most relevant branding is always applied based on the user's domain, promoting consistency and personalization in multi-tenant setups.
+The branding feature in Stalwart allows administrators to apply custom logos, either globally or tailored to specific tenants and domains, providing a seamless and branded experience across the web administration interface. This hierarchical logo selection process ensures that the most relevant branding is always applied based on the user's domain, promoting consistency and personalization in multi-tenant setups.
 
 ## Configuration
 

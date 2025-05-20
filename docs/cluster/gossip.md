@@ -10,7 +10,7 @@ The primary function of infection-style protocols is to ensure all nodes in a ne
 
 ## Gossip Service
 
-Stalwart Mail Server incorporates a gossip protocol service, enabling it to dynamically discover new nodes, share status updates, and detect node failures effectively. The protocol operates by having nodes periodically exchange messages with a randomly chosen peer, which then spreads this information through the network, creating a resilient and self-stabilizing system.
+Stalwart incorporates a gossip protocol service, enabling it to dynamically discover new nodes, share status updates, and detect node failures effectively. The protocol operates by having nodes periodically exchange messages with a randomly chosen peer, which then spreads this information through the network, creating a resilient and self-stabilizing system.
 
 A crucial feature of Stalwart’s gossip protocol is its tolerance to network partitions. Network partitions occur when a network is split into disjoint subnets where nodes within the same subnet can communicate, but cannot reach nodes in other subnets due to network failures or disruptions. Stalwart's protocol is designed to handle these scenarios by maintaining the service operational within each partition. Once the network partition is resolved, the protocol ensures that the state information is reconciled across the partitions, restoring consistency across the entire network.
 

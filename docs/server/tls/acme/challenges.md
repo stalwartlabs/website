@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Challenge Types
 
-The ACME protocol supports several types of challenges to prove control over a domain name. Each challenge type verifies that the ACME client (in this case, Stalwart Mail Server) controls the domain it claims to represent. The choice of challenge depends on the user’s environment and the specific security requirements:
+The ACME protocol supports several types of challenges to prove control over a domain name. Each challenge type verifies that the ACME client (in this case, Stalwart) controls the domain it claims to represent. The choice of challenge depends on the user’s environment and the specific security requirements:
 
 - **HTTP-01 Challenge**: This method requires the server to respond to a HTTP request made to a specific URL on the domain. It's suitable for services with an active web server.
 - **DNS-01 Challenge**: This approach involves creating a specific DNS record in the domain’s DNS zone. It is useful for services that have control over their DNS records.
@@ -16,8 +16,8 @@ The HTTP-01 challenge is designed to prove control over a domain by making an HT
 
 Process:
 
-- **Token Creation**: The ACME server generates a token and sends it to Stalwart Mail Server.
-- **File Creation**: Stalwart Mail Server creates a file containing the token and a key authorization derived from the token and the server’s ACME account key.
+- **Token Creation**: The ACME server generates a token and sends it to Stalwart.
+- **File Creation**: Stalwart creates a file containing the token and a key authorization derived from the token and the server’s ACME account key.
 - **File Placement**: This file is at `http://<YOUR_DOMAIN>/.well-known/acme-challenge/<TOKEN>`, which is accessible via the web on port 80.
 - **Verification**: The ACME server accesses the URL. If the server retrieves the correct response, the domain validation is considered successful.
 
@@ -33,8 +33,8 @@ The DNS-01 challenge validates domain ownership by requiring the user to create 
 
 Process:
 
-- **Token Creation**: The ACME server provides a token to Stalwart Mail Server.
-- **Record Creation**: Stalwart Mail Server uses the token to create a TXT record for the domain in the format `_acme-challenge.<YOUR_DOMAIN>`.
+- **Token Creation**: The ACME server provides a token to Stalwart.
+- **Record Creation**: Stalwart uses the token to create a TXT record for the domain in the format `_acme-challenge.<YOUR_DOMAIN>`.
 - **Record Placement**: The TXT record's value is set to a key authorization digest, which is a SHA-256 digest of the token combined with the server's ACME account key.
 - **Verification**: The ACME server queries the DNS records for the TXT entry. If the TXT record matches the expected digest, the domain is considered validated.
 
@@ -50,8 +50,8 @@ The TLS-ALPN-01 challenge uses the TLS Application-Layer Protocol Negotiation ex
 
 Process:
 
-- **Token Creation**: The ACME server sends a token to Stalwart Mail Server.
-- **Certificate Generation**: Stalwart Mail Server generates a self-signed certificate that includes the token and a specific ACME OID in the Subject Alternative Name (SAN) extension.
+- **Token Creation**: The ACME server sends a token to Stalwart.
+- **Certificate Generation**: Stalwart generates a self-signed certificate that includes the token and a specific ACME OID in the Subject Alternative Name (SAN) extension.
 - **TLS Configuration**: Stalwart configures itself to respond to HTTPS (port 443) requests using the ACME-specific TLS-ALPN protocol ID.
 - **Verification**: The ACME server connects to the domain via TLS-ALPN. If the server presents the correct certificate, the domain is validated.
 
@@ -63,7 +63,7 @@ Considerations:
 
 ## Choosing the Right Challenge
 
-When setting up Stalwart Mail Server to use the Automated Certificate Management Environment (ACME) protocol for SSL/TLS certificate management, selecting the appropriate challenge type is crucial. This short guide will help you decide between HTTP-01, DNS-01, and TLS-ALPN-01 challenges based on your server configuration and specific requirements.
+When setting up Stalwart to use the Automated Certificate Management Environment (ACME) protocol for SSL/TLS certificate management, selecting the appropriate challenge type is crucial. This short guide will help you decide between HTTP-01, DNS-01, and TLS-ALPN-01 challenges based on your server configuration and specific requirements.
 
 #### HTTP-01
 This is the most straightforward method if your server has port 80 open and accessible from the internet. The HTTP-01 challenge proves control over your domain by responding to HTTP requests from the ACME server.

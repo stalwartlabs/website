@@ -12,7 +12,7 @@ For example, administrators can use the `llm_prompt` function to analyze incomin
 
 :::tip Enterprise feature
 
-This feature is available exclusively in the [Enterprise Edition](/docs/server/enterprise) of Stalwart Mail Server and not included in the Community Edition.
+This feature is available exclusively in the [Enterprise Edition](/docs/server/enterprise) of Stalwart and not included in the Community Edition.
 
 :::
 

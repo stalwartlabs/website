@@ -10,11 +10,11 @@ OAuth defines two primary types of tokens: **access tokens** and **refresh token
 
 ## Access Tokens
 
-An access token is a short-lived token issued by the authorization server (in this case, Stalwart Mail Server’s built-in OAuth server) after a successful authorization request. This token is used by the client to access protected resources on behalf of the user. When a client presents an access token to the resource server, the server validates it before granting the requested access to the user's resources.
+An access token is a short-lived token issued by the authorization server (in this case, Stalwart’s built-in OAuth server) after a successful authorization request. This token is used by the client to access protected resources on behalf of the user. When a client presents an access token to the resource server, the server validates it before granting the requested access to the user's resources.
 
 Access tokens typically have a limited lifespan, often lasting from several minutes to a few hours. This short lifespan is intentional, as it reduces the window of opportunity for malicious use in case the token is compromised. Once the token expires, the client must obtain a new access token through a refresh token or by requesting a new authorization from the user.
 
-Access tokens are issued with a defined scope, meaning they only grant access to specific resources or actions. For instance, an access token issued for sending emails through Stalwart Mail Server may not allow the client to read the user’s inbox or modify account settings. This granularity in permissioning enhances security by ensuring that clients only access what is absolutely necessary.
+Access tokens are issued with a defined scope, meaning they only grant access to specific resources or actions. For instance, an access token issued for sending emails through Stalwart may not allow the client to read the user’s inbox or modify account settings. This granularity in permissioning enhances security by ensuring that clients only access what is absolutely necessary.
 
 ## Refresh Tokens
 
@@ -28,7 +28,7 @@ Refresh tokens are often issued alongside access tokens during the authorization
 
 ### Encryption
 
-All tokens issued by Stalwart Mail Server are cryptographically signed using a mechanism inspired by [PASETO security tokens](https://paseto.io/):
+All tokens issued by Stalwart are cryptographically signed using a mechanism inspired by [PASETO security tokens](https://paseto.io/):
 
 - An **encryption key** is derived using the [BLAKE3](https://en.wikipedia.org/wiki/BLAKE_(hash_function)#BLAKE3) cryptographic hash function combining the principal encryption key (configurable with the `oauth.key` parameter) with the device id, the expiration time, account details and an [Argon2](https://en.wikipedia.org/wiki/Argon2) hash of the account's password.
 - A **nonce** is generated using a BLAKE3 hash of the user details and the expiration time of the token.
@@ -55,13 +55,13 @@ key = "%{env:OAUTH_KEY}%"
 - On distributed systems, all nodes have to use the **exact same encryption key**. Otherwise,
   tokens issued in one node will not be valid in other nodes.
 - The encryption key **must be kept private**. It is recommended that it is specified using an [environment variable](/docs/configuration/macros), which will prevent the key from being stored in the configuration file in plain text.
-  If using an environment variable is not possible or practical, then make sure that only the Stalwart Mail Server process
+  If using an environment variable is not possible or practical, then make sure that only the Stalwart process
   has access to the configuration file where it is stored. In Unix systems this can be done
   with the commands:
   
    ```
-   sudo chown stalwart-mail /opt/stalwart-mail/etc/config.toml
-   sudo chmod 600 /opt/stalwart-mail/etc/config.toml
+   sudo chown stalwart /opt/stalwart/etc/config.toml
+   sudo chmod 600 /opt/stalwart/etc/config.toml
    ``` 
 
 :::
@@ -98,4 +98,4 @@ max-attempts = 3
 
 ### Revocation
 
-Access and refresh tokens issued by Stalwart Mail Server can be revoked by both account owners and system administrators simply by changing the account's password.
+Access and refresh tokens issued by Stalwart can be revoked by both account owners and system administrators simply by changing the account's password.

@@ -4,11 +4,11 @@ sidebar_position: 1
 
 # Getting started
 
-**Stalwart Mail Server** is an open-source mail server solution with SMTP, JMAP, IMAP4, and POP3 support and a wide range of modern features. It is written in Rust and aims to be secure, fast, robust and scalable.
+**Stalwart** is an open-source mail server solution with SMTP, JMAP, IMAP4, and POP3 support and a wide range of modern features. It is written in Rust and aims to be secure, fast, robust and scalable.
 
 ## Choosing a storage backend
 
-When installing Stalwart Mail server you will be asked to specify a backend for each one of the four store types:
+When installing Stalwart you will be asked to specify a backend for each one of the four store types:
 
 - [Data store](/docs/storage/data): Where email metadata, folders, and various settings are stored. Essentially, it contains all the data except for large binary objects (blobs).
 - [Blob store](/docs/storage/blob): Used for storing large binary objects such as emails, sieve scripts, and other files.
@@ -17,7 +17,7 @@ When installing Stalwart Mail server you will be asked to specify a backend for 
 
 The following table summarizes the supported backends available for each store type:
 
-|                    | Data store         | Blob store         | Full-text store    | In-memory store       |
+|                    | Data store         | Blob store         | Full-text store    | In-memory store    |
 |--------------------|--------------------|--------------------|--------------------|--------------------|
 | RocksDB            | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | FoundationDB       | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
@@ -40,21 +40,21 @@ Be aware that changing the database backend at a later time will require migrati
 
 A database or directory server is required for authentication, validating local accounts, and obtaining account-related information such as names, group membership or disk quotas. Available options are:
 
-- [Internal](/docs/auth/backend/internal): An internal directory that is automatically created and managed by Stalwart Mail server. It uses the same database backend as the data store.
+- [Internal](/docs/auth/backend/internal): An internal directory that is automatically created and managed by Stalwart. It uses the same database backend as the data store.
 - [LDAP](/docs/auth/backend/ldap): LDAP servers, including OpenLDAP and Active Directory.
 - [SQL](/docs/auth/backend/sql): SQL databases, including PostgreSQL, MySQL and SQLite.
 - [OpenID Connect](/docs/auth/backend/oidc.md): OpenID Connect servers, including Authentik, Keycloak, etc.
 
 :::tip Note
 
-- When the internal directory is used, Stalwart Mail Server manages all user-related data within its own system. In this setup, all account management tasks, such as creating new user accounts, updating passwords, and setting quotas, are performed directly within Stalwart Mail Server.
-- When an external LDAP or SQL directory is utilized, all user account management must be performed within that external system. Stalwart Mail Server will rely on this external directory for authentication and user information but will not have the ability to directly modify user details.
+- When the internal directory is used, Stalwart manages all user-related data within its own system. In this setup, all account management tasks, such as creating new user accounts, updating passwords, and setting quotas, are performed directly within Stalwart.
+- When an external LDAP or SQL directory is utilized, all user account management must be performed within that external system. Stalwart will rely on this external directory for authentication and user information but will not have the ability to directly modify user details.
 
 :::
 
 ## Choosing network ports
 
-Stalwart Mail Server utilizes various network ports to handle different types of email and administrative traffic. Understanding the function of each port can help in optimizing your server's security and performance. Below is a detailed guide on what each port is used for and recommendations on whether to keep it open or closed.
+Stalwart utilizes various network ports to handle different types of email and administrative traffic. Understanding the function of each port can help in optimizing your server's security and performance. Below is a detailed guide on what each port is used for and recommendations on whether to keep it open or closed.
 
 The essential ports are:
 
@@ -75,7 +75,7 @@ Disabling unused or non-essential ports helps to reduce potential vulnerabilitie
 
 ## Understanding DNS records
 
-When setting up a mail server, it is essential to configure the necessary DNS records to ensure proper email delivery, security, and client configuration. When a new domain is added, Stalwart Mail Server automatically generates the required DNS records for the domain, which can be copied and pasted into your domain's DNS settings. Below is a brief explanation of each record type and its purpose:
+When setting up a mail server, it is essential to configure the necessary DNS records to ensure proper email delivery, security, and client configuration. When a new domain is added, Stalwart automatically generates the required DNS records for the domain, which can be copied and pasted into your domain's DNS settings. Below is a brief explanation of each record type and its purpose:
 
 This record directs email traffic to the correct mail server:
 

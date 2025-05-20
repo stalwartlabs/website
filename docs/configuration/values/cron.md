@@ -4,7 +4,7 @@ sidebar_position: 9
 
 # Cron
 
-Stalwart Mail Server runs periodically automated tasks that perform essential maintenance to ensure efficient use of storage and optimal database operations. The schedule for these tasks is configured using a simplified cron-like syntax:
+Stalwart runs periodically automated tasks that perform essential maintenance to ensure efficient use of storage and optimal database operations. The schedule for these tasks is configured using a simplified cron-like syntax:
 
 ```txt
 <minute> <hour> <week-day>

@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # SQL Database
 
-Stalwart Mail Server supports using popular SQL database systems such as mySQL, PostgreSQL, and SQLite as a directory server. This allows you to leverage an existing SQL database to handle tasks such as authentication, validating local accounts, and retrieving account-related information.
+Stalwart supports using popular SQL database systems such as mySQL, PostgreSQL, and SQLite as a directory server. This allows you to leverage an existing SQL database to handle tasks such as authentication, validating local accounts, and retrieving account-related information.
 
 ## Configuration
 
@@ -29,7 +29,7 @@ Please refer to the relevant section for each data store for more information on
 
 ### Column mappings
 
-The `directory.<name>.columns` section maps the column names in the SQL database to the names used within Stalwart Mail Server:
+The `directory.<name>.columns` section maps the column names in the SQL database to the names used within Stalwart:
 
 - `class`: Maps to the 'type' column in the SQL database. Expected values are `individual` (or `person`) for user accounts and `group` for group accounts.
 - `secret`: Maps to the 'secret' column in the SQL database. Passwords can be stored [hashed](//docs/auth/authentication/password) or in plain text (not recommended).
@@ -52,7 +52,7 @@ email = "email"
 
 ## Sample directory schema
 
-This section provides a sample SQL database schema that can be used as a directory server for Stalwart Mail Server. The schema is provided as a reference and is not intended to be used as-is. You will need to modify the schema to suit your needs.
+This section provides a sample SQL database schema that can be used as a directory server for Stalwart. The schema is provided as a reference and is not intended to be used as-is. You will need to modify the schema to suit your needs.
 
 ### Table schema
 

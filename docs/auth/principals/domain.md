@@ -4,7 +4,7 @@ sidebar_position: 4
 
 # Domain
 
-The **Domain** principal type in Stalwart Mail Server represents a local domain managed by the mail server. Domain principals are crucial for defining the domains that the mail server recognizes as part of its local configuration. If a domain principal is not created for a specific domain, Stalwart will treat that domain as external and will not accept email delivery for it. This makes domain principals essential for proper routing and handling of emails within the server.
+The **Domain** principal type in Stalwart represents a local domain managed by the mail server. Domain principals are crucial for defining the domains that the mail server recognizes as part of its local configuration. If a domain principal is not created for a specific domain, Stalwart will treat that domain as external and will not accept email delivery for it. This makes domain principals essential for proper routing and handling of emails within the server.
 
 In addition to enabling local email delivery, domain principals allow administrators to configure custom [branding](/docs/management/webadmin/branding) for each domain, such as setting a logo that is displayed when accessing the web administration interface for that domain. This is especially useful in multi-tenant setups, where different organizations may want to apply their own branding to their respective domains.
 

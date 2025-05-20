@@ -4,7 +4,7 @@ sidebar_position: 4
 
 # Security
 
-Stalwart Mail Server provides several security settings that can help enhance the security of the HTTP server. These settings include HTTP Strict Transport Security (HSTS) and CORS policies. By configuring these settings, administrators can enforce secure communication practices and control cross-origin requests to the server.
+Stalwart provides several security settings that can help enhance the security of the HTTP server. These settings include HTTP Strict Transport Security (HSTS) and CORS policies. By configuring these settings, administrators can enforce secure communication practices and control cross-origin requests to the server.
 
 ## Strict Transport Security
 
@@ -12,7 +12,7 @@ HTTP Strict Transport Security (HSTS) is a web security policy mechanism that he
 
 Implementing HSTS increases the security of your server by ensuring that all connections are made over HTTPS, thus preventing attackers from exploiting any unsecured entry points during data transmission. This is particularly important to mitigate the risk of attacks that rely on intercepting or modifying data in transit, such as active eavesdropping or session hijacking.
 
-In Stalwart Mail Server, HSTS can be easily enabled by setting `server.http.hsts` to `true`. This setting forces the server to use HTTPS exclusively, providing an additional layer of security for the administrative interface and any other web-based services it offers.
+In Stalwart, HSTS can be easily enabled by setting `server.http.hsts` to `true`. This setting forces the server to use HTTPS exclusively, providing an additional layer of security for the administrative interface and any other web-based services it offers.
 
 Example:
 
@@ -29,7 +29,7 @@ Web pages make requests to servers using the XMLHttpRequest or Fetch APIs. By de
 
 The server communicates its CORS policy to the browser through specific HTTP headers. The browser then decides whether to allow the web page to make the cross-origin request based on these headers. For example, if a web page from `example.com` tries to fetch data from `api.example.net`, the server at `api.example.net` would need to include the appropriate CORS headers in its response to allow this.
 
-A permissive CORS policy might be necessary when managing Stalwart Mail Server using a webadmin interface hosted on a different domain. To set a permissive CORS policy that allows any origin to access the resources on the server, you would need to set the `server.http.permissive-cors` headers to `true`. Here's how you can set this in the configuration file:
+A permissive CORS policy might be necessary when managing Stalwart using a webadmin interface hosted on a different domain. To set a permissive CORS policy that allows any origin to access the resources on the server, you would need to set the `server.http.permissive-cors` headers to `true`. Here's how you can set this in the configuration file:
 
 ```toml
 [server.http]

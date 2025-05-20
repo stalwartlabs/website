@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # Self-service
 
-Stalwart Mail Server features a self-service portal designed to empower users with direct control over key aspects of their account settings. This portal enhances the overall user experience by providing a straightforward interface for personal account management tasks, such as updating passwords and enabling encryption-at-rest for sensitive email communications.
+Stalwart features a self-service portal designed to empower users with direct control over key aspects of their account settings. This portal enhances the overall user experience by providing a straightforward interface for personal account management tasks, such as updating passwords and enabling encryption-at-rest for sensitive email communications.
 
 ## Changing Passwords
 
@@ -18,7 +18,7 @@ Upon deciding on the encryption method, users are then prompted to select an enc
 
 ## Two-Factor Authentication
 
-Stalwart Mail Server supports two-factor authentication (2FA) as an additional layer of security for user accounts. The self-service portal allows users to enable 2FA by configuring their preferred authentication method, such as TOTP (Time-based One-Time Password). Once enabled, users are required to provide a secondary authentication factor in addition to their password when logging in to their account. This significantly enhances the security of user accounts by mitigating the risks associated with password-based authentication.
+Stalwart supports two-factor authentication (2FA) as an additional layer of security for user accounts. The self-service portal allows users to enable 2FA by configuring their preferred authentication method, such as TOTP (Time-based One-Time Password). Once enabled, users are required to provide a secondary authentication factor in addition to their password when logging in to their account. This significantly enhances the security of user accounts by mitigating the risks associated with password-based authentication.
 
 ## Application Passwords
 

@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # Rate Limits
 
-Rate limiting is a mechanism used to control the flow of connections and messages by restricting the number of requests or actions allowed over a specific time period. In Stalwart Mail Server, rate limiting ensures that email traffic is managed efficiently, preventing resource overuse and protecting the server from abuse, such as spam or denial-of-service (DoS) attacks.
+Rate limiting is a mechanism used to control the flow of connections and messages by restricting the number of requests or actions allowed over a specific time period. In Stalwart, rate limiting ensures that email traffic is managed efficiently, preventing resource overuse and protecting the server from abuse, such as spam or denial-of-service (DoS) attacks.
 
 Stalwart supports enforcing rate limits on both inbound connections and outbound connections. Inbound rate limits apply to connections from remote servers on standard ports, such as 25 (SMTP) and 465 (submissions), helping to regulate the flow of incoming messages. Outbound rate limits, on the other hand, apply to connections initiated automatically by the message queue when delivering messages to remote hosts. These limits help manage the volume of outgoing traffic and ensure that the server does not overwhelm external systems.
 
@@ -14,19 +14,19 @@ By leveraging rate limits, administrators can maintain control over email traffi
 
 ## Inbound Limits
 
-Inbound rate limits in Stalwart Mail Server are designed to regulate the flow of incoming connections and messages from remote servers. These limits are particularly useful for mitigating attacks, such as spam campaigns and denial-of-service (DoS) attempts, as well as preventing issues like routing loops that can cause excessive resource usage.
+Inbound rate limits in Stalwart are designed to regulate the flow of incoming connections and messages from remote servers. These limits are particularly useful for mitigating attacks, such as spam campaigns and denial-of-service (DoS) attempts, as well as preventing issues like routing loops that can cause excessive resource usage.
 
 When the configured inbound rate limit is exceeded, Stalwart responds by rejecting any additional messages with a `451 4.4.5 Rate limit exceeded, try again later.` error. This temporary rejection prevents the server from being overwhelmed while signaling the remote sender to retry delivery at a later time. The server will continue rejecting messages until the rate limit is restored, ensuring that normal operations are not disrupted by excessive inbound traffic.
 
 ## Outbound Limits
 
-Outbound rate limits regulate the flow of connections and messages initiated by Stalwart Mail Server to deliver messages to remote systems. These limits help prevent overwhelming external servers and can be used to throttle message delivery based on the server's operational policies or constraints.
+Outbound rate limits regulate the flow of connections and messages initiated by Stalwart to deliver messages to remote systems. These limits help prevent overwhelming external servers and can be used to throttle message delivery based on the server's operational policies or constraints.
 
 Unlike inbound rate limits, outbound rate limiting does not reject or discard messages. Instead, when an outbound rate limit is reached, affected messages remain in the server's message queue until the limit is restored. Once the rate limit resets, the server resumes delivering the queued messages according to its configured retry schedule.
 
 ## Settings
 
-Stalwart Mail Server supports an unlimited number of rate limiters, which can be dynamically configured to limit email delivery based on multiple variables. Rate limiters are defined in the configuration file under the `queue.limiter.outbound[]` (for outbound connections) and `queue.limiter.inbound[]` (for inbound connections) keys using the following attributes:
+Stalwart supports an unlimited number of rate limiters, which can be dynamically configured to limit email delivery based on multiple variables. Rate limiters are defined in the configuration file under the `queue.limiter.outbound[]` (for outbound connections) and `queue.limiter.inbound[]` (for inbound connections) keys using the following attributes:
 
 - `concurrency`: Specifies the maximum number of concurrent requests that the throttle will allow.
 - `rate`: Specifies the rate limit that the throttle will impose.

@@ -6,7 +6,7 @@ sidebar_position: 1
 
 RocksDB is an embeddable, high performance, and persistent key-value store originally built by Facebook. It is particularly well-suited for storing data on fast storage devices, such as SSDs. With its efficient use of CPU and RAM, RocksDB is designed for fast data retrieval, making it a popular choice for various applications.
 
-RocksDB is the recommended backend for single-node setups of Stalwart Mail Server due to its speed and robustness, which are essential for a reliable mail server operation.
+RocksDB is the recommended backend for single-node setups of Stalwart due to its speed and robustness, which are essential for a reliable mail server operation.
 
 ## Configuration
 

@@ -8,7 +8,7 @@ DMARC (Domain-based Message Authentication, Reporting & Conformance) is an email
 
 ## Verification
 
-Stalwart Mail Server supports the following DMARC verification policies which are configured with the `auth.dmarc.verify` attribute:
+Stalwart supports the following DMARC verification policies which are configured with the `auth.dmarc.verify` attribute:
 
 - `relaxed`: Verify DMARC and report the results in the `Authentication-Results` header.
 - `strict`: Reject the message if DMARC fails verification, otherwise report the results in the `Authentication-Results` header.
@@ -24,7 +24,7 @@ verify = [ { if = "listener = 'smtp'", then = "relaxed" },
 
 ## Reporting
 
-Stalwart Mail Server [automatically analyzes](/docs/smtp/authentication/analysis) received DMARC failure and aggregate reports from external hosts and can also generate its own DMARC reports to inform other hosts about the authentication outcomes of the DKIM signatures and SPF policies it has processed.
+Stalwart [automatically analyzes](/docs/smtp/authentication/analysis) received DMARC failure and aggregate reports from external hosts and can also generate its own DMARC reports to inform other hosts about the authentication outcomes of the DKIM signatures and SPF policies it has processed.
 
 The report submitter address can be configured using the `report.submitter` attribute. If not specified, the `config_get('server.hostname')` expression is be used.
 

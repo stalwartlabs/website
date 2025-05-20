@@ -13,20 +13,20 @@ Running Stalwart in a Kubernetes environment enables scalable and resilient depl
 In Kubernetes, liveness and readiness probes are mechanisms designed to ensure that containers are running properly and are ready to handle requests. The liveness probe checks if an application is running and if it fails, Kubernetes will kill the container and restart it, assuming something has gone wrong. This feature helps recover from situations where an application might be running but is stuck or unable to continue its work.
 
 On the other hand, the readiness probe determines if an application is ready to start accepting traffic. When the readiness probe fails, Kubernetes will temporarily remove the pod from its service endpoints, preventing it from receiving any traffic. This is particularly useful for scenarios where an application might need some initialization time before it can serve requests or when it needs to shut down gracefully.
-Stalwart Mail Server Endpoints
+Stalwart Endpoints
 
-In Stalwart Mail Server, the endpoints for these probes are predefined as follows: the liveness endpoint is located at `/healthz/live`, and the readiness endpoint can be found at `/healthz/ready`. These endpoints can be configured in your Kubernetes deployment files to ensure that the Stalwart Mail Server containers are properly monitored and managed.
+In Stalwart, the endpoints for these probes are predefined as follows: the liveness endpoint is located at `/healthz/live`, and the readiness endpoint can be found at `/healthz/ready`. These endpoints can be configured in your Kubernetes deployment files to ensure that the Stalwart containers are properly monitored and managed.
 
 ## Helm Chart
 
-Below are the steps to create a Helm chart, which is a package containing all the necessary files and configurations to deploy Stalwart Mail Server on Kubernetes. This Helm chart will simplify the process of setting up Stalwart in a Kubernetes cluster by defining all the required resources in a cohesive and structured format.
+Below are the steps to create a Helm chart, which is a package containing all the necessary files and configurations to deploy Stalwart on Kubernetes. This Helm chart will simplify the process of setting up Stalwart in a Kubernetes cluster by defining all the required resources in a cohesive and structured format.
 
 ### Step 1: Directory Structure
 
 First, create the directory structure for your Helm chart:
 
 ```
-stalwart-mail/
+stalwart/
 ├── Chart.yaml
 ├── values.yaml
 ├── templates/
@@ -41,8 +41,8 @@ This file contains metadata about your chart. Here's an example:
 
 ```yaml
 apiVersion: v2
-name: stalwart-mail
-description: Helm chart for Stalwart Mail Server
+name: stalwart
+description: Helm chart for Stalwart
 version: 0.1.0
 appVersion: "latest"
 ```
@@ -53,7 +53,7 @@ This file contains the default values for your chart. Users can override these v
 
 ```yaml
 image:
-  repository: stalwartlabs/mail-server
+  repository: stalwartlabs/stalwart
   pullPolicy: IfNotPresent
   tag: "latest"
 
@@ -74,7 +74,7 @@ persistence:
   storageClass: "standard"
   accessMode: ReadWriteOnce
   size: 10Gi
-  mountPath: /opt/stalwart-mail
+  mountPath: /opt/stalwart
 
 replicaCount: 1
 ```
@@ -87,21 +87,21 @@ This file defines the Kubernetes deployment for your mail server.
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "stalwart-mail.fullname" . }}
+  name: {{ include "stalwart.fullname" . }}
   labels:
-    {{- include "stalwart-mail.labels" . | nindent 4 }}
+    {{- include "stalwart.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      {{- include "stalwart-mail.selectorLabels" . | nindent 6 }}
+      {{- include "stalwart.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        {{- include "stalwart-mail.selectorLabels" . | nindent 8 }}
+        {{- include "stalwart.selectorLabels" . | nindent 8 }}
     spec:
       containers:
-      - name: stalwart-mail
+      - name: stalwart
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         livenessProbe:
@@ -131,7 +131,7 @@ spec:
       volumes:
       - name: stalwart-volume
         persistentVolumeClaim:
-          claimName: {{ include "stalwart-mail.fullname" . }}
+          claimName: {{ include "stalwart.fullname" . }}
 ```
 
 ### Step 5: service.yaml
@@ -142,9 +142,9 @@ This file defines the Kubernetes service for your mail server.
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "stalwart-mail.fullname" . }}
+  name: {{ include "stalwart.fullname" . }}
   labels:
-    {{- include "stalwart-mail.labels" . | nindent 4 }}
+    {{- include "stalwart.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -173,7 +173,7 @@ spec:
     port: 4190
     targetPort: 4190
   selector:
-    {{- include "stalwart-mail.selectorLabels" . | nindent 4 }}
+    {{- include "stalwart.selectorLabels" . | nindent 4 }}
 ```
 
 ### Deploying the Chart
@@ -181,7 +181,7 @@ spec:
 To deploy the chart, you would navigate to the root of the Helm chart directory and run:
 
 ```sh
-helm install stalwart-mail .
+helm install stalwart .
 ```
 
-This deployment command initializes your Stalwart Mail Server with the settings specified in the `values.yaml` and the resources defined in the `templates/` directory. Adjust the `values.yaml` according to your actual requirements regarding storage and node specifics.
+This deployment command initializes your Stalwart with the settings specified in the `values.yaml` and the resources defined in the `templates/` directory. Adjust the `values.yaml` according to your actual requirements regarding storage and node specifics.

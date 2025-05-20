@@ -10,11 +10,11 @@ Address rewriting can be used for several purposes. For instance, you might want
 
 Address rewriting rules can be defined using regular expressions, providing a powerful and flexible tool for matching and transforming addresses based on patterns. And, for instances where even greater control is needed, is is also possible to manage address rewriting from within [Sieve scripts](/docs/sieve/overview).
 
-Stalwart Mail Server supports comprehensive address rewriting, allowing changes to both sender and recipient parts of the envelope. This flexibility allows complex manipulations of email traffic to suit a variety of needs. 
+Stalwart supports comprehensive address rewriting, allowing changes to both sender and recipient parts of the envelope. This flexibility allows complex manipulations of email traffic to suit a variety of needs. 
 
 ## Expressions
 
-Address rewriting in Stalwart Mail Server is based on the use of [expressions](/docs/configuration/expressions/overview) and regular expressions (regex), a powerful tool for pattern matching in strings. If the regular expression matches the email address, the components of the address that are captured by the regex can be rearranged or modified to form a new address.
+Address rewriting in Stalwart is based on the use of [expressions](/docs/configuration/expressions/overview) and regular expressions (regex), a powerful tool for pattern matching in strings. If the regular expression matches the email address, the components of the address that are captured by the regex can be rearranged or modified to form a new address.
 
 The capture groups in the regex, which are delineated by parentheses, are numbered sequentially from 0. The 0th group always refers to the entire address that is matched by the regex, while subsequent numbers correspond to the respective groups in the order they appear.
 
@@ -34,7 +34,7 @@ In the configuration file, address rewriting expressions are defined in the `ses
 
 ## Sieve
 
-In situations where the task of address rewriting cannot be accomplished using regular expressions alone, Stalwart Mail Server offers the flexibility to use [Sieve scripts](/docs/sieve/overview). Sieve is a powerful scripting language designed specifically for mail filtering. It is easy to write and understand, making it a versatile tool for mail server administrators. Stalwart Mail Server supports the `envelope` Sieve extension, which provides access to details of the message envelope such as sender and recipient addresses, as well as other envelope information such as Delivery Status Notifications (DSN).
+In situations where the task of address rewriting cannot be accomplished using regular expressions alone, Stalwart offers the flexibility to use [Sieve scripts](/docs/sieve/overview). Sieve is a powerful scripting language designed specifically for mail filtering. It is easy to write and understand, making it a versatile tool for mail server administrators. Stalwart supports the `envelope` Sieve extension, which provides access to details of the message envelope such as sender and recipient addresses, as well as other envelope information such as Delivery Status Notifications (DSN).
 
 In order to modify parts of the envelope within a Sieve script, the `set` command is used. The `set` command allows you to define and modify variables within your script, which can then be applied to elements of the envelope. This opens up an extensive range of possibilities for address rewriting, providing the power to construct elaborate rules for customizing how your mail server processes and directs incoming and outgoing messages.
 
@@ -46,7 +46,7 @@ Rewriting rules defined in Sieve scripts are configured in the `sieve.trusted.sc
 
 Gmail has a specific functionality where it disregards any periods '.' in the local part (before the '@') of an email address. This means that if you have an email address like 'example@gmail.com', you will still receive emails sent to 'ex.ample@gmail.com' or 'e.x.a.m.p.l.e@gmail.com'. This is a handy feature that provides flexibility to the users and ensures that the email is delivered even if someone mistakenly adds dots to the email address.
 
-In Stalwart Mail Server, you can accomplish the same effect using Sieve scripts. 
+In Stalwart, you can accomplish the same effect using Sieve scripts. 
 
 ```toml
 [session.rcpt]

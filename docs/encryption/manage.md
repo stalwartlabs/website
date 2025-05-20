@@ -4,14 +4,14 @@ sidebar_position: 2
 
 # Management
 
-Stalwart Mail Server includes a [self-service portal](/docs/management/webadmin/selfservice) that allows end users to control their own data security and independently manage encryption at rest for their accounts. This self-service interface allows users to enable or disable encryption without needing to involve or rely on the system administrator. To manage their encryption settings, users need to access the web management UI located under "/account/crypto" on the JMAP server base URL. For instance, if your JMAP server base URL is `https://jmap.example.org:8080`, then your users can access the encryption at rest management interface at `https://jmap.example.org:8080/account/crypto`.
+Stalwart includes a [self-service portal](/docs/management/webadmin/selfservice) that allows end users to control their own data security and independently manage encryption at rest for their accounts. This self-service interface allows users to enable or disable encryption without needing to involve or rely on the system administrator. To manage their encryption settings, users need to access the web management UI located under "/account/crypto" on the JMAP server base URL. For instance, if your JMAP server base URL is `https://jmap.example.org:8080`, then your users can access the encryption at rest management interface at `https://jmap.example.org:8080/account/crypto`.
 
 ## Enabling Encryption
 
-To enable encryption at rest using the Stalwart Mail Server web interface, users are required to follow the below steps:
+To enable encryption at rest using the Stalwart web interface, users are required to follow the below steps:
 
 - Visit the encryption at rest management URL, which is typically in the format: "https://jmap.example.org:8080/account/crypto" (replace "jmap.example.org:8080" with your actual JMAP server base URL).
-- In the provided form, enter your username and password. These credentials are the same as the ones you use to access your Stalwart Mail Server account.
+- In the provided form, enter your username and password. These credentials are the same as the ones you use to access your Stalwart account.
 - Choose the encryption method you wish to use - either OpenPGP or S/MIME. This choice depends on your specific encryption needs and the kind of key or certificate you have.
 - Select and upload the file that contains your encryption key. For OpenPGP encryption, this would be your OpenPGP public key. For S/MIME encryption, this would be your S/MIME certificate.
 - After ensuring all the details are correct, click on the "Update" button to submit the form.
@@ -20,11 +20,11 @@ Upon successful submission of the form, the system processes the information and
 
 After enabling encryption at rest, it is recommended to send a test email to yourself. This will help you verify that your email client is properly set up to decrypt the encrypted messages. When you receive this test email, it should arrive encrypted. Use your email client's decryption feature to decrypt the message. If you can successfully decrypt and read the message, it means that your email client is correctly configured to work with the encryption system in place.
 
-Remember that, to decrypt messages, your email client must have access to the corresponding private key for the public key you've uploaded to the mail server (in case of OpenPGP), or the private key of your S/MIME certificate. Make sure these are properly installed and configured in your email client. If you encounter any issues or the message does not decrypt properly, double-check your email client's encryption settings and the key or certificate you uploaded to Stalwart Mail Server. 
+Remember that, to decrypt messages, your email client must have access to the corresponding private key for the public key you've uploaded to the mail server (in case of OpenPGP), or the private key of your S/MIME certificate. Make sure these are properly installed and configured in your email client. If you encounter any issues or the message does not decrypt properly, double-check your email client's encryption settings and the key or certificate you uploaded to Stalwart. 
 
 ## Disabling Encryption
 
-Disabling encryption at rest in Stalwart Mail Server is as straightforward as enabling it. Users who wish to disable encryption at rest would need to follow these steps:
+Disabling encryption at rest in Stalwart is as straightforward as enabling it. Users who wish to disable encryption at rest would need to follow these steps:
 
 - Access the web management UI through the designated URL (e.g., "https://jmap.example.org:8080/account/crypto"). 
 - In the form provided, enter your username and password as required.

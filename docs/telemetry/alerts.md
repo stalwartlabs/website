@@ -4,7 +4,7 @@ sidebar_position: 6
 
 # Alerts
 
-The Alerts feature in the Stalwart Mail Server is designed to proactively notify administrators when specific conditions are met within the server’s operations. This feature is essential for maintaining optimal server performance and ensuring that potential issues are addressed promptly. By setting up alerts, you can stay informed about critical metrics and take immediate action when necessary, minimizing downtime and enhancing the overall reliability of your mail server.
+The Alerts feature in the Stalwart is designed to proactively notify administrators when specific conditions are met within the server’s operations. This feature is essential for maintaining optimal server performance and ensuring that potential issues are addressed promptly. By setting up alerts, you can stay informed about critical metrics and take immediate action when necessary, minimizing downtime and enhancing the overall reliability of your mail server.
 
 Alerts work by monitoring various server metrics and sending a notification when those metrics reach predefined thresholds. Notifications can be delivered via email or through a webhook, depending on your preference and the needs of your monitoring infrastructure. This flexibility allows you to integrate alerts seamlessly into your existing systems, ensuring that you receive timely information in the most convenient way possible.
 
@@ -12,7 +12,7 @@ The condition that triggers an alert is configured using an expression that can 
 
 :::tip Enterprise feature
 
-This feature is available exclusively in the [Enterprise Edition](/docs/server/enterprise) of Stalwart Mail Server and not included in the Community Edition.
+This feature is available exclusively in the [Enterprise Edition](/docs/server/enterprise) of Stalwart and not included in the Community Edition.
 
 :::
 

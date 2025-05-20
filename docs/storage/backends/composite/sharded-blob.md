@@ -4,17 +4,17 @@ sidebar_position: 3
 
 # Sharded Blob Store
 
-Sharding is a method used to distribute data across multiple storage backends, enhancing scalability and performance by balancing the load among them. For Stalwart Mail Server's sharded blob store, sharding operates by hashing the key associated with a blob and using a modulus operation to determine which storage backend will store or retrieve the blob. This ensures that each backend manages a specific portion of the data, optimizing resource utilization and access speed.
+Sharding is a method used to distribute data across multiple storage backends, enhancing scalability and performance by balancing the load among them. For Stalwart's sharded blob store, sharding operates by hashing the key associated with a blob and using a modulus operation to determine which storage backend will store or retrieve the blob. This ensures that each backend manages a specific portion of the data, optimizing resource utilization and access speed.
 
 :::tip Enterprise feature
 
-This feature is available exclusively in the [Enterprise Edition](/docs/server/enterprise) of Stalwart Mail Server and not included in the Community Edition.
+This feature is available exclusively in the [Enterprise Edition](/docs/server/enterprise) of Stalwart and not included in the Community Edition.
 
 :::
 
 ## Configuration
 
-Configuring a sharded blob store in Stalwart Mail Server is simple and requires specifying a list of two or more blob store identifiers in the configuration. These identifiers correspond to the individual blob stores participating in the shard. 
+Configuring a sharded blob store in Stalwart is simple and requires specifying a list of two or more blob store identifiers in the configuration. These identifiers correspond to the individual blob stores participating in the shard. 
 
 The following configuration settings are available for Sharded Blob Stores, which are specified under the `store.<name>` section of the configuration file:
 

@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Overview
 
-The spam filter is enabled by default in Stalwart Mail Server, providing a robust defense against unwanted emails. However, administrators can disable it globally by setting the `spam-filter.enable` setting to `false`. Alternatively, it can be disabled dynamically using an [expression](/docs/configuration/expressions/overview) at the [SMTP DATA](/docs/smtp/inbound/data#spam-filtering) stage. Additionally, spam filtering can be disabled for specific users by removing the `spam-filter-classify` [permission](/docs/auth/authorization/permissions) from their user account or the [tenant](/docs/auth/authorization/tenants) they belong to.
+The spam filter is enabled by default in Stalwart, providing a robust defense against unwanted emails. However, administrators can disable it globally by setting the `spam-filter.enable` setting to `false`. Alternatively, it can be disabled dynamically using an [expression](/docs/configuration/expressions/overview) at the [SMTP DATA](/docs/smtp/inbound/data#spam-filtering) stage. Additionally, spam filtering can be disabled for specific users by removing the `spam-filter-classify` [permission](/docs/auth/authorization/permissions) from their user account or the [tenant](/docs/auth/authorization/tenants) they belong to.
 
 ## Headers
 
@@ -88,7 +88,7 @@ resource = "file:///path/to/spam-filter.toml"
 
 ### Automatic Updates
 
-Stalwart Mail Server can be configured to automatically update the spam-filter rules on startup. This feature is disabled by default and can be enabled by setting the `spam-filter.auto-update` key to `true`.
+Stalwart can be configured to automatically update the spam-filter rules on startup. This feature is disabled by default and can be enabled by setting the `spam-filter.auto-update` key to `true`.
 
 Example:
 

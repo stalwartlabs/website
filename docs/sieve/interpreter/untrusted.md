@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # Untrusted Interpreter
 
-The untrusted interpreter is used to execute Sieve scripts that are created by end-users. Stalwart Mail Server includes support for [JMAP for Sieve Scripts](https://www.ietf.org/archive/id/draft-ietf-jmap-sieve-12.html) as well as [ManageSieve](https://datatracker.ietf.org/doc/html/rfc5804), which allows users to upload and manage their Sieve scripts.
+The untrusted interpreter is used to execute Sieve scripts that are created by end-users. Stalwart includes support for [JMAP for Sieve Scripts](https://www.ietf.org/archive/id/draft-ietf-jmap-sieve-12.html) as well as [ManageSieve](https://datatracker.ietf.org/doc/html/rfc5804), which allows users to upload and manage their Sieve scripts.
 
 ## Limits
 
@@ -54,7 +54,7 @@ outgoing-messages = 3
 
 ## Extensions
 
-Stalwart JMAP includes support for [all existing Sieve extensions](https://www.iana.org/assignments/sieve-extensions/sieve-extensions.xhtml) which are enabled
+Stalwart includes support for [all existing Sieve extensions](https://www.iana.org/assignments/sieve-extensions/sieve-extensions.xhtml) which are enabled
 by default. However, system administrators might want to disable certain extensions such as *enotify* which allow users to send outgoing emails from
 a script, or extensions that allow modifying the contents of a message such as *editheader*, *replace* or *enclose*.
 

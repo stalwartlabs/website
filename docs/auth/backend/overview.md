@@ -12,15 +12,15 @@ Directories are a critical component of the system, serving as the central repos
 
 ## Directory types
 
-Stalwart Mail Server offers the possibility to use either an internal directory or connect to an external directory service. The choice between these options depends on the specific needs and existing infrastructure of the organization. 
+Stalwart offers the possibility to use either an internal directory or connect to an external directory service. The choice between these options depends on the specific needs and existing infrastructure of the organization. 
 
 ### Internal Directory
 
-When the internal directory is used, Stalwart Mail Server manages all user-related data within its own system. This option is suitable for environments where Stalwart is the primary system for email management and no external user management systems are in place. In this setup, all account management tasks, such as creating new user accounts, updating passwords, and setting quotas, are performed directly within Stalwart Mail Server. This offers a straightforward and integrated approach to user management.
+When the internal directory is used, Stalwart manages all user-related data within its own system. This option is suitable for environments where Stalwart is the primary system for email management and no external user management systems are in place. In this setup, all account management tasks, such as creating new user accounts, updating passwords, and setting quotas, are performed directly within Stalwart. This offers a straightforward and integrated approach to user management.
 
 ### External Directory
 
-Stalwart can also be configured to integrate with external directories, such as LDAP (Lightweight Directory Access Protocol) servers or SQL databases. This option is ideal for organizations that already have an established user management system and prefer to maintain a central directory for all services, including email. When an external directory is utilized, all user account management must be performed within that external system. Stalwart Mail Server will rely on this external directory for authentication and user information but will not have the ability to directly modify user details. It is important to ensure that the external directory is properly maintained and synchronized to prevent access issues or inconsistencies in user data.
+Stalwart can also be configured to integrate with external directories, such as LDAP (Lightweight Directory Access Protocol) servers or SQL databases. This option is ideal for organizations that already have an established user management system and prefer to maintain a central directory for all services, including email. When an external directory is utilized, all user account management must be performed within that external system. Stalwart will rely on this external directory for authentication and user information but will not have the ability to directly modify user details. It is important to ensure that the external directory is properly maintained and synchronized to prevent access issues or inconsistencies in user data.
 
 ## Configuration
 
@@ -69,7 +69,7 @@ recycle = "30s"
 
 ### Cache
 
-In order to reduce the number of requests made to a directory, it is possible to enable caching for certain directory lookups. Stalwart Mail Server uses S3-FIFO caching and maintains separate positive and negative caches for each query. Successful lookups are stored in the positive cache while failed or non-existent lookups are stored in the negative cache. The directory cache is configured through the following parameters located under the `directory.<name>.cache` key in the configuration file:
+In order to reduce the number of requests made to a directory, it is possible to enable caching for certain directory lookups. Stalwart uses S3-FIFO caching and maintains separate positive and negative caches for each query. Successful lookups are stored in the positive cache while failed or non-existent lookups are stored in the negative cache. The directory cache is configured through the following parameters located under the `directory.<name>.cache` key in the configuration file:
 
 - `size`: Specifies the size in bytes of the cache. The cache will automatically evict the least recently used entries when the cache size exceeds this value.
 - `ttl.positive`: Defines how long entries in the positive cache will be kept before they are considered stale and are refreshed. For example, a value of `1h` means that if a directory lookup returns a positive result (i.e., the requested user or account information is found), that result will be kept in the cache for 1 hour. 

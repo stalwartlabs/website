@@ -5,7 +5,7 @@ sidebar_position: 1
 # From Maildir or mbox
 
 E-mail messages and folders can be easily imported into a user account from either ``Maildir`` or ``mbox``
-mailboxes. The CLI command used to import mailboxes into Stalwart JMAP is ``import messages`` and accepts the following
+mailboxes. The CLI command used to import mailboxes into Stalwart is ``import messages`` and accepts the following
 options:
 
 ```txt

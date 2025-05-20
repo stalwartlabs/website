@@ -18,7 +18,7 @@ JMAP clients and servers, which eliminates the performance hit of having to proc
 When using JMAP over WebSocket, clients are only authenticated once when the connection is started and their credentials remain in effect 
 for the duration of the WebSocket connection.
 
-JMAP over WebSocket is enabled by default in Stalwart JMAP and is available to JMAP clients at ``wss://your-domain.example``.
+JMAP over WebSocket is enabled by default in Stalwart and is available to JMAP clients at ``wss://your-domain.example``.
 
 ## Configuration
 

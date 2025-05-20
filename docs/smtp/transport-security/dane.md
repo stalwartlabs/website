@@ -10,7 +10,7 @@ With DANE, domain owners can publish their own certificate information in the DN
 
 ## Configuration
 
-DANE can be enabled in Stalwart Mail Server with the `queue.outbound.tls.dane` property which accepts the following values:
+DANE can be enabled in Stalwart with the `queue.outbound.tls.dane` property which accepts the following values:
 
 - `optional`: Use DANE only if TLSA records for the domain are available.
 - `require`: Require DANE and do not delivery unless a valid TLSA record is available (not recommended unless used under a custom rule).
@@ -32,4 +32,4 @@ TLSA records are DNS records that contain the certificate information for a doma
 - **Matching Type**: Specifies how the certificate is matched.
 - **Certificate Association Data**: Contains the certificate data.
 
-Stalwart Mail server automatically generates the TLSA records for the TLS certificates it uses. To obtain the TLSA records for a domain, go to the `Management` > `Directory` > `Domains` section in the [Webadmin](/docs/management/webadmin/overview.md).
+Stalwart automatically generates the TLSA records for the TLS certificates it uses. To obtain the TLSA records for a domain, go to the `Management` > `Directory` > `Domains` section in the [Webadmin](/docs/management/webadmin/overview.md).

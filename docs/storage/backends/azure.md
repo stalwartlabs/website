@@ -4,7 +4,7 @@ sidebar_position: 10
 
 # Azure Blob Storage
 
-For distributed and larger-scale implementations, Stalwart Mail Server supports Azure Blob Storage as a backend for storing blobs (e-mail messages, Sieve scripts, etc.). Azure Blob Storage is a cloud-based object storage service that provides scalable storage for large amounts of unstructured data. By using Azure Blob Storage, Stalwart can store blobs on remote servers, facilitating large-scale storage management, easy data replication, and backup, making it a viable option for businesses seeking robustness and scalability.
+For distributed and larger-scale implementations, Stalwart supports Azure Blob Storage as a backend for storing blobs (e-mail messages, Sieve scripts, etc.). Azure Blob Storage is a cloud-based object storage service that provides scalable storage for large amounts of unstructured data. By using Azure Blob Storage, Stalwart can store blobs on remote servers, facilitating large-scale storage management, easy data replication, and backup, making it a viable option for businesses seeking robustness and scalability.
 
 ## Configuration
 

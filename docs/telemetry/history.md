@@ -12,7 +12,7 @@ To enhance usability, the Telemetry History feature is fully integrated into the
 
 :::tip Enterprise feature
 
-This feature is available exclusively in the [Enterprise Edition](/docs/server/enterprise) of Stalwart Mail Server and not included in the Community Edition.
+This feature is available exclusively in the [Enterprise Edition](/docs/server/enterprise) of Stalwart and not included in the Community Edition.
 
 :::
 

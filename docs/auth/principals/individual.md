@@ -4,9 +4,9 @@ sidebar_position: 2
 
 # Individual
 
-The **Individual** principal type in Stalwart Mail Server represents a single person or user account. It is the fundamental unit for user management, as each email user within the system is stored as an individual principal. Individual principals contain all the information necessary to manage and authenticate a user's account, such as login credentials, email addresses, group memberships, and permissions.
+The **Individual** principal type in Stalwart represents a single person or user account. It is the fundamental unit for user management, as each email user within the system is stored as an individual principal. Individual principals contain all the information necessary to manage and authenticate a user's account, such as login credentials, email addresses, group memberships, and permissions.
 
-An individual principal holds several fields that define its properties and how it interacts with the Stalwart Mail Server. Below are the key fields that an individual principal stores:
+An individual principal holds several fields that define its properties and how it interacts with the Stalwart. Below are the key fields that an individual principal stores:
 
 - **name**: This field represents the login name or username of the account. It is the identifier used by the user to access the mail server and authenticate their session.
 - **type**: Specifies the principal type. For user accounts, this field will always be set to `"individual"`, identifying the principal as a single user.
@@ -22,5 +22,5 @@ An individual principal holds several fields that define its properties and how 
 - **disabledPermissions**: Specifies the [permissions](/docs/auth/authorization/permissions) that are explicitly disabled for the account. These are permissions that the account does not have, which restrict certain actions or access to resources.
 - **picture**: Stores the account's profile picture. This is an image associated with the account, often used in email clients to display alongside the user's name or email address.
 
-These fields allow the Stalwart Mail Server to manage the individual user’s account, ensuring secure authentication, handling email delivery, and managing their access to groups, roles, and resources within the system.
+These fields allow the Stalwart to manage the individual user’s account, ensuring secure authentication, handling email delivery, and managing their access to groups, roles, and resources within the system.
 

@@ -6,9 +6,9 @@ sidebar_position: 1
 
 E-mail filtering is a crucial part of any modern mail server system. Filtering serves various purposes including the management of incoming and outgoing messages, blocking or flagging spam, removing viruses from attachments, automating organization of messages, and implementing various user-defined rules for message handling. Effective filtering is essential not only for the organization and security of the mail system but also for user productivity and the overall quality of the email experience.
 
-Stalwart Mail Server supports various filtering mechanisms, which allow a high degree of flexibility and customization for system administrators to define their filtering rules and operations:
+Stalwart supports various filtering mechanisms, which allow a high degree of flexibility and customization for system administrators to define their filtering rules and operations:
 
-- [Spam filter](/docs/smtp/filter/spam): Stalwart Mail Server Server includes a comprehensive Spam and Phishing filter that provides a robust defense against such unwanted emails.
+- [Spam filter](/docs/smtp/filter/spam): Stalwart includes a comprehensive Spam and Phishing filter that provides a robust defense against such unwanted emails.
 
 - [Sieve scripts](/docs/sieve/overview): These are scripts written in the Sieve language, a powerful, yet straightforward language specifically designed for mail filtering. Sieve scripts allow both [administrators](/docs/sieve/overview.md) and [users](/docs/jmap/sieve) to specify rules for how incoming mail should be handled.
 

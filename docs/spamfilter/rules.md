@@ -4,13 +4,13 @@ sidebar_position: 5
 
 # Rules
 
-Stalwart Mail Server supports custom spam filter rules to be defined, allowing administrators to analyze email messages and assign tags dynamically. These rules rely on [expressions](/docs/configuration/expressions/overview) to evaluate different sections of an email, such as the headers, body, sender information, or attachments, and determine whether specific tags should be applied to identify potential spam.
+Stalwart supports custom spam filter rules to be defined, allowing administrators to analyze email messages and assign tags dynamically. These rules rely on [expressions](/docs/configuration/expressions/overview) to evaluate different sections of an email, such as the headers, body, sender information, or attachments, and determine whether specific tags should be applied to identify potential spam.
 
-By default, Stalwart Mail Server includes a comprehensive set of preconfigured rules designed to address common spam patterns and behaviors. However, the flexibility of the system allows administrators to create their own rules tailored to the specific needs and requirements of their organization. This customization ensures that the spam filter can adapt to unique environments, providing enhanced accuracy and protection against unwanted emails.
+By default, Stalwart includes a comprehensive set of preconfigured rules designed to address common spam patterns and behaviors. However, the flexibility of the system allows administrators to create their own rules tailored to the specific needs and requirements of their organization. This customization ensures that the spam filter can adapt to unique environments, providing enhanced accuracy and protection against unwanted emails.
 
 ## Configuration
 
-Spam filter rules in Stalwart Mail Server are defined under the `spam-filter.rule.<id>` section, where `<id>` is a unique identifier for each rule. These rules allow administrators to evaluate specific parts of an email and dynamically assign tags based on customizable expressions.
+Spam filter rules in Stalwart are defined under the `spam-filter.rule.<id>` section, where `<id>` is a unique identifier for each rule. These rules allow administrators to evaluate specific parts of an email and dynamically assign tags based on customizable expressions.
 
 The following settings are available for each rule:
 
@@ -46,7 +46,7 @@ condition = [ { if = "!contains(['env_from', 'from', 'reply_to', 'to', 'cc', 'bc
 
 Core rules are predefined spam filter rules maintained by Stalwart Labs. These rules are identified by an ID starting with `STWT_` and are designed to address common spam patterns and behaviors. Core rules are regularly updated to ensure they remain effective against evolving spam tactics.
 
-The latest version of core rules is maintained in the [Spam Filter repository](https://github.com/stalwartlabs/spam-filter). Stalwart Mail Server can be configured to automatically download and apply the latest [updates](/docs/spamfilter/settings/general#updates), ensuring the spam filter stays up-to-date without manual intervention.
+The latest version of core rules is maintained in the [Spam Filter repository](https://github.com/stalwartlabs/spam-filter). Stalwart can be configured to automatically download and apply the latest [updates](/docs/spamfilter/settings/general#updates), ensuring the spam filter stays up-to-date without manual intervention.
 
 Administrators should avoid modifying `STWT_` core rules directly, as any changes will be overwritten during the next update. The only exception is the `enable` setting, which allows administrators to control whether a core rule is active. This setting is preserved across updates. If a core rule needs to be altered beyond enabling or disabling it, the recommended approach is to disable the rule and create a custom rule with the desired changes. By doing so, administrators can ensure their customizations are retained while still benefiting from future updates to the core rules.
 

@@ -4,9 +4,9 @@ sidebar_position: 3
 
 # Group
 
-The **Group** principal type in Stalwart Mail Server represents a collection of individual users and potentially other groups. Groups function similarly to regular accounts in that they can receive emails, but they differ in a few important ways: group accounts cannot log in to the mail server using IMAP, POP3, or JMAP. Instead, groups are designed to organize users and share resources. When an individual is added as a member of a group, they gain access to the group’s inbox, which appears as a shared folder in their email client when using IMAP or JMAP.
+The **Group** principal type in Stalwart represents a collection of individual users and potentially other groups. Groups function similarly to regular accounts in that they can receive emails, but they differ in a few important ways: group accounts cannot log in to the mail server using IMAP, POP3, or JMAP. Instead, groups are designed to organize users and share resources. When an individual is added as a member of a group, they gain access to the group’s inbox, which appears as a shared folder in their email client when using IMAP or JMAP.
 
-A group principal holds a set of fields that define its properties and how it interacts with the Stalwart Mail Server. Below are the key fields for a group principal:
+A group principal holds a set of fields that define its properties and how it interacts with the Stalwart. Below are the key fields for a group principal:
 
 - **name**: The name field represents the group's identifier. This is the name used to refer to the group within the system, and it is unique to the group within its context.
 - **type**: Specifies the principal type. For groups, this is always set to `"group"`, distinguishing the principal as a collection of individuals or other groups.
@@ -22,4 +22,4 @@ A group principal holds a set of fields that define its properties and how it in
 - **disabledPermissions**: Specifies the [permissions](/docs/auth/authorization/permissions) that are explicitly disabled for the group. These limit what actions the group is allowed to perform, controlling access to certain features or resources.
 - **picture**: Stores the group's picture. This image can be used in email clients or within the server's management interface to visually represent the group.
 
-Groups are a powerful feature of Stalwart Mail Server, allowing administrators to manage multiple users more efficiently by assigning shared resources, permissions, and email addresses. When individuals are added to a group, they can access the group’s inbox and messages as if they were their own, simplifying collaboration and communication across the organization.
+Groups are a powerful feature of Stalwart, allowing administrators to manage multiple users more efficiently by assigning shared resources, permissions, and email addresses. When individuals are added to a group, they can access the group’s inbox and messages as if they were their own, simplifying collaboration and communication across the organization.

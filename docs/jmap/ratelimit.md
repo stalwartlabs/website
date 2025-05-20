@@ -9,10 +9,10 @@ someone can repeat an action (such as trying to log into an account) within a gi
 Rate limiting can help mitigate certain types of malicious activity such as brute force attacks. It is also 
 useful to reduce the load on your JMAP server.
 
-In Stalwart JMAP, rate limiting works by tracking the IP addresses from which requests are coming from and keeping
-a record of how much time passes between each request. Then, Stalwart JMAP measures the number of requests received
+In Stalwart, rate limiting works by tracking the IP addresses from which requests are coming from and keeping
+a record of how much time passes between each request. Then, Stalwart measures the number of requests received
 from each IP address as well as the time elapsed between each request. If there are too many requests from a 
-given IP within a configured timeframe, Stalwart JMAP will reject all further requests coming from that IP address 
+given IP within a configured timeframe, Stalwart will reject all further requests coming from that IP address 
 for some time until the limit is restored.
 
 ## Anonymous Limits
@@ -44,7 +44,7 @@ account = "1000/1m"
 ## Concurrent Requests
 
 The parameter ``jmap.protocol.request.max-concurrent`` controls the number of requests that an
-authenticated user can make concurrently to Stalwart JMAP. The default setting is 4 concurrent requests.
+authenticated user can make concurrently to Stalwart. The default setting is 4 concurrent requests.
 
 Example:
 

@@ -18,7 +18,7 @@ Administrators, on the other hand, have limited control over Application Passwor
 
 :::tip Note
 
-Application Passwords can only be managed from the self-service portal or the webadmin interface when Stalwart Mail Server is configured to use the [internal directory](/docs/auth/backend/internal). If the server is set up to use an external directory, such as LDAP or SQL, administrators need to manually add the App Password secret as one of the account secrets to add a new Application Password for user accounts.
+Application Passwords can only be managed from the self-service portal or the webadmin interface when Stalwart is configured to use the [internal directory](/docs/auth/backend/internal). If the server is set up to use an external directory, such as LDAP or SQL, administrators need to manually add the App Password secret as one of the account secrets to add a new Application Password for user accounts.
 
 :::
 

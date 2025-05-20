@@ -16,7 +16,7 @@ Pyzor is a prominent example of a collaborative spam detection system. It's an o
 
 ### Configuration
 
-Pyzor is enabled by default in Stalwart Mail Server and it is configured to use the public Pyzor server at `public.pyzor.org` with a lookup timeout of 5 seconds.
+Pyzor is enabled by default in Stalwart and it is configured to use the public Pyzor server at `public.pyzor.org` with a lookup timeout of 5 seconds.
 
 The following settings can be configured in the server's configuration file:
 

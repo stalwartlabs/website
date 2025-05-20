@@ -8,11 +8,11 @@ OpenTelemetry is an open-source observability framework designed to provide stan
 
 The primary goal of OpenTelemetry is to enable seamless observability, allowing developers and system administrators to gain deep insights into their applications' operations. By providing a unified and consistent approach to telemetry, OpenTelemetry ensures that data can be easily integrated with multiple backend systems for analysis, visualization, and alerting. This flexibility and extensibility make OpenTelemetry a powerful tool for maintaining and optimizing the performance of complex, distributed applications.
 
-Stalwart Mail Server supports exporting metrics via push to OpenTelemetry, allowing users to leverage the powerful capabilities of this observability framework. By integrating with OpenTelemetry, Stalwart Mail Server can continuously send collected metrics to a centralized telemetry backend, providing real-time insights into the server's performance and health. OpenTelemetry allows users to take advantage of a wide range of telemetry backends, including popular options like Prometheus, Jaeger, and Zipkin. This flexibility ensures that users can choose the best tools for their specific monitoring and observability needs.
+Stalwart supports exporting metrics via push to OpenTelemetry, allowing users to leverage the powerful capabilities of this observability framework. By integrating with OpenTelemetry, Stalwart can continuously send collected metrics to a centralized telemetry backend, providing real-time insights into the server's performance and health. OpenTelemetry allows users to take advantage of a wide range of telemetry backends, including popular options like Prometheus, Jaeger, and Zipkin. This flexibility ensures that users can choose the best tools for their specific monitoring and observability needs.
 
 ## Configuration
 
-Configuring Stalwart Mail Server to push metrics to OpenTelemetry involves setting up an exporter within the server's configuration. This exporter defines the endpoint for the OpenTelemetry collector or backend, along with any necessary authentication and connection settings. Once configured, the server will automatically handle the collection and transmission of metrics, minimizing the need for manual intervention.
+Configuring Stalwart to push metrics to OpenTelemetry involves setting up an exporter within the server's configuration. This exporter defines the endpoint for the OpenTelemetry collector or backend, along with any necessary authentication and connection settings. Once configured, the server will automatically handle the collection and transmission of metrics, minimizing the need for manual intervention.
 
 The following options are available under `metrics.open-telemetry` for configuring the OpenTelemetry metrics push exporter:
 
@@ -23,7 +23,7 @@ The following options are available under `metrics.open-telemetry` for configuri
 
 ## Example
 
-Here is an example configuration snippet for setting up the OpenTelemetry metrics push exporter in Stalwart Mail Server:
+Here is an example configuration snippet for setting up the OpenTelemetry metrics push exporter in Stalwart:
 
 ```toml
 [metrics.open-telemetry]

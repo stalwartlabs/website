@@ -42,7 +42,7 @@ By overriding the default levels, you can increase the verbosity for specific ev
 
 ## Event Types
 
-The following are the event types that Stalwart Mail Server captures along with their default logging levels:
+The following are the event types that Stalwart captures along with their default logging levels:
 
 | Event | Description | Level |
 | --- | --- | --- |
@@ -436,8 +436,8 @@ The following are the event types that Stalwart Mail Server captures along with 
 |`security.scan-ban`|Banned due to scan|`INFO`|
 |`security.unauthorized`|Unauthorized access|`INFO`|
 |`server.licensing`|Server licensing event|`INFO`|
-|`server.shutdown`|Shutting down Stalwart Mail Server|`INFO`|
-|`server.startup`|Starting Stalwart Mail Server|`INFO`|
+|`server.shutdown`|Shutting down Stalwart|`INFO`|
+|`server.startup`|Starting Stalwart|`INFO`|
 |`server.startup-error`|Server startup error|`ERROR`|
 |`server.thread-error`|Server thread error|`ERROR`|
 |`sieve.action-accept`|Sieve action: Accept|`DEBUG`|

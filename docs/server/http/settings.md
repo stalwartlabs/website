@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Settings
 
-Stalwart Mail Server includes a built-in HTTP server, which primarily serves two functions: handling [JMAP](/docs/jmap/overview) (JSON Meta Application Protocol) requests and processing requests to the [REST management API](/docs/api/management/overview). The following settings can be configured to customize the behavior of the HTTP server.
+Stalwart includes a built-in HTTP server, which primarily serves two functions: handling [JMAP](/docs/jmap/overview) (JSON Meta Application Protocol) requests and processing requests to the [REST management API](/docs/api/management/overview). The following settings can be configured to customize the behavior of the HTTP server.
 
 ## URL
 
@@ -25,14 +25,14 @@ For example:
 
 ```toml
 [server.http]
-headers = ["Cache-Control: max-age=3600", "Server: Stalwart JMAP"]
+headers = ["Cache-Control: max-age=3600", "Server: Stalwart"]
 ```
 
 While this option provides flexibility in customizing response headers, administrators should exercise caution. Setting or overriding specific headers could impact the behavior of clients or intermediary systems that interact with the JMAP server. Always consult relevant documentation and ensure the desired behavior before setting custom headers.
 
 ## Use Forwarded IP
 
-When running Stalwart Mail Server behind a proxy such as Cloudflare or Amazon CloudFront, the server needs to be instructed to obtain the client's IP address from the ``Forwarded`` or ``X-Forwarded-For`` HTTP header rather than from the socket source address (which most likely is the proxy's address). This setting should not be enabled when the [proxy protocol](/docs/server/reverse-proxy/proxy-protocol) is being used.
+When running Stalwart behind a proxy such as Cloudflare or Amazon CloudFront, the server needs to be instructed to obtain the client's IP address from the ``Forwarded`` or ``X-Forwarded-For`` HTTP header rather than from the socket source address (which most likely is the proxy's address). This setting should not be enabled when the [proxy protocol](/docs/server/reverse-proxy/proxy-protocol) is being used.
 
 This can be done by setting the ``server.http.use-x-forwarded`` parameter to ``true``, for example:
 

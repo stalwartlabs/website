@@ -4,7 +4,7 @@ sidebar_position: 4
 
 # Endpoints
 
-Stalwart Mail Server supports various **OpenID Connect (OIDC)** endpoints that allow clients and applications to interact with the server for authentication and identity information. Below is a brief description of the key OIDC endpoints available in Stalwart.
+Stalwart supports various **OpenID Connect (OIDC)** endpoints that allow clients and applications to interact with the server for authentication and identity information. Below is a brief description of the key OIDC endpoints available in Stalwart.
 
 ## `/.well-known/openid-configuration`
 

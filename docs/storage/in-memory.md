@@ -6,7 +6,7 @@ sidebar_position: 5
 
 In-memory data stores (such as Redis) are high-performance databases that store data entirely in memory, enabling extremely fast read and write operations. These systems are often used for caching, message brokering, and as temporary storage for dynamic data that does not require long-term persistence.
 
-In Stalwart Mail Server, in-memory stores play a crucial role in handling a wide variety of tasks. They are used for storing:
+In Stalwart, in-memory stores play a crucial role in handling a wide variety of tasks. They are used for storing:
 
 - [Spam filter data](/docs/spamfilter/settings/database) such as sender reputation information, bayesian classifier models, greylist data, message reply tracking and other similar data.
 - [Rate limiting](/docs/smtp/queue/limits/rate-limit) and [fail2ban](/docs/server/auto-ban) data, such as the number of messages sent by a specific sender or the number of failed authentication attempts from a specific IP address.
@@ -18,16 +18,16 @@ Additionally, in-memory stores can be queried and modified from [expressions](/d
 
 ## Backends
 
-Stalwart Mail Server supports the following backends as in-memory stores:
+Stalwart supports the following backends as in-memory stores:
 
 - [Redis, Memcached, or compatible](/docs/storage/backends/redis): Ideal for high-performance, distributed, or heavy-load environments. Redis, in particular, is recommended for such cases because of its speed and versatility as a cache, database, and message broker.
 - [Data store](/docs/storage/data): For administrators aiming to minimize external dependencies, any supported data store backend (SQL, FoundationDB, RocksDB) can also function as an in-memory store. While data store backends provide flexibility, Redis is better suited for heavy loads and distributed setups due to its optimized performance.
 
 ## Key Prefixes
 
-In-memory stores operate as key-value stores, where each key is prefixed with a unique identifier to prevent conflicts. Stalwart Mail Server uses predefined prefixes for different types of data, ensuring clear organization within the store.
+In-memory stores operate as key-value stores, where each key is prefixed with a unique identifier to prevent conflicts. Stalwart uses predefined prefixes for different types of data, ensuring clear organization within the store.
 
-Below is a mapping of key prefixes used by Stalwart Mail Server, including their assigned unsigned integer values:
+Below is a mapping of key prefixes used by Stalwart, including their assigned unsigned integer values:
 
 | **Short name**                 | **Description**                                  | **Integer prefix** |
 |----------------------------|------------------------------------------------------|--------------|

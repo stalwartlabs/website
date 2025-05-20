@@ -82,7 +82,7 @@ Below is an example of a request object received by the MTA hooks API:
             "certSubject": "mail.example.com"
         },
         "server": {
-            "name": "Stalwart Mail Server",
+            "name": "Stalwart",
             "port": 25,
             "ip": "192.168.2.2"
         },
@@ -131,7 +131,7 @@ Below is an example of a request object received by the MTA hooks API:
         "serverHeaders": [
             [
                 "Received",
-                "from mail.example.com (mail.example.com [192.168.1.1]) by mail.foobar.com (Stalwart Mail Server) with ESMTPS id 1234567890"
+                "from mail.example.com (mail.example.com [192.168.1.1]) by mail.foobar.com (Stalwart) with ESMTPS id 1234567890"
             ]
         ],
         "contents": "Hello, World!\r\n",

@@ -4,7 +4,7 @@ sidebar_position: 7
 
 # Filesystem
 
-For single-node installations, Stalwart Mail Server supports storing emails and blobs on the local filesystem. This is done using a hashed directory structure, which is designed to prevent filesystem slowdowns when storing large numbers of files in a single directory.
+For single-node installations, Stalwart supports storing emails and blobs on the local filesystem. This is done using a hashed directory structure, which is designed to prevent filesystem slowdowns when storing large numbers of files in a single directory.
 
 ## Configuration
 

@@ -4,7 +4,7 @@ sidebar_position: 4
 
 # LLM Classifier
 
-The LLM Classifier in Stalwart Mail Server enhances the spam filtering capabilities by utilizing AI models to detect threats, unsolicited emails, and commercial messages. By integrating with any of the configured [AI models](/docs/server/ai-models), the LLM Classifier improves the accuracy of spam detection, analyzing the content of incoming messages through advanced natural language processing techniques. This approach allows the spam filter to better understand the nature of the emails and identify potential risks.
+The LLM Classifier in Stalwart enhances the spam filtering capabilities by utilizing AI models to detect threats, unsolicited emails, and commercial messages. By integrating with any of the configured [AI models](/docs/server/ai-models), the LLM Classifier improves the accuracy of spam detection, analyzing the content of incoming messages through advanced natural language processing techniques. This approach allows the spam filter to better understand the nature of the emails and identify potential risks.
 
 
 The LLM Classifier operates by sending a prompt, which can be customized, to the AI model along with the subject and body of the email. The default prompt instructs the AI model to categorize the email into one of four categories: Unsolicited, Commercial, Harmful, or Legitimate. This classification helps the system identify whether the message is unwanted, promotional, malicious, or safe for delivery. In addition to categorization, the model also assigns a confidence level—High, Medium, or Low—to each classification. This confidence level enables the system to assess the certainty of the classification, providing valuable input for how the message should be handled by the spam filter.
@@ -13,13 +13,13 @@ Once the AI model returns its classification and confidence levels, the spam fil
 
 :::tip Enterprise feature
 
-This feature is available exclusively in the [Enterprise Edition](/docs/server/enterprise) of Stalwart Mail Server and not included in the Community Edition.
+This feature is available exclusively in the [Enterprise Edition](/docs/server/enterprise) of Stalwart and not included in the Community Edition.
 
 :::
 
 ## Caveats
 
-While integrating LLMs into the Stalwart Mail Server’s spam filtering system offers powerful capabilities for detecting unsolicited and harmful emails, it is important to consider the performance and cost implications, especially when processing a high volume of incoming messages.
+While integrating LLMs into the Stalwart’s spam filtering system offers powerful capabilities for detecting unsolicited and harmful emails, it is important to consider the performance and cost implications, especially when processing a high volume of incoming messages.
 
 ### Performance Considerations
 
@@ -33,7 +33,7 @@ In both cases—whether using self-hosted or cloud-based AI models—there are t
 
 ## Configuration
 
-By default, the LLM Classifier is disabled in Stalwart Mail Server. To enable it, set the `spam-filter.llm.enable` option to `true` in the configuration file. This activates the LLM Classifier, allowing it to process incoming emails and assign tags based on the AI model's classification.
+By default, the LLM Classifier is disabled in Stalwart. To enable it, set the `spam-filter.llm.enable` option to `true` in the configuration file. This activates the LLM Classifier, allowing it to process incoming emails and assign tags based on the AI model's classification.
 
 ### Model
 

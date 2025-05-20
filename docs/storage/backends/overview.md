@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Overview
 
-Stalwart Mail Server offers support for multiple database and storage backends. The choice of backend depends primarily on the scale and distribution of your mail server setup. 
+Stalwart offers support for multiple database and storage backends. The choice of backend depends primarily on the scale and distribution of your mail server setup. 
 
 The following table summarizes the backend options available for each store type:
 
@@ -21,7 +21,7 @@ The following table summarizes the backend options available for each store type
 | ElasticSearch      |                    |                    | :white_check_mark: |                    |
 | Redis              |                    |                    |                    | :white_check_mark: |
 
-It's important to note that the support for each of these databases is compiled directly into the Stalwart Mail Server binary. Therefore, to switch to certain backends such as FoundationDB, you'll need to utilize a different binary, corresponding to the desired backend(s).
+It's important to note that the support for each of these databases is compiled directly into the Stalwart binary. Therefore, to switch to certain backends such as FoundationDB, you'll need to utilize a different binary, corresponding to the desired backend(s).
 
 :::tip Note
 

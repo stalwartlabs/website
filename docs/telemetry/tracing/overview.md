@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Overview
 
-Stalwart Mail Server provides detailed tracing and logging information to help users monitor and understand its behavior. The logging mechanisms can be configured to output to a file, standard output, or send tracing information to OpenTelemetry. It is possible to configure multiple loggers to output to different destinations, and the level of detail can be adjusted per logger. This makes it easier for users to diagnose issues and understand the inner workings of the software.
+Stalwart provides detailed tracing and logging information to help users monitor and understand its behavior. The logging mechanisms can be configured to output to a file, standard output, or send tracing information to OpenTelemetry. It is possible to configure multiple loggers to output to different destinations, and the level of detail can be adjusted per logger. This makes it easier for users to diagnose issues and understand the inner workings of the software.
 
 The available tracing mechanisms include:
 

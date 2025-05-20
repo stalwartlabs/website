@@ -4,7 +4,7 @@ sidebar_position: 4
 
 # Full-text store
 
-Stalwart Mail Server supports full-text search (FTS) capabilities that greatly improve the user experience when searching through email content. Full-text indexing can be done internally using any of the supported data store backends, or externally using a third-party solution such as ElasticSearch:
+Stalwart supports full-text search (FTS) capabilities that greatly improve the user experience when searching through email content. Full-text indexing can be done internally using any of the supported data store backends, or externally using a third-party solution such as ElasticSearch:
 
 - [ElasticSearch](/docs/storage/backends/elasticsearch) Delegate full-text search to ElasticSearch, a distributed, RESTful search and analytics engine.
 - [Internal](/docs/storage/data): Use any of the supported [data store backends](/docs/storage/data) as a full-text index store.

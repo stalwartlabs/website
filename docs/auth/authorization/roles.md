@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # Roles
 
-Roles in Stalwart Mail Server are used to group [permissions](/docs/auth/authorization/permissions), making it easier to manage access control across individuals, groups, and tenants. Roles are stored in the directory as principals, just like individuals or groups, and they can also contain subroles (roles within other roles) allowing for a hierarchical structure of access permissions. 
+Roles in Stalwart are used to group [permissions](/docs/auth/authorization/permissions), making it easier to manage access control across individuals, groups, and tenants. Roles are stored in the directory as principals, just like individuals or groups, and they can also contain subroles (roles within other roles) allowing for a hierarchical structure of access permissions. 
 
 Roles are a powerful way to streamline permission management by assigning sets of predefined permissions to users, groups, or tenants. Instead of assigning permissions individually, administrators can assign roles that encapsulate multiple permissions at once.
 
@@ -19,7 +19,7 @@ A role [principal](/docs/auth/principals/overview) includes the following fields
 - **enabledPermissions**: This field defines the set of [permissions](/docs/auth/authorization/permissions) that the role grants to its members. These permissions determine what actions and resources the role's members can access and perform within the system.
 - **disabledPermissions**: This field lists any [permissions](/docs/auth/authorization/permissions) that are explicitly disabled for the role, ensuring that members of the role are restricted from performing certain actions, even if those actions are enabled in a subrole or elsewhere.
 
-Roles are an essential tool for efficiently managing permissions in Stalwart Mail Server. By grouping permissions into roles, administrators can assign access rights more easily to individuals, groups, or entire tenants. The built-in roles—**user**, **admin**, and **tenant-admin**—provide a ready-made starting point for typical scenarios, but custom roles can also be created to meet specific needs. Through the flexible use of **enabledPermissions**, **disabledPermissions**, and **subroles**, roles offer granular control over what resources can be accessed and what actions can be performed within the mail server.
+Roles are an essential tool for efficiently managing permissions in Stalwart. By grouping permissions into roles, administrators can assign access rights more easily to individuals, groups, or entire tenants. The built-in roles—**user**, **admin**, and **tenant-admin**—provide a ready-made starting point for typical scenarios, but custom roles can also be created to meet specific needs. Through the flexible use of **enabledPermissions**, **disabledPermissions**, and **subroles**, roles offer granular control over what resources can be accessed and what actions can be performed within the mail server.
 
 ## Built-in Roles
 

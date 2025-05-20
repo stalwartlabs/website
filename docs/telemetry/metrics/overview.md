@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Overview
 
-Telemetry is the process of collecting, transmitting, and analyzing data from remote or inaccessible points to monitor the performance, health, and usage of systems. In the context of server applications like Stalwart Mail Server, telemetry involves gathering various metrics that provide insights into the server's operation, resource usage, and overall health. This information is crucial for system administrators and developers to ensure the server runs efficiently, identify and troubleshoot issues, and optimize performance.
+Telemetry is the process of collecting, transmitting, and analyzing data from remote or inaccessible points to monitor the performance, health, and usage of systems. In the context of server applications like Stalwart, telemetry involves gathering various metrics that provide insights into the server's operation, resource usage, and overall health. This information is crucial for system administrators and developers to ensure the server runs efficiently, identify and troubleshoot issues, and optimize performance.
 
 ## Push vs. Pull Metrics Exporters
 
@@ -16,11 +16,11 @@ On the other hand, pull metrics exporters work by having the metrics collection 
 
 ## Supported backends
 
-Stalwart Mail Server supports both push and pull metrics export methods, providing flexibility to integrate with different monitoring solutions based on organizational needs and preferences.
+Stalwart supports both push and pull metrics export methods, providing flexibility to integrate with different monitoring solutions based on organizational needs and preferences.
 
-For push metric exports, Stalwart Mail Server integrates seamlessly with [OpenTelemetry](/docs/telemetry/metrics/opentelemetry). OpenTelemetry is a set of APIs, libraries, agents, and instrumentation that provides a standard way to collect and export telemetry data. By supporting OpenTelemetry, Stalwart Mail Server allows metrics to be pushed to a centralized telemetry collection system, enabling real-time monitoring and analysis.
+For push metric exports, Stalwart integrates seamlessly with [OpenTelemetry](/docs/telemetry/metrics/opentelemetry). OpenTelemetry is a set of APIs, libraries, agents, and instrumentation that provides a standard way to collect and export telemetry data. By supporting OpenTelemetry, Stalwart allows metrics to be pushed to a centralized telemetry collection system, enabling real-time monitoring and analysis.
 
-In addition to push metrics exports, Stalwart Mail Server also supports pull metrics exports to [Prometheus](/docs/telemetry/metrics/prometheus). Prometheus is a popular open-source monitoring and alerting toolkit designed for reliability and scalability. Stalwart Mail Server exposes a scraping endpoint that Prometheus can query at regular intervals to collect metrics. This allows for flexible and efficient monitoring, with the ability to adjust the scraping frequency to match the desired level of detail and performance impact.
+In addition to push metrics exports, Stalwart also supports pull metrics exports to [Prometheus](/docs/telemetry/metrics/prometheus). Prometheus is a popular open-source monitoring and alerting toolkit designed for reliability and scalability. Stalwart exposes a scraping endpoint that Prometheus can query at regular intervals to collect metrics. This allows for flexible and efficient monitoring, with the ability to adjust the scraping frequency to match the desired level of detail and performance impact.
 
 ## Disabling metrics
 

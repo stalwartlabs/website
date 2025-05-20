@@ -19,7 +19,7 @@ The following configuration settings are available for Elasticsearch, which are 
 
 ### Index Configuration
 
-The following configuration settings are available for the index where Stalwart Mail Server stores its data, which are specified under the `store.<name>.index` section of the configuration file:
+The following configuration settings are available for the index where Stalwart stores its data, which are specified under the `store.<name>.index` section of the configuration file:
 
 - `shards`: Specifies the number of primary shards that an index should have. Shards are the basic unit of scalability in Elasticsearch.
 - `replicas`: Sets the number of replica shards (copies) that each primary shard should have. Replicas provide high availability and redundancy.

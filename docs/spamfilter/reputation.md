@@ -10,7 +10,7 @@ Email is often used as a channel for spam, phishing, and other forms of maliciou
 
 ## Overview
 
-Stalwart Mail Server's spam filter keeps tracks the past spam scores associated with various tokens related to the sender: their IP address, the Autonomous System Number (ASN), domain, and the email address itself. Once an initial spam score for a message is computed, it undergoes an adjustment based on the sender's reputation using the formula:
+Stalwart's spam filter keeps tracks the past spam scores associated with various tokens related to the sender: their IP address, the Autonomous System Number (ASN), domain, and the email address itself. Once an initial spam score for a message is computed, it undergoes an adjustment based on the sender's reputation using the formula:
 
 ```
     new_score = calculated_score + (reputation - score) * 0.5

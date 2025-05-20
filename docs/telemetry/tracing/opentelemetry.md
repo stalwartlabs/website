@@ -6,7 +6,7 @@ sidebar_position: 2
 
 OpenTelemetry is an open-source standard for distributed tracing of applications. It provides a single set of APIs, libraries, agents, and collector services to capture distributed traces and metrics from applications.
 
-By enabling OpenTelemetry in Stalwart Mail Server, administrators can gain insight into the performance and behavior of the system, which is useful for identifying and resolving issues. With OpenTelemetry, administrators can understand how messages are flowing through the system, where bottlenecks are occurring, and how the server is performing under different loads. This information can help to identify performance issues and make improvements to the system, ensuring that the server is operating at optimal levels and delivering the best possible experience to end-users.
+By enabling OpenTelemetry in Stalwart, administrators can gain insight into the performance and behavior of the system, which is useful for identifying and resolving issues. With OpenTelemetry, administrators can understand how messages are flowing through the system, where bottlenecks are occurring, and how the server is performing under different loads. This information can help to identify performance issues and make improvements to the system, ensuring that the server is operating at optimal levels and delivering the best possible experience to end-users.
 
 The following options are available under `tracer.<id>` for configuring an OpenTelemetry tracer:
 
@@ -18,7 +18,7 @@ The following options are available under `tracer.<id>` for configuring an OpenT
 
 ## Transports
 
-Stalwart Mail Server is capable of sending tracing information to both gRPC and HTTP collectors. The transport protocol for sending tracing information is specified using the `tracer.<id>.transport` key, with options for either gRPC or HTTP transport:
+Stalwart is capable of sending tracing information to both gRPC and HTTP collectors. The transport protocol for sending tracing information is specified using the `tracer.<id>.transport` key, with options for either gRPC or HTTP transport:
 
 - `grpc`: Tracing information is sent via gRPC.
 - `http`: Tracing information is sent via HTTP.

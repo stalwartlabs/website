@@ -6,19 +6,19 @@ sidebar_position: 2
 
 Message routing is the process of determining the final destination host to which an email message should be delivered. This step is essential for ensuring that messages are delivered to their intended recipients accurately and efficiently. In a mail server, routing involves resolving the recipient domain's address to identify the mail server responsible for accepting messages for that domain.
 
-By default, **Stalwart Mail Server** uses **MX (Mail Exchange) resolution** to determine where to deliver outgoing messages. MX resolution is a DNS-based process that retrieves Mail Exchange records associated with the recipient's domain. These records specify which mail servers are authorized to handle email for that domain, along with their priority levels. During this process, Stalwart Mail Server queries the DNS for MX records of the recipient's domain. If multiple MX records are found, they are sorted based on their priority values, with the lowest number indicating the highest priority. The server attempts delivery to the highest-priority host first and, if that fails, proceeds to try the next available host in the sorted list.
+By default, **Stalwart** uses **MX (Mail Exchange) resolution** to determine where to deliver outgoing messages. MX resolution is a DNS-based process that retrieves Mail Exchange records associated with the recipient's domain. These records specify which mail servers are authorized to handle email for that domain, along with their priority levels. During this process, Stalwart queries the DNS for MX records of the recipient's domain. If multiple MX records are found, they are sorted based on their priority values, with the lowest number indicating the highest priority. The server attempts delivery to the highest-priority host first and, if that fails, proceeds to try the next available host in the sorted list.
 
-While MX resolution is the default mechanism, Stalwart Mail Server also provides a flexible way to customize routing behavior. Administrators can define specific delivery rules to override MX lookups, tailoring the routing process to fit unique organizational needs. These custom rules allow messages to be directed based on various criteria, such as the recipient domain, sender domain, network conditions, or even specific message content. This flexibility enables Stalwart Mail Server to support advanced routing requirements and adapt to complex email delivery scenarios.
+While MX resolution is the default mechanism, Stalwart also provides a flexible way to customize routing behavior. Administrators can define specific delivery rules to override MX lookups, tailoring the routing process to fit unique organizational needs. These custom rules allow messages to be directed based on various criteria, such as the recipient domain, sender domain, network conditions, or even specific message content. This flexibility enables Stalwart to support advanced routing requirements and adapt to complex email delivery scenarios.
 
 ## Configuration
 
 Message routing is controlled through the `queue.outbound.next-hop` setting. This setting determines how the server selects the relay host for delivering messages. It expects an [expression](/docs/configuration/expressions/overview) which dynamically evaluates and returns the name of the relay host to use for message delivery. 
 
-When the `queue.outbound.next-hop` expression is evaluated, it must return the identifier of the desired relay host. This identifier specifies the host to which the message will be forwarded for delivery. If the expression evaluates to `false` instead of a relay host identifier, Stalwart Mail Server defaults to using **MX (Mail Exchange) resolution** to determine the delivery target. This fallback behavior ensures that the server can still route messages based on standard DNS records when no custom routing is explicitly defined.
+When the `queue.outbound.next-hop` expression is evaluated, it must return the identifier of the desired relay host. This identifier specifies the host to which the message will be forwarded for delivery. If the expression evaluates to `false` instead of a relay host identifier, Stalwart defaults to using **MX (Mail Exchange) resolution** to determine the delivery target. This fallback behavior ensures that the server can still route messages based on standard DNS records when no custom routing is explicitly defined.
 
 ### Local delivery
 
-To route a message for local delivery, the `queue.outbound.next-hop` expression can return the special internal identifier `local`. When this identifier is returned, Stalwart Mail Server interprets it as an instruction to bypass MX resolution and deliver the message directly to a local mailbox or domain hosted on the server. This mechanism is particularly useful for ensuring that messages addressed to locally managed domains are handled entirely within the server, without attempting to route them through external hosts.
+To route a message for local delivery, the `queue.outbound.next-hop` expression can return the special internal identifier `local`. When this identifier is returned, Stalwart interprets it as an instruction to bypass MX resolution and deliver the message directly to a local mailbox or domain hosted on the server. This mechanism is particularly useful for ensuring that messages addressed to locally managed domains are handled entirely within the server, without attempting to route them through external hosts.
 
 For example, the following configuration can be used to deliver messages for local domains:
 
@@ -77,7 +77,7 @@ Another common usage scenario is when sending emails from a network that's behin
 
 Relay hosts can also be used for security purposes. Emails can be sent to a relay host that scans them for viruses and spam before they are delivered to the final recipient. This way, potentially harmful or unwanted messages can be detected and stopped before they reach their destination.
 
-In Stalwart Mail Server, messages can be routed to a relay host by adding it as the next hop in the routing configuration. For example:
+In Stalwart, messages can be routed to a relay host by adding it as the next hop in the routing configuration. For example:
 
 ```toml
 [queue.outbound]

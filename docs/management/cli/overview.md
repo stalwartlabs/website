@@ -5,17 +5,17 @@ sidebar_position: 1
 # Overview
 
 The Stalwart Command Line Interface (CLI) allows system administrators to perform tasks such as managing the internal directory, queues, migrating information and more. 
-Although the recommended way to manage and configure Stalwart Mail Server is using the [web-admin](/docs/management/webadmin/overview), the CLI tool can be useful for automating tasks or performing some operations that are not available in the web interface.
+Although the recommended way to manage and configure Stalwart is using the [web-admin](/docs/management/webadmin/overview), the CLI tool can be useful for automating tasks or performing some operations that are not available in the web interface.
 
 ## Installation
 
-To install the CLI tool, download the [latest release](https://github.com/stalwartlabs/mail-server/releases/latest/) of the `stalwart-cli` package for your platform and extract it to a directory of your choice.
+To install the CLI tool, download the [latest release](https://github.com/stalwartlabs/stalwart/releases/latest/) of the `stalwart-cli` package for your platform and extract it to a directory of your choice.
 
 ## Usage
 
 The Stalwart CLI expects two required arguments: 
 
-- **Base URL of your Stalwart Mail server**: Which is specified with the ``-u`` argument or the `URL` environment variable.
+- **Base URL of your Stalwart**: Which is specified with the ``-u`` argument or the `URL` environment variable.
 - **System administrator credentials**: Which are specified with the ``-c`` argument or the `CREDENTIALS` environment variable. If none are provided, the CLI tool will prompt for them.
 
 For example, to force a purge of all expired blobs:
@@ -37,7 +37,7 @@ When executed without any parameters, the CLI tool prints a brief help page such
 ```bash
 $ stalwart-cli
 
-Stalwart Mail Server CLI
+Stalwart CLI
 
 Usage: stalwart-cli [OPTIONS] --url <URL> <COMMAND>
 

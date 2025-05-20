@@ -34,7 +34,7 @@ The MTA-STS policy is published at a specific HTTPS URL, under the `/.well-known
 - **mx**: Lists the mail servers that are permitted to receive emails for the domain. Only these listed servers are considered valid recipients.
 - **max_age**: Indicates the length of time, in seconds, that the sender should cache and apply the domain's MTA-STS policy.
 
-Stalwart Mail Server can automate the publication of MTA-STS policy files for all hosted domains. This feature ensures that all domains managed by the server maintain an up-to-date policy, enhancing email security across multiple domains without requiring manual policy updates. The following configuration options are available for MTA-STS policy publishing:
+Stalwart can automate the publication of MTA-STS policy files for all hosted domains. This feature ensures that all domains managed by the server maintain an up-to-date policy, enhancing email security across multiple domains without requiring manual policy updates. The following configuration options are available for MTA-STS policy publishing:
 
 - `session.mta-sts.mode`: The operational mode of the MTA-STS policy (`none`, `testing`, or `enforce`).
 - `session.mta-sts.max-age`: The maximum age of the MTA-STS policy in seconds.
@@ -42,7 +42,7 @@ Stalwart Mail Server can automate the publication of MTA-STS policy files for al
 
 :::tip Note
 
-To automatically publish MTA-STS policies, it is essential to have port 443 (the standard port for HTTPS traffic) open. This port allows Stalwart Mail Server to serve the MTA-STS policy files via HTTPS, complying with the protocol's requirements and ensuring that the policies are accessible to other mail servers performing policy checks.
+To automatically publish MTA-STS policies, it is essential to have port 443 (the standard port for HTTPS traffic) open. This port allows Stalwart to serve the MTA-STS policy files via HTTPS, complying with the protocol's requirements and ensuring that the policies are accessible to other mail servers performing policy checks.
 
 :::
 
@@ -55,4 +55,4 @@ max-age = "7d"
 mx = ["mx1.example.com", "mx2.example.com"]
 ```
 
-Stalwart Mail server can automatically generate the MTA-STS DNS records for your domains. To obtain them, go to the `Management` > `Directory` > `Domains` section in the [Webadmin](/docs/management/webadmin/overview.md).
+Stalwart can automatically generate the MTA-STS DNS records for your domains. To obtain them, go to the `Management` > `Directory` > `Domains` section in the [Webadmin](/docs/management/webadmin/overview.md).

@@ -46,7 +46,7 @@ $ stalwart-cli -u https://jmap.example.org server list-config server.security.
 
 ### TLS certificates
 
-Stalwart Mail Server supports [ACME](/docs/server/tls/acme/overview) (Automatic Certificate Management Environment) for TLS certificate management, which allows automatic certificate issuance and renewal. However, when TLS certificate management is done manually, it is necessary to reload any new certificates in order for the changes to take effect. This can be done by running the `server reload-certificates` command:
+Stalwart supports [ACME](/docs/server/tls/acme/overview) (Automatic Certificate Management Environment) for TLS certificate management, which allows automatic certificate issuance and renewal. However, when TLS certificate management is done manually, it is necessary to reload any new certificates in order for the changes to take effect. This can be done by running the `server reload-certificates` command:
 
 ```bash
 $ stalwart-cli -u https://jmap.example.org server reload-certificates

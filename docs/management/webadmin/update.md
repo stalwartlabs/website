@@ -21,7 +21,7 @@ resource = "file:///path/to/webadmin.zip"
 
 ## Automatic Updates
 
-Stalwart Mail Server can be configured to automatically update the Webadmin bundle on startup. This feature is disabled by default and can be enabled by setting the `webadmin.auto-update` key to `true`.
+Stalwart can be configured to automatically update the Webadmin bundle on startup. This feature is disabled by default and can be enabled by setting the `webadmin.auto-update` key to `true`.
 
 Example:
 

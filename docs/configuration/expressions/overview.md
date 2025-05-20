@@ -4,9 +4,9 @@ sidebar_position: 1
 
 # Overview
 
-Expressions in Stalwart Mail Server provide a powerful, flexible, and dynamic way to configure and control various aspects of the mail server based on context. These expressions enable administrators to define conditional logic that evaluates variables, manipulates data, and returns results in the form of booleans, strings, numbers, or arrays. Think of expressions as small programs that evaluate conditions and produce results. These results can control various aspects of the mail server's behavior, from deciding whether to accept connections to determining how to route messages.
+Expressions in Stalwart provide a powerful, flexible, and dynamic way to configure and control various aspects of the mail server based on context. These expressions enable administrators to define conditional logic that evaluates variables, manipulates data, and returns results in the form of booleans, strings, numbers, or arrays. Think of expressions as small programs that evaluate conditions and produce results. These results can control various aspects of the mail server's behavior, from deciding whether to accept connections to determining how to route messages.
 
-Stalwart Mail Server compiles these expressions into optimized bytecode, ensuring that they are executed with high performance and minimal memory usage. Expressions are used extensively across the server’s configuration, enabling precise customization for routing, authentication, spam filtering, and more.
+Stalwart compiles these expressions into optimized bytecode, ensuring that they are executed with high performance and minimal memory usage. Expressions are used extensively across the server’s configuration, enabling precise customization for routing, authentication, spam filtering, and more.
 
 ## Core Concepts
 

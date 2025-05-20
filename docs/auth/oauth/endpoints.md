@@ -4,7 +4,7 @@ sidebar_position: 5
 
 # Endpoints
 
-Stalwart Mail Server provides multiple OAuth endpoints to facilitate secure authentication and authorization processes. These endpoints allow clients to interact with the OAuth server for tasks such as obtaining access tokens, authorizing devices, and validating tokens. Below is a description of the available endpoints and their functions.
+Stalwart provides multiple OAuth endpoints to facilitate secure authentication and authorization processes. These endpoints allow clients to interact with the OAuth server for tasks such as obtaining access tokens, authorizing devices, and validating tokens. Below is a description of the available endpoints and their functions.
 
 ## `/.well-known/oauth-authorization-server`
 

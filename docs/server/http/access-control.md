@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # Access Control
 
-Stalwart Mail Server provides a flexible access control mechanism that allows administrators to define custom rules for controlling access to the HTTP server. By setting access control rules based on various criteria such as IP address, resource, method name, and more, administrators can ensure secure and tailored access to the server's HTTP services. This flexibility enables the server to be effectively managed and integrated with other systems, meeting diverse operational needs.
+Stalwart provides a flexible access control mechanism that allows administrators to define custom rules for controlling access to the HTTP server. By setting access control rules based on various criteria such as IP address, resource, method name, and more, administrators can ensure secure and tailored access to the server's HTTP services. This flexibility enables the server to be effectively managed and integrated with other systems, meeting diverse operational needs.
 
 ## Configuration
 

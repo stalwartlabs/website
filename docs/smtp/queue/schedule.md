@@ -19,7 +19,7 @@ retry = "[2m, 5m, 10m, 15m, 30m, 1h, 2h]"
 
 ## Notifications
 
-The `queue.retry.notify` setting determines when Stalwart Mail Server sends delayed [delivery notifications](/docs/smtp/queue/dsn) (DSNs) to message senders. This setting is an [expression](/docs/configuration/expressions/overview) that evaluates to an array of durations, specifying the time intervals after which notifications should be sent. For example, an expression returning `[1d, 3d]` instructs the server to send the first delayed DSN 1 day after the message enters the queue and a second and final delayed DSN 3 days later. These notifications inform senders that their message is still queued and has not yet been delivered, ensuring transparency in the delivery process.
+The `queue.retry.notify` setting determines when Stalwart sends delayed [delivery notifications](/docs/smtp/queue/dsn) (DSNs) to message senders. This setting is an [expression](/docs/configuration/expressions/overview) that evaluates to an array of durations, specifying the time intervals after which notifications should be sent. For example, an expression returning `[1d, 3d]` instructs the server to send the first delayed DSN 1 day after the message enters the queue and a second and final delayed DSN 3 days later. These notifications inform senders that their message is still queued and has not yet been delivered, ensuring transparency in the delivery process.
 
 Example:
 

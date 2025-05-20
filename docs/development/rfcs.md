@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # RFCs
 
-The following RFCs are implemented by Stalwart Mail Server.
+The following RFCs are implemented by Stalwart.
 
 ## JMAP and extensions
 

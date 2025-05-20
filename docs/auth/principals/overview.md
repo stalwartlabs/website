@@ -4,11 +4,11 @@ sidebar_position: 1
 
 # Overview
 
-Principals are the entities that represent individuals, groups, resources, or other organizational elements within Stalwart Mail Server. They play a key role in managing access, permissions, and interactions with the mail system. Principals in Stalwart Mail Server follow the [JMAP Sharing](https://datatracker.ietf.org/doc/draft-ietf-jmap-sharing/09/) specification (as outlined in the RFC), which provides a standardized way to define and share resources among users. Each principal type represents a different category of entity and serves a distinct function within the system.
+Principals are the entities that represent individuals, groups, resources, or other organizational elements within Stalwart. They play a key role in managing access, permissions, and interactions with the mail system. Principals in Stalwart follow the [JMAP Sharing](https://datatracker.ietf.org/doc/draft-ietf-jmap-sharing/09/) specification (as outlined in the RFC), which provides a standardized way to define and share resources among users. Each principal type represents a different category of entity and serves a distinct function within the system.
 
 ## Types
 
-Stalwart Mail Server supports a variety of principal types, which include both types defined in the JMAP Sharing RFC and additional types that are internal to Stalwart's architecture:
+Stalwart supports a variety of principal types, which include both types defined in the JMAP Sharing RFC and additional types that are internal to Stalwart's architecture:
 
 - [Individual](/docs/auth/principals/individual): Represents a single person who can send, receive, and manage email within the system.
 - [Group](/docs/auth/principals/group): Represents a collection of individuals or other principals. This allows for easier management of permissions and access rights for multiple users at once.
@@ -32,6 +32,6 @@ According to the [JMAP Sharing specification](https://datatracker.ietf.org/doc/d
 - **Location**: A physical location (e.g., a conference room).
 - **Other**: An undefined principal type that doesn't fall into any of the above categories.
 
-While Stalwart includes additional principal types for its internal functionality (such as **list**, **domain**, **tenant**, and **role**), when principals are accessed using the JMAP Sharing protocol, any internal types that do not directly match a JMAP-defined type are mapped to the **other** principal type. This ensures compatibility with the JMAP Sharing specification while still allowing for the extended functionality provided by Stalwart Mail Server.
+While Stalwart includes additional principal types for its internal functionality (such as **list**, **domain**, **tenant**, and **role**), when principals are accessed using the JMAP Sharing protocol, any internal types that do not directly match a JMAP-defined type are mapped to the **other** principal type. This ensures compatibility with the JMAP Sharing specification while still allowing for the extended functionality provided by Stalwart.
 
-In the following sections, we will explore each principal type in more detail, explaining their roles and how they can be configured within the Stalwart Mail Server environment.
+In the following sections, we will explore each principal type in more detail, explaining their roles and how they can be configured within the Stalwart environment.

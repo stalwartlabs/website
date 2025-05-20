@@ -18,13 +18,13 @@ The dynamic client registration process involves a few simple steps that allow a
 
 The dynamic registration process simplifies the onboarding of new clients, especially in environments with many devices or applications that need to interact with the server, as it eliminates the need for manual registration.
 
-Stalwart Mail Server fully supports the OAuth Dynamic Client Registration Protocol, allowing clients to register dynamically with its built-in OAuth server. This capability is crucial for environments where a large number of clients need to authenticate, such as in email applications, third-party services, or custom applications that integrate with the mail server.
+Stalwart fully supports the OAuth Dynamic Client Registration Protocol, allowing clients to register dynamically with its built-in OAuth server. This capability is crucial for environments where a large number of clients need to authenticate, such as in email applications, third-party services, or custom applications that integrate with the mail server.
 
 ## Enabling Registration
 
-By default, Stalwart Mail Server does not require clients to be formally registered in order to obtain OAuth tokens. This means that any client ID can be used to request access tokens without prior registration. However, in scenarios where it is essential to manage which clients are allowed to authenticate with the server, dynamic client registration must be enabled. This feature allows administrators to keep track of registered clients, regulate their access, and maintain a secure environment.
+By default, Stalwart does not require clients to be formally registered in order to obtain OAuth tokens. This means that any client ID can be used to request access tokens without prior registration. However, in scenarios where it is essential to manage which clients are allowed to authenticate with the server, dynamic client registration must be enabled. This feature allows administrators to keep track of registered clients, regulate their access, and maintain a secure environment.
 
-To activate dynamic client registration in Stalwart Mail Server, a configuration change is required. Specifically, setting `oauth.client-registration.require` to `true` will require all clients to formally register with the OAuth server before they can interact with it.
+To activate dynamic client registration in Stalwart, a configuration change is required. Specifically, setting `oauth.client-registration.require` to `true` will require all clients to formally register with the OAuth server before they can interact with it.
 
 Example:
 
@@ -54,7 +54,7 @@ However, it is strongly advised that this setting remains disabled (which is the
 
 ## Managing Clients
 
-Once dynamic client registration is enabled and a client registers successfully, Stalwart Mail Server stores the client’s information in its directory as an [OAuth Client principal](/docs/auth/principals/oauth-client). This stored information includes the client ID, redirect URIs, and other metadata related to the client's access to the OAuth system. The server maintains a detailed record of all registered clients, enabling administrators to manage client credentials, access permissions, and general configurations.
+Once dynamic client registration is enabled and a client registers successfully, Stalwart stores the client’s information in its directory as an [OAuth Client principal](/docs/auth/principals/oauth-client). This stored information includes the client ID, redirect URIs, and other metadata related to the client's access to the OAuth system. The server maintains a detailed record of all registered clients, enabling administrators to manage client credentials, access permissions, and general configurations.
 
 Administrators can modify or remove these registered clients using either the [Webadmin](/docs/management/webadmin/overview) or [REST API](/docs/api/management/overview).
 

@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # Bayes Classifier
 
-Built into Stalwart Mail Server is a spam classifier designed to effectively identify and manage unsolicited emails. This classifier is hybrid in nature, leveraging the strengths of two popular statistical methods: **Naive Bayes** and **Inverse Chi-Square**. Depending on the specific characteristics and nuances of a given message, the classifier intelligently chooses between these two methods to ensure optimal accuracy in spam detection.
+Built into Stalwart is a spam classifier designed to effectively identify and manage unsolicited emails. This classifier is hybrid in nature, leveraging the strengths of two popular statistical methods: **Naive Bayes** and **Inverse Chi-Square**. Depending on the specific characteristics and nuances of a given message, the classifier intelligently chooses between these two methods to ensure optimal accuracy in spam detection.
 
 Before delving into the classification process, each incoming message undergoes a series of preparatory steps:
 
@@ -14,7 +14,7 @@ Before delving into the classification process, each incoming message undergoes 
 
 The classifier then employs a tokenization technique known as **Orthogonal Sparse Bigrams (OSB)** with a window size of 5. In OSB tokenization, the message is analyzed in chunks, where each chunk (or window) comprises five words. Bigrams, which are pairs of words, are extracted from this window in various combinations. These bigrams are orthogonal, meaning they capture relationships between non-adjacent words within the window, ensuring a comprehensive understanding of the message's context and structure. This technique aids in identifying patterns and relationships in the text that are crucial for accurate spam classification.
 
-The Bayes classifier is enabled by default in Stalwart Mail Server, providing a robust defense against unwanted emails. However, administrators can disable it globally by setting the `spam-filter.bayes.enable` setting to `false`. 
+The Bayes classifier is enabled by default in Stalwart, providing a robust defense against unwanted emails. However, administrators can disable it globally by setting the `spam-filter.bayes.enable` setting to `false`. 
 
 ## Training
 
@@ -57,13 +57,13 @@ By adjusting these parameters, administrators can fine-tune the autolearn featur
 
 ## Account training
 
-Stalwart Mail Server offers users the ability to train the spam classifier based on their individual preferences and email patterns. This user-specific training model allows users to refine the classifier's judgment by moving messages to and from the Junk Mail folder or by adding or removing the `$Junk` flag to messages.
+Stalwart offers users the ability to train the spam classifier based on their individual preferences and email patterns. This user-specific training model allows users to refine the classifier's judgment by moving messages to and from the Junk Mail folder or by adding or removing the `$Junk` flag to messages.
 
 When a user moves an email to the Junk Mail folder or adds the `$Junk` flag to a message, the classifier interprets this action as a signal that the email is spam. Conversely, moving an email out of the Junk Mail folder or removing the `$Junk` flag indicates that the email is legitimate or 'ham'. These user actions serve as training data for the classifier, enabling it to learn from individual user interactions and tailor its classification to each user's preferences.
 
 ### Configuration
 
-By default, user-specific training is disabled in Stalwart Mail Server. To enable this feature, administrators can set the `spam-filter.bayes.account.enable` parameter to `true`. This setting activates the user-specific training model, allowing users to train the spam classifier based on their interactions with emails.
+By default, user-specific training is disabled in Stalwart. To enable this feature, administrators can set the `spam-filter.bayes.account.enable` parameter to `true`. This setting activates the user-specific training model, allowing users to train the spam classifier based on their interactions with emails.
 
 ### Thresholds
 

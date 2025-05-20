@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Backup
 
-The backup procedure for Stalwart Mail Server varies depending on the chosen [storage](/docs/storage/overview.md) backend. Ensuring regular backups of your data will minimize the risk of data loss and aid in recovery in case of accidental deletion or system failures.
+The backup procedure for Stalwart varies depending on the chosen [storage](/docs/storage/overview.md) backend. Ensuring regular backups of your data will minimize the risk of data loss and aid in recovery in case of accidental deletion or system failures.
 
 ## RocksDB
 

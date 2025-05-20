@@ -6,11 +6,11 @@ sidebar_position: 2
 
 Traefik is a modern, dynamic reverse proxy and load balancer designed to deploy microservices with ease. It integrates seamlessly with major container orchestrators like Docker, Kubernetes, and others, automatically discovering the services and adjusting configurations accordingly. Traefik's dynamic nature, extensive integration capabilities, and robust feature set make it an ideal choice for managing and routing traffic to microservice applications.
 
-Stalwart Mail Server supports Traefik, allowing you to take advantage of Traefik's capabilities to manage and route traffic efficiently to your email server. By using Traefik as a reverse proxy, you can ensure high availability, scalability, and security for your Stalwart Mail Server. Additionally, Traefik’s support for the Proxy Protocol further enhances Stalwart’s ability to perform sender authentication and enforce security policies effectively.
+Stalwart supports Traefik, allowing you to take advantage of Traefik's capabilities to manage and route traffic efficiently to your email server. By using Traefik as a reverse proxy, you can ensure high availability, scalability, and security for your Stalwart. Additionally, Traefik’s support for the Proxy Protocol further enhances Stalwart’s ability to perform sender authentication and enforce security policies effectively.
 
 ## Configuration
 
-The following example demonstrates how to configure Traefik to use the Proxy Protocol with Stalwart Mail Server:
+The following example demonstrates how to configure Traefik to use the Proxy Protocol with Stalwart:
 
 ### Traefik Compose
 
@@ -60,7 +60,7 @@ networks:
 ```yaml
 services:
   mailserver:
-    image: stalwartlabs/mail-server:latest
+    image: stalwartlabs/stalwart:latest
     container_name: mailserver
     restart: unless-stopped
     hostname: mail.example.com
@@ -69,7 +69,7 @@ services:
         ipv4_address: 172.19.0.5
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - data:/opt/stalwart-mail
+      - data:/opt/stalwart
       - certs:/data/certs:ro
     labels:
       - traefik.enable=true

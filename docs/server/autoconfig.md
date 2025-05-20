@@ -12,8 +12,8 @@ Autodiscover, popularized by Microsoft, operates similarly by automating the dis
 
 ## Configuration
 
-Stalwart Mail Server supports both Autoconfig and Autodiscover protocols, ensuring compatibility with a wide range of email clients and enhancing user accessibility. Implementing these protocols in Stalwart does not require any additional configuration specific to these protocols.
+Stalwart supports both Autoconfig and Autodiscover protocols, ensuring compatibility with a wide range of email clients and enhancing user accessibility. Implementing these protocols in Stalwart does not require any additional configuration specific to these protocols.
 
-In order to enable Autoconfig and Autodiscover in Stalwart Mail Server, ensure that the server is configured to listen on port 443 and that the necessary DNS records are set up to point to the server's IP address. Once these prerequisites are met, the server will automatically generate the required XML files for Autoconfig and Autodiscover, making it easier for users to configure their email clients and access their mailboxes without manual intervention.
+In order to enable Autoconfig and Autodiscover in Stalwart, ensure that the server is configured to listen on port 443 and that the necessary DNS records are set up to point to the server's IP address. Once these prerequisites are met, the server will automatically generate the required XML files for Autoconfig and Autodiscover, making it easier for users to configure their email clients and access their mailboxes without manual intervention.
 
-Stalwart Mail server can automatically generate the autoconfig and autodiscover DNS records for your domains. To obtain them, go to the `Management` > `Directory` > `Domains` section in the [Webadmin](/docs/management/webadmin/overview.md).
+Stalwart can automatically generate the autoconfig and autodiscover DNS records for your domains. To obtain them, go to the `Management` > `Directory` > `Domains` section in the [Webadmin](/docs/management/webadmin/overview.md).

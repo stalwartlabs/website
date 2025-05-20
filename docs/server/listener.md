@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Listeners
 
-Stalwart Mail Server offers the ability to configure multiple listeners, which are responsible for receiving incoming TCP connections. There is no limit to the number of listeners that can be created, and the behavior of each listener can be customized by the administrator. 
+Stalwart offers the ability to configure multiple listeners, which are responsible for receiving incoming TCP connections. There is no limit to the number of listeners that can be created, and the behavior of each listener can be customized by the administrator. 
 
 ## Bind settings
 

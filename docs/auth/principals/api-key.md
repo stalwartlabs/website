@@ -6,7 +6,7 @@ sidebar_position: 5
 
 The **API Key** principal type is used to grant external applications access to the management REST API or to register OAuth clients using the OAuth Dynamic Client Registration protocol. API keys allow secure, programmatic interaction with the management interface of the mail server, enabling external tools and applications to automate administrative tasks or integrate with the system's management features. However, it’s important to note that API keys **cannot be used with JMAP, IMAP, POP3**, or other mail server services for authentication or accessing user mailboxes.
 
-An **API Key** principal holds several fields that define its properties and permissions within the Stalwart Mail Server. Below are the key fields for this principal type:
+An **API Key** principal holds several fields that define its properties and permissions within the Stalwart. Below are the key fields for this principal type:
 
 - **name**: The **name** field represents the unique **API key ID**. This is the identifier used to reference the API key within the system and by external applications accessing the API.
 - **type**: Specifies the principal type, which for API keys is always set to `"apiKey"`. This distinguishes it from other principal types such as individuals, groups, or domains.

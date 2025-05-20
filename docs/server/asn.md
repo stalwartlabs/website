@@ -6,17 +6,17 @@ sidebar_position: 8
 
 ASN (Autonomous System Number) and GeoIP are essential tools for identifying the origin and characteristics of network traffic. An ASN represents the autonomous system that manages a specific range of IP addresses, providing insight into the organization or entity responsible for those addresses. GeoIP, on the other hand, offers geographical data about an IP address, such as the country, region, or city where it is located.
 
-Stalwart Mail Server utilizes ASN and GeoIP information for several critical purposes. Within [expressions](/docs/configuration/expressions/overview), this data allows administrators to create dynamic configuration rules that adapt based on the geographic or network identity of an incoming connection. For example, specific rules can be applied to connections originating from certain regions or managed by particular autonomous systems, enabling fine-tuned control over email handling.
+Stalwart utilizes ASN and GeoIP information for several critical purposes. Within [expressions](/docs/configuration/expressions/overview), this data allows administrators to create dynamic configuration rules that adapt based on the geographic or network identity of an incoming connection. For example, specific rules can be applied to connections originating from certain regions or managed by particular autonomous systems, enabling fine-tuned control over email handling.
 
 In spam filtering, ASN and GeoIP information play a significant role. The built-in [spam filter](/docs/spamfilter/overview) uses this data to track reputation metrics for IP addresses, senders, domains, and ASNs, enhancing its ability to detect and block malicious traffic. Additionally, GeoIP and ASN data are integrated into the training of the Bayesian classifier, improving its accuracy by considering geographical and network patterns associated with spam.
 
-To further improve transparency and traceability, Stalwart Mail Server includes ASN and GeoIP information in the `Received` headers of emails it processes. This addition helps administrators and recipients better understand the path and origin of messages, aiding in troubleshooting and security assessments.
+To further improve transparency and traceability, Stalwart includes ASN and GeoIP information in the `Received` headers of emails it processes. This addition helps administrators and recipients better understand the path and origin of messages, aiding in troubleshooting and security assessments.
 
-Stalwart Mail Server supports obtaining ASN and GeoIP data in two ways. The recommended method is downloading data files from HTTP resources, ensuring the information remains up-to-date and accurate. Alternatively, the server can query TXT records from a DNS service offering ASN and GeoIP information, providing a lightweight option for environments where HTTP downloads may not be feasible.
+Stalwart supports obtaining ASN and GeoIP data in two ways. The recommended method is downloading data files from HTTP resources, ensuring the information remains up-to-date and accurate. Alternatively, the server can query TXT records from a DNS service offering ASN and GeoIP information, providing a lightweight option for environments where HTTP downloads may not be feasible.
 
 ## Configuration
 
-The ASN and GeoIP settings in Stalwart Mail Server allows administrators to choose between different methods for obtaining ASN and GeoIP data. Configuration is defined in the `asn` section of the configuration file, with several options available to tailor the setup based on the environment and requirements.
+The ASN and GeoIP settings in Stalwart allows administrators to choose between different methods for obtaining ASN and GeoIP data. Configuration is defined in the `asn` section of the configuration file, with several options available to tailor the setup based on the environment and requirements.
 
 - `asn.type`: Specifies the method used to retrieve ASN and GeoIP data. Supported values are:
   - `resource`: Use HTTP resources to download ASN and GeoIP data files.

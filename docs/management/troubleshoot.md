@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # Troubleshooting
 
-Stalwart Mail Server provides a comprehensive suite of tools to assist administrators in diagnosing and resolving issues related to email delivery, authentication, and compliance with security standards. These tools are integrated into the server’s interface, offering detailed insights into the email processing pipeline and enabling effective troubleshooting. Below are instructions and explanations for utilizing these features.
+Stalwart provides a comprehensive suite of tools to assist administrators in diagnosing and resolving issues related to email delivery, authentication, and compliance with security standards. These tools are integrated into the server’s interface, offering detailed insights into the email processing pipeline and enabling effective troubleshooting. Below are instructions and explanations for utilizing these features.
 
 ## Email Delivery Issues
 
@@ -24,7 +24,7 @@ The tool performs checks for SPF, DKIM, ARC, and DMARC compliance. It also verif
 
 ## Authentication Issues
 
-For authentication problems, administrators should begin by examining the server [logs](/docs/telemetry/tracing/log), where any authentication failures or warnings will be recorded. These logs are located in the system's designated logging directory for the Stalwart Mail Server. The logs typically include error messages with specific details about the failed authentication attempts.
+For authentication problems, administrators should begin by examining the server [logs](/docs/telemetry/tracing/log), where any authentication failures or warnings will be recorded. These logs are located in the system's designated logging directory for the Stalwart. The logs typically include error messages with specific details about the failed authentication attempts.
 
 If the information in the logs is insufficient to diagnose the issue, administrators can increase the log verbosity by setting the log level to `trace`. This detailed logging level provides a granular view of the authentication process, capturing all actions and interactions during the login attempt. With these enhanced logs, administrators can identify configuration errors or issues with credentials, protocols, or communication between the client and server.
 

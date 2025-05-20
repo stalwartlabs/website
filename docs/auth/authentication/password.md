@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Passwords
 
-In Stalwart Mail Server, passwords for user accounts can be stored either in the internal directory or through external directories such as LDAP or SQL. The server supports multiple password hashing schemes to enhance security, and accounts are able to store multiple password hashes. While it is technically possible to store passwords in plain text, this practice is strongly discouraged due to security risks.
+In Stalwart, passwords for user accounts can be stored either in the internal directory or through external directories such as LDAP or SQL. The server supports multiple password hashing schemes to enhance security, and accounts are able to store multiple password hashes. While it is technically possible to store passwords in plain text, this practice is strongly discouraged due to security risks.
 
 Below is a list of the supported password hashing schemes, ranging from modern, secure algorithms like Argon2 to legacy options like MD5. Each hash type is identified by a specific prefix, making it easy to recognize the hashing method in use. If a stored password does not match a known hash prefix, it will be treated as plain text for comparison.
 

@@ -8,7 +8,7 @@ sidebar_position: 18
 
 ### Can Stalwart be used in production?
 
-Stalwart Mail Server is currently being utilized in various production systems globally. To date, there have been no reports of data loss or crashes attributed to Stalwart Mail Server. This track record speaks to the stability and reliability of Stalwart as a production-level mail server solution.
+Stalwart is currently being utilized in various production systems globally. To date, there have been no reports of data loss or crashes attributed to Stalwart. This track record speaks to the stability and reliability of Stalwart as a production-level mail server solution.
 
 Users who are considering Stalwart for their production environments are encouraged to join our Discord channel or Reddit. Here, they can directly engage with other users who are actively running Stalwart in their production environments. This community-driven approach provides real-world insights and experiences, offering valuable perspectives on the effectiveness and reliability of Stalwart in diverse operational scenarios.
 
@@ -16,9 +16,9 @@ However, it's important to note that Stalwart is currently in version 0.x. As wi
 
 ### Is my data safe?
 
-Stalwart Mail Server is built upon well-established and proven database systems such as RocksDB, FoundationDB and PostgreSQL. The use of these trusted database systems ensures that Stalwart Mail Server has a strong and reliable foundation for data storage and management. These databases are widely recognized for their stability, security, and performance, contributing significantly to the overall safety of data within Stalwart.
+Stalwart is built upon well-established and proven database systems such as RocksDB, FoundationDB and PostgreSQL. The use of these trusted database systems ensures that Stalwart has a strong and reliable foundation for data storage and management. These databases are widely recognized for their stability, security, and performance, contributing significantly to the overall safety of data within Stalwart.
 
-In addition to this, before each release, Stalwart Mail Server undergoes extensive stress testing. This testing is crucial to identify and resolve any issues related to concurrency or other potential problems that could lead to data loss. The stress tests simulate various operational conditions, including high-load scenarios and concurrent access, to ensure that Stalwart can handle real-world demands without compromising data integrity or system stability.
+In addition to this, before each release, Stalwart undergoes extensive stress testing. This testing is crucial to identify and resolve any issues related to concurrency or other potential problems that could lead to data loss. The stress tests simulate various operational conditions, including high-load scenarios and concurrent access, to ensure that Stalwart can handle real-world demands without compromising data integrity or system stability.
 
 ### Where is my data stored?
 
@@ -26,11 +26,11 @@ This depends on storage backends you are using. Please refer to the [storage doc
 
 ### Can it handle large volumes of users and emails?
 
-Yes. When using [FoundationDB](/docs/storage/backends/foundationdb) as the backend, Stalwart Mail Server can scale to support millions of users without sacrificing performance.
+Yes. When using [FoundationDB](/docs/storage/backends/foundationdb) as the backend, Stalwart can scale to support millions of users without sacrificing performance.
 
 ### Does it have a web interface?
 
-Yes, Stalwart Mail Server includes a web interface that allows users to manage their accounts, settings, and preferences. The web interface is accessible via a web browser and provides a user-friendly way to interact with the mail server.
+Yes, Stalwart includes a web interface that allows users to manage their accounts, settings, and preferences. The web interface is accessible via a web browser and provides a user-friendly way to interact with the mail server.
 
 ## Management
 
@@ -46,7 +46,7 @@ Sending emails from a new domain does not require any additional configuration e
 
 ### How can I migrate from another server?
 
-Stalwart Mail Server includes a command line interface to facilitate [data migration](/docs/management/cli/database/migrate) from a previous version of the server or from third-party servers.
+Stalwart includes a command line interface to facilitate [data migration](/docs/management/cli/database/migrate) from a previous version of the server or from third-party servers.
 
 ### How do I backup my data?
 
@@ -71,7 +71,7 @@ Yes, greylisting can be implemented as a Sieve filter. You can find an example [
 
 ### What is encryption at rest?
 
-Encryption at rest refers to the process of encrypting data when it is stored, or "at rest", on the disk. In Stalwart Mail Server, this feature provides the ability to automatically encrypt plain-text messages using either PGP or S/MIME before they are written to disk.
+Encryption at rest refers to the process of encrypting data when it is stored, or "at rest", on the disk. In Stalwart, this feature provides the ability to automatically encrypt plain-text messages using either PGP or S/MIME before they are written to disk.
 
 ### Is encryption at rest enabled by default?
 
@@ -87,7 +87,7 @@ Once encryption at rest is enabled, all incoming emails are automatically encryp
 
 ### What encryption methods are supported?
 
-Stalwart Mail Server supports two encryption methods: PGP (using either AES256 or AES128 symmetric encryption) and S/MIME (using either AES256-CBC or AES128-CBC symmetric encryption).
+Stalwart supports two encryption methods: PGP (using either AES256 or AES128 symmetric encryption) and S/MIME (using either AES256-CBC or AES128-CBC symmetric encryption).
 
 ### What format should the S/MIME certificates or PGP keys be in when uploaded?
 
@@ -102,7 +102,7 @@ Once you have enabled encryption at rest, it is recommended that you send a test
 
 ### What makes Stalwart's Spam filter different from other solutions?
 
-Stalwart Mail Server's spam filter is built-in and doesn't require any third-party software. It's designed for speed and efficiency, keeping messages within the server during the filtering process. It also offers comprehensive filtering rules on par with popular solutions like RSpamd and SpamAssassin.
+Stalwart's spam filter is built-in and doesn't require any third-party software. It's designed for speed and efficiency, keeping messages within the server during the filtering process. It also offers comprehensive filtering rules on par with popular solutions like RSpamd and SpamAssassin.
 
 ### How does the spam classifier work?
 

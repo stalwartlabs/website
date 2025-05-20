@@ -6,7 +6,7 @@ sidebar_position: 12
 
 Greylisting is a method where an email server temporarily rejects emails from unknown senders. In essence, when an email from an unfamiliar source arrives, the server sends back a "try again later" message. Legitimate email servers, following standard email protocols, will attempt to resend the email after a short delay. Most spammers, on the other hand, don't bother with resending, and hence, the email never gets through.
 
-The primary criterion for greylisting is a triplet: the sender's IP address, the sender's email address, and the recipient's email address. Stalwart Mail Server employs this triplet to apply greylisting for a duration of 30 days.
+The primary criterion for greylisting is a triplet: the sender's IP address, the sender's email address, and the recipient's email address. Stalwart employs this triplet to apply greylisting for a duration of 30 days.
 
 In the ongoing battle against unwanted emails, greylisting stands as one of the various techniques employed to thwart the efforts of spammers. But like all tools, it comes with its own set of advantages and challenges.
 
@@ -22,7 +22,7 @@ In the ongoing battle against unwanted emails, greylisting stands as one of the 
 
 ## Configuration
 
-Greylisting can be enabled in Stalwart Mail Server by specifying the amount of time a sender should be greylisted. This can be done by setting the `spam-filter.grey-list.duration` property in the configuration file.
+Greylisting can be enabled in Stalwart by specifying the amount of time a sender should be greylisted. This can be done by setting the `spam-filter.grey-list.duration` property in the configuration file.
 
 For example, to greylist a sender for 30 days:
 

@@ -7,7 +7,7 @@ sidebar_position: 6
 Push notifications allow JMAP clients to efficiently receive updates almost instantly
 and stay in sync with data changes on the JMAP server.
 There are two different mechanisms by which a client can receive push notifications
-from Stalwart JMAP:
+from Stalwart:
 
 - Event source allows clients to hold transport connections open over HTTP to receive 
   push notifications directly from the server.
@@ -17,13 +17,13 @@ from Stalwart JMAP:
 
 ## Push Subscriptions
 
-JMAP clients can activate push subscriptions by registering a push service URL with Stalwart JMAP.
+JMAP clients can activate push subscriptions by registering a push service URL with Stalwart.
 The server will then make an HTTP POST request to this URL for each push notification it wishes to 
 send to the JMAP client.
 
 Even though all notifications sent to the push service URL are encrypted over TLS, for enhanced privacy it is recommended
 to enable [web push encryption](https://datatracker.ietf.org/doc/html/rfc8291) by providing Elliptic Curve Diffie-Hellman (ECDH) public keys when registering the push service
-with Stalwart JMAP. 
+with Stalwart. 
 
 The push subscription service accepts the following parameters under the `jmap.push` section:
 
@@ -56,7 +56,7 @@ verify = "1s"
 
 ## Event Source
 
-JMAP clients that support holding transport connections open can connect directly to Stalwart JMAP to receive 
+JMAP clients that support holding transport connections open can connect directly to Stalwart to receive 
 push notifications via a ``text/event-stream`` resource, as described in [event source specification](https://html.spec.whatwg.org/multipage/server-sent-events.html#server-sent-events).
 This is a long running HTTP request where the server can push data to the client by appending data without ending the response.
 

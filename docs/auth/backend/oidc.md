@@ -4,7 +4,7 @@ sidebar_position: 5
 
 # OpenID Connect
 
-Stalwart Mail Server can be configured to authenticate users against a third-party **OpenID Connect (OIDC) provider**. This allows Stalwart to delegate user authentication to an external identity provider, integrating seamlessly with an existing identity management system. Common third-party OIDC providers include services like Google, Microsoft, or any OpenID Connect-compliant identity provider.
+Stalwart can be configured to authenticate users against a third-party **OpenID Connect (OIDC) provider**. This allows Stalwart to delegate user authentication to an external identity provider, integrating seamlessly with an existing identity management system. Common third-party OIDC providers include services like Google, Microsoft, or any OpenID Connect-compliant identity provider.
 
 However, as Stalwart is primarily a **mail server** rather than a traditional web application, there are important distinctions in how it handles the OIDC authentication process. Specifically, Stalwart expects to receive **access tokens** directly via the **OAUTHBEARER SASL mechanism** and does not initiate the OIDC authentication flow itself. As a result, it relies on external means to retrieve user identity information, since it does not directly handle the **ID token** issued by the OIDC server.
 
@@ -14,20 +14,20 @@ As a mail server, Stalwart expects clients (such as email applications) to authe
 
 Since Stalwart does not initiate the OIDC flow, it does not have direct access to the [ID token](/docs/auth/openid/id-tokens), which typically contains key identity information about the user (such as the username or email). Instead, it operates with the **access token** provided by the client via OAUTHBEARER. Therefore, to retrieve the user’s identity (such as their account name and email address), Stalwart must be configured to query either the OIDC **UserInfo endpoint** or the **OAuth token introspection endpoint** provided by the OIDC server.
 
-To map the access token received via OAUTHBEARER to the user’s identity, Stalwart Mail Server can be configured to query one of the following endpoints on the third-party OIDC provider:
+To map the access token received via OAUTHBEARER to the user’s identity, Stalwart can be configured to query one of the following endpoints on the third-party OIDC provider:
 
 - **UserInfo Endpoint:** The standard OpenID Connect endpoint that returns information about the authenticated user associated with a given access token. This endpoint typically provides key user attributes such as the user’s unique identifier (subject), email address, and other profile information. By querying this endpoint, Stalwart can retrieve the user’s identity and link it to the corresponding mail account.
 - **Token Introspection Endpoint:** Alternatively, Stalwart can be configured to use the **OAuth 2.0 Token Introspection endpoint**. The introspection endpoint allows the mail server to validate an access token and retrieve metadata about it, including the user’s identity. This endpoint returns information about the token’s status (whether it is active or expired) and, if valid, includes details such as the user’s identifier and scopes.
 
 ## Limitations
 
-When using an external OpenID Connect (OIDC) provider as an authentication backend in Stalwart Mail Server, it is important to understand certain limitations due to the nature of OIDC and its integration with the mail server. 
+When using an external OpenID Connect (OIDC) provider as an authentication backend in Stalwart, it is important to understand certain limitations due to the nature of OIDC and its integration with the mail server. 
 
 ### Offline Access
 
-One of the key limitations is that Stalwart only becomes aware of user accounts after they have authenticated at least once with the system. This limitation arises because OIDC does not provide a mechanism to query or validate user information offline without an active and valid token. As a result, if an email message is sent to an address that exists in the external OIDC provider but the corresponding account has never logged into Stalwart Mail Server, Stalwart will not recognize the account. In this scenario, the server will bounce the message, as it does not have the email address in its internal database. This happens even if the address is valid in the OIDC system because Stalwart cannot perform offline verifications against the OIDC provider.
+One of the key limitations is that Stalwart only becomes aware of user accounts after they have authenticated at least once with the system. This limitation arises because OIDC does not provide a mechanism to query or validate user information offline without an active and valid token. As a result, if an email message is sent to an address that exists in the external OIDC provider but the corresponding account has never logged into Stalwart, Stalwart will not recognize the account. In this scenario, the server will bounce the message, as it does not have the email address in its internal database. This happens even if the address is valid in the OIDC system because Stalwart cannot perform offline verifications against the OIDC provider.
 
-To avoid this issue, it is necessary to pre-deploy accounts in Stalwart Mail Server before users log in for the first time. Administrators can manually create these accounts through the [Webadmin](/docs/management/webadmin/overview) interface or in bulk via the [REST API](/docs/api/management/overview). By pre-creating user accounts, Stalwart will recognize the email addresses and accept incoming messages, even if the users have not yet logged in. This ensures that all necessary accounts are set up to receive mail, even if they have not authenticated via OIDC.
+To avoid this issue, it is necessary to pre-deploy accounts in Stalwart before users log in for the first time. Administrators can manually create these accounts through the [Webadmin](/docs/management/webadmin/overview) interface or in bulk via the [REST API](/docs/api/management/overview). By pre-creating user accounts, Stalwart will recognize the email addresses and accept incoming messages, even if the users have not yet logged in. This ensures that all necessary accounts are set up to receive mail, even if they have not authenticated via OIDC.
 
 ### `OAUTHBEARER` SASL
 
@@ -35,7 +35,7 @@ Another limitation relates to the OAUTHBEARER SASL mechanism, which is required 
 
 ## Configuration
 
-Stalwart Mail Server can be configured to authenticate users against a third-party OpenID Connect (OIDC) provider by querying the provider’s endpoints to retrieve user identity information. The server supports different methods for interacting with OIDC providers, such as using the **UserInfo endpoint** or the **Token Introspection endpoint** with various authentication methods. This documentation outlines how to configure Stalwart Mail Server to work with these methods.
+Stalwart can be configured to authenticate users against a third-party OpenID Connect (OIDC) provider by querying the provider’s endpoints to retrieve user identity information. The server supports different methods for interacting with OIDC providers, such as using the **UserInfo endpoint** or the **Token Introspection endpoint** with various authentication methods. This documentation outlines how to configure Stalwart to work with these methods.
 
 Before diving into the specific methods, there are common configuration settings that apply across all types of OIDC provider integrations:
 

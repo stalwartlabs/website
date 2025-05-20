@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # General
 
-This section of the configuration manual deals with some of the general settings of Stalwart Mail Server.
+This section of the configuration manual deals with some of the general settings of Stalwart.
 
 ## Server Hostname
 
@@ -19,7 +19,7 @@ If a `server.hostname` setting is not provided, the server will attempt to deter
 
 ## Thread pool size
 
-Stalwart Mail Server utilizes a thread pool for the execution of CPU-intensive tasks. The default size of the thread pool is equal to the number of CPUs available on the server. However, the size of the thread pool can be manually adjusted using the `global.thread-pool` parameter in the configuration file:
+Stalwart utilizes a thread pool for the execution of CPU-intensive tasks. The default size of the thread pool is equal to the number of CPUs available on the server. However, the size of the thread pool can be manually adjusted using the `global.thread-pool` parameter in the configuration file:
 
 ```toml
 [global]
@@ -60,4 +60,4 @@ By default the localhost IP address `127.0.0.1` and `::1` are on this list to pr
 
 ## Run as user
 
-On Linux systems, Stalwart Mail Server requires the `CAP_NET_BIND_SERVICE` capability to bind to privileged ports (ports below 1024). However, in older systems where this capability is not supported, Stalwart Mail Server can also be run as the `root` user and then drop privileges to a non-privileged user. The non-privileged account and group name can be configured using the `RUN_AS_USER` and `RUN_AS_GROUP` environment variables, respectively.
+On Linux systems, Stalwart requires the `CAP_NET_BIND_SERVICE` capability to bind to privileged ports (ports below 1024). However, in older systems where this capability is not supported, Stalwart can also be run as the `root` user and then drop privileges to a non-privileged user. The non-privileged account and group name can be configured using the `RUN_AS_USER` and `RUN_AS_GROUP` environment variables, respectively.

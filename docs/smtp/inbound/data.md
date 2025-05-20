@@ -8,7 +8,7 @@ The `DATA` command is used to initiate the data transfer phase of the email deli
 
 ## Message Filtering
 
-Once a message has been submitted either with the `DATA` or `BDAT` command, it is possible to run [sieve scripts](/docs/sieve/overview), [milter filters](/docs/smtp/filter/milter) or [MTA Hools](/docs/smtp/filter/mtahooks) that accept, reject or modify the message's contents. When multiple filter types are configured, Stalwart Mail Server will execute first the Milter filters, then the Sieve scripts and finally the MTA Hooks.
+Once a message has been submitted either with the `DATA` or `BDAT` command, it is possible to run [sieve scripts](/docs/sieve/overview), [milter filters](/docs/smtp/filter/milter) or [MTA Hools](/docs/smtp/filter/mtahooks) that accept, reject or modify the message's contents. When multiple filter types are configured, Stalwart will execute first the Milter filters, then the Sieve scripts and finally the MTA Hooks.
 
 ### Sieve
 
@@ -56,7 +56,7 @@ spam-filter = "listener = 'smtp'"
 
 ## Message Limits
 
-Stalwart Mail Server server can be configured to limit messages based on their size and total number. Additionally, it supports setting a maximum limit on the number of `Received` headers, which helps to prevent message loops. These configuration attributes can be found under the `session.data.limits` key in the configuration file and include the following:
+Stalwart can be configured to limit messages based on their size and total number. Additionally, it supports setting a maximum limit on the number of `Received` headers, which helps to prevent message loops. These configuration attributes can be found under the `session.data.limits` key in the configuration file and include the following:
 
 - `message`: Limits the maximum number of messages that can be submitted per SMTP session.
 - `size`: Restricts the maximum size of a message in bytes.

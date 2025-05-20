@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # ID Tokens
 
-In the context of **OpenID Connect (OIDC)**, an **ID token** is a JSON Web Token (JWT) that contains information about the authenticated user, or subject. ID tokens are central to OIDC’s purpose of enabling authentication. When a client uses OpenID Connect to authenticate a user, the OpenID provider (such as Stalwart Mail Server when configured as an OIDC server) issues an ID token to the client, confirming the identity of the user who has logged in.
+In the context of **OpenID Connect (OIDC)**, an **ID token** is a JSON Web Token (JWT) that contains information about the authenticated user, or subject. ID tokens are central to OIDC’s purpose of enabling authentication. When a client uses OpenID Connect to authenticate a user, the OpenID provider (such as Stalwart when configured as an OIDC server) issues an ID token to the client, confirming the identity of the user who has logged in.
 
 The ID token is a compact, secure token that includes various claims (pieces of information) about the user and the authentication process. It allows the client to verify the user’s identity without the need to handle sensitive information like passwords directly. In contrast to OAuth, which focuses on authorization (granting access to resources), OIDC with ID tokens specifically addresses authentication, allowing services to confirm who the user is.
 
@@ -53,4 +53,4 @@ In some cases, ID tokens may also be **encrypted** for additional confidentialit
 
 ## Summary
 
-ID tokens play a crucial role in OpenID Connect by enabling authentication and providing information about the user to clients in a secure, verifiable manner. Unlike OAuth access tokens, which are used for authorization, ID tokens are specifically designed to authenticate the user and are issued as JWTs, ensuring that they are compact, secure, and verifiable. Through signing and, optionally, encryption, ID tokens provide both integrity and confidentiality, ensuring that the authentication process is both secure and trustworthy. Stalwart Mail Server, when configured as an OpenID provider, can issue ID tokens that allow clients to securely identify users and provide them with seamless access to resources and services.
+ID tokens play a crucial role in OpenID Connect by enabling authentication and providing information about the user to clients in a secure, verifiable manner. Unlike OAuth access tokens, which are used for authorization, ID tokens are specifically designed to authenticate the user and are issued as JWTs, ensuring that they are compact, secure, and verifiable. Through signing and, optionally, encryption, ID tokens provide both integrity and confidentiality, ensuring that the authentication process is both secure and trustworthy. Stalwart, when configured as an OpenID provider, can issue ID tokens that allow clients to securely identify users and provide them with seamless access to resources and services.
