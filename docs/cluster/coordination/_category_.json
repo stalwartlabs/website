@@ -1,6 +1,6 @@
 {
-    "label": "Clustering & HA",
-    "position": 14,
+    "label": "Coordination",
+    "position": 4,
     "link": {
         "type": "generated-index"
     }

@@ -1,6 +1,6 @@
 {
-    "label": "Clustering & HA",
-    "position": 14,
+    "label": "Orchestration",
+    "position": 5,
     "link": {
         "type": "generated-index"
     }
