@@ -35,6 +35,22 @@ For example:
 license-key = "<LICENSE_KEY>"
 ```
 
+### Restart and re-login
+
+After you added the license key, you need to restart Stalwart:
+
+```bash
+$ sudo systemctl restart stalwart-mail
+```
+
+Or, if you are using MacOS:
+
+```bash
+$ sudo launchctl kickstart -k stalwart.mail
+```
+
+You must logout and re-login to be able to use the enterprise features.
+
 ## Automatic renewals
 
 Since Enterprise licenses are time-bound, they have a predefined expiration date. Once expired, the Enterprise features will no longer be accessible until the license is renewed. To streamline this renewal process and avoid service interruptions, Stalwart Labs offers an **automatic renewal API**. This API is used to automatically renew the license a few days before it expires, ensuring uninterrupted access to Enterprise functionalities.
