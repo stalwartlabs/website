@@ -4,11 +4,11 @@ sidebar_position: 2
 
 # Test
 
-The following subsections cover the different tests available on Stalwart.
-Before running these tests, make sure you have Rust installed by following the instructions
-in the [compile section](/docs/development/compile).
+The following subsections cover the different tests available on Stalwart. Before running these tests, make sure you have Rust installed by following the instructions in the [compile section](/docs/development/compile).
 
-## JMAP Protocol tests
+## Protocol tests
+
+### JMAP
 
 The JMAP protocol tests ensure protocol compliance. To run these tests execute:
 
@@ -16,7 +16,7 @@ The JMAP protocol tests ensure protocol compliance. To run these tests execute:
 $ cargo test --manifest-path=crates/jmap-proto/Cargo.toml -- --nocapture
 ```
 
-## IMAP Protocol tests
+### IMAP
 
 The IMAP protocol tests ensure protocol compliance. To run these tests execute:
 
@@ -24,15 +24,15 @@ The IMAP protocol tests ensure protocol compliance. To run these tests execute:
 $ cargo test --manifest-path=crates/imap-proto/Cargo.toml -- --nocapture
 ```
 
-## Full-text Search tests
+### WebDAV
 
-The full-text search tests ensure that the full-text search engine is working as expected. To run these tests execute:
+The WebDAV protocol tests ensure protocol compliance. To run these tests execute:
 
 ```bash
-$ cargo test --manifest-path=crates/store/Cargo.toml -- --nocapture
+$ cargo test --manifest-path=crates/dav-proto/Cargo.toml -- --nocapture
 ```
 
-## Store tests
+## Storage layer tests
 
 The store tests ensure that the mail store is working as expected. Before running these tests, you'll have to install and run [MinIO](https://github.com/minio/minio) in order to be able to run the S3 storage tests:
 
@@ -75,7 +75,9 @@ Once glauth is up and running, run the directory tests by executing:
 $ cargo test --manifest-path=tests/Cargo.toml directory -- --nocapture
 ```
 
-## SMTP Server tests
+## Integration tests
+
+### SMTP
 
 The SMTP tests ensure that the SMTP server is working as expected. To run these tests execute:
 
@@ -83,7 +85,7 @@ The SMTP tests ensure that the SMTP server is working as expected. To run these 
 $ cargo test --manifest-path=tests/Cargo.toml smtp -- --nocapture
 ```
 
-## JMAP Server tests
+### JMAP
 
 The JMAP tests ensure that the JMAP server is working as expected. To run these tests execute:
 
@@ -91,18 +93,20 @@ The JMAP tests ensure that the JMAP server is working as expected. To run these 
 $ cargo test --manifest-path=tests/Cargo.toml jmap -- --nocapture
 ```
 
-If you would like to run the JMAP test suite using the FoundationDB backend, you'll first have to install the [FoundationDB client libraries](https://github.com/apple/foundationdb/releases). Once the FoundationDB client libraries are installed, start the JMAP tests by executing:
-
-```bash
-$ cargo test --manifest-path=tests/Cargo.toml jmap --no-default-features --features foundationdb -- --nocapture
-```
-
-## IMAP Server tests
+### IMAP
 
 The IMAP tests ensure that the IMAP server is working as expected. To run these tests execute:
 
 ```bash
 $ cargo test --manifest-path=tests/Cargo.toml imap -- --nocapture
+```
+
+### WebDAV
+
+The IMAP tests ensure that the IMAP server is working as expected. To run these tests execute:
+
+```bash
+$ cargo test --manifest-path=tests/Cargo.toml webdav -- --nocapture
 ```
 
 ## Third party tests
@@ -166,10 +170,36 @@ Stress testing Stalwart can be done with Dovecot's ImapTest:
             auth=100
     ```
 
+### WebDAV protocol compliance
+
+Stalwart's WebDAV protocol compliance may be also tested with Litmus' WebDAV test suite.
+
+First, clone the Litmus repository and compile:
+
+```bash
+$ git clone https://github.com/notroj/litmus.git
+$ cd litmus
+$ git submodule update --init
+$ ./autogen.sh
+$ ./configure
+$ make
+```
+
+Then, create in Stalwart a test account with the username `john` and password `12345` and run the following command to run the WebDAV tests:
+
+```bash
+$ /usr/local/bin/litmus "http://localhost:8080/dav/file/john" "john" "12345"
+```
+
+
 ## Fuzzing
 
-To run the fuzz tests please refer to the Stalwart libraries that handle parsing for the mail server: [smtp-proto](https://github.com/stalwartlabs/smtp-proto),
-[mail-parser](https://github.com/stalwartlabs/mail-parser),
-[mail-auth](https://github.com/stalwartlabs/mail-auth) and [sieve-rs](https://github.com/stalwartlabs/sieve). 
+To run the fuzz tests please refer to the Stalwart libraries that handle parsing for the mail server:
+
+- [smtp-proto](https://github.com/stalwartlabs/smtp-proto)
+- [mail-parser](https://github.com/stalwartlabs/mail-parser)
+- [mail-auth](https://github.com/stalwartlabs/mail-auth)
+- [calcard](https://github.com/stalwartlabs/calcard)
+- [sieve-rs](https://github.com/stalwartlabs/sieve). 
 
 

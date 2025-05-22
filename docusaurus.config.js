@@ -104,8 +104,8 @@ const config = {
             title: 'Documentation',
             items: [
               {
-                label: 'All-in-one Server',
-                to: '/docs/get-started',
+                label: 'Getting Started',
+                to: '/docs/install/get-started',
               },
               {
                 label: 'Email Store',

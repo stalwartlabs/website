@@ -4,9 +4,8 @@ sidebar_position: 1
 
 # Compile
 
-Compiling Stalwart from the source has the main advantage that binaries are built
-with optimizations specific to your hardware which may result in better performance.
-Another advantage is that you may enable or disable features to suit your needs.
+Compiling Stalwart from the source has the main advantage that binaries are built with optimizations specific to your hardware which may result in better performance.
+Another advantage is that you may enable or disable features to suit your needs, thus reducing the size of the binary and the memory footprint.
 
 ## Install Rust
 
@@ -27,35 +26,58 @@ $ git clone https://github.com/stalwartlabs/stalwart.git
 $ cd stalwart
 ```
 
-## Install required dependencies
+## Install any required dependencies
 
-The following build dependencies are required:
-
-- `gcc`
-- `clang`
-- `make`
-- `protoc`
-
-```bash
-$ sudo apt-get install gcc clang make protobuf-compiler
-```
-
-- If you are compiling the Foundation DB backend, download and install the [Foundation DB client library](https://github.com/apple/foundationdb/releases).
+If you are compiling the Foundation DB backend, download and install the [Foundation DB client library](https://github.com/apple/foundationdb/releases).
 
 ## Compile
 
-Compile Stalwart with the default SQLite backend by executing:
+For example, to compile Stalwart with the RocksDB, ElasticSearch support and Enterprise [features](#available-features):
 
 ```bash
-$ cargo build --manifest-path=crates/main/Cargo.toml --release
+$ cargo build --release -p stalwart --no-default-features --features "rocks elastic redis enterprise"
 ```
 
 Or, to compile the FoundationDB backend:
 
 ```bash
-$ cargo build --manifest-path=crates/main/Cargo.toml --no-default-features --features foundationdb --release
+$ cargo build --release -p stalwart  --no-default-features --features "foundationdb enterprise"
 ```
 
 Once the compilation process is completed, the Stalwart
 binary will be available under ``target/release/stalwart``.
 
+## Available Features
+
+You can enable the following features when compiling Stalwart by using the ``--features`` flag:
+
+### Data store backends
+
+- `rocks`: RocksDB backend
+- `sqlite`: SQLite backend
+- `foundationdb`: FoundationDB backend
+- `postgres`: PostgreSQL backend
+- `mysql`: MySQL backend
+
+### Blob store backends
+
+- `s3`: S3 backend
+- `azure`: Azure backend
+
+### FTS backends
+
+- `elastic`: ElasticSearch backend
+
+### In-memory backends
+
+- `redis`: Redis backend
+
+### Message queue backends
+
+- `nats`: NATS backend
+- `zenoh`: Eclipse Zenoh backend
+- `kafka`: Kafka backend
+
+### Other features
+
+- `enterprise`: Enterprise features
