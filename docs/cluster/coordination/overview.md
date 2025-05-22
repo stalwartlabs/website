@@ -37,3 +37,7 @@ For **medium-sized deployments**, [NATS](/docs/cluster/coordination/nats) strike
 
 Ultimately, the choice of coordination mechanism should be guided by the expected cluster size, message volume, operational overhead, and existing infrastructure within the organization.
 
+## Topic Name
+
+Stalwart uses the `stwt.agora` topic name for all coordination messages. This topic is used for all coordination backends, including peer-to-peer, Kafka, NATS, and Redis. This topic name is not currently configurable, but it is recommended to avoid using it for any other purpose to prevent conflicts with Stalwart's internal coordination messages.
+

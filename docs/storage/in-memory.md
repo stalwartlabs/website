@@ -37,8 +37,8 @@ Below is a mapping of key prefixes used by Stalwart, including their assigned un
 | `KV_RATE_LIMIT_SCAN`       | Rate limiting data for email scanning                | 3            |
 | `KV_RATE_LIMIT_LOITER`     | Rate limiting data for idle connections              | 4            |
 | `KV_RATE_LIMIT_AUTH`       | Rate limiting data for authentication attempts       | 5            |
-| `KV_RATE_LIMIT_SMTP`       | Rate limiting data for SMTP throttles         | 6            |
-| `KV_RATE_LIMIT_CONTACT`    | Rate limiting data for contact forms          | 7            |
+| `KV_RATE_LIMIT_SMTP`       | Rate limiting data for SMTP throttles                | 6            |
+| `KV_RATE_LIMIT_CONTACT`    | Rate limiting data for contact forms                 | 7            |
 | `KV_RATE_LIMIT_HTTP_AUTHENTICATED` | Rate limiting data for authenticated HTTP requests | 8            |
 | `KV_RATE_LIMIT_HTTP_ANONYMOUS`    | Rate limiting data for anonymous HTTP requests     | 9            |
 | `KV_RATE_LIMIT_IMAP`       | Rate limiting data for IMAP connections              | 10           |
@@ -56,6 +56,8 @@ Below is a mapping of key prefixes used by Stalwart, including their assigned un
 | `KV_LOCK_QUEUE_REPORT`     | Lock for report queues                               | 22           |
 | `KV_LOCK_EMAIL_TASK`       | Lock for email-related tasks                         | 23           |
 | `KV_LOCK_HOUSEKEEPER`      | Lock for housekeeping tasks                          | 24           |
+| `KV_LOCK_DAV`              | WebDAV locks                                         | 25           |
+| `KV_SIEVE_ID`              | Sieve auto-responder tracking ids                    | 26           |
 
 This structured approach ensures data integrity and prevents key collisions across different types of operations within the in-memory store.
 
