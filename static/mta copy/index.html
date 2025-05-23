@@ -4,10 +4,10 @@
 <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Robust, secure, and scalable message storage, expertly handling all modern email protocols.">
+<meta name="description" content="State-of-the-art SMTP server built for unmatched security, enhanced speed, superior scalability, and extensive customization capabilities.">
 <meta name="author" content="Stalwart Labs Ltd.">
 <title>
-    Stalwart Mail Server | Stalwart Labs
+    SMTP Server | Stalwart Labs
 </title>
 <meta http-equiv="x-ua-compatible" content="ie=edge">
 
@@ -110,10 +110,9 @@
                         <a class="nav-link dropdown-toggle font-bold !tracking-[normal] hover:!text-[#605dba] !text-[.85rem]"
                             href="#" data-bs-toggle="dropdown">Platform</a>
                         <ul class="dropdown-menu">
-                            <li class="nav-item"><a class="dropdown-item hover:!text-[#605dba]" href="/mail-server">Mail
-                                    Server</a></li>
-                            <li class="nav-item"><a class="dropdown-item hover:!text-[#605dba]"
-                                    href="/collaboration">Collaboration</a></li>
+                            <li class="nav-item"><a class="dropdown-item hover:!text-[#605dba]" href="/mail-server">JMAP
+                                    /
+                                    IMAP4</a></li>
                             <li class="nav-item"><a class="dropdown-item hover:!text-[#605dba]" href="/mta">MTA</a></li>
                             <li class="nav-item"><a class="dropdown-item hover:!text-[#605dba]"
                                     href="/anti-spam">Anti-spam</a>
@@ -165,18 +164,18 @@
                                         <ul class="pl-0 list-none  xl:columns-2 lg:columns-2  xl:pb-1 lg:pb-1">
                                             <li class="xl:inline-block xl:w-full lg:inline-block lg:w-full"><a
                                                     class="dropdown-item hover:!text-[#605dba]"
-                                                    href="/docs/install/platforn/linux">Linux</a>
+                                                    href="/docs/install/linux">Linux</a>
                                             </li>
                                             <li class="xl:inline-block xl:w-full lg:inline-block lg:w-full"><a
                                                     class="dropdown-item hover:!text-[#605dba]"
-                                                    href="/docs/install/platforn/linux">MacOS</a></li>
+                                                    href="/docs/install/linux">MacOS</a></li>
                                             <li class="xl:inline-block xl:w-full lg:inline-block lg:w-full"><a
                                                     class="dropdown-item hover:!text-[#605dba]"
-                                                    href="/docs/install/platforn/windows">Windows</a>
+                                                    href="/docs/install/windows">Windows</a>
                                             </li>
                                             <li class="xl:inline-block xl:w-full lg:inline-block lg:w-full"><a
                                                     class="dropdown-item hover:!text-[#605dba]"
-                                                    href="/docs/install/platforn/docker">Docker</a>
+                                                    href="/docs/install/docker">Docker</a>
                                             </li>
                                         </ul>
                                         <h6 class="dropdown-header !text-[#605dba] xl:!mt-6 lg:!mt-6">Overview</h6>
@@ -339,6 +338,7 @@
     </div>
     <!-- /.container -->
 </nav>
+
         </header>
         <!-- /header -->
         <section class="wrapper !bg-[#ffffff]">
@@ -348,21 +348,21 @@
                     class="flex flex-wrap mx-[-15px] xl:mx-[-35px] lg:mx-[-20px] mt-[-50px] xl:mt-0 !mb-[4.5rem] items-center">
                     <div
                         class="xl:w-7/12 lg:w-7/12 w-full flex-[0_0_auto] px-[15px] xl:px-[35px] lg:px-[20px] mt-[50px] xl:mt-0 max-w-full xl:!order-2 lg:!order-2">
-                        <figure class="m-0 p-0"><img class="img-auto" src="/img/clipart/store_01.png"
-                                srcset="/img/clipart/store_01.png 2x" alt="image"></figure>
+                        <figure class="m-0 p-0"><img class="max-w-none h-auto" src="/img/clipart/mta_01.png"
+                                srcset="/img/clipart/mta_01.png 2x" alt="image"></figure>
                     </div>
                     <!-- /column -->
                     <div
                         class="md:w-10/12 md:!ml-[8.33333333%] lg:!ml-0 lg:w-5/12 xl:!ml-0 xl:w-5/12 w-full flex-[0_0_auto] px-[15px] xl:px-[35px] lg:px-[20px] mt-[50px] xl:mt-0 max-w-full text-center lg:text-left xl:text-left">
                         <h1
                             class="xl:text-[2.7rem] text-[calc(1.395rem_+_1.74vw)] !leading-[1.15] mb-5 md:mx-[-1.25rem] lg:mx-0 mt-7">
-                            Mail server <br class="xl:!hidden lg:!hidden md:!hidden">fluent in <br
-                                class="xl:!hidden lg:!hidden md:!hidden"><span
-                                class="rotator-fade text-[#5eb9f0]">JMAP,IMAP4,POP3</span></h1>
-                        <p class="lead !text-[1.1rem] !leading-[1.55] font-medium mb-7">Robust, secure, and scalable
-                            message
-                            storage, expertly handling all modern email protocols.</p>
-                        <span><a href="#store"
+                            Next-generation, programmable MTA</h1>
+                        <p class="lead !text-[1.1rem] !leading-[1.55] font-medium mb-7">State-of-the-art SMTP server
+                            built for
+                            unmatched
+                            security, enhanced speed, superior scalability, and extensive customization capabilities.
+                        </p>
+                        <span><a href="#mta"
                                 class="btn btn-lg btn-sky text-white !bg-[#5eb9f0] border-[#5eb9f0] hover:text-white hover:!bg-[#5eb9f0] hover:border-[#5eb9f0] focus:shadow-[rgba(88,167,216,1)] active:text-white active:!bg-[#5eb9f0] active:border-[#5eb9f0] disabled:text-white disabled:!bg-[#5eb9f0] disabled:border-[#5eb9f0]  !rounded-[50rem] !mr-2">Learn
                                 More</a></span>
                     </div>
@@ -382,108 +382,219 @@
         </section>
         <!-- /section -->
         <section class="wrapper bg-gradient-sky">
-            <div class="container pt-14 xl:pt-8 lg:pt-8 pb-[4.5rem] xl:pb-14 lg:pb-14 md:pb-14" id="store">
+            <div class="container pt-14 xl:pt-8 lg:pt-8 pb-[4.5rem] xl:pb-14 lg:pb-14 md:pb-14" id="mta">
 
 
                 <div
                     class="flex flex-wrap mx-[-15px] xsm:mt-[-50px] mt-[-80px] md:mx-[-20px] xl:mx-[-35px] items-center mb-10 xl:!mb-14 lg:!mb-14 md:!mb-14">
+
                     <div
                         class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
-                        <figure class="m-0 p-0"><img class="w-auto" src="/img/clipart/modern_email.png"
-                                srcset="/img/clipart/modern_email.png 2x" alt="image"></figure>
+                        <figure class="m-0 p-0"><img class="w-auto" src="/img/clipart/authentication.png"
+                                srcset="/img/clipart/authentication.png 2x" alt="image"></figure>
                     </div>
                     <div
                         class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
                         <h2
                             class="text-[0.8rem] !tracking-[0.02rem] !leading-[1.35] uppercase text-gradient gradient-1 !mb-3">
-                            JMAP Server</h2>
+                            Sender & Message Authentication</h2>
                         <h3
                             class="xl:text-[1.9rem] text-[calc(1.315rem_+_0.78vw)] font-semibold !leading-[1.25] tracking-[normal] mb-4">
-                            Embracing modern email with JMAP.</h3>
-                        <p class="!mb-6">JMAP (JSON Meta Application Protocol) is a contemporary protocol designed to be
-                            a modern
-                            replacement for IMAP, enhancing the way email clients sync with mail servers. Unlike its
-                            predecessor, JMAP
-                            uses JSON to structure data and HTTP for its transport layer, making it more efficient and
-                            suitable for
-                            today's mobile and web-based environments. Stalwart stands out as one of the few email
-                            servers on the
-                            market that fully implements JMAP, providing users with a cutting-edge, streamlined email
-                            syncing
-                            experience.</p>
+                            Comprehensive sender and message authentication.</h3>
+                        <p class="!mb-6">Stalwart supports the latest standards in sender and message
+                            authentication, including DMARC, SPF, DKIM, and ARC. This comprehensive support ensures that
+                            every email
+                            sent and received is verified for authenticity, enhancing security and trustworthiness.
+                            Stalwart also
+                            excels in proactive communication with other servers by sending
+                            and analyzing authentication reports. This automatic exchange and examination of reports
+                            allows Stalwart
+                            to
+                            identify and alert administrators of potential issues promptly, providing an additional
+                            layer of security
+                            and
+                            maintaining the integrity of your email communications.</p>
 
                         <ul class="pl-0 list-none bullet-bg bullet-soft-primary">
                             <li class="relative pl-6"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>JMAP
-                                Core full support.</li>
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Domain-based
+                                Message Authentication, Reporting, and Conformance (DMARC) verification and reporting.
+                            </li>
                             <li class="relative pl-6 mt-[0.35rem]"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>JMAP
-                                Mail full support.</li>
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>DomainKeys
+                                Identified Mail (DKIM) verification, signing and failure reporting.</li>
                             <li class="relative pl-6 mt-[0.35rem]"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>JMAP
-                                over WebSockets extension.</li>
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Sender
+                                Policy Framework (SPF) policy evaluation and failure reporting.</li>
                             <li class="relative pl-6 mt-[0.35rem]"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>JMAP
-                                for Sieve Scripts extension.</li>
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Authenticated
+                                Received Chain (ARC) verification and sealing.</li>
                             <li class="relative pl-6 mt-[0.35rem]"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>JMAP
-                                for Quotas extension.</li>
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Reverse
+                                IP (iprev) validation.</li>
                             <li class="relative pl-6 mt-[0.35rem]"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>JMAP
-                                Blob Management extension.</li>
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Automatic
+                                analysis of received authentication failure and abuse reports.</li>
                         </ul>
                         <!--/.row -->
                     </div>
                 </div>
 
-
                 <div
                     class="flex flex-wrap mx-[-15px] xsm:mt-[-50px] mt-[-80px] md:mx-[-20px] xl:mx-[-35px] items-center mb-10 xl:!mb-14 lg:!mb-14 md:!mb-14">
                     <div
                         class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
                         <h2
                             class="text-[0.8rem] !tracking-[0.02rem] !leading-[1.35] uppercase text-gradient gradient-1 !mb-3">
-                            IMAP4 & POP3 server</h2>
+                            Strong transport security</h2>
                         <h3
                             class="xl:text-[1.9rem] text-[calc(1.315rem_+_0.78vw)] font-semibold !leading-[1.25] tracking-[normal] mb-4">
-                            Broad compatibility with modern and legacy protocols.</h3>
-                        <p class="!mb-6">Stalwart seamlessly supports both cutting-edge and legacy email protocols,
-                            including the
-                            latest IMAP4 revision 2, the established IMAP4 revision 1, and POP3 for older clients.
-                            Additionally,
-                            Stalwart implements dozens of IMAP4 extensions, enhancing functionality and user experience
-                            across a
-                            variety of email client software. This dual focus on the future and the past allows Stalwart
-                            to offer a
-                            versatile and robust email server solution, capable of meeting diverse user needs in a
-                            changing
-                            technological landscape.</p>
+                            Robust email security at the transport layer.</h3>
+                        <p class="!mb-6">Stalwart incorporates robust transport security features designed to safeguard
+                            email
+                            communications at the transport layer. By utilizing protocols such as DANE and MTA-STS,
+                            Stalwart ensures
+                            that email data remains secure during transit, preventing interception and
+                            tampering. Additionally, the platform automatically analyzes incoming TLS reports, enhancing
+                            its ability
+                            to identify and react to potential security threats. This proactive approach to security not
+                            only
+                            maintains the confidentiality and integrity of email data but also fortifies the email
+                            infrastructure
+                            against evolving cyber threats.
+                        </p>
 
                         <ul class="pl-0 list-none bullet-bg bullet-soft-primary">
                             <li class="relative pl-6"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>IMAP4rev2
-                                full compliance.</li>
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>DNS-Based
+                                Authentication of Named Entities (DANE) Transport Layer Security.</li>
                             <li class="relative pl-6 mt-[0.35rem]"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>IMAP4rev1
-                                compatible.</li>
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>SMTP
+                                MTA Strict Transport Security (MTA-STS).</li>
                             <li class="relative pl-6 mt-[0.35rem]"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>POP3
-                                support.</li>
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>SMTP
+                                TLS Reporting (TLSRPT) delivery and analysis.</li>
                             <li class="relative pl-6 mt-[0.35rem]"><i
                                     class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>
-                                CONDSTORE and QRESYNC for mailbox synchronization.</li>
-                            <li class="relative pl-6 mt-[0.35rem]"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Dozens
-                                of IMAP4 extensions.</li>
+                                Automatic analysis of incoming TLS aggregate reports.</li>
                         </ul>
                         <!--/.row -->
                     </div>
                     <div
                         class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
-                        <figure class="m-0 p-0"><img class="w-auto" src="/img/clipart/legacy_email.png"
-                                srcset="/img/clipart/legacy_email.png 2x" alt="image"></figure>
+                        <figure class="m-0 p-0"><img class="w-auto" src="/img/clipart/secure_transport.png"
+                                srcset="/img/clipart/secure_transport.png 2x" alt="image"></figure>
                     </div>
                 </div>
+
+
+                <div
+                    class="flex flex-wrap mx-[-15px] xsm:mt-[-50px] mt-[-80px] md:mx-[-20px] xl:mx-[-35px] items-center mb-10 xl:!mb-14 lg:!mb-14 md:!mb-14">
+                    <div
+                        class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
+                        <figure class="m-0 p-0"><img class="w-auto" src="/img/clipart/rewrite.png"
+                                srcset="/img/clipart/rewrite.png 2x" alt="image"></figure>
+                    </div>
+                    <div
+                        class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
+                        <h2
+                            class="text-[0.8rem] !tracking-[0.02rem] !leading-[1.35] uppercase text-gradient gradient-1 !mb-3">
+                            Advanced filtering</h2>
+                        <h3
+                            class="xl:text-[1.9rem] text-[calc(1.315rem_+_0.78vw)] font-semibold !leading-[1.25] tracking-[normal] mb-4">
+                            Enhanced filtering and rewriting.</h3>
+                        <p class="!mb-6">Stalwart is equipped with a comprehensive set of filtering capabilities
+                            designed to enhance
+                            email security and management. Its robust spam and phishing filters effectively block
+                            malicious and
+                            unwanted content, maintaining the integrity of your communications. Additionally, the
+                            platform's support
+                            for the Sieve scripting language allows for intricate customization of filtering rules.
+                            Stalwart also
+                            incorporates advanced
+                            control features such as inbound concurrency and rate limiting to manage and optimize the
+                            flow of incoming
+                            emails, ensuring efficient and secure email handling.</p>
+
+                        <ul class="pl-0 list-none bullet-bg bullet-soft-primary">
+                            <li class="relative pl-6"><i
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Built-in
+                                SPAM and Phishing filtering.</li>
+                            <li class="relative pl-6 mt-[0.35rem]"><i
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Sieve
+                                scripting with support for all registered extensions.</li>
+                            <li class="relative pl-6 mt-[0.35rem]"><i
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Milter
+                                support for integration with external content filtering systems.</li>
+                            <li class="relative pl-6 mt-[0.35rem]"><i
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Filtering,
+                                rewriting, modification and removal of message parts, envelope or headers.</li>
+                            <li class="relative pl-6 mt-[0.35rem]"><i
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Inbound
+                                concurrency & rate limiting.</li>
+                        </ul>
+                        <!--/.row -->
+                    </div>
+                </div>
+
+                <div
+                    class="flex flex-wrap mx-[-15px] xsm:mt-[-50px] mt-[-80px] md:mx-[-20px] xl:mx-[-35px] items-center mb-10 xl:!mb-14 lg:!mb-14 md:!mb-14">
+                    <div
+                        class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
+                        <h2
+                            class="text-[0.8rem] !tracking-[0.02rem] !leading-[1.35] uppercase text-gradient gradient-1 !mb-3">
+                            Flexible queues</h2>
+                        <h3
+                            class="xl:text-[1.9rem] text-[calc(1.315rem_+_0.78vw)] font-semibold !leading-[1.25] tracking-[normal] mb-4">
+                            Advanced queue management for efficient delivery.</h3>
+                        <p class="!mb-6">Stalwart enhances SMTP operations with sophisticated message queueing features
+                            designed to
+                            optimize and secure email delivery. The system utilizes distributed and fault-tolerant
+                            queues that ensure
+                            reliable message handling across diverse network conditions. With support for unlimited
+                            virtual queues,
+                            dynamic routing rules, and specialized delivery options, Stalwart
+                            can meet varied organizational needs. Additionally, it
+                            helps manage the flow and volume of outgoing messages, preventing bottlenecks and
+                            maintaining system
+                            efficiency.</p>
+
+                        <ul class="pl-0 list-none bullet-bg bullet-soft-primary">
+                            <li class="relative pl-6"><i
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Distributed
+                                and fault-tolerant message queues.
+                            </li>
+                            <li class="relative pl-6 mt-[0.35rem]"><i
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Unlimited
+                                virtual queues.
+                            </li>
+                            <li class="relative pl-6 mt-[0.35rem]"><i
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Dynamic
+                                routing rules.
+                            </li>
+                            <li class="relative pl-6 mt-[0.35rem]"><i
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Delayed
+                                & priority delivery support.
+                            </li>
+                            <li class="relative pl-6 mt-[0.35rem]"><i
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Outbound
+                                throttling.
+                            </li>
+                            <li class="relative pl-6 mt-[0.35rem]"><i
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Queue
+                                quotas.
+                            </li>
+
+                        </ul>
+                        <!--/.row -->
+                    </div>
+                    <div
+                        class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
+                        <figure class="m-0 p-0"><img class="w-auto" src="/img/clipart/queue.png"
+                                srcset="/img/clipart/queue.png 2x" alt="image"></figure>
+                    </div>
+                </div>
+
 
                 <div
                     class="flex flex-wrap mx-[-15px] xsm:mt-[-50px] mt-[-80px] md:mx-[-20px] xl:mx-[-35px] items-center mb-10 xl:!mb-14 lg:!mb-14 md:!mb-14">
@@ -496,228 +607,43 @@
                         class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
                         <h2
                             class="text-[0.8rem] !tracking-[0.02rem] !leading-[1.35] uppercase text-gradient gradient-1 !mb-3">
-                            Sieve scripting</h2>
+                            Flexible</h2>
                         <h3
                             class="xl:text-[1.9rem] text-[calc(1.315rem_+_0.78vw)] font-semibold !leading-[1.25] tracking-[normal] mb-4">
-                            Enhanced automation with Sieve scripting.</h3>
-                        <p class="!mb-6">Stalwart offers comprehensive support for Sieve (a scripting language designed
-                            for
-                            filtering and managing email) as well all registered extensions,
-                            ensuring a wide range of capabilities for users to customize their email handling. The
-                            built-in Sieve
-                            interpreter is not only fast but also secure, featuring sandboxed code execution to protect
-                            against
-                            security vulnerabilities. Additionally, users can conveniently manage their Sieve scripts
-                            either through
-                            the included ManageSieve server or via JMAP for Sieve Scripts, providing flexible and
-                            accessible options
-                            for script management. </p>
-
-                        <ul class="pl-0 list-none bullet-bg bullet-soft-primary">
-                            <li class="relative pl-6"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Sieve
-                                scripting support.</li>
-                            <li class="relative pl-6 mt-[0.35rem]"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>All
-                                extensions supported.</li>
-                            <li class="relative pl-6 mt-[0.35rem]"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>ManageSieve
-                                server.</li>
-                            <li class="relative pl-6 mt-[0.35rem]"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>JMAP
-                                for Sieve Scripts extension.</li>
-                        </ul>
-                        <!--/.row -->
-                    </div>
-                </div>
-
-
-                <div
-                    class="flex flex-wrap mx-[-15px] xsm:mt-[-50px] mt-[-80px] md:mx-[-20px] xl:mx-[-35px] items-center mb-10 xl:!mb-14 lg:!mb-14 md:!mb-14">
-                    <div
-                        class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
-                        <h2
-                            class="text-[0.8rem] !tracking-[0.02rem] !leading-[1.35] uppercase text-gradient gradient-1 !mb-3">
-                            Feature-rich</h2>
-                        <h3
-                            class="xl:text-[1.9rem] text-[calc(1.315rem_+_0.78vw)] font-semibold !leading-[1.25] tracking-[normal] mb-4">
-                            Elevating your email experience.</h3>
-                        <p class="!mb-6">Stalwart is engineered to be a feature-rich email server solution, delivering
-                            advanced
-                            capabilities that cater to diverse needs and enhance user experience. From seamless security
-                            measures to
-                            extensive customization options, each integrated feature ensures a comprehensive, efficient,
-                            and secure
-                            communication platform. Stalwart's versatile architecture not only simplifies administration
-                            but also
-                            scales effectively to meet the demands of any organization.</p>
-
-                        <ul class="pl-0 list-none bullet-bg bullet-soft-primary">
-                            <li class="relative pl-6"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Built-in
-                                full-text search available in 17 languages.
-                            </li>
-                            <li class="relative pl-6 mt-[0.35rem]"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Automatic
-                                account configuration and discovery.
-                            </li>
-                            <li class="relative pl-6 mt-[0.35rem]"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Automatic
-                                TLS certificate provisioning with ACME.
-                            </li>
-                            <li class="relative pl-6 mt-[0.35rem]"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>E-mail
-                                aliases, mailing lists, sub-addressing and catch-all addresses support.
-                            </li>
-                            <li class="relative pl-6 mt-[0.35rem]"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>OpenTelemetry
-                                support.
-                            </li>
-                            <li class="relative pl-6 mt-[0.35rem]"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>OpenID
-                                Connect + OAuth
-                                code and device flows.
-                            </li>
-                            <li class="relative pl-6 mt-[0.35rem]"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Disk
-                                quotas.
-                            </li>
-                            <li class="relative pl-6 mt-[0.35rem]"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>REST
-                                API.
-                            </li>
-
-                        </ul>
-                        <!--/.row -->
-                    </div>
-                    <div
-                        class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
-                        <figure class="m-0 p-0"><img class="w-auto" src="/img/clipart/elevate.png"
-                                srcset="/img/clipart/elevate.png 2x" alt="image"></figure>
-                    </div>
-                </div>
-
-
-                <div
-                    class="flex flex-wrap mx-[-15px] xsm:mt-[-50px] mt-[-80px] md:mx-[-20px] xl:mx-[-35px] items-center mb-10 xl:!mb-14 lg:!mb-14 md:!mb-14">
-                    <div
-                        class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
-                        <figure class="m-0 p-0"><img class="w-auto" src="/img/clipart/secure_encryption.png"
-                                srcset="/img/clipart/secure_encryption.png 2x" alt="image"></figure>
-                    </div>
-                    <div
-                        class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
-                        <h2
-                            class="text-[0.8rem] !tracking-[0.02rem] !leading-[1.35] uppercase text-gradient gradient-1 !mb-3">
-                            Secure</h2>
-                        <h3
-                            class="xl:text-[1.9rem] text-[calc(1.315rem_+_0.78vw)] font-semibold !leading-[1.25] tracking-[normal] mb-4">
-                            Robust security and encryption.</h3>
-                        <p class="!mb-6">Stalwart is designed with a robust security framework to ensure the highest
-                            level of
-                            protection for your communications. The platform incorporates advanced security features and
-                            encryption
-                            technologies that safeguard data both in transit and at rest. With proactive measures like
-                            host blocking
-                            and rate limiting, along with rigorously tested access controls, Stalwart ensures a secure
-                            and reliable
-                            email environment. Its memory-safe architecture and comprehensive security audits further
-                            underline its
-                            commitment to maintaining strong defenses against evolving threats.</p>
-
-                        <ul class="pl-0 list-none bullet-bg bullet-soft-primary">
-                            <li class="relative pl-6"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Encryption
-                                at rest with S/MIME or OpenPGP.</li>
-                            <li class="relative pl-6 mt-[0.35rem]"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Automated
-                                blocking of hosts (aka fail2ban).</li>
-                            <li class="relative pl-6 mt-[0.35rem]"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Access
-                                Control Lists (ACLs).</li>
-                            <li class="relative pl-6 mt-[0.35rem]"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Rate
-                                and concurrency limiting.</li>
-                            <li class="relative pl-6 mt-[0.35rem]"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Memory
-                                safe.</li>
-                            <li class="relative pl-6 mt-[0.35rem]"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Security
-                                audited.</li>
-                        </ul>
-                        <!--/.row -->
-                    </div>
-                </div>
-
-                <div
-                    class="flex flex-wrap mx-[-15px] xsm:mt-[-50px] mt-[-80px] md:mx-[-20px] xl:mx-[-35px] items-center mb-10 xl:!mb-14 lg:!mb-14 md:!mb-14">
-                    <div
-                        class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
-                        <h2
-                            class="text-[0.8rem] !tracking-[0.02rem] !leading-[1.35] uppercase text-gradient gradient-1 !mb-3">
-                            Flexible Storage</h2>
-                        <h3
-                            class="xl:text-[1.9rem] text-[calc(1.315rem_+_0.78vw)] font-semibold !leading-[1.25] tracking-[normal] mb-4">
-                            Diverse storage and authentication options for every need.</h3>
-                        <p class="!mb-6">Stalwart offers a versatile and powerful range of storage and authentication
-                            options
-                            designed to meet various
-                            needs and technical requirements. Its flexible architecture supports everything from fast
-                            local data
-                            storage to extensive distributed storage, enabling both high performance and scalability.
-                            Whether you
-                            require robust database storage, efficient caching, specialized blob storage, or advanced
-                            search
-                            capabilities, Stalwart provides the right tools to optimize and enhance your data management
-                            strategies.
+                            Programmable MTA for modern email systems.</h3>
+                        <p class="!mb-6">Stalwart stands out for its exceptional flexibility and programmability,
+                            tailored to
+                            meet the unique demands of any modern messaging infrastructure. It allows for extensive
+                            customization
+                            through dynamic configuration rules, enabling administrators to fine-tune behaviors and
+                            settings in real
+                            time. Additionally, the message queue is highly adaptable, supported by a wide range of
+                            storage backends.
+                            This versatility ensures that regardless of the scale or
+                            complexity of your needs, Stalwart can be configured to deliver optimal performance and
+                            reliability.
                         </p>
 
                         <ul class="pl-0 list-none bullet-bg bullet-soft-primary">
                             <li class="relative pl-6"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>FoundationDB
-                                for distributed data storage.</li>
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Programmable
+                                with dynamic configuration rules.</li>
                             <li class="relative pl-6 mt-[0.35rem]"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>RocksDB
-                                and SQLite
-                                for fast, local data storage.</li>
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>FoundationDB,
+                                RocksDB, Redis, LDAP, PostgreSQL, MySQL, and SQLite support.</li>
                             <li class="relative pl-6 mt-[0.35rem]"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>PostgreSQL,
-                                MySQL and MariaDB
-                                for relational data storage</li>
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>OpenTelemetry
+                                support for monitoring, tracing, and performance analysis.</li>
                             <li class="relative pl-6 mt-[0.35rem]"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Redis
-                                for caching and lookup storage.</li>
-                            <li class="relative pl-6 mt-[0.35rem]"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>S3-Compatible
-                                for distributed blob storage.</li>
-                            <li class="relative pl-6 mt-[0.35rem]"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Filesystem
-                                for local blob storage.</li>
-                            <li class="relative pl-6 mt-[0.35rem]"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>ElasticSearch
-                                for full-text search.</li>
-                            <li class="relative pl-6 mt-[0.35rem]"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>LDAP
-                                for authentication and authorization.</li>
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>REST
+                                API for management.</li>
                         </ul>
                         <!--/.row -->
                     </div>
-                    <div
-                        class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
-                        <figure class="m-0 p-0"><img class="w-auto" src="/img/clipart/flexible_store.png"
-                                srcset="/img/clipart/flexible_store.png 2x" alt="image"></figure>
-                    </div>
                 </div>
-
-
 
                 <div
                     class="flex flex-wrap mx-[-15px] xsm:mt-[-50px] mt-[-80px] md:mx-[-20px] xl:mx-[-35px] items-center mb-10 xl:!mb-14 lg:!mb-14 md:!mb-14">
-                    <div
-                        class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
-                        <figure class="m-0 p-0"><img class="w-auto" src="/img/clipart/control_panel.png"
-                                srcset="/img/clipart/control_panel.png 2x" alt="image"></figure>
-                    </div>
                     <div
                         class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
                         <h2
@@ -725,47 +651,45 @@
                             Web-based admin</h2>
                         <h3
                             class="xl:text-[1.9rem] text-[calc(1.315rem_+_0.78vw)] font-semibold !leading-[1.25] tracking-[normal] mb-4">
-                            Effortless web-based management at your fingertips.</h3>
-                        <p class="!mb-6">Stalwart provides a streamlined management experience through its comprehensive
-                            web-based
-                            administration interface. This platform eliminates the need for traditional server
-                            management methods,
-                            such as using text editors or SSH access, by enabling full control over the mail server
-                            directly from a
-                            web browser. The webadmin is designed as a Single Page Application (SPA), ensuring a swift
-                            and responsive
-                            user experience. From intricate configuration adjustments to basic account management, all
-                            aspects of the
-                            server can be effortlessly handled online, providing both administrators and users with a
-                            powerful,
-                            efficient tool for managing their email environment.</p>
+                            Real-time web-based MTA monitoring.</h3>
+                        <p class="!mb-6">Stalwart offers comprehensive web-based management capabilities, allowing for
+                            complete
+                            control of the email queue directly from your browser. Its webadmin tool simplifies the
+                            administration of email queues and provides detailed insights into DMARC, TLS-RPT, and ARF
+                            reports,
+                            enhancing visibility into email performance and security. Developed as a Single Page
+                            Application (SPA),
+                            the webadmin interface is exceptionally responsive and fast, ensuring a smooth and efficient
+                            management
+                            experience.
+                        </p>
 
                         <ul class="pl-0 list-none bullet-bg bullet-soft-primary">
                             <li class="relative pl-6"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Dashboards
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Dashboards.
                             </li>
                             <li class="relative pl-6 mt-[0.35rem]"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Account,
-                                domain, group and mailing list management.
-                            </li>
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Message
+                                delivery history & Live tracing.</li>
                             <li class="relative pl-6 mt-[0.35rem]"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Delivery
-                                history & Lice tracing.
-                            </li>
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Web-based
+                                queue management for messages and outbound DMARC and TLS reports.</li>
+                            <li class="relative pl-6 mt-[0.35rem]"><i
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Report
+                                visualization interface for received DMARC, TLS-RPT and ARF reports.</li>
                             <li class="relative pl-6 mt-[0.35rem]"><i
                                     class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Configuration
-                                of every aspect of the mail server.
-                            </li>
+                                of every aspect of the SMTP server.</li>
                             <li class="relative pl-6 mt-[0.35rem]"><i
                                     class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Log
-                                viewer with search and filtering capabilities.
-                            </li>
-                            <li class="relative pl-6 mt-[0.35rem]"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Self-service
-                                portal for password reset and encryption-at-rest key management.
-                            </li>
+                                viewer with search and filtering capabilities.</li>
                         </ul>
                         <!--/.row -->
+                    </div>
+                    <div
+                        class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
+                        <figure class="m-0 p-0"><img class="w-auto" src="/img/clipart/dashboard.png"
+                                srcset="/img/clipart/dashboard.png 2x" alt="image"></figure>
                     </div>
                 </div>
 
@@ -773,48 +697,53 @@
                     class="flex flex-wrap mx-[-15px] xsm:mt-[-50px] mt-[-80px] md:mx-[-20px] xl:mx-[-35px] items-center mb-10 xl:!mb-14 lg:!mb-14 md:!mb-14">
                     <div
                         class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
-                        <h2
-                            class="text-[0.8rem] !tracking-[0.02rem] !leading-[1.35] uppercase text-gradient gradient-1 !mb-3">
-                            Built to scale</h2>
-                        <h3
-                            class="xl:text-[1.9rem] text-[calc(1.315rem_+_0.78vw)] font-semibold !leading-[1.25] tracking-[normal] mb-4">
-                            Seamless scalability for millions of mailboxes.</h3>
-                        <p class="!mb-6">Unlike traditional mail servers, which often rely on coordinators and proxies
-                            to scale and
-                            are limited by ancient storage formats like Maildir that tie user accounts to a single
-                            server, Stalwart is
-                            engineered to scale effortlessly from the start. When paired with modern storage backends
-                            such as
-                            FoundationDB, Stalwart can seamlessly handle millions of mailboxes. This design not only
-                            eliminates the
-                            need for complex scaling solutions but also ensures robust performance and reliability
-                            across extensive
-                            email infrastructures.</p>
-
-                        <ul class="pl-0 list-none bullet-bg bullet-soft-primary">
-                            <li class="relative pl-6"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Seamless
-                                load balancing and fault tolerance.</li>
-                            <li class="relative pl-6 mt-[0.35rem]"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Node
-                                autodiscovery, streamlining network expansion.</li>
-                            <li class="relative pl-6 mt-[0.35rem]"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Network
-                                partition-tolerant failure detection.</li>
-                            <li class="relative pl-6 mt-[0.35rem]"><i
-                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Simplified
-                                architecture without coordinators or proxies.</li>
-                        </ul>
-                        <!--/.row -->
-                    </div>
-                    <div
-                        class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
                         <figure class="m-0 p-0"><img class="w-auto" src="/img/clipart/scalable.png"
                                 srcset="/img/clipart/scalable.png 2x" alt="image"></figure>
                     </div>
+                    <div
+                        class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
+                        <h2
+                            class="text-[0.8rem] !tracking-[0.02rem] !leading-[1.35] uppercase text-gradient gradient-1 !mb-3">
+                            High availability</h2>
+                        <h3
+                            class="xl:text-[1.9rem] text-[calc(1.315rem_+_0.78vw)] font-semibold !leading-[1.25] tracking-[normal] mb-4">
+                            Seamless failover with distributed queues.</h3>
+                        <p class="!mb-6">With its advanced distributed message queue system, Stalwart is engineered for
+                            high
+                            availability. Unlike other MTAs that rely on local storage
+                            for message queues, Stalwart utilizes a distributed approach. This design allows any node
+                            within the
+                            cluster to seamlessly take over message delivery duties if another node fails, ensuring no
+                            interruption in
+                            service. Such redundancy guarantees that all messages will be reliably received, maintaining
+                            continuous
+                            communication even in the face of hardware or network failures. This robust framework
+                            provides an extra
+                            layer of reliability and efficiency, making Stalwart an ideal choice for businesses that
+                            cannot afford any
+                            downtime.</p>
+
+                        <ul class="pl-0 list-none bullet-bg bullet-soft-primary">
+                            <li class="relative pl-6"><i
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Distributed
+                                and fault tolerant SMTP queue.
+                            </li>
+                            <li class="relative pl-6 mt-[0.35rem]"><i
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Node
+                                autodiscovery, streamlining network expansion.
+                            </li>
+                            <li class="relative pl-6 mt-[0.35rem]"><i
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Network
+                                partition-tolerant failure detection.
+                            </li>
+                            <li class="relative pl-6 mt-[0.35rem]"><i
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Simplified
+                                architecture without coordinators or proxies.
+                            </li>
+                        </ul>
+                        <!--/.row -->
+                    </div>
                 </div>
-
-
 
 
                 <!--/.row -->
@@ -823,7 +752,7 @@
         </section>
 
     </div>
-
+    <!-- /.content-wrapper -->
     <footer class="!bg-[#ffffff] ">
     <div class="container-card">
         <div class="card image-wrapper bg-full bg-image bg-overlay bg-overlay-light-500 !mb-[4.5rem] [background-size:100%] bg-[center_center] bg-no-repeat !bg-scroll relative z-0 before:content-[''] before:block before:absolute before:z-[1] before:w-full before:h-full before:left-0 before:top-0 before:bg-[rgba(255,255,255,.5)] xxl:rounded-[.8rem] rounded-0"
@@ -845,7 +774,7 @@
                     </div>
                     <!-- /.row -->
                     <div class="flex justify-center">
-                        <span><a class="btn btn-lg btn-gradient gradient-1 rounded" href="/docs/install/get-started">
+                        <span><a class="btn btn-lg btn-gradient gradient-1 rounded" href="/docs/install/linux">
                                 Get Stalwart
                             </a></span>
                     </div>
@@ -893,11 +822,11 @@
                 <div class="widget">
                     <h4 class="widget-title !mb-3 !text-[1rem] !leading-[1.45]">Platform</h4>
                     <ul class="pl-0 list-none !mb-0">
-                        <li><a class="text-[#60697b] hover:text-[#605dba]" href="/mail-server">Mail Server</a></li>
+                        <li><a class="text-[#60697b] hover:text-[#605dba]" href="/mail-server">JMAP</a></li>
                         <li class="mt-[0.35rem]"><a class="text-[#60697b] hover:text-[#605dba]"
-                                href="/collaboration">Collaboration</a>
+                                href="/mail-server">IMAP4</a>
                         </li>
-                        <li class="mt-[0.35rem]"><a class="text-[#60697b] hover:text-[#605dba]" href="/mta">MTA</a>
+                        <li class="mt-[0.35rem]"><a class="text-[#60697b] hover:text-[#605dba]" href="/mta">SMTP</a>
                         </li>
                         <li class="mt-[0.35rem]"><a class="text-[#60697b] hover:text-[#605dba]"
                                 href="/anti-spam">Anti-spam</a>
@@ -967,7 +896,6 @@
 
     gtag('config', 'G-NTKTV3G55G');
 </script>
-
 </body>
 
 </html>

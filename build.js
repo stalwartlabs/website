@@ -10,6 +10,9 @@ if (!fs.existsSync(distDir)) {
     fs.mkdirSync(distDir);
 }
 
+// chokidar "**/*.ejs" -c "node ./build.js"
+// python3 -m http.server
+
 // Function to compile an EJS file to HTML
 function compileFile(file) {
     const filePath = path.join(srcDir, file);

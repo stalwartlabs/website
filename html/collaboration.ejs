@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('include-meta.ejs', { title: 'Stalwart Collaboration Server | Stalwart Labs' ,
+        description: 'Integrated support for calendars, contacts, and file storage to keep your team connected and productive.'
+        }) %>
+
+        <!-- google fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link
+            href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Manrope:wght@400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+            rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/fonts/unicons/unicons.css">
+        <link rel="stylesheet" href="/css/plugins.css">
+        <link rel="stylesheet" href="/css/style.css">
+        <link rel="stylesheet" href="/css/colors/sky.css">
+        <link rel="preload" href="/fonts/urbanist/urbanist.css" as="style" onload="this.rel='stylesheet'">
+        <style>
+            .swiper-container.nav-color .swiper-button.swiper-button-disabled,
+            .swiper-container.nav-color .swiper-slide figure .item-link.swiper-button-disabled {
+                background: #5eb9f0b3 !important;
+            }
+
+            .swiper-container.nav-color .swiper-button,
+            .swiper-container.nav-color .swiper-slide figure .item-link {
+                background: #5eb9f0e6 !important;
+                color: #ffffff !important;
+            }
+
+            .swiper-container.nav-color .swiper-button:hover,
+            .swiper-container.nav-color .swiper-slide figure .item-link:hover {
+                background: #5eb9f0 !important;
+            }
+
+            .navbar.navbar-light.fixed .btn:not(.btn-expand):not(.btn-gradient) {
+                background: #5eb9f0 !important;
+                border-color: #5eb9f0 !important;
+                color: #ffffff !important;
+            }
+
+            .accordion-wrapper .card-header button {
+                color: #5eb9f0;
+            }
+
+            @media (min-width: 992px) {
+                .navbar-expand-lg.navbar-light .dropdown:not(.dropdown-submenu)>.dropdown-toggle:after {
+                    color: #5eb9f0;
+                }
+            }
+
+            @media (max-width: 991.98px) {
+                .navbar-expand-lg .navbar-collapse .dropdown-toggle:after {
+                    color: #ffffff !important;
+                }
+            }
+        </style>
+</head>
+
+<body>
+    <div class="grow shrink-0">
+        <header class="relative wrapper !bg-[#ffffff] ">
+            <%- include('include-header.ejs') %>
+
+        </header>
+        <!-- /header -->
+        <section class="wrapper !bg-[#ffffff]">
+            <div
+                class="container pt-10 xl:pt-[4.5rem] lg:pt-[4.5rem] md:pt-[4.5rem] pb-[4.5rem] xl:pb-12 lg:pb-12 md:pb-12 !text-center">
+                <div
+                    class="flex flex-wrap mx-[-15px] xl:mx-[-35px] lg:mx-[-20px] mt-[-50px] xl:mt-0 !mb-[4.5rem] items-center">
+                    <div
+                        class="xl:w-7/12 lg:w-7/12 w-full flex-[0_0_auto] px-[15px] xl:px-[35px] lg:px-[20px] mt-[50px] xl:mt-0 max-w-full xl:!order-2 lg:!order-2">
+                        <figure class="m-0 p-0"><img class="max-w-none h-auto" src="/img/clipart/collab_01.png"
+                                srcset="/img/clipart/collab_01.png 2x" alt="image"></figure>
+                    </div>
+                    <!-- /column -->
+                    <div
+                        class="md:w-10/12 md:!ml-[8.33333333%] lg:!ml-0 lg:w-5/12 xl:!ml-0 xl:w-5/12 w-full flex-[0_0_auto] px-[15px] xl:px-[35px] lg:px-[20px] mt-[50px] xl:mt-0 max-w-full text-center lg:text-left xl:text-left">
+                        <h1
+                            class="xl:text-[2.7rem] text-[calc(1.395rem_+_1.74vw)] !leading-[1.15] mb-5 md:mx-[-1.25rem] lg:mx-0 mt-7">
+                            Collaboration Platform</h1>
+                        <p class="lead !text-[1.1rem] !leading-[1.55] font-medium mb-7">Stay organized with built-in
+                            calendars, contact management, and secure file storage features.
+                        </p>
+                        <span><a href="#mta"
+                                class="btn btn-lg btn-sky text-white !bg-[#5eb9f0] border-[#5eb9f0] hover:text-white hover:!bg-[#5eb9f0] hover:border-[#5eb9f0] focus:shadow-[rgba(88,167,216,1)] active:text-white active:!bg-[#5eb9f0] active:border-[#5eb9f0] disabled:text-white disabled:!bg-[#5eb9f0] disabled:border-[#5eb9f0]  !rounded-[50rem] !mr-2">Learn
+                                More</a></span>
+                    </div>
+                    <!-- /column -->
+                </div>
+            </div>
+            <!-- /.container -->
+            <div class="overflow-hidden">
+                <div class="divider text-[#f0f8fe] mx-[-0.5rem]">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 100">
+                        <path fill="currentColor"
+                            d="M1260,1.65c-60-5.07-119.82,2.47-179.83,10.13s-120,11.48-180,9.57-120-7.66-180-6.42c-60,1.63-120,11.21-180,16a1129.52,1129.52,0,0,1-180,0c-60-4.78-120-14.36-180-19.14S60,7,30,7H0v93H1440V30.89C1380.07,23.2,1319.93,6.15,1260,1.65Z" />
+                    </svg>
+                </div>
+            </div>
+            <!-- /.overflow-hidden -->
+        </section>
+        <!-- /section -->
+        <section class="wrapper bg-gradient-sky">
+            <div class="container pt-14 xl:pt-8 lg:pt-8 pb-[4.5rem] xl:pb-14 lg:pb-14 md:pb-14" id="mta">
+
+
+                <div
+                    class="flex flex-wrap mx-[-15px] xsm:mt-[-50px] mt-[-80px] md:mx-[-20px] xl:mx-[-35px] items-center mb-10 xl:!mb-14 lg:!mb-14 md:!mb-14">
+
+                    <div
+                        class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
+                        <figure class="m-0 p-0"><img class="w-auto" src="/img/clipart/online_calendar.png"
+                                srcset="/img/clipart/online_calendar.png 2x" alt="image"></figure>
+                    </div>
+                    <div
+                        class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
+                        <h2
+                            class="text-[0.8rem] !tracking-[0.02rem] !leading-[1.35] uppercase text-gradient gradient-1 !mb-3">
+                            Integrated Calendars</h2>
+                        <h3
+                            class="xl:text-[1.9rem] text-[calc(1.315rem_+_0.78vw)] font-semibold !leading-[1.25] tracking-[normal] mb-4">
+                            Seamless scheduling for teams and individuals.</h3>
+                        <p class="!mb-6">Stalwart brings powerful calendar and scheduling capabilities directly into
+                            your collaboration stack—no add-ons or third-party tools needed. Plan events, manage
+                            recurring meetings, set alerts, and coordinate with teammates using open protocols designed
+                            for real-time performance and seamless integration. With support for both JMAP and CalDAV,
+                            your calendars stay perfectly in sync across all clients and devices. Whether you're working
+                            solo or across a distributed team, Stalwart ensures you stay on schedule, informed, and in
+                            control.</p>
+
+                        <ul class="pl-0 list-none bullet-bg bullet-soft-primary">
+                            <li class="relative pl-6"><i
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>
+                                Full-featured calendaring.
+
+                            </li>
+                            <li class="relative pl-6 mt-[0.35rem]"><i
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Scheduling
+                                tools for meetings, tasks, and recurring events.</li>
+                            <li class="relative pl-6 mt-[0.35rem]"><i
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Real-time
+                                alerts and reminders.</li>
+                            <li class="relative pl-6 mt-[0.35rem]"><i
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Integrated
+                                free/busy availability lookup.</li>
+                            <li class="relative pl-6 mt-[0.35rem]"><i
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Seamless
+                                access via CalDAV and JMAP protocols.</li>
+                            <li class="relative pl-6 mt-[0.35rem]"><i
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Support
+                                for group and shared calendars.</li>
+                        </ul>
+                        <!--/.row -->
+                    </div>
+                </div>
+
+                <div
+                    class="flex flex-wrap mx-[-15px] xsm:mt-[-50px] mt-[-80px] md:mx-[-20px] xl:mx-[-35px] items-center mb-10 xl:!mb-14 lg:!mb-14 md:!mb-14">
+                    <div
+                        class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
+                        <h2
+                            class="text-[0.8rem] !tracking-[0.02rem] !leading-[1.35] uppercase text-gradient gradient-1 !mb-3">
+                            Unified contacts</h2>
+                        <h3
+                            class="xl:text-[1.9rem] text-[calc(1.315rem_+_0.78vw)] font-semibold !leading-[1.25] tracking-[normal] mb-4">
+                            Manage, share, and sync your contacts.</h3>
+                        <p class="!mb-6">Stalwart offers seamless contact management as part of its integrated
+                            collaboration features. Designed for compatibility and performance, it supports both JMAP
+                            and CardDAV, allowing users to access, sync, and manage contacts across any compliant client
+                            or device. Whether you're handling personal contacts, shared address books, or organizing
+                            groups, Stalwart ensures your data is consistent, reliable, and ready for real-time
+                            collaboration—without the complexity of external services.
+                        </p>
+
+                        <ul class="pl-0 list-none bullet-bg bullet-soft-primary">
+                            <li class="relative pl-6"><i
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Full
+                                contact management.</li>
+                            <li class="relative pl-6 mt-[0.35rem]"><i
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Support
+                                for group and shared address books.</li>
+                            <li class="relative pl-6 mt-[0.35rem]"><i
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Real-time
+                                sync via JMAP and CardDAV protocols.</li>
+                        </ul>
+                        <!--/.row -->
+                    </div>
+                    <div
+                        class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
+                        <figure class="m-0 p-0"><img class="w-auto" src="/img/clipart/profile_contact.png"
+                                srcset="/img/clipart/profile_contact.png 2x" alt="image"></figure>
+                    </div>
+                </div>
+
+
+                <div
+                    class="flex flex-wrap mx-[-15px] xsm:mt-[-50px] mt-[-80px] md:mx-[-20px] xl:mx-[-35px] items-center mb-10 xl:!mb-14 lg:!mb-14 md:!mb-14">
+                    <div
+                        class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
+                        <figure class="m-0 p-0"><img class="w-auto" src="/img/clipart/sync_files.png"
+                                srcset="/img/clipart/sync_files.png 2x" alt="image"></figure>
+                    </div>
+                    <div
+                        class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
+                        <h2
+                            class="text-[0.8rem] !tracking-[0.02rem] !leading-[1.35] uppercase text-gradient gradient-1 !mb-3">
+                            Integrated File Access</h2>
+                        <h3
+                            class="xl:text-[1.9rem] text-[calc(1.315rem_+_0.78vw)] font-semibold !leading-[1.25] tracking-[normal] mb-4">
+                            Secure, centralized access to your documents.</h3>
+                        <p class="!mb-6">Stalwart includes built-in file storage capabilities, making it easy to manage
+                            and share documents within the same secure platform that powers your mail and collaboration
+                            tools. With support for WebDAV and the JMAP for File Storage extension, users can store,
+                            retrieve, and sync files across devices and clients effortlessly. Whether you're managing
+                            attachments, documents, or shared team resources, Stalwart provides a unified,
+                            protocol-driven solution that keeps your data accessible and protected.</p>
+
+                        <ul class="pl-0 list-none bullet-bg bullet-soft-primary">
+                            <li class="relative pl-6"><i
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Built-in
+                                file storage.</li>
+                            <li class="relative pl-6 mt-[0.35rem]"><i
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Access
+                                via WebDAV and JMAP for File Storage.</li>
+                            <li class="relative pl-6 mt-[0.35rem]"><i
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Support
+                                for user, group and shared file spaces.</li>
+                            <li class="relative pl-6 mt-[0.35rem]"><i
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Secure
+                                file sharing with fine-grained permissions.</li>
+                        </ul>
+                        <!--/.row -->
+                    </div>
+                </div>
+
+                <div
+                    class="flex flex-wrap mx-[-15px] xsm:mt-[-50px] mt-[-80px] md:mx-[-20px] xl:mx-[-35px] items-center mb-10 xl:!mb-14 lg:!mb-14 md:!mb-14">
+                    <div
+                        class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
+                        <h2
+                            class="text-[0.8rem] !tracking-[0.02rem] !leading-[1.35] uppercase text-gradient gradient-1 !mb-3">
+                            Flexible sharing</h2>
+                        <h3
+                            class="xl:text-[1.9rem] text-[calc(1.315rem_+_0.78vw)] font-semibold !leading-[1.25] tracking-[normal] mb-4">
+                            Granular control over calendars, contacts, and files.</h3>
+                        <p class="!mb-6">Stalwart makes collaboration seamless with built-in sharing capabilities across
+                            calendars, address books, and file storage. Whether you're sharing with a single user, a
+                            group, or an entire organization, Stalwart gives you precise control over what others can
+                            see or do. With support for WebDAV ACLs and the JMAP for Sharing extension, users can assign
+                            granular permissions to manage access with confidence—no manual configuration or external
+                            tools required.</p>
+
+                        <ul class="pl-0 list-none bullet-bg bullet-soft-primary">
+                            <li class="relative pl-6"><i
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Support
+                                for user, group, and shared resources.
+                            </li>
+                            <li class="relative pl-6 mt-[0.35rem]"><i
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Share
+                                calendars, address books, and file spaces.
+                            </li>
+                            <li class="relative pl-6 mt-[0.35rem]"><i
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Fine-grained
+                                permission control for read, write, and manage access.
+                            </li>
+                            <li class="relative pl-6 mt-[0.35rem]"><i
+                                    class="uil uil-check absolute left-0 w-4 h-4 text-[0.8rem] leading-none tracking-[normal] !text-center flex items-center justify-center bg-[#e2e2f3] text-[#605dba] rounded-[100%] top-[0.2rem] before:content-['\e9dd'] before:align-middle before:table-cell"></i>Based
+                                on WebDAV ACL and JMAP for Sharing standards.
+                            </li>
+
+                        </ul>
+                        <!--/.row -->
+                    </div>
+                    <div
+                        class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
+                        <figure class="m-0 p-0"><img class="w-auto" src="/img/clipart/collab_share.png"
+                                srcset="/img/clipart/collab_share.png 2x" alt="image"></figure>
+                    </div>
+                </div>
+
+
+
+                <!--/.row -->
+            </div>
+            <!-- /.overflow-hidden -->
+        </section>
+
+    </div>
+    <!-- /.content-wrapper -->
+    <%- include('include-footer.ejs', { cta: 'Ready to elevate your email?' ,
+        ctaSub: 'Step into the future of messaging and try us out today.' , ctaButton: 'Get Stalwart' ,
+        ctaLink: '/docs/install/get-started' }) %>
+</body>
+
+</html>
