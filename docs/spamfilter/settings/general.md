@@ -69,6 +69,19 @@ The `spam-filter.score.reject` parameter sets the score threshold for outright r
 reject = "0.0"
 ```
 
+## Address Book Integration
+
+Stalwart’s spam filter includes integration with the user's [address book](/docs/collaboration/contact) to improve the accuracy of spam detection and reduce the risk of false positives. When enabled, the spam filter checks whether the sender of an incoming message is listed in the recipient's address book. If a match is found, the message is automatically **classified as legitimate (ham)**, regardless of its content or other spam signals.
+
+This feature is controlled by the `spam-filter.card-is-ham` setting, which is **enabled by default**. With this setting active, trusted contacts (such as colleagues, clients, or friends) won't have their messages misclassified as spam simply because of wording, formatting, or other typical spam indicators.
+
+Example:
+
+```toml
+[spam-filter]
+card-is-ham = true
+```
+
 ## Updates
 
 Upon the initial execution of Stalwart, the Spam filter rules are automatically retrieved from the GitHub repository and stored locally as part of the configuration file. This ensures that the Spam filter is readily available and updated without manual intervention. 

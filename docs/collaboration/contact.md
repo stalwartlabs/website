@@ -69,4 +69,11 @@ display-name = "Stalwart Address Book"
 
 This name is assigned to the address book’s `display-name` property and can be customized to better match your organization's branding or language preferences.
 
+## Spam Filter Integration
+
+Stalwart’s contact management system is closely integrated with the [built-in spam filter](/docs/spamfilter/overview) to enhance filtering accuracy and reduce the chances of false positives. When enabled, the spam filter can reference a user’s address book to identify trusted senders and ensure their messages are not mistakenly marked as spam.
+
+In addition to [bypassing spam classification](/docs/spamfilter/settings/general#address-book-integration) for known contacts, Stalwart can also use this information to [improve its Bayesian spam filter](/docs/spamfilter/classifier#contacts-auto-learning). If a message from a known contact is incorrectly flagged as spam, the system can automatically learn from the mistake and train its Bayesian model to better recognize similar messages in the future.
+
+This seamless integration between the address book and spam filtering system helps create a more intelligent and personalized filtering experience. For more information on how to configure these features, see the [spam filter documentation](/docs/spamfilter/overview).
 

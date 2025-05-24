@@ -1,8 +1,8 @@
 ---
-sidebar_position: 2
+sidebar_position: 3
 ---
 
-# Test
+# Testing Stalwart
 
 The following subsections cover the different tests available on Stalwart. Before running these tests, make sure you have Rust installed by following the instructions in the [compile section](/docs/development/compile).
 

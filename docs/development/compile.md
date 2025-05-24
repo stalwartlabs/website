@@ -1,8 +1,8 @@
 ---
-sidebar_position: 1
+sidebar_position: 2
 ---
 
-# Compile
+# Compiling Stalwart
 
 Compiling Stalwart from the source has the main advantage that binaries are built with optimizations specific to your hardware which may result in better performance.
 Another advantage is that you may enable or disable features to suit your needs, thus reducing the size of the binary and the memory footprint.

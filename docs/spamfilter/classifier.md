@@ -72,6 +72,25 @@ Just like the global classifier, the user-specific Bayes classifier employs two 
 - `spam-filter.bayes.account.score.spam` (default: "0.7"): This setting defines the threshold at which an email is classified as spam. If the email's spam probability exceeds this threshold, it will be marked as spam. By default, this threshold is set at 0.7, indicating that an email is classified as spam if its spam probability is 70% or higher.
 - `spam-filter.bayes.account.score.ham` (default: "0.5"): Conversely, this setting specifies the threshold for classifying an email as ham. If the email's ham probability exceeds this threshold, it will be marked as legitimate. The default ham threshold is 0.5, meaning that an email is classified as ham if its ham probability is 50% or higher.
 
+Example:
+
+```toml
+[spam-filter.bayes.account.score]
+spam = "0.7"
+ham = "0.5"
+```
+
+### Contacts Auto-Learning
+
+To improve the accuracy of the user-specific Bayes classifier, Stalwart can automatically use the user’s [address book](/docs/collaboration/contact) as a signal for misclassification correction. When the setting `spam-filter.bayes.auto-learn.card-is-ham` is enabled (which it is by default), Stalwart will **automatically train the user’s Bayesian filter** whenever a message is incorrectly classified as spam **but the sender is present in the user's address book**. In such cases, the message is assumed to be legitimate, and the spam filter updates its model accordingly by learning from the message as ham. This allows the Bayesian classifier to become more accurate over time, especially in recognizing legitimate messages from frequent correspondents, colleagues, or trusted sources—without requiring manual intervention by the user.
+
+Example:
+
+```toml
+[spam-filter.bayes.auto-learn]
+card-is-ham = true
+```
+
 ### Headers
 
 The user-specific Bayes classifier can append headers to incoming messages to provide detailed insights into the classification process. These headers offer a transparent view of the classifier's decision-making, aiding administrators in understanding how emails are categorized and ensuring that the filtering process aligns with organizational policies.
@@ -80,6 +99,8 @@ Whether to include these headers and their names can be configured using the fol
 
 - `spam-filter.header.bayes.enable` (default: "true"): This setting determines whether the Bayes classifier headers should be added to incoming messages. By setting this to "true", the headers will be included, offering detailed insights into the classification process.
 - `spam-filter.header.bayes.name` (default: "X-Spam-Bayes"): This parameter specifies the name of the header added by the Bayes classifier. The default name is "X-Spam-Bayes". Administrators can customize this name to align with their organization's conventions or preferences.
+
+Example:
 
 ```toml
 [spam-filter.header.bayes]
