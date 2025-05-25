@@ -17,7 +17,7 @@ $ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
 If you are running Windows 64-bit, download and run [rustup‑init.exe](https://rustup.rs), then follow the onscreen instructions. 
 
-## Clone Repo
+## Clone the repository
 
 Clone the Stalwart repository:
 
@@ -44,8 +44,13 @@ Or, to compile the FoundationDB backend:
 $ cargo build --release -p stalwart  --no-default-features --features "foundationdb enterprise"
 ```
 
-Once the compilation process is completed, the Stalwart
-binary will be available under ``target/release/stalwart``.
+:::tip Grab a cup of coffee
+
+Rust is a powerful language, but it can take some time to compile large projects like Stalwart, especially with multiple features enabled. Be patient!
+
+:::
+
+Once the compilation process is completed, the Stalwart binary will be available under ``target/release/stalwart``.
 
 ## Available Features
 
