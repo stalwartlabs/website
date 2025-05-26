@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # Docker
 
-Stalwart is available as a Docker image that includes JMAP, IMAP, and SMTP servers. To get started, pull the `stalwart:latest` image, for example:
+Stalwart is available as a Docker image that includes JMAP, IMAP, SMTP and WebDAV servers. To get started, pull the `stalwart:latest` image, for example:
 
 ```bash
 $ docker pull stalwartlabs/stalwart:latest
