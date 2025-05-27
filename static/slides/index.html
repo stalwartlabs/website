@@ -5,7 +5,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-	<title>Stalwart Mail Server Presentation</title>
+	<title>Stalwart Mail & Collaboration Server Presentation</title>
 
 	<link rel="stylesheet" href="css/reset.css">
 	<link rel="stylesheet" href="css/reveal.css">
@@ -99,6 +99,7 @@
 					<span class="fragment fade-in-then-semi-out">+ Postfix (MTA)</span>
 					<span class="fragment fade-in-then-semi-out">+ SpamAssassin
 					</span>
+					<span class="fragment fade-in-then-semi-out">+ Radicale (DAV)</span>
 					<span class="fragment fade-in-then-semi-out">+ postgrey
 					</span>
 					<span class="fragment fade-in-then-semi-out">+ OpenDKIM
@@ -114,8 +115,6 @@
 					<span class="fragment fade-in-then-semi-out">+ Munin
 					</span>
 					<span class="fragment fade-in-then-semi-out">+ Nginx
-					</span>
-					<span class="fragment fade-in-then-semi-out">+ PHP
 					</span>
 				</p>
 			</section>
@@ -160,17 +159,18 @@ EHLO yourcompany.org
 
 
 			<section data-auto-animate data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
-				<h3><span data-id="stalwart">Stalwart Mail Server</span></h3>
-				<p><span data-id="text">Secure and Modern All-in-One Mail Server</span></p>
+				<h3><span data-id="stalwart">Stalwart</span></h3>
+				<p><span data-id="text">All-in-One Mail & Collaboration Server</span></p>
 			</section>
 
 			<section style="text-align: left;" data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)"
 				data-auto-animate>
-				<h4><span data-id="stalwart">Stalwart Mail Server</span></h4>
-				<small data-id="text"><span data-id="text">Secure and Modern All-in-One Mail Server</span>
+				<h4><span data-id="stalwart">Stalwart</span></h4>
+				<small data-id="text"><span data-id="text">All-in-One Mail & Collaboration</span>
 					featuring:</small>
 				<ul style="font-size: 0.8em;">
 					<li class="fragment custom blur">SMTP, JMAP, IMAP4, POP3 and ManageSieve server</li>
+					<li class="fragment custom blur">CalDAV, CardDAV and WebDAV server</li>
 					<li class="fragment custom blur">Built-in spam and phishing filter</li>
 					<li class="fragment custom blur">Web-based administration</li>
 					<li class="fragment custom blur">Scalable & Robust</li>
@@ -181,8 +181,8 @@ EHLO yourcompany.org
 			</section>
 
 			<section data-auto-animate data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
-				<h4><span data-id="stalwart">Stalwart Mail Server</span></h4>
-				<small data-id="text">A streamlined, all-in-one mail server that’s ready in
+				<h4><span data-id="stalwart">Stalwart</span></h4>
+				<small data-id="text">A streamlined, all-in-one mail & collaboration server that’s ready in
 					minutes.</small>
 				<pre data-id="code-animation2"><code class="sh" data-trim style="font-size: 0.8em;"><script type="text/template">
 $ curl --proto '=https' --tlsv1.2 -sSf https://get.stalw.art/install.sh -o install.sh</script>
@@ -190,23 +190,23 @@ $ curl --proto '=https' --tlsv1.2 -sSf https://get.stalw.art/install.sh -o insta
 			</section>
 
 			<section data-auto-animate data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
-				<h4><span data-id="stalwart">Stalwart Mail Server</span></h4>
-				<small data-id="text">A streamlined, all-in-one mail server that’s ready in
+				<h4><span data-id="stalwart">Stalwart</span></h4>
+				<small data-id="text">A streamlined, all-in-one mail & collaboration server that’s ready in
 					minutes.</small>
 				<pre data-id="code-animation2"><code class="sh" data-trim style="font-size: 0.8em;"><script type="text/template">
 $ curl --proto '=https' --tlsv1.2 -sSf https://get.stalw.art/install.sh -o install.sh
-$ sudo sh install.sh /opt/stalwart-mail
+$ sudo sh install.sh /opt/stalwart
 </script></code></pre>
 			</section>
 
 			<section data-auto-animate data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
-				<h4><span data-id="stalwart">Stalwart Mail Server</span></h4>
-				<small data-id="text">A streamlined, all-in-one mail server that’s ready in
+				<h4><span data-id="stalwart">Stalwart</span></h4>
+				<small data-id="text">A streamlined, all-in-one mail & collaboration server that’s ready in
 					minutes.</small>
 				<pre data-id="code-animation2"><code class="sh" data-trim style="font-size: 0.8em;"><script type="text/template">
 $ curl --proto '=https' --tlsv1.2 -sSf https://get.stalw.art/install.sh -o install.sh
-$ sudo sh install.sh /opt/stalwart-mail
-✅ Configuration file written to /opt/stalwart-mail/etc/config.toml
+$ sudo sh install.sh /opt/stalwart
+✅ Configuration file written to /opt/stalwart/etc/config.toml
 🔑 Your administrator account is 'admin' with password 'w95Yuiu36E'.
 🔐 Setting permissions...
 🚀 Starting service...
@@ -215,8 +215,8 @@ $ sudo sh install.sh /opt/stalwart-mail
 			</section>
 
 			<section data-auto-animate data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
-				<h4><span data-id="stalwart">Stalwart Mail Server</span></h4>
-				<small data-id="text">A streamlined, all-in-one mail server that’s ready in
+				<h4><span data-id="stalwart">Stalwart</span></h4>
+				<small data-id="text">A streamlined, all-in-one mail & collaboration server that’s ready in
 					minutes.</small>
 				<img src="img/s_install.gif" class="slide-image" />
 			</section>
@@ -236,7 +236,7 @@ $ sudo sh install.sh /opt/stalwart-mail
 					<li class="fragment custom blur">JMAP for WebSocket (<em>RFC 8887</em>)</li>
 					<li class="fragment custom blur">JMAP Blob Management (<em>RFC 9404</em>)</li>
 					<li class="fragment custom blur">JMAP for Quotas (<em>RFC 9425</em>)</li>
-					<li class="fragment custom blur">JMAP for Calendars and Contacts (<em>coming Q2 2025</em>)</li>
+					<li class="fragment custom blur">JMAP for Calendars and Contacts (<em>coming Q3 2025</em>)</li>
 				</ul>
 			</section>
 
@@ -261,7 +261,6 @@ $ sudo sh install.sh /opt/stalwart-mail
 					<li class="fragment custom blur">POP3 extensions including SASL and TLS</li>
 					<li class="fragment custom blur">ManageSieve (<em>RFC 5804</em>) for remotely managing Sieve
 						scripts</li>
-					<li class="fragment custom blur">CalDAV and CardDAV (<em>coming Q4 2025</em>)</li>
 				</ul>
 			</section>
 
@@ -345,6 +344,61 @@ $ sudo sh install.sh /opt/stalwart-mail
 			<section data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
 				<h4>Message Delivery History</h4>
 				<img src="img/s_history.gif" class="slide-image" />
+			</section>
+
+			<section data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h3>Collaboration Server</h3>
+				<p>Built-in support for calendars, contacts and file storage.</p>
+			</section>
+
+			<section style="text-align: left;" data-auto-animate
+				data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h4>Calendars</h4>
+				<small>Seamless scheduling for teams and individuals</small>
+				<ul style="font-size: 0.8em;">
+					<li class="fragment custom blur">CalDAV support</li>
+					<li class="fragment custom blur">JMAP for Calendars support (<em>coming Q3 2025</em>)</li>
+					<li class="fragment custom blur">Event scheduling</li>
+					<li class="fragment custom blur">Alerts and notifications via email</li>
+					<li class="fragment custom blur">Integrated free/busy availability</li>
+					<li class="fragment custom blur">Support for group and shared calendars</li>
+				</ul>
+			</section>
+
+			<section style="text-align: left;" data-auto-animate
+				data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h4>Contacts</h4>
+				<small>Manage, share, and sync your contacts</small>
+				<ul style="font-size: 0.8em;">
+					<li class="fragment custom blur">CardDAV support</li>
+					<li class="fragment custom blur">JMAP for Contacts support (<em>coming Q3 2025</em>)</li>
+					<li class="fragment custom blur">Support for group and shared address books</li>
+				</ul>
+			</section>
+
+			<section style="text-align: left;" data-auto-animate
+				data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h4>File Storage</h4>
+				<small>Secure, centralized access to your documents</small>
+				<ul style="font-size: 0.8em;">
+					<li class="fragment custom blur">WebDAV support</li>
+					<li class="fragment custom blur">JMAP for File Storage support (<em>coming Q3 2025</em>)</li>
+					<li class="fragment custom blur">Support for user, group and shared file spaces</li>
+					<li class="fragment custom blur">Secure file sharing with fine-grained permissions</li>
+				</ul>
+			</section>
+
+			<section style="text-align: left;" data-auto-animate
+				data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h4>Sharing</h4>
+				<small>Granular sharing control over calendars, contacts, and files</small>
+				<ul style="font-size: 0.8em;">
+					<li class="fragment custom blur">Support for user, group, and shared resources</li>
+					<li class="fragment custom blur">Share calendars, address books, and file spaces</li>
+					<li class="fragment custom blur">Fine-grained permission control for read, write, and manage access
+					</li>
+					<li class="fragment custom blur">Based on WebDAV ACL and JMAP for Sharing standards</li>
+				</ul>
 			</section>
 
 			<section data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
@@ -530,11 +584,12 @@ condition = [ { if = "contains_ignore_case(['re', 'aw', 'antw', 'sv'],
 					<li class="fragment custom blur">Seamless load balancing and high availability for millions of
 						mailboxes
 					</li>
-					<li class="fragment custom blur">Coordinator-free architecture with automatic node discovery
+					<li class="fragment custom blur">Peer-to-peer cluster coordination or via Kafka, NATS or Redis
 					</li>
 					<li class="fragment custom blur">Recovers from failures with minimal operational impact</li>
 					<li class="fragment custom blur">Partition-tolerant failure detection</li>
-					<li class="fragment custom blur">Kubernetes support for automated scaling</li>
+					<li class="fragment custom blur">Kubernetes, Apache Mesos and Docker Swarm support for automated
+						scaling</li>
 					<li class="fragment custom blur">Read replicas and sharded storage backends <sup>*</sup></li>
 				</ul>
 			</section>

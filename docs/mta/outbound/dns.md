@@ -16,6 +16,7 @@ The DNS resolver is configured with the following attributes, which are availabl
 - `timeout`: The time after which a resolution request will be timed out if no response is received.
 - `attempts`: The number of times a resolution request will be retried before it is considered failed.
 - `try-tcp-on-error`: Whether to try using TCP for resolution requests if an error occurs during a UDP resolution request.
+- `edns`: Whether to use EDNS (Extension mechanisms for DNS) for resolution requests. This is enabled by default and is required for some DNS features, such as DNSSEC.
 
 The supported DNS resolver types for the `resolver.type` value are:
 
@@ -46,4 +47,5 @@ concurrency = 2
 timeout = "5s"
 attempts = 2
 try-tcp-on-error = true
+edns = true
 ```
