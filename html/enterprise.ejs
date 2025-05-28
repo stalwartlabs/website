@@ -17,6 +17,15 @@
         <link rel="stylesheet" type="text/css" href="/fonts/unicons/unicons.css">
         <link rel="stylesheet" href="/css/plugins.css">
         <link rel="stylesheet" href="/css/style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rangeslider.js/2.3.3/rangeslider.css"
+            integrity="sha512-FkNnPJevAkIHB3NqUiMadWNcoMcOCPQUMyF55JeAFZmPcSR6wK6TgZ0qL6bMrRqGNaaVS8CAwBYceORhdTUILQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+            integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/rangeslider.js/2.3.3/rangeslider.js"
+            integrity="sha512-kto5vajVp7FrqTvPDaiIIo2k5lt/xoEyi0LTLzujAtdLQKvLCaxRZ2/qJVW2Fc5UeTr6lVlNs8yHupc5pzJUow=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 
 <body>
@@ -283,11 +292,12 @@
                         class="xl:w-6/12 lg:w-6/12 w-full flex-[0_0_auto] xl:px-[35px] lg:px-[20px] md:px-[20px] px-[15px] max-w-full mt-[80px]">
                         <h2
                             class="text-[0.8rem] !tracking-[0.02rem] !leading-[1.35] uppercase text-gradient gradient-1 !mb-3">
-                            Priority support</h2>
+                            Priority support (*)</h2>
                         <h3
                             class="xl:text-[1.9rem] text-[calc(1.315rem_+_0.78vw)] font-semibold !leading-[1.25] tracking-[normal] mb-4">
                             Expert assistance for enterprise needs.</h3>
-                        <p class="!mb-6">Stalwart Enterprise provides your organization with comprehensive professional
+                        <p class="!mb-6">Stalwart Enterprise provides your
+                            organization with comprehensive professional
                             support,
                             ensuring that your needs are met with the highest priority. This ensures that your team can
                             quickly
@@ -301,8 +311,14 @@
                             future
                             developments. This level of support and engagement ensures that Stalwart Enterprise is not
                             only a powerful
-                            email solution but also a responsive and evolving platform tailored to your business
-                            requirements.</p>
+                            email and collaboration solution but also a responsive and evolving platform tailored to
+                            your business
+                            requirements.
+
+                        </p>
+                        <p><small class="text-gray-500">(*) Priority support and bug-fixing are only available
+                                for deployments with 150 or more
+                                mailboxes.</small></p>
                         <!--/.row -->
                     </div>
                 </div>
@@ -348,8 +364,165 @@
             <!-- /.container -->
         </section>
 
+        <section class="wrapper !bg-[#edf2fc]" id="pricing">
+            <div class="container py-[4.5rem]">
+
+                <div class="card border-0 !bg-[rgba(255,255,255,.9)] opacity-900">
+                    <div class="card-body xl:!py-16 xl:!px-24 lg:!py-16 lg:!px-24 p-[40px]">
+                        <h2
+                            class="text-[calc(1.285rem_+_0.42vw)] font-bold xl:text-[1.6rem] leading-[1.3] mb-3 !text-center">
+                            Pricing</h2>
+                        <p class="lead text-[1rem] !text-center mb-10">Pricing is tiered and progressive,
+                            meaning different portions of your mailbox count are charged at different rates
+                            rather than a single flat rate.</p>
+
+                        <div class="card">
+                            <div class="card-body flex-[1_1_auto] p-[40px]">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Mailboxes</th>
+                                            <th scope="col">Price per year (EUR)</th>
+                                            <th scope="col">Price per year (USD)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">1 to 499</th>
+                                            <td>€2.00</td>
+                                            <td>$2.40</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">500 to 999</th>
+                                            <td>€1.70</td>
+                                            <td>$2.04</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">1,000 to 4,499</th>
+                                            <td>€1.45</td>
+                                            <td>$1.74</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">5,000 to 9,999</th>
+                                            <td>€1.23</td>
+                                            <td>$1.48</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">10,000+</th>
+                                            <td><a href="/contact">Request quote</a></td>
+                                            <td><a href="/contact">Request quote</a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+                            <!-- /form -->
+                        </div>
+                        <!--/.card-body -->
+                        <div class="pt-10 w-full max-w-xl mx-auto"><input type="range" min="25" max="10000" step="5"
+                                value="25" data-rangeslider><br />
+                            <h1 class="!text-center">
+                                <output id="price"></output>
+                            </h1>
+                            <p class="!text-center">
+                                <output id="mailboxes"></output>
+                                <br />
+                                <small class="!text-center">
+                                    <output id="support"></output>
+                                </small>
+                            </p>
+
+                        </div>
+
+                    </div>
+                    <!--/.card -->
+                </div>
+
+                <!-- /.row -->
+            </div>
+            <!-- /.container -->
+        </section>
+
+        <section class="wrapper pb-10"> </section>
+
+
         <!-- /section -->
     </div>
+    <script>
+
+        function calculateTieredPrice(mailboxCount) {
+            // Define pricing tiers: [maxCountInTier, pricePerUnit]
+            const tiers = [
+                [499, 2.00],   // Tier 1: 1-499 at €2.00
+                [500, 1.70],   // Tier 2: 500-999 at €1.70
+                [4000, 1.45],  // Tier 3: 1000-4999 at €1.45
+                [5001, 1.23]   // Tier 4: 5000-10000 at €1.23
+            ];
+
+            let totalPrice = 0;
+            let remaining = mailboxCount;
+
+            for (const [tierCapacity, pricePerUnit] of tiers) {
+                if (remaining <= 0) break;
+
+                const tierCount = Math.min(remaining, tierCapacity);
+                totalPrice += tierCount * pricePerUnit;
+                remaining -= tierCount;
+            }
+
+            return parseFloat(totalPrice.toFixed(2));
+        }
+
+        function formatEuro(amount) {
+            const rounded = Math.round(amount * 100) / 100;
+            const formatted = rounded.toFixed(2);
+            const parts = formatted.split('.');
+            parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+            return '€' + parts.join(',');
+        }
+
+        function formatUSD(amount) {
+            const rounded = Math.round(amount * 100) / 100;
+            const formatted = rounded.toFixed(2);
+            const parts = formatted.split('.');
+            parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            return '$' + parts.join('.');
+        }
+
+        function formatInteger(number) {
+            return Math.floor(number).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        }
+
+        $(function () {
+            var $document = $(document);
+            var selector = '[data-rangeslider]';
+            var $inputRange = $(selector);
+            function valueOutput(element) {
+                var value = element.value;
+                var price = calculateTieredPrice(value);
+                document.getElementById('price').innerHTML = formatEuro(calculateTieredPrice(value)) + " (or " + formatUSD((price * 1.2).toFixed(2)) + ")";
+                document.getElementById('mailboxes').innerHTML = "per year for <b>" + formatInteger(value) + "</b> mailboxes";
+                if (value < 150) {
+                    document.getElementById('support').innerHTML = "(add " + (150 - value) + " more mailboxes to get priority support)";
+                } else {
+                    document.getElementById('support').innerHTML = "(priority support included)";
+                }
+
+            } /** * Initial value output */
+            for (var i = $inputRange.length - 1; i >= 0; i--) {
+                valueOutput($inputRange[i]);
+            };
+            $document.on('input', selector, function (e) {
+                valueOutput(e.target);
+            });
+            $inputRange.rangeslider({
+                polyfill: false
+            });
+
+        });
+
+    </script>
     <!-- /.content-wrapper -->
     <%- include('include-footer.ejs', { cta: 'Upgrade to enterprise-level email' ,
         ctaSub: 'Reach out to us today for a personalized quote.' , ctaButton: 'Contact us' , ctaLink: '/contact' }) %>
