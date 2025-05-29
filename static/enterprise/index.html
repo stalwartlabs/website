@@ -55,6 +55,11 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/rangeslider.js/2.3.3/rangeslider.js"
             integrity="sha512-kto5vajVp7FrqTvPDaiIIo2k5lt/xoEyi0LTLzujAtdLQKvLCaxRZ2/qJVW2Fc5UeTr6lVlNs8yHupc5pzJUow=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <style>
+            .rangeslider__fill {
+                background: #e668b3 !important;
+            }
+        </style>
 </head>
 
 <body>
@@ -246,6 +251,8 @@
                             <li class="nav-item"><a class="dropdown-item hover:!text-[#605dba]"
                                     href="/contact">Contact</a>
                             </li>
+                            <li class="nav-item"><a class="dropdown-item hover:!text-[#605dba]" href="/legal">Legal</a>
+                            </li>
                         </ul>
 
                         <!--/.dropdown-menu -->
@@ -333,7 +340,7 @@
         <!-- /section -->
         <section
             class="wrapper !bg-[#ffffff]  angled upper-end !relative border-0 before:top-[-4rem] before:border-l-transparent before:border-r-[100vw] before:border-t-[4rem] before:border-[#fefefe] before:content-[''] before:block before:absolute before:z-0 before:!border-y-transparent before:border-0 before:border-solid before:right-0 after:top-[-4rem] after:border-l-transparent after:border-r-[100vw] after:border-t-[4rem] after:border-[#fefefe] after:content-[''] after:block after:absolute after:z-0 after:!border-y-transparent after:border-0 after:border-solid after:right-0">
-            <div class="container !pb-[4.5rem] xl:!pb-24 lg:!pb-24 md:!pb-24">
+            <div class="container">
 
 
                 <div
@@ -639,87 +646,105 @@
             <!-- /.container -->
         </section>
 
-        <section class="wrapper !bg-[#edf2fc]" id="pricing">
-            <div class="container py-[4.5rem]">
+        <section id="pricing" class="wrapper !bg-[#ffffff]">
+            <div class="container">
+                <div class="card !bg-[#fdf1f8] mb-10">
+                    <div class="card-body p-14">
+                        <div class="flex flex-wrap mx-[-15px] mt-[-50px] items-center">
+                            <div
+                                class="xl:w-4/12 lg:w-4/12 w-full flex-[0_0_auto] px-[15px] max-w-full xl:!order-2 xl:!ml-[8.33333333%] lg:!order-2 lg:!ml-[8.33333333%] mt-[50px]">
+                                <h3 class="h1 post-title !mb-3 !leading-[1.3]">Pricing</h3>
+                                <p> Pricing is tiered and progressive, meaning different portions of your mailbox count
+                                    are charged at different rates rather than a single flat rate.</p>
+                                <ul class="pl-0 list-none bullet-grape flex flex-wrap mx-[-15px] ml-0 mt-[-10px]">
+                                    <li class="w-full flex-[0_0_auto] px-[15px] max-w-full relative pl-5 mt-[10px]">
+                                        <span><i
+                                                class="uil uil-check before:content-['\e9dd'] absolute top-[-0.2rem] text-[1rem] text-[#e668b3] left-0"></i></span><span><b>Premium
+                                                support</b> included in 150+ mailbox deployments.</span>
+                                    </li>
+                                    <li class="w-full flex-[0_0_auto] px-[15px] max-w-full relative pl-5 mt-[10px]">
+                                        <span><i
+                                                class="uil uil-check before:content-['\e9dd'] absolute top-[-0.2rem] text-[1rem] text-[#e668b3] left-0"></i></span><span>Only
+                                            <b>active mailboxes</b> are charged.</span>
+                                    </li>
+                                    <li class="w-full flex-[0_0_auto] px-[15px] max-w-full relative pl-5 mt-[10px]">
+                                        <span><i
+                                                class="uil uil-check before:content-['\e9dd'] absolute top-[-0.2rem] text-[1rem] text-[#e668b3] left-0"></i></span><span>Includes
+                                            <b>unlimited</b> domains, tenants, groups, lists and aliases.</span>
+                                    </li>
+                                    <li class="w-full flex-[0_0_auto] px-[15px] max-w-full relative pl-5 mt-[10px]">
+                                        <span><i
+                                                class="uil uil-check before:content-['\e9dd'] absolute top-[-0.2rem] text-[1rem] text-[#e668b3] left-0"></i></span><span>Bulk
+                                            <b>discounts</b> available for large deployments.</span>
+                                    </li>
+                                </ul>
+                                <a href="https://license.stalw.art/buy" target="_blank"
+                                    class="btn btn-sm btn-fuchsia text-white !bg-[#e668b3] border-[#e668b3] hover:text-white hover:bg-[#e668b3] hover:border-[#e668b3] focus:shadow-[rgba(92,140,229,1)] active:text-white active:bg-[#e668b3] active:border-[#e668b3] disabled:text-white disabled:bg-[#e668b3] disabled:border-[#e668b3] !rounded-[50rem] mt-1">Purchase</a>
 
-                <div class="card border-0 !bg-[rgba(255,255,255,.9)] opacity-900">
-                    <div class="card-body xl:!py-16 xl:!px-24 lg:!py-16 lg:!px-24 p-[40px]">
-                        <h2
-                            class="text-[calc(1.285rem_+_0.42vw)] font-bold xl:text-[1.6rem] leading-[1.3] mb-3 !text-center">
-                            Pricing</h2>
-                        <p class="lead text-[1rem] !text-center mb-10">Pricing is tiered and progressive,
-                            meaning different portions of your mailbox count are charged at different rates
-                            rather than a single flat rate.</p>
-
-                        <div class="card">
-                            <div class="card-body flex-[1_1_auto] p-[40px]">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">Mailboxes</th>
-                                            <th scope="col">Price per year (EUR)</th>
-                                            <th scope="col">Price per year (USD)</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <th scope="row">1 to 499</th>
-                                            <td>€2.00</td>
-                                            <td>$2.40</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">500 to 999</th>
-                                            <td>€1.70</td>
-                                            <td>$2.04</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">1,000 to 4,499</th>
-                                            <td>€1.45</td>
-                                            <td>$1.74</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">5,000 to 9,999</th>
-                                            <td>€1.23</td>
-                                            <td>$1.48</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">10,000+</th>
-                                            <td><a href="/contact">Request quote</a></td>
-                                            <td><a href="/contact">Request quote</a></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
                             </div>
+                            <!-- /column -->
+                            <div class="xl:w-7/12 lg:w-7/12 w-full flex-[0_0_auto] px-[15px] max-w-full mt-[50px]">
+                                <div class="card">
+                                    <div class="card-body flex-[1_1_auto] p-[40px]">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Mailboxes</th>
+                                                    <th scope="col">Price per year</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row">25 to 500</th>
+                                                    <td>€2.00 / $2.40</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">501 to 1,000</th>
+                                                    <td>€1.70 / $2.04</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">1,001 to 5,000</th>
+                                                    <td>€1.45 / $1.74</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">5,001 to 10,000</th>
+                                                    <td>€1.23 / $1.48</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">10,000+</th>
+                                                    <td><a href="/contact"
+                                                            class="more hover text-[#a07cc5] focus:text-[#a07cc5] hover:text-[#a07cc5]">Request
+                                                            Quote</a></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
 
+                                        <div class="pt-10 w-full max-w-xl mx-auto"><input type="range" min="25"
+                                                max="10000" step="5" value="25" data-rangeslider><br />
+                                            <h1 class="!text-center">
+                                                <output id="price"></output>
+                                            </h1>
+                                            <p class="!text-center">
+                                                <output id="mailboxes"></output>
+                                                <br />
+                                                <small class="!text-center">
+                                                    <output id="support"></output>
+                                                </small>
+                                            </p>
 
-                            <!-- /form -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /column -->
                         </div>
-                        <!--/.card-body -->
-                        <div class="pt-10 w-full max-w-xl mx-auto"><input type="range" min="25" max="10000" step="5"
-                                value="25" data-rangeslider><br />
-                            <h1 class="!text-center">
-                                <output id="price"></output>
-                            </h1>
-                            <p class="!text-center">
-                                <output id="mailboxes"></output>
-                                <br />
-                                <small class="!text-center">
-                                    <output id="support"></output>
-                                </small>
-                            </p>
-
-                        </div>
-
+                        <!-- /.row -->
                     </div>
-                    <!--/.card -->
+                    <!--/.card-body -->
                 </div>
-
-                <!-- /.row -->
             </div>
-            <!-- /.container -->
         </section>
 
-        <section class="wrapper pb-10"> </section>
 
 
         <!-- /section -->
@@ -729,10 +754,11 @@
         function calculateTieredPrice(mailboxCount) {
             // Define pricing tiers: [maxCountInTier, pricePerUnit]
             const tiers = [
-                [499, 2.00],   // Tier 1: 1-499 at €2.00
+                [500, 2.00],   // Tier 1: 1-499 at €2.00
                 [500, 1.70],   // Tier 2: 500-999 at €1.70
                 [4000, 1.45],  // Tier 3: 1000-4999 at €1.45
-                [5001, 1.23]   // Tier 4: 5000-10000 at €1.23
+                [5000, 1.23],  // Tier 4: 5000-9999 at €1.23
+                [40000, 1.04]  // Tier 5: 10000+ at €1.04
             ];
 
             let totalPrice = 0;
@@ -909,6 +935,8 @@
                         </li>
                         <li class="mt-[0.35rem]"><a class="text-[#60697b] hover:text-[#605dba]"
                                 href="/contact">Contact</a></li>
+                        <li class="mt-[0.35rem]"><a class="text-[#60697b] hover:text-[#605dba]" href="/legal">Legal</a>
+                        </li>
                     </ul>
 
                     <!-- /.newsletter-wrapper -->
@@ -931,14 +959,6 @@
 </div>
 <script src="/js/plugins.js"></script>
 <script src="/js/theme.js"></script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-NTKTV3G55G"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-
-    gtag('config', 'G-NTKTV3G55G');
-</script>
 </body>
 
 </html>
