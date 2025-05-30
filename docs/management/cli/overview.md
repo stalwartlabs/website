@@ -21,13 +21,13 @@ The Stalwart CLI expects two required arguments:
 For example, to force a purge of all expired blobs:
 
 ```bash
-$ stalwart-cli -u https://127.0.0.1:9990 -c MySecretPass database purge
+$ stalwart-cli -u https://127.0.0.1:443 -c MySecretPass database purge
 ```
 
 Or, using environment variables:
 
 ```bash
-$ export URL=https://127.0.0.1:9990
+$ export URL=https://127.0.0.1:443
 $ export CREDENTIALS=MySecretPass
 $ stalwart-cli database purge
 ```
