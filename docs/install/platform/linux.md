@@ -77,7 +77,7 @@ Stalwart requires a valid TLS certificate to secure the connection between the s
 Once you have completed the setup instructions, restart Stalwart:
 
 ```bash
-$ sudo systemctl restart stalwart
+$ sudo systemctl restart stalwart-mail
 ```
 
 Or, if you are using MacOS:
