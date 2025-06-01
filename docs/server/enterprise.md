@@ -35,6 +35,12 @@ For example:
 license-key = "<LICENSE_KEY>"
 ```
 
+### Reload and re-login
+
+After you have added the license key, you need to [reload the configuration](https://stalw.art/docs/management/cli/config/#configuration-1).
+
+You must then logout and re-login to be able to use the enterprise features.
+
 ## Automatic renewals
 
 Since Enterprise licenses are time-bound, they have a predefined expiration date. Once expired, the Enterprise features will no longer be accessible until the license is renewed. To streamline this renewal process and avoid service interruptions, Stalwart Labs offers an **automatic renewal API**. This API is used to automatically renew the license a few days before it expires, ensuring uninterrupted access to Enterprise functionalities.
