@@ -4,15 +4,18 @@ sidebar_position: 4
 
 # LDAP Server
 
-Stalwart supports retrieving account information from an LDAP directory such as OpenLDAP or Active Directory. This allows you to leverage an existing LDAP directory to handle tasks such as authentication, validating local accounts, and retrieving account-related information.
+LDAP (Lightweight Directory Access Protocol) is an open, vendor-neutral protocol used to access and manage directory information services. It is commonly employed to centralize user authentication and authorization data across multiple systems and applications. LDAP directories, such as OpenLDAP, Microsoft Active Directory, and others, store user credentials and metadata in a structured, hierarchical format that can be queried efficiently.
+
+Stalwart supports integration with LDAP directories for user authentication. By configuring Stalwart to use an LDAP backend, administrators can leverage existing directory infrastructure to manage user accounts, passwords, and group policies centrally. This allows seamless authentication using credentials stored in the LDAP directory, improving security, simplifying user management, and enabling single sign-on (SSO) capabilities in enterprise environments. Stalwart is compatible with a wide range of LDAP-compliant servers, including OpenLDAP, Active Directory, and other RFC 4511-conforming implementations.
 
 ## Connection details
 
-The connection details for the LDAP directory are specified under the `directory.<name>` key in the configuration file with the following attributes:
+To enable LDAP authentication in Stalwart, the core requirement is specifying the LDAP server URL. This URL defines how and where the server connects to the directory service. A basic example would be `ldap://localhost:3893`, which instructs Stalwart to connect to an LDAP server running on localhost using the standard non-encrypted LDAP protocol on port 3893.
+
+All connection details for the LDAP directory are specified under the `directory.<name>` key in the configuration file with the following attributes:
 
 - `type`: Indicates the type of directory, which has to be set to `"ldap"`.
 - `url`: The URL of the LDAP server.
-- `base-dn`: The base distinguished name (DN) from where searches should begin.
 - `tls.enable`: Whether to use `STARTTLS` to encrypt the connection. This is disabled by default.
 - `tls.allow-invalid-certs`: Whether to allow self-signed certificates. This is disabled by default.
 - `timeout`: The timeout for LDAP operations. This is set to 30 seconds by default.
@@ -23,7 +26,6 @@ For example,
 [directory."ldap"]
 type = "ldap"
 url = "ldap://localhost:3893"
-base-dn = "dc=example,dc=org"
 timeout = "30s"
 
 [directory."ldap".tls]
@@ -31,18 +33,14 @@ enable = false
 allow-invalid-certs = false
 ```
 
-## Binding
+## Default Bind Credentials
 
-The process of "binding" is essentially the LDAP way of logging in. It involves verifying the credentials (usually a distinguished name and a password) of a user or application trying to access the LDAP server.
-
-### Bind Credentials
+In LDAP, **binding** is the process of authenticating to the directory server. It establishes the identity under which queries and operations will be performed. To authenticate and perform searches against the LDAP directory, Stalwart typically needs to bind using a valid account, specified by a Bind DN (Distinguished Name) and a corresponding secret (password). These credentials allow Stalwart to connect to the directory with sufficient privileges to search for and validate user entries during the authentication process.
 
 Bind credentials can be specified under the `directory.<name>.bind` key in the configuration file using the following attributes:
 
 - `dn`: The distinguished name of the user account that the server will bind as to connect to the LDAP directory.
 - `secret`: The password associated with the DN account. Can also be specified using an [environment variable](/docs/configuration/macros).
-
-If no bind credentials are specified, the server will attempt to connect anonymously.
 
 For example,
 
@@ -52,42 +50,123 @@ dn = "cn=admin,dc=example,dc=org"
 secret = "password"
 ```
 
-### Bind Authentication
+If **no bind credentials are provided**, the server will attempt to connect and perform operations anonymously. While some LDAP directories allow anonymous access for basic queries, many are configured to require authentication for security reasons. In such cases, failing to provide bind credentials may result in failed authentication attempts or limited visibility into the directory structure.
 
-Bind authentication is a method of verifying user credentials by binding to the LDAP server using the provided credentials. It can be configured under the `directory.<name>.bind.auth` key in the configuration file using the following attributes:
+:::tip Note
 
-- `enable`: A boolean setting that enables (`true`) or disables (`false`) bind authentication. When set to `false`, bind authentication is not used for verifying credentials with the LDAP server.
-- `dn`: The distinguished name (DN) template used for binding to the LDAP server. The `?` in the DN template is a placeholder that will be replaced with the username provided during the login process.
-- `search`: Use the bind authentication connection to search for the user's DN. When set to `false`, a new connection to the LDAP server is established using the bind credentials (`directory.<name>.bind.dn`) to search for the user's DN. When set to `true`, the bind authentication connection is used to search for the user's DN.
+Even if bind authentication is enabled, the server still requires a default bind DN to connect to the LDAP server in order to perform other operations such as retrieving account information or validating e-mail addresses and domains.
 
-For example,
+:::
+
+## Authentication Methods
+
+Stalwart offers multiple methods for authenticating users against an LDAP directory, providing flexibility to accommodate different directory configurations and security policies.
+
+In some LDAP environments—particularly with directories like Microsoft Active Directory or hardened OpenLDAP setups, **password hashes are not retrievable via queries**, even when using privileged bind credentials. This limitation makes it impossible for Stalwart to validate user credentials by comparing password hashes directly. In such cases, the only viable method for authentication is **bind authentication**, where the server attempts to log in (bind) as the user using the credentials provided during the login process. If the bind succeeds, the user is considered authenticated.
+
+Stalwart supports three authentication methods when integrating with an LDAP server:
+
+- The **default** method relies on the [default bind credentials](#default-bind-credentials) to search for the user and retrieve their password hash, which Stalwart then compares against the user-supplied password. This approach only works if the LDAP server exposes [password hashes in a format supported by Stalwart](/docs/auth/authentication/password).
+- The **template** method performs bind authentication by constructing the user’s Distinguished Name (DN) from a template string, such as `cn={username},dc=example,dc=com`. The server attempts to bind directly using the resulting DN and the password supplied by the user.
+- The **lookup** method also uses bind authentication, but instead of relying on a static DN template, it first performs a search query (using the [default bind credentials](#default-bind-credentials)) to locate the user's DN dynamically. Once the DN is found, Stalwart attempts to bind as that user using their provided password.
+
+These authentication methods give administrators the flexibility to work with a wide variety of LDAP directory configurations, whether or not password hashes are accessible.
+
+### Bind with default credentials
+
+The **default** authentication method uses the configured **default bind credentials** to connect to the LDAP server and retrieve user entries. Once connected, Stalwart searches for the user based on the login input, retrieves the user’s password hash from the directory, and compares it against the password provided during login.
+
+To enable this method, set the `bind.auth.method` configuration option to `default` in the `directory.<name>` section of the configuration file. Additionally, you must specify the name of the [LDAP attribute](#object-attributes) that holds the user’s password hash using the `attributes.secret` setting.
+
+Example:
 
 ```toml
 [directory."ldap".bind.auth]
-enable = false
-dn = "cn=?,ou=svcaccts,dc=example,dc=org"
+method = "default"
+
+[directory."ldap".attributes]
+secret = "userPassword"
+```
+
+This instructs Stalwart to authenticate users by retrieving the `userPassword` attribute in the user’s LDAP entry and use its value for hash comparison. The attribute must contain the hash in a format supported by Stalwart (such as SSHA, SHA, MD5, etc.).
+
+:::tip Note
+
+This method is only suitable if the LDAP server allows access to password hashes and exposes them in a supported format. If the directory does not permit this—for example, in many Active Directory environments—bind authentication should be used instead.
+
+:::
+
+### Bind authentication with template
+
+**Bind authentication** is a method where the server attempts to authenticate users by binding to the LDAP directory as the user themselves. Instead of retrieving and comparing password hashes, Stalwart uses the credentials entered during login to perform a bind operation. If the LDAP server accepts the bind, the user is successfully authenticated.
+
+To enable this method, set the `bind.auth.method` configuration option to `template` in the `directory.<name>` section of the configuration file. The following additional attributes are available when configuring bind authentication with a template:
+
+- `template`: The distinguished name (DN) template used for binding to the LDAP server. 
+- `search`: Use the bind authentication connection to search for the user's DN. When set to `false`, a new connection to the LDAP server is established using the bind credentials (`directory.<name>.bind.dn`) to search for the user's DN. When set to `true`, the bind authentication connection is used to search for the user's DN.
+
+Example:
+
+```toml
+[directory."ldap".bind.auth]
+method = "template"
+dn = "cn={local},ou=svcaccts,dc={domain}"
 search = true
+
+[directory."ldap".attributes]
+secret-changed = "pwdChangedTime"
+```
+
+The user's **Distinguished Name (DN)** is constructed dynamically using a template string defined in the `bind.auth.template` setting. This template allows you to specify how the DN should be formatted based on the username provided during login. The template supports the following placeholders:
+
+* `{username}`: Replaced with the full username entered at login.
+* `{local}`: If the username is an email address, this is replaced with the local part (before the `@`).
+* `{domain}`: If the username is an email address, this is replaced with the domain part (after the `@`).
+
+For example, if the login username is `john.doe@example.com`, `{local}` becomes `john.doe` and `{domain}` becomes `example.com`.
+
+:::tip Note
+
+Since password hashes are not available in bind authentication, Stalwart cannot detect password changes based on stored credentials in order to invalidate existing OAuth tokens. Therefore, it is essential to configure the `secret-changed` attribute to track password changes. This attribute should contain a value that changes whenever the user's password is updated, such as a timestamp or version hash. This allows Stalwart to recognize when a password has changed, even without access to the hash.
+
+:::
+
+### Bind authentication with lookup
+
+**Bind authentication** is a method where the server attempts to authenticate users by binding to the LDAP directory as the user themselves. Instead of retrieving and comparing password hashes, Stalwart uses the credentials entered during login to perform a bind operation. If the LDAP server accepts the bind, the user is successfully authenticated.
+
+The **bind authentication with lookup** method is designed for more complex or dynamic LDAP environments where the user's **Distinguished Name (DN)** cannot be reliably constructed using a [static template](#bind-authentication-with-template). This is often the case in large directory structures with nested organizational units or non-standard naming conventions.
+
+In this method, Stalwart first performs an **LDAP search query** using the [default bind credentials](#default-bind-credentials) to locate the user's DN based on the login input. Once the DN is retrieved, Stalwart attempts to **bind as that user** using the password provided during login. If the bind succeeds, the user is authenticated.
+
+To enable this method, set the `bind.auth.method` configuration option to `lookup` in the `directory.<name>` section of the configuration file.
+
+Example:
+
+```toml
+[directory."ldap".bind.auth]
+method = "lookup"
+
+[directory."ldap".attributes]
+secret-changed = "pwdChangedTime"
 ```
 
 :::tip Note
 
-Even if bind authentication is enabled, the server still requires the `directory.<name>.bind` credentials to connect to the LDAP server in order to perform other operations such as retrieving account information or validating e-mail addresses and domains.
+Since password hashes are not available in bind authentication, Stalwart cannot detect password changes based on stored credentials in order to invalidate existing OAuth tokens. Therefore, it is essential to configure the `secret-changed` attribute to track password changes. This attribute should contain a value that changes whenever the user's password is updated, such as a timestamp or version hash. This allows Stalwart to recognize when a password has changed, even without access to the hash.
 
 :::
 
-### Limitations Regarding Password Hashes
+## Lookup filters
 
-When integrating LDAP servers with Stalwart, one key consideration is the availability of password hashes. In many LDAP implementations, the LDAP server does not expose the account password hashes to connected applications or services. This limitation has specific implications for certain authentication mechanisms in Stalwart, particularly regarding OAuth support and challenge-response SASL authentication methods like SCRAM (Salted Challenge Response Authentication Mechanism).
+**Lookup filters** are used to perform search queries against the LDAP directory. These filters determine how user entries are located based on either login credentials or email addresses. Stalwart uses two specific filters for LDAP lookups: `name` and `email`:
 
-- **Impact on OAuth Support**: [OAuth](/docs/auth/oauth/overview) is an open standard for access delegation commonly used as a way for users to grant websites or applications access to their information on other websites without giving them the passwords.  For OAuth to function correctly, the server needs to validate whether the current password of a user account has been revoked. This process typically involves comparing stored password hashes. If the LDAP server does not provide access to password hashes, Stalwart cannot perform this validation. As a result, OAuth support will be disabled. This is because, without access to password hashes, there is no reliable method for the server to ascertain the current validity of an OAuth token. One way to work around this limitation is to use the `secret-changed` attribute, which stores the last time the password was changed. This attribute can be used to determine if the password has been changed since the last login.
+- The **`name` filter** is used during the authentication process. When a user attempts to log in, Stalwart uses this filter to search the directory for the corresponding LDAP object based on the login name. Once the user’s DN is retrieved, it can be used for bind authentication or to access additional attributes.
+- The **`email` filter** is used during email delivery. Its purpose is to verify whether a given email address exists in the LDAP directory. This helps ensure that mail is only delivered to valid, known addresses within the system.
 
-- **Impact on challenge-response mechanisms**: Challenge-response authentication mechanism such as SCRAM enhances security by avoiding the transmission of password-equivalent data over the network. However, its implementation relies on access to password hashes. SCRAM requires the server to have access to stored password hashes to engage in the challenge-response process with the client. In scenarios where the LDAP server does not expose password hashes, mechanisms like SCRAM cannot be supported by Stalwart. This is because the server cannot perform the necessary hash-based computations for the SCRAM protocol without access to these hashes.
+Both filters are **template strings** that must include a single `?` character. At runtime, this placeholder is replaced by the appropriate value—either the username (for the `name` filter) or the email address (for the `email` filter).
 
-In summary, when integrating LDAP servers with Stalwart, the unavailability of password hashes from the LDAP server leads to specific limitations. It disables the use of OAuth, as the server cannot verify the current status of passwords, and it also renders challenge-response authentication methods like SCRAM unsupported, as these methods require direct access to password hashes. Understanding these limitations is crucial for administrators when configuring and managing authentication methods in Stalwart environments that rely on LDAP directories.
-
-## Lookup queries
-
-The `directory.<name>.filter` section contains the filters used to interact with the LDAP server. The following LDAP filters need to be defined in order to retrieve information about accounts:
+The following LDAP filters need to be defined under the `directory.<name>.filter` section in order to retrieve information about accounts:
 
 - `name`: This filter is used to search for objects based on the account name.
 - `email`: Searches for objects associated with a specific primary addresses or alias.
@@ -102,7 +181,20 @@ email = "(&(|(objectClass=posixAccount)(objectClass=posixGroup))(|(mail=?)(mailA
 
 The `?` character in the queries denotes a parameter that will be filled in at runtime.
 
+## Base DN
+
+In addition to the filters themselves, a **base DN (Distinguished Name)** must be defined under `directory.<name>.base-dn`. The base DN specifies the starting point in the LDAP directory tree from which the search should begin. It acts as the root context for the lookup and determines the scope of the query. For example, a base DN might target a specific organizational unit or domain subtree to limit the search area and improve performance.
+
+Example:
+
+```toml
+[directory."ldap"]
+base-dn = "dc=example,dc=org"
+```
+
 ## Object attributes
+
+To interact effectively with an LDAP directory, Stalwart needs to understand how user information is represented within that directory. Different LDAP servers may use different attribute names for storing common data such as usernames, email addresses, or group memberships. Therefore, Stalwart must be explicitly configured to map its internal attribute names to the corresponding LDAP attribute names used by your directory schema.
 
 The `directory.<name>.attributes` section is used to map the LDAP attributes to Stalwart's internal attributes. The following attributes need to be defined:
 
@@ -129,3 +221,5 @@ email = "mail"
 email-alias = "mailAlias"
 quota = "diskQuota"
 ```
+
+These mappings are essential for Stalwart to interpret and use LDAP directory data correctly. By configuring them according to your directory's schema, you ensure accurate user identification, group membership resolution, and email delivery handling.
