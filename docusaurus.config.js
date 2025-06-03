@@ -138,7 +138,7 @@ const config = {
               },
               {
                 label: 'Discord',
-                href: 'https://discord.gg/aVQr3jF8jd',
+                href: 'https://discord.com/servers/stalwart-923615863037390889',
               },
               {
                 label: 'Mastodon',
