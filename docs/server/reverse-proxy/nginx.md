@@ -53,3 +53,13 @@ stream {
     }
 }
 ```
+You'll need to stop Stalwart mail so that nginx can bind to the appropriate ports. Then restart ngxin with the Stream configuration and restart afterwards Stalwart.
+```
+systemctl stop nginx
+systemctl stop stalwart
+```
+Configuration happens here.
+```
+systemctl start nginx
+systemctl start stalwart
+```
