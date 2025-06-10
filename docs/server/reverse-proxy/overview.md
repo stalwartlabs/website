@@ -21,3 +21,11 @@ Secondly, enforcing limits on the number of connections or the volume of emails 
 Lastly, knowing whether the connection was encrypted via TLS can help in policy enforcement and logging, ensuring that sensitive data is transmitted securely. This information allows Stalwart to maintain high security standards and enforce policies that may depend on the encryption status of the connection.
 
 By leveraging the Proxy Protocol, you enhance the capability of Stalwart to accurately authenticate senders, enforce security policies, and maintain the integrity of your email communications. Configuring a reverse proxy with the Proxy Protocol for Stalwart not only optimizes performance and security but also ensures that the server has all necessary client connection details to function correctly and securely.
+
+## Ports and base url
+
+To have Stalwart working smoothly behind a proxy, you will need to adjust:
+
+1. the listener port(s), ie. remove the https listener and change the http port to 8080
+2. set up your proxy to listen to the ports (http 80, https 443...) and proxy to the new ports defined in Stalwart. Refer to each proxy for how to do it
+3. change the Base URL to *'https://' + config_get('server.hostname')* to let Stalwart use the public url (for instance for the JMAP server)
