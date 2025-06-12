@@ -10,9 +10,10 @@ Stalwart supports NGINX, enabling you to leverage NGINX’s capabilities to effi
 
 ## Configuration
 
-Ensure that NGINX is built with the `--with-stream` module, as the `stream` module is required to handle TCP traffic.
-If you're on Debian, or a Debian based system, use the 'nginx-full' package
-to ensure you have the stream module, called `libnginx-mod-stream`.
+Ensure that NGINX is built with the `--with-stream` module, as the
+`stream` module is required to handle TCP traffic.  If you're on
+Debian, or a Debian based system, use the 'nginx-full' package to
+ensure you have the stream module, called `libnginx-mod-stream`.
 
 ```txt
 # /etc/nginx/nginx.conf
