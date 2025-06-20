@@ -1,0 +1,26 @@
+---
+slug: roadmap
+title: "The Future of Stalwart: Webmail, Roadmap, and Beyond"
+authors: [mdecimus]
+tags: [webmail, roadmap, stalwart, jmap, imap, pop3, smtp, webdav, dioxus]
+---
+
+Since we officially started developing [Stalwart](https://github.com/stalwartlabs/stalwart) on September 4th, 2021, we've come a long way in establishing a powerful and versatile open-source mail and collaboration server. The very first commit, made on [October 3rd, 2021](https://github.com/stalwartlabs/mail-parser/commit/c5ed27bb12f6aa3e162827ebaad1e88ecb15abd8), was to the `mail-parser` Rust crate, a fundamental component upon which Stalwart was built. It set the tone for our relentless pursuit of secure, reliable, and performant software.
+
+Almost exactly one year later, on [September 17th, 2022](https://github.com/stalwartlabs/jmap-server/releases/tag/v0.1.0), we proudly released version 0.1, initially known as the [Stalwart JMAP server](https://github.com/stalwartlabs/jmap-server). From that initial launch, we've continuously expanded Stalwart's capabilities, consistently introducing valuable new features. Just last month, we [celebrated a major milestone](/blog/collaboration) by transforming Stalwart from solely a mail server into a comprehensive mail and collaboration server. This significant update brought CalDAV, CardDAV, and WebDAV support, positioning Stalwart as the open-source mail and collaboration server with the most extensive feature set available today—even compared to many commercial solutions.
+
+Despite these significant advancements and the existing web-based administration interface that includes essential self-service capabilities, we've noticed one prominent request from our community: a built-in webmail client. Many of you have been eagerly asking whether we plan to offer this feature. Today, we're excited to share with you that yes, a dedicated Stalwart Webmail is indeed in our plans—but it's not currently our immediate priority.
+
+Our roadmap for the remainder of 2025 is already well-defined. We will first release JMAP support for Calendars, Contacts, and File Storage, which will further strengthen Stalwart’s position as a powerful collaborative tool. Immediately following these updates, our main focus will shift to preparing for our much-anticipated version 1.0 release.
+
+Although Stalwart is already being confidently used in production environments globally, version 1.0 marks an essential milestone. It signifies that we've finalized our database schema—no more daunting database migrations!—ensuring stability for long-term users. Unless an entirely new protocol surpassing email emerges (who knows?), our database schema will remain stable and optimized. Moreover, this version will involve a comprehensive performance optimization initiative. Every line of our code was initially written with speed and efficiency in mind, yet there are still critical areas we believe can be further improved. By systematically benchmarking critical code paths, we're confident we'll find opportunities to make Stalwart even faster and more efficient.
+
+Post version 1.0, our commitment remains firm: Stalwart will remain lean and specialized. While our GitHub issue tracker proudly showcases [numerous exciting enhancement requests](https://github.com/stalwartlabs/stalwart/issues?q=is%3Aissue+is%3Aopen+sort%3Areactions-%2B1-desc+label%3Aenhancement), rest assured we won't lose sight of our core mission. Our primary goal is to continue being the absolute best in JMAP, IMAP, POP3, SMTP, and WebDAV protocols—nothing more, nothing less. We strive to avoid becoming a proverbial jack-of-all-trades, instead remaining focused and exceptional at our core competencies.
+
+As for the much-requested Webmail, once we've achieved the critical milestone of version 1.0, we plan to start its development—most likely sometime in 2026. We'll be building a Single Page Application (SPA) using Rust and the [Dioxus](https://github.com/DioxusLabs/dioxus) framework. Dioxus is quite distinct from more popular frameworks like React, meaning many necessary UI components still don't exist. Consequently, we'll likely spend considerable time contributing directly to the Dioxus ecosystem, expanding available components and features.
+
+Now, you might ask, "Why not simply use React or another established framework?" Well, humorously and earnestly, at Stalwart, we operate by an unofficial motto: "**Aut Rust aut nihil**," meaning "Either Rust or nothing." We’re committed to Rust because we truly believe it's the best language for creating secure, reliable, and performant software—even if this approach means occasionally delaying releases by a few months.
+
+In the meantime, while our webmail is in development, we highly recommend using alternative webmail solutions that integrate smoothly with Stalwart. Some choices include [Roundcube](https://github.com/roundcube/roundcubemail), [SnappyMail](https://github.com/the-djmaze/snappymail), [SoGo](https://github.com/Alinto/sogo), or [TMail Web](https://github.com/linagora/tmail-flutter)—which notably supports the JMAP protocol.
+
+We're grateful for your continued support and patience as we steadily build toward a fully integrated Stalwart experience. Stay tuned, and thank you for being part of this exciting journey!
