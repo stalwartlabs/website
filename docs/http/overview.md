@@ -14,6 +14,7 @@ The following endpoints are available through the HTTP service:
 
 - `/jmap`: The JMAP endpoint provides access to the [JMAP API](/docs/http/jmap/overview), allowing clients to interact with mailboxes, messages, and other resources.
 - `/dav/*`: The WebDAV endpoint provides access to [WebDAV](/docs/http/webdav/overview) resources, allowing clients to manage calendar, contact and file resources.
+- `/calendar/rsvp`: The Calendar Scheduling [RSVP endpoint](/docs/collaboration/scheduling#http-rsvp) allows participants to respond to calendar invitations using a simple web interface.
 - `/.well-known/*`: The [well-known endpoint](#well-known-resources) provides access to resources that are commonly used by clients to discover service information.
 - `/api/*`: The API management endpoint provides access to the [REST management API](/docs/api/management/overview).
 - `/auth/device`: The device authorization endpoint is used for [OAuth device authorization](/docs/auth/oauth/overview).

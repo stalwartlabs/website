@@ -45,6 +45,9 @@ Stalwart provides a wide range of permissions that can be assigned to users, gro
 |`authenticate`|Authenticate|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 |`authenticate-oauth`|Authenticate via OAuth|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 |`blob-fetch`|Retrieve arbitrary blobs|:white_check_mark:|||
+|`calendar-alarms`|Receive calendar alarms via e-mail|:white_check_mark:|:white_check_mark:|:white_check_mark:|
+|`calendar-scheduling-receive`|Receive calendar scheduling requests via e-mail|:white_check_mark:|:white_check_mark:|:white_check_mark:|
+|`calendar-scheduling-send`|Send calendar scheduling requests via e-mail|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 |`dav-cal-acl`|Manage access control lists for calendar entries|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 |`dav-cal-copy`|Copy calendar entries to new locations|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 |`dav-cal-delete`|Remove calendar entries or collections|:white_check_mark:|:white_check_mark:|:white_check_mark:|

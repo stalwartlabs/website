@@ -88,6 +88,13 @@ The following are the event types that Stalwart captures along with their defaul
 |`auth.success`|Authentication successful|`INFO`|
 |`auth.token-expired`|OAuth token expired|`DEBUG`|
 |`auth.too-many-attempts`|Too many authentication attempts|`WARN`|
+|`calendar.alarm-failed`|Calendar alarm could not be sent|`WARN`|
+|`calendar.alarm-recipient-override`|Calendar alarm recipient overriden|`DEBUG`|
+|`calendar.alarm-sent`|Calendar alarm sent|`INFO`|
+|`calendar.alarm-skipped`|Calendar alarm skipped|`DEBUG`|
+|`calendar.itip-message-error`|iTIP message error|`DEBUG`|
+|`calendar.itip-message-received`|Calendar iTIP message received|`INFO`|
+|`calendar.itip-message-sent`|Calendar iTIP message sent|`INFO`|
 |`calendar.rule-expansion-error`|Calendar rule expansion error|`DEBUG`|
 |`cluster.message-invalid`|Invalid PubSub message|`ERROR`|
 |`cluster.message-received`|PubSub message received|`TRACE`|
@@ -323,6 +330,7 @@ The following are the event types that Stalwart captures along with their defaul
 |`manage.not-supported`|Management operation not supported|`DEBUG`|
 |`message-ingest.duplicate`|Skipping duplicate message|`INFO`|
 |`message-ingest.error`|Message ingestion error|`ERROR`|
+|`message-ingest.fts-index`|Full-text search index updated|`INFO`|
 |`message-ingest.ham`|Message ingested|`INFO`|
 |`message-ingest.imap-append`|Message appended via IMAP|`INFO`|
 |`message-ingest.jmap-append`|Message appended via JMAP|`INFO`|
@@ -540,6 +548,7 @@ The following are the event types that Stalwart captures along with their defaul
 |`spam.pyzor`|Pyzor success|`DEBUG`|
 |`spam.pyzor-error`|Pyzor error|`DEBUG`|
 |`spam.train`|Training spam filter|`DEBUG`|
+|`spam.train-account`|Training spam filter for account|`DEBUG`|
 |`spam.train-balance`|Spam filter model balance verify|`DEBUG`|
 |`spam.train-error`|Error training spam filter|`DEBUG`|
 |`spf.fail`|SPF check failed|`DEBUG`|
@@ -570,11 +579,10 @@ The following are the event types that Stalwart captures along with their defaul
 |`store.foundationdb-error`|FoundationDB error|`ERROR`|
 |`store.http-store-error`|Error updating HTTP store|`WARN`|
 |`store.http-store-fetch`|HTTP store updated|`DEBUG`|
-|`store.ldap-bind`|LDAP bind operation|`TRACE`|
 |`store.ldap-error`|LDAP error|`ERROR`|
 |`store.ldap-query`|LDAP query executed|`TRACE`|
+|`store.ldap-warning`|LDAP authentication warning|`DEBUG`|
 |`store.mysql-error`|MySQL error|`ERROR`|
-|`store.nats-error`|NATS error|`ERROR`|
 |`store.not-configured`|Store not configured|`ERROR`|
 |`store.not-found`|Record not found in database|`DEBUG`|
 |`store.not-supported`|Operation not supported by store|`ERROR`|
@@ -586,11 +594,10 @@ The following are the event types that Stalwart captures along with their defaul
 |`store.sql-query`|SQL query executed|`TRACE`|
 |`store.sqlite-error`|SQLite error|`ERROR`|
 |`store.unexpected-error`|Unexpected store error|`ERROR`|
-|`task-queue.bayes-train`|Bayesian training completed|`DEBUG`|
 |`task-queue.blob-not-found`|Blob not found for task|`DEBUG`|
-|`task-queue.index`|Full-text search indexing completed|`INFO`|
-|`task-queue.locked`|Task is locked by another process|`DEBUG`|
 |`task-queue.metadata-not-found`|Metadata not found for task|`DEBUG`|
+|`task-queue.task-acquired`|Task acquired from queue|`DEBUG`|
+|`task-queue.task-locked`|Task is locked by another process|`DEBUG`|
 |`telemetry.alert`|Alert triggered|`WARN`|
 |`telemetry.journal-error`|Journal collector error|`WARN`|
 |`telemetry.log-error`|Log collector error|`WARN`|
