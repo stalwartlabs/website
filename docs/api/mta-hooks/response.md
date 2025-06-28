@@ -105,12 +105,12 @@ Below is an example of a response object:
             }
         },
         {
-            "type": "addRcpt",
+            "type": "addRecipient",
             "value": "tom@example.com",
             "parameters": null
         },
         {
-            "type": "deleteRcpt",
+            "type": "deleteRecipient",
             "value": "jane@foobar.com"
         },
         {
