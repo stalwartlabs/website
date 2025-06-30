@@ -10,7 +10,10 @@ Stalwart supports NGINX, enabling you to leverage NGINX’s capabilities to effi
 
 ## Configuration
 
-Ensure that NGINX is built with the `--with-stream` module, as the `stream` module is required to handle TCP traffic.
+Ensure that NGINX is built with the `--with-stream` module, as the
+`stream` module is required to handle TCP traffic.  If you're on
+Debian, or a Debian based system, use the 'nginx-full' package to
+ensure you have the stream module, called `libnginx-mod-stream`.
 
 ```txt
 # /etc/nginx/nginx.conf
@@ -53,3 +56,19 @@ stream {
     }
 }
 ```
+You'll need to stop Stalwart mail so that NGINX can bind to the 
+appropriate ports. Stalwart binds to ports 8080 and 443 by default.
+Then restart NGINX with the Stream configuration and restart 
+Stalwart.
+```
+systemctl stop nginx
+systemctl stop stalwart
+```
+(Configuration happens here.)
+```
+systemctl start nginx
+systemctl start stalwart
+```
+One can use an alternative port for either Stalwart or NGINX if 
+you want to have two HTTPS ports; NGINX can listen on 8443 for 
+example and Stalwart on 443. 
