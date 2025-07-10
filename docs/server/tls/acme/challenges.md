@@ -76,7 +76,7 @@ This is the most straightforward method if your server has port 80 open and acce
 If your server has port 443 open and reachable, the TLS-ALPN-01 challenge is recommended. This challenge verifies domain control by using TLS with the ACME-specific Application Layer Protocol Negotiation (ALPN) protocol.
 
 - **Advantages**: Works well in environments where HTTP traffic is restricted; suitable for securing communications on the standard HTTPS port.
-- **Disadvantages**: Does not support wildcard certificates and does not work behind certain types of reverse proxies or firewalls; use `DNS-01` if `HTTP-01` if this is your case.
+- **Disadvantages**: Does not support wildcard certificates and does not work behind certain types of reverse proxies or firewalls; use `DNS-01` or `HTTP-01` if this is your case.
 
 #### DNS-01
 
