@@ -84,10 +84,10 @@ services:
         - "traefik.http.routers.stalwart-jmap.service=stalwart-jmap"
         - "traefik.http.services.stalwart-jmap.loadbalancer.server.port=8000"
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
-      interval: 1m
-      timeout: 10s
-      retries: 3
+      test: "/opt/stalwart-mail/tool/scripts/healthcheck"
+      interval: 20s
+      timeout: 5s
+      retries: 5
       start_period: 40s
     networks:
       - mail_network
