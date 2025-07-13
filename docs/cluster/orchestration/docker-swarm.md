@@ -84,7 +84,8 @@ services:
         - "traefik.http.routers.stalwart-jmap.service=stalwart-jmap"
         - "traefik.http.services.stalwart-jmap.loadbalancer.server.port=8000"
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      test: ["CMD", "stalwart-cli", "server", "healthcheck",
+       "http://localhost:8080/health"]
       interval: 1m
       timeout: 10s
       retries: 3
