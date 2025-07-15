@@ -71,7 +71,7 @@ This configuration disables STARTTLS entirely, which may be appropriate when del
 
 ## Invalid certificates
 
-The `queue.tls.tls.<id>.allow-invalid-certs` configuration option governs the behavior of Stalwart when it encounters an invalid or misconfigured TLS certificate from a remote host during outbound communication.
+The `queue.tls.<id>.allow-invalid-certs` configuration option governs the behavior of Stalwart when it encounters an invalid or misconfigured TLS certificate from a remote host during outbound communication.
 
 When this option is set to `false` (the recommended and default setting), Stalwart will reject any connections to remote hosts that present an invalid TLS certificate. This ensures that the email communications are secure and trustworthy, and prevents potential security risks associated with connecting to hosts with misconfigured or compromised certificates.
 
@@ -82,7 +82,7 @@ While this can be useful in scenarios where communication with a misconfigured h
 Example:
 
 ```toml
-[queue.outbound.tls.invalid-tls]
+[queue.tls.invalid-tls]
 allow-invalid-certs = false
 ```
 
@@ -121,15 +121,15 @@ tls = [ { if = "retry_num > 0 && last_error == 'tls'", then = "'invalid-tls'" },
         { if = "retry_num > 1 && last_error == 'tls'", then = "'disable-tls'" },
         { else = "'default'" } ]
 
-[queue.outbound.invalid-tls]
+[queue.tls.invalid-tls]
 allow-invalid-certs = true
 starttls = "optional"
 
-[queue.outbound.disable-tls]
+[queue.tls.disable-tls]
 allow-invalid-certs = false
 starttls = "disable"
 
-[queue.outbound.default]
+[queue.tls.default]
 allow-invalid-certs = false
 starttls = "optional"
 
@@ -158,7 +158,7 @@ dane = "require"
 mta-sts = "require"
 starttls = "require"
 
-[queue.outbound.default]
+[queue.tls.default]
 allow-invalid-certs = false
 starttls = "optional"
 mta-sts = "optional"

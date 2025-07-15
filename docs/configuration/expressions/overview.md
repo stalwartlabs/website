@@ -120,16 +120,12 @@ mechanisms = [ { if = "local_port != 25 && is_tls", then = "[plain, login]"},
 rewrite = [ { if = "listener != 'smtp' & matches('^([^.]+)@([^.]+)\.(.+)$', rcpt)", then = "$1 + '@' + $3" },
             { else = false } ]
 
-[queue.outbound]
-next-hop = [ { if = "is_local_domain('', rcpt_domain)", then = "'local'" }, 
-             { if = "retry_num > 1", then = "'fallback'" }, 
-             { else = false } ]
-
-[queue.outbound.tls]
-allow-invalid-certs = [ { if = "retry_num > 0 && last_error == 'tls'", then = true},
-                        { else = false } ]
-starttls = [ { if = "retry_num > 1 && last_error == 'tls'", then = "disable"},
-             { else = "require" } ]
+[queue.strategy]
+route = [ { if = "is_local_domain('', rcpt_domain)", then = "'local'" }, 
+          { if = "retry_num > 1", then = "'fallback'" }, 
+          { else = "'mx'" } ]
+tls  = [ { if = "retry_num > 0 && last_error == 'tls'", then = "'invalid-tls'"},
+         { else = "'mx'" } ]
 
 [spam-filter.dnsbl.server.STWT_RBL_MAILSPIKE_IP]
 enable = true

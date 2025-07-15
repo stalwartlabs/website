@@ -138,17 +138,17 @@ In Stalwart, messages can be routed to a relay host by adding it as a route in t
 route = [ { if = "is_local_domain('', rcpt_domain)", then = "'relay'" }, 
           { else = "'mx'" } ]
 
-[route."relay"]
+[queue.route."relay"]
 type = "relay"
 address = "relay.example.org"
 port = 25
 protocol = "smtp"
 
-[route."relay".tls]
+[queue.route."relay".tls]
 implicit = false
 allow-invalid-certs = false
 
-[route."mx"]
+[queue.route."mx"]
 type = "mx"
 ip-lookup = "ipv4_then_ipv6"
 ```
@@ -163,17 +163,17 @@ route = [ { if = "is_local_domain('', rcpt_domain)", then = "'local'" },
           { if = "retry_num > 1", then = "'fallback'" }, 
           { else = "'mx'" } ]
 
-[route."fallback"]
+[queue.route."fallback"]
 type = "relay"
 address = "fallback.example.org"
 port = 25
 protocol = "smtp"
 
-[route."mx"]
+[queue.route."mx"]
 type = "mx"
 ip-lookup = "ipv4_then_ipv6"
 
-[route."local"]
+[queue.route."local"]
 type = "local"
 ```
 
@@ -185,24 +185,24 @@ To deliver messages to a local mail store over LMTP, the following configuration
 
 ```toml
 [queue.strategy]
-route= [ { if = "is_local_domain('', rcpt_domain)", then = "'lmtp'" }, 
-         { else = "'mx'" } ]
+route = [ { if = "is_local_domain('', rcpt_domain)", then = "'lmtp'" }, 
+          { else = "'mx'" } ]
 
-[route."lmtp"]
+[queue.route."lmtp"]
 type = "relay"
 address = "localhost"
 port = 24
 protocol = "lmtp"
 
-[route."lmtp".tls]
+[queue.route."lmtp".tls]
 implicit = false
 allow-invalid-certs = true
 
-[route."lmtp".auth]
+[queue.route."lmtp".auth]
 username = "relay_server"
 secret = "123456"
 
-[route."mx"]
+[queue.route."mx"]
 type = "mx"
 ip-lookup = "ipv4_then_ipv6"
 
