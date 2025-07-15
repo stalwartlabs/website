@@ -64,7 +64,7 @@ The CNAME record points to where your MTA-STS policy is hosted, while the TXT re
 
 ## TLS Reporting (TLS-RPT) Record
 
-[SMTP TLS Reporting](/docs/mta/transport-security/tls-reporting) allows mail servers to send reports about failed TLS negotiations when trying to deliver email to your domain.
+[SMTP TLS Reporting](/docs/mta/reports/tls) allows mail servers to send reports about failed TLS negotiations when trying to deliver email to your domain.
 
 ```
 TXT	_smtp._tls.example.org.	v=TLSRPTv1; rua=mailto:postmaster@example.org

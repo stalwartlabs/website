@@ -9,7 +9,7 @@ In-memory data stores (such as Redis) are high-performance databases that store 
 In Stalwart, in-memory stores play a crucial role in handling a wide variety of tasks. They are used for storing:
 
 - [Spam filter data](/docs/spamfilter/settings/database) such as sender reputation information, bayesian classifier models, greylist data, message reply tracking and other similar data.
-- [Rate limiting](/docs/mta/queue/limits/rate-limit) and [fail2ban](/docs/server/auto-ban) data, such as the number of messages sent by a specific sender or the number of failed authentication attempts from a specific IP address.
+- [Rate limiting](/docs/mta/outbound/rate-limit) and [fail2ban](/docs/server/auto-ban) data, such as the number of messages sent by a specific sender or the number of failed authentication attempts from a specific IP address.
 - Distributed locks for managing concurrent tasks, such as purging accounts, processing email queues, and running housekeeping tasks.
 - [OAuth authorization codes](/docs/auth/oauth/overview) to validate the authorization process.
 - [ACME tokens](/docs/server/tls/acme/overview) for SSL/TLS certificate management.

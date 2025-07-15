@@ -16,6 +16,12 @@ While peer-to-peer coordination simplifies deployment by removing the need for a
 
 Nonetheless, for many use cases—especially in environments where infrastructure simplicity, self-discovery, and low-latency messaging are key—Stalwart’s peer-to-peer coordination powered by Eclipse Zenoh provides an elegant and robust solution.
 
+:::tip Note
+
+Peer-to-peer coordination is not included in the default Stalwart binary. To enable this feature, you must [build](/docs/development/compile) Stalwart with the `zenoh` feature flag enabled.
+
+:::
+
 ## Configuration
 
 To enable peer-to-peer coordination in a Stalwart cluster, you must configure the coordination backend to use the zenoh protocol. Stalwart uses Eclipse Zenoh under the hood for decentralized, low-latency communication between nodes. Configuration for Zenoh must be provided in JSON5 format, and embedded under the `store.<id>.config` key in Stalwart's configuration file.

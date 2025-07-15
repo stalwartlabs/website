@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 2
 ---
 
 # Delivery Notifications
@@ -23,13 +23,3 @@ from-address = "'MAILER-DAEMON@example.org'"
 sign = "['rsa']"
 ```
 
-## Report Domain
-
-The default domain to use in DSNs as well as DMARC and TLS reports is configured under the `report.domain` key in the configuration file.
-
-For example:
-
-```toml
-[report]
-domain = "example.org"
-```

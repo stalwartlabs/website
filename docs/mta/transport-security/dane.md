@@ -10,7 +10,7 @@ With DANE, domain owners can publish their own certificate information in the DN
 
 ## Configuration
 
-DANE can be enabled in Stalwart with the `queue.outbound.tls.dane` property which accepts the following values:
+DANE can be enabled in Stalwart with the `queue.tls.<id>.dane` property, where `<id>` is the name of the [TLS strategy](/docs/mta/outbound/tls). This property accepts the following values:
 
 - `optional`: Use DANE only if TLSA records for the domain are available.
 - `require`: Require DANE and do not delivery unless a valid TLSA record is available (not recommended unless used under a custom rule).
@@ -19,7 +19,7 @@ DANE can be enabled in Stalwart with the `queue.outbound.tls.dane` property whic
 Example:
 
 ```toml
-[queue.outbound.tls]
+[queue.tls.default]
 dane = "optional"
 ```
 

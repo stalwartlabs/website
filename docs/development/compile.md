@@ -26,6 +26,21 @@ $ git clone https://github.com/stalwartlabs/stalwart.git
 $ cd stalwart
 ```
 
+Find and then check out the latest tagged release, for example:
+
+```bash
+$ git tag --sort=-version:refname | head -1
+v0.13.0
+$ git checkout tags/v0.13.0
+```
+
+:::tip Note
+
+Never compile Stalwart from the `main` branch, as it may contain unstable code. Always use a tagged release.
+
+:::
+
+
 ## Install any required dependencies
 
 If you are compiling the Foundation DB backend, download and install the [Foundation DB client library](https://github.com/apple/foundationdb/releases).

@@ -72,7 +72,7 @@ Example:
 outbound.max-recipients = 100
 ```
 
-In addition to these scheduling-specific limits, all existing [MTA-level throttling policies](/docs/mta/queue/limits/overview) remain in effect for outbound iMIP messages. This ensures that users cannot bypass email sending restrictions by routing bulk messages through the scheduling system. Outbound scheduling emails are subject to the same rate limits, message size limits, and delivery policies as any other email traffic, maintaining consistency and preventing abuse.
+In addition to these scheduling-specific limits, all existing [MTA-level throttling policies](/docs/mta/outbound/rate-limit) remain in effect for outbound iMIP messages. This ensures that users cannot bypass email sending restrictions by routing bulk messages through the scheduling system. Outbound scheduling emails are subject to the same rate limits, message size limits, and delivery policies as any other email traffic, maintaining consistency and preventing abuse.
 
 ## Inbox Auto-Expunge
 

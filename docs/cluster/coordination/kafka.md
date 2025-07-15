@@ -14,6 +14,12 @@ Using Kafka or Redpanda provides a durable, centralized coordination layer that 
 
 While Kafka introduces additional infrastructure requirements, its ability to handle millions of events per second, support long-term message retention, and integrate with a wide ecosystem of tools makes it well-suited for enterprises with complex or high-traffic mail infrastructures.
 
+:::tip Note
+
+Apache Kafka is not included in the default Stalwart binary. To enable this feature, you must [build](/docs/development/compile) Stalwart with the `kafka` feature flag enabled.
+
+:::
+
 ## Configuration
 
 To use **Apache Kafka** (or a Kafka-compatible platform such as **Redpanda**) as the coordination backend in Stalwart, you need to configure the required Kafka connection parameters under the appropriate store section. These settings define how Stalwart connects to Kafka, handles messaging, and manages coordination events across the cluster.

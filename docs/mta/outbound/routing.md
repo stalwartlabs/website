@@ -1,75 +1,94 @@
 ---
-sidebar_position: 2
+sidebar_position: 4
 ---
 
 # Routing
 
-Message routing is the process of determining the final destination host to which an email message should be delivered. This step is essential for ensuring that messages are delivered to their intended recipients accurately and efficiently. In a mail server, routing involves resolving the recipient domain's address to identify the mail server responsible for accepting messages for that domain.
+Message routing is the process of determining the final destination host to which an email message should be delivered. When a message is processed for delivery, the selected **routing strategy** defines whether it should be delivered locally, resolved through DNS, or sent through an intermediate relay server.
 
-By default, **Stalwart** uses **MX (Mail Exchange) resolution** to determine where to deliver outgoing messages. MX resolution is a DNS-based process that retrieves Mail Exchange records associated with the recipient's domain. These records specify which mail servers are authorized to handle email for that domain, along with their priority levels. During this process, Stalwart queries the DNS for MX records of the recipient's domain. If multiple MX records are found, they are sorted based on their priority values, with the lowest number indicating the highest priority. The server attempts delivery to the highest-priority host first and, if that fails, proceeds to try the next available host in the sorted list.
+There are three types of routing strategies supported:
 
-While MX resolution is the default mechanism, Stalwart also provides a flexible way to customize routing behavior. Administrators can define specific delivery rules to override MX lookups, tailoring the routing process to fit unique organizational needs. These custom rules allow messages to be directed based on various criteria, such as the recipient domain, sender domain, network conditions, or even specific message content. This flexibility enables Stalwart to support advanced routing requirements and adapt to complex email delivery scenarios.
+* **Local**: Delivers the message to the local message store, typically for users hosted on the same system or domain.
+* **MX**: Uses DNS MX record resolution to determine the destination server for remote delivery.
+* **Relay**: Forwards the message to a predefined relay host, regardless of recipient domain.
 
-## Configuration
+Each message recipient can be routed independently using different strategies. This allows, for example, some messages to be delivered locally while others are relayed or sent via MX resolution based on domain, authentication status, or other delivery context.
 
-Message routing is controlled through the `queue.outbound.next-hop` setting. This setting determines how the server selects the relay host for delivering messages. It expects an [expression](/docs/configuration/expressions/overview) which dynamically evaluates and returns the name of the relay host to use for message delivery. 
+Routing strategies are defined in the configuration under the `queue.route.<id>` section, where `<id>` is the name of the routing strategy. The type of routing to use is specified using the `queue.route.<id>.type` setting, which must be one of the following: `local`, `mx`, or `relay`.
 
-When the `queue.outbound.next-hop` expression is evaluated, it must return the identifier of the desired relay host. This identifier specifies the host to which the message will be forwarded for delivery. If the expression evaluates to `false` instead of a relay host identifier, Stalwart defaults to using **MX (Mail Exchange) resolution** to determine the delivery target. This fallback behavior ensures that the server can still route messages based on standard DNS records when no custom routing is explicitly defined.
+Once defined, routing strategies can be dynamically selected for each recipient via the [route strategy](/docs/mta/outbound/strategy) expression, allowing administrators to apply different routing logic depending on message attributes or system policies.
 
-### Local delivery
+## Local Delivery
 
-To route a message for local delivery, the `queue.outbound.next-hop` expression can return the special internal identifier `local`. When this identifier is returned, Stalwart interprets it as an instruction to bypass MX resolution and deliver the message directly to a local mailbox or domain hosted on the server. This mechanism is particularly useful for ensuring that messages addressed to locally managed domains are handled entirely within the server, without attempting to route them through external hosts.
+The **local** routing strategy is used to deliver messages to the server's internal message store, where they are made available to users through standard mail access protocols such as **JMAP**, **IMAP**, or **POP3**. This route is typically used for delivering messages to domains and users hosted on the same Stalwart MTA instance.
 
-For example, the following configuration can be used to deliver messages for local domains:
+Messages routed using the local strategy are not forwarded to external systems. Instead, they are written directly into the mailbox storage backend, where they can be retrieved by the intended recipients using supported client protocols.
+
+The local route requires no additional configuration parameters. To define a local routing strategy, simply create an entry under the `queue.route.<id>` section and set the route type to `local`:
 
 ```toml
-[queue.outbound]
-next-hop = [ { if = "is_local_domain('', rcpt_domain)", then = "'local'" }, 
-             { else = false } ]
+[queue.route.local]
+type = "local"
 ```
 
-### Relay hosts
+Once defined, this route can be selected dynamically for specific recipients using a routing strategy expression. This allows messages destined for local users to be handled separately from those requiring external delivery.
 
-Relay hosts enable the definition of external SMTP and LMTP servers for the purpose of relaying messages. These servers are specified in the configuration file using the `remote.<id>` keys, where `<id>` is the internal identifier for the host.
+## MX Delivery
 
-#### Host Settings
+The **MX** routing strategy is used for delivering messages to remote domains using **Mail Exchanger (MX) DNS resolution**. When a message is routed using this strategy, Stalwart queries DNS for the MX records of the recipient's domain and attempts delivery to the listed mail servers in priority order. MX resolution works by retrieving all MX records associated with the target domain. Each record includes a hostname and a priority value. The MTA attempts delivery to the host(s) with the lowest priority value first, moving to the next available one if delivery fails.
 
-For each remote host, the following parameters can be specified as sub-keys of `remote.<id>`:
+To configure an MX route, define a route with `type` set to `mx` under the `queue.route.<id>` section:
 
-- `address`: The fully-qualified domain name of the remote server, for example "mail.domain.org".
-- `port`: The port on the remote server that should be used for the connection.
-- `protocol`: The communication protocol to use, with valid options being `lmtp` or `smtp`.
+```toml
+[queue.route.mx]
+type = "mx"
+```
 
-#### TLS Options
+### MX Limits
 
-The configuration of TLS for remote servers is managed through the following parameters, which are located under the `remote.<id>.tls` key in the configuration file:
+The `queue.route.<id>.limits.mx` setting controls the **maximum number of MX hosts** that the MTA will attempt to contact during a single delivery attempt.
 
-- `implicit`: Specifies whether TLS should be implicitly established upon connecting to the remote host, or if it should be negotiated on a clear-text connection using the `STARTTLS` command (defaults to `true`).
-- `allow-invalid-certs`: A flag indicating whether self-signed and invalid certificates should be accepted (defaults to `false`).
+```toml
+[queue.route.mx.limits]
+mx = 3
+```
 
-#### Authentication
+In this example, if a domain has five MX records, only the first three (ordered by priority) will be considered during the delivery attempt. This can help limit connection time and resource usage when dealing with domains that have many fallback servers.
 
-Authentication can be configured using the following parameters located under the `remote.<id>.auth` key in the configuration file:
+### Multihomed Limits
 
-- `username`: The username to be used for authentication.
-- `secret`: The password to be used for authentication. Can also be specified using an [environment variable](/docs/configuration/macros).
+The `queue.route.<id>.limits.multihomed` setting defines the **maximum number of IP addresses** to try for each MX host, in cases where a host resolves to multiple IPs (i.e., multihomed servers).
 
-### EHLO hostname
+```toml
+[queue.route.mx.limits]
+multihomed = 2
+```
 
-The `queue.outbound.hostname` parameter indicates which EHLO hostname to use when sending messages to remote SMTP servers. If not specified, the `config_get('server.hostname')` expression is be used.
+If an MX hostname resolves to several A or AAAA records, only the first two addresses will be tried during delivery. This is useful to avoid long delays when some IPs are unreachable or non-responsive.
+
+### IP Lookup Strategy
+
+The `queue.route.<id>.ip-lookup` setting controls the **IP address resolution strategy** when looking up the addresses of MX hosts. It determines whether the MTA should prefer IPv4 or IPv6 addresses, or use only one type.
+
+Available options:
+
+* `ipv4_only`: Use only IPv4 addresses (A records).
+* `ipv6_only`: Use only IPv6 addresses (AAAA records).
+* `ipv6_then_ipv4`: Prefer IPv6 addresses; fallback to IPv4 if none are available.
+* `ipv4_then_ipv6`: Prefer IPv4 addresses; fallback to IPv6 if none are available.
 
 Example:
 
 ```toml
-[queue.outbound]
-hostname = "'mx.example.org'"
+[queue.route.mx]
+ip-lookup = "ipv4_then_ipv6"
 ```
 
-## Examples
+This configuration will attempt delivery using IPv4 addresses first, and use IPv6 only if no IPv4 addresses are available for the destination host.
 
-### Relay host
+## Relay Delivery
 
-A relay host is a server that accepts email from another server and then forwards it to its final destination. The server that accepts and forwards the emails is known as a relay because it functions as an intermediate stop for messages on their way to their final destination.
+The **relay** routing strategy is used to deliver messages through a predefined **relay host** instead of sending them directly to the recipient's domain via MX resolution. A relay host is a server that accepts email from another server and then forwards it to its final destination. The server that accepts and forwards the emails is known as a relay because it functions as an intermediate stop for messages on their way to their final destination.
 
 In the realm of email delivery, relay hosts are particularly useful in various scenarios. For instance, some organizations might not want to handle the complexity of direct delivery, so they send all their outgoing mail to a relay host (like an Internet Service Provider's mail server) which handles the details of delivery.
 
@@ -77,29 +96,61 @@ Another common usage scenario is when sending emails from a network that's behin
 
 Relay hosts can also be used for security purposes. Emails can be sent to a relay host that scans them for viruses and spam before they are delivered to the final recipient. This way, potentially harmful or unwanted messages can be detected and stopped before they reach their destination.
 
-In Stalwart, messages can be routed to a relay host by adding it as the next hop in the routing configuration. For example:
+To configure a relay route, define a route with `type` set to `relay` under the `queue.route.<id>` section:
 
 ```toml
-[queue.outbound]
-next-hop = [ { if = "is_local_domain('', rcpt_domain)", then = "'relay'" }, 
-             { else = false } ]
+[queue.route.relay]
+type = "relay"
+```
 
-[remote."relay"]
+Once the route type is defined, additional settings can be configured to specify the relay host, port, authentication credentials, and other delivery options. These will be described in detail in the relay route configuration section.
+
+### Host Settings
+
+For each remote host, the following parameters can be specified as sub-keys of `route.<id>`:
+
+- `address`: The fully-qualified domain name of the remote server, for example "mail.domain.org".
+- `port`: The port on the remote server that should be used for the connection.
+- `protocol`: The communication protocol to use, with valid options being `lmtp` or `smtp`.
+
+### TLS Options
+
+The configuration of TLS for remote servers is managed through the following parameters, which are located under the `route.<id>.tls` key in the configuration file:
+
+- `implicit`: Specifies whether TLS should be implicitly established upon connecting to the remote host, or if it should be negotiated on a clear-text connection using the `STARTTLS` command (defaults to `true`).
+- `allow-invalid-certs`: A flag indicating whether self-signed and invalid certificates should be accepted (defaults to `false`).
+
+### Authentication
+
+Authentication can be configured using the following parameters located under the `route.<id>.auth` key in the configuration file:
+
+- `username`: The username to be used for authentication.
+- `secret`: The password to be used for authentication. Can also be specified using an [environment variable](/docs/configuration/macros).
+
+## Examples
+
+### Relay host
+
+In Stalwart, messages can be routed to a relay host by adding it as a route in the routing configuration. For example:
+
+```toml
+[queue.strategy]
+route = [ { if = "is_local_domain('', rcpt_domain)", then = "'relay'" }, 
+          { else = "'mx'" } ]
+
+[route."relay"]
+type = "relay"
 address = "relay.example.org"
 port = 25
 protocol = "smtp"
 
-[remote."relay".tls]
+[route."relay".tls]
 implicit = false
 allow-invalid-certs = false
-```
 
-**Note**: When using a relay host, make sure both [MTA-STS](/docs/mta/outbound/tls#mta-sts) and [DANE](/docs/mta/outbound/tls#dane) are disabled in the configuration file:
-
-```toml
-[queue.outbound.tls]
-mta-sts = "disable"
-dane = "disable"
+[route."mx"]
+type = "mx"
+ip-lookup = "ipv4_then_ipv6"
 ```
 
 ### Failover delivery
@@ -107,15 +158,23 @@ dane = "disable"
 Failover delivery is a mechanism used to ensure that messages are delivered using an alternative host when the delivery to the primary host fails. This is achieved by configuring an expression that forwards messages to a secondary host after the `nth` delivery attempt. The following example demonstrates how to configure failover delivery after the second delivery attempt:
 
 ```toml
-[queue.outbound]
-next-hop = [ { if = "is_local_domain('', rcpt_domain)", then = "'local'" }, 
-             { if = "retry_num > 1", then = "'fallback'" }, 
-             { else = false } ]
+[queue.strategy]
+route = [ { if = "is_local_domain('', rcpt_domain)", then = "'local'" }, 
+          { if = "retry_num > 1", then = "'fallback'" }, 
+          { else = "'mx'" } ]
 
-[remote."fallback"]
+[route."fallback"]
+type = "relay"
 address = "fallback.example.org"
 port = 25
 protocol = "smtp"
+
+[route."mx"]
+type = "mx"
+ip-lookup = "ipv4_then_ipv6"
+
+[route."local"]
+type = "local"
 ```
 
 ### LMTP delivery
@@ -125,21 +184,27 @@ The Local Mail Transfer Protocol (LMTP) is a derivative of the Simple Mail Trans
 To deliver messages to a local mail store over LMTP, the following configuration can be used that only delivers messages for local domains to the LMTP server:
 
 ```toml
-[queue.outbound]
-next-hop = [ { if = "is_local_domain('', rcpt_domain)", then = "'lmtp'" }, 
-             { else = false } ]
+[queue.strategy]
+route= [ { if = "is_local_domain('', rcpt_domain)", then = "'lmtp'" }, 
+         { else = "'mx'" } ]
 
-[remote."lmtp"]
+[route."lmtp"]
+type = "relay"
 address = "localhost"
 port = 24
 protocol = "lmtp"
 
-[remote."lmtp".tls]
+[route."lmtp".tls]
 implicit = false
 allow-invalid-certs = true
 
-[remote."lmtp".auth]
+[route."lmtp".auth]
 username = "relay_server"
 secret = "123456"
+
+[route."mx"]
+type = "mx"
+ip-lookup = "ipv4_then_ipv6"
+
 ```
 

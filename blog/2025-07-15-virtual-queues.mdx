@@ -1,0 +1,52 @@
+---
+slug: virtual-queues
+title: "Introducing Virtual Queues and Strategy-Driven Delivery in Stalwart MTA"
+authors: [mdecimus]
+tags: [mta, smtp, queue, mta-hooks, ietf123, stalwart]
+---
+
+At Stalwart Labs, we're constantly working to evolve and improve our software based on real-world feedback. Today, we're excited to announce a major enhancement to the **queueing system** in **Stalwart MTA**, designed to meet the needs of some of our busiest users—those delivering **millions of messages per day**.
+
+This update is the result of valuable input from operators managing large-scale mail infrastructure. Many reported a recurring issue: when message volumes spiked, **low-priority traffic**, such as **DMARC aggregate reports** and **Delivery Status Notifications (DSNs)**, would often compete with or delay the delivery of **legitimate user mail**. Since all messages were processed through a **single delivery queue**, these traffic types were treated equally, regardless of urgency or purpose.
+
+## Smarter Queueing with Virtual Queues
+
+To solve this, we've introduced [virtual queues](/docs/mta/outbound/queue)—a powerful feature that allows administrators to define **separate, independently managed delivery queues** for different categories of mail.
+
+Each virtual queue operates with its own set of **delivery threads**, giving you control over how system resources are allocated. Messages can now be segmented by **message type**, **source**, **priority**, **recipient domain**, or any other attribute, and assigned to different queues with tailored delivery policies.
+
+For example, you can isolate system-generated messages such as DSNs or reports into low-concurrency queues, while prioritizing user-facing transactional mail in high-capacity queues—ensuring the latter is never blocked or delayed by the former.
+
+## Strategy-Driven Delivery
+
+At the core of this system is a [strategy-based architecture](/docs/mta/outbound/strategy) that governs how messages are handled from the moment they're queued to the point of delivery. These strategies are dynamically evaluated per recipient and control four key aspects of delivery:
+
+- **Scheduling Strategy**: Determines which virtual queue to use, how frequently to retry failed deliveries, when to notify the sender of delays, and when to give up and bounce a message.
+- **Routing Strategy**: Controls whether a message should be delivered locally, via MX resolution, or relayed through a smart host.
+- **Connection Strategy**: Defines connection parameters such as the source IP address, EHLO hostname, and SMTP timeouts.
+- **TLS Strategy**: Enforces transport-layer security policies, including STARTTLS behavior and support for MTA-STS and DANE.
+
+All of these strategies are defined through **expressions** that can evaluate runtime variables like the sender, recipient, message size, source classification, and more. This enables extremely granular control over delivery logic, with different strategies dynamically assigned to different recipients within the same message.
+
+With this enhancement, Stalwart now gives you the tools to build highly customized delivery workflows. You can throttle or isolate problematic traffic, prioritize VIP clients, set domain-specific retry policies, and fine-tune your system for performance, reliability, and security—all with a simple and transparent configuration model.
+
+## MTA Hooks: Moving Toward Standardization
+
+For those not already familiar, [MTA Hooks](/docs/mta/filter/mtahooks) is a modern alternative to the legacy [Milter](/docs/mta/filter/milter) protocol originally developed for Sendmail. Milter has long served as a way to inspect, modify, or reject messages during the SMTP transaction, but its binary format and low-level implementation have made it difficult to work with and integrate into modern systems.
+
+**MTA Hooks**, introduced by **Stalwart Labs** some years ago, was designed to solve these problems with a cleaner, more accessible approach. Instead of relying on obscure binary protocols, MTA Hooks uses **HTTP** and a **human-readable JSON schema**, making it easy for administrators and developers to write filters in any language, debug behavior transparently, and integrate with modern infrastructure.
+
+Using MTA Hooks, it's possible to **intercept, inspect, and alter** any part of the SMTP transaction—whether that's rejecting mail during `RCPT TO`, modifying headers after `DATA`, or applying policy logic during message queuing. Many users are already using MTA Hooks in production for a wide range of use cases, from spam filtering and data leak prevention to routing logic and outbound content policy enforcement.
+
+Now, we're excited to share that **Stalwart Labs will begin the process of standardizing MTA Hooks** with the broader email community.
+
+We’ll be presenting the protocol at [IETF 123](https://www.ietf.org/meeting/123/) in **Madrid**, where we plan to engage with the [mailmaint working group](https://datatracker.ietf.org/wg/mailmaint/about/) to start formal discussions around standardization. Our goal is to make MTA Hooks an open, community-driven specification—so it can serve as a modern, interoperable alternative to Milter for the entire mail ecosystem.
+
+If you’re attending IETF 123 and would like to connect with us about this effort, we welcome your input. Please reach out through any of our official channels or come speak with us during the event. Whether you're an MTA developer, operator, or interested party, we’d love to hear your perspective.
+
+## Looking Ahead
+
+Stalwart is evolving rapidly, and this release represents a major step forward in performance, flexibility, and modern protocol design. As always, we’re grateful to our community for your feedback and support. We look forward to seeing what you build with these new capabilities.
+
+Stay tuned for more updates—and see you in Madrid!
+

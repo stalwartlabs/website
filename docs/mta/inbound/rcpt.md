@@ -128,7 +128,7 @@ For example, the following script implements greylisting using an SQL database:
 
 ```toml
 [session.rcpt]
-script = [ { if = "is_empty(authenticated-as")", then = "'greylist'" }, 
+script = [ { if = "is_empty(authenticated-as)", then = "'greylist'" }, 
            { else = false } ]
 
 [sieve.trusted.scripts.greylist]

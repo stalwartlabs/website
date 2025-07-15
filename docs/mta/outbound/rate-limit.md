@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 8
 ---
 
 # Rate Limits
@@ -51,7 +51,7 @@ Please note that the above example will impose a global rate limiter, to apply a
 The `key` attribute enables the creation of limit groups based on a combination of context variables. Available context variables for outbound limiters are:
 
 - `remote_ip`: The remote IP address.
-- `local_ip`: The local IP address (only available when a [source IP](/docs/mta/outbound/ip-strategy#source-ip) is configured).
+- `local_ip`: The local IP address (only available when a [source IP](/docs/mta/outbound/connection#source-ip) is configured).
 - `mx`: The remote host's MX hostname.
 - `sender`: The return path specified in the `MAIL FROM` command.
 - `sender_domain`: The domain component of the return path specified in the `MAIL FROM` command.

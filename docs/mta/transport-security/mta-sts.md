@@ -10,7 +10,7 @@ MTA-STS works by publishing a policy statement in the form of a well-known DNS T
 
 ## Outbound Configuration
 
-Whether to use MTA-STS on outbound connections can be configured with the `queue.outbound.tls.mta-sts` property which accepts the following values:
+Whether to use MTA-STS on outbound connections can be configured with the `queue.tls.<id>.mta-sts` property, where `<id>` is the name of the [TLS strategy](/docs/mta/outbound/tls). This property accepts the following values:
 
 - `optional`: Use MTA-STS only if an STS policy for the domain has been published.
 - `require`: Require MTA-STS and do not delivery unless a valid STS policy is available (not recommended unless used under a custom rule).
@@ -19,7 +19,7 @@ Whether to use MTA-STS on outbound connections can be configured with the `queue
 Example:
 
 ```toml
-[queue.outbound.tls]
+[queue.tls.default]
 mta-sts = "optional"
 ```
 
