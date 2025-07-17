@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>MTA Hooks Presentation - IETF 123</title>
+
+	<link rel="stylesheet" href="css/reset.css">
+	<link rel="stylesheet" href="css/reveal.css">
+	<link rel="stylesheet" href="css/stalwart.css">
+	<link rel="stylesheet" href="css/monokai.css">
+
+	<style>
+		body:after {
+			content: url(./img/logo-white.png);
+			position: fixed;
+			display: block;
+			top: 0px;
+			right: 0px;
+			transform: scale(0.5);
+			transform-origin: top right;
+			z-index: 100;
+		}
+
+		.reveal .slides section img.slide-image {
+			max-width: min(95%, 760px) !important;
+			max-height: none !important;
+			width: auto !important;
+			height: auto !important;
+			display: block;
+			margin: auto;
+		}
+
+		.fragment.blur {
+			filter: blur(5px);
+		}
+
+		.fragment.blur.visible {
+			filter: none;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section data-auto-animate>
+				<h4><span>Introducing MTA Hooks</span></h4>
+				<p style="font-size: 0.6em;"><span>Proposal for a modern, standardized MTA filtering protocol</span></p>
+				<p style="font-size: 0.4em;"><span>IETF 123 Madrid - Stalwart Labs LLC</span></p>
+			</section>
+
+
+			<section data-auto-animate>
+				<h3>Brief introduction to Milter</h3>
+			</section>
+
+			<section style="text-align: left;" data-auto-animate>
+				<h4><span>What is Milter?</span></h4>
+				<small>Legacy protocol for integrating filters with MTA.<br />&nbsp;</small>
+				<ul style="font-size: 0.6em;">
+					<li class="fragment fade-in-then-semi-out">Milter (Mail Filter) was introduced by Sendmail in the
+						early 2000s.</li>
+					<li class="fragment fade-in-then-semi-out">Allows external programs to inspect and modify mail
+						during the SMTP transaction.</li>
+					<li class="fragment fade-in-then-semi-out">Widely adopted by MTAs like Sendmail and Postfix.</li>
+					<li class="fragment fade-in-then-semi-out">Supports message manipulation, header rewriting, message
+						rejection, etc.</li>
+				</ul>
+			</section>
+
+			<section style="text-align: left;" data-auto-animate>
+				<h4><span>Milter in the real world</span></h4>
+				<small>Used widely, but inconsistently — and without formal standardization.<br />&nbsp;</small>
+				<ul style="font-size: 0.6em;">
+					<li class="fragment fade-in-then-semi-out">Still actively used today in many production
+						environments.
+					</li>
+					<li class="fragment fade-in-then-semi-out">De facto standard for integrating filters like
+						Rspamd, ClamAV, SpamAssassin, etc.</li>
+					<li class="fragment fade-in-then-semi-out">Mostly used <b>over the network</b>, not just via
+						loopback.
+					</li>
+					<li class="fragment fade-in-then-semi-out">But… it’s not a formal standard, and <b>not portable
+							across MTAs.</b></li>
+				</ul>
+			</section>
+
+			<section style="text-align: left;" data-auto-animate>
+				<h4><span>Problems with Milter</span></h4>
+				<small>Obscure protocol and poor developer experience.<br />&nbsp;</small>
+				<ul style="font-size: 0.6em;">
+					<li class="fragment fade-in-then-semi-out">Opaque & poorly documented: no formal spec, only C API.
+					</li>
+					<li class="fragment fade-in-then-semi-out">Binary protocol: Undocumented and difficult to implement
+						in modern languages.</li>
+					<li class="fragment fade-in-then-semi-out">Poor tooling:
+						<i>libmilter</i> is fragile and tightly coupled to Sendmail.
+					</li>
+					<li class="fragment fade-in-then-semi-out">Lack of interoperability: MTAs differ in macro support
+						and behavior</li>
+					<li class="fragment fade-in-then-semi-out">No native state-sharing: Filters can’t pass data between
+						each other.</li>
+					<li class="fragment fade-in-then-semi-out">Not supported by many modern MTAs.</li>
+				</ul>
+			</section>
+
+			<section data-auto-animate>
+				<h3>But... do we really need standardization?</h3>
+			</section>
+
+			<section style="text-align: left;" data-auto-animate>
+				<h4><span>Why a standard matters</span></h4>
+				<small>Why formalizing a filtering protocol matters today.<br />&nbsp;</small>
+				<ul style="font-size: 0.6em;">
+					<li class="fragment fade-in-then-semi-out">Milter is already used as a de facto network protocol:
+						<ul style="font-size: 0.8em;">
+							<li>Tools like Rspamd, ClamAV, and SpamAssassin integrate via milter over the
+								network.</li>
+							<li>MTAs treat it as a plug-and-play interface — even across hosts and containers.</li>
+							<li>Yet it’s completely undocumented at the protocol level.</li>
+						</ul>
+					</li>
+					<li class="fragment fade-in-then-semi-out">Lack of a standard blocks innovation:
+						<ul style="font-size: 0.8em;">
+							<li>Developers must reverse-engineer libmilter to figure out protocol.</li>
+							<li>No clean, consistent way to build filters that work across multiple MTAs.</li>
+							<li>Every integration becomes a custom, fragile solution.</li>
+						</ul>
+					</li>
+					<li class="fragment fade-in-then-semi-out">A common protocol would open the door...
+						<ul style="font-size: 0.8em;">
+							<li>Easier development of filtering, policy, and security tools.</li>
+							<li>Encourages modular, language-agnostic architectures.</li>
+							<li>Reduces the burden on both MTA developers and filter authors.</li>
+
+						</ul>
+					</li>
+				</ul>
+			</section>
+
+			<section style="text-align: left;" data-auto-animate>
+				<h4><span>Why not just use Webhooks or Scripts?</span></h4>
+				<small>Existing alternatives don’t provide sufficient control.<br />&nbsp;</small>
+				<ul style="font-size: 0.6em;">
+					<li class="fragment fade-in-then-semi-out">Webhooks are passive: They can't instruct the MTA to act
+						(accept/reject, etc.).</li>
+					<li class="fragment fade-in-then-semi-out">Local scripts are limiting: Don't work in
+						distributed/cloud-native environments.</li>
+					<li class="fragment fade-in-then-semi-out">Users want more flexibility, portability, and integration
+						possibilities.</li>
+					<li class="fragment fade-in-then-semi-out">Existing solutions often lead to vendor lock-in and
+						reduced choice.</li>
+				</ul>
+			</section>
+
+			<section data-auto-animate data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h3><span data-id="stalwart">MTA Hooks</span></h3>
+				<p><span data-id="text">A modern and interoperable mail filtering interface</span></p>
+			</section>
+
+
+			<section style="text-align: left;" data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h4><span>What is MTA Hooks?</span></h4>
+				<small data-id="text"><span>A <b>modern, protocol-based interface</b> for MTA filtering, designed to
+						be:</span></small>
+				<ul style="font-size: 0.6em;">
+					<li class="fragment custom blur">Language-agnostic</li>
+					<li class="fragment custom blur">Transport-agnostic</li>
+					<li class="fragment custom blur">Simple to implement</li>
+					<li class="fragment custom blur">Extensible and flexible</li>
+				</ul>
+			</section>
+
+			<section style="text-align: left;" data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h4><span>Why MTA Hooks was developed</span></h4>
+				<small data-id="text"><span>Real user pain points drove the need for a better solution.</span></small>
+				<ul style="font-size: 0.6em;">
+					<li class="fragment custom blur">Direct response to user feedback.
+					</li>
+					<li class="fragment custom blur">Available options all had serious
+						limitations:
+						<ul style="font-size: 0.8em;">
+							<li>Milter was too difficult to implement (binary,
+								undocumented, C-centric).</li>
+							<li>Webhooks were limited to passive observability — no way to
+								control the SMTP session.</li>
+							<li>Local scripts didn’t work for users running distributed or
+								containerized setups.</li>
+						</ul>
+					</li>
+					<li class="fragment custom blur">Users wanted:
+						<ul style="font-size: 0.8em;">
+							<li>A simple, language-agnostic, and network-safe protocol.
+							</li>
+							<li>Clear documentation and easy integration.</li>
+							<li>Multi-stage scanning with shared state across SMTP phases.
+							</li>
+						</ul>
+					</li>
+					<li class="fragment custom blur">MTA Hooks was created to fill this gap — and it’s already running
+						in production.</li>
+				</ul>
+			</section>
+
+			<section style="text-align: left;" data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h4><span>How MTA Hooks works</span></h4>
+				<small data-id="text"><span>Stage-based HTTP interactions between MTA and scanner.</span></small>
+				<ul style="font-size: 0.6em;">
+					<li class="fragment custom blur">MTA sends <b>HTTP POST requests</b> at various SMTP stages.</li>
+					<li class="fragment custom blur">Payload is JSON (or optionally other formats like MessagePack).
+					</li>
+					<li class="fragment custom blur">Scanner replies with an action: accept, reject, modify, etc..</li>
+					<li class="fragment custom blur">MTA acts based on the scanner’s response.</li>
+				</ul>
+			</section>
+
+			<section style="text-align: left;" data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h4><span>Lifecycle Example</span></h4>
+				<small data-id="text"><span>Each SMTP phase has a hook, with shared state across stages.</span></small>
+				<ul style="font-size: 0.6em;">
+					<li class="fragment custom blur"><b>CONNECT</b> → Scanner evaluates client info.</li>
+					<li class="fragment custom blur"><b>MAIL FROM / RCPT TO</b> → Scanner checks envelope.</li>
+					<li class="fragment custom blur"><b>DATA</b> → Scanner evaluates content.</li>
+					<li class="fragment custom blur">Each step has its own hook, with shared context.</li>
+					<li class="fragment custom blur">Scanner can attach state across stages.</li>
+				</ul>
+			</section>
+
+			<section style="text-align: left;" data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h4><span>Why standardize MTA Hooks?</span></h4>
+				<small data-id="text"><span>Unlock innovation and interoperability across the ecosystem.</span></small>
+				<ul style="font-size: 0.6em;">
+					<li class="fragment custom blur">Encourages <b>interoperability</b> between MTAs and third-party
+						filters.</li>
+					<li class="fragment custom blur">Simplifies development: no need to reverse-engineer C libraries.
+					</li>
+					<li class="fragment custom blur">Creates a shared, open ecosystem for filtering, observability, and
+						policy tools.</li>
+					<li class="fragment custom blur">Gives MTA and filter developers a modern, extensible alternative to
+						milter.</li>
+					<li class="fragment custom blur">Helps formalize what is currently being used in an ad-hoc way.</li>
+					<li class="fragment custom blur">We’re already seeing interest from
+						scanner developers and mailbox providers.</li>
+					<li class="fragment custom blur">Some MTA hooks plugins are starting to emerge on GitHub.</li>
+				</ul>
+			</section>
+
+			<section style="text-align: left;" data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h4><span>Open Questions for Standardization</span></h4>
+				<small data-id="text"><span>As we consider moving toward a standard, a few areas need community
+						input:</span></small>
+				<ul style="font-size: 0.6em;">
+					<li class="fragment custom blur">Raw vs. Parsed message content:
+						<ul style="font-size: 0.8em;">
+							<li>Scanners like Rspamd need access to raw message bytes (e.g., to detect malformed MIME).
+							</li>
+							<li>Others (e.g., Fastmail) prefer structured MIME representations.</li>
+							<li>Can/should both be supported?</li>
+						</ul>
+					</li>
+					<li class="fragment custom blur">Encoding message bodies in JSON:
+						<ul style="font-size: 0.8em;">
+							<li>Escaping large blobs of text is inefficient and messy.</li>
+							<li>Base64? Or define a clean way to handle body content outside the JSON structure?</li>
+						</ul>
+
+					</li>
+					<li class="fragment custom blur">Support for binary protocol alternatives:
+						<ul style="font-size: 0.8em;">
+							<li>Should we allow alternatives like MessagePack, CBOR, or gRPC?</li>
+							<li>Could use content negotiation or capability flags</li>
+						</ul>
+					</li>
+					<li class="fragment custom blur">Extensibility:
+						<ul style="font-size: 0.8em;">
+							<li>How should we define extension points for future capabilities?</li>
+							<li>Custom actions? Metadata tagging? Plugin behaviors?</li>
+						</ul>
+					</li>
+					<li class="fragment custom blur">Security & Authentication:
+
+						<ul style="font-size: 0.8em;">
+							<li>How should MTAs authenticate scanners?</li>
+							<li>Should we recommend mTLS? Tokens? Other mechanisms?</li>
+						</ul>
+					</li>
+				</ul>
+			</section>
+
+			<section style="text-align: left;" data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h4><span>What We’re Asking</span></h4>
+				<small data-id="text"><span>Looking for interest, feedback, and next steps.</span></small>
+				<ul style="font-size: 0.6em;">
+					<li class="fragment custom blur">Input from the community on the need for a modern protocol.</li>
+					<li class="fragment custom blur">Help shape the <b>scope</b>: filtering, observability, policy
+						control.</li>
+					<li class="fragment custom blur">Ideally: charter a discussion around standardizing MTA Hooks.</li>
+					<li class="fragment custom blur">If there's interest, we can work toward a formal I-D and WG
+						adoption.</li>
+					<li class="fragment custom blur">Latest specification available at <a
+							href="https://stalw.art/docs/api/mta-hooks/overview">https://stalw.art/docs/api/mta-hooks/overview</a>.
+					</li>
+				</ul>
+			</section>
+
+			<section data-auto-animate data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<h3><span data-id="stalwart">EOF</span></h3>
+				<p><span data-id="text">Questions? Feedback?</span></p>
+			</section>
+
+
+			<section data-auto-animate data-background-gradient="linear-gradient(to bottom, #DB2D54, #d47287)">
+				<img src="img/logo-white.svg" />
+				<p>https://stalw.art</p>
+				<p>hello@stalw.art</p>
+			</section>
+
+		</div>
+	</div>
+
+	<script src="js/reveal.js"></script>
+	<script src="js/notes.js"></script>
+	<script src="js/markdown.js"></script>
+	<script src="js/highlight.js"></script>
+	<script>
+		Reveal.initialize({
+			hash: true,
+			plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+		});
+	</script>
+</body>
+
+</html>
