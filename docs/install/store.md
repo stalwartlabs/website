@@ -30,7 +30,7 @@ The following table summarizes the supported backends available for each store t
 | Azure Blob Storage |                    | :white_check_mark: |                    |                    |
 | Filesystem         |                    | :white_check_mark: |                    |                    |
 | ElasticSearch      |                    |                    | :white_check_mark: |                    |
-| Meiliearch         |                    |                    | :white_check_mark: |                    |
+| Meilisearch        |                    |                    | :white_check_mark: |                    |
 | Redis / Valkey     |                    |                    |                    | :white_check_mark: |
 
 :::tip Note
