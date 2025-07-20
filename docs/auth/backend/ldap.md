@@ -110,7 +110,7 @@ Example:
 ```toml
 [directory."ldap".bind.auth]
 method = "template"
-dn = "cn={local},ou=svcaccts,dc={domain}"
+template = "cn={local},ou=svcaccts,dc={domain}"
 search = true
 
 [directory."ldap".attributes]
