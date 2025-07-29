@@ -13,7 +13,7 @@ To start the database console, run the Stalwart binary with the `--console` para
 For example:
 
 ```bash
-$ /opt/stalwart/bin/stalwart --console --config /opt/stalwart/etc/config.toml
+$ /opt/stalwart/bin/stalwart --config /opt/stalwart/etc/config.toml --console
 ```
 
 This command initializes the console interface and establishes a connection to the configured backend database, providing an interactive session for executing database-related operations.
