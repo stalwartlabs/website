@@ -1,0 +1,56 @@
+---
+slug: github-ossf
+title: "Stalwart Joins GitHub's Open Source Secure Fund"
+authors: [mdecimus]
+tags: [ossf, open-source, security, stalwart]
+---
+
+We're excited to announce that Stalwart has been selected to participate in Session 2 of [GitHub's Open Source Secure Fund (OSSF)](https://github.blog/open-source/maintainers/securing-the-supply-chain-at-scale-starting-with-71-important-open-source-projects/), a prestigious program designed to enhance security across the open source ecosystem. This recognition represents not only an acknowledgment of Stalwart's growing importance in the email infrastructure space but also our commitment to maintaining the highest security standards.
+
+## About GitHub's OSSF
+
+GitHub launched the [Open Source Secure Fund](https://resources.github.com/github-secure-open-source-fund/) in November 2024 as a comprehensive initiative to strengthen security across the software supply chain. The program represents a strategic approach to open source security that goes far beyond simple financial support. Instead of merely providing funding, the initiative creates a structured pathway for maintainers to develop deep security expertise while building lasting connections within a community of security-focused developers.
+
+The fund operates on a model that combines immediate intensive training with long-term support and accountability. Each session consists of a three-week sprint, delivered by security experts from GitHub and their partners through the GitHub Security Lab. However, the relationship extends far beyond these initial weeks, with participants receiving ongoing support and resources throughout a full twelve-month engagement period.
+
+What makes this program particularly valuable is its emphasis on community building and ongoing support. Participants gain access to a specialized security-focused community and regular office hours with the GitHub Security Lab throughout the entire twelve-month period. This extended engagement ensures that the security improvements initiated during the sprint continue to evolve and mature over time.
+
+## Our Experience
+
+The training component of our participation concluded six weeks ago, and we can confidently say it provided valuable insights that have already begun to shape Stalwart's security posture. The comprehensive nature of the program allowed us to step back and evaluate our security practices from multiple perspectives, leading to concrete improvements in our security infrastructure.
+
+One of the most significant outcomes of our participation has been the development of a comprehensive [Incident Response Plan](https://github.com/stalwartlabs/stalwart/blob/main/SECURITY_PROCESS.md) specifically tailored to Stalwart's architecture and user base. This plan establishes clear protocols for identifying, containing, and resolving security incidents while maintaining transparency with our community. Having a well-defined incident response strategy is crucial for any mail server software, given the sensitive nature of email communications and the potential impact of security breaches.
+
+Additionally, we've substantially enhanced our existing [Security Policy](https://github.com/stalwartlabs/stalwart/blob/main/SECURITY.md), incorporating lessons learned from the GitHub training and feedback from security experts. This updated policy provides clearer guidelines for security researchers, establishes more robust vulnerability disclosure procedures, and outlines our commitment to maintaining security standards throughout Stalwart's development lifecycle.
+
+The training also introduced us to various security concepts and tools, including an introduction to fuzzing techniques for discovering potential vulnerabilities. However, the Rust programming language's memory safety guarantees and the security-conscious culture of the Rust community mean that many of the security recommendations from the GitHub program were already implemented in Stalwart's codebase. This validation from security experts reinforced our choice of Rust as the foundation for Stalwart and highlighted the proactive security feedback we've received from the broader Rust ecosystem.
+
+## Leveraging Azure Credits
+
+While the GitHub funding provides important financial support for the project, we're particularly excited about the $100,000 in Azure credits that accompany our participation in the program. These credits represent an unprecedented opportunity to conduct large-scale testing and optimization of Stalwart's performance and security characteristics.
+
+We plan to use these Azure credits to deploy Stalwart across a massive cluster configuration, enabling us to generate millions of concurrent connections and simulate real-world load scenarios that would be impossible to replicate in smaller testing environments. This extensive testing will focus on three critical areas that are essential for any mail server infrastructure.
+
+First, we'll conduct comprehensive performance testing to identify and resolve bottlenecks that might emerge under extreme load conditions. Email servers must handle varying loads gracefully, from quiet periods to sudden spikes in activity, and this testing will help us optimize Stalwart's resource utilization and response times across all scenarios.
+
+Second, we'll focus extensively on scalability improvements, ensuring that Stalwart can grow seamlessly from small deployments to enterprise-scale installations. Understanding how different components interact and potentially conflict under high-load conditions will enable us to make architectural improvements that benefit all users, regardless of their deployment size.
+
+Finally, and perhaps most importantly for security, we'll conduct thorough resilience testing against various types of Denial of Service (DoS) attacks. Mail servers are frequent targets for such attacks, and having the ability to simulate these scenarios in a controlled environment will allow us to implement and verify defensive mechanisms that protect real deployments. The insights gained from this testing will be invaluable for administrators who need to deploy Stalwart in security-conscious environments.
+
+## Ongoing Security Audit
+
+Our commitment to security extends beyond the GitHub program, as evidenced by our current engagement with [Radically Open Security](https://www.radicallyopensecurity.com/) for a comprehensive second security audit of Stalwart. This audit represents a significant milestone in our security journey, coming approximately two years after our [first security audit](https://stalw.art/blog/security-audit/) conducted on October 7, 2023.
+
+The timing of this second audit is particularly important because Stalwart has evolved considerably since that initial security review. New features have been added, performance optimizations have been implemented, and the overall architecture has matured significantly. A fresh security perspective is essential to ensure that these improvements haven't introduced new vulnerabilities and that our security posture has kept pace with the software's development.
+
+Radically Open Security brings extensive experience in open source security auditing, and their thorough approach will provide valuable insights into Stalwart's current security status. This audit is being financed through a [grant from NLNet](https://stalw.art/blog/nlnet-grant-collaboration), demonstrating the broader open source community's investment in Stalwart's security and reliability.
+
+We expect to release the complete results of this security audit soon, continuing our commitment to transparency and community trust. The combination of the GitHub security training, the ongoing Azure-powered testing, and this comprehensive security audit represents a multi-faceted approach to security that reflects the importance we place on protecting our users' communications and data.
+
+## Acknowledgments
+
+We want to take a moment to express our sincere thanks to [GitHub](https://github.com/) for selecting Stalwart to participate in the Open Source Secure Fund and for providing us with the training and resources that will help strengthen the security of our project. We also want to extend our gratitude to [Zerodha](https://zerodha.com/) for referring Stalwart to be part of GitHub’s OSSF Session 2. Their support has been invaluable, and we look forward to continuing this journey of growth and improvement with their help.
+
+Stalwart is committed to providing secure and reliable mail and collaboration services, and with the backing of the GitHub OSSF and the ongoing work of our team, we are confident that we can continue to meet and exceed the expectations of our users.
+
+Thank you for your continued support!
