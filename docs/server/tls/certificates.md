@@ -36,4 +36,4 @@ private-key = "%{file:/opt/stalwart-smtp/etc/private/tls.key}%"
 
 ## Reloading certificates
 
-When TLS certificates are updated, it is necessary to reload them in order for the changes to take effect. This can be done without stopping the server by using the [web-admin](/docs/management/webadmin/overview) or [command line interface](/docs/management/cli/overview).
+There is no automatic mechanism provided by Stalwart to automagically update the SSL/TLS certificates you're using on your domain(s). When your certificates expire, you will have to update them yourself according to this discussion on GitHub: https://github.com/stalwartlabs/stalwart/issues/463#issuecomment-2815440850. When TLS certificates are updated via the process you've chosen, it is necessary and required to reload them into Stalwart so that Stalwart can use them. This can be done without stopping the server by using eith the [web-admin](/docs/management/webadmin/overview) or [command line interface](/docs/management/cli/overview). 
