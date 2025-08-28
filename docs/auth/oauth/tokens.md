@@ -42,11 +42,11 @@ command ``LC_ALL=C tr -dc '[:alpha:]' < /dev/urandom | head -c 64``. Once you ha
 key = "sDRvvROsJmRUnjIfcUiDUSaAxdQpfixuLvdwlSffptaxUnSQZALenZSYUPQQByUI"
 ```
 
-Or, to read the key from the environment variable `OAUTH_KEY`:
+Or, to read the key from the environment variable `OAUTH_SECRET`:
 
 ```toml
 [oauth]
-key = "%{env:OAUTH_KEY}%"
+key = "%{env:OAUTH_SECRET}%"
 ```
 
 :::tip Be aware that
