@@ -4,9 +4,9 @@ sidebar_position: 2
 
 # Certificates
 
-When deploying TLS encryption with manually provided certificates, Stalwart automatically parses each certificate to extract all available subject names embedded within the certificate. These subject names indicate the domains and subdomains for which the certificate is valid, essentially determining the scope of its applicability for securing connections.
+When deploying TLS encryption with manually provided certificates, Stalwart automatically parses each certificate to extract all available subject names embedded within the certificate. These subject names indicate the domains and subdomains for which the certificate is valid, determining the scope of its applicability for securing connections.
 
-During the TLS handshake process (the initial phase of establishing a TLS-secured connection) the server dynamically selects the appropriate certificate to present based on the server name provided by the client via the Server Name Indication (SNI) extension. SNI is a TLS extension that allows a client to specify the host it is trying to connect to at the start of the handshake process. This capability is crucial for servers hosting multiple domains or services under a single IP address, enabling them to present the correct certificate matching the requested domain.
+During the TLS handshake process (the initial phase of establishing a TLS-secured connection) the server dynamically selects the appropriate certificate to present based on the server name provided by the client via the Server Name Indication (SNI) extension. SNI is a TLS extension that allows a client to specify the host it is trying to connect to at the start of the handshake process. This capability is crucial for servers hosting multiple domains or services under a single IP address, enabling them to present the correct certificate for the requested domain.
 
 While Stalwart's automatic parsing and selection mechanism efficiently handles the determination and usage of certificates based on SNI, administrators also have the option to manually specify the list of subjects (i.e., domain names) for which a certificate is valid. However, this manual specification is generally unnecessary, given the server's ability to intelligently derive this information directly from the certificate itself.
 
@@ -36,4 +36,4 @@ private-key = "%{file:/opt/stalwart-smtp/etc/private/tls.key}%"
 
 ## Reloading certificates
 
-There is no automatic mechanism provided by Stalwart to automagically update the SSL/TLS certificates you're using on your domain(s). When your certificates expire, you will have to update them yourself according to this discussion on GitHub: https://github.com/stalwartlabs/stalwart/issues/463#issuecomment-2815440850. When TLS certificates are updated via the process you've chosen, it is necessary and required to reload them into Stalwart so that Stalwart can use them. This can be done without stopping the server by using eith the [web-admin](/docs/management/webadmin/overview) or [command line interface](/docs/management/cli/overview). 
+There is an [automatic mechanism](https://stalw.art/blog/acme-tls/#the-power-of-acme) provided by Stalwart to update the TLS certificates you're using on your domain(s). When TLS certificates are updated manually, it's required to reload them into Stalwart so that Stalwart can use them. This can be done without stopping the server by using either the [web-admin](/docs/management/webadmin/overview) or [command line interface](/docs/management/cli/overview). 
