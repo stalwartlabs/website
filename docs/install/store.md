@@ -13,7 +13,7 @@ Stalwart employs a modular storage architecture that separates different types o
 
 In simple or single-node setups, it is entirely feasible to consolidate these roles into a single storage backend. For example, databases such as **RocksDB** or **PostgreSQL** can be configured to serve as the data store, blob store, full-text search store, and even in-memory store. It is common to see lightweight deployments where RocksDB is used exclusively for all four functions, simplifying management and reducing infrastructure complexity. 
 
-Should you decide to use PostrgreSQL instead of the default RocksDB, you'll need to add a user and a [database schema](/docs/auth/backend/sql/#postgresql).  
+Should you decide to use PostrgreSQL instead of the default RocksDB, you'll need to add a user and a [database schema](/docs/auth/backend/sql/#postgresql).
 
 However, for larger deployments—particularly those running in [distributed environments](/docs/cluster/overview)—it is advisable to assign each storage role to a backend that is fit for purpose. A more scalable and robust configuration might involve **FoundationDB** as the data store, an **S3-compatible service** for blob storage, **Redis** for handling volatile in-memory data, and a dedicated search engine such as **Elasticsearch** or **Meilisearch** for full-text indexing.
 
