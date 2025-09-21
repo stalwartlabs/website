@@ -43,6 +43,8 @@ user = "admin"
 secret = "$6$MM1wz7Y8.L8O4eN0$ti3/072t3T5SJ6xryK45RvpW38dW2hSH86cBcV0XHtgnBYCCAFjqibS84OsdxfAITd6.VkKfhfUhlfVczdkFx1"
 ```
 
+where `secret` is the SHA-512 of the password, that can be computed using `openssl passwd -6 <password>`.
+
 ## Master User
 
 The master user is a special account that is granted full access to all mailboxes on the server. This account is typically used for system maintenance and monitoring purposes, allowing administrators to perform tasks that require access to all mailboxes. The master user is a powerful tool that should be used judiciously and only for legitimate system administration tasks.
