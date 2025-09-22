@@ -6,7 +6,7 @@ sidebar_position: 5
 
 Multi-tenancy is a feature in Stalwart that allows multiple independent organizations, known as **tenants**, to share the same mail server infrastructure while keeping their data and resources completely isolated from one another. A tenant is defined as a logical division within the mail server, representing a specific organization or group that has its own set of users, groups, mailing lists, and domains.
 
-Each tenant in Stalwart is defined as a [principal](/docs/auth/principals/overview) within the directory. Principals assigned to a specific tenant (such as i[individuals](/docs/auth/principals/individual), [groups](/docs/auth/principals/group), and [lists](/docs/auth/principals/list)) are restricted to interacting only with other resources and users within the same tenant. This ensures complete separation between tenants, providing privacy and security for each organization. 
+Each tenant in Stalwart is defined as a [principal](/docs/auth/principals/overview) within the directory. Principals assigned to a specific tenant (such as [individuals](/docs/auth/principals/individual), [groups](/docs/auth/principals/group), and [lists](/docs/auth/principals/list)) are restricted to interacting only with other resources and users within the same tenant. This ensures complete separation between tenants, providing privacy and security for each organization. 
 
 Additionally, any permissions assigned within a tenant are bound by the permissions of the tenant itself. For instance, if a tenant administrator assigns a permission to a user that the tenant itself does not have, this permission is ignored. This ensures that tenant administrators cannot assign more privileges than the tenant is allowed.
 
