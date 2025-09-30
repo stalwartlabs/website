@@ -19,7 +19,7 @@ Configuring a sharded blob store in Stalwart is simple and requires specifying a
 The following configuration settings are available for Sharded Blob Stores, which are specified under the `store.<name>` section of the configuration file:
 
 - `type`: Specifies the type of database, set to `"shared-blob"` for sharded blob store.
-- `stores`: A list of blob store identifiers that make up the shard. Each identifier corresponds to an blob store backend, such as Redis or Memcached.
+- `stores`: A list of blob store identifiers that make up the shard. Each identifier corresponds to an blob store backend, such as Amazon S3, Google Cloud Storage (GCS) or MinIO.
 
 **IMPORTANT**: It is vital to maintain consistency in the order and number of blob stores in the configuration. Changing the sequence or modifying the number of stores will disrupt the hash-to-store mapping, leading to misplaced or inaccessible blobs. For this reason, careful planning and stability in the shard configuration are essential to ensure data integrity and reliable access to stored blobs.
 
