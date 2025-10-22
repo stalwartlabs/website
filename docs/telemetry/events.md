@@ -322,11 +322,11 @@ The following are the event types that Stalwart captures along with their defaul
 |`manage-sieve.start-tls`|ManageSieve STARTTLS command|`DEBUG`|
 |`manage-sieve.unauthenticate`|ManageSieve UNAUTHENTICATE command|`DEBUG`|
 |`manage-sieve.update-script`|ManageSieve UPDATE script command|`DEBUG`|
-|`manage.already-exists`|Managed resource already exists|`DEBUG`|
-|`manage.assert-failed`|Management assertion failed|`DEBUG`|
+|`manage.already-exists`|Record already exists|`DEBUG`|
+|`manage.assert-failed`|Assertion failed|`DEBUG`|
 |`manage.error`|Management error|`DEBUG`|
-|`manage.missing-parameter`|Missing management parameter|`DEBUG`|
-|`manage.not-found`|Managed resource not found|`DEBUG`|
+|`manage.missing-parameter`|Missing parameter|`DEBUG`|
+|`manage.not-found`|Resource not found|`DEBUG`|
 |`manage.not-supported`|Management operation not supported|`DEBUG`|
 |`message-ingest.duplicate`|Skipping duplicate message|`INFO`|
 |`message-ingest.error`|Message ingestion error|`ERROR`|
@@ -486,6 +486,7 @@ The following are the event types that Stalwart captures along with their defaul
 |`smtp.future-release-disabled`|FUTURE RELEASE extension disabled|`DEBUG`|
 |`smtp.future-release-invalid`|Invalid FUTURE RELEASE parameter|`DEBUG`|
 |`smtp.help`|SMTP HELP command|`DEBUG`|
+|`smtp.id-not-found`|Strategy not found|`WARN`|
 |`smtp.invalid-command`|Invalid command|`DEBUG`|
 |`smtp.invalid-ehlo`|Invalid EHLO command|`INFO`|
 |`smtp.invalid-parameter`|Invalid parameter|`DEBUG`|
@@ -520,7 +521,6 @@ The following are the event types that Stalwart captures along with their defaul
 |`smtp.rcpt-to-missing`|RCPT TO address missing|`DEBUG`|
 |`smtp.rcpt-to-rewritten`|RCPT TO address rewritten|`DEBUG`|
 |`smtp.relay-not-allowed`|Relay not allowed|`INFO`|
-|`smtp.remote-id-not-found`|Remote host ID not found|`WARN`|
 |`smtp.request-too-large`|Request too large|`INFO`|
 |`smtp.require-tls-disabled`|REQUIRETLS extension disabled|`DEBUG`|
 |`smtp.rset`|SMTP RSET command|`DEBUG`|
@@ -597,6 +597,7 @@ The following are the event types that Stalwart captures along with their defaul
 |`task-queue.blob-not-found`|Blob not found for task|`DEBUG`|
 |`task-queue.metadata-not-found`|Metadata not found for task|`DEBUG`|
 |`task-queue.task-acquired`|Task acquired from queue|`DEBUG`|
+|`task-queue.task-ignored`|Task ignored based on current server roles|`DEBUG`|
 |`task-queue.task-locked`|Task is locked by another process|`DEBUG`|
 |`telemetry.alert`|Alert triggered|`WARN`|
 |`telemetry.journal-error`|Journal collector error|`WARN`|

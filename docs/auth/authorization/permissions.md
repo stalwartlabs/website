@@ -85,9 +85,9 @@ Stalwart provides a wide range of permissions that can be assigned to users, gro
 |`dav-file-prop-patch`|Modify properties of file resources|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 |`dav-file-put`|Upload or modify file resources|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 |`dav-principal-acl`|Set principal properties for access control|:white_check_mark:|:white_check_mark:|:white_check_mark:|
-|`dav-principal-list`|List available principals in the system|:white_check_mark:|||
+|`dav-principal-list`|List available principals in the system|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 |`dav-principal-match`|Match principals based on specified criteria|:white_check_mark:|:white_check_mark:|:white_check_mark:|
-|`dav-principal-search`|Search for principals by property values|:white_check_mark:|||
+|`dav-principal-search`|Search for principals by property values|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 |`dav-principal-search-prop-set`|Define property sets for principal searches|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 |`dav-sync-collection`|Synchronize collection changes with client|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 |`delete-system-folders`|Delete of system folders|:white_check_mark:|||
@@ -143,10 +143,35 @@ Stalwart provides a wide range of permissions that can be assigned to users, gro
 |`individual-get`|Retrieve specific account information|:white_check_mark:|:white_check_mark:||
 |`individual-list`|View list of user accounts|:white_check_mark:|:white_check_mark:||
 |`individual-update`|Modify user account information|:white_check_mark:|:white_check_mark:||
+|`jmap-address-book-changes`|Track address book changes via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
+|`jmap-address-book-get`|Retrieve address books via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
+|`jmap-address-book-set`|Create or update address books via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 |`jmap-blob-copy`|Copy blobs via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 |`jmap-blob-get`|Retrieve blobs via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 |`jmap-blob-lookup`|Look up blobs via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 |`jmap-blob-upload`|Upload blobs via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
+|`jmap-calendar-changes`|Track calendar changes via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
+|`jmap-calendar-event-changes`|Track calendar event changes via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
+|`jmap-calendar-event-copy`|Copy calendar events to new locations via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
+|`jmap-calendar-event-get`|Retrieve calendar events via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
+|`jmap-calendar-event-notification-changes`|Track calendar event notification changes via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
+|`jmap-calendar-event-notification-get`|Retrieve calendar event notifications via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
+|`jmap-calendar-event-notification-query`|Search for calendar event notifications matching criteria via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
+|`jmap-calendar-event-notification-query-changes`|Track calendar event notification query changes via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
+|`jmap-calendar-event-notification-set`|Create or update calendar event notifications via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
+|`jmap-calendar-event-parse`|Parse calendar events via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
+|`jmap-calendar-event-query`|Search for calendar events matching criteria via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
+|`jmap-calendar-event-query-changes`|Track calendar event query changes via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
+|`jmap-calendar-event-set`|Create or update calendar events via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
+|`jmap-calendar-get`|Retrieve calendars via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
+|`jmap-calendar-set`|Create or update calendars via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
+|`jmap-contact-card-changes`|Track contact card changes via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
+|`jmap-contact-card-copy`|Copy contact cards to new locations via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
+|`jmap-contact-card-get`|Retrieve contact cards via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
+|`jmap-contact-card-parse`|Parse contact cards via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
+|`jmap-contact-card-query`|Search for contact cards matching criteria via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
+|`jmap-contact-card-query-changes`|Track contact card query changes via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
+|`jmap-contact-card-set`|Create or update contact cards via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 |`jmap-echo`|Perform JMAP echo requests|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 |`jmap-email-changes`|Track email changes via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 |`jmap-email-copy`|Copy emails via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
@@ -161,6 +186,11 @@ Stalwart provides a wide range of permissions that can be assigned to users, gro
 |`jmap-email-submission-query`|Perform email submission queries via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 |`jmap-email-submission-query-changes`|Track email submission query changes via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 |`jmap-email-submission-set`|Modify email submission settings via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
+|`jmap-file-node-changes`|Track file node changes via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
+|`jmap-file-node-get`|Retrieve file nodes via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
+|`jmap-file-node-query`|Search for file nodes matching criteria via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
+|`jmap-file-node-query-changes`|Track file node query changes via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
+|`jmap-file-node-set`|Create or update file nodes via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 |`jmap-identity-changes`|Track identity changes via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 |`jmap-identity-get`|Retrieve user identities via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 |`jmap-identity-set`|Modify user identities via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
@@ -169,9 +199,14 @@ Stalwart provides a wide range of permissions that can be assigned to users, gro
 |`jmap-mailbox-query`|Perform mailbox queries via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 |`jmap-mailbox-query-changes`|Track mailbox query changes via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 |`jmap-mailbox-set`|Modify mailboxes via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
-|`jmap-principal-get`|Retrieve principal information via JMAP|:white_check_mark:|:white_check_mark:||
-|`jmap-principal-query`|Perform principal queries via JMAP|:white_check_mark:|:white_check_mark:||
-|`jmap-principal-query-changes`|Track principal query changes via JMAP|:white_check_mark:|:white_check_mark:||
+|`jmap-participant-identity-changes`|Track participant identity changes via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
+|`jmap-participant-identity-get`|Retrieve participant identity information via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
+|`jmap-participant-identity-set`|Create or update participant identities via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
+|`jmap-principal-changes`|Track principal changes via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
+|`jmap-principal-get`|Retrieve principal information via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
+|`jmap-principal-get-availability`|Retrieve availability information via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
+|`jmap-principal-query`|Perform principal queries via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
+|`jmap-principal-query-changes`|Track principal query changes via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 |`jmap-push-subscription-get`|Retrieve push subscriptions via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 |`jmap-push-subscription-set`|Modify push subscriptions via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 |`jmap-quota-changes`|Track quota changes via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
@@ -179,6 +214,11 @@ Stalwart provides a wide range of permissions that can be assigned to users, gro
 |`jmap-quota-query`|Perform quota queries via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 |`jmap-quota-query-changes`|Track quota query changes via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 |`jmap-search-snippet`|Retrieve search snippets via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
+|`jmap-share-notification-changes`|Track share notification changes via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
+|`jmap-share-notification-get`|Retrieve share notifications via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
+|`jmap-share-notification-query`|Search for share notifications matching criteria via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
+|`jmap-share-notification-query-changes`|Track share notification query changes via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
+|`jmap-share-notification-set`|Create or update share notifications via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 |`jmap-sieve-script-get`|Retrieve Sieve scripts via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 |`jmap-sieve-script-query`|Perform Sieve script queries via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 |`jmap-sieve-script-query-changes`|Track Sieve script query changes via JMAP|:white_check_mark:|:white_check_mark:|:white_check_mark:|
