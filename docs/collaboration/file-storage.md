@@ -4,7 +4,15 @@ sidebar_position: 7
 
 # File Storage
 
-Stalwart includes support for **file storage and remote file management** through the **WebDAV protocol**, allowing users to store, organize, and access files directly from their account.
+Stalwart includes support for **file storage and remote file management** through the **JMAP for File Storage** and **WebDAV** protocols, allowing users to store, organize, and access files directly from their account.
+
+## JMAP for File Storage
+
+**JMAP for File Storage** (also known as JMAP for FileNode) is a JMAP-based replacement for traditional WebDAV file storage. It allows clients to manage files and folders (upload, download, move, rename, share, etc.) using the same JMAP framework as Mail, Calendars, and Contacts.
+
+Instead of WebDAV’s XML-based PROPFIND/REPORT operations and custom HTTP methods, JMAP for File Storage exposes a well-defined JSON data model for files and collections. It integrates natively with JMAP Sharing and Access Control mechanisms.
+
+## WebDAV
 
 With WebDAV, users can **connect to their Stalwart account as a remote drive**, enabling them to browse, upload, download, and manage files using standard file manager applications on desktop and mobile devices. This provides a convenient and secure way to share documents, access files on the go, or centralize data storage—without the need for additional software or proprietary protocols.
 
@@ -12,7 +20,7 @@ File storage in Stalwart is tightly integrated with the server's existing resour
 
 By supporting WebDAV-based file storage, Stalwart extends its functionality beyond communication and scheduling, offering a unified platform for collaborative work and secure data access.
 
-## Accessing Files
+### Accessing Files
 
 Users can access their file storage on Stalwart using the WebDAV protocol at a predictable and consistent URL path. Each user’s file storage area is located under `/dav/file/<account_name>`. For example, if the user’s account name is `jane`, her root file storage directory will be accessible at `/dav/file/jane`.
 

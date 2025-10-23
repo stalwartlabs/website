@@ -6,7 +6,10 @@ sidebar_position: 4
 
 Calendar Scheduling allows users to efficiently coordinate meetings and events by automating the process of sending, receiving, and responding to invitations. Rather than relying on manual email exchanges, calendar scheduling systems streamline communication between organizers and attendees, track participation status, and manage updates and cancellations in real time.
 
-Stalwart Mail supports **Scheduling Extensions to CalDAV**, as defined in [RFC 6638](https://datatracker.ietf.org/doc/html/rfc6638). This specification extends the CalDAV protocol to support server-based scheduling operations, enabling calendar clients to schedule meetings through standard WebDAV-based interactions. With this extension, users can create calendar events and invite participants by simply adding attendee information to an event—Stalwart will handle the necessary scheduling logic, including delivering invitations, processing replies, and updating calendars accordingly.
+Stalwart supports calendar scheduling through two primary mechanisms:
+
+-  **JMAP for Calendars**, which includes built-in support for scheduling operations such as sending invitations, processing responses, and managing event updates using the JMAP protocol. This modern API allows clients to interact with calendar data in a structured and efficient manner, enabling seamless scheduling workflows across devices and applications.
+- **Scheduling Extensions to CalDAV**, as defined in [RFC 6638](https://datatracker.ietf.org/doc/html/rfc6638). This specification extends the CalDAV protocol to support server-based scheduling operations, enabling calendar clients to schedule meetings through standard WebDAV-based interactions. With this extension, users can create calendar events and invite participants by simply adding attendee information to an event—Stalwart will handle the necessary scheduling logic, including delivering invitations, processing replies, and updating calendars accordingly.
 
 Calendar scheduling in Stalwart relies on two core protocols from the iCalendar ecosystem:
 

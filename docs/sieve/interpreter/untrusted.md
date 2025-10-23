@@ -10,7 +10,6 @@ The untrusted interpreter is used to execute Sieve scripts that are created by e
 
 Sieve scripts are safely executed in a controlled sandbox that ensures that scripts do not exceed or abuse their allocated system resources. Different type of limits can be enforced on Sieve scripts to prevent users from abusing the system resources. The following parameters can be configured under the `sieve.untrusted.limits` section:
 
-- ``max-scripts``: Maximum number of Sieve scripts that a user can have. Defaults to ``256``.
 - ``script-size``: Maximum size of a Sieve script in bytes. Defaults to ``1048576`` (1MB).
 - ``string-length``: Maximum size of a constant string. Defaults to ``4096``.
 - ``nested-blocks``: Maximum number of nested ``if`` / ``elsif`` / ``else`` blocks. Defaults to ``15``.
@@ -33,7 +32,6 @@ Example:
 ```toml
 [sieve.untrusted.limits]
 name-length = 512
-max-scripts = 256
 script-size = 102400
 string-length = 4096
 variable-name-length = 32

@@ -4,7 +4,7 @@ sidebar_position: 4
 
 # Database Migration
 
-The **Database Import / Export** utility is a built-in feature of the Stalwart Mail and Collaboration Server binary. It allows administrators to perform a full export or import of the system’s internal database. This functionality is primarily intended for **migrating data between different database backends**, such as moving from an embedded backend like **RocksDB** or **SQLite** to a more scalable one like **FoundationDB**, **PostgreSQL**, or **MySQL**.
+The **Database Import / Export** utility is a built-in feature of the Stalwart binary. It allows administrators to perform a full export or import of the system’s internal database. This functionality is primarily intended for **migrating data between different database backends**, such as moving from an embedded backend like **RocksDB** or **SQLite** to a more scalable one like **FoundationDB**, **PostgreSQL**, or **MySQL**.
 
 ## Usage Considerations
 

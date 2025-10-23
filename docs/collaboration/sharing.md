@@ -8,7 +8,7 @@ Stalwart includes support for **resource sharing**, allowing users and groups to
 
 Stalwart supports **group calendars**, **shared address books**, and **shared file folders**, which can be accessed and managed by multiple users with appropriate permissions. In addition to group-based resources, users can also share their **personal calendars, contact lists, and files** with others on the system.
 
-Sharing is implemented using the **WebDAV ACL (Access Control List) extension**, which is supported by many CalDAV and CardDAV clients. This allows users to manage who can read, write, or administer their resources directly from a compatible client interface, without requiring server-side configuration changes. Permissions can be granted at various levels—ranging from full access to read-only viewing—providing flexibility for different collaboration scenarios.
+Sharing is implemented using the **JMAP Sharing extension** for JMAP clients, as well as the **WebDAV ACL (Access Control List) extension**, which is supported by many CalDAV and CardDAV clients. This allows users to manage who can read, write, or administer their resources directly from a compatible client interface, without requiring server-side configuration changes. Permissions can be granted at various levels—ranging from full access to read-only viewing—providing flexibility for different collaboration scenarios.
 
 With built-in sharing capabilities and standards-based access controls, Stalwart makes it easy to enable collaborative features across calendars, contacts, and files while maintaining clear control over access and visibility.
 
@@ -22,17 +22,50 @@ Group resources behave just like individual resources but are accessible to all 
 
 There is no special configuration required to enable group resource visibility—membership alone is sufficient to grant access, making group-based collaboration both straightforward and scalable.
 
+
 ## Sharing Resources
 
 In addition to group-based collaboration, Stalwart allows **individual users to share their own calendars, address books, and file folders** with other users on the system. This enables flexible, ad-hoc collaboration without requiring administrative involvement, and is ideal for scenarios like sharing a personal calendar with a colleague or granting a teammate access to a specific file directory.
 
-To share a resource, users must use a **CalDAV, CardDAV, or WebDAV client**—depending on whether they are sharing a calendar, address book, or file folder—that supports the **WebDAV ACL (Access Control List) extension**. This standard allows users to assign fine-grained permissions (such as read-only or full access) to other users or groups, directly from within the client interface.
+To share a resource, users must use a JMAP client with **JMAP Sharing** support or a **CalDAV, CardDAV, WebDAV client** (depending on whether they are sharing a calendar, address book, or file folder) that supports the **WebDAV ACL (Access Control List) extension**. Both JMAP Sharing and WebDAV ACL allow users to assign fine-grained permissions (such as read-only or full access) to other users or groups, directly from within the client interface.
 
-An important consideration when sharing resources is how users discover others in the system. In WebDAV terminology, a **principal** is any entity that can be granted access to a resource—typically a user, group, or system-defined role. By default, for **privacy and security reasons**, Stalwart **does not allow users to list all available principals** on the system. This means that while users can share resources with others they know, they won't be able to browse or search the full list of users or groups unless explicitly permitted to do so.
+An important consideration when sharing resources is how users discover others in the system. In "groupware" terminology, a **principal** is any entity that can be granted access to a resource—typically a user, group, or system-defined role. By default, for **privacy and security reasons**, Stalwart **does not allow users to list all available principals** on the system. This means that while users can share resources with others they know, they won't be able to browse or search the full list of users or groups unless explicitly permitted to do so.
 
-To allow users to **list or discover other principals**, administrators must grant the appropriate **`dav-principal-*` permissions**. These permissions control who can browse user directories, view group membership, or discover available principals across the system. For details on the specific permissions involved, refer to the [Permissions documentation](/docs/auth/authorization/permissions).
+To control directory visibility, administrators can enable the `sharing.allow-directory-query` setting. When enabled, this allows authenticated users to perform principal lookups via JMAP Sharing and WebDAV ACL, making it possible to discover and share resources with other users on the system. However, this option should only be turned on in controlled environments—either when all users belong to the same organization or when they are isolated into clearly defined [tenants](/docs/auth/authorization/tenants). Enabling directory queries in mixed or unsegregated environments may expose sensitive user information.
 
-This approach ensures a secure default posture while still providing flexibility for environments where broader visibility and self-service sharing are desirable.
+Example:
+
+```toml
+[sharing]
+allow-directory-query = true
+```
+
+For a more granular approach, administrators can also use permissions to control who can browse user directories, view group membership, or discover available principals across the system. For details on the specific permissions involved, refer to the [Permissions documentation](/docs/auth/authorization/permissions).
+
+
+## Sharing Limits
+
+To help prevent over-sharing and keep access lists at a manageable size, administrators can define limits on how many individual users a single item can be shared using the `sharing.max-shares-per-item` setting. For example, changing this setting to `50` would limit each shared calendar, contact list, or file to fifty recipients. Adjust this value according to the scale and collaboration needs of your deployment.
+
+Example:
+
+```toml
+[sharing]
+max-shares-per-item = 50
+```
+
+## Share History Retention
+
+JMAP Sharing records when items are shared under a data type called `ShareNotification`. Each notification captures who shared what with whom, the previous and new ACLs, and other contextual details. The `sharing.max-history` setting determines how long these records are retained before they are automatically deleted.
+
+For instance, setting `sharing.max-history` to `"30d"` keeps share notifications for thirty days, after which they are purged. This allows you to balance audit requirements with database size and performance considerations.
+
+Example:
+
+```toml
+[sharing]
+max-history = "30d"
+```
 
 ## WebDAV Assisted Discovery
 

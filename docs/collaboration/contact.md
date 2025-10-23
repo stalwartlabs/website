@@ -4,15 +4,21 @@ sidebar_position: 6
 
 # Contacts
 
-Stalwart includes built-in support for **contact management and synchronization** through the **CardDAV protocol**, enabling users to store, access, and maintain address book data across devices and applications.
+Stalwart includes built-in support for **contact management and synchronization** through the **JMAP for Contacts** and **CardDAV**, enabling users to store, access, and maintain address book data across devices and applications.
+
+## JMAP for Contacts
+
+**JMAP for Contacts** is a modern alternative to CardDAV, built on the same JSON-based foundation as other JMAP specifications. It allows clients to manage address books and contact data efficiently through a structured, schema-defined JSON representation known as JSContact.
+
+While CardDAV relies on XML-based WebDAV extensions and uses the vCard format for storing contact information, JMAP for Contacts replaces both layers with clear, well-defined JSON objects and operations.
+
+## CardDAV
 
 **CardDAV** is a standardized extension of WebDAV that allows clients to interact with contact data stored on a server. It provides a reliable and interoperable way for users to manage personal and shared address books, and is widely supported by contact applications on both desktop and mobile platforms—including Apple Contacts, Thunderbird, and many others.
 
-Through CardDAV, users can create and edit contact entries, organize them into address books, and synchronize changes automatically across multiple devices. This ensures that contact information remains consistent and up-to-date, no matter where it’s accessed.
+Through CardDAV, users can create and edit contact entries, organize them into address books, and synchronize changes automatically across multiple devices. This ensures that contact information remains consistent and up-to-date, no matter where it’s accessed. By supporting CardDAV, Stalwart delivers a complete and standards-compliant contact management system that integrates seamlessly into modern communication and collaboration workflows. This section covers how contact data is structured, how clients access it, and how administrators can manage and configure contact-related features.
 
-By supporting CardDAV, Stalwart delivers a complete and standards-compliant contact management system that integrates seamlessly into modern communication and collaboration workflows. This section covers how contact data is structured, how clients access it, and how administrators can manage and configure contact-related features.
-
-## Accessing Contacts
+### Accessing Contacts
 
 CardDAV clients can access address book data on the Stalwart using standardized URLs, ensuring compatibility with a wide range of contact management applications. The recommended method for client configuration is through the **autodiscovery endpoint** located at `/.well-known/carddav`. When a client queries this path, the server redirects the request to the appropriate CardDAV resource associated with the authenticated user. This simplifies setup by allowing most modern clients to automatically locate and configure contacts access without requiring manual URL input.
 
@@ -33,6 +39,17 @@ Example:
 ```toml
 [contacts]
 max-size = 524288
+```
+
+### JMAP Parsing Limit
+
+When using JMAP to interact with contact data, the `jmap.contact.parse.max-items` setting limits how many vCard objects can be parsed in a single JMAP `ContactCard/parse` request. The default value is **100 items**. This prevents excessively large requests from consuming too many server resources. If your use case requires processing more items in a single request, this limit can be adjusted.
+
+Example:
+
+```toml
+[jmap.contact.parse]
+max-items = 100
 ```
 
 ## Default Address Book

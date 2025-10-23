@@ -17,7 +17,6 @@ Even though all notifications sent to the push service URL are encrypted over TL
 
 The push subscription service accepts the following parameters under the `jmap.push` section:
 
-- ``max-total``: Total number of push subscriptions that a given user can activate. Defaults to 100.
 - ``throttle``: Time to wait before sending a new request to the push service. Defaults to 1000 milliseconds (1 second).
 - ``attempts.max:``: Maximum number of push attempts before a notification is discarded. Defaults to 3.
 - ``attempts.interval``: Time to wait between push attempts. Defaults to 60000 milliseconds (1 minute).
@@ -29,7 +28,6 @@ Example:
 
 ```toml
 [jmap.push]
-max-total = 100
 throttle = "1ms"
 
 [jmap.push.attempts]

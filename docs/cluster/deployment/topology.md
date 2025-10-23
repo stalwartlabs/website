@@ -4,7 +4,7 @@ sidebar_position: 4
 
 # Topology
 
-In a Stalwart cluster, administrators have full control over how user-facing services are distributed across nodes. This is distinct from [node roles](/docs/cluster/configuration#node-roles), which assign background maintenance tasks such as purging or certificate renewal. **Cluster topology** focuses on which protocols—such as **IMAP, JMAP, WebDAV, and SMTP**—each node will serve.
+In a Stalwart cluster, administrators have full control over how user-facing services are distributed across nodes. This is distinct from [node roles](/docs/cluster/configuration/roles), which assign background maintenance tasks such as purging or certificate renewal. **Cluster topology** focuses on which protocols—such as **IMAP, JMAP, WebDAV, and SMTP**—each node will serve.
 
 Stalwart allows for flexible service distribution: each node can be configured to handle one, several, or all supported protocols. This lets administrators optimize performance, resource usage, and fault tolerance according to real-world traffic patterns and operational goals.
 

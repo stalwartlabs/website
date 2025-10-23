@@ -4,13 +4,19 @@ sidebar_position: 3
 
 # Calendar
 
-Stalwart includes full support for **calendar management and scheduling** through the **CalDAV protocol**, enabling users to create, access, and synchronize calendar data across devices and applications.
+Stalwart includes full support for **calendar management and scheduling** through the **JMAP** and **CalDAV** protocols, enabling users to create, access, and synchronize calendar data across devices and applications.
 
-**CalDAV** is a standardized extension of WebDAV that allows clients to interact with calendar data stored on a server. It is widely supported by calendar applications on desktops and mobile devices, including Apple Calendar, Thunderbird, Outlook (with plugins), and many others. CalDAV enables features such as creating events, setting recurring appointments, inviting participants, and viewing shared calendars, all using a common protocol.
+## JMAP for Calendars
 
-By supporting CalDAV, Stalwart provides users with a flexible and interoperable calendar system that integrates seamlessly into both personal and organizational workflows. Calendars stored on the server can be accessed and managed from anywhere, ensuring consistent scheduling and collaboration across platforms.
+**JMAP for Calendars** is a protocol that provides a modern, JSON-based API for managing calendar data such as events, tasks, and scheduling information. It is designed as a replacement for CalDAV and CalDAV Scheduling, offering the same functionality—creating, reading, updating, deleting, and sharing calendar data—but in a much simpler and more consistent way.
 
-## Accessing Calendars
+Unlike CalDAV, which is built on top of WebDAV and uses XML combined with embedded iCalendar data, JMAP for Calendars is entirely JSON over HTTPS. It uses the same core request/response model as JMAP for Mail, providing a unified protocol for all personal data types.
+
+## CalDAV
+
+**CalDAV** is a standardized extension of WebDAV that allows clients to interact with calendar data stored on a server. It is widely supported by calendar applications on desktops and mobile devices, including Apple Calendar, Thunderbird, Outlook (with plugins), and many others. CalDAV enables features such as creating events, setting recurring appointments, inviting participants, and viewing shared calendars, all using a common protocol. By supporting CalDAV, Stalwart provides users with a flexible and interoperable calendar system that integrates seamlessly into both personal and organizational workflows. Calendars stored on the server can be accessed and managed from anywhere, ensuring consistent scheduling and collaboration across platforms.
+
+### Accessing Calendars
 
 CalDAV clients can access calendar data on the Stalwart using standardized URLs, ensuring compatibility with a wide range of calendar applications. The recommended method for client configuration is through the **autodiscovery endpoint** located at `/.well-known/caldav`. When a client queries this path, the server redirects the request to the appropriate CalDAV resource associated with the authenticated user. This simplifies setup by allowing most modern clients to automatically locate and configure calendar access without requiring manual URL input.
 
@@ -57,6 +63,17 @@ Example:
 ```toml
 [calendar]
 max-attendees-per-instance = 20
+```
+
+### JMAP Parsing Limit
+
+When using JMAP to interact with calendar data, the `jmap.calendar.parse.max-items` setting limits how many iCalendar objects can be parsed in a single JMAP `CalendarEvent/parse` request. The default value is **100 items**. This prevents excessively large requests from consuming too many server resources. If your use case requires processing more items in a single request, this limit can be adjusted.
+
+Example:
+
+```toml
+[jmap.calendar.parse]
+max-items = 100
 ```
 
 ## Default Calendar

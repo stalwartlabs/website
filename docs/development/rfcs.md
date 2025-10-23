@@ -6,16 +6,18 @@ sidebar_position: 4
 
 The following RFCs are implemented by Stalwart.
 
-## JMAP and extensions
+## Message Store
+
+### JMAP
 
 - [RFC 8620 - The JSON Meta Application Protocol (JMAP)](https://www.rfc-editor.org/rfc/rfc8620)
-- [RFC 8621 - The JSON Meta Application Protocol (JMAP) for Mail](https://www.rfc-editor.org/rfc/rfc8621)
 - [RFC 8887 - A JSON Meta Application Protocol (JMAP) Subprotocol for WebSocket](https://www.rfc-editor.org/rfc/rfc8887)
 - [RFC 9404 - JSON Meta Application Protocol (JMAP) Blob Management Extension](https://www.rfc-editor.org/rfc/rfc9404.html)
 - [RFC 9425 - JSON Meta Application Protocol (JMAP) for Quotas](https://www.rfc-editor.org/rfc/rfc9425.html)
+- [RFC 8621 - The JSON Meta Application Protocol (JMAP) for Mail](https://www.rfc-editor.org/rfc/rfc8621)
 - [RFC 9661 - JMAP for Sieve Scripts](https://www.rfc-editor.org/rfc/rfc9661.html)
 
-## IMAP4 and extensions
+### IMAP4
 
 - [RFC 9051 - Internet Message Access Protocol (IMAP) - Version 4rev2](https://datatracker.ietf.org/doc/html/rfc9051)
 - [RFC 3501 - Internet Message Access Protocol (IMAP) - Version 4rev1](https://datatracker.ietf.org/doc/html/rfc3501)
@@ -57,7 +59,74 @@ The following RFCs are implemented by Stalwart.
 - [RFC 9208 - IMAP QUOTA Extension](https://datatracker.ietf.org/doc/html/rfc9208)
 - [RFC 9698 - The JMAPACCESS Extension for IMAP](https://datatracker.ietf.org/doc/html/rfc9698)
 
-## SMTP and Extensions
+### POP3
+
+- [RFC 1939 - Post Office Protocol - Version 3](https://datatracker.ietf.org/doc/html/rfc1939)
+- [RFC 2449 - POP3 Extension Mechanism](https://datatracker.ietf.org/doc/html/rfc2449)
+- [RFC 5034 - POP3 SASL Authentication Mechanism](https://datatracker.ietf.org/doc/html/rfc5034)
+- [RFC 6856 - Post Office Protocol Version 3 (POP3) Support for UTF-8](https://datatracker.ietf.org/doc/html/rfc6856)
+- [RFC 2595 - Using TLS with IMAP, POP3 and ACAP](https://datatracker.ietf.org/doc/html/rfc2595)
+
+### Message Format
+
+- [RFC 822 - Standard for ARPA Internet Text Messages](https://datatracker.ietf.org/doc/html/rfc822)
+- [RFC 5322 - Internet Message Format](https://datatracker.ietf.org/doc/html/rfc5322)
+- [RFC 2045 - Multipurpose Internet Mail Extensions (MIME) Part One: Format of Internet Message Bodies](https://datatracker.ietf.org/doc/html/rfc2045)
+- [RFC 2046 - Multipurpose Internet Mail Extensions (MIME) Part Two: Media Types](https://datatracker.ietf.org/doc/html/rfc2046)
+- [RFC 2047 - MIME (Multipurpose Internet Mail Extensions) Part Three: Message Header Extensions for Non-ASCII Text](https://datatracker.ietf.org/doc/html/rfc2047)
+- [RFC 2048 - Multipurpose Internet Mail Extensions (MIME) Part Four: Registration Procedures](https://datatracker.ietf.org/doc/html/rfc2048)
+- [RFC 2049 - Multipurpose Internet Mail Extensions (MIME) Part Five: Conformance Criteria and Examples](https://datatracker.ietf.org/doc/html/rfc2049)
+- [RFC 2231 - MIME Parameter Value and Encoded Word Extensions: Character Sets, Languages, and Continuations](https://datatracker.ietf.org/doc/html/rfc2231)
+- [RFC 2557 - MIME Encapsulation of Aggregate Documents, such as HTML (MHTML)](https://datatracker.ietf.org/doc/html/rfc2557)
+- [RFC 2183 - Communicating Presentation Information in Internet Messages: The Content-Disposition Header Field](https://datatracker.ietf.org/doc/html/rfc2183)
+- [RFC 2392 - Content-ID and Message-ID Uniform Resource Locators](https://datatracker.ietf.org/doc/html/rfc2392)
+- [RFC 3282 - Content Language Headers](https://datatracker.ietf.org/doc/html/rfc3282)
+- [RFC 6532 - Internationalized Email Headers](https://datatracker.ietf.org/doc/html/rfc6532)
+- [RFC 2152 - UTF-7 - A Mail-Safe Transformation Format of Unicode](https://datatracker.ietf.org/doc/html/rfc2152)
+- [RFC 2369 - The Use of URLs as Meta-Syntax for Core Mail List Commands and their Transport through Message Header Fields](https://datatracker.ietf.org/doc/html/rfc2369)
+- [RFC 2919 - List-Id: A Structured Field and Namespace for the Identification of Mailing Lists](https://datatracker.ietf.org/doc/html/rfc2919)
+- [RFC 3339 - Date and Time on the Internet: Timestamps](https://datatracker.ietf.org/doc/html/rfc3339)
+
+### Message Encryption
+
+- [RFC 8551 - Secure/Multipurpose Internet Mail Extensions (S/MIME) Version 4.0 Message Specification](https://datatracker.ietf.org/doc/html/rfc8551)
+- [RFC 4880 - OpenPGP Message Format](https://datatracker.ietf.org/doc/html/rfc4880)
+- [RFC 3156 - MIME Security with OpenPGP](https://datatracker.ietf.org/doc/html/rfc3156)
+
+### Sieve
+
+- [RFC 5228 - Sieve: An Email Filtering Language](https://datatracker.ietf.org/doc/html/rfc5228)
+- [RFC 5804 - A Protocol for Remotely Managing Sieve Scripts](https://datatracker.ietf.org/doc/html/rfc5804)
+- [RFC 3894 - Copying Without Side Effects](https://datatracker.ietf.org/doc/html/rfc3894)
+- [RFC 5173 - Body Extension](https://datatracker.ietf.org/doc/html/rfc5173)
+- [RFC 5183 - Environment Extension](https://datatracker.ietf.org/doc/html/rfc5183)
+- [RFC 5229 - Variables Extension](https://datatracker.ietf.org/doc/html/rfc5229)
+- [RFC 5230 - Vacation Extension](https://datatracker.ietf.org/doc/html/rfc5230)
+- [RFC 5231 - Relational Extension](https://datatracker.ietf.org/doc/html/rfc5231)
+- [RFC 5232 - Imap4flags Extension](https://datatracker.ietf.org/doc/html/rfc5232)
+- [RFC 5233 - Subaddress Extension](https://datatracker.ietf.org/doc/html/rfc5233)
+- [RFC 5235 - Spamtest and Virustest Extensions](https://datatracker.ietf.org/doc/html/rfc5235)
+- [RFC 5260 - Date and Index Extensions](https://datatracker.ietf.org/doc/html/rfc5260)
+- [RFC 5293 - Editheader Extension](https://datatracker.ietf.org/doc/html/rfc5293)
+- [RFC 5429 - Reject and Extended Reject Extensions](https://datatracker.ietf.org/doc/html/rfc5429)
+- [RFC 5435 - Extension for Notifications](https://datatracker.ietf.org/doc/html/rfc5435)
+- [RFC 5463 - Ihave Extension](https://datatracker.ietf.org/doc/html/rfc5463)
+- [RFC 5490 - Extensions for Checking Mailbox Status and Accessing Mailbox Metadata](https://datatracker.ietf.org/doc/html/rfc5490)
+- [RFC 5703 - MIME Part Tests, Iteration, Extraction, Replacement, and Enclosure](https://datatracker.ietf.org/doc/html/rfc5703)
+- [RFC 6009 - Delivery Status Notifications and Deliver-By Extensions](https://datatracker.ietf.org/doc/html/rfc6009)
+- [RFC 6131 - Sieve Vacation Extension: "Seconds" Parameter](https://datatracker.ietf.org/doc/html/rfc6131)
+- [RFC 6134 - Externally Stored Lists](https://datatracker.ietf.org/doc/html/rfc6134)
+- [RFC 6558 - Converting Messages before Delivery](https://datatracker.ietf.org/doc/html/rfc6558)
+- [RFC 6609 - Include Extension](https://datatracker.ietf.org/doc/html/rfc6609)
+- [RFC 7352 - Detecting Duplicate Deliveries](https://datatracker.ietf.org/doc/html/rfc7352)
+- [RFC 8579 - Delivering to Special-Use Mailboxes](https://datatracker.ietf.org/doc/html/rfc8579)
+- [RFC 8580 - File Carbon Copy (FCC)](https://datatracker.ietf.org/doc/html/rfc8580)
+- [RFC 9042 - Delivery by MAILBOXID](https://datatracker.ietf.org/doc/html/rfc9042)
+- [REGEX-01 - Regular Expression Extension (draft-ietf-sieve-regex-01)](https://www.ietf.org/archive/id/draft-ietf-sieve-regex-01.html)
+
+## MTA
+
+### SMTP
 
 - [RFC 5321 - Simple Mail Transfer Protocol](https://datatracker.ietf.org/doc/html/rfc5321)
 - [RFC 5321bis - Simple Mail Transfer Protocol (draft 18)](https://datatracker.ietf.org/doc/draft-ietf-emailcore-rfc5321bis/)
@@ -77,22 +146,6 @@ The following RFCs are implemented by Stalwart.
 - [RFC 6710 - Simple Mail Transfer Protocol Extension for Message Transfer Priorities](https://datatracker.ietf.org/doc/html/rfc6710)
 - [RFC 8689 - SMTP Require TLS Option](https://datatracker.ietf.org/doc/html/rfc8689)
 - [RFC 2831 - Using Digest Authentication as a SASL Mechanism](https://www.rfc-editor.org/rfc/rfc2831)
-
-## POP3 and Extensions
-
-- [RFC 1939 - Post Office Protocol - Version 3](https://datatracker.ietf.org/doc/html/rfc1939)
-- [RFC 2449 - POP3 Extension Mechanism](https://datatracker.ietf.org/doc/html/rfc2449)
-- [RFC 5034 - POP3 SASL Authentication Mechanism](https://datatracker.ietf.org/doc/html/rfc5034)
-- [RFC 6856 - Post Office Protocol Version 3 (POP3) Support for UTF-8](https://datatracker.ietf.org/doc/html/rfc6856)
-- [RFC 2595 - Using TLS with IMAP, POP3 and ACAP](https://datatracker.ietf.org/doc/html/rfc2595)
-
-## Message Encryption
-
-- [RFC 8551 - Secure/Multipurpose Internet Mail Extensions (S/MIME) Version 4.0 Message Specification](https://datatracker.ietf.org/doc/html/rfc8551)
-- [RFC 4880 - OpenPGP Message Format](https://datatracker.ietf.org/doc/html/rfc4880)
-- [RFC 3156 - MIME Security with OpenPGP](https://datatracker.ietf.org/doc/html/rfc3156)
-
-## Message Authentication
 
 ### DKIM
 
@@ -121,45 +174,18 @@ The following RFCs are implemented by Stalwart.
 - [RFC 8616 - Email Authentication for Internationalized Mail](https://datatracker.ietf.org/doc/html/rfc8616)
 - [RFC 7960 - Interoperability Issues between Domain-based Message Authentication, Reporting, and Conformance (DMARC) and Indirect Email Flows](https://datatracker.ietf.org/doc/html/rfc7960)
 
+### Transport Security
+- [RFC 6698 - The DNS-Based Authentication of Named Entities (DANE) Transport Layer Security (TLS) Protocol: TLSA](https://datatracker.ietf.org/doc/html/rfc6698)
+- [RFC 7671 - The DNS-Based Authentication of Named Entities (DANE) Protocol: Updates and Operational Guidance](https://datatracker.ietf.org/doc/html/rfc7671)
+- [RFC 8461 - SMTP MTA Strict Transport Security (MTA-STS)](https://datatracker.ietf.org/doc/html/rfc8461)
+
 ### Reporting
 - [RFC 5965 - An Extensible Format for Email Feedback Reports](https://datatracker.ietf.org/doc/html/rfc5965)
 - [RFC 6430 - Email Feedback Report Type Value: not-spam](https://datatracker.ietf.org/doc/html/rfc6430)
 - [RFC 6590 - Redaction of Potentially Sensitive Data from Mail Abuse Reports](https://datatracker.ietf.org/doc/html/rfc6590)
 - [RFC 6591 - Authentication Failure Reporting Using the Abuse Reporting Format](https://datatracker.ietf.org/doc/html/rfc6591)
 - [RFC 6650 - Creation and Use of Email Feedback Reports: An Applicability Statement for the Abuse Reporting Format (ARF)](https://datatracker.ietf.org/doc/html/rfc6650)
-
-## Transport Security
-
-### DANE
-- [RFC 6698 - The DNS-Based Authentication of Named Entities (DANE) Transport Layer Security (TLS) Protocol: TLSA](https://datatracker.ietf.org/doc/html/rfc6698)
-- [RFC 7671 - The DNS-Based Authentication of Named Entities (DANE) Protocol: Updates and Operational Guidance](https://datatracker.ietf.org/doc/html/rfc7671)
-
-### MTA-STS
-
-- [RFC 8461 - SMTP MTA Strict Transport Security (MTA-STS)](https://datatracker.ietf.org/doc/html/rfc8461)
-
-### SMTP TLS Reporting
 - [RFC 8460 - SMTP TLS Reporting](https://datatracker.ietf.org/doc/html/rfc8460)
-
-## E-mail
-
-- [RFC 822 - Standard for ARPA Internet Text Messages](https://datatracker.ietf.org/doc/html/rfc822)
-- [RFC 5322 - Internet Message Format](https://datatracker.ietf.org/doc/html/rfc5322)
-- [RFC 2045 - Multipurpose Internet Mail Extensions (MIME) Part One: Format of Internet Message Bodies](https://datatracker.ietf.org/doc/html/rfc2045)
-- [RFC 2046 - Multipurpose Internet Mail Extensions (MIME) Part Two: Media Types](https://datatracker.ietf.org/doc/html/rfc2046)
-- [RFC 2047 - MIME (Multipurpose Internet Mail Extensions) Part Three: Message Header Extensions for Non-ASCII Text](https://datatracker.ietf.org/doc/html/rfc2047)
-- [RFC 2048 - Multipurpose Internet Mail Extensions (MIME) Part Four: Registration Procedures](https://datatracker.ietf.org/doc/html/rfc2048)
-- [RFC 2049 - Multipurpose Internet Mail Extensions (MIME) Part Five: Conformance Criteria and Examples](https://datatracker.ietf.org/doc/html/rfc2049)
-- [RFC 2231 - MIME Parameter Value and Encoded Word Extensions: Character Sets, Languages, and Continuations](https://datatracker.ietf.org/doc/html/rfc2231)
-- [RFC 2557 - MIME Encapsulation of Aggregate Documents, such as HTML (MHTML)](https://datatracker.ietf.org/doc/html/rfc2557)
-- [RFC 2183 - Communicating Presentation Information in Internet Messages: The Content-Disposition Header Field](https://datatracker.ietf.org/doc/html/rfc2183)
-- [RFC 2392 - Content-ID and Message-ID Uniform Resource Locators](https://datatracker.ietf.org/doc/html/rfc2392)
-- [RFC 3282 - Content Language Headers](https://datatracker.ietf.org/doc/html/rfc3282)
-- [RFC 6532 - Internationalized Email Headers](https://datatracker.ietf.org/doc/html/rfc6532)
-- [RFC 2152 - UTF-7 - A Mail-Safe Transformation Format of Unicode](https://datatracker.ietf.org/doc/html/rfc2152)
-- [RFC 2369 - The Use of URLs as Meta-Syntax for Core Mail List Commands and their Transport through Message Header Fields](https://datatracker.ietf.org/doc/html/rfc2369)
-- [RFC 2919 - List-Id: A Structured Field and Namespace for the Identification of Mailing Lists](https://datatracker.ietf.org/doc/html/rfc2919)
-- [RFC 3339 - Date and Time on the Internet: Timestamps](https://datatracker.ietf.org/doc/html/rfc3339)
 
 ## Collaboration
 
@@ -176,6 +202,10 @@ The following RFCs are implemented by Stalwart.
 - [RFC 9074 - "VALARM" Extensions for iCalendar](https://datatracker.ietf.org/doc/html/rfc9074)
 - [RFC 9253 - Support for iCalendar Relationships](https://datatracker.ietf.org/doc/html/rfc9253)
 - [RFC 7953 - Calendar Availability](https://datatracker.ietf.org/doc/html/rfc7953)
+- [draft-ietf-calext-jscalendarbis - JSCalendar: A JSON Representation of Calendar Data](https://datatracker.ietf.org/doc/draft-ietf-calext-jscalendarbis/)
+- [draft-ietf-calext-jscalendar-icalendar - JSCalendar: Converting from and to iCalendar](https://datatracker.ietf.org/doc/draft-ietf-calext-jscalendar-icalendar/)
+- [draft-ietf-calext-icalendar-jscalendar-extensions - iCalendar Format Extensions for JSCalendar](https://datatracker.ietf.org/doc/draft-ietf-calext-icalendar-jscalendar-extensions/)
+- [draft-ietf-calext-ical-tasks - Task Extensions to iCalendar](https://datatracker.ietf.org/doc/draft-ietf-calext-ical-tasks/)
 
 ### Contacts
 
@@ -188,6 +218,16 @@ The following RFCs are implemented by Stalwart.
 - [RFC 6473 - vCard KIND:application](https://datatracker.ietf.org/doc/html/rfc6473)
 - [RFC 6869 - vCard KIND:device](https://datatracker.ietf.org/doc/html/rfc6869)
 - [RFC 7852 - Additional Data Related to an Emergency Call](https://datatracker.ietf.org/doc/html/rfc7852)
+- [RFC 9553 - JSContact: A JSON Representation of Contact Data](https://datatracker.ietf.org/doc/rfc9553/)
+- [RFC 9555 - JSContact: Converting from and to vCard](https://datatracker.ietf.org/doc/rfc9555/)
+
+
+### JMAP
+
+- [draft-ietf-jmap-calendars - JMAP for Calendars](https://datatracker.ietf.org/doc/draft-ietf-jmap-calendars)
+- [RFC 9610 - JMAP for Contacts](https://datatracker.ietf.org/doc/rfc9610/)
+- [draft-ietf-jmap-filenode - JMAP for File Storage](https://datatracker.ietf.org/doc/draft-ietf-jmap-filenode/)
+- [RFC 9670 - JMAP Sharing](https://datatracker.ietf.org/doc/rfc9670/)
 
 ### WebDAV
 
@@ -230,36 +270,6 @@ The following RFCs are implemented by Stalwart.
 - [OpenID Connect Discovery 1.0](https://openid.net/specs/openid-connect-discovery-1_0.html)
 - [OpenID Connect Dynamic Client Registration 1.0](https://openid.net/specs/openid-connect-registration-1_0.html)
 
-## Sieve
-
-- [RFC 5228 - Sieve: An Email Filtering Language](https://datatracker.ietf.org/doc/html/rfc5228)
-- [RFC 5804 - A Protocol for Remotely Managing Sieve Scripts](https://datatracker.ietf.org/doc/html/rfc5804)
-- [RFC 3894 - Copying Without Side Effects](https://datatracker.ietf.org/doc/html/rfc3894)
-- [RFC 5173 - Body Extension](https://datatracker.ietf.org/doc/html/rfc5173)
-- [RFC 5183 - Environment Extension](https://datatracker.ietf.org/doc/html/rfc5183)
-- [RFC 5229 - Variables Extension](https://datatracker.ietf.org/doc/html/rfc5229)
-- [RFC 5230 - Vacation Extension](https://datatracker.ietf.org/doc/html/rfc5230)
-- [RFC 5231 - Relational Extension](https://datatracker.ietf.org/doc/html/rfc5231)
-- [RFC 5232 - Imap4flags Extension](https://datatracker.ietf.org/doc/html/rfc5232)
-- [RFC 5233 - Subaddress Extension](https://datatracker.ietf.org/doc/html/rfc5233)
-- [RFC 5235 - Spamtest and Virustest Extensions](https://datatracker.ietf.org/doc/html/rfc5235)
-- [RFC 5260 - Date and Index Extensions](https://datatracker.ietf.org/doc/html/rfc5260)
-- [RFC 5293 - Editheader Extension](https://datatracker.ietf.org/doc/html/rfc5293)
-- [RFC 5429 - Reject and Extended Reject Extensions](https://datatracker.ietf.org/doc/html/rfc5429)
-- [RFC 5435 - Extension for Notifications](https://datatracker.ietf.org/doc/html/rfc5435)
-- [RFC 5463 - Ihave Extension](https://datatracker.ietf.org/doc/html/rfc5463)
-- [RFC 5490 - Extensions for Checking Mailbox Status and Accessing Mailbox Metadata](https://datatracker.ietf.org/doc/html/rfc5490)
-- [RFC 5703 - MIME Part Tests, Iteration, Extraction, Replacement, and Enclosure](https://datatracker.ietf.org/doc/html/rfc5703)
-- [RFC 6009 - Delivery Status Notifications and Deliver-By Extensions](https://datatracker.ietf.org/doc/html/rfc6009)
-- [RFC 6131 - Sieve Vacation Extension: "Seconds" Parameter](https://datatracker.ietf.org/doc/html/rfc6131)
-- [RFC 6134 - Externally Stored Lists](https://datatracker.ietf.org/doc/html/rfc6134)
-- [RFC 6558 - Converting Messages before Delivery](https://datatracker.ietf.org/doc/html/rfc6558)
-- [RFC 6609 - Include Extension](https://datatracker.ietf.org/doc/html/rfc6609)
-- [RFC 7352 - Detecting Duplicate Deliveries](https://datatracker.ietf.org/doc/html/rfc7352)
-- [RFC 8579 - Delivering to Special-Use Mailboxes](https://datatracker.ietf.org/doc/html/rfc8579)
-- [RFC 8580 - File Carbon Copy (FCC)](https://datatracker.ietf.org/doc/html/rfc8580)
-- [RFC 9042 - Delivery by MAILBOXID](https://datatracker.ietf.org/doc/html/rfc9042)
-- [REGEX-01 - Regular Expression Extension (draft-ietf-sieve-regex-01)](https://www.ietf.org/archive/id/draft-ietf-sieve-regex-01.html)
 
 ## Planned Extensions
 
