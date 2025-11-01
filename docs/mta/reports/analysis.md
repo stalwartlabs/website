@@ -10,7 +10,7 @@ Stalwart has the ability to automatically analyze incoming DMARC, DKIM, SPF, and
 
 The configuration for report analysis can be found under the `report.analysis` key and includes the following attributes:
 
-- `addresses`: A list of addresses (which may include wildcards) from which reports will be intercepted and analyzed.
+- `addresses`: A list of addresses (which may include wildcards) from which reports will be intercepted and analyzed. This address need to a real routable address.
 - `forward`: Whether reports should be forwarded to their final recipient after analysis.
 - `store`: The duration for which reports should be stored before being deleted, of `false` to disable storage.
 
