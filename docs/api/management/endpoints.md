@@ -2223,52 +2223,6 @@ Status Code **200**
 This operation does not require authentication
 </aside>
 
-## Delete Global Bayes Model
-
-> Code samples
-
-```python
-import requests
-headers = {
-  'Accept': 'application/json'
-}
-
-r = requests.get('https://mail.example.org/api/store/purge/in-memory/default/bayes-global', headers = headers)
-
-print(r.json())
-
-```
-
-`GET /store/purge/in-memory/default/bayes-global`
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "data": null
-}
-```
-
-<h3 id="delete-global-bayes-model-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|Inline|
-
-<h3 id="delete-global-bayes-model-responseschema">Response Schema</h3>
-
-Status Code **200**
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» data|object¦null|false|none|none|
-
-<aside class="success">
-This operation does not require authentication
-</aside>
-
 ## List Settings by Key
 
 > Code samples
@@ -3613,58 +3567,6 @@ print(r.json())
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|Inline|
 
 <h3 id="purge-account-responseschema">Response Schema</h3>
-
-Status Code **200**
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» data|object¦null|false|none|none|
-
-<aside class="success">
-This operation does not require authentication
-</aside>
-
-## Delete Bayes Model for Account
-
-> Code samples
-
-```python
-import requests
-headers = {
-  'Accept': 'application/json'
-}
-
-r = requests.get('https://mail.example.org/api/store/purge/in-memory/default/bayes-account/{account_id}', headers = headers)
-
-print(r.json())
-
-```
-
-`GET /store/purge/in-memory/default/bayes-account/{account_id}`
-
-<h3 id="delete-bayes-model-for-account-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|account_id|path|string|true|none|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "data": null
-}
-```
-
-<h3 id="delete-bayes-model-for-account-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|Inline|
-
-<h3 id="delete-bayes-model-for-account-responseschema">Response Schema</h3>
 
 Status Code **200**
 

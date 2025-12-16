@@ -410,12 +410,12 @@ The following are the event types that Stalwart captures along with their defaul
 |`pop3.uidl-message`|POP3 UIDL specific message command|`DEBUG`|
 |`pop3.utf8`|POP3 UTF8 command|`DEBUG`|
 |`purge.auto-expunge`|Auto-expunge executed|`DEBUG`|
+|`purge.blob-cleanup`|Blob storage cleanup completed|`INFO`|
 |`purge.error`|Purge error|`ERROR`|
 |`purge.finished`|Purge finished|`DEBUG`|
 |`purge.in-progress`|Active purge in progress|`DEBUG`|
 |`purge.running`|Purge running|`INFO`|
 |`purge.started`|Purge started|`DEBUG`|
-|`purge.tombstone-cleanup`|Tombstone cleanup executed|`DEBUG`|
 |`push-subscription.error`|Push subscription error|`DEBUG`|
 |`push-subscription.not-found`|Push subscription not found|`DEBUG`|
 |`push-subscription.success`|Push subscription successful|`TRACE`|
@@ -443,8 +443,8 @@ The following are the event types that Stalwart captures along with their defaul
 |`security.scan-ban`|Banned due to scan|`INFO`|
 |`security.unauthorized`|Unauthorized access|`INFO`|
 |`server.licensing`|Server licensing event|`INFO`|
-|`server.shutdown`|Shutting down Stalwart Server|`INFO`|
-|`server.startup`|Starting Stalwart Server|`INFO`|
+|`server.shutdown`|Shutting down Stalwart Server v0.15.0|`INFO`|
+|`server.startup`|Starting Stalwart Server v0.15.0|`INFO`|
 |`server.startup-error`|Server startup error|`ERROR`|
 |`server.thread-error`|Server thread error|`ERROR`|
 |`sieve.action-accept`|Sieve action: Accept|`DEBUG`|
@@ -542,15 +542,17 @@ The following are the event types that Stalwart captures along with their defaul
 |`smtp.vrfy-disabled`|VRFY command disabled|`INFO`|
 |`smtp.vrfy-not-found`|VRFY address not found|`INFO`|
 |`spam.classify`|Classifying message for spam|`DEBUG`|
-|`spam.classify-error`|Not enough training data for spam filter|`DEBUG`|
 |`spam.dnsbl`|DNSBL query|`DEBUG`|
 |`spam.dnsbl-error`|Error querying DNSBL|`DEBUG`|
+|`spam.model-loaded`|Spam classifier model loaded|`INFO`|
+|`spam.model-not-found`|Spam classifier model not found|`INFO`|
+|`spam.model-not-ready`|Spam classifier model not ready|`INFO`|
 |`spam.pyzor`|Pyzor success|`DEBUG`|
 |`spam.pyzor-error`|Pyzor error|`DEBUG`|
-|`spam.train`|Training spam filter|`DEBUG`|
-|`spam.train-account`|Training spam filter for account|`DEBUG`|
-|`spam.train-balance`|Spam filter model balance verify|`DEBUG`|
-|`spam.train-error`|Error training spam filter|`DEBUG`|
+|`spam.train-completed`|Spam classifier training completed|`INFO`|
+|`spam.train-sample-added`|New training sample added|`DEBUG`|
+|`spam.train-sample-not-found`|Training sample not found|`WARN`|
+|`spam.train-started`|Spam classifier training started|`INFO`|
 |`spf.fail`|SPF check failed|`DEBUG`|
 |`spf.neutral`|SPF neutral result|`DEBUG`|
 |`spf.none`|No SPF record|`DEBUG`|
@@ -582,6 +584,7 @@ The following are the event types that Stalwart captures along with their defaul
 |`store.ldap-error`|LDAP error|`ERROR`|
 |`store.ldap-query`|LDAP query executed|`TRACE`|
 |`store.ldap-warning`|LDAP authentication warning|`DEBUG`|
+|`store.meilisearch-error`|Meilisearch error|`ERROR`|
 |`store.mysql-error`|MySQL error|`ERROR`|
 |`store.not-configured`|Store not configured|`ERROR`|
 |`store.not-found`|Record not found in database|`DEBUG`|
@@ -597,6 +600,7 @@ The following are the event types that Stalwart captures along with their defaul
 |`task-queue.blob-not-found`|Blob not found for task|`DEBUG`|
 |`task-queue.metadata-not-found`|Metadata not found for task|`DEBUG`|
 |`task-queue.task-acquired`|Task acquired from queue|`DEBUG`|
+|`task-queue.task-failed`|Task failed during processing|`WARN`|
 |`task-queue.task-ignored`|Task ignored based on current server roles|`DEBUG`|
 |`task-queue.task-locked`|Task is locked by another process|`DEBUG`|
 |`telemetry.alert`|Alert triggered|`WARN`|

@@ -56,7 +56,7 @@ The backup procedure depends on which database and blob storage backend you are 
 
 ### How is anti-spam handled?
 
-Stalwart includes its own built-in spam filter that uses statistical techniques like Naive Bayes. It also supports DNS Blocklists (DNSBLs) and collaborative digest-based spam filtering tools like Pyzor. Additionally, Stalwart can easily integrate with popular anti-spam solutions such as SpamAssassin and RSPAMD using [milter](/docs/mta/filter/milter) as well as other [filtering mechanisms](/docs/mta/filter/overview).
+Stalwart includes its own built-in spam filter that uses the FTRL-Proximal algorithm and feature hashing. It also supports DNS Blocklists (DNSBLs) and collaborative digest-based spam filtering tools like Pyzor. Additionally, Stalwart can easily integrate with popular anti-spam solutions such as SpamAssassin and RSPAMD using [milter](/docs/mta/filter/milter) as well as other [filtering mechanisms](/docs/mta/filter/overview).
 
 ### Does it support relay hosts?
 
@@ -106,7 +106,7 @@ Stalwart's spam filter is built-in and doesn't require any third-party software.
 
 ### How does the spam classifier work?
 
-Our spam classifier uses statistical techniques, including Naive Bayes and Inverse Chi-Square. It automatically trains itself, ensuring improved accuracy over time. 
+Our spam classifier uses the FTRL-Proximal algorithm and feature hashing. It automatically trains itself, ensuring improved accuracy over time. 
 
 ### How does Stalwart handle phishing attempts?
 Stalwart offers robust phishing protection by checking against databases like OpenPhish and PhishTank, identifying homographic URL attacks, sender spoofing, and other deceptive techniques. It also detects and flags suspicious URL patterns.

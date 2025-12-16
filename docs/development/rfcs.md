@@ -58,6 +58,7 @@ The following RFCs are implemented by Stalwart.
 - [RFC 8970 - Message Preview Generation](https://datatracker.ietf.org/doc/html/rfc8970)
 - [RFC 9208 - IMAP QUOTA Extension](https://datatracker.ietf.org/doc/html/rfc9208)
 - [RFC 9698 - The JMAPACCESS Extension for IMAP](https://datatracker.ietf.org/doc/html/rfc9698)
+- [draft-ietf-messageflag - Registration of further IMAP/JMAP keywords and mailbox name attributes](https://datatracker.ietf.org/doc/html/draft-ietf-mailmaint-messageflag-mailboxattribute-13)
 
 ### POP3
 

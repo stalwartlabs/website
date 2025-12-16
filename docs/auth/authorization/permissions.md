@@ -90,7 +90,6 @@ Stalwart provides a wide range of permissions that can be assigned to users, gro
 |`dav-principal-search`|Search for principals by property values|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 |`dav-principal-search-prop-set`|Define property sets for principal searches|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 |`dav-sync-collection`|Synchronize collection changes with client|:white_check_mark:|:white_check_mark:|:white_check_mark:|
-|`delete-system-folders`|Delete of system folders|:white_check_mark:|||
 |`dkim-signature-create`|Create DKIM signatures for email authentication|:white_check_mark:|:white_check_mark:||
 |`dkim-signature-get`|Retrieve DKIM signature information|:white_check_mark:|:white_check_mark:||
 |`domain-create`|Add new email domains|:white_check_mark:|:white_check_mark:||
@@ -286,8 +285,8 @@ Stalwart provides a wide range of permissions that can be assigned to users, gro
 |`sieve-put-script`|Upload Sieve scripts|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 |`sieve-rename-script`|Rename Sieve scripts|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 |`sieve-set-active`|Set active Sieve script|:white_check_mark:|:white_check_mark:|:white_check_mark:|
-|`spam-filter-classify`|Classify emails with the spam filter|:white_check_mark:|:white_check_mark:|:white_check_mark:|
-|`spam-filter-train`|Train the spam filter|:white_check_mark:|:white_check_mark:|:white_check_mark:|
+|`spam-filter-test`|Test the spam filter|:white_check_mark:|:white_check_mark:||
+|`spam-filter-train`|Train the spam filter|:white_check_mark:|:white_check_mark:||
 |`spam-filter-update`|Modify spam filter settings|:white_check_mark:|||
 |`tenant-create`|Add new tenants|:white_check_mark:|||
 |`tenant-delete`|Remove tenants|:white_check_mark:|||

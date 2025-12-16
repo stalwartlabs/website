@@ -1,0 +1,68 @@
+---
+slug: marginal-gains
+title: "Marginal Gains: Major Impact"
+authors: [mdecimus]
+tags: [performance, spam, search, storage, marginal, gains]
+---
+
+In professional cycling, the concept of *marginal gains* became famous through Team Sky. Rather than chasing dramatic breakthroughs, they focused on making hundreds of small improvements: slightly better bike fit, marginally lighter components, improved sleep, cleaner nutrition. None of these changes mattered much on their own, but together they reshaped performance—and helped dominate the sport for years.
+
+Software systems, especially large distributed ones, work much the same way. Rarely does a single feature transform everything overnight. More often, real progress comes from careful attention to small details: shaving latency here, reducing contention there, simplifying a hot path, rethinking a data structure.
+
+Stalwart v0.15 is very much a release in this spirit. It does not introduce a long list of headline features. Instead, it is the result of revisiting core subsystems—spam filtering, search, storage, and data access—and making many targeted improvements that, together, have a significant impact on performance, reliability, and usability.
+
+## Rethinking Spam Classification
+
+Stalwart v0.14 (and earlier) included a spam classifier which was a direct port of the classifier used by Rspamd. This classifier is grounded in Bayesian theory and uses more advanced methods to combine probabilities, including sparse bigrams (OSB) and the inverse chi-square distribution. This approach is well understood and robust, particularly when training data is limited. It produces reasonable results quickly and has a long track record in production systems.
+
+However, it comes with a significant cost in distributed environments. Both Rspamd and Stalwart v0.14 relied on OSB-5, which generates a very large number of features per message. Each of these features was stored in Redis. Even with aggressive caching, training or classifying a single message could involve hundreds or even thousands of round trips to Redis. At scale, this becomes a bottleneck: latency increases, throughput drops, and horizontal scaling becomes inefficient.
+
+For v0.15, we went back to first principles and redesigned the spam classifier from scratch, guided by more recent research. We evaluated several models and ultimately settled on a logistic regression classifier trained using the FTRL-Proximal ([Following the Regularized Leader](https://dl.acm.org/doi/10.1145/2487575.2488200)) algorithm. This algorithm—famously used by Google for large-scale online learning—is particularly well suited to spam classification workloads where models must be updated continuously and efficiently.
+
+One immediate benefit of this approach is that Stalwart can now support collaborative filtering out of the box. Multiple users can benefit from a single shared classifier trained on aggregated data, dramatically improving accuracy in environments with many accounts. At the same time, individual users can still maintain their own personal classifiers trained solely on their own messages.
+
+The [new classifier](/docs/spamfilter/classifier/overview) also adopts feature hashing (often called the *hashing trick*) to keep the feature space compact and predictable. This significantly reduces memory usage and improves cache locality. For very large deployments, cuckoo feature hashing is available to further reduce hash collisions. If you are interested in the theoretical background, the original feature hashing paper is available at [Feature Hashing for Large Scale Multitask Learning](https://arxiv.org/pdf/0902.2206) and the cuckoo feature hashing paper at [Cuckoo Feature Hashing: Dynamic Weight Sharing for Sparse Analytics](https://www.ijcai.org/proceedings/2018/0295.pdf).
+
+With the default configuration of 2²⁰ features, the entire model fits in approximately 4 MB of memory and is loaded only once after each training cycle. The result is a classifier that is both faster and more accurate than the previous version, particularly in distributed deployments where network overhead matters.
+
+We also evaluated RetVec ([Resilient and Efficient Text Vectorizer](https://arxiv.org/abs/2302.09207)), the embedding technique used by Gmail. RetVec excels at generating compact semantic representations of email content, but it is primarily designed to feed neural networks and deep learning models. For now, logistic regression offers a better balance of simplicity, performance, and operational transparency. That said, we plan to ship a pre-trained RetVec model alongside BERT in a future release.
+
+## A Faster, Simpler Search Layer
+
+Search is another area where small architectural choices have outsized effects. In Stalwart v0.15, the search layer has been substantially rewritten.
+
+For deployments using PostgreSQL or MySQL, Stalwart now leverages the built-in full-text search capabilities of the database instead of relying on a custom implementation. This reduces complexity, improves query planning, and allows the database to do what it already does well.
+
+We have also added support for [Meilisearch](/docs/storage/backends/meilisearch), a lightweight, fast search engine with excellent performance characteristics and simple operational semantics. Meilisearch offers low-latency full-text search, typo tolerance, and efficient indexing, making it a good fit for many Stalwart deployments.
+
+For large installations backed by FoundationDB, we plan to significantly improve the built-in search functionality by embedding Seekstorm. Until that work is complete, we recommend pairing FoundationDB with an external search engine such as OpenSearch or Meilisearch to achieve the best performance.
+
+## Faster Database Access and Leaner Storage
+
+Stalwart v0.15 includes a number of optimizations to the database access layer. We have reduced the number of reads and writes required to store and retrieve messages, particularly along hot paths such as IMAP and JMAP access. The result is noticeably faster message retrieval and improved overall responsiveness under load.
+
+In parallel, we revisited how email metadata is stored and reduced some serialization overhead. This lowers disk usage and improves cache efficiency, which again compounds into better performance at scale.
+
+Individually, these changes are modest. Collectively, they make the system feel tighter and more predictable under real-world workloads.
+
+## Meet Us at FOSDEM 2026
+
+We are excited to announce that Stalwart will be present at FOSDEM 2026 in Brussels, Belgium.
+
+Our talk, [Stalwart: Can Open Source do Gmail-scale Email?](https://fosdem.org/2026/schedule/event/scaling-email/), builds naturally on the marginal gains theme. While v0.15 focuses on incremental improvements, the talk zooms out to the other end of the spectrum: what it takes to design and operate a truly large-scale email system.
+
+Using a 1,024-node cluster as a concrete example, we will explore how modern providers store and index petabytes of messages, survive hardware failures without data loss, and run spam and phishing filtering across billions of daily deliveries. We will walk through the architectural patterns behind distributed storage, large-scale spam filtering, MTA queue management, and load balancing for IMAP, JMAP, and SMTP.
+
+We will also discuss cluster coordination, orchestration, autoscaling, and how to reason about failure before it happens. The goal is to give attendees a practical understanding of how planet-scale email systems are built, and how those same principles can be applied using open-source technology.
+
+If you are attending FOSDEM, we would love to meet you, answer questions, and talk about where Stalwart is heading next.
+
+## Looking Ahead
+
+Stalwart v0.15 is a release shaped by the philosophy of marginal gains. There are no new flashy features, but there are dozens of small improvements that add up to something meaningful: faster spam classification, better scalability, simpler search, leaner storage, and more predictable performance.
+
+If you are already running Stalwart, we encourage you to [try v0.15](https://github.com/stalwartlabs/stalwart/blob/main/UPGRADING/v0_15.md) and let us know how it performs in your environment. Your feedback continues to guide where we focus next.
+
+The team is already working on future releases that build on this foundation. With the core systems now leaner and more robust, we can continue to add new capabilities without compromising performance or reliability.
+
+As with cycling, progress comes from steady, thoughtful refinement. Stalwart v0.15 is one more step in that direction.

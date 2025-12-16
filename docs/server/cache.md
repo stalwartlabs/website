@@ -83,15 +83,6 @@ The Permissions Cache is used to store role and permission mappings for user acc
 permission.size = 5242880
 ```
 
-### Bayesian Filter Cache
-
-The Bayesian Filter Cache stores token data and associated weights for the spam filter’s Bayesian classifier. Caching this data allows the spam filter to make quick and accurate decisions without frequently accessing the database. It is configured under the `cache.bayes.size` setting and has a default size of 10 MB.
-
-```toml
-[cache]
-bayes.size = 10485760
-```
-
 ### DNS Cache
 
 #### TXT Records

@@ -23,9 +23,6 @@ The following table provides a detailed description of each subspace used in Sta
 | Subspace | Description                                                                                          |
 | -------- | ---------------------------------------------------------------------------------------------------- |
 | `a`      | Access Control Lists (ACL): Stores permissions and access rules governing resource access.           |
-| `b`      | Document Ids: Holds a list of assigned document ids for each collection.                             |
-| `c`      | Tags: Contains tags such message flags.                                                              |
-| `v`      | Text index: Maps tokens to document ids.                                                             |
 | `d`      | Directory: Stores the internal directory using for authentication.                                   |
 | `f`      | Task Queue: Keeps a list of scheduled or pending tasks awaiting background processing.               |
 | `i`      | Indexes: Contains general-purpose indexes used throughout various modules in the system.             |
@@ -43,8 +40,7 @@ The following table provides a detailed description of each subspace used in Sta
 | `u`      | Quota: Tracks usage limits and enforces resource quotas.                                             |
 | `h`      | Outgoing Reports: Stores generated reports such as pending outgoing DMARC or TLS reports             |
 | `r`      | Incoming Reports: Contains data received from external reports or analytics.                         |
-| `g`      | Full-Text Search Index (FTS): Maintains indexes used for efficient text-based search capabilities.   |
 | `o`      | Telemetry Span: Records spans used for distributed tracing and observability.                        |
-| `w`      | Telemetry Index: Stores indexed entries for quick access to telemetry data.                          |
 | `x`      | Telemetry Metrics: Captures raw metric data collected for system performance monitoring.             |
+| `z`      | Search Index: Maintains indexes used for efficient text-based search capabilities.                   |
 

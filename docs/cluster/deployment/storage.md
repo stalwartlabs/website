@@ -8,8 +8,8 @@ In a clustered Stalwart deployment, choosing the right **storage backends** is c
 
 - [Data Store](/docs/storage/data): stores structured information such as user settings, folder hierarchies, message metadata, flags, access controls, and index references.
 - [Blob Store](/docs/storage/blob): stores the actual contents of emails and other large objects, such as attachments or calendar data.
+- [Search Store](/docs/storage/fts): provides indexing and search capabilities for email content, allowing users to quickly find messages based on keywords or phrases.
 - [In-Memory Store](/docs/storage/in-memory): handles ephemeral, transient data used for real-time operations like rate limiting, session tracking, delivery state, and coordination.
-- [Full-text Search](/docs/storage/fts): provides indexing and search capabilities for email content, allowing users to quickly find messages based on keywords or phrases.
 
 Each of these backends serves a different purpose in the overall system architecture, and the choice of technology for each should reflect the scale and growth expectations of the organization.
 
@@ -74,9 +74,9 @@ For optimal performance and scalability, it is highly recommended to use a **ded
 
 Both Redis and Valkey are suitable for small to large deployments and integrate easily with Stalwart. By offloading ephemeral state to one of these systems, administrators can significantly improve the responsiveness and throughput of their clusters while reducing strain on the primary data store.
 
-## Full-Text Store
+## Search Store
 
-The [full-text search store](/docs/storage/fts) is responsible for indexing the content of emails to support fast, accurate search capabilities across mailboxes. This includes indexing message bodies, subject lines, headers, and attachments where applicable. Efficient full-text search is essential for providing a responsive user experience, particularly in environments with large volumes of email data.
+The [search store](/docs/storage/fts) is responsible for indexing the content of emails to support fast, accurate search capabilities across mailboxes. This includes indexing message bodies, subject lines, headers, and attachments where applicable. Efficient full-text search is essential for providing a responsive user experience, particularly in environments with large volumes of email data.
 
 While Stalwart can be configured to use the **primary data store** for full-text indexing, this approach comes with trade-offs. Although there are **no direct performance penalties** in terms of search speed or responsiveness, using a general-purpose database for full-text indexing results in **increased write amplification**. Data stores like PostgreSQL or FoundationDB are optimized for structured records, not for the high-ingestion and text-tokenization workloads required by search engines.
 

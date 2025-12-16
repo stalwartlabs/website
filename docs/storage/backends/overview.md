@@ -8,7 +8,7 @@ Stalwart offers support for multiple database and storage backends. The choice o
 
 The following table summarizes the backend options available for each store type:
 
-|                    | Data store         | Blob store         | Full-text store    | In-memory store       |
+|                    | Data store         | Blob store         | Search store       | In-memory store       |
 |--------------------|--------------------|--------------------|--------------------|--------------------|
 | RocksDB            | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | FoundationDB       | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
@@ -19,6 +19,7 @@ The following table summarizes the backend options available for each store type
 | Azure Blob Storage |                    | :white_check_mark: |                    |                    |
 | Filesystem         |                    | :white_check_mark: |                    |                    |
 | ElasticSearch      |                    |                    | :white_check_mark: |                    |
+| Meilisearch        |                    |                    | :white_check_mark: |                    |
 | Redis              |                    |                    |                    | :white_check_mark: |
 
 It's important to note that the support for each of these databases is compiled directly into the Stalwart binary. Therefore, to switch to certain backends such as FoundationDB, you'll need to utilize a different binary, corresponding to the desired backend(s).

@@ -1,6 +1,6 @@
 {
-    "label": "Composite",
-    "position": 12,
+    "label": "Linear Classifier",
+    "position": 3,
     "link": {
         "type": "generated-index"
     }

@@ -22,11 +22,11 @@ For example:
 ```
 [spam-filter.list]
 scores = {
-   "BAYES_HAM" = "-3.0",
+   "PROB_HAM_MEDIUM" = "-3.0",
    RBL_SPAMHAUS_DROP = "7.0",
    "SPAM_TRAP" = "discard"
 }
 ```
 
-In this example, `BAYES_HAM` = `-3.0` indicates that if the Bayesian filter determines the email to be ham (not spam), a score of -3.0 will be applied, reducing the overall likelihood of the message being classified as spam. `RBL_SPAMHAUS_DROP` = `7.0` indicates that, if the email's sender IP is found on the SPAMHAUS_DROP list, a score of 7.0 is added, increasing the chance of the email being categorized as spam. And finally, `SPAM_TRAP` = `discard` indicates that if the message triggers a spam trap, the action taken is to discard the message, preventing it from reaching the intended recipient.
+In this example, `PROB_HAM_MEDIUM` = `-3.0` indicates that if the Spam classifier determines the email to be ham (not spam), a score of -3.0 will be applied, reducing the overall likelihood of the message being classified as spam. `RBL_SPAMHAUS_DROP` = `7.0` indicates that, if the email's sender IP is found on the SPAMHAUS_DROP list, a score of 7.0 is added, increasing the chance of the email being categorized as spam. And finally, `SPAM_TRAP` = `discard` indicates that if the message triggers a spam trap, the action taken is to discard the message, preventing it from reaching the intended recipient.
 

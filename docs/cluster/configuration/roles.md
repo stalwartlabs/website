@@ -69,8 +69,8 @@ The following role settings determine the operational responsibilities of nodes 
 * **`cluster.roles.fts-indexing`**
   Defines the nodes responsible for performing **full-text search (FTS)** indexing operations. This role maintains search index consistency as messages and objects are created or modified.
 
-* **`cluster.roles.bayes-training`**
-  Assigns nodes that perform **Bayesian training** and analysis for spam detection models, continuously refining the system’s ability to identify unsolicited messages.
+* **`cluster.roles.spam-training`**
+  Assigns the node that performs **Spam classifier training** and analysis for spam detection models, continuously refining the system’s ability to identify unsolicited messages. Only one node should be assigned this role to avoid conflicting updates to the spam models.
 
 * **`cluster.roles.imip-processing`**
   Determines the nodes that handle **iMIP** (iCalendar Message-Based Interoperability Protocol) processing, managing calendar invitations and event responses exchanged via email.
@@ -82,7 +82,7 @@ The following role settings determine the operational responsibilities of nodes 
 
 Effective role assignment is essential to ensure that a **Stalwart** cluster remains performant, resilient, and predictable under varying workloads. While Stalwart’s role system offers considerable flexibility, careful planning and adherence to a few guiding principles can greatly enhance stability and maintainability.
 
-Administrators should begin by evaluating the **resource profile** of each role. Certain tasks, such as **FTS indexing** or **Bayesian training**, tend to be CPU- and I/O-intensive, while others, like **metrics calculation** or **ACME certificate renewal**, are relatively lightweight but time-sensitive. Assigning resource-heavy roles to nodes with sufficient computational capacity and isolating them from latency-sensitive workloads ensures optimal cluster performance.
+Administrators should begin by evaluating the **resource profile** of each role. Certain tasks, such as **FTS indexing** or **Spam classifier training**, tend to be CPU- and I/O-intensive, while others, like **metrics calculation** or **ACME certificate renewal**, are relatively lightweight but time-sensitive. Assigning resource-heavy roles to nodes with sufficient computational capacity and isolating them from latency-sensitive workloads ensures optimal cluster performance.
 
 For **high-availability scenarios**, it is recommended to assign critical roles—such as **purge** operations, **calendar alerts**, and **iMIP processing**—to multiple nodes. This redundancy ensures continuity if one node becomes unavailable. However, when redundancy is applied, administrators should consider **sharding** where supported to avoid redundant work or duplication of user-visible effects, as is the case with **push notifications**.
 
@@ -110,8 +110,8 @@ push-notifications = ["1,2", "3,4"]
 [cluster.roles.fts-indexing]
 fts-indexing = ["2,3"]
 
-[cluster.roles.bayes-training]
-bayes-training = ["1"]
+[cluster.roles.spam-training]
+spam-training = ["1"]
 
 [cluster.roles.imip-processing]
 imip-processing = ["4"]
