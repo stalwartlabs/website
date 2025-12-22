@@ -6,15 +6,7 @@ sidebar_position: 3
 
 In addition to explicitly labeled training samples provided by users or administrators, Stalwart supports automatic learning. Automatic learning allows the classifier to incorporate new training samples without direct user intervention, but only under conditions where the system has high confidence in the correctness of the label. The purpose of this mechanism is to accelerate adaptation to new patterns while minimizing the risk of reinforcing incorrect classifications.
 
-Automatic learning is deliberately conservative. It does not rely on the classifier’s own probabilistic output alone, but instead uses external signals and contextual information that strongly indicate whether a message should be treated as spam or ham. Only when these conditions are met is a message promoted to a training sample and fed back into the model.
-
-## Threshold-based classification
-
-One mechanism for automatic learning is based on the global spam score assigned to a message. This score is the result of combining multiple independent indicators, such as DNS-based block lists, protocol-level signals, authentication results, and other heuristic or reputation-based checks. It is distinct from the classifier’s internal probability or confidence score.
-
-When the global spam score exceeds an administrator-defined upper threshold, the message may be automatically treated as spam for training purposes. Conversely, when the score falls below a lower threshold, the message may be treated as ham. These thresholds are intentionally separate from delivery or filtering actions and exist solely to control automatic learning.
-
-To reduce the risk of mislabeling, it is recommended to configure these thresholds conservatively, such that only messages with overwhelming evidence are included. By default, Stalwart uses a threshold of 8.0 for spam and −8.0 for ham. Messages falling between these bounds are never used for automatic training and require explicit user feedback to influence the model.
+Automatic learning is deliberately conservative. It does not rely on the classifier’s own probabilistic output alone, but instead uses strong external signals and contextual information to determine whether a message should be treated as spam or ham. These signals include user-specific trust relationships, conversational context, and infrastructure-level indicators such as spam traps and DNS block lists. Only when these conditions are met is a message promoted to a training sample and incorporated into the model.
 
 ## Address books
 
@@ -28,14 +20,24 @@ A further automatic learning rule applies to message threads. If a message is cl
 
 When this condition is met, the message is automatically added as a ham training sample. This helps the classifier learn conversational patterns and prevents false positives in ongoing exchanges, particularly in cases where replies contain short or atypical content that might otherwise resemble spam.
 
-Together, these automatic learning mechanisms provide a controlled way for the classifier to improve itself using reliable contextual signals. They are designed to complement explicit user feedback, increasing training throughput while maintaining a strong bias toward correctness.
+## Spam traps
+
+Stalwart can automatically learn spam from messages delivered to administrator-defined [spam traps](/docs/spamfilter/spamtrap), also known as honey pots. Spam traps are addresses that are not used for legitimate communication and are intended solely to attract unsolicited messages. Any message received by such an address is assumed to be spam with a high degree of confidence.
+
+Messages sent to spam traps are automatically added as spam training samples. This mechanism provides a reliable source of high-quality spam data and allows the classifier to learn about new spam campaigns early, often before they reach regular users.
+
+## DNS block lists
+
+Another source of automatic spam learning is [DNS-based block lists](/docs/spamfilter/dnsbl). When a message originates from a sender domain or IP address that is listed in multiple DNS block lists, this is treated as strong evidence of spam activity. By default, Stalwart requires the sender to be listed in at least two block lists before this condition is satisfied, although this threshold is configurable.
+
+When the requirement is met, the message is automatically added as a spam training sample. Using multiple block list confirmations reduces the risk of false positives and ensures that only well-established spam sources contribute to automatic learning.
 
 ## Configuration
 
 The following configuration options are available for the spam classifier’s automatic learning process:
 
-- `spam-filter.classifier.auto-learn.spam-score`: Specifies the upper spam score threshold above which messages are automatically treated as spam for training purposes. The default value is `8.0`. Messages with a spam score exceeding this threshold are added as spam training samples.
-- `spam-filter.classifier.auto-learn.ham-score`: Specifies the lower spam score threshold below which messages are automatically treated as ham for training purposes. The default value is `-8.0`. Messages with a spam score below this threshold are added as ham training samples.
+- `spam-filter.classifier.auto-learn.spam-rbl-count`: Specifies the minimum number of DNS block lists that must list the sender’s domain or IP address for a message to be automatically treated as spam for training purposes. The default value is `2`.
+- `spam-filter.classifier.auto-learn.spam-trap`:  When set to `true`, messages delivered to administrator-defined spam trap addresses are automatically added as spam training samples. The default value is `true`.
 - `spam-filter.card-is-ham.learn`: When set to `true`, messages from senders in the recipient’s address book that are classified as spam are automatically added as ham training samples. The default value is `true`.
 - `spam-filter.trusted-reply.learn`: When set to `true`, messages classified as spam that belong to threads containing messages in the recipient’s Sent Items folder are automatically added as ham training samples. The default value is `true`.
 
@@ -43,8 +45,8 @@ Example:
 
 ```toml
 [spam-filter.classifier.auto-learn]
-spam-score = 8.0
-ham-score = -8.0
+spam-rbl-count = 2
+spam-trap = true
 
 [spam-filter.card-is-ham]
 learn = true
