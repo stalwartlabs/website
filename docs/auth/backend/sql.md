@@ -4,20 +4,22 @@ sidebar_position: 3
 
 # SQL Database
 
-Stalwart supports using popular SQL database systems such as mySQL, PostgreSQL, and SQLite as a directory server. This allows you to leverage an existing SQL database to handle tasks such as authentication, validating local accounts, and retrieving account-related information.
+Stalwart can use SQL database systems such as mySQL, PostgreSQL, and SQLite as a directory server. This allows you to leverage an existing SQL database to handle tasks such as authentication, validating local accounts, and retrieving account-related information. Please note that RocksDB is the default data store in Stalwart and you will need to configure Stalwart to use an SQL databse.
 
 ## Configuration
 
-The following configuration settings are available for the SQL directory, which are specified under the `directory.<name>` section of the configuration file:
+The following configuration settings are required for use of an SQL based directory;
 
 - `type`: Indicates the type of directory, which has to be set to `"sql"`.
 - `store`: Specifies the name of the [SQL data store](/docs/storage/data) to use as a directory. Only SQL data stores are supported.
 
-Any of the supported SQL data stores can be used as an SQL directory. Configuration details for each SQL data store can be found in the [data stores](/docs/storage/data) section.
+These settings are specified under the `directory.<name>` section of the configuration file (etc/config.toml)
+
+Any of the supported SQL databases can be used as an SQL directory. More configuration details for each SQL data store can be found in the [data stores](/docs/storage/data) section.
 
 ### Directory queries
 
-In order to retrieve information about accounts, the following SQL directory queries need to be defined in the underlying [data store](/docs/storage/data):
+In order to retrieve information about accounts, the following SQL directory queries must be defined in the underlying [data store](/docs/storage/data):
 
 - `name`: Retrieves the `type`, `description`, and `quota` fields of an account by its account `name`. Optionally this query can return the account's `email` and `secret` fields as well.
 - `members`: Fetches the groups that a particular account is a member of. Groups names have to be returned as text.
