@@ -8,6 +8,34 @@ Caddy is an open-source, HTTP/2-enabled web server that is renowned for its simp
 
 Stalwart supports Caddy, allowing you to leverage Caddy's robust feature set to manage and route traffic to your email server seamlessly. Using Caddy as a reverse proxy, you can benefit from its automatic HTTPS configuration, easy-to-use syntax, and powerful performance enhancements to ensure that your Stalwart operates efficiently and securely.
 
+You can use Caddy to either proxy all protocols (HTTP, SMTP, IMAP and POP) or only HTTP.
+
+## HTTP Only Proxy Configuration
+
+The following is an example of a Caddyfile configuration that can be used to set up Caddy as a reverse proxy for Stalwart for only HTTP protocol. This configuration includes support for the Proxy Protocol, which is essential for preserving client IP addresses and TLS connection information when using Caddy in front of Stalwart.
+
+```txt
+example.com {
+    redir https://www.example.com{uri}
+}
+
+www.example.com {
+    root * /var/www/imkerei
+
+    file_server
+}
+
+mail.example.com {
+    reverse_proxy https://127.0.0.1:10443 {
+        transport http {
+            proxy_protocol v2
+            tls_server_name mail.example.com
+        }
+    }
+}
+```
+
+
 ## Note on Layer 4 support
 
 Caddy, while being a powerful and easy-to-use web server and reverse proxy, does not natively support raw TCP streams (layer 4) and consequently the [Proxy Protocol](/docs/server/reverse-proxy/proxy-protocol). This protocol is typically used to pass client connection information such as IP addresses and TLS connection statuses through multiple layers of proxies. To achieve this functionality, you would need to integrate [HAProxy](/docs/server/reverse-proxy/haproxy) or [NGINX](/docs/server/reverse-proxy/nginx), which can handle the Proxy Protocol and forward traffic to Caddy for further processing.
@@ -21,7 +49,7 @@ xcaddy build --with github.com/mholt/caddy-l4/modules/l4proxy \
     --with github.com/mholt/caddy-l4/modules/l4proxyprotocol
 ```
 
-## Configuration
+## Full Proxy Configuration
 
 The following is an example of a Caddyfile configuration that can be used to set up Caddy as a reverse proxy for Stalwart. This configuration includes support for the Proxy Protocol, which is essential for preserving client IP addresses and TLS connection information when using Caddy in front of Stalwart.
 
@@ -124,7 +152,7 @@ Description=imports certs from caddy to stalwart
 Type=oneshot
 ExecStart=/usr/bin/cp -f /var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/mail.example.com/mail.example.com.pem /opt/stalwart/cert/
 ExecStart=/usr/bin/cp -f /var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/mail.example.com/mail.example.com.priv.pem /opt/stalwart/cert/
-ExecStart=/usr/bin/curl -X GET -H "Accept: application/json" -H "Authorization: Bearer <TOKEN>"  https://mail.example.com/api/reload/certificate 
+ExecStart=/usr/bin/curl -X GET -H "Accept: application/json" -H "Authorization: Bearer <TOKEN>"  https://mail.example.com/api/reload/certificate
 
 [Install]
 WantedBy=multi-user.target
