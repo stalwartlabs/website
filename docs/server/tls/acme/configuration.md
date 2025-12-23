@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # Configuration
 
-Stalwart supports automatic TLS deployment and renewals using the ACME protocol, enhancing security and ease of management for mail server administrators. ACME in configured in the `acme.<name>` section of the configuration file. The following attributes are available:
+Stalwart supports automated TLS certificate deployment and renewals using the ACME protocol, enhancing security and ease of management for mail server administrators. ACME can be configured in the `acme.<name>` section of the configuration file. The following attributes are available:
 
 - `directory`: The directory URL of the ACME provider you're using. For Let's Encrypt, the live directory URL is `https://acme-v02.api.letsencrypt.org/directory` and is used for actual certificate issuance. The staging directory URL is `https://acme-staging-v02.api.letsencrypt.org/directory` and is primarily used for testing. 
 - `challenge`: The [challenge type](/docs/server/tls/acme/challenges) to use for validation. Supported values are `http-01`, `dns-01`, and `tls-alpn-01` (default).
