@@ -31,7 +31,7 @@ Make sure to replace `<STALWART_DIR>` with the path to the directory you created
 
 ### Log in to the web interface
 
-Execute `docker logs stalwart` to obtain the system the administrator account and password: 
+Execute `docker logs stalwart` to obtain the administrator account’s name and password:
 
 ```bash
 $ docker logs stalwart
