@@ -12,79 +12,28 @@ Below are several common topology strategies used in Stalwart clusters:
 
 ## Unified Service Model
 
+In this approach, **all nodes in the cluster handle all services**—IMAP, JMAP, WebDAV, and SMTP. For example, in a 1024-node deployment, each server would be configured identically and capable of handling any type of client or protocol request.
+
 ```mermaid
-flowchart TB
-    subgraph Cluster Nodes
+flowchart LR
+    LB[Load Balancer]
+    
+    subgraph Cluster["1,024 Unified Nodes"]
         direction LR
-        Node1[Node 1]
-        Node2[Node 2]
-        Node3[Node 3]
-        Node4[Node 4]
-        Node5[Node 5]
-        Node6[Node 6]
-        Node7[Node 7]
-        Node8[Node 8]
-        Node9[Node 9]
-        Node10[Node 10]
+        N1["Node 1<br>SMTP+IMAP+JMAP"]
+        N2["Node 2<br>SMTP+IMAP+JMAP"]
+        N3["..."]
+        N1024["Node 1024<br>SMTP+IMAP+JMAP"]
     end
-
-    IMAP(IMAP)
-    JMAP(JMAP)
-    WebDAV(WebDAV)
-    SMTP(SMTP)
-
-    Node1 --> IMAP
-    Node1 --> JMAP
-    Node1 --> WebDAV
-    Node1 --> SMTP
-
-    Node2 --> IMAP
-    Node2 --> JMAP
-    Node2 --> WebDAV
-    Node2 --> SMTP
-
-    Node3 --> IMAP
-    Node3 --> JMAP
-    Node3 --> WebDAV
-    Node3 --> SMTP
-
-    Node4 --> IMAP
-    Node4 --> JMAP
-    Node4 --> WebDAV
-    Node4 --> SMTP
-
-    Node5 --> IMAP
-    Node5 --> JMAP
-    Node5 --> WebDAV
-    Node5 --> SMTP
-
-    Node6 --> IMAP
-    Node6 --> JMAP
-    Node6 --> WebDAV
-    Node6 --> SMTP
-
-    Node7 --> IMAP
-    Node7 --> JMAP
-    Node7 --> WebDAV
-    Node7 --> SMTP
-
-    Node8 --> IMAP
-    Node8 --> JMAP
-    Node8 --> WebDAV
-    Node8 --> SMTP
-
-    Node9 --> IMAP
-    Node9 --> JMAP
-    Node9 --> WebDAV
-    Node9 --> SMTP
-
-    Node10 --> IMAP
-    Node10 --> JMAP
-    Node10 --> WebDAV
-    Node10 --> SMTP
+    
+    subgraph Storage
+        FDB[(Metadata)]
+        CEPH[(Blobs)]
+    end
+    
+    LB --> Cluster
+    Cluster --> Storage
 ```
-
-In this approach, **all nodes in the cluster handle all services**—IMAP, JMAP, WebDAV, and SMTP. For example, in a 10-node deployment, each server would be configured identically and capable of handling any type of client or protocol request.
 
 This model is ideal for:
 
@@ -96,62 +45,34 @@ The unified model also simplifies load balancing and reduces operational complex
 
 ## Service-Specific Allocation
 
+In this model, nodes are **dedicated to specific protocols**. For example, a 1024-node cluster might be divided into 256 SMTP nodes, 384 IMAP nodes, 256 JMAP nodes and 128 WebDAV nodes.
+
 ```mermaid
 flowchart TB
-
-    subgraph IMAP_Nodes [IMAP Nodes]
-        direction LR
-        IMAP1[Node 1]
-        IMAP2[Node 2]
+    subgraph SMTP["SMTP Nodes (256)"]
+        S1[Node 1-256]
     end
-
-    subgraph JMAP_Nodes [JMAP Nodes]
-        direction LR
-        JMAP1[Node 3]
-        JMAP2[Node 4]
+    
+    subgraph IMAP["IMAP Nodes (384)"]
+        I1[Node 257-640]
     end
-
-    subgraph WebDAV_Nodes [WebDAV Nodes]
-        direction LR
-        WebDAV1[Node 5]
-        WebDAV2[Node 6]
+    
+    subgraph JMAP["JMAP Nodes (256)"]
+        J1[Node 641-896]
     end
-
-    subgraph SMTP_Inbound [SMTP Inbound]
-        direction LR
-        SMTPIn1[Node 7]
-        SMTPIn2[Node 8]
+    
+    subgraph WebDAV["WebDAV Nodes (128)"]
+        W1[Node 897-1024]
     end
-
-    subgraph SMTP_Outbound [SMTP Outbound]
-        direction LR
-        SMTPOut1[Node 9]
-        SMTPOut2[Node 10]
+    
+    subgraph Storage
+        FDB[(Metadata)]
+        CEPH[(Blobs)]
     end
-
-    IMAP1 --> IMAP[IMAP Service]
-    IMAP2 --> IMAP
-
-    JMAP1 --> JMAP[JMAP Service]
-    JMAP2 --> JMAP
-
-    WebDAV1 --> WebDAV[WebDAV Service]
-    WebDAV2 --> WebDAV
-
-    SMTPIn1 --> SMTP_IN[SMTP Inbound Service]
-    SMTPIn2 --> SMTP_IN
-
-    SMTPOut1 --> SMTP_OUT[SMTP Outbound Service]
-    SMTPOut2 --> SMTP_OUT
+    
+    SMTP & IMAP & JMAP & WebDAV --> Storage
 ```
 
-In this model, nodes are **dedicated to specific protocols**. A 10-node cluster might be divided as follows:
-
-* 2 nodes for **IMAP**
-* 2 nodes for **JMAP**
-* 2 nodes for **WebDAV**
-* 2 nodes for **SMTP Inbound**
-* 2 nodes for **SMTP Outbound**
 
 This separation of concerns is useful when:
 
@@ -163,52 +84,25 @@ Service-specific allocation allows more granular resource planning but may requi
 
 ## Weighted Allocation Based on Load
 
-```mermaid
-flowchart TB
-
-    subgraph IMAP_Nodes [IMAP Nodes]
-        direction LR
-        IMAP1[Node 1]
-        IMAP2[Node 2]
-        IMAP3[Node 3]
-        IMAP4[Node 4]
-    end
-
-    subgraph JMAP_WebDAV_Nodes [JMAP + WebDAV Nodes]
-        direction LR
-        Combo1[Node 5]
-        Combo2[Node 6]
-    end
-
-    subgraph SMTP_Nodes [SMTP Nodes]
-        direction LR
-        SMTP1[Node 7]
-        SMTP2[Node 8]
-        SMTP3[Node 9]
-        SMTP4[Node 10]
-    end
-
-    IMAP1 --> IMAP[IMAP Service]
-    IMAP2 --> IMAP
-    IMAP3 --> IMAP
-    IMAP4 --> IMAP
-
-    Combo1 --> JMAP[JMAP Service]
-    Combo1 --> WebDAV[WebDAV Service]
-    Combo2 --> JMAP
-    Combo2 --> WebDAV
-
-    SMTP1 --> SMTP[SMTP Service]
-    SMTP2 --> SMTP
-    SMTP3 --> SMTP
-    SMTP4 --> SMTP
-```
-
 Clusters can also be sized **according to expected usage patterns**. For instance, if IMAP usage is significantly heavier than JMAP or WebDAV, the topology could look like this:
 
-* 4 nodes for **IMAP**
-* 2 nodes for **JMAP + WebDAV**
-* 4 nodes for **SMTP** (handling both inbound and outbound)
+| Protocol | Nodes | Rationale |
+|----------|-------|-----------|
+| IMAP | 512 | Long-lived connections, high memory |
+| SMTP | 256 | Burst traffic, queue processing |
+| JMAP | 192 | API-heavy, mobile clients |
+| WebDAV | 64 | Calendar/contacts, lower volume |
+
+```mermaid
+flowchart LR
+    subgraph Distribution
+        direction TB
+        IMAP["IMAP<br>512 nodes<br>(50%)"]
+        SMTP["SMTP<br>256 nodes<br>(25%)"]
+        JMAP["JMAP<br>192 nodes<br>(19%)"]
+        WebDAV["WebDAV<br>64 nodes<br>(6%)"]
+    end
+```
 
 This model strikes a balance between redundancy and efficiency, allocating more resources to higher-demand services while still covering less-used protocols.
 
@@ -219,6 +113,12 @@ It's especially effective in:
 * Clusters designed to scale incrementally
 
 ## Protocol Pairing Model
+
+Some organizations prefer to group **complementary protocols** together. A common configuration might look like:
+
+* 40% of the nodes for **IMAP + JMAP**
+* 20% of the nodes for **WebDAV**
+* 40% of the nodes for **SMTP Inbound + Outbound**
 
 ```mermaid
 flowchart TB
@@ -263,12 +163,6 @@ flowchart TB
     SMTP4 --> SMTP
 ```
 
-Some organizations prefer to group **complementary protocols** together. A common configuration might look like:
-
-* 4 nodes for **IMAP + JMAP**
-* 2 nodes for **WebDAV**
-* 4 nodes for **SMTP Inbound + Outbound**
-
 This model offers:
 
 * Reduced configuration duplication
@@ -279,51 +173,39 @@ Pairing services can also simplify routing and firewall policies, especially whe
 
 ## Geographically Distributed Topology
 
-```mermaid
-flowchart TB
-
-    subgraph Region_A [Region A]
-        direction LR
-        A1[Node 1 - IMAP]
-        A2[Node 2 - SMTP In]
-        A3[Node 3 - SMTP In]
-    end
-
-    subgraph Region_B [Region B]
-        direction LR
-        B1[Node 4 - IMAP + JMAP]
-        B2[Node 5 - SMTP Out]
-        B3[Node 6 - SMTP Out]
-    end
-
-    subgraph Region_C [Region C]
-        direction LR
-        C1[Node 7 - WebDAV]
-        C2[Node 8 - WebDAV]
-        C3[Node 9 - JMAP]
-        C4[Node 10 - SMTP]
-    end
-
-    A1 --> IMAP[IMAP Service]
-    A2 --> SMTP_IN[SMTP Inbound Service]
-    A3 --> SMTP_IN
-
-    B1 --> IMAP
-    B1 --> JMAP[JMAP Service]
-    B2 --> SMTP_OUT[SMTP Outbound Service]
-    B3 --> SMTP_OUT
-
-    C1 --> WebDAV[WebDAV Service]
-    C2 --> WebDAV
-    C3 --> JMAP
-    C4 --> SMTP[SMTP Service]
-```
-
 In larger or multi-site deployments, nodes may be distributed across **data centers or geographic regions**, with services colocated according to regional demand:
 
-* Region A: 3 nodes (IMAP, SMTP Inbound)
-* Region B: 3 nodes (IMAP, JMAP, SMTP Outbound)
-* Region C: 4 nodes (WebDAV, JMAP, SMTP)
+* Region A: 384 nodes (IMAP, SMTP Inbound)
+* Region B: 448 nodes (IMAP, JMAP, SMTP Outbound)
+* Region C: 192 nodes (WebDAV, JMAP, SMTP)
+
+```mermaid
+flowchart TB
+    subgraph EU["EU Region (384 nodes)"]
+        EU_S[SMTP: 96]
+        EU_I[IMAP: 192]
+        EU_J[JMAP: 96]
+    end
+    
+    subgraph US["US Region (448 nodes)"]
+        US_S[SMTP: 112]
+        US_I[IMAP: 224]
+        US_J[JMAP: 112]
+    end
+    
+    subgraph APAC["APAC Region (192 nodes)"]
+        AP_S[SMTP: 48]
+        AP_I[IMAP: 96]
+        AP_J[JMAP: 48]
+    end
+    
+    subgraph Global["Global Storage"]
+        FDB[(Metadata<br>Multi-region)]
+        CEPH[(Blobs<br>Geo-replicated)]
+    end
+    
+    EU & US & APAC <--> Global
+```
 
 This approach improves:
 

@@ -12,6 +12,36 @@ Unlike many traditional mail servers, Stalwart does not rely on external directo
 
 In addition to its stateless protocol handling capabilities, Stalwart also supports distributed SMTP queues. This allows multiple instances to access and process the queue concurrently, increasing delivery throughput and ensuring resilience in case any individual node becomes unavailable.
 
+```mermaid
+flowchart TB
+    subgraph Clients
+        C1[JMAP]
+        C2[IMAP]
+        C3[SMTP]
+    end
+    
+    subgraph Cluster["Stalwart Cluster (any node)"]
+        N1[Node 1]
+        N2[Node 2]
+        N3[Node N]
+    end
+    
+    subgraph Storage
+        FDB[(Metadata store)]
+        CEPH[(Blob store)]
+        ES[(Search store)]
+        RED[(Ephemeral store)]
+    end
+    
+    subgraph Coordination
+        ZEN[Zenoh / Kafka]
+    end
+    
+    C1 & C2 & C3 --> N1 & N2 & N3
+    N1 & N2 & N3 <--> ZEN
+    N1 & N2 & N3 --> FDB & CEPH & ES & RED
+```
+
 ## Coordination
 
 Cluster [coordination](/docs/cluster/coordination/overview) in Stalwart refers to how nodes within the system share updates, replicate state, and stay informed about the state of the overall cluster. Coordination is essential for synchronizing data, ensuring consistency, and reacting to dynamic changes such as node joins, failures, or configuration changes.
