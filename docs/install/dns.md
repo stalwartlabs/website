@@ -35,8 +35,8 @@ Each DKIM record corresponds to a cryptographic key and is referenced by a selec
 The [Sender Policy Framework (SPF)](/docs/mta/authentication/spf) helps mail servers verify whether an email claiming to come from your domain was sent from an authorized server. SPF records are published as TXT records.
 
 ```
-TXT	mail.example.org.	v=spf1 a ra=postmaster -all
-TXT	example.org.	v=spf1 mx ra=postmaster -all
+TXT	mail.example.org.	v=spf1 a -all
+TXT	example.org.	v=spf1 mx -all
 ```
 
 These policies indicate that mail can be sent from the server defined by the domain’s MX or A records, and instruct recipient servers to reject emails from unauthorized sources.
