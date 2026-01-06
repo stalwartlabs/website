@@ -39,7 +39,7 @@ $ docker logs stalwart
 🔑 Your administrator account is 'admin' with password 'w95Yuiu36E'.
 ```
 
-With this information, you can log in to the web interface at `http://yourserver.org:8080/login`.
+With this information, you can log in to the web interface at `http://yourserver.org:8080/login` or `http://localhost:8080/login` if you're deploying localy.
 
 ### Choose where to store your data
 
