@@ -14,6 +14,58 @@ When using JMAP over WebSocket, clients are only authenticated once when the con
 
 JMAP over WebSocket is enabled by default in Stalwart and is available to JMAP clients at `wss://your-domain.example`.
 
+## Ticket-Based Authentication
+
+Browser-based JMAP clients face a limitation when connecting to WebSockets: browsers do not allow setting custom HTTP headers (like `Authorization`) on WebSocket connections. To solve this, Stalwart supports ticket-based authentication for WebSocket connections.
+
+### How It Works
+
+1. **Obtain a ticket**: The client makes an authenticated `POST` request to `/jmap/ws/ticket` with a valid access token in the `Authorization` header.
+2. **Receive the ticket**: The server returns a short-lived ticket in the response: `{"value": "<ticket>"}`
+3. **Connect with the ticket**: The client connects to the WebSocket endpoint with the ticket as a query parameter: `wss://your-domain.example/jmap/ws?ticket=<ticket>`
+
+### Example
+
+```javascript
+// Step 1: Get a ticket using the access token
+const response = await fetch('https://mail.example.com/jmap/ws/ticket', {
+  method: 'POST',
+  headers: {
+    'Authorization': 'Bearer <access_token>'
+  }
+});
+const { value: ticket } = await response.json();
+
+// Step 2: Connect to WebSocket using the ticket
+const ws = new WebSocket(`wss://mail.example.com/jmap/ws?ticket=${ticket}`);
+```
+
+### Security
+
+- Tickets are short-lived (default: 60 seconds) to minimize the window for misuse
+- Tickets use the same encryption as OAuth access tokens
+- Each ticket is bound to the authenticated user's account
+- Rate limiting is applied to both ticket issuance and WebSocket connections
+
+The ticket expiry can be configured with the `oauth.expiry.ws-ticket` setting (see [OAuth Tokens](/docs/auth/oauth/tokens#expiration)).
+
+### Capability Advertisement
+
+The JMAP session response includes information about ticket authentication support:
+
+```json
+{
+  "capabilities": {
+    "urn:ietf:params:jmap:websocket": {
+      "url": "wss://mail.example.com/jmap/ws",
+      "supportsPush": true,
+      "supportsTicketAuth": true,
+      "ticketUrl": "https://mail.example.com/jmap/ws/ticket"
+    }
+  }
+}
+```
+
 ## Configuration
 
 The WebSocket following parameters can be configured under the `jmap.web-socket` section:

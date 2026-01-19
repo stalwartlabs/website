@@ -75,6 +75,7 @@ System administrators can configure under the `oauth.expiry` section the expirat
 - ``refresh-token-renew``:  Number of remaining seconds in a refresh token before a new one is issued to the client. Defaults to 345600 seconds (4 days).
 - ``user-code``: Expiration time in seconds of a user code issued by the device authentication flow. Defaults to 1800 seconds (30 minutes).
 - ``auth-code-expiry``: Expiration time in seconds of an authorization code issued by the authorization code flow. Defaults to 600 seconds (10 minutes).
+- ``ws-ticket``: Expiration time in seconds of a WebSocket authentication ticket. These short-lived tickets allow browser-based clients to authenticate WebSocket connections. Defaults to 60 seconds. See [WebSocket Ticket-Based Authentication](/docs/http/jmap/websockets#ticket-based-authentication) for more details.
 
 Example:
 
@@ -85,6 +86,7 @@ auth-code = "10m"
 token = "1h"
 refresh-token = "30d"
 refresh-token-renew = "4d"
+ws-ticket = "60s"
 ```
 
 The `oauth.auth.max-attempts` parameter can be used to prevent brute-force attacks against the authorization code flow. If the user fails to authenticate after the configured number of attempts, the authorization code is invalidated and the user has to start the flow again.
