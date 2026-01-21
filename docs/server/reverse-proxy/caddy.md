@@ -130,6 +130,10 @@ ExecStart=/usr/bin/curl -X GET -H "Accept: application/json" -H "Authorization: 
 WantedBy=multi-user.target
 ```
 
+### Caddy events
+
+Yet another alternative is to hook into the certificate lifecycle of caddy. For an example see the [Caddy Documentation on events](https://caddyserver.com/docs/caddyfile/options#event-options).
+
 ## Stalwart configuration
 
 ```toml
