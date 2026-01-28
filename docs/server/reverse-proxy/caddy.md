@@ -66,16 +66,6 @@ The following is an example of a Caddyfile configuration that can be used to set
     }
 }
 
-example.com {
-    redir https://www.example.com{uri}
-}
-
-www.example.com {
-    root * /var/www/imkerei
-
-    file_server
-}
-
 mail.example.com {
     reverse_proxy https://127.0.0.1:10443 {
         transport http {
