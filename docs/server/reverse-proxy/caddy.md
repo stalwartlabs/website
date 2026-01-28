@@ -137,4 +137,5 @@ server.tls.certificate = "default"
 certificate.default.cert = "%{file:/opt/stalwart/cert/example.com.pem}%"
 certificate.default.default = true
 certificate.default.private-key = "%{file:/opt/stalwart/cert/example.com.priv.pem}%"
+server.proxy.trusted-networks = ["::1","127.0.0.0/8", "172.16.0.0/12","192.168.0.0/24", "10.0.0.0/8"]
 ```
