@@ -66,16 +66,6 @@ The following is an example of a Caddyfile configuration that can be used to set
     }
 }
 
-example.com {
-    redir https://www.example.com{uri}
-}
-
-www.example.com {
-    root * /var/www/imkerei
-
-    file_server
-}
-
 mail.example.com {
     reverse_proxy https://127.0.0.1:10443 {
         transport http {
@@ -137,4 +127,5 @@ server.tls.certificate = "default"
 certificate.default.cert = "%{file:/opt/stalwart/cert/example.com.pem}%"
 certificate.default.default = true
 certificate.default.private-key = "%{file:/opt/stalwart/cert/example.com.priv.pem}%"
+server.proxy.trusted-networks = ["::1","127.0.0.0/8", "172.16.0.0/12","192.168.0.0/24", "10.0.0.0/8"]
 ```
