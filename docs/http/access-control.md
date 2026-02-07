@@ -31,7 +31,7 @@ The following example allows public access to the `/robots.txt` and `/.well-know
 
 ```toml
 [http]
-allowed-endpoint = [ { if = "starts_with( remote_ip, '192.180.1.' ) || contains( [ 'robots.txt', '.well-known' ], split( url_path, '/' )[1] )", 
+allowed-endpoint = [ { if = "starts_with( remote_ip, '192.168.1.' ) || contains( [ 'robots.txt', '.well-known' ], split( url_path, '/' )[1] )", 
                        then = "200" },
                      { else = "400" } ]
 ```
