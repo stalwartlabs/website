@@ -77,7 +77,7 @@ This record tells sending servers where to report TLS issues, helping you monito
 SRV records guide email clients like Thunderbird, Outlook, or mobile apps to the correct server and port for various services.
 
 ```
-SRV	_imap._tcp.example.org.	0 1 110 mail.example.org.
+SRV	_imap._tcp.example.org.	0 1 143 mail.example.org.
 SRV	_imaps._tcp.example.org.	0 1 993 mail.example.org.
 SRV	_submissions._tcp.example.org.	0 1 465 mail.example.org.
 SRV	_submission._tcp.example.org.	0 1 587 mail.example.org.
