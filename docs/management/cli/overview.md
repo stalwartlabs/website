@@ -39,12 +39,13 @@ $ stalwart-cli
 
 Stalwart CLI
 
-Usage: stalwart-cli [OPTIONS] --url <URL> <COMMAND>
+Usage: stalwart-cli [OPTIONS] <COMMAND>
 
 Commands:
+  dkim      Manage user accounts Manage DKIM signatures
   import    Import JMAP accounts and Maildir/mbox mailboxes
   export    Export JMAP accounts
-  database  Manage JMAP database
+  server    Manage JMAP database
   queue     Manage SMTP message queue
   report    Manage SMTP DMARC/TLS report queue
   help      Print this message or the help of the given subcommand(s)
@@ -53,6 +54,7 @@ Options:
   -u, --url <URL>                  JMAP or SMTP server base URL
   -c, --credentials <CREDENTIALS>  Authentication credentials
   -t, --timeout <TIMEOUT>          Connection timeout in seconds
+  -a, --anonymous                  Do not ask for credentials
   -h, --help                       Print help
   -V, --version                    Print version
 ```
