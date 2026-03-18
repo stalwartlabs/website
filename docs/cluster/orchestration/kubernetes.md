@@ -114,7 +114,7 @@ spec:
             path: /healthz/ready
             port: 8080
           initialDelaySeconds: 5
-          periodSeconds: 10        
+          periodSeconds: 10
         ports:
         - containerPort: 8080
         - containerPort: 443
