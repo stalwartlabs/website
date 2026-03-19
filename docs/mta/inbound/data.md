@@ -8,7 +8,7 @@ The `DATA` command is used to initiate the data transfer phase of the email deli
 
 ## Message Filtering
 
-Once a message has been submitted either with the `DATA` or `BDAT` command, it is possible to run [sieve scripts](/docs/sieve/overview), [milter filters](/docs/mta/filter/milter) or [MTA Hools](/docs/mta/filter/mtahooks) that accept, reject or modify the message's contents. When multiple filter types are configured, Stalwart will execute first the Milter filters, then the Sieve scripts and finally the MTA Hooks.
+Once a message has been submitted either with the `DATA` or `BDAT` command, it is possible to run [sieve scripts](/docs/sieve/overview), [milter filters](/docs/mta/filter/milter) or [MTA Hooks](/docs/mta/filter/mtahooks) that accept, reject or modify the message's contents. When multiple filter types are configured, Stalwart will execute first the Milter filters, then the Sieve scripts and finally the MTA Hooks.
 
 ### Sieve
 
