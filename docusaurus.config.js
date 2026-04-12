@@ -1,8 +1,6 @@
 // @ts-check
-// Note: type annotations allow type checking and IDEs autocompletion
 
-const lightCodeTheme = require('prism-react-renderer/themes/github');
-const darkCodeTheme = require('prism-react-renderer/themes/dracula');
+import { themes as prismThemes } from 'prism-react-renderer';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -22,11 +20,6 @@ const config = {
   projectName: 'docs', // Usually your repo name.
 
   onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
-
-  // Even if you don't use internalization, you can use this field to set useful
-  // metadata like html lang. For example, if your site is Chinese, you may want
-  // to replace "en" with "zh-Hans".
   i18n: {
     defaultLocale: 'en',
     locales: ['en'],
@@ -34,8 +27,12 @@ const config = {
 
   markdown: {
     mermaid: true,
+    hooks: {
+      onBrokenMarkdownLinks: 'warn',
+    },
   },
   themes: ['@docusaurus/theme-mermaid'],
+  plugins: ['@docsearch/docusaurus-adapter'],
 
   presets: [
     [
@@ -43,7 +40,7 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
-          sidebarPath: require.resolve('./sidebars.js'),
+          sidebarPath: './sidebars.js',
           editUrl:
             'https://github.com/stalwartlabs/website/tree/main/',
         },
@@ -53,10 +50,9 @@ const config = {
             'https://github.com/stalwartlabs/website/tree/main/',
         },
         theme: {
-          customCss: require.resolve('./src/css/custom.css'),
+          customCss: './src/css/custom.css',
         },
         sitemap: {
-          changefreq: 'weekly',
           priority: 0.5,
           ignorePatterns: ['/tags/**'],
           filename: 'sitemap.xml',
@@ -164,43 +160,26 @@ const config = {
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} Stalwart Labs Ltd.`,
+        copyright: `Copyright © ${new Date().getFullYear()} Stalwart Labs LLC`,
       },
       prism: {
-        theme: lightCodeTheme,
-        darkTheme: darkCodeTheme,
+        theme: prismThemes.dracula,
+        darkTheme: prismThemes.dracula,
         additionalLanguages: ['toml'],
       },
-      algolia: {
-        // The application ID provided by Algolia
+      docsearch: {
         appId: 'CMWSXETHDL',
-
-        // Public API key: it is safe to commit it
         apiKey: '7559c539ade0f66d36bf423da6c71e5c',
-
         indexName: 'stalw',
-
-        // Optional: see doc section below
         contextualSearch: true,
-
-        // Optional: Specify domains where the navigation should occur through window.location instead on history.push. Useful when our Algolia config crawls multiple documentation sites and we want to navigate with window.location.href to them.
-        //externalUrlRegex: 'external\\.com|domain\\.com',
-
-        // Optional: Replace parts of the item URLs from Algolia. Useful when using the same search index for multiple deployments using a different baseUrl. You can use regexp or string in the `from` param. For example: localhost:3000 vs myCompany.com/docs
-        /*replaceSearchResultPathname: {
-          from: '/docs/', // or as RegExp: /\/docs\//
-          to: '/',
-        },*/
-
-        // Optional: Algolia search parameters
         searchParameters: {},
-
-        // Optional: path for search page that enabled by default (`false` to disable it)
         searchPagePath: 'search',
-
-        //... other Algolia params
+        /*askAi: {
+          assistantId: 'YOUR_ASSISTANT_ID',
+          sidePanel: true,
+        },*/
       },
     }),
 };
 
-module.exports = config;
+export default config;
