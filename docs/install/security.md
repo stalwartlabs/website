@@ -6,7 +6,7 @@ sidebar_position: 6
 
 Stalwart is secure by design. From the moment it's deployed, it applies safe, [security-conscious defaults](/docs/configuration/overview#safe-defaults) that follow best practices for modern mail server operation. Out of the box, it includes built-in defense mechanisms to [protect against common threats](/docs/server/auto-ban). For example, Stalwart can automatically detect and block IP addresses that attempt brute-force password attacks, guess account names, scan for vulnerabilities, or launch SYN flood attacks. These protections operate continuously to reduce the risk of abuse and compromise.
 
-While Stalwart provides a strong security foundation, server administrators still play a critical role in maintaining a secure environment. This section offers additional recommendations and best practices to further harden your server, minimize attack surfaces, and ensure safe operation in a variety of deployment scenarios—from small personal setups to large, internet-facing infrastructure.
+While Stalwart provides a strong security foundation, server administrators still play a critical role in maintaining a secure environment. This section offers additional recommendations and best practices to further harden your server, minimize attack surfaces, and ensure safe operation in a variety of deployment scenarios, from small personal setups to large, internet-facing infrastructure.
 
 ## Disable unused ports
 
@@ -16,7 +16,7 @@ Unused ports represent potential entry points for attackers. Even if the underly
 
 Administrators can disable unused ports in one of two ways:
 
-- **Remove the corresponding [listener](/docs/server/listener) from the Stalwart configuration**—this ensures that the service no longer binds to the port.
+- **Remove the corresponding [listener](/docs/server/listener) from the Stalwart configuration**. This ensures that the service no longer binds to the port.
 - **Block incoming traffic at the network or host firewall level**, which prevents external access even if the listener is active internally.
 
 Stalwart uses a variety of ports to support email delivery, access, and administrative tasks. Knowing what each port does will help you decide which ones to keep open and which can be safely closed.
@@ -43,7 +43,7 @@ By carefully reviewing and disabling any unused network ports, you can significa
 
 Stalwart’s HTTP listener plays a central role in enabling many of the server's modern capabilities. It is used to provide access to a range of services, including JMAP, WebDAV, management APIs, ACME certificate issuance, autoconfig/autodiscover protocols, `.well-known` resources, metrics endpoints, and OAuth-based authentication.
 
-While this broad functionality is powerful, it also means that the HTTP listener exposes multiple endpoints by default. In scenarios where you want to allow access to only a subset of these features—such as enabling JMAP but disabling WebDAV or public metrics access—you will need to define [HTTP Access Control rules](/docs/http/access-control).
+While this broad functionality is powerful, it also means that the HTTP listener exposes multiple endpoints by default. In scenarios where you want to allow access to only a subset of these features (such as enabling JMAP but disabling WebDAV or public metrics access), you will need to define [HTTP Access Control rules](/docs/http/access-control).
 
 HTTP Access Control rules are logical expressions evaluated for every incoming HTTP request. These rules determine whether access to a particular URL should be granted, based on criteria such as the request path, method, source IP, authentication status, or other conditions. This provides fine-grained control over which HTTP endpoints are accessible and under what circumstances.
 

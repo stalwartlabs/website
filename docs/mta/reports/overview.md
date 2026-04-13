@@ -17,7 +17,7 @@ Stalwart can generate and send multiple types of standardized reports, which hel
 
 In addition to sending reports, Stalwart can [receive and automatically analyze](/docs/mta/reports/analysis) a wide range of incoming email security reports. This includes **DMARC Aggregate Reports**, **SMTP TLS Aggregate Reports**, **Authentication Failure Reports** (e.g., DKIM, SPF, and DMARC failures) and **ARF Reports** (Abuse Reporting Format, used for spam complaints and security incidents). Upon receipt, these reports are parsed and stored for visualization within the [WebAdmin interface](/docs/management/webadmin/overview). This enables administrators to review authentication trends, detect anomalies, and track policy enforcement results over time.
 
-If any problems are detected—such as unusually high failure rates or authentication misalignments—Stalwart can generate **warnings** which are forwarded to the configured [logging or tracing](/docs/telemetry/overview) mechanism. Additionally, these warnings can be configured to trigger [webhooks](/docs/telemetry/webhooks), allowing integration with external monitoring systems, dashboards, or automated response workflows.
+If any problems are detected, such as unusually high failure rates or authentication misalignments, Stalwart can generate **warnings** which are forwarded to the configured [logging or tracing](/docs/telemetry/overview) mechanism. Additionally, these warnings can be configured to trigger [webhooks](/docs/telemetry/webhooks), allowing integration with external monitoring systems, dashboards, or automated response workflows.
 
 ## Configuration
 

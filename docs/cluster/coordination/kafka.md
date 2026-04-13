@@ -10,7 +10,7 @@ Redpanda is a Kafka-compatible streaming data platform that serves as a drop-in 
 
 When used as a coordination backend in a Stalwart cluster, Kafka or Redpanda acts as the message bus for distributing internal updates between nodes. These updates can include mailbox changes for IMAP IDLE, push notification events, IP blocking alerts, TLS certificate distribution, and more. By publishing and subscribing to coordination topics, each Stalwart node remains synchronized with the rest of the cluster.
 
-Using Kafka or Redpanda provides a durable, centralized coordination layer that excels in high-volume environments. It ensures that messages are reliably delivered—even in the event of node failure—and that new or recovering nodes can catch up on missed updates by replaying messages from the log. This makes Kafka and Redpanda ideal choices for very large-scale Stalwart deployments that demand robust coordination with strict delivery guarantees.
+Using Kafka or Redpanda provides a durable, centralized coordination layer that excels in high-volume environments. It ensures that messages are reliably delivered, even in the event of node failure, and that new or recovering nodes can catch up on missed updates by replaying messages from the log. This makes Kafka and Redpanda ideal choices for very large-scale Stalwart deployments that demand robust coordination with strict delivery guarantees.
 
 While Kafka introduces additional infrastructure requirements, its ability to handle millions of events per second, support long-term message retention, and integrate with a wide ecosystem of tools makes it well-suited for enterprises with complex or high-traffic mail infrastructures.
 

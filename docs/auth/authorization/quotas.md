@@ -6,7 +6,7 @@ sidebar_position: 6
 
 Quotas in **Stalwart** provide a mechanism for regulating resource consumption within the system, ensuring fair allocation of storage and object capacity across users and tenants. They define explicit limits on the amount of space or number of items that an account can hold, preventing misuse and maintaining optimal system performance. Quotas are an integral part of the directory and account management architecture, capable of being enforced at various levels, including per-account or per-tenant.
 
-The quota system in Stalwart encompasses several types, most notably disk usage quotas and object quotas. **Disk usage quotas** control the total amount of disk space consumed by a user’s stored data, while **object quotas** constrain the number of distinct items—such as messages, mailboxes, calendar events, or address book entries—that can be created or stored. Together, these mechanisms offer administrators fine-grained control over resource utilization and service scaling.
+The quota system in Stalwart encompasses several types, most notably disk usage quotas and object quotas. **Disk usage quotas** control the total amount of disk space consumed by a user’s stored data, while **object quotas** constrain the number of distinct items (such as messages, mailboxes, calendar events, or address book entries) that can be created or stored. Together, these mechanisms offer administrators fine-grained control over resource utilization and service scaling.
 
 ## Disk Usage Quotas
 

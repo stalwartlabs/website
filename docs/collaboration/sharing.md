@@ -8,7 +8,7 @@ Stalwart includes support for **resource sharing**, allowing users and groups to
 
 Stalwart supports **group calendars**, **shared address books**, and **shared file folders**, which can be accessed and managed by multiple users with appropriate permissions. In addition to group-based resources, users can also share their **personal calendars, contact lists, and files** with others on the system.
 
-Sharing is implemented using the **JMAP Sharing extension** for JMAP clients, as well as the **WebDAV ACL (Access Control List) extension**, which is supported by many CalDAV and CardDAV clients. This allows users to manage who can read, write, or administer their resources directly from a compatible client interface, without requiring server-side configuration changes. Permissions can be granted at various levels—ranging from full access to read-only viewing—providing flexibility for different collaboration scenarios.
+Sharing is implemented using the **JMAP Sharing extension** for JMAP clients, as well as the **WebDAV ACL (Access Control List) extension**, which is supported by many CalDAV and CardDAV clients. This allows users to manage who can read, write, or administer their resources directly from a compatible client interface, without requiring server-side configuration changes. Permissions can be granted at various levels, ranging from full access to read-only viewing, providing flexibility for different collaboration scenarios.
 
 With built-in sharing capabilities and standards-based access controls, Stalwart makes it easy to enable collaborative features across calendars, contacts, and files while maintaining clear control over access and visibility.
 
@@ -20,7 +20,7 @@ To enable group resources, administrators simply need to **create the appropriat
 
 Group resources behave just like individual resources but are accessible to all group members. Permissions are managed centrally, and updates made by one user are immediately visible to others in the group. This simplifies coordination and promotes shared ownership of data within teams.
 
-There is no special configuration required to enable group resource visibility—membership alone is sufficient to grant access, making group-based collaboration both straightforward and scalable.
+There is no special configuration required to enable group resource visibility: membership alone is sufficient to grant access, making group-based collaboration both straightforward and scalable.
 
 
 ## Sharing Resources
@@ -29,9 +29,9 @@ In addition to group-based collaboration, Stalwart allows **individual users to 
 
 To share a resource, users must use a JMAP client with **JMAP Sharing** support or a **CalDAV, CardDAV, WebDAV client** (depending on whether they are sharing a calendar, address book, or file folder) that supports the **WebDAV ACL (Access Control List) extension**. Both JMAP Sharing and WebDAV ACL allow users to assign fine-grained permissions (such as read-only or full access) to other users or groups, directly from within the client interface.
 
-An important consideration when sharing resources is how users discover others in the system. In "groupware" terminology, a **principal** is any entity that can be granted access to a resource—typically a user, group, or system-defined role. By default, for **privacy and security reasons**, Stalwart **does not allow users to list all available principals** on the system. This means that while users can share resources with others they know, they won't be able to browse or search the full list of users or groups unless explicitly permitted to do so.
+An important consideration when sharing resources is how users discover others in the system. In "groupware" terminology, a **principal** is any entity that can be granted access to a resource, typically a user, group, or system-defined role. By default, for **privacy and security reasons**, Stalwart **does not allow users to list all available principals** on the system. This means that while users can share resources with others they know, they won't be able to browse or search the full list of users or groups unless explicitly permitted to do so.
 
-To control directory visibility, administrators can enable the `sharing.allow-directory-query` setting. When enabled, this allows authenticated users to perform principal lookups via JMAP Sharing and WebDAV ACL, making it possible to discover and share resources with other users on the system. However, this option should only be turned on in controlled environments—either when all users belong to the same organization or when they are isolated into clearly defined [tenants](/docs/auth/authorization/tenants). Enabling directory queries in mixed or unsegregated environments may expose sensitive user information.
+To control directory visibility, administrators can enable the `sharing.allow-directory-query` setting. When enabled, this allows authenticated users to perform principal lookups via JMAP Sharing and WebDAV ACL, making it possible to discover and share resources with other users on the system. However, this option should only be turned on in controlled environments, either when all users belong to the same organization or when they are isolated into clearly defined [tenants](/docs/auth/authorization/tenants). Enabling directory queries in mixed or unsegregated environments may expose sensitive user information.
 
 Example:
 
@@ -69,7 +69,7 @@ max-history = "30d"
 
 ## WebDAV Assisted Discovery
 
-Stalwart organizes user and group resources using a clear and hierarchical path structure. Each **principal**—a user, group, or other addressable entity in the WebDAV system—has its own namespace under which resources are stored. For example, the calendars for a user named John are located under `/dav/cal/john`, while the address book for a group named Sales is under `/dav/card/sales`. Within each principal's path, multiple **collections** can be created, such as `/dav/cal/john/work` and `/dav/cal/john/personal`, allowing users to manage different calendars or contact lists independently.
+Stalwart organizes user and group resources using a clear and hierarchical path structure. Each **principal** (a user, group, or other addressable entity in the WebDAV system) has its own namespace under which resources are stored. For example, the calendars for a user named John are located under `/dav/cal/john`, while the address book for a group named Sales is under `/dav/card/sales`. Within each principal's path, multiple **collections** can be created, such as `/dav/cal/john/work` and `/dav/cal/john/personal`, allowing users to manage different calendars or contact lists independently.
 
 To support standards-based client discovery, Stalwart lists all of a user’s accessible calendar and address book collections in the **`calendar-home-set`** and **`addressbook-home-set`** properties of the user's principal. These properties indicate to the client which paths should be queried to retrieve the resources available to the authenticated user, including both personal and shared collections.
 

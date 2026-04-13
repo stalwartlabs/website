@@ -8,7 +8,7 @@ Stalwart includes full support for **calendar management and scheduling** throug
 
 ## JMAP for Calendars
 
-**JMAP for Calendars** is a protocol that provides a modern, JSON-based API for managing calendar data such as events, tasks, and scheduling information. It is designed as a replacement for CalDAV and CalDAV Scheduling, offering the same functionality—creating, reading, updating, deleting, and sharing calendar data—but in a much simpler and more consistent way.
+**JMAP for Calendars** is a protocol that provides a modern, JSON-based API for managing calendar data such as events, tasks, and scheduling information. It is designed as a replacement for CalDAV and CalDAV Scheduling, offering the same functionality (creating, reading, updating, deleting, and sharing calendar data) but in a much simpler and more consistent way.
 
 Unlike CalDAV, which is built on top of WebDAV and uses XML combined with embedded iCalendar data, JMAP for Calendars is entirely JSON over HTTPS. It uses the same core request/response model as JMAP for Mail, providing a unified protocol for all personal data types.
 
@@ -88,7 +88,7 @@ href-name = "default"
 
 ### Disabling Automatic Creation
 
-If automatic calendar creation is not desired—for example, in environments where calendars are provisioned manually or via external tools—you can disable this feature by setting `calendar.default.href-name` to `false`. Example:
+If automatic calendar creation is not desired (for example, in environments where calendars are provisioned manually or via external tools), you can disable this feature by setting `calendar.default.href-name` to `false`. Example:
 
 ```toml
 [calendar.default]

@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Overview
 
-**OpenID Connect (OIDC)** is an identity layer built on top of the [OAuth](/docs/auth/oauth/overview) 2.0 protocol. While OAuth 2.0 is primarily concerned with authorization — granting third-party applications access to resources — OpenID Connect adds authentication, enabling clients to verify the identity of users. It allows for single sign-on (SSO) functionality, where a user can log in once and use their authenticated identity across multiple services or applications.
+**OpenID Connect (OIDC)** is an identity layer built on top of the [OAuth](/docs/auth/oauth/overview) 2.0 protocol. While OAuth 2.0 is primarily concerned with authorization (granting third-party applications access to resources), OpenID Connect adds authentication, enabling clients to verify the identity of users. It allows for single sign-on (SSO) functionality, where a user can log in once and use their authenticated identity across multiple services or applications.
 
 In an OpenID Connect flow, the user authenticates with an identity provider (OIDC server), and the client receives an **ID token** in addition to the usual OAuth access token. The ID token contains information about the authenticated user, such as their unique identifier (subject), name, email, and other claims. This enables clients to confirm the user’s identity without needing to handle usernames and passwords directly.
 

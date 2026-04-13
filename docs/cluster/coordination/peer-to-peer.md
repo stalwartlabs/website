@@ -14,7 +14,7 @@ Zenoh's protocol is designed to handle dynamic network conditions gracefully, in
 
 While peer-to-peer coordination simplifies deployment by removing the need for additional services like Kafka or NATS, it's important to note that this approach introduces a modest computational cost. Since coordination duties are handled by the mail server itself, organizations with higher performance requirements or large-scale clusters may prefer to offload these responsibilities to a dedicated coordination backend.
 
-Nonetheless, for many use cases—especially in environments where infrastructure simplicity, self-discovery, and low-latency messaging are key—Stalwart’s peer-to-peer coordination powered by Eclipse Zenoh provides an elegant and robust solution.
+Nonetheless, for many use cases, especially in environments where infrastructure simplicity, self-discovery, and low-latency messaging are key, Stalwart’s peer-to-peer coordination powered by Eclipse Zenoh provides an elegant and robust solution.
 
 :::tip Note
 

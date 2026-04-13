@@ -8,7 +8,7 @@ One of the most common questions when planning a Stalwart deployment is: **How m
 
 ## Load-Based Sizing
 
-The starting point for cluster sizing should be your **expected number of concurrent users** and **daily email volume**. As a general rule, a single well-configured Stalwart node can handle between **10,000 and 50,000 active mailboxes**, depending on usage intensity, concurrent connections, and backend performance. In high-volume environments—such as large enterprises with heavy email activity—you should plan for approximately **one node per 5,000–10,000 active users**.
+The starting point for cluster sizing should be your **expected number of concurrent users** and **daily email volume**. As a general rule, a single well-configured Stalwart node can handle between **10,000 and 50,000 active mailboxes**, depending on usage intensity, concurrent connections, and backend performance. In high-volume environments, such as large enterprises with heavy email activity, you should plan for approximately **one node per 5,000–10,000 active users**.
 
 ## High Availability Considerations
 

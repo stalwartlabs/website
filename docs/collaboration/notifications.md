@@ -24,7 +24,7 @@ This workaround offers a practical and reliable solution for enabling email-base
 
 ## Enabling Notifications
 
-Calendar Email Notifications are **enabled by default** in Stalwart, allowing users to receive email alerts for calendar alarms without requiring additional configuration. When an event includes a supported alarm—either a standard `VALARM` with `ACTION:EMAIL` or one marked with the `@email` hint—Stalwart will automatically deliver the corresponding notification to the user’s email address.
+Calendar Email Notifications are **enabled by default** in Stalwart, allowing users to receive email alerts for calendar alarms without requiring additional configuration. When an event includes a supported alarm (either a standard `VALARM` with `ACTION:EMAIL` or one marked with the `@email` hint), Stalwart will automatically deliver the corresponding notification to the user’s email address.
 
 Administrators who wish to **disable email notifications globally** can do so by setting the configuration option `calendar.alarms.enabled` to `false`. When this option is disabled, Stalwart will ignore all email alarms, regardless of their configuration or presence in the calendar data.
 

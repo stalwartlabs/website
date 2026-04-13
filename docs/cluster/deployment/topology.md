@@ -4,7 +4,7 @@ sidebar_position: 4
 
 # Topology
 
-In a Stalwart cluster, administrators have full control over how user-facing services are distributed across nodes. This is distinct from [node roles](/docs/cluster/configuration/roles), which assign background maintenance tasks such as purging or certificate renewal. **Cluster topology** focuses on which protocols—such as **IMAP, JMAP, WebDAV, and SMTP**—each node will serve.
+In a Stalwart cluster, administrators have full control over how user-facing services are distributed across nodes. This is distinct from [node roles](/docs/cluster/configuration/roles), which assign background maintenance tasks such as purging or certificate renewal. **Cluster topology** focuses on which protocols (such as **IMAP, JMAP, WebDAV, and SMTP**) each node will serve.
 
 Stalwart allows for flexible service distribution: each node can be configured to handle one, several, or all supported protocols. This lets administrators optimize performance, resource usage, and fault tolerance according to real-world traffic patterns and operational goals.
 
@@ -12,7 +12,7 @@ Below are several common topology strategies used in Stalwart clusters:
 
 ## Unified Service Model
 
-In this approach, **all nodes in the cluster handle all services**—IMAP, JMAP, WebDAV, and SMTP. For example, in a 1024-node deployment, each server would be configured identically and capable of handling any type of client or protocol request.
+In this approach, **all nodes in the cluster handle all services**: IMAP, JMAP, WebDAV, and SMTP. For example, in a 1024-node deployment, each server would be configured identically and capable of handling any type of client or protocol request.
 
 ```mermaid
 flowchart LR
@@ -219,4 +219,4 @@ Geographically distributed clusters typically rely on global load balancers, DNS
 
 There is no one-size-fits-all topology. The best approach depends on your organization’s size, usage patterns, and operational preferences. One of Stalwart’s key strengths is that **topologies are flexible and easily adjusted over time**. You can start with a simple unified model and transition to a more specialized layout as your needs evolve.
 
-Additionally, you can **mix and match** approaches—running unified nodes alongside dedicated ones—or shift services dynamically as demand grows.
+Additionally, you can **mix and match** approaches (running unified nodes alongside dedicated ones), or shift services dynamically as demand grows.

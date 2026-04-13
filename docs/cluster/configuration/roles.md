@@ -6,7 +6,7 @@ sidebar_position: 5
 
 In a clustered deployment, certain background and maintenance tasks must be performed regularly to keep the system healthy, efficient, and secure. To distribute this operational workload across the cluster, **Stalwart** allows administrators to assign **roles** to specific nodes using the `cluster.roles` settings.
 
-These roles determine which node—or group of nodes—is responsible for executing specific maintenance operations, such as purging old data, renewing TLS certificates, or calculating and exporting metrics. By distributing these responsibilities, Stalwart ensures that no single node becomes a bottleneck and that tasks are handled reliably, even in large-scale environments.
+These roles determine which node (or group of nodes) is responsible for executing specific maintenance operations, such as purging old data, renewing TLS certificates, or calculating and exporting metrics. By distributing these responsibilities, Stalwart ensures that no single node becomes a bottleneck and that tasks are handled reliably, even in large-scale environments.
 
 Each role is configured as a list of [node identifiers](/docs/cluster/configuration/node-id), corresponding to one or more Stalwart instances in the cluster. This provides flexibility to assign tasks redundantly (for high availability), to distribute them in parallel (for scalability), or to isolate them to specific nodes (for performance optimization).
 
@@ -84,7 +84,7 @@ Effective role assignment is essential to ensure that a **Stalwart** cluster rem
 
 Administrators should begin by evaluating the **resource profile** of each role. Certain tasks, such as **FTS indexing** or **Spam classifier training**, tend to be CPU- and I/O-intensive, while others, like **metrics calculation** or **ACME certificate renewal**, are relatively lightweight but time-sensitive. Assigning resource-heavy roles to nodes with sufficient computational capacity and isolating them from latency-sensitive workloads ensures optimal cluster performance.
 
-For **high-availability scenarios**, it is recommended to assign critical roles—such as **purge** operations, **calendar alerts**, and **iMIP processing**—to multiple nodes. This redundancy ensures continuity if one node becomes unavailable. However, when redundancy is applied, administrators should consider **sharding** where supported to avoid redundant work or duplication of user-visible effects, as is the case with **push notifications**.
+For **high-availability scenarios**, it is recommended to assign critical roles (such as **purge** operations, **calendar alerts**, and **iMIP processing**) to multiple nodes. This redundancy ensures continuity if one node becomes unavailable. However, when redundancy is applied, administrators should consider **sharding** where supported to avoid redundant work or duplication of user-visible effects, as is the case with **push notifications**.
 
 When configuring **sharded roles**, aim for an even distribution of nodes across shards. Each shard should have similar computational resources to maintain balance and prevent uneven load distribution. In smaller deployments where load balancing is less of a concern, a single shard configuration may be sufficient, simplifying management without compromising functionality.
 

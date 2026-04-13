@@ -14,7 +14,7 @@ While CardDAV relies on XML-based WebDAV extensions and uses the vCard format fo
 
 ## CardDAV
 
-**CardDAV** is a standardized extension of WebDAV that allows clients to interact with contact data stored on a server. It provides a reliable and interoperable way for users to manage personal and shared address books, and is widely supported by contact applications on both desktop and mobile platforms—including Apple Contacts, Thunderbird, and many others.
+**CardDAV** is a standardized extension of WebDAV that allows clients to interact with contact data stored on a server. It provides a reliable and interoperable way for users to manage personal and shared address books, and is widely supported by contact applications on both desktop and mobile platforms, including Apple Contacts, Thunderbird, and many others.
 
 Through CardDAV, users can create and edit contact entries, organize them into address books, and synchronize changes automatically across multiple devices. This ensures that contact information remains consistent and up-to-date, no matter where it’s accessed. By supporting CardDAV, Stalwart delivers a complete and standards-compliant contact management system that integrates seamlessly into modern communication and collaboration workflows. This section covers how contact data is structured, how clients access it, and how administrators can manage and configure contact-related features.
 
@@ -64,7 +64,7 @@ href-name = "default"
 
 ### Disabling Automatic Creation
 
-If automatic address book creation is not desired—for example, in environments where address books are provisioned manually or via external tools—you can disable this feature by setting `contacts.default.href-name` to `false`. Example:
+If automatic address book creation is not desired (for example, in environments where address books are provisioned manually or via external tools), you can disable this feature by setting `contacts.default.href-name` to `false`. Example:
 
 ```toml
 [contacts.default]

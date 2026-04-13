@@ -19,7 +19,7 @@ The following subsections will provide recommendations and supported options for
 
 ## Data Store
 
-The [data store](/docs/storage/data) in Stalwart is responsible for managing structured data that defines and supports core functionality across the system. This includes **email metadata**, **mailbox structures**, **user settings**, **calendars**, and **contacts**. It does *not* store the actual content of emails or large files—those are handled separately by the [blob store](/docs/storage/blob).
+The [data store](/docs/storage/data) in Stalwart is responsible for managing structured data that defines and supports core functionality across the system. This includes **email metadata**, **mailbox structures**, **user settings**, **calendars**, and **contacts**. It does *not* store the actual content of emails or large files; those are handled separately by the [blob store](/docs/storage/blob).
 
 Together with the blob store, the data store represents the **most critical component** of Stalwart’s storage architecture. It holds the organizational and user-level state of the entire system, and must therefore be reliable, consistent, and capable of scaling with demand.
 
@@ -63,7 +63,7 @@ For administrators who prefer to offload storage infrastructure to the cloud, St
 
 ## In-Memory Store
 
-The [in-memory store](/docs/storage/in-memory) in Stalwart is used for managing **ephemeral data**—temporary runtime information that does not need to be persisted long-term. This includes elements such as **rate limiting state**, **active sessions**, **temporary delivery status**, and **short-lived coordination data**. While this data is transient by nature, it plays a critical role in maintaining performance and real-time responsiveness within the cluster.
+The [in-memory store](/docs/storage/in-memory) in Stalwart is used for managing **ephemeral data**: temporary runtime information that does not need to be persisted long-term. This includes elements such as **rate limiting state**, **active sessions**, **temporary delivery status**, and **short-lived coordination data**. While this data is transient by nature, it plays a critical role in maintaining performance and real-time responsiveness within the cluster.
 
 Although Stalwart can be configured to use the **primary data store** for ephemeral data, this approach is **not recommended** in high-traffic or clustered environments. Using the data store for this purpose adds unnecessary overhead and latency, placing additional load on systems that are better optimized for persistent, structured data.
 

@@ -6,9 +6,9 @@ sidebar_position: 8
 
 At this stage, Stalwart does not yet include an automated upgrade tool, which means all upgrades must be performed manually. This is by design: Stalwart is evolving rapidly, and some newer versions introduce data migrations that can modify or restructure existing data. These operations require supervision to ensure a smooth and safe transition. Automating them too early could increase the risk of data corruption or service disruption.
 
-The good news is that after four years of intensive development, Stalwart has reached maturity and is now considered feature complete. The upcoming **v1.0.0** release—expected during the **first half of 2026**—will introduce a stable, finalized database schema and configuration system. From that version onward, upgrades will be handled automatically, making maintenance significantly easier.
+The good news is that after four years of intensive development, Stalwart has reached maturity and is now considered feature complete. The upcoming **v1.0.0** release (expected during the **first half of 2026**) will introduce a stable, finalized database schema and configuration system. From that version onward, upgrades will be handled automatically, making maintenance significantly easier.
 
-We understand that frequent breaking changes in a mission-critical system like email are far from ideal. Therefore, we recommend upgrading **only when necessary**—for example, when a release includes a bug fix or new feature that you specifically need. Otherwise, it may be best to stay on your current version until **v1.0.0** becomes available. This approach will help you avoid “upgrade fatigue” and maintain long-term stability in your deployment.
+We understand that frequent breaking changes in a mission-critical system like email are far from ideal. Therefore, we recommend upgrading **only when necessary**, for example, when a release includes a bug fix or new feature that you specifically need. Otherwise, it may be best to stay on your current version until **v1.0.0** becomes available. This approach will help you avoid “upgrade fatigue” and maintain long-term stability in your deployment.
 
 ## Understanding Release Compatibility
 

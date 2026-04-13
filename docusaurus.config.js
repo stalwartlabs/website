@@ -43,6 +43,17 @@ const config = {
           sidebarPath: './sidebars.js',
           editUrl:
             'https://github.com/stalwartlabs/website/tree/main/',
+          lastVersion: 'current',
+          versions: {
+            current: {
+              label: '0.16',
+              path: '',
+            },
+            '0.15': {
+              label: '0.15',
+              path: '0.15',
+            },
+          },
         },
         blog: {
           showReadingTime: true,
@@ -86,6 +97,11 @@ const config = {
             label: 'Documentation',
           },
           { to: '/blog', label: 'Blog', position: 'right' },
+          {
+            type: 'docsVersionDropdown',
+            position: 'right',
+            dropdownActiveClassDisabled: true,
+          },
           {
             href: 'https://github.com/stalwartlabs',
             label: 'GitHub',

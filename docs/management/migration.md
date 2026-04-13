@@ -53,7 +53,7 @@ This will create a binary dump in the `~/stalwart-export` directory containing o
 
 ## Import Procedure
 
-The **import process** in Stalwart allows administrators to restore a previously exported database dump into a newly configured backend. This functionality is designed primarily for migrating an entire system from one storage backend to another—for example, transitioning from RocksDB to PostgreSQL or FoundationDB.
+The **import process** in Stalwart allows administrators to restore a previously exported database dump into a newly configured backend. This functionality is designed primarily for migrating an entire system from one storage backend to another, for example, transitioning from RocksDB to PostgreSQL or FoundationDB.
 
 Just like the export operation, the import process is built into the main Stalwart binary and must be executed while the server is **stopped** to ensure consistency and prevent conflicts with the running system.
 

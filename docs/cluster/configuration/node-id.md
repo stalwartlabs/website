@@ -6,7 +6,7 @@ sidebar_position: 2
 
 Each Stalwart instance in a cluster must be assigned a unique identifier to distinguish it from other nodes. This identifier is configured using the `cluster.node-id` setting and must be a **positive integer**. It plays a critical role in coordination, logging, and internal message routing, allowing each node to be uniquely addressed within the cluster.
 
-The node ID must be **unique across the entire cluster**—no two nodes should share the same ID. Assigning duplicate IDs can lead to unpredictable behavior, coordination conflicts, and data inconsistencies.
+The node ID must be **unique across the entire cluster**; no two nodes should share the same ID. Assigning duplicate IDs can lead to unpredictable behavior, coordination conflicts, and data inconsistencies.
 
 For example:
 

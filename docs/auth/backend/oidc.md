@@ -10,7 +10,7 @@ However, as Stalwart is primarily a **mail server** rather than a traditional we
 
 ## Authentication Flow
 
-As a mail server, Stalwart expects clients (such as email applications) to authenticate using the **OAUTHBEARER SASL mechanism**. This means the client provides an **access token**—obtained from the third-party OIDC provider—to the mail server when attempting to authenticate. Unlike a typical web-based OIDC client, Stalwart does not participate in the full OIDC authentication flow (such as redirecting users to a login page or handling authorization codes).
+As a mail server, Stalwart expects clients (such as email applications) to authenticate using the **OAUTHBEARER SASL mechanism**. This means the client provides an **access token** (obtained from the third-party OIDC provider) to the mail server when attempting to authenticate. Unlike a typical web-based OIDC client, Stalwart does not participate in the full OIDC authentication flow (such as redirecting users to a login page or handling authorization codes).
 
 Since Stalwart does not initiate the OIDC flow, it does not have direct access to the [ID token](/docs/auth/openid/id-tokens), which typically contains key identity information about the user (such as the username or email). Instead, it operates with the **access token** provided by the client via OAUTHBEARER. Therefore, to retrieve the user’s identity (such as their account name and email address), Stalwart must be configured to query either the OIDC **UserInfo endpoint** or the **OAuth token introspection endpoint** provided by the OIDC server.
 

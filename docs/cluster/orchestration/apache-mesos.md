@@ -4,7 +4,7 @@ sidebar_position: 4
 
 # Apache Mesos
 
-**Apache Mesos** is a distributed systems kernel designed to abstract and pool resources—such as CPU, memory, storage, and network—across an entire datacenter or cloud environment. It enables efficient resource sharing across diverse workloads, making it well-suited for running large-scale, fault-tolerant distributed applications.
+**Apache Mesos** is a distributed systems kernel designed to abstract and pool resources (such as CPU, memory, storage, and network) across an entire datacenter or cloud environment. It enables efficient resource sharing across diverse workloads, making it well-suited for running large-scale, fault-tolerant distributed applications.
 
 Mesos provides a two-level scheduling model, where it manages low-level resource allocation and delegates task scheduling to higher-level frameworks. This design allows complex systems like Stalwart to run alongside other services in a shared infrastructure while still maintaining control over how and where tasks are executed.
 

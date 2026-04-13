@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Overview
 
-**Orchestration** refers to the automated management of service lifecycles in a distributed system—such as deploying, scaling, monitoring, and recovering application instances. In contrast to [coordination](/docs/cluster/coordination/overview), which focuses on how nodes within a cluster communicate and stay in sync, orchestration handles the *infrastructure-level automation* that ensures those nodes are running, healthy, and responsive under dynamic conditions.
+**Orchestration** refers to the automated management of service lifecycles in a distributed system, such as deploying, scaling, monitoring, and recovering application instances. In contrast to [coordination](/docs/cluster/coordination/overview), which focuses on how nodes within a cluster communicate and stay in sync, orchestration handles the *infrastructure-level automation* that ensures those nodes are running, healthy, and responsive under dynamic conditions.
 
 While coordination enables Stalwart nodes to exchange internal updates and work together as a unified system, orchestration ensures that these nodes are correctly scheduled, restarted when they fail, and scaled up or down according to demand. It’s about maintaining operational continuity and elasticity in changing environments.
 

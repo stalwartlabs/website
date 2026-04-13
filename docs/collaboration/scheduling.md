@@ -9,12 +9,12 @@ Calendar Scheduling allows users to efficiently coordinate meetings and events b
 Stalwart supports calendar scheduling through two primary mechanisms:
 
 -  **JMAP for Calendars**, which includes built-in support for scheduling operations such as sending invitations, processing responses, and managing event updates using the JMAP protocol. This modern API allows clients to interact with calendar data in a structured and efficient manner, enabling seamless scheduling workflows across devices and applications.
-- **Scheduling Extensions to CalDAV**, as defined in [RFC 6638](https://datatracker.ietf.org/doc/html/rfc6638). This specification extends the CalDAV protocol to support server-based scheduling operations, enabling calendar clients to schedule meetings through standard WebDAV-based interactions. With this extension, users can create calendar events and invite participants by simply adding attendee information to an event—Stalwart will handle the necessary scheduling logic, including delivering invitations, processing replies, and updating calendars accordingly.
+- **Scheduling Extensions to CalDAV**, as defined in [RFC 6638](https://datatracker.ietf.org/doc/html/rfc6638). This specification extends the CalDAV protocol to support server-based scheduling operations, enabling calendar clients to schedule meetings through standard WebDAV-based interactions. With this extension, users can create calendar events and invite participants by simply adding attendee information to an event; Stalwart will handle the necessary scheduling logic, including delivering invitations, processing replies, and updating calendars accordingly.
 
 Calendar scheduling in Stalwart relies on two core protocols from the iCalendar ecosystem:
 
-- **iCalendar Transport-Independent Interoperability Protocol (iTIP)**: defined in [RFC 5546](https://datatracker.ietf.org/doc/html/rfc5546), describes how scheduling messages—such as event invitations, updates, cancellations, and responses—are structured and processed using the iCalendar data format. It defines a set of methods (`REQUEST`, `REPLY`, `CANCEL`, etc.) used to negotiate scheduling operations between organizers and attendees. iTIP itself is **transport-agnostic**, meaning it defines the message content and expected behavior but not how the messages are delivered. It is used internally by CalDAV servers and clients to interpret and manage scheduling data.
-- **iCalendar Message-Based Interoperability Protocol (iMIP)**, described in [RFC 6047](https://datatracker.ietf.org/doc/html/rfc6047), specifies how iTIP messages are transported over email (typically via SMTP). It enables calendar scheduling between systems that may not support CalDAV directly—for example, sending a calendar invitation from a CalDAV user to an external recipient via standard email.
+- **iCalendar Transport-Independent Interoperability Protocol (iTIP)**: defined in [RFC 5546](https://datatracker.ietf.org/doc/html/rfc5546), describes how scheduling messages (such as event invitations, updates, cancellations, and responses) are structured and processed using the iCalendar data format. It defines a set of methods (`REQUEST`, `REPLY`, `CANCEL`, etc.) used to negotiate scheduling operations between organizers and attendees. iTIP itself is **transport-agnostic**, meaning it defines the message content and expected behavior but not how the messages are delivered. It is used internally by CalDAV servers and clients to interpret and manage scheduling data.
+- **iCalendar Message-Based Interoperability Protocol (iMIP)**, described in [RFC 6047](https://datatracker.ietf.org/doc/html/rfc6047), specifies how iTIP messages are transported over email (typically via SMTP). It enables calendar scheduling between systems that may not support CalDAV directly, for example, sending a calendar invitation from a CalDAV user to an external recipient via standard email.
 
 When Stalwart encounters a recipient that cannot be reached via CalDAV (for example, an external attendee), it automatically falls back to iMIP to deliver the scheduling message as an email with an attached `.ics` file.
 
@@ -22,7 +22,7 @@ When Stalwart encounters a recipient that cannot be reached via CalDAV (for exam
 
 In Stalwart, Calendar Scheduling is **enabled by default** to provide full support for meeting invitations, participant management, and automated scheduling workflows. This ensures compatibility with CalDAV clients that implement the Scheduling Extensions (RFC 6638), as well as email-based scheduling through iMIP. When enabled, Stalwart automatically handles the delivery and processing of scheduling messages, allowing users to create and manage events with attendees without requiring manual coordination.
 
-Administrators who wish to **disable calendar scheduling**—for example, in environments where scheduling is managed externally, or where only personal calendar use is desired—can do so by setting the `calendar.scheduling.enable` configuration option to `false` in the server's configuration file:
+Administrators who wish to **disable calendar scheduling** (for example, in environments where scheduling is managed externally, or where only personal calendar use is desired) can do so by setting the `calendar.scheduling.enable` configuration option to `false` in the server's configuration file:
 
 ```toml
 [calendar.scheduling]
@@ -39,7 +39,7 @@ Calendar Scheduling can also be enabled or disabled on a per-user basis by setti
 
 ## Automatic Event Addition
 
-RFC 6638 mandates that CalDAV servers **automatically add scheduling messages**—such as invitations received via iTIP or iMIP—to the recipient’s calendar. This behavior is intended to make scheduling seamless by eliminating the need for users to manually review or accept incoming event requests before they appear in their calendar.
+RFC 6638 mandates that CalDAV servers **automatically add scheduling messages** (such as invitations received via iTIP or iMIP) to the recipient’s calendar. This behavior is intended to make scheduling seamless by eliminating the need for users to manually review or accept incoming event requests before they appear in their calendar.
 
 Stalwart takes a more deliberate and user-respecting approach to this requirement. While automatic addition can be convenient, it also creates the potential for calendar spam, where unsolicited or irrelevant invitations are inserted directly into a user’s calendar. More importantly, it undermines user control, removing the individual’s ability to decide which events appear in their personal or work schedule.
 
@@ -79,13 +79,13 @@ In addition to these scheduling-specific limits, all existing [MTA-level throttl
 
 ## Inbox Auto-Expunge
 
-As part of the CalDAV Scheduling Extensions defined in RFC 6638, each user account includes a **Scheduling Inbox**, a special collection where incoming iTIP messages—such as invitations, replies, cancellations, and updates—are stored. These messages serve as a log of scheduling activity and are used by calendar clients to synchronize and process meeting-related actions.
+As part of the CalDAV Scheduling Extensions defined in RFC 6638, each user account includes a **Scheduling Inbox**, a special collection where incoming iTIP messages (such as invitations, replies, cancellations, and updates) are stored. These messages serve as a log of scheduling activity and are used by calendar clients to synchronize and process meeting-related actions.
 
 However, not all CalDAV clients reliably delete messages from the Scheduling Inbox after processing them. As a result, the inbox can accumulate outdated or redundant scheduling messages over time. This not only consumes unnecessary storage but may also affect performance or cause confusion for users and clients that continue to sync or display stale data.
 
 To address this, Stalwart provides the `calendar.scheduling.inbox.auto-expunge` configuration option. This setting defines a retention period for iTIP messages stored in the Scheduling Inbox. Once a message has been in the inbox for longer than the configured duration, Stalwart will automatically delete it during routine maintenance.
 
-The value of `calendar.scheduling.inbox.auto-expunge` is specified as a duration—for example, `30d` to delete messages older than thirty days. If this setting is not configured, messages will remain in the inbox indefinitely unless removed manually by the client or user.
+The value of `calendar.scheduling.inbox.auto-expunge` is specified as a duration, for example, `30d` to delete messages older than thirty days. If this setting is not configured, messages will remain in the inbox indefinitely unless removed manually by the client or user.
 
 Example:
 
@@ -96,7 +96,7 @@ auto-expunge = "30d"
 
 ## HTTP RSVP
 
-Stalwart allows participants to respond to calendar invitations using a simple web link. When enabled, a unique RSVP URL is included in the iMIP invitation email sent to each attendee. Recipients can click this link to accept, decline, or tentatively respond to the invitation using a web interface—without needing a CalDAV-capable client or calendar application.
+Stalwart allows participants to respond to calendar invitations using a simple web link. When enabled, a unique RSVP URL is included in the iMIP invitation email sent to each attendee. Recipients can click this link to accept, decline, or tentatively respond to the invitation using a web interface, without needing a CalDAV-capable client or calendar application.
 
 This feature is particularly useful when scheduling with external users or with clients that do not support calendaring or scheduling protocols. It ensures that all recipients, regardless of their client capabilities, have a reliable way to respond to invitations and update their participation status.
 

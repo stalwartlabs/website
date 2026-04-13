@@ -62,7 +62,7 @@ Even if bind authentication is enabled, the server still requires a default bind
 
 Stalwart offers multiple methods for authenticating users against an LDAP directory, providing flexibility to accommodate different directory configurations and security policies.
 
-In some LDAP environments—particularly with directories like Microsoft Active Directory or hardened OpenLDAP setups, **password hashes are not retrievable via queries**, even when using privileged bind credentials. This limitation makes it impossible for Stalwart to validate user credentials by comparing password hashes directly. In such cases, the only viable method for authentication is **bind authentication**, where the server attempts to log in (bind) as the user using the credentials provided during the login process. If the bind succeeds, the user is considered authenticated.
+In some LDAP environments, particularly with directories like Microsoft Active Directory or hardened OpenLDAP setups, **password hashes are not retrievable via queries**, even when using privileged bind credentials. This limitation makes it impossible for Stalwart to validate user credentials by comparing password hashes directly. In such cases, the only viable method for authentication is **bind authentication**, where the server attempts to log in (bind) as the user using the credentials provided during the login process. If the bind succeeds, the user is considered authenticated.
 
 Stalwart supports three authentication methods when integrating with an LDAP server:
 
@@ -92,7 +92,7 @@ This instructs Stalwart to authenticate users by retrieving the `userPassword` a
 
 :::tip Note
 
-This method is only suitable if the LDAP server allows access to password hashes and exposes them in a supported format. If the directory does not permit this—for example, in many Active Directory environments—bind authentication should be used instead.
+This method is only suitable if the LDAP server allows access to password hashes and exposes them in a supported format. If the directory does not permit this (for example, in many Active Directory environments), bind authentication should be used instead.
 
 :::
 
@@ -164,7 +164,7 @@ Since password hashes are not available in bind authentication, Stalwart cannot 
 - The **`name` filter** is used during the authentication process. When a user attempts to log in, Stalwart uses this filter to search the directory for the corresponding LDAP object based on the login name. Once the user’s DN is retrieved, it can be used for bind authentication or to access additional attributes.
 - The **`email` filter** is used during email delivery. Its purpose is to verify whether a given email address exists in the LDAP directory. This helps ensure that mail is only delivered to valid, known addresses within the system.
 
-Both filters are **template strings** that must include a single `?` character. At runtime, this placeholder is replaced by the appropriate value—either the username (for the `name` filter) or the email address (for the `email` filter).
+Both filters are **template strings** that must include a single `?` character. At runtime, this placeholder is replaced by the appropriate value: either the username (for the `name` filter) or the email address (for the `email` filter).
 
 The following LDAP filters need to be defined under the `directory.<name>.filter` section in order to retrieve information about accounts:
 

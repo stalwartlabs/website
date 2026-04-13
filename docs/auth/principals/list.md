@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # Mailing List
 
-A **Mailing List** principal in Stalwart represents a group of recipients—both individuals and groups—who are subscribed to receive emails sent to a common email address. Mailing lists are commonly used for distributing messages to multiple users at once, simplifying communication with a large group of people. While similar to groups, mailing lists are designed primarily for one-way communication, where messages are sent to all members of the list, rather than shared access to an inbox like group principals.
+A **Mailing List** principal in Stalwart represents a group of recipients (both individuals and groups) who are subscribed to receive emails sent to a common email address. Mailing lists are commonly used for distributing messages to multiple users at once, simplifying communication with a large group of people. While similar to groups, mailing lists are designed primarily for one-way communication, where messages are sent to all members of the list, rather than shared access to an inbox like group principals.
 
 A mailing list principal holds specific fields that define its properties and behavior within the Stalwart:
 

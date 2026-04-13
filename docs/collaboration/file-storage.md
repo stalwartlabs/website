@@ -14,7 +14,7 @@ Instead of WebDAV’s XML-based PROPFIND/REPORT operations and custom HTTP metho
 
 ## WebDAV
 
-With WebDAV, users can **connect to their Stalwart account as a remote drive**, enabling them to browse, upload, download, and manage files using standard file manager applications on desktop and mobile devices. This provides a convenient and secure way to share documents, access files on the go, or centralize data storage—without the need for additional software or proprietary protocols.
+With WebDAV, users can **connect to their Stalwart account as a remote drive**, enabling them to browse, upload, download, and manage files using standard file manager applications on desktop and mobile devices. This provides a convenient and secure way to share documents, access files on the go, or centralize data storage, without the need for additional software or proprietary protocols.
 
 File storage in Stalwart is tightly integrated with the server's existing resource management features. **The same quota system used for email storage also applies to WebDAV file storage**, ensuring consistent usage policies across services. This allows administrators to control total storage consumption per user or tenant, simplifying resource planning and enforcement.
 

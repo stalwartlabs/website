@@ -6,11 +6,11 @@ sidebar_position: 2
 
 WebDAV (Web Distributed Authoring and Versioning) is an extension of the HTTP protocol that allows clients to remotely manage content on a server. It supports operations such as creating, editing, and deleting files, as well as accessing and synchronizing calendars and contacts. WebDAV is widely used in collaborative environments for file sharing, calendar coordination, and contact management, making it a key component of Stalwart.
 
-This section focuses specifically on WebDAV storage-related settings, such as limits on property lengths and lock behavior—that help administrators manage resource usage and performance. These settings control how the server handles incoming WebDAV operations at the storage level. For details on configuring WebDAV protocol behavior, including access controls and path routing, please refer to the [WebDAV Protocol Documentation](/docs/http/webdav/overview).
+This section focuses specifically on WebDAV storage-related settings, such as limits on property lengths and lock behavior, which help administrators manage resource usage and performance. These settings control how the server handles incoming WebDAV operations at the storage level. For details on configuring WebDAV protocol behavior, including access controls and path routing, please refer to the [WebDAV Protocol Documentation](/docs/http/webdav/overview).
 
 ## WebDAV Properties
 
-WebDAV extends the capabilities of HTTP by allowing clients to store, retrieve, and manipulate metadata about resources using **WebDAV properties**. These properties are pieces of information associated with a file, calendar entry, contact, or other resource—similar to attributes or metadata. They are typically accessed and modified via the `PROPFIND`, `PROPPATCH`, and other WebDAV methods.
+WebDAV extends the capabilities of HTTP by allowing clients to store, retrieve, and manipulate metadata about resources using **WebDAV properties**. These properties are pieces of information associated with a file, calendar entry, contact, or other resource, similar to attributes or metadata. They are typically accessed and modified via the `PROPFIND`, `PROPPATCH`, and other WebDAV methods.
 
 WebDAV properties are divided into two categories: **dead properties** and **live properties**:
 

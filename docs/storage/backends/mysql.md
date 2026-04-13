@@ -69,6 +69,6 @@ One significant limitation is that MySQL full text search does not support **mul
 
 MySQL full text search also does **not support stemming**. Words are indexed and matched in their exact forms, so different grammatical variants of the same word (such as singular versus plural or different verb tenses) are treated as unrelated terms. As a result, searches are less tolerant of natural language variation and may miss relevant messages unless users search for the exact word forms present in the message.
 
-Another important constraint is that **words shorter than three characters are not indexed** by default. Common short words, abbreviations, and identifiers—many of which are common in email content—will therefore not be searchable at all. This can be particularly noticeable when searching for short names, acronyms, or codes.
+Another important constraint is that **words shorter than three characters are not indexed** by default. Common short words, abbreviations, and identifiers (many of which are common in email content) will therefore not be searchable at all. This can be particularly noticeable when searching for short names, acronyms, or codes.
 
 Taken together, these limitations can significantly affect search quality and recall. If accurate, language-aware, and user-friendly search behavior is a priority for your deployment, it is strongly recommended to consider using a different [full text search backend](/docs/storage/fts) that provides better linguistic support and more robust indexing capabilities.

@@ -29,7 +29,7 @@ The best coordination mechanism depends on the size and nature of the deployment
 
 [Peer-to-peer coordination](/docs/cluster/coordination/peer-to-peer) is recommended for **small clusters** or environments where simplicity is a priority. It eliminates the need to provision or manage an external coordination service. However, it's important to note that this approach introduces a modest processing overhead to each Stalwart node, as the coordination duties are handled internally by the mail server process itself.
 
-For **very large-scale deployments**—especially those processing **millions of messages per second**— [Apache Kafka or Redpanda](/docs/cluster/coordination/kafka) is the preferred choice. These platforms are designed for high-throughput, durable event streaming and provide strong guarantees around message delivery and partitioning across large clusters.
+For **very large-scale deployments** (especially those processing **millions of messages per second**), [Apache Kafka or Redpanda](/docs/cluster/coordination/kafka) is the preferred choice. These platforms are designed for high-throughput, durable event streaming and provide strong guarantees around message delivery and partitioning across large clusters.
 
 For **medium-sized deployments**, [NATS](/docs/cluster/coordination/nats) strikes a good balance between performance and operational complexity. It offers lower latency and simpler configuration compared to Kafka, while still scaling to handle high messaging volumes reliably.
 

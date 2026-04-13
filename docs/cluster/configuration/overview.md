@@ -12,4 +12,4 @@ To get a Stalwart cluster up and running, only three key elements need to be con
 - Configure a [coordination mechanism](/docs/cluster/coordination/overview), which allows nodes to communicate, share internal state, and remain synchronized. Stalwart supports multiple coordination backends including peer-to-peer, Apache Kafka, NATS, and Redis.
 - Determine the [roles of each node](/docs/cluster/configuration/roles), defining which maintenance tasks each instance will be responsible for handling.
 
-Each of these aspects will be explained in detail in the following subsections, with examples and guidance to help you tailor your cluster to your specific needs—whether you're deploying a lightweight three-node setup or a large-scale distributed system.
+Each of these aspects will be explained in detail in the following subsections, with examples and guidance to help you tailor your cluster to your specific needs, whether you're deploying a lightweight three-node setup or a large-scale distributed system.

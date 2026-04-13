@@ -45,7 +45,7 @@ This command is helpful for exploring the contents of a subspace or verifying th
 
 The `delete` command is used to **remove one or more keys** from the database. If only `<from_key>` is specified, a single key is deleted. If both `<from_key>` and `<to_key>` are given, the command deletes all keys in the range starting from `from_key` up to (but not including) `to_key`.
 
-This operation is irreversible, so it should be used with caution—especially in production environments or when operating on wide ranges.
+This operation is irreversible, so it should be used with caution, especially in production environments or when operating on wide ranges.
 
 ### `get <key>`
 
