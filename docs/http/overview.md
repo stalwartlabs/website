@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Overview
 
-Stalwart includes an HTTP service that is enabled by default, serving multiple critical functions. The HTTP service supports several key features, such as JMAP access, WebDAV access, API management, ACME certificate issuance, autoconfig/autodiscover protocols, well-known resources, metrics collection, and OAuth authentication. These functionalities enhance user convenience, improve performance, and provide robust monitoring and security capabilities.
+Stalwart includes an HTTP service that is enabled by default. It supports JMAP access, WebDAV access, API management, ACME certificate issuance, autoconfig/autodiscover protocols, well-known resources, metrics collection, and OAuth authentication.
 
 Additionally, Stalwart allows the definition of multiple HTTP services with customizable [access control rules](/docs/http/access-control). Administrators can set these rules based on IP address, resource, method name, and more, ensuring secure and tailored access to the server's HTTP services. This flexibility ensures that the server can be effectively managed and integrated with other systems, meeting diverse operational needs.
 

@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # Self-service
 
-Stalwart features a self-service portal designed to empower users with direct control over key aspects of their account settings. This portal enhances the overall user experience by providing a straightforward interface for personal account management tasks, such as updating passwords and enabling encryption-at-rest for sensitive email communications.
+Stalwart includes a self-service portal that gives users direct control over key aspects of their account settings. The portal provides an interface for personal account management tasks, such as updating passwords and enabling encryption-at-rest for sensitive email communications.
 
 ## Changing Passwords
 

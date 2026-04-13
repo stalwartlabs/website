@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Overview
 
-Stalwart supports a comprehensive range of email protocols to accommodate diverse organizational needs and ensure compatibility with various email clients and devices. This includes support for JMAP, the latest and preceding versions of the Internet Message Access Protocol (IMAP) as well as the Post Office Protocol version 3 (POP3).
+Stalwart supports a range of email protocols to accommodate different organizational needs and to ensure compatibility with various email clients and devices. This includes support for JMAP, the latest and preceding versions of the Internet Message Access Protocol (IMAP) as well as the Post Office Protocol version 3 (POP3).
 
 ## JMAP for Mail
 

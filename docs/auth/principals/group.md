@@ -22,4 +22,4 @@ A group principal holds a set of fields that define its properties and how it in
 - **disabledPermissions**: Specifies the [permissions](/docs/auth/authorization/permissions) that are explicitly disabled for the group. These limit what actions the group is allowed to perform, controlling access to certain features or resources.
 - **picture**: Stores the group's picture. This image can be used in email clients or within the server's management interface to visually represent the group.
 
-Groups are a powerful feature of Stalwart, allowing administrators to manage multiple users more efficiently by assigning shared resources, permissions, and email addresses. When individuals are added to a group, they can access the group’s inbox and messages as if they were their own, simplifying collaboration and communication across the organization.
+Groups allow administrators to manage multiple users efficiently by assigning shared resources, permissions, and email addresses. When individuals are added to a group, they can access the group’s inbox and messages as if they were their own, simplifying collaboration and communication across the organization.

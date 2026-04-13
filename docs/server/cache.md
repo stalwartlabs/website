@@ -6,7 +6,7 @@ sidebar_position: 10
 
 Caching is a technique used to store frequently accessed data in memory, enabling faster retrieval and reducing the load on underlying systems. In Stalwart, caching is utilized for various critical operations, including storing email account data, security access tokens, and DNS query results. By caching this information, the server enhances performance, reduces latency, and minimizes resource usage.
 
-Stalwart employs an efficient caching algorithm with an advanced eviction policy. The eviction mechanism is a modified version of the Clock-PRO algorithm, which closely resembles the later-published S3-FIFO algorithm. This algorithm is designed to be “scan-resistant,” meaning it avoids cache eviction caused by temporary spikes in access patterns. It provides high cache hit rates, outperforming traditional Least Recently Used (LRU) eviction policies and delivering results comparable to other state-of-the-art algorithms, such as W-TinyLFU. This advanced approach ensures that cached data remains highly relevant, contributing to the server's overall efficiency.
+Stalwart employs an efficient caching algorithm with an advanced eviction policy. The eviction mechanism is a modified version of the Clock-PRO algorithm, which closely resembles the later-published S3-FIFO algorithm. This algorithm is designed to be “scan-resistant,” meaning it avoids cache eviction caused by temporary spikes in access patterns. It provides high cache hit rates, outperforming traditional Least Recently Used (LRU) eviction policies and delivering results comparable to other modern algorithms such as W-TinyLFU. This approach keeps cached data relevant and contributes to the server's overall efficiency.
 
 ## Memory Usage
 

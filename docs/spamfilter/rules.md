@@ -6,7 +6,7 @@ sidebar_position: 5
 
 Stalwart supports custom spam filter rules to be defined, allowing administrators to analyze email messages and assign tags dynamically. These rules rely on [expressions](/docs/configuration/expressions/overview) to evaluate different sections of an email, such as the headers, body, sender information, or attachments, and determine whether specific tags should be applied to identify potential spam.
 
-By default, Stalwart includes a comprehensive set of preconfigured rules designed to address common spam patterns and behaviors. However, the flexibility of the system allows administrators to create their own rules tailored to the specific needs and requirements of their organization. This customization ensures that the spam filter can adapt to unique environments, providing enhanced accuracy and protection against unwanted emails.
+By default, Stalwart includes a set of preconfigured rules that cover common spam patterns and behaviors. Administrators can also create custom rules tailored to the specific requirements of their organization, so the spam filter can adapt to different environments.
 
 ## Configuration
 

@@ -10,7 +10,7 @@ Stalwart supports enforcing rate limits on both inbound connections and outbound
 
 In distributed environments, Stalwart's rate limiting system is shared across the entire cluster. This ensures consistent enforcement of limits across all nodes, regardless of which node handles a specific connection. To achieve this, rate limiters are stored in the server's default [in-memory store](/docs/storage/in-memory), providing low-latency access and efficient synchronization across the cluster.
 
-By leveraging rate limits, administrators can maintain control over email traffic, protect their infrastructure, and ensure smooth operation in both standalone and distributed setups.
+Rate limits let administrators control email traffic, protect their infrastructure, and maintain smooth operation in both standalone and distributed setups.
 
 ## Inbound Limits
 

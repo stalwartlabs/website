@@ -43,7 +43,7 @@ values = ["mail.spammer.test", "mail.spammer.example"]
 Stalwart supports [various SMTP extensions](/docs/development/rfcs#smtp-and-extensions) which can be enabled through the following attributes under the `session.extensions` key:
 
 - `pipelining`: This attribute enables SMTP pipelining (RFC 2920), which enables multiple commands to be sent in a single request to speed up communication between the client and server.
-- `chunking`: This attribute enables chunking (RFC 1830), an extension that allows large messages to be transferred in chunks which may reduce the load on the network and server.
+- `chunking`: This attribute enables chunking (RFC 3030), an extension that allows large messages to be transferred in chunks which may reduce the load on the network and server.
 - `requiretls`: This attribute enables require TLS (RFC 8689), an extension that allows clients to require TLS encryption for the SMTP session.
 - `no-soliciting`: This attribute specifies the text to include in the `NOSOLICITING` (RFC 3865) message, which indicates that the server does not accept unsolicited commercial email (UCE or spam).
 - `dsn`: This attribute enables delivery status notifications (RFC 3461), which allows the sender to request a delivery status notification (DSN) from the recipient's mail server.

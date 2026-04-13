@@ -4,7 +4,7 @@ sidebar_position: 4
 
 # Export
 
-The command-line interface (CLI) tool supports exporting JMAP accounts, which allows system administrator to perform comprehensive backups or transfer user data to other mail servers. The exported data is stored in JSON files, which are structured according to the JMAP schema. This standardized format ensures compatibility and interoperability across different systems and platforms that support the JMAP protocol. An exported JMAP account is not limited to only the emails of the user, but it also includes mailboxes, Sieve scripts, identities, and vacation responses. This means that all critical account information, settings, and data are encapsulated within the export. 
+The command-line interface (CLI) tool supports exporting JMAP accounts, which allows system administrators to perform full backups or transfer user data to other mail servers. The exported data is stored in JSON files, which are structured according to the JMAP schema. This standardized format ensures compatibility and interoperability across different systems and platforms that support the JMAP protocol. An exported JMAP account is not limited to only the emails of the user, but it also includes mailboxes, Sieve scripts, identities, and vacation responses. This means that all critical account information, settings, and data are encapsulated within the export. 
 
 The CLI command used to export an account is ``export account`` and accepts the following
 options:

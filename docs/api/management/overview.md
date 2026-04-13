@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Overview
 
-Stalwart offers a powerful REST Management API, enabling administrators and developers to manage and configure every aspect of the mail server with ease. From user and domain management to server configuration and monitoring, the API provides comprehensive endpoints designed to streamline operations and integrate seamlessly into your existing workflows.
+Stalwart offers a REST Management API that allows administrators and developers to manage and configure every aspect of the mail server. From user and domain management to server configuration and monitoring, the API provides endpoints designed for operational use and integration into existing workflows.
 
 For a detailed overview of the API's capabilities, the complete **OpenAPI specification** is available in the [project's repository](https://github.com/stalwartlabs/stalwart/blob/main/api/v1/openapi.yml). Additionally, for convenience, the specification can also be displayed within the [endpoints section](/docs/api/management/endpoints) of the documentation.
 

@@ -10,4 +10,4 @@ In the realm of email communication, ensuring that messages are transmitted secu
 
 [MTA-STS](/docs/mta/transport-security/mta-sts.md), on the other hand, is a standard that enables mail service providers to declare their ability to receive Transport Layer Security (TLS) secured connections and to specify whether sending SMTP servers should refuse to deliver to MX hosts that do not offer TLS with a trusted certificate. It helps to mitigate the risk of downgrade attacks and active surveillance threats by enforcing the use of secure connections between email servers.
 
-Together, DANE and MTA-STS fortify the transport layer, providing robust defenses against common threats to email security, ensuring that emails are not only sent from verified sources but also securely transmitted across networks.
+Together, DANE and MTA-STS strengthen the transport layer against common threats to email security, ensuring that emails are sent from verified sources and securely transmitted across networks.

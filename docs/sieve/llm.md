@@ -4,7 +4,7 @@ sidebar_position: 5
 
 # LLM Integration
 
-Stalwart extends the functionality of the Sieve scripting language by introducing the `llm_prompt` function, enabling seamless integration of AI-powered analysis into email processing rules. This new function allows administrators and users to access any of the LLM [AI models](/docs/server/ai-models) configured in Stalwart directly from a Sieve script.
+Stalwart extends the Sieve scripting language with the `llm_prompt` function, which lets scripts run AI analysis as part of email processing rules. This function allows administrators and users to access any of the LLM [AI models](/docs/server/ai-models) configured in Stalwart directly from a Sieve script.
 
 With the `llm_prompt` function, you can pass email content, such as the subject and body, to an AI model for analysis. The function sends the prompt and message data to the LLM, then processes the response according to the defined rules within the Sieve script. This opens up new possibilities for advanced email filtering, categorization, and processing beyond traditional Sieve rules.
 
@@ -30,7 +30,7 @@ The `llm_prompt` function has the syntax `llm_prompt("model_name", "prompt", tem
 
 The function returns the response provided by the AI model, which can then be used within the Sieve script to perform further actions, such as filtering, categorizing, or flagging emails. If an error occurs during the interaction with the AI model, the function will return `false`, and detailed error information will be logged for troubleshooting purposes.
 
-By incorporating the `llm_prompt` function into Sieve scripts, administrators and users can leverage powerful AI tools to create more intelligent and dynamic email processing rules.
+By incorporating the `llm_prompt` function into Sieve scripts, administrators and users can use AI models to create more dynamic email processing rules.
 
 ## Caveats
 

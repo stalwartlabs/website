@@ -6,11 +6,11 @@ sidebar_position: 1
 
 WebDAV (Web Distributed Authoring and Versioning) is an extension of the HTTP protocol that enables users to collaboratively manage and edit files stored on a remote server. By building on standard web technologies, WebDAV allows files and directories on a server to be accessed, created, modified, and deleted as if they were part of a local file system. This makes it an ideal protocol for enabling remote file storage and document collaboration across multiple platforms and devices.
 
-Stalwart includes full support for WebDAV, extending its functionality beyond traditional email to provide integrated collaboration tools. Through WebDAV, users can manage remote file storage directly from compatible clients, offering a seamless experience for storing, retrieving, and organizing documents and other data on the server.
+Stalwart includes full support for WebDAV, extending its functionality beyond traditional email to provide collaboration tools. Through WebDAV, users can manage remote file storage directly from compatible clients for storing, retrieving, and organizing documents and other data on the server.
 
 In addition to file storage, Stalwart also supports two important WebDAV-based protocols for collaboration: CalDAV and CardDAV. CalDAV allows users to manage calendar data, including creating, editing, and synchronizing events across devices and clients that support the protocol. Similarly, CardDAV is used for managing contact data, enabling users to maintain and synchronize address books in a consistent and standards-compliant way.
 
-Together, WebDAV, CalDAV, and CardDAV provide a powerful foundation for collaborative workflows within Stalwart. These protocols ensure broad interoperability with client applications and devices, making Stalwart a flexible and reliable platform for modern communication and data management needs.
+Together, WebDAV, CalDAV, and CardDAV provide a foundation for collaborative workflows within Stalwart. These protocols provide broad interoperability with client applications and devices.
 
 ## Enabling WebDAV
 
@@ -37,7 +37,7 @@ For general file storage, the WebDAV file system is available under `/dav/file`.
 
 Stalwart also supports WebDAV ACL (Access Control List) extensions, and user principals are exposed via the `/dav/pal` path. These principal resources are used to define and manage access rights across the various WebDAV services, and are typically accessed by clients to retrieve information about user identities and permissions.
 
-To streamline configuration, Stalwart provides autodiscovery endpoints for both CalDAV and CardDAV services. These endpoints are located at `/.well-known/caldav` and `/.well-known/carddav`, respectively. When queried, they redirect clients to the appropriate resource location for the authenticated user, simplifying initial setup in compliant calendar and contact applications.
+To simplify configuration, Stalwart provides autodiscovery endpoints for both CalDAV and CardDAV services. These endpoints are located at `/.well-known/caldav` and `/.well-known/carddav`, respectively. When queried, they redirect clients to the appropriate resource location for the authenticated user, simplifying initial setup in compliant calendar and contact applications.
 
 ## Disabling WebDAV
 

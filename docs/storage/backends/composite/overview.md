@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Overview
 
-Composite backends in Stalwart provide a flexible way to combine multiple storage backends, allowing administrators to distribute load effectively or increase redundancy for critical data. By leveraging composite backends, Stalwart can optimize performance and ensure resilience in environments with high availability and scalability requirements.
+Composite backends in Stalwart provide a way to combine multiple storage backends, allowing administrators to distribute load or increase redundancy for critical data. Composite backends can improve performance and resilience in environments with high availability and scalability requirements.
 
 There are three types of composite backends supported by Stalwart:
 
@@ -14,7 +14,7 @@ There are three types of composite backends supported by Stalwart:
 
 - [SQL Read Replicas](/docs/storage/backends/composite/sql-replica) SQL read replicas allow administrators to define a primary data store for write operations and one or more read replicas to handle read operations. This configuration distributes the read workload among multiple replicas, reducing the load on the primary database and enhancing overall system performance. Read replicas provide redundancy for data retrieval, ensuring continued availability even if the primary database experiences high traffic or temporary issues.
 
-Composite backends are a powerful feature for administrators seeking to scale their infrastructure efficiently. By enabling the distribution of load across multiple backends and ensuring redundancy, Stalwart delivers high performance and resilience for even the most demanding environments.
+Composite backends are a feature for administrators who need to scale their infrastructure. Distributing load across multiple backends and adding redundancy provides high performance and resilience for demanding environments.
 
 :::tip Enterprise feature
 

@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # PostgreSQL
 
-PostgreSQL, often known simply as Postgres, is a powerful, open-source object-relational database system. It is highly respected for its proven architecture, reliability, data integrity, robust feature set, and extensibility. PostgreSQL is designed to handle a range of workloads, from single machines to data warehouses or Web services with many concurrent users. 
+PostgreSQL, often known simply as Postgres, is an open-source object-relational database system. It is well regarded for its architecture, reliability, data integrity, feature set, and extensibility. PostgreSQL is designed to handle a range of workloads, from single machines to data warehouses or web services with many concurrent users. 
 
 ## Configuration
 

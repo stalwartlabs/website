@@ -4,7 +4,7 @@ sidebar_position: 9
 
 # Meilisearch
 
-Meilisearch is an open-source, lightning-fast, and hyper-relevant search engine that is easy to deploy and use. It is designed to provide an intuitive search experience with minimal configuration, making it a great choice for applications that require powerful search capabilities without the complexity of traditional search engines. Meilisearch offers features such as typo tolerance, synonyms, filters, and faceted search, allowing users to find relevant information quickly and efficiently.
+Meilisearch is an open-source search engine designed for fast, relevance-focused queries with minimal configuration. It offers features such as typo tolerance, synonyms, filters, and faceted search, allowing users to find relevant information quickly.
 
 ## Configuration
 

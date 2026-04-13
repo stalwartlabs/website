@@ -16,7 +16,7 @@ Users can enable Two-Factor Authentication (2FA) on their email accounts by logg
 
 Administrators can enable 2FA on a user account by accessing the Manage Account section of the [webadmin interface](/docs/management/webadmin/overview). Within the account configuration, administrators need to enter the OTPAuth URL. After configuring the OTPAuth URL, the administrator must share the TOTP code with the user so they can add it to their authentication app. This ensures that the user can generate the necessary codes for 2FA.
 
-Both users and administrators should ensure that the authenticator app is properly set up and tested to avoid any access issues. Enabling 2FA significantly enhances the security of email accounts, providing robust protection against unauthorized access.
+Both users and administrators should ensure that the authenticator app is properly set up and tested to avoid access issues. Enabling 2FA significantly improves the security of email accounts, providing protection against unauthorized access.
 
 :::tip Note
 
@@ -38,11 +38,11 @@ For users with 2FA enabled, it is still possible to use legacy mail clients that
 
 #### Concatenated Passwords
 
-Stalwarts offers a second alternative to access accounts protected by two-factor authentication. This method combines the user's password and TOTP code into a single string, allowing seamless integration with older systems.
+Stalwart offers a second alternative for accessing accounts protected by two-factor authentication. This method combines the user's password and TOTP code into a single string, allowing integration with older systems.
 
 To employ this technique, users simply concatenate their password and the current TOTP code, using a dollar sign ($) as a delimiter. For instance, if a user's password is "mysecret" and their authenticator app generates the TOTP code "976544," they would enter "mysecret$976544" in the password field.
 
-This approach bridges the gap between modern security practices and legacy software, ensuring that users can maintain robust account protection without sacrificing compatibility with older applications. 
+This approach bridges the gap between modern security practices and legacy software, letting users maintain strong account protection without sacrificing compatibility with older applications. 
 
 ## Internal Storage
 
@@ -59,4 +59,4 @@ An OTP Auth URL is a standardized format used to represent the secret key and co
 
 The OTP Auth URL is formatted as a URI, starting with "otpauth://totp/" followed by the issuer, account name, and query parameters containing the secret key and other settings. For example, an OTP Auth URL might look like this: `otpauth://totp/issuer:accountname?secret=SECRETKEY&issuer=issuer&algorithm=SHA1&digits=6&period=30`.
 
-By storing the TOTP settings as an OTP Auth URL, Stalwart ensures that all necessary information is securely and conveniently encapsulated. This approach simplifies the process of setting up and managing Two-Factor Authentication, providing users with a seamless and secure experience.
+By storing the TOTP settings as an OTP Auth URL, Stalwart ensures that all the necessary information is encapsulated in a single string. This simplifies the process of setting up and managing Two-Factor Authentication.

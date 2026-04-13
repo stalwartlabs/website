@@ -6,9 +6,9 @@ sidebar_position: 1
 
 Spam filtering is an essential component of any modern mail server, designed to sift through vast amounts of incoming email to identify and segregate unsolicited or potentially harmful messages. These unsolicited messages, commonly known as spam, not only clutter an individual's inbox but can also pose significant security risks. Efficient spam filtering ensures that genuine, legitimate emails reach their intended recipients, while unwanted or malicious emails are quarantined or discarded.
 
-Stalwart includes a comprehensive Spam and Phishing filter that provides a robust defense against such unwanted emails. This filter is built into Stalwart and consists of multiple customizable rules, which allow administrators to effortlessly modify its behavior or introduce new rules to better suit their specific requirements. 
+Stalwart includes a built-in Spam and Phishing filter. The filter consists of customizable rules, which administrators can modify or extend to suit their specific requirements. 
 
-It's worth noting that Stalwart's Spam and Phishing filter offers a protection level on par with popular tools such as RSpamd and SpamAssassin. This level of protection is no coincidence; the bulk of the spam/phishing rules present in Stalwart have been ported directly from RSpamd, with a handful also derived from SpamAssassin. This synthesis of top-tier rules, combined with the customization offered by [expressions](/docs/configuration/expressions/overview), ensures that Stalwart delivers an unparalleled email filtering experience.
+Stalwart's Spam and Phishing filter offers a protection level on par with popular tools such as RSpamd and SpamAssassin. This is not a coincidence: the bulk of the spam and phishing rules in Stalwart have been ported directly from RSpamd, with a handful also derived from SpamAssassin. Combined with the customization offered by [expressions](/docs/configuration/expressions/overview), this provides a comparable level of email filtering.
 
 ## Tags and Scores
 
@@ -47,4 +47,4 @@ X-Spam-Result: DMARC_POLICY_ALLOW (-0.50),
 X-Spam-Status: Yes, score=13.45
 ```
 
-This detailed feedback empowers users and administrators alike, granting them the capability to make informed decisions about how to handle incoming emails.
+This detailed feedback allows users and administrators to make informed decisions about how to handle incoming emails.

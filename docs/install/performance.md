@@ -4,7 +4,7 @@ sidebar_position: 7
 
 # Performance tuning
 
-Stalwart is engineered for efficiency and can handle substantial workloads even with default settings. For **small or personal deployments**, extensive performance tuning is rarely necessary; default configurations are more than sufficient to deliver reliable performance. However, for **larger-scale or high-traffic environments**, fine-tuning specific parameters can help unlock the full potential of your server and ensure optimal responsiveness under load.
+Stalwart is designed for efficiency and can handle substantial workloads with default settings. For **small or personal deployments**, extensive performance tuning is rarely necessary; defaults are more than sufficient. For **larger-scale or high-traffic environments**, fine-tuning specific parameters can help the server remain responsive under load.
 
 Caching plays a crucial role in improving performance by reducing latency, lowering database load, and ensuring faster response times for frequent operations. In Stalwart, caching is deeply integrated into the server’s internal architecture and is used across various components to store frequently accessed data temporarily in memory.
 

@@ -8,7 +8,7 @@ NATS is a lightweight, high-performance messaging system designed for cloud-nati
 
 As a coordination backend in a Stalwart cluster, NATS facilitates the exchange of internal events between nodes, allowing them to stay synchronized and respond to changes throughout the system. When a mailbox is updated on one node, a push notification needs to be triggered, or an IP address is blocked due to abuse, NATS ensures that this information is immediately disseminated to other nodes in the cluster.
 
-NATS is particularly well-matched to medium-sized Stalwart deployments where low-latency communication is essential, but the full durability and message persistence features of Kafka are not required. Its compact footprint and straightforward configuration also make it a good option for teams looking to minimize operational overhead while still benefiting from robust coordination capabilities.
+NATS is particularly well-matched to medium-sized Stalwart deployments where low-latency communication is essential, but the full durability and message persistence features of Kafka are not required. Its compact footprint and straightforward configuration also make it a good option for teams looking to minimize operational overhead while still benefiting from reliable coordination.
 
 Though NATS does not persist messages in the same way Kafka does (unless extended via JetStream), it excels in real-time scenarios where speed and efficiency take priority over long-term storage. For many organizations, it offers the ideal balance between performance, simplicity, and scalability for coordinating distributed mail services.
 

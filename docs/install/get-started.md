@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Welcome to Stalwart
 
-Welcome to **Stalwart**, an open-source mail and collaboration server designed for the modern internet. Stalwart supports a wide range of protocols including **JMAP**, **IMAP4**, **POP3**, **SMTP**, **CalDAV**, **CardDAV**, and **WebDAV**, making it a comprehensive solution for managing email, calendars, contacts, file storage, and more. Built in **Rust**, Stalwart is engineered to be **secure**, **fast**, **robust**, and **scalable**, capable of running everything from small personal mail servers to large, distributed enterprise deployments.
+Welcome to **Stalwart**, an open-source mail and collaboration server designed for the modern internet. Stalwart supports a wide range of protocols including **JMAP**, **IMAP4**, **POP3**, **SMTP**, **CalDAV**, **CardDAV**, and **WebDAV**, covering email, calendars, contacts, and file storage. Built in **Rust**, Stalwart is designed to be **secure**, **fast**, **reliable**, and **scalable**, and is capable of running everything from small personal mail servers to large, distributed enterprise deployments.
 
 This **Getting Started** guide is intended to help new users install, configure, and optimize Stalwart for their specific needs. It walks through the essential steps and considerations for a successful deployment.
 

@@ -4,7 +4,7 @@ sidebar_position: 4
 
 # Domain Lists
 
-Some of the lists stored as [lookup lists](/docs/storage/lookup/local) provide the spam filter with guidelines on handling emails from or containing specific domains. These lists contain one domain per line and are used to categorize domains based on their characteristics and help streamline the email filtering process. Let's delve into the details of each list:
+Some of the lists stored as [lookup lists](/docs/storage/lookup/local) provide the spam filter with guidelines on handling emails from or containing specific domains. These lists contain one domain per line and are used to categorize domains based on their characteristics, helping the email filtering process. The lists are:
 
 ## Trusted domains
 

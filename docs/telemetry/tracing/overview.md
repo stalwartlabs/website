@@ -8,14 +8,14 @@ Stalwart provides detailed tracing and logging information to help users monitor
 
 The available tracing mechanisms include:
 
-- [OpenTelemetry](/docs/telemetry/tracing/opentelemetry): A vendor-neutral standard that provides a set of tools and APIs for collecting distributed traces and metrics. It enables seamless integration with various observability platforms, allowing for consistent monitoring across different systems and services.
+- [OpenTelemetry](/docs/telemetry/tracing/opentelemetry): A vendor-neutral standard that provides a set of tools and APIs for collecting distributed traces and metrics. It integrates with various observability platforms, allowing consistent monitoring across different systems and services.
 - [Log Files](/docs/telemetry/tracing/log): Traditional text-based files where Stalwart records detailed logs of system events and activities. These logs can be stored locally and accessed for troubleshooting, auditing, or analysis.
 - [Journald](/docs/telemetry/tracing/journal): A system service for collecting and managing log data, particularly in Linux environments. Journald provides structured and centralized logging, making it easier to search, filter, and manage logs.
 - [Console](/docs/telemetry/tracing/console): The standard output and error streams where Stalwart can display real-time logs and messages. This is useful for debugging and monitoring the system during active sessions.
 
 ## Tracing method
 
-In the configuration file, the method each tracer is defined with the the `tracer.<id>.type` attribute, where `<id>` is a unique identifier for the tracer. The supported tracers are:
+In the configuration file, the method for each tracer is defined with the `tracer.<id>.type` attribute, where `<id>` is a unique identifier for the tracer. The supported tracers are:
 
 - `open-telemetry`: Sends tracing information to an OpenTelemetry collector.
 - `log`: Writes tracing information to a log file.

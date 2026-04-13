@@ -4,7 +4,7 @@ sidebar_position: 6
 
 # Auto-banning
 
-Stalwart provides robust protection mechanisms to safeguard your mail infrastructure against various forms of attacks and abuse. One of the key features in this protection framework is the **automatic ban mechanism**, which is designed to monitor incoming connections and identify potentially malicious behavior. When certain thresholds are met, Stalwart takes immediate action by banning the offending IP address, thereby preventing further attempts to compromise or misuse the server.
+Stalwart provides protection mechanisms to safeguard your mail infrastructure against attacks and abuse. One such feature is the **automatic ban mechanism**, which monitors incoming connections and identifies potentially malicious behavior. When certain thresholds are met, Stalwart bans the offending IP address, preventing further attempts to compromise or misuse the server.
 
 The automatic ban system operates by keeping track of different types of suspicious activities or abuse patterns. These could include excessive failed login attempts, unauthorized relay usage, or attempts to discover valid recipient addresses on the server. The system allows administrators to configure specific thresholds, and when these limits are exceeded, the IP address responsible for the abuse is automatically banned. After an IP address is banned, Stalwart drops all future connection attempts from that IP, ensuring that any further malicious activity is blocked.
 

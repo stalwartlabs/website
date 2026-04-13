@@ -18,7 +18,7 @@ On the other hand, pull metrics exporters work by having the metrics collection 
 
 Stalwart supports both push and pull metrics export methods, providing flexibility to integrate with different monitoring solutions based on organizational needs and preferences.
 
-For push metric exports, Stalwart integrates seamlessly with [OpenTelemetry](/docs/telemetry/metrics/opentelemetry). OpenTelemetry is a set of APIs, libraries, agents, and instrumentation that provides a standard way to collect and export telemetry data. By supporting OpenTelemetry, Stalwart allows metrics to be pushed to a centralized telemetry collection system, enabling real-time monitoring and analysis.
+For push metric exports, Stalwart integrates with [OpenTelemetry](/docs/telemetry/metrics/opentelemetry). OpenTelemetry is a set of APIs, libraries, agents, and instrumentation that provides a standard way to collect and export telemetry data. By supporting OpenTelemetry, Stalwart allows metrics to be pushed to a centralized telemetry collection system, enabling real-time monitoring and analysis.
 
 In addition to push metrics exports, Stalwart also supports pull metrics exports to [Prometheus](/docs/telemetry/metrics/prometheus). Prometheus is a popular open-source monitoring and alerting toolkit designed for reliability and scalability. Stalwart exposes a scraping endpoint that Prometheus can query at regular intervals to collect metrics. This allows for flexible and efficient monitoring, with the ability to adjust the scraping frequency to match the desired level of detail and performance impact.
 

@@ -4,11 +4,11 @@ sidebar_position: 4
 
 # Scheduling
 
-Calendar Scheduling allows users to efficiently coordinate meetings and events by automating the process of sending, receiving, and responding to invitations. Rather than relying on manual email exchanges, calendar scheduling systems streamline communication between organizers and attendees, track participation status, and manage updates and cancellations in real time.
+Calendar Scheduling lets users coordinate meetings and events by automating the process of sending, receiving, and responding to invitations. Rather than relying on manual email exchanges, calendar scheduling systems handle communication between organizers and attendees, track participation status, and manage updates and cancellations in real time.
 
 Stalwart supports calendar scheduling through two primary mechanisms:
 
--  **JMAP for Calendars**, which includes built-in support for scheduling operations such as sending invitations, processing responses, and managing event updates using the JMAP protocol. This modern API allows clients to interact with calendar data in a structured and efficient manner, enabling seamless scheduling workflows across devices and applications.
+-  **JMAP for Calendars**, which includes built-in support for scheduling operations such as sending invitations, processing responses, and managing event updates using the JMAP protocol. This API allows clients to interact with calendar data in a structured and efficient manner, enabling scheduling workflows across devices and applications.
 - **Scheduling Extensions to CalDAV**, as defined in [RFC 6638](https://datatracker.ietf.org/doc/html/rfc6638). This specification extends the CalDAV protocol to support server-based scheduling operations, enabling calendar clients to schedule meetings through standard WebDAV-based interactions. With this extension, users can create calendar events and invite participants by simply adding attendee information to an event; Stalwart will handle the necessary scheduling logic, including delivering invitations, processing replies, and updating calendars accordingly.
 
 Calendar scheduling in Stalwart relies on two core protocols from the iCalendar ecosystem:
@@ -39,7 +39,7 @@ Calendar Scheduling can also be enabled or disabled on a per-user basis by setti
 
 ## Automatic Event Addition
 
-RFC 6638 mandates that CalDAV servers **automatically add scheduling messages** (such as invitations received via iTIP or iMIP) to the recipient’s calendar. This behavior is intended to make scheduling seamless by eliminating the need for users to manually review or accept incoming event requests before they appear in their calendar.
+RFC 6638 mandates that CalDAV servers **automatically add scheduling messages** (such as invitations received via iTIP or iMIP) to the recipient’s calendar. This behavior eliminates the need for users to manually review or accept incoming event requests before they appear in their calendar.
 
 Stalwart takes a more deliberate and user-respecting approach to this requirement. While automatic addition can be convenient, it also creates the potential for calendar spam, where unsolicited or irrelevant invitations are inserted directly into a user’s calendar. More importantly, it undermines user control, removing the individual’s ability to decide which events appear in their personal or work schedule.
 

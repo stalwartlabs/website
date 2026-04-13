@@ -6,7 +6,7 @@ sidebar_position: 5
 
 Redis is an in-memory data structure store commonly used for caching, session storage, and ephemeral key-value data. While it is best known for its performance as a high-speed cache, Redis also includes native support for **publish/subscribe (pub/sub)** messaging, which can be used for lightweight inter-process or inter-node communication.
 
-In a Stalwart cluster, Redis can serve as a coordination backend by leveraging its pub/sub capabilities to propagate internal updates between nodes. This includes events such as mailbox changes, IMAP IDLE and push notification triggers, blocked IP alerts, and ACME certificate availability. Each node subscribes to relevant Redis channels and publishes updates as necessary, ensuring the cluster remains synchronized in real time.
+In a Stalwart cluster, Redis can serve as a coordination backend using its pub/sub capabilities to propagate internal updates between nodes. This includes events such as mailbox changes, IMAP IDLE and push notification triggers, blocked IP alerts, and ACME certificate availability. Each node subscribes to relevant Redis channels and publishes updates as necessary, keeping the cluster synchronized in real time.
 
 Redis is especially useful in small to medium-sized deployments where Kafka or NATS might be considered too heavy, or where Redis is already in use for storing transient or ephemeral data within Stalwart. Using Redis for both coordination and ephemeral storage can help reduce system complexity by consolidating services and avoiding the need to introduce additional infrastructure.
 

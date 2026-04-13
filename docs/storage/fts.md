@@ -7,7 +7,7 @@ sidebar_position: 4
 Stalwart supports full-text search (FTS) capabilities that greatly improve the user experience when searching through email content. Full-text indexing can be done internally using any of the supported data store backends, or externally using a third-party solution such as ElasticSearch:
 
 - [ElasticSearch](/docs/storage/backends/elasticsearch) Delegate full-text search to ElasticSearch, a distributed, RESTful search and analytics engine.
-- [Meilisearch](/docs/storage/backends/meilisearch) Use Meilisearch, an open-source, lightning-fast, and hyper-relevant search engine that is easy to deploy and use.
+- [Meilisearch](/docs/storage/backends/meilisearch) Use Meilisearch, an open-source search engine that is fast and easy to deploy.
 - [Internal](/docs/storage/data): Use any of the supported [data store backends](/docs/storage/data) as a full-text index store.
 
 ## Choosing a search store

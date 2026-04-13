@@ -20,4 +20,4 @@ Secondly, enforcing limits on the number of connections or the volume of emails 
 
 Lastly, knowing whether the connection was encrypted via TLS can help in policy enforcement and logging, ensuring that sensitive data is transmitted securely. This information allows Stalwart to maintain high security standards and enforce policies that may depend on the encryption status of the connection.
 
-By leveraging the Proxy Protocol, you enhance the capability of Stalwart to accurately authenticate senders, enforce security policies, and maintain the integrity of your email communications. Configuring a reverse proxy with the Proxy Protocol for Stalwart not only optimizes performance and security but also ensures that the server has all necessary client connection details to function correctly and securely.
+Using the Proxy Protocol allows Stalwart to correctly authenticate senders, enforce security policies, and preserve the integrity of email communications. Configuring a reverse proxy with the Proxy Protocol ensures that the server has the client connection details it needs to operate correctly.

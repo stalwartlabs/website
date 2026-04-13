@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Permissions
 
-Permissions in Stalwart determine the specific actions and resources that a user, group, or entity is allowed to access. Permissions allow administrators to control fine-grained access to various operations within the mail server, providing a clear distinction between what actions an entity can or cannot perform. Permissions can be assigned directly to [individuals](/docs/auth/principals/individual), [groups](/docs/auth/principals/group), [roles](/docs/auth/authorization/roles), or even entire [tenants](/docs/auth/authorization/tenants), giving administrators comprehensive control over access policies.
+Permissions in Stalwart determine the specific actions and resources that a user, group, or entity is allowed to access. Permissions allow administrators to control fine-grained access to various operations within the mail server, providing a clear distinction between what actions an entity can or cannot perform. Permissions can be assigned directly to [individuals](/docs/auth/principals/individual), [groups](/docs/auth/principals/group), [roles](/docs/auth/authorization/roles), or entire [tenants](/docs/auth/authorization/tenants), giving administrators fine-grained control over access policies.
 
 To simplify the management of permissions, multiple permissions can be grouped together into [roles](/docs/auth/authorization/roles). Assigning roles to users or groups allows administrators to more easily manage access by bundling related permissions rather than having to assign them individually.
 
@@ -28,7 +28,7 @@ It's important to note that permissions in Stalwart are distinct from Access Con
 - **Permissions**: Defined by the **administrator**, permissions control access to specific resources and actions within the mail server itself. These determine what a user or entity is allowed to do globally within the system, such as managing settings, accessing logs, or sending emails.
 - **Access Control Lists (ACLs)**: Managed by **users** and are used to grant other users or groups access to their emails, folders, or other specific data. ACLs, typically controlled via the IMAP ACL extension or JMAP, regulate how one user's data is shared with others and are applied on a per-folder or per-resource basis.
 
-In summary, permissions are centrally controlled by administrators to define what actions and resources can be accessed by whom, while ACLs give users control over how their own data is shared and accessed by others. Together, they offer robust and flexible security and access control within the Stalwart environment.
+In summary, permissions are centrally controlled by administrators to define what actions and resources can be accessed by whom, while ACLs give users control over how their own data is shared and accessed by others. Together, they provide flexible security and access control within the Stalwart environment.
 
 ## Available Permissions
 

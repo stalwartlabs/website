@@ -47,12 +47,12 @@ The [blob store](/docs/storage/blob) in Stalwart is responsible for storing **la
 
 Because of the volume and size of this data, the blob store must be highly durable, scalable, and capable of handling concurrent access from multiple nodes in a clustered environment. Alongside the data store, it is one of the **two most critical components** of Stalwart’s storage layer. If either is unavailable or unreliable, core functionality such as email delivery, retrieval, and filtering will be impacted.
 
-Stalwart is designed to work seamlessly with **S3-compatible object stores**, which offer a robust and scalable solution for managing blobs in both self-hosted and cloud-native environments. These systems provide high availability, versioning, and replication capabilities that align well with the needs of a distributed mail platform.
+Stalwart works with **S3-compatible object stores**, which are a scalable option for managing blobs in both self-hosted and cloud-native environments. These systems provide high availability, versioning, and replication, which align well with the needs of a distributed mail platform.
 
 ### Self-Hosted Options
 
 * [GarageHQ](https://garagehq.deuxfleurs.fr/documentation/quick-start/) : A distributed, lightweight S3-compatible object store built for self-hosting and resiliency. GarageHQ is designed to run on modest hardware and can replicate data across multiple nodes and sites, making it well-suited for decentralized or fault-tolerant deployments.
-* [MinIO](https://min.io/): A high-performance, enterprise-grade object storage solution that is fully compatible with the S3 API. MinIO supports erasure coding, multi-tenant configurations, and horizontal scalability. It is widely adopted and well-documented, making it an excellent choice for administrators looking for a robust self-hosted option.
+* [MinIO](https://min.io/): A high-performance object storage solution that is fully compatible with the S3 API. MinIO supports erasure coding, multi-tenant configurations, and horizontal scalability. It is widely adopted and well-documented, making it a good choice for administrators looking for a self-hosted option.
 
 ### Cloud-Hosted Options
 
@@ -82,7 +82,7 @@ While Stalwart can be configured to use the **primary data store** for full-text
 
 To avoid unnecessary strain on the data store and improve indexing performance and scalability, it is **strongly recommended** to use a **dedicated full-text search engine** such as:
 
-- **Elasticsearch**: A powerful, scalable, and mature search engine built on Apache Lucene. Elasticsearch is widely used in enterprise environments and offers robust query capabilities, full-text relevance scoring, and support for distributed indexing across large clusters.
+- **Elasticsearch**: A scalable, mature search engine built on Apache Lucene. Elasticsearch is widely used in enterprise environments and offers rich query capabilities, full-text relevance scoring, and support for distributed indexing across large clusters.
 - **Meilisearch**: A modern, lightweight full-text search engine designed for speed and simplicity. Meilisearch is particularly well-suited for smaller or mid-sized deployments, offering fast indexing, a user-friendly API, and minimal configuration overhead.
 
 Both Elasticsearch and Meilisearch integrate easily with Stalwart and provide significant benefits over general-purpose databases when it comes to managing and querying large volumes of textual data.

@@ -10,7 +10,7 @@ The following database backends can be utilized as a data store:
 
 - [RocksDB](/docs/storage/backends/rocksdb): A high performance embedded database for key-value data (recommended for single node installations).
 - [FoundationDB](/docs/storage/backends/foundationdb): A distributed database designed to handle large volumes of data across clusters of machines (recommended for multi-node installations).
-- [PostgreSQL](/docs/storage/backends/postgresql): A powerful, open-source object-relational database system.
+- [PostgreSQL](/docs/storage/backends/postgresql): An open-source object-relational database system.
 - [MySQL](/docs/storage/backends/mysql): An open-source relational database management system.
 - [SQLite](/docs/storage/backends/sqlite): A C library that provides a lightweight disk-based database.
 

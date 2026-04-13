@@ -14,7 +14,7 @@ Unlike CalDAV, which is built on top of WebDAV and uses XML combined with embedd
 
 ## CalDAV
 
-**CalDAV** is a standardized extension of WebDAV that allows clients to interact with calendar data stored on a server. It is widely supported by calendar applications on desktops and mobile devices, including Apple Calendar, Thunderbird, Outlook (with plugins), and many others. CalDAV enables features such as creating events, setting recurring appointments, inviting participants, and viewing shared calendars, all using a common protocol. By supporting CalDAV, Stalwart provides users with a flexible and interoperable calendar system that integrates seamlessly into both personal and organizational workflows. Calendars stored on the server can be accessed and managed from anywhere, ensuring consistent scheduling and collaboration across platforms.
+**CalDAV** is a standardized extension of WebDAV that allows clients to interact with calendar data stored on a server. It is widely supported by calendar applications on desktops and mobile devices, including Apple Calendar, Thunderbird, Outlook (with plugins), and many others. CalDAV enables features such as creating events, setting recurring appointments, inviting participants, and viewing shared calendars, all using a common protocol. By supporting CalDAV, Stalwart provides a flexible and interoperable calendar system that fits both personal and organizational workflows. Calendars stored on the server can be accessed and managed from anywhere, ensuring consistent scheduling and collaboration across platforms.
 
 ### Accessing Calendars
 
@@ -78,7 +78,7 @@ max-items = 100
 
 ## Default Calendar
 
-To streamline client compatibility and ensure that calendar operations can proceed without manual setup, Stalwart **automatically creates** a default calendar when a user account is accessed and no calendars currently exist for that user.
+To improve client compatibility and allow calendar operations to proceed without manual setup, Stalwart **automatically creates** a default calendar when a user account is accessed and no calendars currently exist for that user.
 The location (URL path) of the automatically created calendar is determined by the `calendar.default.href-name` setting. By default, this is set to `"default"`, which means that for a user named `john`, the default calendar will be created at `/dav/cal/john/default`. This behavior ensures that CalDAV clients always have at least one calendar to work with, avoiding errors or empty interfaces when first connecting to the server.
 
 ```toml

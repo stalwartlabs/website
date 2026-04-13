@@ -4,7 +4,7 @@ sidebar_position: 13
 
 # Enterprise License
 
-Stalwart is a robust, open-source mail server designed to deliver high-performance email services across a wide range of applications. While the core functionalities are available for free as open-source software, Stalwart also provides a suite of [Enterprise features](https://stalw.art/enterprise/) tailored specifically for large-scale, complex environments that require enhanced control, security, and manageability. These features are aimed at enterprise-level customers who need specialized tools such as multi-tenancy, dashboards, AI integrations, and other advanced capabilities. To access these premium features, an [Enterprise subscription](https://license.stalw.art/buy) is required, which unlocks additional functionalities and support.
+Stalwart is an open-source mail server designed to deliver high-performance email services across a wide range of applications. While the core functionality is available for free as open-source software, Stalwart also provides a suite of [Enterprise features](https://stalw.art/enterprise/) tailored for large-scale environments that require additional control, security, and manageability. These features target enterprise customers who need specialized tools such as multi-tenancy, dashboards, AI integrations, and other advanced capabilities. To access these features, an [Enterprise subscription](https://license.stalw.art/buy) is required.
 
 Among the Enterprise-exclusive capabilities are [multi-tenancy](/docs/auth/authorization/tenants), which allows administrators to manage multiple organizations or domains within a single server instance, and intuitive dashboards, which provide administrators with visual insights and control over system activity. Additionally, Stalwart offers [AI-powered models](/docs/server/ai-models) that enhance email processing, for example, by improving filtering accuracy or categorization. For a full comparison between the open-source and Enterprise versions of Stalwart, please refer to [the comparison page on the Stalwart website](https://stalw.art/compare/).
 
@@ -12,7 +12,7 @@ Among the Enterprise-exclusive capabilities are [multi-tenancy](/docs/auth/autho
 
 Enterprise licenses for Stalwart are issued to a specific **domain name** and come with a defined limit on the number of active mailboxes allowed under that license. This licensing model provides flexibility for enterprises, as a single license can be utilized across multiple servers, provided they share the same registered domain name. 
 
-For example, if an Enterprise license is issued for `*.example.org`, it can be used seamlessly across multiple servers configured under this domain, such as `mx1.example.org`, `mx2.example.org`, up to any number of `X.example.org` servers. This setup allows for robust, distributed deployment without requiring additional licenses for each server, as long as they fall under the specified domain.
+For example, if an Enterprise license is issued for `*.example.org`, it can be used across multiple servers configured under this domain, such as `mx1.example.org`, `mx2.example.org`, up to any number of `X.example.org` servers. This allows distributed deployment without additional licenses for each server, as long as they fall under the specified domain.
 
 Although licenses are issued to a specific domain, it is still possible to host an **unlimited number of client domains** within the same environment. This means that even if your Enterprise license is registered for `*.example.org`, you can still provide email services for any number of other domains on the same server, such as `foobar.org`, `test.org`, or any other client domain.
 
@@ -20,13 +20,13 @@ The domain-specific restriction applies solely to the licensed servers’ domain
 
 ## Obtaining a License
 
-To activate and use the Enterprise-grade features in Stalwart, an **Enterprise license** is required. This license acts as the gateway to premium functionality, transforming Stalwart into a comprehensive solution for high-demand, multi-user environments that prioritize scalability, security, and compliance.
+To activate and use the Enterprise features in Stalwart, an **Enterprise license** is required. The license enables additional functionality aimed at multi-user environments that require scalability, security, and compliance.
 
 Enterprise licenses are provided as a unique, cryptographically signed string of characters. Each license string contains an asymmetrically signed code, which allows Stalwart to validate the license’s authenticity offline. This offline verification process ensures that no external connection is required for license validation, making the setup more secure and suitable for isolated environments or deployments where internet access is limited or controlled.
 
 ### Configuration
 
-After obtaining an Enterprise license for Stalwart, it is essential to configure it within the server settings to unlock premium features. Adding the license is a straightforward process that requires updating the `enterprise.license-key` setting in the Stalwart configuration file.
+After obtaining an Enterprise license for Stalwart, configure it in the server settings to enable the additional features. Adding the license requires updating the `enterprise.license-key` setting in the Stalwart configuration file.
 
 For example:
 
@@ -43,9 +43,9 @@ You must then logout and re-login to be able to use the enterprise features.
 
 ## Automatic renewals
 
-Since Enterprise licenses are time-bound, they have a predefined expiration date. Once expired, the Enterprise features will no longer be accessible until the license is renewed. To streamline this renewal process and avoid service interruptions, Stalwart Labs offers an **automatic renewal API**. This API is used to automatically renew the license a few days before it expires, ensuring uninterrupted access to Enterprise functionalities.
+Enterprise licenses are time-bound and have a predefined expiration date. Once expired, the Enterprise features are no longer accessible until the license is renewed. To simplify renewal and avoid service interruptions, Stalwart Labs offers an **automatic renewal API** that renews the license a few days before it expires.
 
-The automatic renewal feature is highly recommended, as it eliminates the need for manual intervention by system administrators and reduces the risk of downtime due to an expired license. By enabling the auto-renewal API, you ensure that the license renewal happens seamlessly in the background, providing continuous access to premium features without affecting day-to-day operations.
+The automatic renewal feature is recommended: it eliminates the need for manual intervention and reduces the risk of downtime due to an expired license. When the auto-renewal API is enabled, license renewal happens in the background without affecting day-to-day operations.
 
 Once configured with a valid API key, Stalwart will automatically attempt to renew the license up to five days before it expires. This early renewal window provides ample time to secure a new license, even in environments with limited connectivity or occasional network issues.
 

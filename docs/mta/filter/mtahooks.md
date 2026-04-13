@@ -4,9 +4,9 @@ sidebar_position: 5
 
 # MTA Hooks
 
-MTA Hooks is a modern replacement for the milter protocol, designed to provide enhanced flexibility and ease of use for managing and processing email transactions within Mail Transfer Agents (MTAs). Unlike milter, which operates at a lower level and uses a custom protocol, MTA Hooks leverages the ubiquitous HTTP protocol, making it simpler to integrate and deploy.
+MTA Hooks is a replacement for the milter protocol for managing and processing email transactions within Mail Transfer Agents (MTAs). Unlike milter, which operates at a lower level and uses a custom protocol, MTA Hooks uses HTTP, which makes integration and deployment simpler.
 
-MTA Hooks is built on the robust and widely used HTTP protocol, making integration and debugging significantly simpler compared to traditional methods. The protocol uses JSON for both requests and responses, offering a clear, human-readable format that enhances the ease of implementation. Each stage of the SMTP transaction is managed by sending a POST request to a specified HTTP endpoint, ensuring seamless communication and processing. MTA Hooks can be invoked at any point in the SMTP transaction, from the initial connection phase to the final message delivery, providing comprehensive coverage and control over the email processing workflow.
+MTA Hooks is built on HTTP, which makes integration and debugging simpler than with custom binary protocols. It uses JSON for both requests and responses. Each stage of the SMTP transaction is handled by sending a POST request to a specified HTTP endpoint. MTA Hooks can be invoked at any point in the SMTP transaction, from the initial connection phase to final message delivery, giving full control over the email processing workflow.
 
 ## Configuration
 

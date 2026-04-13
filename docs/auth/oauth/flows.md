@@ -6,7 +6,7 @@ sidebar_position: 2
 
 OAuth 2.0 defines several authorization flows designed to accommodate different types of clients and use cases. Each flow provides a secure mechanism for obtaining an access token that grants permission to access resources on behalf of a user.
 
-Stalwart supports two of the most commonly used flows: the **Authorization Code flow** ([RFC6749](https://www.rfc-editor.org/rfc/rfc6749.html)) and the **Device Authorization flow** ([RFC8628](https://www.rfc-editor.org/rfc/rfc8628)), ensuring flexibility in the types of clients and devices that can securely interact with the server. These flows enable a wide range of applications, from web-based and mobile applications to smart devices, to authenticate and obtain access tokens without exposing user credentials or compromising security. By supporting these two core OAuth flows, Stalwart ensures that both traditional and device-based clients can integrate seamlessly with the server while adhering to modern security practices.
+Stalwart supports two of the most commonly used flows: the **Authorization Code flow** ([RFC6749](https://www.rfc-editor.org/rfc/rfc6749.html)) and the **Device Authorization flow** ([RFC8628](https://www.rfc-editor.org/rfc/rfc8628)). These flows cover a wide range of clients, from web-based and mobile applications to smart devices, and let them authenticate and obtain access tokens without exposing user credentials. Between them, these two flows cover both traditional and device-based clients.
 
 ## Authorization Code Flow
 

@@ -6,7 +6,7 @@ sidebar_position: 3
 
 Roles in Stalwart are used to group [permissions](/docs/auth/authorization/permissions), making it easier to manage access control across individuals, groups, and tenants. Roles are stored in the directory as principals, just like individuals or groups, and they can also contain subroles (roles within other roles) allowing for a hierarchical structure of access permissions. 
 
-Roles are a powerful way to streamline permission management by assigning sets of predefined permissions to users, groups, or tenants. Instead of assigning permissions individually, administrators can assign roles that encapsulate multiple permissions at once.
+Roles are a way to simplify permission management by assigning sets of predefined permissions to users, groups, or tenants. Instead of assigning permissions individually, administrators can assign roles that encapsulate multiple permissions at once.
 
 A role [principal](/docs/auth/principals/overview) includes the following fields that define its properties and how it functions within the mail server:
 
@@ -26,6 +26,6 @@ Roles are an essential tool for efficiently managing permissions in Stalwart. By
 Stalwart includes three **built-in roles** to simplify common access control scenarios:
 
 - `user`: This role grants access to all regular services offered by the mail server, such as email sending, receiving, and accessing mailboxes. It is designed for standard users who need full access to their email functions without any administrative rights.
-- `admin`: The admin role is the most powerful role in Stalwart. It enables **every single permission type** within the system, giving the user full control over all aspects of the mail server, including configuration changes, user management, and system operations.
+- `admin`: The admin role has the broadest scope in Stalwart. It enables **every single permission type** within the system, giving the user full control over all aspects of the mail server, including configuration changes, user management, and system operations.
 - `tenant-admin`:This role is intended for administrators of a specific **tenant** or **domain**. It grants basic administrative permissions to manage users, groups, and settings for their tenant or domain, but it restricts access to critical system configurations to prevent unintended changes at the global level.
 

@@ -6,7 +6,7 @@ sidebar_position: 2
 
 The internal directory handles crucial tasks such as authenticating credentials (usernames and passwords), validating email addresses, and storing various user-specific settings like disk quotas and group memberships. Using an internal directory is suitable for environments where Stalwart is the primary system for email management and no external user management systems are in place. In this setup, all account management tasks, such as creating new user accounts, updating passwords, and setting quotas, are performed directly within Stalwart. This offers a straightforward and integrated approach to user management.
 
-Internally, the internal directory utilizes one of the supported [data stores](/docs/storage/data) to maintain and retrieve user details. This integration ensures that user information is stored and accessed efficiently, leveraging the capabilities of the chosen data store.
+Internally, the internal directory uses one of the supported [data stores](/docs/storage/data) to maintain and retrieve user details. User information is stored and accessed through the chosen data store.
 
 ## Configuration
 

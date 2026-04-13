@@ -16,7 +16,7 @@ While CardDAV relies on XML-based WebDAV extensions and uses the vCard format fo
 
 **CardDAV** is a standardized extension of WebDAV that allows clients to interact with contact data stored on a server. It provides a reliable and interoperable way for users to manage personal and shared address books, and is widely supported by contact applications on both desktop and mobile platforms, including Apple Contacts, Thunderbird, and many others.
 
-Through CardDAV, users can create and edit contact entries, organize them into address books, and synchronize changes automatically across multiple devices. This ensures that contact information remains consistent and up-to-date, no matter where it’s accessed. By supporting CardDAV, Stalwart delivers a complete and standards-compliant contact management system that integrates seamlessly into modern communication and collaboration workflows. This section covers how contact data is structured, how clients access it, and how administrators can manage and configure contact-related features.
+Through CardDAV, users can create and edit contact entries, organize them into address books, and synchronize changes across multiple devices. This keeps contact information consistent and up-to-date regardless of where it’s accessed. By supporting CardDAV, Stalwart provides a standards-compliant contact management system that integrates with standard communication and collaboration workflows. This section covers how contact data is structured, how clients access it, and how administrators manage and configure contact-related features.
 
 ### Accessing Contacts
 
@@ -54,7 +54,7 @@ max-items = 100
 
 ## Default Address Book
 
-To streamline client compatibility and ensure that contact management operations can proceed without manual setup, Stalwart **automatically creates** a default address book when a user account is accessed and no address books currently exist for that user.
+To improve client compatibility and allow contact management operations to proceed without manual setup, Stalwart **automatically creates** a default address book when a user account is accessed and no address books exist for that user.
 The location (URL path) of the automatically created address book is determined by the `contacts.default.href-name` setting. By default, this is set to `"default"`, which means that for a user named `john`, the default address book will be created at `/dav/cal/john/default`. This behavior ensures that CalDAV clients always have at least one address book to work with, avoiding errors or empty interfaces when first connecting to the server.
 
 ```toml
@@ -92,5 +92,5 @@ Stalwart’s contact management system is closely integrated with the [built-in 
 
 In addition to [bypassing spam classification](/docs/spamfilter/settings/general#address-book-integration) for known contacts, Stalwart can also use this information to [improve its spam classifier](/docs/spamfilter/classifier/autolearn#address-books). If a message from a known contact is incorrectly flagged as spam, the system can automatically learn from the mistake and train its classifier model to better recognize similar messages in the future.
 
-This seamless integration between the address book and spam filtering system helps create a more intelligent and personalized filtering experience. For more information on how to configure these features, see the [spam filter documentation](/docs/spamfilter/overview).
+This integration between the address book and the spam filter provides more personalized filtering. For more information on how to configure these features, see the [spam filter documentation](/docs/spamfilter/overview).
 

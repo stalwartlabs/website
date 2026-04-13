@@ -4,9 +4,9 @@ sidebar_position: 4
 
 # HAProxy
 
-HAProxy is a powerful, open-source software widely recognized for its high performance, reliability, and flexibility as a load balancer and reverse proxy. It is commonly used in environments requiring high availability and scalability, such as web servers, databases, and various application services. HAProxy excels in managing large volumes of traffic, distributing load evenly across multiple servers, and providing advanced features like health checks, SSL termination, and connection persistence.
+HAProxy is open-source software widely used as a load balancer and reverse proxy, known for its high performance, reliability, and flexibility. It is commonly used in environments requiring high availability and scalability, such as web servers, databases, and various application services. HAProxy handles large volumes of traffic, distributes load evenly across multiple servers, and provides features like health checks, SSL termination, and connection persistence.
 
-Stalwart supports HAProxy, enabling you to take full advantage of HAProxy's robust capabilities to manage and route email traffic efficiently. By using HAProxy as a reverse proxy, you can ensure that your Stalwart benefits from HAProxy's sophisticated load balancing, failover mechanisms, and traffic management features.
+Stalwart supports HAProxy, so you can use HAProxy to manage and route email traffic. As a reverse proxy in front of Stalwart, HAProxy provides load balancing, failover, and traffic management.
 
 ## Configuration
 

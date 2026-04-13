@@ -14,11 +14,11 @@ In addition to handling email, Stalwart supports **calendar management**, **cont
 
 To manage access and permissions across these services, Stalwart also supports the **WebDAV ACL (Access Control List) extension**. This allows fine-grained, standards-compliant control over who can read, write, or manage each resource, providing both flexibility and security in collaborative environments.
 
-By supporting CalDAV, CardDAV, file storage, and WebDAV ACL, Stalwart delivers a powerful and extensible collaboration platform that seamlessly integrates with modern tools and workflows.
+By supporting CalDAV, CardDAV, file storage, and WebDAV ACL, Stalwart provides an extensible collaboration platform that integrates with standard tools and workflows.
 
 ## Opting Out
 
-While Stalwart includes powerful collaboration features (such as calendars, contacts, and file storage via WebDAV) it is designed to remain lightweight and modular. If your organization is only interested in email functionality, rest assured that these additional services do **not** introduce any performance or resource overhead unless explicitly used.
+While Stalwart includes collaboration features (such as calendars, contacts, and file storage via WebDAV) it is designed to remain lightweight and modular. If your organization is only interested in email functionality, these additional services do **not** introduce any performance or resource overhead unless explicitly used.
 
 The collaboration features are **completely optional**. They do not interfere with mail delivery, IMAP, SMTP, or any other core mail server functionality. By default, WebDAV support is enabled when an HTTP listener is configured, but if collaboration is not needed, you can easily disable WebDAV access entirely.
 

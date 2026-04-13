@@ -30,8 +30,8 @@ Find and then check out the latest tagged release, for example:
 
 ```bash
 $ git tag --sort=-version:refname | head -1
-v0.13.0
-$ git checkout tags/v0.13.0
+v0.16.0
+$ git checkout tags/v0.16.0
 ```
 
 :::tip Note
@@ -61,7 +61,7 @@ $ cargo build --release -p stalwart  --no-default-features --features "foundatio
 
 :::tip Grab a cup of coffee
 
-Rust is a powerful language, but it can take some time to compile large projects like Stalwart, especially with multiple features enabled. Be patient!
+Rust compile times for large projects like Stalwart can be long, especially with multiple features enabled. Be patient!
 
 :::
 

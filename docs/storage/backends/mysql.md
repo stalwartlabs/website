@@ -71,4 +71,4 @@ MySQL full text search also does **not support stemming**. Words are indexed and
 
 Another important constraint is that **words shorter than three characters are not indexed** by default. Common short words, abbreviations, and identifiers (many of which are common in email content) will therefore not be searchable at all. This can be particularly noticeable when searching for short names, acronyms, or codes.
 
-Taken together, these limitations can significantly affect search quality and recall. If accurate, language-aware, and user-friendly search behavior is a priority for your deployment, it is strongly recommended to consider using a different [full text search backend](/docs/storage/fts) that provides better linguistic support and more robust indexing capabilities.
+Taken together, these limitations can significantly affect search quality and recall. If accurate, language-aware search behavior is a priority for your deployment, it is strongly recommended to use a different [full text search backend](/docs/storage/fts) that provides better linguistic support and indexing.

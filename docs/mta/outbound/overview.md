@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Overview
 
-Stalwart MTA provides a flexible and robust framework for managing outbound email delivery. Messages sent to both local and external domains are processed through a [strategy-driven](/docs/mta/outbound/strategy) architecture that allows precise control over how, when, and where each message is delivered. This architecture evaluates delivery strategies dynamically for each recipient, enabling the system to adapt its behavior based on the message context, such as the recipient's domain, the sender’s identity, message type, or assigned priority.
+Stalwart MTA provides a flexible framework for managing outbound email delivery. Messages sent to both local and external domains are processed through a [strategy-driven](/docs/mta/outbound/strategy) architecture that allows precise control over how, when, and where each message is delivered. This architecture evaluates delivery strategies dynamically for each recipient, enabling the system to adapt its behavior based on the message context, such as the recipient's domain, the sender’s identity, message type, or assigned priority.
 
 Through its delivery strategies, Stalwart can control every aspect of outbound delivery, including queue selection, retry policies, routing logic, connection parameters, and transport security enforcement. These strategies work together to ensure messages are handled according to defined policies while allowing per-recipient delivery decisions, independent retry logic, and conditional routing.
 

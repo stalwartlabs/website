@@ -4,11 +4,11 @@ sidebar_position: 9
 
 # AI Models
 
-Stalwart supports the integration of AI models, enabling advanced email processing capabilities. AI models, particularly Large Language Models (LLMs), are powerful tools that can analyze and interpret the content of emails to perform a variety of tasks. With the integration of AI, Stalwart can be configured to handle sophisticated operations such as [spam classification](/docs/spamfilter/llm), threat detection, [message categorization](/docs/sieve/llm), and more.
+Stalwart supports the integration of AI models for email processing. AI models, particularly Large Language Models (LLMs), can analyze and interpret email content to perform a range of tasks. With AI integration, Stalwart can be configured for operations such as [spam classification](/docs/spamfilter/llm), threat detection, and [message categorization](/docs/sieve/llm).
 
-Stalwart is designed to be flexible, allowing users to leverage cloud-based AI models from providers like OpenAI or Anthropic, or alternatively, access locally hosted models using solutions such as LocalAI. Any AI model that provides an OpenAI-compatible API can be seamlessly integrated into Stalwart, giving administrators the freedom to choose between cloud-based or on-premise AI infrastructure, depending on their needs and privacy requirements.
+Stalwart allows users to integrate cloud-based AI models from providers like OpenAI or Anthropic, or access locally hosted models using solutions such as LocalAI. Any AI model that exposes an OpenAI-compatible API can be integrated into Stalwart, so administrators can choose between cloud-based or on-premise AI infrastructure depending on their needs and privacy requirements.
 
-By integrating with these AI models, Stalwart enhances email security, streamlines email management, and improves overall performance, making it a robust solution for modern email environments.
+Through AI integration, Stalwart can improve email security, simplify email management, and perform more advanced message processing.
 
 :::tip Enterprise feature
 

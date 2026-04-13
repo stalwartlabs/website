@@ -22,7 +22,7 @@ Both sublinear term frequency scaling and L2 normalization are enabled by defaul
 
 The classifier is trained using the FTRL-Proximal optimizer, which exposes several hyperparameters that influence learning dynamics. The parameter α controls the base learning rate and determines how aggressively the model updates its weights in response to new samples. The parameter β stabilizes learning by smoothing adaptive learning rates over time. The L1 ratio and L2 ratio control the strength of L1 and L2 regularization respectively, influencing sparsity and weight magnitude.
 
-These settings interact in subtle ways and have a significant impact on convergence, stability, and generalization. For this reason, the default values have been chosen to provide robust behavior across a wide range of workloads. Modifying them is not recommended unless the reader has a solid background in machine learning and a clear understanding of the trade-offs involved.
+These settings interact in subtle ways and have a significant impact on convergence, stability, and generalization. For this reason, the default values have been chosen to provide stable behavior across a wide range of workloads. Modifying them is not recommended unless the reader has a solid background in machine learning and a clear understanding of the trade-offs involved.
 
 ## Configuration
 

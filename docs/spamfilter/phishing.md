@@ -6,7 +6,7 @@ sidebar_position: 8
 
 Phishing is a deceptive technique employed by cybercriminals to trick individuals into revealing sensitive information, such as passwords, credit card numbers, and other personal details. Typically, these attacks use counterfeit emails, websites, or messages that appear to be from legitimate sources, luring the unsuspecting user into providing their data. As cyber threats evolve, phishing attempts have become more sophisticated, sometimes making them challenging to distinguish from genuine communications.
 
-Stalwart recognizes the potential risks posed by phishing and is equipped with robust built-in mechanisms to detect and thwart such malicious attempts. The server analyzes various attributes of incoming emails, including embedded URLs, domain reputation, and email content patterns commonly associated with phishing schemes. By constantly updating its knowledge base and employing advanced algorithms, Stalwart can identify even the most subtle phishing attempts, ensuring users are protected from deceptive emails. Any suspected phishing email is flagged, allowing administrators and end-users to take appropriate precautions and prevent potential data breaches.
+Stalwart includes built-in mechanisms to detect phishing attempts. The server analyzes attributes of incoming emails, including embedded URLs, domain reputation, and email content patterns commonly associated with phishing. Combined with an up-to-date knowledge base, this lets Stalwart identify subtle phishing attempts. Any suspected phishing email is flagged, so administrators and end users can take appropriate precautions.
 
 ## URL analysis
 
@@ -22,7 +22,7 @@ Additionally, the phishing filter remains vigilant against URLs that might not b
 
 ### Phishing databases
 
-An important component of Stalwart's phishing filter is its reliance on comprehensive phishing databases. These databases collate and maintain lists of URLs identified as part of phishing campaigns, ensuring that the filter has an updated reference to compare against incoming emails. Two primary databases that the phishing filter consults are:
+An important component of Stalwart's phishing filter is its use of phishing databases. These databases maintain lists of URLs identified as part of phishing campaigns, giving the filter an up-to-date reference to compare against incoming emails. Two primary databases the phishing filter consults are:
 
 - **OpenPhish**: A community-driven platform that gathers, verifies, and shares phishing URLs. OpenPhish's extensive list is derived from various sources, including industry partners, voluntary contributors, and automated crawlers.
 - **PhishTank**: Operated by the cybersecurity company OpenDNS, PhishTank allows users to submit, verify, and share phishing URLs. It's a collaborative platform where the community actively participates in identifying and flagging phishing attempts.

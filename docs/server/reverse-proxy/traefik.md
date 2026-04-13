@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Traefik
 
-Traefik is a modern, dynamic reverse proxy and load balancer designed to deploy microservices with ease. It integrates seamlessly with major container orchestrators like Docker, Kubernetes, and others, automatically discovering the services and adjusting configurations accordingly. Traefik's dynamic nature, extensive integration capabilities, and robust feature set make it an ideal choice for managing and routing traffic to microservice applications.
+Traefik is a dynamic reverse proxy and load balancer designed for microservice deployments. It integrates with major container orchestrators like Docker and Kubernetes, automatically discovering services and adjusting configurations. Traefik's dynamic configuration and integration options make it well-suited to routing traffic to microservice applications.
 
 Stalwart supports Traefik, allowing you to take advantage of Traefik's capabilities to manage and route traffic efficiently to your email server. By using Traefik as a reverse proxy, you can ensure high availability, scalability, and security for your Stalwart. Additionally, Traefik’s support for the Proxy Protocol further enhances Stalwart’s ability to perform sender authentication and enforce security policies effectively.
 

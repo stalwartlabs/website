@@ -43,7 +43,7 @@ By carefully reviewing and disabling any unused network ports, you can significa
 
 Stalwartâ€™s HTTP listener plays a central role in enabling many of the server's modern capabilities. It is used to provide access to a range of services, including JMAP, WebDAV, management APIs, ACME certificate issuance, autoconfig/autodiscover protocols, `.well-known` resources, metrics endpoints, and OAuth-based authentication.
 
-While this broad functionality is powerful, it also means that the HTTP listener exposes multiple endpoints by default. In scenarios where you want to allow access to only a subset of these features (such as enabling JMAP but disabling WebDAV or public metrics access), you will need to define [HTTP Access Control rules](/docs/http/access-control).
+This broad functionality also means that the HTTP listener exposes multiple endpoints by default. In scenarios where you want to allow access to only a subset of these features (such as enabling JMAP but disabling WebDAV or public metrics access), you will need to define [HTTP Access Control rules](/docs/http/access-control).
 
 HTTP Access Control rules are logical expressions evaluated for every incoming HTTP request. These rules determine whether access to a particular URL should be granted, based on criteria such as the request path, method, source IP, authentication status, or other conditions. This provides fine-grained control over which HTTP endpoints are accessible and under what circumstances.
 
@@ -55,7 +55,7 @@ Taking the time to configure HTTP Access Control not only improves your serverâ€
 
 ## Understand administrator roles
 
-When Stalwart is launched for the first time, it automatically creates a [fall-back administrator account](/docs/auth/authorization/administrator#fallback-administrator). This account is designed to facilitate the **initial configuration** of the server and to act as an **emergency access mechanism** in case the external directory service becomes unavailable or misconfigured. The fall-back admin has **full, unrestricted access** to all server functionalities, making it a powerful but sensitive account.
+When Stalwart is launched for the first time, it automatically creates a [fall-back administrator account](/docs/auth/authorization/administrator#fallback-administrator). This account is designed to facilitate the **initial configuration** of the server and to act as an **emergency access mechanism** in case the external directory service becomes unavailable or misconfigured. The fall-back admin has **full, unrestricted access** to all server functionality, which makes it a sensitive account.
 
 While this account is essential during setup, it is [strongly recommended to disable the fall-back administrator](/docs/auth/authorization/administrator#best-practices) once the server is fully configured. Keeping it active unnecessarily increases the risk of unauthorized access or privilege escalation. The account should only be re-enabled when absolutely needed, such as during a critical recovery scenario.
 

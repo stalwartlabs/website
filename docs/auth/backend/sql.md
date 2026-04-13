@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # SQL Database
 
-Stalwart supports using popular SQL database systems such as mySQL, PostgreSQL, and SQLite as a directory server. This allows you to leverage an existing SQL database to handle tasks such as authentication, validating local accounts, and retrieving account-related information.
+Stalwart supports using SQL database systems such as MySQL, PostgreSQL, and SQLite as a directory server. This allows you to use an existing SQL database to handle tasks such as authentication, validating local accounts, and retrieving account-related information.
 
 ## Configuration
 

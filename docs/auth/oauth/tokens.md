@@ -6,7 +6,7 @@ sidebar_position: 3
 
 OAuth tokens are at the core of the OAuth 2.0 protocol, serving as the mechanism through which secure access to protected resources is granted. Instead of relying on user credentials such as usernames and passwords, OAuth tokens are issued to clients by the authorization server to allow access to specific resources for a limited period and scope. These tokens provide a more secure, flexible, and efficient way to manage access control across various applications and services.
 
-OAuth defines two primary types of tokens: **access tokens** and **refresh tokens**. Each plays a distinct role in the authentication and authorization process, ensuring both secure access and a streamlined user experience.
+OAuth defines two primary types of tokens: **access tokens** and **refresh tokens**. Each plays a distinct role in the authentication and authorization process.
 
 ## Access Tokens
 
@@ -18,7 +18,7 @@ Access tokens are issued with a defined scope, meaning they only grant access to
 
 ## Refresh Tokens
 
-Refresh tokens complement access tokens by allowing the client to request new access tokens without requiring the user to re-authenticate. When an access token expires, the client can present a valid refresh token to the authorization server, which will issue a new access token without requiring the user’s involvement. This enables a seamless user experience, where long-lived sessions or background processes can continue without requiring repeated logins.
+Refresh tokens complement access tokens by allowing the client to request new access tokens without requiring the user to re-authenticate. When an access token expires, the client can present a valid refresh token to the authorization server, which will issue a new access token without requiring the user’s involvement. This allows long-lived sessions or background processes to continue without repeated logins.
 
 Unlike access tokens, refresh tokens typically have a longer lifespan and are considered more sensitive because they allow the client to obtain new access tokens. Refresh tokens should be securely stored by the client and never shared or exposed to unauthorized parties. In cases where the refresh token is compromised, the attacker could potentially gain continuous access to the user's resources by requesting new access tokens.
 

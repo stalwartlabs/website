@@ -4,7 +4,7 @@ sidebar_position: 5
 
 # OpenID Connect
 
-Stalwart can be configured to authenticate users against a third-party **OpenID Connect (OIDC) provider**. This allows Stalwart to delegate user authentication to an external identity provider, integrating seamlessly with an existing identity management system. Common third-party OIDC providers include services like Google, Microsoft, or any OpenID Connect-compliant identity provider.
+Stalwart can be configured to authenticate users against a third-party **OpenID Connect (OIDC) provider**. This allows Stalwart to delegate user authentication to an external identity provider, integrating with an existing identity management system. Common third-party OIDC providers include services like Google, Microsoft, or any OpenID Connect-compliant identity provider.
 
 However, as Stalwart is primarily a **mail server** rather than a traditional web application, there are important distinctions in how it handles the OIDC authentication process. Specifically, Stalwart expects to receive **access tokens** directly via the **OAUTHBEARER SASL mechanism** and does not initiate the OIDC authentication flow itself. As a result, it relies on external means to retrieve user identity information, since it does not directly handle the **ID token** issued by the OIDC server.
 

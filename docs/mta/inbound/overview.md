@@ -15,7 +15,7 @@ In Stalwart, a "session" refers to a single incoming SMTP connection. Each SMTP 
 
 The configuration file of Stalwart contains dedicated sections for each of these stages. This makes it possible to apply specific settings or behaviors for each individual stage of an SMTP session.
 
-Most of these stages support the use of [Sieve scripts](/docs/sieve/overview). Sieve is a language designed specifically for filtering email messages. By using Sieve scripts in different stages of an SMTP session, it's possible to create custom filters that can reject, alter, or reroute incoming messages based on a wide range of criteria. Sieve scripts can also modify the contents of incoming messages, such as changing headers or appending information to the body of an email. This flexibility makes Sieve an incredibly powerful tool for managing and customizing the behavior of an SMTP server.
+Most of these stages support the use of [Sieve scripts](/docs/sieve/overview). Sieve is a language designed specifically for filtering email messages. By using Sieve scripts in different stages of an SMTP session, it's possible to create custom filters that can reject, alter, or reroute incoming messages based on a wide range of criteria. Sieve scripts can also modify the contents of incoming messages, such as changing headers or appending information to the body of an email. This makes Sieve a flexible tool for managing and customizing the behavior of an SMTP server.
 
 ## Limits
 

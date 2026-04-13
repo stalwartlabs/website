@@ -6,7 +6,7 @@ sidebar_position: 2
 
 The command-line interface (CLI) allows system administrators to easily import entire JMAP accounts. Importing a JMAP account is not limited to just emails, it also includes folders, identities, Sieve scripts, and vacation responses. This useful when migrating from previous versions of Stalwart or moving accounts from third-party JMAP servers. To facilitate this process, the CLI tool offers also an [export command](/docs/management/cli/export) which extracts all the account data from the original server.
 
-Once the export account command has been executed and the account data secured, the `import account` command can be used on the destination server. The imported account data is then populated into the respective user's account, ensuring a seamless transition between servers or versions. 
+Once the export account command has been executed and the account data secured, the `import account` command can be used on the destination server. The imported account data is then populated into the user's account, allowing migration between servers or versions. 
 
 The CLI command used to import mailboxes into Stalwart is ``import account`` and accepts the following options:
 

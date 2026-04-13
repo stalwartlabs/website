@@ -4,11 +4,11 @@ sidebar_position: 5
 
 # Webhooks 
 
-Webhooks are a powerful and flexible way to receive real-time notifications about various events in your system. By configuring webhooks, you can set up HTTP callbacks that are triggered when specific events occur, allowing your applications to respond immediately and automatically to important occurrences.
+Webhooks are a flexible way to receive real-time notifications about events in your system. By configuring webhooks, you can set up HTTP callbacks that are triggered when specific events occur, allowing your applications to respond immediately and automatically to important occurrences.
 
 Stalwart offers built-in support for webhooks, enabling real-time notifications for a variety of events. This capability allows administrators to set up HTTP callbacks that are triggered by specific occurrences, facilitating immediate and automated responses to critical events within the email system. For example, you can configure webhooks to notify you when an email message is received or delivered. This ensures that you are promptly informed about the flow of emails through your server. Similarly, notifications can be set up for user authentication events, alerting you whenever a user successfully logs in or fails to authenticate, which is crucial for security monitoring.
 
-Overall, by leveraging the webhook functionality in Stalwart, you can significantly enhance the automation and responsiveness of your email infrastructure, making it easier to manage and monitor various aspects of email activity and security.
+Using the webhook functionality in Stalwart, you can automate responses and monitor email activity and security events across your infrastructure.
 
 ## Configuration
 

@@ -8,7 +8,7 @@ Transport Layer Security (TLS) is a widely adopted protocol designed to facilita
 
 Stalwart supports TLS encryption to safeguard email communications, offering flexibility in certificate management to meet various operational needs. Administrators have the option to configure TLS using manually provided certificates, suitable for organizations with specific certificate providers or policies. This traditional method involves obtaining a TLS certificate from a trusted Certificate Authority (CA) and configuring Stalwart to use this certificate for encrypting connections.
 
-Additionally, Stalwart facilitates the automatic procurement of TLS certificates through the Automated Certificate Management Environment (ACME) protocol. This feature enables seamless integration with ACME-compliant providers, such as Let's Encrypt, which offer free and automated certificate issuance and renewal. This automation significantly simplifies the process of enabling and maintaining TLS encryption, making it more accessible and manageable, especially for small to medium-sized organizations.
+Stalwart also supports automatic issuance of TLS certificates through the Automated Certificate Management Environment (ACME) protocol. This allows integration with ACME-compliant providers such as Let's Encrypt, which offer automated certificate issuance and renewal. This automation simplifies enabling and maintaining TLS encryption, especially for small to medium-sized organizations.
 
 ## Settings
 
@@ -28,7 +28,7 @@ The following TLS versions are supported:
 * `TLSv1.3`
 * `TLSv1.2`
 
-TLS 1.1 is not supported due to its inherent security vulnerabilities and its subsequent deprecation by major standards bodies and browsers. By focusing on more modern and secure protocols, Stalwart ensures robust encryption and the utmost security for its users' communications.
+TLS 1.1 is not supported due to its known security vulnerabilities and its subsequent deprecation by major standards bodies and browsers. By focusing on more modern protocols, Stalwart provides strong encryption for its users' communications.
 
 ## Supported cipher suites
 

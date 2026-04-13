@@ -10,7 +10,7 @@ SMTP is the protocol used for the transmission of electronic mail across IP netw
 
 Stalwart's MTA is a high-performance, standards-compliant SMTP server designed to serve both inbound and outbound email flows. It includes native support for email authentication standards such as DMARC, DKIM, SPF, and ARC, ensuring message integrity and domain validation. To secure message transport, Stalwart implements DANE, MTA-STS, and SMTP TLS reporting, enabling secure and verifiable transmission over TLS.
 
-Beyond authentication and transport security, Stalwart offers comprehensive mechanisms for managing incoming traffic. These include inbound connection throttling, advanced filtering capabilities using configurable rules, support for Sieve scripting, MTA-level hooks, and milter integration.
+Beyond authentication and transport security, Stalwart offers mechanisms for managing incoming traffic: inbound connection throttling, configurable filtering rules, support for Sieve scripting, MTA-level hooks, and milter integration.
 
 For outbound delivery, Stalwart features a distributed virtual queue architecture with support for delayed and priority delivery, delivery quotas, routing rules, and sender- or domain-specific throttling. It also provides mechanisms for envelope rewriting and message modification, allowing administrators to adapt message content and routing to meet deployment-specific requirements.
 

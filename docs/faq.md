@@ -102,14 +102,14 @@ Once you have enabled encryption at rest, it is recommended that you send a test
 
 ### What makes Stalwart's Spam filter different from other solutions?
 
-Stalwart's spam filter is built-in and doesn't require any third-party software. It's designed for speed and efficiency, keeping messages within the server during the filtering process. It also offers comprehensive filtering rules on par with popular solutions like RSpamd and SpamAssassin.
+Stalwart's spam filter is built-in and doesn't require any third-party software. It's designed for speed and efficiency, keeping messages within the server during the filtering process. It offers filtering rules on par with popular solutions like RSpamd and SpamAssassin.
 
 ### How does the spam classifier work?
 
 Our spam classifier uses the FTRL-Proximal algorithm and feature hashing. It automatically trains itself, ensuring improved accuracy over time. 
 
 ### How does Stalwart handle phishing attempts?
-Stalwart offers robust phishing protection by checking against databases like OpenPhish and PhishTank, identifying homographic URL attacks, sender spoofing, and other deceptive techniques. It also detects and flags suspicious URL patterns.
+Stalwart provides phishing protection by checking against databases like OpenPhish and PhishTank, identifying homographic URL attacks, sender spoofing, and other deceptive techniques. It also detects and flags suspicious URL patterns.
 
 ### What are DNSBLs, and why are they important?
 

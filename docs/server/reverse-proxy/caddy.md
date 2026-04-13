@@ -4,13 +4,13 @@ sidebar_position: 3
 
 # Caddy
 
-Caddy is an open-source, HTTP/2-enabled web server that is renowned for its simplicity, flexibility, and powerful automatic HTTPS features. It is designed to make setting up web servers quick and easy, with an emphasis on security and performance. Caddy is highly configurable, supporting a wide range of use cases, from simple static file serving to complex reverse proxy setups, all while providing automatic TLS certificate management.
+Caddy is an open-source, HTTP/2-enabled web server known for its simplicity, flexibility, and automatic HTTPS. It is designed to make setting up web servers quick, with an emphasis on security and performance. Caddy is highly configurable, supporting a wide range of use cases, from static file serving to reverse proxy setups, while providing automatic TLS certificate management.
 
-Stalwart supports Caddy, allowing you to leverage Caddy's robust feature set to manage and route traffic to your email server seamlessly. Using Caddy as a reverse proxy, you can benefit from its automatic HTTPS configuration, easy-to-use syntax, and powerful performance enhancements to ensure that your Stalwart operates efficiently and securely.
+Stalwart supports Caddy, allowing you to use Caddy to manage and route traffic to your email server. Using Caddy as a reverse proxy, you benefit from its automatic HTTPS configuration and simple configuration syntax.
 
 ## Note on Layer 4 support
 
-Caddy, while being a powerful and easy-to-use web server and reverse proxy, does not natively support raw TCP streams (layer 4) and consequently the [Proxy Protocol](/docs/server/reverse-proxy/proxy-protocol). This protocol is typically used to pass client connection information such as IP addresses and TLS connection statuses through multiple layers of proxies. To achieve this functionality, you would need to integrate [HAProxy](/docs/server/reverse-proxy/haproxy) or [NGINX](/docs/server/reverse-proxy/nginx), which can handle the Proxy Protocol and forward traffic to Caddy for further processing.
+Caddy, while being an easy-to-use web server and reverse proxy, does not natively support raw TCP streams (layer 4) and consequently the [Proxy Protocol](/docs/server/reverse-proxy/proxy-protocol). This protocol is typically used to pass client connection information such as IP addresses and TLS connection statuses through multiple layers of proxies. To achieve this functionality, you would need to integrate [HAProxy](/docs/server/reverse-proxy/haproxy) or [NGINX](/docs/server/reverse-proxy/nginx), which can handle the Proxy Protocol and forward traffic to Caddy for further processing.
 
 For those looking to enable Layer 4 support directly within Caddy, there is a community-contributed plugin called caddy-l4. This plugin is a listener wrapper for Caddy that adds support for Layer 4 forwarding and Proxy headers on new connections, allowing Caddy to handle the Proxy Protocol directly without the need for HAProxy.
 

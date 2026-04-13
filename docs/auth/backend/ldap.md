@@ -6,11 +6,11 @@ sidebar_position: 4
 
 LDAP (Lightweight Directory Access Protocol) is an open, vendor-neutral protocol used to access and manage directory information services. It is commonly employed to centralize user authentication and authorization data across multiple systems and applications. LDAP directories, such as OpenLDAP, Microsoft Active Directory, and others, store user credentials and metadata in a structured, hierarchical format that can be queried efficiently.
 
-Stalwart supports integration with LDAP directories for user authentication. By configuring Stalwart to use an LDAP backend, administrators can leverage existing directory infrastructure to manage user accounts, passwords, and group policies centrally. This allows seamless authentication using credentials stored in the LDAP directory, improving security, simplifying user management, and enabling single sign-on (SSO) capabilities in enterprise environments. Stalwart is compatible with a wide range of LDAP-compliant servers, including OpenLDAP, Active Directory, and other RFC 4511-conforming implementations.
+Stalwart supports integration with LDAP directories for user authentication. By configuring Stalwart to use an LDAP backend, administrators can use existing directory infrastructure to manage user accounts, passwords, and group policies centrally. This allows authentication using credentials stored in the LDAP directory, improves security, simplifies user management, and enables single sign-on (SSO) in enterprise environments. Stalwart is compatible with a wide range of LDAP-compliant servers, including OpenLDAP, Active Directory, and other RFC 4511-conforming implementations.
 
 ## Connection details
 
-To enable LDAP authentication in Stalwart, the core requirement is specifying the LDAP server URL. This URL defines how and where the server connects to the directory service. A basic example would be `ldap://localhost:3893`, which instructs Stalwart to connect to an LDAP server running on localhost using the standard non-encrypted LDAP protocol on port 3893.
+To enable LDAP authentication in Stalwart, the core requirement is specifying the LDAP server URL. This URL defines how and where the server connects to the directory service. A basic example would be `ldap://localhost:389`, which instructs Stalwart to connect to an LDAP server running on localhost using the standard non-encrypted LDAP protocol on port 389.
 
 All connection details for the LDAP directory are specified under the `directory.<name>` key in the configuration file with the following attributes:
 
@@ -25,7 +25,7 @@ For example,
 ```toml
 [directory."ldap"]
 type = "ldap"
-url = "ldap://localhost:3893"
+url = "ldap://localhost:389"
 timeout = "30s"
 
 [directory."ldap".tls]

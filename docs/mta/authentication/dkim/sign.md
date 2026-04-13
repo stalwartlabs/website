@@ -7,7 +7,7 @@ sidebar_position: 2
 Stalwart can be configured to automatically sign outgoing messages with one or multiple signatures using any of the following algorithms:
 
 - `ED25519-SHA256`: This algorithm uses the Edwards-Curve Digital Signature Algorithm, which is known for its strong security and efficiency in processing.
-- `RSA-SHA256`: Provides robust security by combining RSA encryption with the SHA-256 hashing algorithm, making it suitable for modern security demands.
+- `RSA-SHA256`: Combines RSA with the SHA-256 hashing algorithm. Suitable for modern security requirements.
 - `RSA-SHA1`: Although supported, it is less secure than RSA-SHA256 and is not recommended for use. RSA-SHA1 can still be used for legacy systems that require compatibility.
 
 When using RSA-based DKIM signatures, it is recommended that the key size is at least 2048 bits. RSA keys smaller than 1024 bits are more susceptible to cryptographic attacks, thereby compromising the security integrity of the email verification process.

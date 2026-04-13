@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Overview
 
-The spam filter is enabled by default in Stalwart, providing a robust defense against unwanted emails. However, administrators can disable it globally by setting the `spam-filter.enable` setting to `false`. Alternatively, it can be disabled dynamically using an [expression](/docs/configuration/expressions/overview) at the [SMTP DATA](/docs/mta/inbound/data#spam-filtering) stage.
+The spam filter is enabled by default in Stalwart. Administrators can disable it globally by setting the `spam-filter.enable` setting to `false`. Alternatively, it can be disabled dynamically using an [expression](/docs/configuration/expressions/overview) at the [SMTP DATA](/docs/mta/inbound/data#spam-filtering) stage.
 
 ## Headers
 
@@ -26,7 +26,7 @@ By setting `spam-filter.header.status.enable` to `true`, the header will be adde
 
 ### X-Spam-Result
 
-The `spam-filter.header.result.enable` and `spam-filter.header.result.name` settings controls the addition of the `X-Spam-Result` header to emails as well as the name of the header. The `X-Spam-Result` header provides a detailed breakdown of the email's analysis, listing each tag applied by the spam filter and its associated score. This gives users a comprehensive view of why an email received its final spam score.
+The `spam-filter.header.result.enable` and `spam-filter.header.result.name` settings control the addition of the `X-Spam-Result` header to emails as well as the name of the header. The `X-Spam-Result` header provides a detailed breakdown of the email's analysis, listing each tag applied by the spam filter and its associated score. This lets users see why an email received its final spam score.
 
 For example:
 

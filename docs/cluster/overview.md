@@ -4,9 +4,9 @@ sidebar_position: 1
 
 # Overview
 
-Clustering and High Availability (HA) are fundamental components of any robust, scalable infrastructure. Clustering refers to the practice of connecting multiple servers to work together as a single system, enabling load distribution, redundancy, and scalability. High Availability ensures that the system continues to operate even when individual components fail, minimizing downtime and maintaining service continuity.
+Clustering and High Availability (HA) are fundamental components of scalable infrastructure. Clustering refers to connecting multiple servers to work together as a single system, enabling load distribution, redundancy, and scalability. High Availability ensures that the system continues to operate even when individual components fail, minimizing downtime and maintaining service continuity.
 
-Stalwart is built from the ground up to support clustering and high availability natively. Whether you're running a lightweight mail setup on a single node or deploying across thousands of nodes in a high-demand environment, Stalwart is designed to scale seamlessly. It provides automatic fault recovery, tolerates hardware and software failures, and maintains operations with minimal impact and no manual intervention.
+Stalwart supports clustering and high availability natively. Whether you're running a lightweight mail setup on a single node or deploying across thousands of nodes in a high-demand environment, Stalwart is designed to scale. It provides automatic fault recovery, tolerates hardware and software failures, and maintains operations with minimal impact and no manual intervention.
 
 Unlike many traditional mail servers, Stalwart does not rely on external directors or proxy servers to route traffic or manage roles. Any node within a Stalwart cluster is capable of handling IMAP, SMTP, JMAP, or WebDAV requests independently. This design simplifies deployment, reduces single points of failure, and improves horizontal scalability.
 

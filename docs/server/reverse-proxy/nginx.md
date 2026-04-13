@@ -4,9 +4,9 @@ sidebar_position: 5
 
 # NGINX
 
-NGINX is a versatile, high-performance web server that can also function as a reverse proxy, load balancer, and HTTP cache. Known for its stability, rich feature set, and low resource consumption, NGINX is widely used to enhance the performance and reliability of web and application services. Its robust architecture and flexible configuration options make it an excellent choice for managing and routing traffic in a variety of environments.
+NGINX is a high-performance web server that can also function as a reverse proxy, load balancer, and HTTP cache. Known for its stability, feature set, and low resource consumption, NGINX is widely used to improve the performance and reliability of web and application services. Its configuration options make it a good fit for managing and routing traffic in a variety of environments.
 
-Stalwart supports NGINX, enabling you to leverage NGINX’s capabilities to efficiently manage and route email traffic. By using NGINX as a reverse proxy for Stalwart, you can ensure high availability, scalability, and enhanced security for your email infrastructure. NGINX’s support for the Proxy Protocol further enhances Stalwart’s ability to receive crucial client connection details, such as the client’s IP address and TLS connection status, which are essential for accurate sender authentication and effective security policy enforcement.
+Stalwart supports NGINX, so you can use NGINX to manage and route email traffic. Using NGINX as a reverse proxy for Stalwart provides high availability, scalability, and additional security for your email infrastructure. NGINX’s support for the Proxy Protocol lets Stalwart receive client connection details such as the client’s IP address and TLS connection status, which are required for accurate sender authentication and security policy enforcement.
 
 ## Configuration
 

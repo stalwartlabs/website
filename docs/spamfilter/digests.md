@@ -4,7 +4,7 @@ sidebar_position: 9
 
 # Collaborative Digests
 
-In the evolving world of cyber threats, collaborative spam detection emerges as one of the most potent tools in the fight against unsolicited emails. By harnessing the power of distributed networks and collective intelligence, collaborative spam detection provides a dynamic and ever-updating defense mechanism against spam.
+Collaborative spam detection is one of the more effective tools against unsolicited emails. By using distributed networks and shared reputation data, collaborative spam detection provides a dynamic and continuously-updated defense against spam.
 
 Collaborative spam detection and filtering networks, like Pyzor, Razor, and DCC, primarily use message digests or hashes. When a user identifies an email as spam, these systems generate a unique hash or digest of that email. This hash is then shared across the network. When another user receives an email, its hash is compared against the repository of spam hashes. If a match is found, the email is flagged as spam.
 

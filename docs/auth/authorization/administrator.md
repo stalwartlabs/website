@@ -25,7 +25,7 @@ While Stalwart relies on regular accounts with specific permissions for day-to-d
 
 When managing administrative access in Stalwart, it is essential to follow best practices to ensure the security and integrity of the system. Some key recommendations include:
 
-- **Use regular accounts with granular permissions**: Instead of relying on a single, all-powerful account, create multiple accounts with only the necessary management permissions for each administrator.
+- **Use regular accounts with granular permissions**: Instead of relying on a single account with all permissions, create multiple accounts with only the necessary management permissions for each administrator.
 - **Restrict use of the fallback administrator**: This account should only be used for initial setup or emergencies. Once regular accounts are configured, the fallback administrator should be set aside and not used for daily tasks.
 - **Assign roles to simplify permission management**: Use roles to group permissions and assign them to individuals, ensuring consistent access control across different users.
 
@@ -33,7 +33,7 @@ By adhering to these practices, administrators can maintain a secure and managea
 
 ### Configuration
 
-The username for the fallback administrator is specified in the `authentication.fallback-admin.user` setting, while the password is defined in `authentication.fallback-admin.secret`. This account should be used sparingly and only in situations where normal administrative access through the primary authentication directory is compromised. Due to its powerful capabilities and bypass nature, it is crucial to secure the fallback administrator credentials with utmost care, applying the same stringent security measures as for primary administrator accounts to prevent unauthorized access.
+The username for the fallback administrator is specified in the `authentication.fallback-admin.user` setting, while the password is defined in `authentication.fallback-admin.secret`. This account should be used sparingly and only in situations where normal administrative access through the primary authentication directory is compromised. Due to its broad capabilities and bypass nature, the fallback administrator credentials must be secured carefully, with the same security measures as for primary administrator accounts, to prevent unauthorized access.
 
 Example:
 
@@ -45,7 +45,7 @@ secret = "$6$MM1wz7Y8.L8O4eN0$ti3/072t3T5SJ6xryK45RvpW38dW2hSH86cBcV0XHtgnBYCCAF
 
 ## Master User
 
-The master user is a special account that is granted full access to all mailboxes on the server. This account is typically used for system maintenance and monitoring purposes, allowing administrators to perform tasks that require access to all mailboxes. The master user is a powerful tool that should be used judiciously and only for legitimate system administration tasks.
+The master user is a special account that is granted full access to all mailboxes on the server. This account is typically used for system maintenance and monitoring purposes, allowing administrators to perform tasks that require access to all mailboxes. The master user has very broad access and should be used judiciously, only for legitimate system administration tasks.
 
 The username for the master user is specified in the `authentication.master.user` setting, while the password is defined in `authentication.master.secret`. The master user account should be secured with a strong, unique password to prevent unauthorized access. Example:
 

@@ -15,4 +15,4 @@ Stalwart offers several mechanisms to facilitate the collection of logs, traces,
 - [Alerts](/docs/telemetry/alerts): A system for defining and triggering alerts based on specific conditions or thresholds. Alerts can notify administrators of critical issues, performance degradations, or security incidents, enabling rapid response and issue resolution.
 - [History](/docs/telemetry/history): A record of past events, activities and metrics within the system. By maintaining a history of events, administrators can review past actions, diagnose issues, and analyze trends over time.
 
-By leveraging these telemetry mechanisms, administrators can gain valuable insights into the operational state of Stalwart, quickly identify and resolve issues, and optimize performance for better user experiences.
+These telemetry mechanisms let administrators observe the operational state of Stalwart, identify and resolve issues, and tune performance.

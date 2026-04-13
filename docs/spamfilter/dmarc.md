@@ -4,7 +4,7 @@ sidebar_position: 7
 
 # DMARC Analysis
 
-Ensuring the authenticity and integrity of incoming emails is paramount in modern email systems, given the prevalence of phishing and spoofing attacks. Stalwart incorporates a comprehensive mechanism to validate the authenticity of emails using four e-mail authentication standards: DMARC (Domain-based Message Authentication, Reporting, and Conformance), SPF (Sender Policy Framework), DKIM (DomainKeys Identified Mail), and ARC (Authenticated Received Chain).
+Ensuring the authenticity and integrity of incoming emails is important in modern email systems, given the prevalence of phishing and spoofing attacks. Stalwart validates the authenticity of emails using four email authentication standards: DMARC (Domain-based Message Authentication, Reporting, and Conformance), SPF (Sender Policy Framework), DKIM (DomainKeys Identified Mail), and ARC (Authenticated Received Chain).
 
 For every incoming message, the server performs the following analyses:
 

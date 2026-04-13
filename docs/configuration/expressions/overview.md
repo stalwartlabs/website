@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Overview
 
-Expressions in Stalwart provide a powerful, flexible, and dynamic way to configure and control various aspects of the mail server based on context. These expressions enable administrators to define conditional logic that evaluates variables, manipulates data, and returns results in the form of booleans, strings, numbers, or arrays. Think of expressions as small programs that evaluate conditions and produce results. These results can control various aspects of the mail server's behavior, from deciding whether to accept connections to determining how to route messages.
+Expressions in Stalwart provide a flexible, dynamic way to configure and control various aspects of the mail server based on context. These expressions enable administrators to define conditional logic that evaluates variables, manipulates data, and returns results in the form of booleans, strings, numbers, or arrays. Think of expressions as small programs that evaluate conditions and produce results. These results can control various aspects of the mail server's behavior, from deciding whether to accept connections to determining how to route messages.
 
 Stalwart compiles these expressions into optimized bytecode, ensuring that they are executed with high performance and minimal memory usage. Expressions are used extensively across the server’s configuration, enabling precise customization for routing, authentication, spam filtering, and more.
 
@@ -73,7 +73,7 @@ In this example, the `chunking` setting is assigned based on the condition that 
 
 ### Functions
 
-[Functions](/docs/configuration/expressions/functions) provide powerful capabilities for manipulating values. Some common functions include:
+[Functions](/docs/configuration/expressions/functions) provide additional ways to manipulate values. Some common functions include:
 
 - `starts_with(string, prefix)`: Checks if a string starts with a given prefix
 - `contains(array, value)`: Checks if an array contains a specific value

@@ -12,7 +12,7 @@ The quota system in Stalwart encompasses several types, most notably disk usage 
 
 Stalwart supports disk usage quotas that define the maximum amount of disk space an account or tenant may consume. These quotas can be applied globally or configured individually per account or [tenant](/docs/auth/authorization/tenants#quotas).
 
-Disk usage quotas are typically defined in the directory from which users are authenticated, ensuring that quota policies are integrated into existing account management systems. This allows organizations to maintain consistency across authentication sources, such as LDAP or SQL directories, while enforcing storage limits seamlessly.
+Disk usage quotas are typically defined in the directory from which users are authenticated, ensuring that quota policies are integrated into existing account management systems. This allows organizations to maintain consistency across authentication sources such as LDAP or SQL directories while enforcing storage limits.
 
 Administrators may also override these quota settings dynamically using the **WebAdmin interface** or the **REST API**, allowing on-demand adjustments without requiring changes to the underlying directory configuration. This capability is particularly useful in environments where user storage requirements vary or where temporary quota increases are needed for administrative or operational reasons.
 

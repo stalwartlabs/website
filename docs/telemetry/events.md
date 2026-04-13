@@ -443,8 +443,8 @@ The following are the event types that Stalwart captures along with their defaul
 |`security.scan-ban`|Banned due to scan|`INFO`|
 |`security.unauthorized`|Unauthorized access|`INFO`|
 |`server.licensing`|Server licensing event|`INFO`|
-|`server.shutdown`|Shutting down Stalwart Server v0.15.0|`INFO`|
-|`server.startup`|Starting Stalwart Server v0.15.0|`INFO`|
+|`server.shutdown`|Shutting down Stalwart Server|`INFO`|
+|`server.startup`|Starting Stalwart Server|`INFO`|
 |`server.startup-error`|Server startup error|`ERROR`|
 |`server.thread-error`|Server thread error|`ERROR`|
 |`sieve.action-accept`|Sieve action: Accept|`DEBUG`|

@@ -8,7 +8,7 @@ sidebar_position: 1
 
 While coordination enables Stalwart nodes to exchange internal updates and work together as a unified system, orchestration ensures that these nodes are correctly scheduled, restarted when they fail, and scaled up or down according to demand. It’s about maintaining operational continuity and elasticity in changing environments.
 
-Stalwart is designed to run seamlessly in a variety of modern orchestration platforms, including **Kubernetes**, **Apache Mesos**, **Docker Swarm**, and **Consul**. These platforms each provide mechanisms for automating deployment, managing service discovery, monitoring health, and maintaining high availability across clusters.
+Stalwart is designed to run in a variety of orchestration platforms, including **Kubernetes**, **Apache Mesos**, **Docker Swarm**, and **Consul**. These platforms each provide mechanisms for automating deployment, managing service discovery, monitoring health, and maintaining high availability across clusters.
 
 - [Kubernetes](/docs/cluster/orchestration/kubernetes): is a widely adopted container orchestration system that automates the deployment and scaling of containerized applications across clusters of machines.
 - [Apache Mesos](/docs/cluster/orchestration/apache-mesos): is a distributed systems kernel that abstracts CPU, memory, storage, and other resources, allowing applications like Stalwart to be run in a highly elastic environment.

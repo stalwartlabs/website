@@ -19,11 +19,11 @@ This feature is available exclusively in the [Enterprise Edition](/docs/server/e
 
 ## Caveats
 
-While integrating LLMs into the Stalwart’s spam filtering system offers powerful capabilities for detecting unsolicited and harmful emails, it is important to consider the performance and cost implications, especially when processing a high volume of incoming messages.
+While integrating LLMs into Stalwart’s spam filtering system can improve detection of unsolicited and harmful emails, it is important to consider the performance and cost implications, especially when processing a high volume of incoming messages.
 
 ### Performance Considerations
 
-When self-hosting AI models, the performance of the system heavily depends on the hardware used. Without access to powerful hardware, especially GPUs (Graphics Processing Units) designed for machine learning tasks, running LLMs can introduce significant delays in processing each email. Passing the subject and body of every incoming message through the AI model requires substantial computational resources, and using only CPU-based processing can slow down the email intake times considerably. This latency may become problematic in environments with high traffic, where maintaining prompt email delivery is critical. Therefore, organizations opting for self-hosted models should ensure they have sufficient hardware, preferably with GPU acceleration, to avoid bottlenecks in their email processing workflow.
+When self-hosting AI models, the performance of the system heavily depends on the hardware used. Without dedicated hardware, especially GPUs (Graphics Processing Units) designed for machine learning tasks, running LLMs can introduce significant delays in processing each email. Passing the subject and body of every incoming message through the AI model requires substantial computational resources, and using only CPU-based processing can slow down the email intake times considerably. This latency may become problematic in environments with high traffic, where maintaining prompt email delivery is critical. Therefore, organizations opting for self-hosted models should ensure they have sufficient hardware, preferably with GPU acceleration, to avoid bottlenecks in their email processing workflow.
 
 ### Cost Implications
 

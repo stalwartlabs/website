@@ -21,7 +21,7 @@ Common use cases for virtual queues include:
 - **Preventing control traffic** (e.g., Delivery Status Notifications, DMARC aggregate reports, or TLS failure reports) from interfering with the delivery of regular user messages by placing them in low-priority or throttled queues.
 - **Implementing custom retry policies** for specific domains or types of content.
 
-Each message recipient is assigned to a virtual queue based on the evaluation of the [scheduling strategy](/docs/mta/outbound/schedule), which can dynamically select a queue using message metadata and delivery context. This allows administrators to build powerful, context-aware queueing logic that adapts to system demands and operational policies.
+Each message recipient is assigned to a virtual queue based on the evaluation of the [scheduling strategy](/docs/mta/outbound/schedule), which can dynamically select a queue using message metadata and delivery context. This allows administrators to build context-aware queueing logic that adapts to system demands and operational policies.
 
 Virtual queues are central to Stalwart’s approach to flexible and scalable message delivery, enabling high degrees of customization while maintaining predictable resource usage.
 
