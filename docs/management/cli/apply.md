@@ -562,6 +562,7 @@ apply:
 
 ## See also
 
+* [Exporting server state](./snapshot.md) for the inverse operation (generating an apply plan from a live deployment).
 * [Overview](./overview.md) for installation and connection setup.
 * [Exploring the schema](./describe.md) to discover what objects, fields, and filters are available.
 * [Creating objects](./create.md) and [Updating objects](./update.md) for the single-shot equivalents.

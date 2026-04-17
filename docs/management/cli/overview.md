@@ -19,6 +19,7 @@ The tool is **schema-driven**: on first use it downloads (and caches) a JSON sch
 | Modify an existing object (or singleton) | `update` | [Updating objects](./update.md) |
 | Destroy one or more objects | `delete` | [Removing objects](./delete.md) |
 | Apply a bulk plan from a JSON file | `apply` | [Declarative bulk operations](./apply.md) |
+| Export live server state as an apply plan | `snapshot` | [Exporting server state](./snapshot.md) |
 
 ## Installation
 
