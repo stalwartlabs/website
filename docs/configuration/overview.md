@@ -4,96 +4,34 @@ sidebar_position: 1
 
 # Overview
 
-Stalwart uses the [TOML](https://toml.io/en/) format for its configuration. TOML, short for Tom's Obvious, Minimal Language, is a configuration file format that is easy to read due to its clear semantics. It is designed for unambiguous parsing, allowing both humans and machines to easily understand its structure. TOML files organize configuration into key-value pairs, tables, arrays, and nested structures, making it versatile for a wide range of applications. This format ensures that the Stalwart's configuration is both accessible and maintainable, facilitating straightforward setup and adjustments.
+Stalwart is configured through a small startup file called `config.json` and a database that holds everything else. When the server starts, it reads `config.json` to learn where the database is, connects to it, and loads the rest of its configuration from there. Every setting (domains, accounts, TLS certificates, SMTP rules, rate limits, and so on) lives in that database as a structured object.
 
-A key aspect of Stalwart's configuration is the ability to use either [static](/docs/category/values) values or [dynamic](/docs/configuration/expressions/values) ones. Static values are straightforward - they're values that you directly specify in the configuration and that don't change. Dynamic values, on the other hand, use [expressions](/docs/configuration/expressions/overview) to determine the final value at runtime. This means that the actual value can change depending on a variety of factors such as user input, system conditions, or other variables. This can be extremely useful for creating flexible configurations that can adapt to different scenarios or conditions without needing to be manually updated.
+Those objects are not edited by hand. The server exposes them over a JMAP API, and two tools make that API easy to use:
 
-In the Stalwart configuration file, settings may expect [values](/docs/category/values) in the form of strings, integers, sizes, booleans, IP addresses, durations, rates, lookup paths, or arrays that contain any of these types. Some settings support [expressions](/docs/configuration/expressions/overview) that can be used to dynamically determine the value of the setting at runtime. 
+The [WebUI](/docs/management/webui) is the browser-based administration console. It includes a setup wizard for first-time installations and forms for every configurable object. Most operators only ever need this.
 
-To specify the configuration for Stalwart, users must provide the path to the TOML configuration file. This is accomplished via the `--config` argument when launching the server.
+The [CLI](/docs/management/cli) (`stalwart-cli`) calls the same JMAP API from the command line. It is the right tool for scripting, automation, and declarative deployments on platforms such as NixOS, Ansible or Terraform.
 
-## Local and database settings
+This arrangement differs from the traditional model of a Unix daemon driven by a large configuration file. The trade-off is that changes take effect immediately across every node in a cluster, every setting is validated before it is saved, and backing up or cloning a deployment becomes a single operation against the API.
 
-In addition to storing configurations in a local TOML file, Stalwart supports storing configuration settings in any of the supported [data stores](/docs/storage/data). This is particularly useful in distributed environments, allowing all servers within a cluster to share the same configuration settings.
+## Configuration file
 
-To accommodate database storage, the hierarchical TOML structure is flattened into a series of keys. This process involves converting each configuration option into a unique key-value pair, with the key reflecting the structure of the original TOML file. For example, consider the following TOML configuration:
+The path to `config.json` is passed on the command line with `--config`:
 
-```toml
-[server.listener."smtp"]
-bind = ["127.0.0.1:25", "192.0.2.1:25"]
-tls.implicit = false
+```sh
+stalwart --config /etc/stalwart/config.json
 ```
 
-In the database, this configuration would be represented as:
+The file contains a single [DataStore](/docs/ref/object/data-store) object telling Stalwart where its database lives. A minimal file for a single-node installation backed by RocksDB looks like this:
 
-```
-server.listener.smtp.bind.0 = "127.0.0.1:25"
-server.listener.smtp.bind.1 = "192.0.2.1:25"
-server.listener.smtp.tls.implicit = false
+```json
+{"@type":"RocksDb","path":"/var/lib/stalwart/"}
 ```
 
-Stalwart allows for fine-grained control over which configuration settings are stored locally and which are stored in the database. This is managed through the `config.local-keys` setting in the local TOML configuration file. This setting accepts an array of glob patterns to match configuration keys. If a key matches a pattern, it is retained in the local TOML file; otherwise, it is stored in the database. Exclusion of specific keys can be achieved by prefixing the glob pattern with a `!`.
+The `@type` field selects the backend. RocksDB is the default and works well for most single-node deployments; PostgreSQL, MySQL, SQLite and FoundationDB are also supported. Each backend has its own set of fields, documented on the [DataStore](/docs/ref/object/data-store) reference page.
 
-If no `config.local-keys` are specified, the default configuration is as follows:
+Once the server is running, `config.json` is rarely touched again. The datastore location is the only setting that cannot be changed through the API, because the API itself is served out of the datastore.
 
-```toml
-[config]
-local-keys = [ "store.*", "directory.*", "tracer.*", "!server.blocked-ip.*", "!server.allowed-ip.*", "server.*",
-               "authentication.fallback-admin.*", "cluster.*",   "config.local-keys.*", 
-               "storage.data", "storage.blob", "storage.lookup", "storage.fts", "storage.directory", "certificate.*" ]
-```
+## Recovery & Bootstrap modes
 
-It is important to note that certain keys, specifically those matching `store.*`, `storage.*`, and `server.*` patterns, must always be stored locally. Stalwart relies on these local configurations to initialize and start correctly. Excluding these key patterns from local storage will prevent the server from starting.
-
-## Safe Defaults
-
-Stalwart is designed with flexibility and ease of use in mind, requiring no mandatory configuration settings to start. In the absence of specific configuration directives, Stalwart defaults to safe and sensible settings to ensure the server operates securely. For instance, if not explicitly configured, SMTP relaying is disabled to prevent misuse of the server as an open relay for spam or unauthorized email transmission.
-
-Stalwart's philosophy of "safe defaults" means that it comes pre-configured with settings that prioritize security and basic functionality. This approach simplifies the initial setup process, especially for users who are new to mail server administration. The server intelligently defaults to configurations that minimize potential security vulnerabilities while ensuring reliable operation.
-
-## Minimal Configuration
-
-Despite the lack of required settings, for Stalwart to function as a mail server, it must have at least one valid store and listener configured. These are the only quasi-mandatory settings needed to get Stalwart up and running. Below is an example of the minimal configuration necessary for a basic instance of Stalwart using RocksDB:
-
-```toml
-[server.listener."smtp"]
-bind = ["[::]:25"]
-protocol = "smtp"
-
-[server.listener."submissions"]
-bind = ["[::]:465"]
-protocol = "smtp"
-tls.implicit = true
-
-[server.listener."imaptls"]
-bind = ["[::]:993"]
-protocol = "imap"
-tls.implicit = true
-
-[storage]
-data = "rocksdb"
-fts = "rocksdb"
-blob = "rocksdb"
-lookup = "rocksdb"
-directory = "internal"
-
-[store."rocksdb"]
-type = "rocksdb"
-path = "%{env:STALWART_PATH}%/data"
-compression = "lz4"
-
-[directory."internal"]
-type = "internal"
-store = "rocksdb"
-
-[tracer."stdout"]
-type = "stdout"
-level = "info"
-ansi = false
-enable = true
-
-[authentication.fallback-admin]
-user = "admin"
-secret = "%{env:ADMIN_SECRET}%"
-```
-
+If `config.json` is absent, Stalwart starts in [bootstrap mode](/docs/configuration/bootstrap-mode) and exposes an initial setup flow served from the browser. If `config.json` is present but the deployment requires maintenance, Stalwart can be started in [recovery mode](/docs/configuration/recovery-mode) to suspend all services and expose only the management API. Both modes, along with a few cluster-related behaviours, are controlled by a handful of [environment variables](/docs/configuration/environment-variables). For platforms such as NixOS, Ansible and Terraform, the [declarative deployments](/docs/configuration/declarative-deployments) page describes how to manage `config.json` and the rest of the configuration as code.
