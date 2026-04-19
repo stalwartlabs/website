@@ -4,28 +4,29 @@ sidebar_position: 5
 
 # In-memory store
 
-In-memory data stores (such as Redis) are high-performance databases that store data entirely in memory, enabling extremely fast read and write operations. These systems are often used for caching, message brokering, and as temporary storage for dynamic data that does not require long-term persistence.
+In-memory data stores (such as Redis) are high-performance databases that keep data entirely in RAM, making read and write operations extremely fast. They are well suited to caching, message brokering, and short-lived state that does not need long-term persistence.
 
-In Stalwart, in-memory stores play a crucial role in handling a wide variety of tasks. They are used for storing:
+Within Stalwart, the in-memory store backs a range of short-lived data:
 
-- [Rate limiting](/docs/mta/outbound/rate-limit) and [fail2ban](/docs/server/auto-ban) data, such as the number of messages sent by a specific sender or the number of failed authentication attempts from a specific IP address.
-- Distributed locks for managing concurrent tasks, such as purging accounts, processing email queues, and running housekeeping tasks.
-- [OAuth authorization codes](/docs/auth/oauth/overview) to validate the authorization process.
+- [Rate limiting](/docs/mta/outbound/rate-limit) and [fail2ban](/docs/server/auto-ban) counters, such as the number of messages sent by a given sender or the number of failed authentication attempts from an IP.
+- Distributed locks that coordinate concurrent tasks, including account purge, email queue processing, and housekeeping.
+- [OAuth authorisation codes](/docs/auth/oauth/overview) used during the authorisation flow.
 - [ACME tokens](/docs/server/tls/acme/overview) for SSL/TLS certificate management.
-- Certain e-mail tracking data, such as [greylisting](/docs/spamfilter/greylist) tokens and [Sieve](/docs/sieve/overview) auto-responder IDs.
+- Short-lived tracking data such as [greylisting](/docs/spamfilter/greylist) tokens and [Sieve](/docs/sieve/overview) auto-responder IDs.
 
 ## Backends
 
-Stalwart supports the following backends as in-memory stores:
+Backend selection is made on the [InMemoryStore](/docs/ref/object/in-memory-store) singleton (found in the WebUI under <!-- breadcrumb:InMemoryStore --><!-- /breadcrumb:InMemoryStore -->). The object is a multi-variant type. The supported variants are:
 
-- [Redis, Memcached, or compatible](/docs/storage/backends/redis): Ideal for high-performance, distributed, or heavy-load environments. Redis, in particular, is recommended for such cases because of its speed and versatility as a cache, database, and message broker.
-- [Data store](/docs/storage/data): For administrators aiming to minimize external dependencies, any supported data store backend (SQL, FoundationDB, RocksDB) can also function as an in-memory store. While data store backends provide flexibility, Redis is better suited for heavy loads and distributed setups due to its optimized performance.
+- [Redis, Valkey, Memcached, or compatible](/docs/storage/backends/redis): the `Redis` and `RedisCluster` variants, recommended for high-performance, distributed, or heavily loaded environments.
+- The `Default` variant, which uses the configured data store (SQL, FoundationDB, RocksDB) as the in-memory store. This is a convenient choice when minimising external dependencies, though Redis is better suited to heavy write loads and distributed setups.
+- The `Sharded` variant, which distributes key-value pairs across multiple Redis or Redis Cluster backends by hashing keys modulo the number of configured stores. See the [Sharded in-memory store](/docs/storage/backends/composite/sharded-in-memory) page for further detail.
 
-## Key Prefixes
+## Key prefixes
 
-In-memory stores operate as key-value stores, where each key is prefixed with a unique identifier to prevent conflicts. Stalwart uses predefined prefixes for different types of data, ensuring clear organization within the store.
+In-memory stores operate as key-value stores. Stalwart assigns a unique integer prefix to each category of data so that keys never collide across subsystems. The mapping is fixed and shown below for reference:
 
-Below is a mapping of key prefixes used by Stalwart, including their assigned unsigned integer values:
+<!-- review:  -->
 
 | **Short name**                 | **Description**                                  | **Integer prefix** |
 |----------------------------|------------------------------------------------------|--------------|
@@ -51,30 +52,18 @@ Below is a mapping of key prefixes used by Stalwart, including their assigned un
 | `KV_LOCK_DAV`              | WebDAV locks                                         | 25           |
 | `KV_SIEVE_ID`              | Sieve auto-responder tracking ids                    | 26           |
 
-This structured approach ensures data integrity and prevents key collisions across different types of operations within the in-memory store.
+This structured approach ensures data integrity and prevents key collisions across subsystems within the in-memory store.
 
-## Data Persistence
+## Data persistence
 
-It is generally not necessary to configure the in-memory store for persistent storage of most key prefixes. Many types of data, such as rate limiter and fail2ban information, are transient and do not require recovery after a server restart.
+Most keys held in the in-memory store are transient: rate-limit counters, fail2ban records, authorisation codes, and short-lived tokens do not need to survive a restart. Configuring persistence on the backend is therefore not usually required.
 
 ## Configuration
 
-The main in-memory store is defined under the `storage.lookup` attribute in the configuration file. For example, to use the `redis` store as the default in-memory store:
+To change the in-memory store backend, update the InMemoryStore singleton and select the appropriate variant. Variant-specific fields such as [`url`](/docs/ref/object/in-memory-store#url) and [`timeout`](/docs/ref/object/in-memory-store#timeout) apply to the Redis variant; [`urls`](/docs/ref/object/in-memory-store#urls), [`authUsername`](/docs/ref/object/in-memory-store#authusername), [`authSecret`](/docs/ref/object/in-memory-store#authsecret), [`readFromReplicas`](/docs/ref/object/in-memory-store#readfromreplicas), and [`protocolVersion`](/docs/ref/object/in-memory-store#protocolversion) apply to the RedisCluster variant. See the [InMemoryStore reference](/docs/ref/object/in-memory-store) for the full field list per variant.
 
-```toml
-[storage]
-lookup = "redis"
-```
-
-Although Stalwart requires a default in-memory store, it is possible to define multiple in-memory stores to be used from expressions](/docs/configuration/expressions/overview) and [Sieve scripts](/docs/sieve/overview). 
+<!-- review: The previous docs mentioned defining multiple in-memory stores for use from expressions and Sieve scripts. The current InMemoryStore singleton exposes only one primary in-memory backend. Confirm whether additional named in-memory stores for expressions/Sieve are still configured through a separate mechanism (possibly StoreLookup) and link to the correct object if so. -->
 
 ## Maintenance
 
-When using a data store as an in-memory store, it is necessary to periodically run an automated task that removes expired keys from the database. The schedule for these tasks is configured using a simplified [cron-like syntax](/docs/configuration/values/cron). The frequency of these tasks is determined by the `store.<id>.purge.frequency` attribute of the configuration file, where `<id>` is the ID of the store you wish to configure.
-
-For example, to run the job every day at 3am local time on the `foundationdb` store, you would add the following to your configuration file:
-
-```toml
-[store."foundationdb".purge]
-frequency = "0 3 *"
-```
+When a persistent data store (SQL, FoundationDB, RocksDB) is used as the in-memory store through the `Default` variant, expired keys must be purged periodically. This is handled by the general data-store clean-up task, scheduled through [`dataCleanupSchedule`](/docs/ref/object/data-retention#datacleanupschedule) on the [DataRetention](/docs/ref/object/data-retention) object (found in the WebUI under <!-- breadcrumb:DataRetention --><!-- /breadcrumb:DataRetention -->). When Redis or Redis Cluster is used, expiry is handled natively by the backend and no scheduled clean-up is required.

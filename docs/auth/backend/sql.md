@@ -4,59 +4,58 @@ sidebar_position: 3
 
 # SQL Database
 
-Stalwart supports using SQL database systems such as MySQL, PostgreSQL, and SQLite as a directory server. This allows you to use an existing SQL database to handle tasks such as authentication, validating local accounts, and retrieving account-related information.
+Stalwart can authenticate users and look up account metadata against an SQL database such as PostgreSQL, MySQL, or SQLite. This makes it possible to reuse an existing SQL-backed user directory, or to manage accounts in a relational schema that other applications already share.
+
+An SQL directory is configured through the SQL variant of the [Directory](/docs/ref/object/directory) object (found in the WebUI under <!-- breadcrumb:Directory --><!-- /breadcrumb:Directory -->).
 
 ## Configuration
 
-The following configuration settings are available for the SQL directory, which are specified under the `directory.<name>` section of the configuration file:
+The main fields on the SQL variant of the Directory object are:
 
-- `type`: Indicates the type of directory, which has to be set to `"sql"`.
-- `store`: Specifies the name of the [SQL data store](/docs/storage/data) to use as a directory. Only SQL data stores are supported.
-
-Any of the supported SQL data stores can be used as an SQL directory. Configuration details for each SQL data store can be found in the [data stores](/docs/storage/data) section.
+- [`description`](/docs/ref/object/directory#description): a human-readable description of this directory.
+- [`store`](/docs/ref/object/directory#store): the backend where the account tables live. The `SqlAuthStore` variant selects between `Default` (the server's data store, when that is itself SQL), `PostgreSql`, `MySql`, and `Sqlite`. Each backend variant carries its own connection parameters (host, port, database, username, and secret) detailed on the [Directory reference page](/docs/ref/object/directory).
 
 ### Directory queries
 
-In order to retrieve information about accounts, the following SQL directory queries need to be defined in the underlying [data store](/docs/storage/data):
+The SQL variant runs the following queries against the configured store; all of them use positional parameters (`$1`, `$2`, ...) and sensible defaults that can be overridden per deployment:
 
-- `name`: Retrieves the `type`, `description`, and `quota` fields of an account by its account `name`. Optionally this query can return the account's `email` and `secret` fields as well.
-- `members`: Fetches the groups that a particular account is a member of. Groups names have to be returned as text.
-- `recipients`: Retrieves the account name(s) associated with a specific primary addresses or alias address.
-- `emails`: Fetches email address(es) associated with a specific account. This query has to return an ordered list containing first the account's primary email address, followed by email aliases and excluding any mailing lists addresses associated with the account. This query is optional, a single email address can be returned by the `name` query.
-- `secrets`: Retrieves the account passwords associated with a specific account. This query is optional, a single password can be returned by the `name` query.
-
-Please refer to the relevant section for each data store for more information on how to define these queries.
+- [`queryLogin`](/docs/ref/object/directory#querylogin): resolves account details by login value. Default `"SELECT name, secret, description, type FROM accounts WHERE name = $1"`.
+- [`queryRecipient`](/docs/ref/object/directory#queryrecipient): resolves account details by recipient email address or alias. Default `"SELECT name, secret, description, type FROM accounts WHERE name = $1 AND active = true"`.
+- [`queryMemberOf`](/docs/ref/object/directory#querymemberof): returns the groups an account is a member of. Default `"SELECT member_of FROM group_members WHERE name = $1"`.
+- [`queryEmailAliases`](/docs/ref/object/directory#queryemailaliases): returns the email aliases of an account. Default `"SELECT address FROM emails WHERE name = $1"`.
 
 ### Column mappings
 
-The `directory.<name>.columns` section maps the column names in the SQL database to the names used within Stalwart:
+Column names in the database are mapped to account fields through the following fields on the SQL variant:
 
-- `class`: Maps to the 'type' column in the SQL database. Expected values are `individual` (or `person`) for user accounts and `group` for group accounts.
-- `secret`: Maps to the 'secret' column in the SQL database. Passwords can be stored [hashed](//docs/auth/authentication/password) or in plain text (not recommended).
-- `description`: Maps to the 'description' column in the SQL database.
-- `quota`: Maps to the 'quota' column in the SQL database. Expects an integer value in bytes.
-- `email`: Maps to the 'email' column in the SQL database. 
+- [`columnEmail`](/docs/ref/object/directory#columnemail): column holding the account login / primary address. Default `"name"`.
+- [`columnSecret`](/docs/ref/object/directory#columnsecret): column holding the password hash. Default `"secret"`. Hashes must be in a [supported format](/docs/auth/authentication/password); plain text is possible but not recommended.
+- [`columnClass`](/docs/ref/object/directory#columnclass): column holding the account kind (`individual`, `person`, or `group`). Default `"type"`.
+- [`columnDescription`](/docs/ref/object/directory#columndescription): column holding the account's full name or description. Default `"description"`.
+
+<!-- review: The previous docs documented a `directory.<name>.columns.quota` mapping for the account disk quota. The SQL variant of the Directory object exposes columnEmail, columnSecret, columnClass, and columnDescription, but no quota column. Confirm whether the quota column has been removed, folded into queryLogin / queryRecipient, or moved elsewhere. -->
 
 For example:
 
-```toml
-[directory."sql".columns]
-name = "name"
-description = "description"
-secret = "secret"
-email = "address"
-quota = "quota"
-class = "type"
-email = "email"
+```json
+{
+  "@type": "Sql",
+  "description": "External SQL directory",
+  "store": {
+    "@type": "Default"
+  },
+  "columnEmail": "name",
+  "columnSecret": "secret",
+  "columnDescription": "description",
+  "columnClass": "type"
+}
 ```
 
 ## Sample directory schema
 
-This section provides a sample SQL database schema that can be used as a directory server for Stalwart. The schema is provided as a reference and is not intended to be used as-is. You will need to modify the schema to suit your needs.
+The following schema is a reference example for an SQL-backed directory. It may need to be adapted for specific deployments; it is not intended to be used as-is.
 
 ### Table schema
-
-The following SQL statements can be used to create the tables for the sample schema:
 
 #### SQLite
 
@@ -84,34 +83,33 @@ CREATE TABLE emails (name VARCHAR(32) NOT NULL, address VARCHAR(128) NOT NULL, t
 
 ### Creating user accounts
 
-Before creating an account, you will first need to hash the account's password. One way to do this is using the `openssl` command. For example, to hash a password using the `SHA512` algorithm:
+Before inserting an account, hash the password. One way is via `openssl`, for example to produce a SHA-512 crypt hash:
 
 ```bash
 $ openssl passwd -6
 ```
 
-Once you have the hashed secret, you may create a user account with an associated email address by running the following SQL statements:
+Once the hashed secret is available, insert the account and its primary address:
 
 ```sql
 INSERT INTO accounts (name, secret, description, type) VALUES ('<ACCOUNT_NAME>', '<HASHED_SECRET>', '<ACCOUNT_FULL_NAME>', 'individual')
 INSERT INTO emails (name, address, type) VALUES ('<ACCOUNT_NAME>', '<PRIMARY_EMAIL_ADDRESS>', 'primary')
 ```
 
-Make sure to replace:
- - `<ACCOUNT_NAME>` with the name of the account, for example `john`.
- - `<HASHED_SECRET>` with the hashed password you generated above.
- - `<ACCOUNT_FULL_NAME>` with the full name of the account, for example `John Doe`.
- - `<PRIMARY_EMAIL_ADDRESS>` with the primary email address for the account, for example `john@example.org`.
+Replace:
+
+- `<ACCOUNT_NAME>` with the account login name, for example `john`.
+- `<HASHED_SECRET>` with the hashed password produced above.
+- `<ACCOUNT_FULL_NAME>` with the account's full name, for example `John Doe`.
+- `<PRIMARY_EMAIL_ADDRESS>` with the primary address, for example `john@example.org`.
 
 ### Adding an email alias
 
-To add an email alias to an account, run the following SQL statements:
+To add an alias to an existing account:
 
 ```sql
 INSERT INTO emails (name, address, type) VALUES ('<ACCOUNT_NAME>', '<EMAIL_ALIAS>', 'alias')
 ```
-
-Make sure to replace `<ACCOUNT_NAME>` with the name of the account and `<EMAIL_ALIAS>` with the email alias you want to add. 
 
 For example, to add the aliases `john.doe@example.org` and `jdoe@example.org` to the account `john`:
 
@@ -120,7 +118,7 @@ INSERT INTO emails (name, address, type) VALUES ('john', 'john.doe@example.org',
 INSERT INTO emails (name, address, type) VALUES ('john', 'jdoe@example.org', 'alias')
 ```
 
-Alternatively, you could designate the `postmaster` account as the [catch-all address](/docs/mta/inbound/rcpt#catch-all-addresses) for the `example.org` domain by adding `@example.org` as an email alias for the `postmaster` account:
+Alternatively, the `postmaster` account can be configured as the [catch-all recipient](/docs/mta/inbound/rcpt#catch-all-addresses) for `example.org` by adding `@example.org` as an alias:
 
 ```sql
 INSERT INTO emails (name, address, type) VALUES ('postmaster', '@example.org', 'alias')
@@ -128,20 +126,14 @@ INSERT INTO emails (name, address, type) VALUES ('postmaster', '@example.org', '
 
 ### Creating group accounts
 
-To create a group account, run the following SQL statements:
-
 ```sql
 INSERT INTO accounts (name, description, type) VALUES ('<GROUP_NAME>', '<GROUP_DESCRIPTION>', 'group')
 ```
 
-Make sure to replace `<GROUP_NAME>` with the name of the group and `<GROUP_DESCRIPTION>` with the description of the group.
+Replace `<GROUP_NAME>` with the group name and `<GROUP_DESCRIPTION>` with a human-readable description.
 
 ### Adding members to a group
-
-To add a user to a group, run the following SQL statements:
 
 ```sql
 INSERT INTO group_members (name, member_of) VALUES ('<ACCOUNT_NAME>', '<GROUP_NAME>')
 ```
-
-Make sure to replace `<ACCOUNT_NAME>` with the name of the account and `<GROUP_NAME>` with the name of the group.

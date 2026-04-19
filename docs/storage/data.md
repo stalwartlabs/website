@@ -4,35 +4,22 @@ sidebar_position: 2
 
 # Data store
 
-In Stalwart, the data store is where e-mail metadata, folders, settings, and most data is kept. It is important to note that the data store does not hold email messages, sieve scripts, or other large binary files. These are managed separately by the [blob store](/docs/storage/blob) to optimize performance and manageability.
+The data store holds email metadata, mailbox state, account settings, folders, and most configuration objects. It does not hold raw message bodies, Sieve scripts, or other large binary files; those are managed separately by the [blob store](/docs/storage/blob) so that each layer can be tuned independently.
 
-The following database backends can be utilized as a data store:
+Backend selection is made on the [DataStore](/docs/ref/object/data-store) singleton (found in the WebUI under <!-- breadcrumb:DataStore --><!-- /breadcrumb:DataStore -->). The object is a multi-variant type: each instance selects one of several database backends, and the chosen variant determines which fields apply. The supported variants are:
 
-- [RocksDB](/docs/storage/backends/rocksdb): A high performance embedded database for key-value data (recommended for single node installations).
-- [FoundationDB](/docs/storage/backends/foundationdb): A distributed database designed to handle large volumes of data across clusters of machines (recommended for multi-node installations).
-- [PostgreSQL](/docs/storage/backends/postgresql): An open-source object-relational database system.
-- [MySQL](/docs/storage/backends/mysql): An open-source relational database management system.
-- [SQLite](/docs/storage/backends/sqlite): A C library that provides a lightweight disk-based database.
-
-Due to their performance and scalability, [RocksDB](/docs/storage/backends/rocksdb) is the recommended backend for single node installations, while [FoundationDB](/docs/storage/backends/foundationdb) is recommended for multi-node installations.
+- [RocksDB](/docs/storage/backends/rocksdb): a high-performance embedded key-value database, recommended for single-node installations.
+- [FoundationDB](/docs/storage/backends/foundationdb): a distributed ACID database for clustered deployments, recommended for multi-node installations.
+- [PostgreSQL](/docs/storage/backends/postgresql): an object-relational database.
+- [MySQL / MariaDB](/docs/storage/backends/mysql): a relational database management system.
+- [SQLite](/docs/storage/backends/sqlite): a self-contained, serverless, file-based database.
 
 ## Configuration
 
-To configure the data store, you need to specify the ID of the store you wish to use under the `storage.data` attribute in the configuration file. For example, to use the `rocksdb` store as the data store:
-
-```toml
-[storage]
-data = "rocksdb"
-```
+To change the data store backend, update the DataStore singleton and select the variant for the desired backend. Each variant carries its own fields (for example, the RocksDB variant requires [`path`](/docs/ref/object/data-store#path), while the PostgreSQL variant requires [`host`](/docs/ref/object/data-store#host), [`database`](/docs/ref/object/data-store#database), [`authUsername`](/docs/ref/object/data-store#authusername), and [`authSecret`](/docs/ref/object/data-store#authsecret)). See the [DataStore reference](/docs/ref/object/data-store) for the full field list per variant.
 
 ## Maintenance
 
-In order ensure efficient use of storage and optimal database operations, Stalwart runs periodically automated tasks that perform essential maintenance such as removing expired entries or compacting logs. The schedule for these tasks is configured using a simplified [cron-like syntax](/docs/configuration/values/cron). The frequency of these tasks is determined by the `store.<id>.purge.frequency` attribute of the configuration file, where `<id>` is the ID of the store you wish to configure.
+Scheduled clean-up of the data store is managed centrally through the [DataRetention](/docs/ref/object/data-retention) object (found in the WebUI under <!-- breadcrumb:DataRetention --><!-- /breadcrumb:DataRetention -->). The [`dataCleanupSchedule`](/docs/ref/object/data-retention#datacleanupschedule) field sets how often the data store clean-up task runs, using a cron expression. The default runs daily at 02:00. Related schedules include [`expungeSchedule`](/docs/ref/object/data-retention#expungeschedule) for auto-expunge and [`blobCleanupSchedule`](/docs/ref/object/data-retention#blobcleanupschedule) for blob store clean-up.
 
-For example, to run the job every day at 3am local time on the `foundationdb` store, you would add the following to your configuration file:
-
-```toml
-[store."foundationdb".purge]
-frequency = "0 3 *"
-```
-
+<!-- review: Per-backend purge frequency was previously expressed as `store.<id>.purge.frequency`. The current DataRetention object only exposes global schedules (`dataCleanupSchedule`, `blobCleanupSchedule`, `expungeSchedule`). Confirm that no per-backend override exists in the new model. -->

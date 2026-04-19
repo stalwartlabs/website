@@ -4,55 +4,18 @@ sidebar_position: 4
 
 # Administrators
 
-In Stalwart, there is no specific concept of dedicated "administrator accounts" within the directory. Instead, [regular accounts](/docs/auth/principals/individual) can be selectively granted specific [permissions](/docs/auth/authorization/permissions) to perform management tasks. This approach provides a more secure and flexible way to manage access, as it avoids giving users blanket administrative privileges. Instead of an "all-or-nothing" approach, permissions can be carefully tailored to individual needs, ensuring that users only have access to the functions they require.
+Stalwart has no dedicated "administrator account" type in the directory. Administrative capabilities are granted by assigning specific [permissions](/docs/auth/authorization/permissions) to regular [individual accounts](/docs/auth/principals/individual). This avoids handing out blanket administrative privileges and allows each administrator to hold only the permissions required for the tasks they perform.
 
-By assigning permissions to regular user accounts, Stalwart allows administrators to distribute management responsibilities without compromising security. For example, an account may be granted the ability to manage email settings or user accounts without being given full control over the entire mail server. This principle of **least privilege** ensures that no account has more access than necessary, reducing the risk of accidental or malicious changes to critical system components.
+Assigning permissions to ordinary accounts lets administrative responsibilities be distributed without compromising security. For example, one account may be granted the ability to manage domain settings and user accounts without being able to reconfigure system-wide services. This principle of least privilege reduces the risk of accidental or malicious changes to critical parts of the server.
 
-Administrators can create one or more roles that grant specific administrative permissions (such as managing users, domains, or mailing lists) and assign these roles to the appropriate users. This provides fine-tuned control over who can perform administrative tasks within the system.
+Administrators can create one or more [Role](/docs/ref/object/role) objects that group administrative permissions together and assign those roles to the appropriate accounts. This provides consistent control over who can perform which administrative tasks.
 
-## Fallback Administrator
-
-While Stalwart relies on regular accounts with specific permissions for day-to-day management, it does include a special internal mechanism called the **fallback administrator**. This account is not stored in the directory and exists outside the regular user and role management system. The fallback administrator is intended for **initial setup** of the mail server or as an **emergency mechanism** to regain access to the system in case the directory becomes unavailable.
-
-### Key Characteristics:
-
-- **Not part of the directory**: The fallback administrator is an internal account that exists independently from the regular user and role management system.
-- **Full access**: This account is automatically granted **every single permission** in the system, giving it unrestricted access to all resources and settings.
-- **Emergency use only**: Because of its full access rights, it is strongly discouraged to use the fallback administrator for routine administrative tasks. Its primary purpose is for setting up Stalwart during the initial installation and for emergencies when no other administrative access is available.
-- **Security risk**: Since the fallback administrator has complete control over the system, it poses a potential security risk if used regularly. For day-to-day management, it is much safer to assign specific permissions to regular user accounts to limit the risk of misuse.
-
-### Best Practices
-
-When managing administrative access in Stalwart, it is essential to follow best practices to ensure the security and integrity of the system. Some key recommendations include:
-
-- **Use regular accounts with granular permissions**: Instead of relying on a single account with all permissions, create multiple accounts with only the necessary management permissions for each administrator.
-- **Restrict use of the fallback administrator**: This account should only be used for initial setup or emergencies. Once regular accounts are configured, the fallback administrator should be set aside and not used for daily tasks.
-- **Assign roles to simplify permission management**: Use roles to group permissions and assign them to individuals, ensuring consistent access control across different users.
-
-By adhering to these practices, administrators can maintain a secure and manageable system while avoiding unnecessary risks associated with overly broad access rights.
-
-### Configuration
-
-The username for the fallback administrator is specified in the `authentication.fallback-admin.user` setting, while the password is defined in `authentication.fallback-admin.secret`. This account should be used sparingly and only in situations where normal administrative access through the primary authentication directory is compromised. Due to its broad capabilities and bypass nature, the fallback administrator credentials must be secured carefully, with the same security measures as for primary administrator accounts, to prevent unauthorized access.
-
-Example:
-
-```toml
-[authentication.fallback-admin]
-user = "admin"
-secret = "$6$MM1wz7Y8.L8O4eN0$ti3/072t3T5SJ6xryK45RvpW38dW2hSH86cBcV0XHtgnBYCCAFjqibS84OsdxfAITd6.VkKfhfUhlfVczdkFx1"
-```
+For emergency access when the regular administrative accounts are unavailable, see the [recovery administrator](/docs/configuration/recovery-mode#recovery-administrator) mechanism. It is an environment-variable credential that is only honoured while the server is running in [recovery mode](/docs/configuration/recovery-mode) or during first-time [bootstrap](/docs/configuration/bootstrap-mode), and is intended to be set temporarily while an incident is resolved.
 
 ## Master User
 
-The master user is a special account that is granted full access to all mailboxes on the server. This account is typically used for system maintenance and monitoring purposes, allowing administrators to perform tasks that require access to all mailboxes. The master user has very broad access and should be used judiciously, only for legitimate system administration tasks.
+The master user is a special account granted full access to every mailbox on the server. It is used for system maintenance and monitoring, in particular operations that require reading messages across all accounts. Because its access is very broad, it should be used only for legitimate administrative tasks.
 
-The username for the master user is specified in the `authentication.master.user` setting, while the password is defined in `authentication.master.secret`. The master user account should be secured with a strong, unique password to prevent unauthorized access. Example:
+<!-- review: The previous docs exposed the master user through `authentication.master.user` and `authentication.master.secret`. The current Authentication singleton has no corresponding fields and no other object in the reference documents the master user. Confirm where the master user is now configured (Bootstrap, a dedicated object, or an account-level flag), and what the current field names are. -->
 
-```toml
-[authentication.master]
-user = "master"
-secret = "$6$MM1wz7Y8.L8O4eN0$ti3/072t3T5SJ6xryK45RvpW38dW2hSH86cBcV0XHtgnBYCCAFjqibS84OsdxfAITd6.VkKfhfUhlfVczdkFx1"
-```
-
-Once master user access is enabled, any mailbox on the server can be accessed using `<account_name>%<master_user>` as the login username. For example, if the master user is `master`, the master user can access the mailbox for `john` by logging in as `john%master`.
+Once master user access is enabled, any mailbox can be accessed by signing in as `<account_name>%<master_user>`. For example, when the master user is `master`, the mailbox of `john` is accessed by logging in as `john%master`.

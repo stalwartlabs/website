@@ -4,20 +4,23 @@ sidebar_position: 5
 
 # Reverse IP
 
-Reverse IP verification is a security mechanism used in SMTP to validate the authenticity of the connecting client's IP address. In reverse IP verification, the SMTP server performs a reverse lookup of the connecting client's IP address to see if it matches the hostname provided by the client in the EHLO or HELO command. If the reverse lookup does not match the hostname provided by the client, the SMTP server can reject the connection as a precaution against malicious actors attempting to disguise their IP address in order to send spam or perform other malicious activities. By enabling reverse IP verification in Stalwart, administrators can help ensure that incoming SMTP connections are legitimate and prevent the server from being used to send unwanted or harmful messages.
+Reverse IP verification validates the authenticity of the connecting client's IP address. The server performs a reverse DNS lookup of the remote IP and compares the result against the hostname provided in the `EHLO` or `HELO` command. If they do not match, the server can reject the connection to guard against hosts that disguise their origin when sending spam or performing other malicious activity. Reverse-IP verification helps ensure that incoming SMTP connections are legitimate.
 
 ## Settings
 
-Stalwart supports the following reverse IP verification policies which are configured with the `auth.iprev.verify` attribute:
+Reverse IP verification is configured on the [SenderAuth](/docs/ref/object/sender-auth) singleton (found in the WebUI under <!-- breadcrumb:SenderAuth --><!-- /breadcrumb:SenderAuth -->). The [`reverseIpVerify`](/docs/ref/object/sender-auth#reverseipverify) field accepts an expression that returns one of:
 
-- `relaxed`: Verify the reverse IP and report the results in the `Authentication-Results` header.
-- `strict`: Reject the message if the reverse IP fails verification, otherwise report the results in the `Authentication-Results` header.
-- `disable`: Do not perform reverse IP verification.
+- `relaxed`: verify the reverse IP and report the results in the `Authentication-Results` header.
+- `strict`: reject the message if reverse-IP verification fails; otherwise report the results.
+- `disable`: do not perform reverse-IP verification.
 
-Example:
+The default policy applies `relaxed` when `local_port == 25` and `disable` otherwise, equivalent to:
 
-```toml
-[auth.iprev]
-verify = [ { if = "listener = 'smtp'", then = "relaxed" }, 
-           { else = "disable" } ]
+```json
+{
+  "reverseIpVerify": {
+    "match": [{"if": "listener == 'smtp'", "then": "relaxed"}],
+    "else": "disable"
+  }
+}
 ```

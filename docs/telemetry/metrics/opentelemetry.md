@@ -4,30 +4,39 @@ sidebar_position: 2
 
 # OpenTelemetry
 
-OpenTelemetry is an open-source observability framework designed to provide standardized methods for collecting, processing, and exporting telemetry data such as metrics, logs, and traces. OpenTelemetry aims to simplify the process of instrumenting applications to monitor their performance and behavior across distributed systems. It provides a set of APIs, libraries, agents, and instrumentation tools for collecting telemetry data from different programming languages and platforms.
+OpenTelemetry is an open-source observability framework that standardises how metrics, logs, and traces are collected, processed, and exported. It defines a common wire format for telemetry data and provides SDKs and collector services for a wide range of programming languages and platforms.
 
-OpenTelemetry aims to provide observability that lets developers and administrators inspect their applications' operations. By providing a consistent approach to telemetry, data can be integrated with multiple backend systems for analysis, visualization, and alerting.
-
-Stalwart supports exporting metrics via push to OpenTelemetry. By integrating with OpenTelemetry, Stalwart can continuously send collected metrics to a centralized telemetry backend, providing real-time visibility into the server's performance and health. OpenTelemetry supports a wide range of telemetry backends, including Prometheus, Jaeger, and Zipkin, so you can choose the tools that suit your monitoring setup.
+Stalwart pushes metrics to an OpenTelemetry collector, from which they can be fanned out to backends such as Prometheus, Jaeger, or Zipkin. Pushing metrics through OpenTelemetry lets Stalwart fit into an existing observability stack with a single collector configuration.
 
 ## Configuration
 
-Configuring Stalwart to push metrics to OpenTelemetry involves setting up an exporter within the server's configuration. This exporter defines the endpoint for the OpenTelemetry collector or backend, along with any necessary authentication and connection settings. Once configured, the server will automatically handle the collection and transmission of metrics, minimizing the need for manual intervention.
+The OpenTelemetry metrics exporter is configured through [`openTelemetry`](/docs/ref/object/metrics#opentelemetry) on the [Metrics](/docs/ref/object/metrics) singleton (found in the WebUI under <!-- breadcrumb:Metrics --><!-- /breadcrumb:Metrics -->). The field is a multi-variant nested type:
 
-The following options are available under `metrics.open-telemetry` for configuring the OpenTelemetry metrics push exporter:
+- `Disabled` turns the exporter off.
+- `Http` exports metrics over HTTP.
+- `Grpc` exports metrics over gRPC.
 
-- `transport`: The transport protocol to use for sending tracing information. It can be set to either `grpc`, `http` or `disable`.
-- `endpoint`: The endpoint URL for the OpenTelemetry collector. This is where the metrics data will be sent.
-- `interval`: The interval at which metrics are collected and sent to the OpenTelemetry collector. The default value is `1m`.
-- `headers`: Additional headers to include in the HTTP request to the OpenTelemetry
+Both active variants share the following fields:
+
+- [`endpoint`](/docs/ref/object/metrics#metricsotelhttp): collector endpoint URL. Required for `Http`; optional for `Grpc` (when omitted, the SDK default endpoint is used).
+- [`interval`](/docs/ref/object/metrics#metricsotelhttp): minimum interval between push requests. Default `"1m"`.
+- [`timeout`](/docs/ref/object/metrics#metricsotelhttp): maximum time to wait for a response. Default `"10s"`.
+
+The `Http` variant additionally carries:
+
+- [`httpAuth`](/docs/ref/object/metrics#httpauth): HTTP authentication used by the exporter. A nested type with variants `Unauthenticated`, `Basic`, and `Bearer`.
+- [`httpHeaders`](/docs/ref/object/metrics#metricsotelhttp): additional HTTP headers sent on each request.
 
 ## Example
 
-Here is an example configuration snippet for setting up the OpenTelemetry metrics push exporter in Stalwart:
+The equivalent of pushing over gRPC every thirty seconds to a collector at `https://otel-collector.example.com/v1/metrics`:
 
-```toml
-[metrics.open-telemetry]
-transport = "grpc"
-endpoint = "https://otel-collector.example.com/v1/metrics"
-interval = "30s"
+```json
+{
+  "openTelemetry": {
+    "@type": "Grpc",
+    "endpoint": "https://otel-collector.example.com/v1/metrics",
+    "interval": "30s"
+  }
+}
 ```

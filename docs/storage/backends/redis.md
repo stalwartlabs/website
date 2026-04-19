@@ -4,72 +4,34 @@ sidebar_position: 10
 
 # Redis
 
-Redis (Remote Dictionary Server) is an in-memory data structure store, used as a database, cache, and message broker. It supports various data structures such as strings, hashes, lists, sets, and sorted sets with range queries, bitmaps, hyperloglogs, geospatial indexes, and streams. Redis has built-in replication, Lua scripting, LRU eviction, transactions, and different levels of on-disk persistence. It's known for its high performance, flexibility, and a wide array of features.
+Redis (Remote Dictionary Server) is an in-memory data-structure store used as a database, cache, and message broker. It supports a range of data structures (strings, hashes, lists, sets, sorted sets, bitmaps, hyperloglogs, geospatial indexes, streams), replication, Lua scripting, LRU eviction, transactions, and several levels of on-disk persistence. Valkey, the open-source Redis-compatible fork, is also supported through the same variant.
 
 :::tip Note
 
-Redis can only be used as a [in-memory store](/docs/storage/in-memory) but not for storing the actual data or blobs (binary large objects) within the mail server system.
+Redis is supported only as an [in-memory store](/docs/storage/in-memory). It cannot be used as the primary data store or as a blob store.
 
 :::
 
-### Standalone Configuration
+## Standalone configuration
 
-The following configuration settings are available for single-node Redis setups, which are specified under the `store.<name>` section of the configuration file:
+The standalone Redis backend is selected by choosing the `Redis` variant on the [InMemoryStore](/docs/ref/object/in-memory-store) object (found in the WebUI under <!-- breadcrumb:InMemoryStore --><!-- /breadcrumb:InMemoryStore -->). The variant exposes the following fields:
 
-- `type`: Specifies the type of store, set to `"redis"`.
-- `redis-type`: Specifies the type of Redis setup, set to `"single"`.
-- `urls`: Configures the connection URL for a single-node Redis setup. It typically includes the Redis scheme, followed by the hostname and port number.
-- `timeout`: The maximum amount of time to wait for a response from the Redis server. Specified as a duration, such as `"10s"` for 10 seconds.
+- [`url`](/docs/ref/object/in-memory-store#url): connection URL for the Redis server. Default: `"redis://127.0.0.1"`. The URL may embed a username, password, port, and database index: `redis[s]://[<username>][:<password>@]<hostname>[:port][/<db>]#insecure`. The `#insecure` fragment disables TLS verification when using the `rediss` scheme, which is useful with self-signed certificates.
+- [`timeout`](/docs/ref/object/in-memory-store#timeout): maximum time to wait for a response from the Redis server. Default: `"10s"`.
+- [`poolMaxConnections`](/docs/ref/object/in-memory-store#poolmaxconnections): maximum number of pooled connections. Default: `10`.
+- [`poolTimeoutCreate`](/docs/ref/object/in-memory-store#pooltimeoutcreate), [`poolTimeoutWait`](/docs/ref/object/in-memory-store#pooltimeoutwait), [`poolTimeoutRecycle`](/docs/ref/object/in-memory-store#pooltimeoutrecycle): connection-pool lifecycle timeouts. Default: `"30s"` each.
 
-In a standalone Redis setup, the `url` parameter is used to specify the connection URL to the Redis server. The URL should include the Redis scheme, followed by the hostname. Optionally, the port, username and password can be included in the URL:
+## Cluster configuration
 
-```redis[s]://[<username>][:<password>@]<hostname>[:port][/<db>]#insecure```
+The Redis Cluster backend is selected by choosing the `RedisCluster` variant on the [InMemoryStore](/docs/ref/object/in-memory-store) object. The variant exposes the following fields:
 
-The `#insecure` flag can be used to disable TLS verification when connecting to the Redis server using the `rediss` scheme. This is useful when using self-signed certificates or when connecting to a Redis server that uses a certificate signed by an unknown CA.
+- [`urls`](/docs/ref/object/in-memory-store#urls): list of connection URLs for the cluster nodes.
+- [`authUsername`](/docs/ref/object/in-memory-store#authusername): username used to authenticate. Default: `"stalwart"`.
+- [`authSecret`](/docs/ref/object/in-memory-store#authsecret): password or other secret reference used to authenticate (required).
+- [`timeout`](/docs/ref/object/in-memory-store#timeout): maximum time to wait for a response from the Redis server. Default: `"10s"`.
+- [`maxRetries`](/docs/ref/object/in-memory-store#maxretries), [`minRetryWait`](/docs/ref/object/in-memory-store#minretrywait), [`maxRetryWait`](/docs/ref/object/in-memory-store#maxretrywait): command retry policy controlling the total number of retries and the backoff between attempts.
+- [`readFromReplicas`](/docs/ref/object/in-memory-store#readfromreplicas): when `true`, allows reads to be served by replica nodes; when `false`, reads are restricted to the primary. Default: `true`.
+- [`protocolVersion`](/docs/ref/object/in-memory-store#protocolversion): Redis protocol version. Supported values are `resp2` and `resp3`. Default: `resp2`.
+- The pool lifecycle fields ([`poolMaxConnections`](/docs/ref/object/in-memory-store#poolmaxconnections), [`poolTimeoutCreate`](/docs/ref/object/in-memory-store#pooltimeoutcreate), [`poolTimeoutWait`](/docs/ref/object/in-memory-store#pooltimeoutwait), [`poolTimeoutRecycle`](/docs/ref/object/in-memory-store#pooltimeoutrecycle)) mirror those of the standalone variant.
 
-### Cluster Configuration
-
-The following configuration settings are available for Redis Cluster, which are specified under the `store.<name>` section of the configuration file:
-
-- `type`: Specifies the type of store, set to `"redis"`.
-- `redis-type`: Specifies the type of Redis setup, set to `"cluster"`.
-- `urls`: Used to configure a Redis cluster by providing an array of connection URLs to different Redis nodes.
-- `user`: The username used for authenticating with the Redis server.
-- `password`: The password associated with the specified username.
-- `timeout`: The maximum amount of time to wait for a response from the Redis server. Specified as a duration, such as `"10s"` for 10 seconds.
-- `retry.total`: The number of attempts to retry a command before giving up.
-- `retry.max-wait`: The maximum duration to wait between retries. Specified as a duration, such as `"1s"` for 1 second.
-- `retry.min-wait`: The minimum duration to wait between retries. Specified as a duration, such as `"500ms"` for 500 milliseconds.
-- `read-from-replicas`: A boolean setting that determines whether the client is allowed to read from replica nodes. Set to `false` to restrict read operations to the primary node only.
-- `protocol-version`: The Redis protocol version to use, supported versions are `resp2` and `resp3`. The default is `resp2`.
-
-### Example
-
-Standalone Redis setup:
-
-```toml
-[store."redis"]
-type = "redis"
-redis-type = "single"
-urls = "redis://my_username:secretpassword@127.0.0.1#insecure"
-timeout = "10s"
-```
-
-Redis cluster setup:
-
-```toml
-[store."redis"]
-type = "redis"
-redis-type = "cluster"
-urls = ["redis://192.0.2.1", "redis://192.0.2.2"] 
-user = "my_username"
-password = "secretpassword"
-timeout = "10s"
-read-from-replicas = false
-protocol-version = "resp3"
-
-[store."redis".retry]
-total = 3
-max-wait = "1s"
-min-wait = "500ms"
-```
+To distribute load across several independent Redis deployments, combine multiple Redis or Redis Cluster backends through the [Sharded in-memory store](/docs/storage/backends/composite/sharded-in-memory).

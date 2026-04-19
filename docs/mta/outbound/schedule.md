@@ -4,222 +4,136 @@ sidebar_position: 3
 
 # Scheduling
 
-Queue scheduling determine which virtual queue to use, the frequency of delivery attempts, the timing for notifications of delivery issues, and the maximum amount of time a message can stay in the queue before it is considered expired and returned to the sender.
+A scheduling strategy defines the policies and behaviour that govern how outbound message deliveries are managed over time. Scheduling strategies control which virtual queue a message uses, how often delivery is retried after a failure, when delayed delivery-status notifications are generated, and when undeliverable messages are expired and bounced to the sender.
 
-A **scheduling strategy** in Stalwart MTA defines the policies and behavior for how outbound message deliveries are managed over time. These strategies play a critical role in determining not only *when* and *how often* delivery attempts are made, but also *how messages are prioritized* and *when they should be removed from the queue* if delivery ultimately fails.
+Scheduling strategies are defined as [MtaDeliverySchedule](/docs/ref/object/mta-delivery-schedule) objects (found in the WebUI under <!-- breadcrumb:MtaDeliverySchedule --><!-- /breadcrumb:MtaDeliverySchedule -->) and selected dynamically at runtime via the schedule expression on [MtaOutboundStrategy](/docs/ref/object/mta-outbound-strategy); see [Strategies](/docs/mta/outbound/strategy) for details.
 
-Each scheduling strategy governs several key aspects of message handling:
+Each scheduling strategy controls the following aspects:
 
-* **Virtual Queue Assignment**: Determines which [virtual queue](/docs/mta/outbound/queue) a message recipient should be placed into for delivery. This allows messages to be grouped and processed independently based on priority, message type, or other criteria.
-* **Retry Logic**: Specifies how frequently the MTA should retry delivery after a failed attempt, and whether retry intervals should increase over time.
-* **Status Notifications**: Controls when delayed [delivery status notifications](/docs/mta/reports/dsn) (DSNs) should be generated and sent to the message sender.
-* **Message Expiry**: Defines how long the system should continue retrying delivery attempts before considering the message undeliverable and bouncing it back to the sender.
-
-Scheduling strategies are defined by under the `queue.schedule.<id>` setting (where `<id>` is the name of the strategy) and selected dynamically at runtime based on an expression configured in the [scheduling strategy](/docs/mta/outbound/strategy) setting. This allows different scheduling behaviors to be applied to different types of messages or recipients depending on delivery context.
+- **Virtual queue assignment**: determines which [virtual queue](/docs/mta/outbound/queue) a message recipient is placed into for delivery.
+- **Retry intervals**: specify how frequently the MTA retries delivery after a failed attempt.
+- **Delay notifications**: control when delayed [delivery-status notifications](/docs/mta/reports/dsn) (DSNs) are generated and sent to the sender.
+- **Expiration**: defines how long the system should continue retrying before considering the message undeliverable.
 
 ## Queue
 
-Each **scheduling strategy** in Stalwart must be associated with a [virtual queue](/docs/mta/outbound/queue), which determines where recipients are placed for delivery processing. The virtual queue defines how delivery is executed, including the number of delivery threads and concurrency limits. By assigning different scheduling strategies to different queues, administrators can control how messages are prioritized and processed based on message characteristics or delivery context.
+Each scheduling strategy must be associated with a [virtual queue](/docs/mta/outbound/queue), which determines where recipients are placed for delivery processing. The [`queueId`](/docs/ref/object/mta-delivery-schedule#queueid) field references the [MtaVirtualQueue](/docs/ref/object/mta-virtual-queue) object to use. Different scheduling strategies can reference different queues to isolate message classes.
 
-The virtual queue used by a scheduling strategy is specified using the `queue.schedule.<id>.queue-name` setting, where `<id>` is the name of the scheduling strategy.
-
-For example:
-
-```toml
-[queue.schedule.local]
-queue-name = "local"
-
-[queue.schedule.remote]
-queue-name = "mx"
-```
-
-In this example:
-
-* Messages using the `local` scheduling strategy will be placed in the `local` virtual queue.
-* Messages using the `remote` strategy will be placed in the `mx` virtual queue.
-
-Each message recipient is evaluated independently and placed into the appropriate queue based on the selected strategy. This allows Stalwart to process different types of messages in isolation, for example, handling local deliveries separately from remote ones, or prioritizing high-importance messages without blocking other traffic.
-
-It is important to ensure that the virtual queues referenced in scheduling strategies are properly defined using the `queue.virtual.<name>.threads-per-node` setting, as queues are not created automatically.
+Each recipient is evaluated independently and placed into the appropriate queue based on the selected strategy, so local deliveries can be processed separately from remote ones, or high-importance messages can bypass a congested general-purpose queue. The referenced virtual queue must exist before the scheduling strategy can be applied, as queues are not created automatically.
 
 ## Retries
 
-When a message cannot be delivered on the first attempt, due to a temporary failure such as a remote server being unavailable, the MTA must retry delivery at a later time. The logic that governs when these retry attempts are made is defined in the **scheduling strategy**, specifically through the `retry` setting.
+When a delivery attempt fails temporarily (for example because the remote server is unavailable), the MTA retries delivery later. Retry timing is controlled by the [`retry`](/docs/ref/object/mta-delivery-schedule#retry) field, which is a multi-variant value: the `Default` variant uses the built-in retry schedule, and the `Custom` variant carries an `intervals` array of `MtaDeliveryScheduleInterval` entries, each with a `duration` field.
 
-In Stalwart, delivery retries are configured using the `queue.schedule.<id>.retry` setting, where `<id>` is the name of the scheduling strategy. This setting accepts a list of durations, which define the intervals between successive delivery attempts.
+With intervals such as `2m`, `5m`, `10m`, `15m`, `30m`, `1h`, `2h`, delivery is retried 2 minutes after the first failure, 5 minutes after that, and so on. When the list is exhausted, the last duration is reused for all subsequent attempts, until the message is delivered, expires, or exceeds the maximum number of delivery attempts. Retries are scheduled independently for each recipient.
 
-For example:
+## Delay notifications
 
-```toml
-[queue.schedule.local]
-retry = ["2m", "5m", "10m", "15m", "30m", "1h", "2h"]
-```
+Delayed Delivery Status Notifications (DSNs) inform the sender that a message has not yet been delivered but is still being retried. These notifications are useful for alerting users to delivery delays before the final expiration.
 
-In this case, delivery will be retried:
+Delay notifications are configured via [`notify`](/docs/ref/object/mta-delivery-schedule#notify), which accepts the same multi-variant shape as `retry`: the `Default` variant uses the built-in schedule and the `Custom` variant carries an `intervals` array. Durations are measured from the moment the message enters the queue; for example an interval list of `1d`, `3d` sends a delay DSN one day and three days after queue entry, provided the message is still undelivered.
 
-* 2 minutes after the first failure,
-* then 5 minutes after that,
-* then 10 minutes after the previous attempt, and so on.
-
-Once the list is exhausted, the last duration in the list (`2h` in this example) is used repeatedly for subsequent retry attempts until the message is either delivered, expires, or exceeds the maximum number of delivery attempts (configured separately). Each recipient in a message is retried independently, and retries are always scheduled based on the delivery failure of the individual recipient.
-
-Retry behavior works in conjunction with message expiration and notification settings, which are described in the following sections.
-
-## Delay Notifications
-
-Delayed Delivery Status Notifications (DSNs) inform the sender that a message has not yet been delivered but is still being retried. These notifications are particularly useful for informing users of potential delivery delays without waiting for the final expiration of the message.
-
-In Stalwart, delayed DSNs are configured using the `queue.schedule.<id>.notify` setting, where `<id>` is the name of the scheduling strategy. This setting accepts a list of durations that specify when delayed notifications should be sent relative to the time the message entered the queue.
-
-For example:
-
-```toml
-[queue.schedule.local]
-notify = ["1d", "3d"]
-```
-
-In this configuration, if a message remains undelivered:
-
-* A delayed DSN will be sent to the sender after 1 day,
-* and again after 3 days,
-* assuming the message is still in the queue and has not been successfully delivered or expired.
-
-If the `notify` list is empty or not defined, no delayed delivery notifications will be sent.
-
-Each duration in the list is evaluated independently, and notifications are only sent once per configured time threshold. Note that these notifications are separate from final bounce messages, which are sent when a message is permanently undeliverable.
+Each interval triggers at most one notification. These delay notifications are separate from the final bounce message, which is sent when the message is permanently undeliverable.
 
 ## Expiration
 
-Message expiration determines how long the MTA should continue attempting delivery before giving up and returning a non-delivery report (bounce [DSN](/docs/mta/reports/dsn)) to the sender. This mechanism ensures that undeliverable messages do not remain in the queue indefinitely and that senders are eventually notified of permanent delivery failures.
+Message expiration determines how long the MTA should continue attempting delivery before giving up and returning a bounce [DSN](/docs/mta/reports/dsn) to the sender. Expiration is configured via [`expiry`](/docs/ref/object/mta-delivery-schedule#expiry), a multi-variant field with two variants:
 
-In Stalwart, message expiration can be configured using **one of two methods**:
+- `Ttl`: Time-To-Live. The message expires after a fixed duration, regardless of the number of delivery attempts. Carries an `expire` duration (default `3d`).
+- `Attempts`: Attempt-based. The message expires after a specified number of failed delivery attempts, regardless of how much time has passed. Carries a `maxAttempts` count (default 5).
 
-- **Time-to-Live (TTL)**: The message expires after a fixed duration in the queue, regardless of the number of delivery attempts.
-- **Maximum Delivery Attempts**: The message expires after a specified number of failed delivery attempts, regardless of how much time has passed.
+TTL-based expiration suits deployments where guaranteed delivery within a fixed time window is important; attempt-based expiration suits environments where retry frequency may vary, but a maximum effort should be enforced.
 
-Both methods offer flexibility for different operational needs. TTL-based expiration is typically used when guaranteed delivery within a fixed time window is important, while attempt-based expiration is useful in environments where retry frequency may vary, but a maximum effort should be enforced.
+A schedule that expires messages after 4 days with custom retry intervals:
 
-Note the only one expiration method can be used per scheduling strategy. If both `expire` and `max-attempts` are defined, the configuration is invalid.
-
-### TTL-Based Expiration
-
-To configure expiration based on TTL, use the `queue.schedule.<id>.expire` setting with a duration value, where `<id>` is the name of the scheduling strategy:
-
-```toml
-[queue.schedule.local]
-expire = "4d"
+```json
+{
+  "name": "local",
+  "queueId": "<MtaVirtualQueue id>",
+  "retry": {
+    "@type": "Custom",
+    "intervals": [
+      {"duration": "2m"}, {"duration": "5m"}, {"duration": "10m"},
+      {"duration": "15m"}, {"duration": "30m"}, {"duration": "1h"}, {"duration": "2h"}
+    ]
+  },
+  "notify": {
+    "@type": "Custom",
+    "intervals": [{"duration": "1d"}, {"duration": "3d"}]
+  },
+  "expiry": {"@type": "Ttl", "expire": "4d"}
+}
 ```
 
-In this example, messages using the `local` scheduling strategy will expire 4 days after entering the queue if they have not been successfully delivered by that time.
+A schedule that gives up after 15 delivery attempts uses the `Attempts` variant instead:
 
-### Attempt-Based Expiration
-
-To expire messages based on a maximum number of delivery attempts, use the `queue.schedule.<id>.max-attempts` setting with an integer value, where `<id>` is the name of the scheduling strategy:
-
-```toml
-[queue.schedule.relay]
-max-attempts = 15
+```json
+{
+  "name": "relay",
+  "queueId": "<MtaVirtualQueue id>",
+  "retry": {"@type": "Default"},
+  "notify": {"@type": "Default"},
+  "expiry": {"@type": "Attempts", "maxAttempts": 15}
+}
 ```
-
-Here, messages using the `relay` scheduling strategy will be expired and bounced after 15 unsuccessful delivery attempts, regardless of how much time has passed.
 
 ## Examples
 
-### Queues by Message Type
+### Queues by message type
 
-This example shows how to assign different types of messages (such as delivery status notifications, reports, autogenerated messages, local deliveries, and general outbound mail) to separate virtual queues. This approach ensures that lower-priority or system-generated messages do not interfere with regular message flow, enabling more efficient and isolated processing.
+Different message types (DSNs, reports, auto-generated notifications, local deliveries, general outbound mail) can be placed into separate virtual queues. The schedule expression on [MtaOutboundStrategy](/docs/ref/object/mta-outbound-strategy) branches on context variables (`is_local_domain('*', rcpt_domain)`, `source == 'dsn'`, `source == 'report'`, `source == 'autogenerated'`) and selects the appropriate scheduling-strategy name. Each referenced [MtaDeliverySchedule](/docs/ref/object/mta-delivery-schedule) sets [`queueId`](/docs/ref/object/mta-delivery-schedule#queueid) to a different [MtaVirtualQueue](/docs/ref/object/mta-virtual-queue) (`local`, `dsn`, `report`, `autogen`, `remote`), and each virtual queue has an appropriate [`threadsPerNode`](/docs/ref/object/mta-virtual-queue#threadspernode) value.
 
-```toml
-[queue.strategy]
-schedule = [ { if = "is_local_domain('*', rcpt_domain)", then = "'local'" }, 
-             { if = "source == 'dsn'", then = "'dsn'" }, 
-             { if = "source == 'report'", then = "'report'" }, 
-             { if = "source == 'autogenerated'", then = "'autogen'" }, 
-             { else = "'remote'" } ]
+The schedule expression:
 
-[queue.schedule.local]
-queue-name = "local"
-
-[queue.schedule.dsn]
-queue-name = "dsn"
-
-[queue.schedule.report]
-queue-name = "report"
-
-[queue.schedule.autogen]
-queue-name = "autogen"
-
-[queue.schedule.remote]
-queue-name = "mx"
-
-[queue.virtual.local]
-threads-per-node = 1000
-
-[queue.virtual.dsn]
-threads-per-node = 50
-
-[queue.virtual.report]
-threads-per-node = 10
-
-[queue.virtual.autogen]
-threads-per-node = 20
-
-[queue.virtual.remote]
-threads-per-node = 1000
+```json
+{
+  "schedule": {
+    "match": [
+      {"if": "is_local_domain('*', rcpt_domain)", "then": "'local'"},
+      {"if": "source == 'dsn'", "then": "'dsn'"},
+      {"if": "source == 'report'", "then": "'report'"},
+      {"if": "source == 'autogenerated'", "then": "'autogen'"}
+    ],
+    "else": "'remote'"
+  }
+}
 ```
 
-### Priority-Based Delivery Queues
+Paired with five MtaVirtualQueue objects (`local`/1000, `dsn`/50, `report`/10, `autogen`/20, `remote`/1000 threads per node) and five MtaDeliverySchedule objects whose [`queueId`](/docs/ref/object/mta-delivery-schedule#queueid) points at the matching queue.
 
-This configuration prioritizes message delivery based on the `MT-PRIORITY` SMTP extension value set by the sender. Messages marked as high priority are given more resources and retried more aggressively, while low-priority traffic is throttled to avoid impacting other deliveries.
+### Priority-based delivery queues
 
-```toml
-[queue.strategy]
-schedule = [ { if = "priority == 1", then = "'high-priority'" }, 
-             { if = "priority == 3", then = "'low-priority'" }, 
-             { else = "'normal-priority'" } ]
+Delivery priority can be driven by the `MT-PRIORITY` SMTP extension. A schedule expression that branches on `priority == 1` and `priority == 3` selects `high-priority`, `low-priority`, or `normal-priority` scheduling strategies. The high-priority strategy uses a short retry interval (`Custom` variant with intervals `["1m"]`) and a high-concurrency virtual queue; the low-priority strategy throttles retries (`["30m"]`) and uses a queue with very few threads.
 
-[queue.schedule.high-priority]
-queue-name = "high-priority"
-retry = ["1m"]
-
-[queue.schedule.normal-priority]
-queue-name = "normal-priority"
-retry = ["2m", "5m", "10m", "15m", "30m", "1h", "2h"]
-
-[queue.schedule.low-priority]
-queue-name = "low-priority"
-retry = ["30m"]
-
-[queue.virtual.high-priority]
-threads-per-node = 2000
-
-[queue.virtual.normal-priority]
-threads-per-node = 100
-
-[queue.virtual.low-priority]
-threads-per-node = 2
+```json
+{
+  "schedule": {
+    "match": [
+      {"if": "priority == 1", "then": "'high-priority'"},
+      {"if": "priority == 3", "then": "'low-priority'"}
+    ],
+    "else": "'normal-priority'"
+  }
+}
 ```
 
-### VIP Client Queue
+The `high-priority` MtaDeliverySchedule uses `retry = {"@type": "Custom", "intervals": [{"duration": "1m"}]}` against a 2000-thread `high-priority` virtual queue; `low-priority` uses `retry = {"@type": "Custom", "intervals": [{"duration": "30m"}]}` against a 2-thread `low-priority` virtual queue; `normal-priority` uses the default schedule against a 100-thread `normal-priority` virtual queue.
 
-This example demonstrates how to prioritize message delivery for VIP users, such as premium or high-importance clients. A database query checks whether either the sender or recipient is listed in a VIP table, and if so, assigns their messages to a dedicated queue with fast retries and higher concurrency.
+### VIP client queue
 
-```toml
-[queue.strategy]
-schedule = [ { if = "sql_query("my-db", "SELECT 1 FROM vip_clients WHERE email = ? OR email = ?", [rcpt, sender])", then = "'vip-client'" }, 
-             { else = "'default'" } ]
+Messages involving VIP clients can be routed to a dedicated queue. The schedule expression invokes `sql_query` against a lookup store to check whether sender or recipient is listed in a VIP table, and selects a `vip-client` scheduling strategy when it matches. The VIP scheduling strategy targets a high-concurrency queue and uses aggressive retry intervals; the default scheduling strategy targets a smaller queue with the standard retry schedule.
 
-[queue.schedule.vip-client]
-queue-name = "vip"
-retry = ["1m", "5m", "10m"]
-
-[queue.schedule.default]
-queue-name = "default"
-retry = ["2m", "5m", "10m", "15m", "30m", "1h", "2h"]
-
-[queue.virtual.vip]
-threads-per-node = 1000
-
-[queue.virtual.default]
-threads-per-node = 100
+```json
+{
+  "schedule": {
+    "match": [
+      {"if": "sql_query('my-db', 'SELECT 1 FROM vip_clients WHERE email = ? OR email = ?', [rcpt, sender])", "then": "'vip-client'"}
+    ],
+    "else": "'default'"
+  }
+}
 ```
+
+The `vip-client` MtaDeliverySchedule targets a 1000-thread `vip` virtual queue with intervals `["1m", "5m", "10m"]`; `default` targets a 100-thread `default` virtual queue with the standard retry schedule.
+
+<!-- review: The original `sql_query` invocation was illustrative. Confirm whether the correct expression for a store lookup in the schedule context is `sql_query('<StoreLookup id>', ...)` or a newer equivalent in the v0.16 expression layer. -->

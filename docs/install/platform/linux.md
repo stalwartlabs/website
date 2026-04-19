@@ -4,32 +4,122 @@ sidebar_position: 1
 
 # Linux / MacOS
 
-To install Stalwart on Linux or MacOS, execute the following command in your terminal:
+Stalwart ships with an installation script that downloads the latest release, creates a dedicated service account, installs the binary under the standard Unix paths, writes a service unit, and starts the daemon. Root access on the target machine and outgoing HTTPS connectivity are required for the steps below.
+
+## Run the installer
+
+Open a terminal on the target host and fetch the installation script:
 
 ```bash
 $ curl --proto '=https' --tlsv1.2 -sSf https://get.stalw.art/install.sh -o install.sh
 ```
 
-Then, execute the installation script as root. The default installation directory is `/opt/stalwart`. If you want to install Stalwart in a different directory, you can specify the installation directory as an argument:
-
-```bash
-$ sudo sh install.sh /path/to/install
-```
-
-If you are planning to use FoundationDB as the backend, add the `--fdb` parameter to the installation script to download the version compiled with FoundationDB support.
-
-### Log in to the web interface
-
-Once the installation is complete, the installation script will print out the administrator account and password: 
+Execute the script as root:
 
 ```bash
 $ sudo sh install.sh
-✅ Configuration file written to /opt/stalwart/etc/config.toml
-🔑 Your administrator account is 'admin' with password 'w95Yuiu36E'.
-🎉 Installation complete! Continue the setup at http://yourserver.org:8080/login
 ```
 
-With this information, you can log in to the web interface at `http://yourserver.org:8080/login`.
+No arguments are required. The script follows the Filesystem Hierarchy Standard and places the pieces as follows:
+
+| Path | Contents |
+| --- | --- |
+| `/usr/local/bin/stalwart` | The server binary |
+| `/etc/stalwart/config.json` | Main configuration file (created by the daemon on first start) |
+| `/etc/stalwart/stalwart.env` | Environment variables read by the service at startup |
+| `/var/lib/stalwart/` | Persistent application data (RocksDB database, local blobs, bootstrap registry) |
+| `/var/log/stalwart/` | Server-managed log files |
+
+A dedicated `stalwart` service account is created if it does not already exist. The script then writes the appropriate service unit (`systemd`, SysV `init.d`, or `launchd` depending on the operating system), enables the service at boot, and starts it immediately.
+
+### Optional: custom installation prefix
+
+When the standard FHS paths cannot be used (for example on a host that mounts `/opt` on a separate volume), a single prefix argument relocates the whole installation under that directory:
+
+```bash
+$ sudo sh install.sh /opt/stalwart
+```
+
+With a prefix, the layout becomes self-contained under that directory: `/opt/stalwart/bin/stalwart`, `/opt/stalwart/etc/config.json`, `/opt/stalwart/etc/stalwart.env`, `/opt/stalwart/data/`, and `/opt/stalwart/logs/`.
+
+### Optional: FoundationDB edition
+
+The default build includes support for SQLite, PostgreSQL, MySQL, RocksDB, S3, Azure Blob Storage, Redis, and NATS. A separate build with FoundationDB support is available. Add the `--fdb` flag to install it:
+
+```bash
+$ sudo sh install.sh --fdb
+```
+
+## Retrieve the bootstrap administrator credentials
+
+Immediately after the first start, Stalwart runs in **bootstrap mode**. A temporary administrator account is generated with a random password and printed to standard error. Bootstrap mode is a transient phase intended only to reach the setup wizard, after which a permanent administrator account is provisioned.
+
+The temporary password is shown exactly once at startup. Retrieve it from the service manager's log facility.
+
+### On Linux with systemd
+
+```bash
+$ sudo journalctl -u stalwart -n 200 | grep -A8 'bootstrap mode'
+```
+
+### On Linux with SysV init
+
+Depending on the distribution's syslog daemon, the output lands in `/var/log/syslog` or `/var/log/messages`:
+
+```bash
+$ sudo grep -A8 'bootstrap mode' /var/log/syslog 2>/dev/null \
+    || sudo grep -A8 'bootstrap mode' /var/log/messages
+```
+
+### On MacOS
+
+```bash
+$ sudo log show --predicate 'process == "stalwart"' --last 5m
+```
+
+The block to look for looks like this:
+
+```
+════════════════════════════════════════════════════════════
+🔑 Stalwart bootstrap mode - temporary administrator account
+
+   username: admin
+   password: XXXXXXXXXXXXXXXX
+
+Use these credentials to complete the initial setup at the
+/admin web UI. Once setup is done, Stalwart will provision a
+permanent administrator and this temporary account will no
+longer apply.
+════════════════════════════════════════════════════════════
+```
+
+Copy the 16-character password from the `password:` line. This is the only time the value appears in the logs.
+
+### Alternative: pin a credential in the env file
+
+To avoid relying on a log-extracted temporary password, a fixed credential can be set in advance. Edit `/etc/stalwart/stalwart.env` and uncomment the `STALWART_RECOVERY_ADMIN` line, setting the desired username and password:
+
+```
+STALWART_RECOVERY_ADMIN=admin:mySecretPass
+```
+
+Restart the service afterwards:
+
+- `sudo systemctl restart stalwart` on systemd hosts
+- `sudo service stalwart restart` on SysV init hosts
+- `sudo launchctl kickstart -k system/stalwart` on MacOS
+
+On the next start, the administrator credentials will match the configured value and no temporary password will be generated.
+
+## Open the setup wizard
+
+With the bootstrap credentials in hand, open a web browser and navigate to:
+
+```
+http://<hostname>:8080/admin
+```
+
+Replace `<hostname>` with the hostname or IP address of the machine running Stalwart. On the machine itself, `http://127.0.0.1:8080/admin` works for local access. Sign in using `admin` as the username and the password retrieved above, then follow the setup wizard to complete the initial configuration.
 
 ### Choose where to store your data
 

@@ -4,29 +4,41 @@ sidebar_position: 2
 
 # Scores
 
-As mentioned in the [tags and scores](/docs/spamfilter/overview#tags-and-scores) section, the spam filter's analysis of incoming messages yields a series of tags, each with a corresponding score. To determine the email's overall classification (spam or ham), scores associated with these tags play a crucial role.
+As described in the [tags and scores](/docs/spamfilter/overview#tags-and-scores) section, the spam filter analyses each incoming message and produces a set of tags. Each tag contributes a score (positive values push the message toward spam, negative values toward ham), or triggers a direct discard or reject action. The cumulative score determines the final classification.
 
-The configuration of these scores is done in the `spam-filter.list.scores` setting. Each entry in this list denotes a tag and its corresponding action or score. The format used is:
+Tag-to-score mappings are configured through the [SpamTag](/docs/ref/object/spam-tag) object (found in the WebUI under <!-- breadcrumb:SpamTag --><!-- /breadcrumb:SpamTag -->). SpamTag is a multi-variant object: the variant selects what happens when the tag fires on a message.
 
-```
-TAG [score|"discard"|"reject"]
-```
+- `Score`: adds a numeric score to the cumulative total. Carries a [`tag`](/docs/ref/object/spam-tag#tag) name and a [`score`](/docs/ref/object/spam-tag#score) value (positive values raise the spam score, negative values reduce it).
+- `Discard`: discards the message outright (no delivery, no bounce). Carries a [`tag`](/docs/ref/object/spam-tag#tag) name only.
+- `Reject`: rejects the message at SMTP time, causing the sending server to receive a delivery failure. Carries a [`tag`](/docs/ref/object/spam-tag#tag) name only.
 
-- **Score**: Tags can be assigned either a positive or negative score. A positive score suggests that the presence of this tag increases the likelihood of the message being spam. Conversely, a negative score indicates that the tag's presence makes the message more likely to be legitimate or ham.
-- **Discard and Reject Flags**: Instead of a numeric score, tags can also be assigned one of two special flags:
-   - **"discard"**: If an email contains a tag with this flag, the entire message will be discarded, meaning it won't reach the recipient's mailbox.
-   - **"reject"**: When an email is found with a tag having this flag, the message will be rejected. Typically, the sending server will be notified of this rejection.
+## Examples
 
-For example:
+Assign a negative score to the classifier's "likely ham" medium-confidence output:
 
-```
-[spam-filter.list]
-scores = {
-   "PROB_HAM_MEDIUM" = "-3.0",
-   RBL_SPAMHAUS_DROP = "7.0",
-   "SPAM_TRAP" = "discard"
+```json
+{
+  "@type": "Score",
+  "tag": "PROB_HAM_MEDIUM",
+  "score": -3.0
 }
 ```
 
-In this example, `PROB_HAM_MEDIUM` = `-3.0` indicates that if the Spam classifier determines the email to be ham (not spam), a score of -3.0 will be applied, reducing the overall likelihood of the message being classified as spam. `RBL_SPAMHAUS_DROP` = `7.0` indicates that, if the email's sender IP is found on the SPAMHAUS_DROP list, a score of 7.0 is added, increasing the chance of the email being categorized as spam. And finally, `SPAM_TRAP` = `discard` indicates that if the message triggers a spam trap, the action taken is to discard the message, preventing it from reaching the intended recipient.
+Assign a high positive score when the sender is on the Spamhaus DROP list:
 
+```json
+{
+  "@type": "Score",
+  "tag": "RBL_SPAMHAUS_DROP",
+  "score": 7.0
+}
+```
+
+Discard any message that lands on a configured spam trap:
+
+```json
+{
+  "@type": "Discard",
+  "tag": "SPAM_TRAP"
+}
+```

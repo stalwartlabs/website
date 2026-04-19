@@ -2,23 +2,26 @@
 sidebar_position: 4
 ---
 
-# Domain Lists
+# Domain lists
 
-Some of the lists stored as [lookup lists](/docs/storage/lookup/local) provide the spam filter with guidelines on handling emails from or containing specific domains. These lists contain one domain per line and are used to categorize domains based on their characteristics, helping the email filtering process. The lists are:
+Several of the lookup lists used by the spam filter categorise domains according to their behaviour. These lists inform rule evaluation and allow the filter to react differently to messages involving specific kinds of domain.
+
+The entries in each list are stored as [MemoryLookupKey](/docs/ref/object/memory-lookup-key) objects (found in the WebUI under <!-- breadcrumb:MemoryLookupKey --><!-- /breadcrumb:MemoryLookupKey -->). The [`namespace`](/docs/ref/object/memory-lookup-key#namespace) field selects which list the entry belongs to, and the [`key`](/docs/ref/object/memory-lookup-key#key) field carries the domain itself.
 
 ## Trusted domains
 
-The `lookup.trusted-domains` lookup list contains domain names that are considered trustworthy. Domains included in this list are not checked against DNS block lists.
+Entries in the `trusted-domains` namespace list domain names considered trustworthy. Messages associated with these domains bypass DNS block-list checks.
 
-## Disposable Domains
+## Disposable domains
 
-The `lookup.disposable-providers` lookup list identifies domains associated with providers offering disposable email addresses. Such addresses are typically used for temporary communication and can be discarded after use. Emails from domains listed here do not directly influence the spam score of the message. However, when these domains are assessed in conjunction with other rules, the spam score might be affected.
+Entries in the `disposable-providers` namespace identify domains associated with providers offering disposable email addresses. Such addresses are typically used for temporary communication and can be discarded after use. Messages from these domains do not directly affect the spam score, but they can shift the score when combined with other rule results.
 
-## Free Domains
+## Free domains
 
-The `lookup.freemail-providers` lookup list contains domain names associated with providers that offer free email addresses. Such providers include popular webmail services where users can sign up for a free email account. Emails originating from these domains do not directly alter the spam score of the message. The spam filter, however, can adjust the score when these domains are evaluated in relation to other rules. For instance, if an email has a "From" address from one free email provider and a "Reply-To" address from another provider, it could be deemed suspicious and affect the spam score.
+Entries in the `freemail-providers` namespace list domain names associated with providers that offer free email accounts, such as popular webmail services. Messages from these domains do not directly alter the spam score, but the filter can adjust it when these domains appear in combination with other signals. For example, a message whose `From` address uses one free-mail provider and whose `Reply-To` uses another may be flagged as suspicious.
 
-## URL Redirectors
+## URL redirectors
 
-The `lookup.url-redirectors` lookup list contains domain names that are recognized as URL redirectors. URL redirectors are services, like bit.ly, that provide shortened URLs which, when accessed, redirect the user to the original, longer URL.  When the spam filter identifies URLs from these domains within the message body, it actively follows the redirect to ascertain its final destination. The filter is also equipped to follow nested redirects, ensuring that even multi-layered redirections are resolved to their ultimate URLs.
+Entries in the `url-redirectors` namespace list domain names that belong to URL redirector services (for example, bit.ly). When the spam filter encounters a URL from one of these domains inside a message body, it follows the redirect to determine the final destination. Nested redirects are also followed, so that multi-layered chains are fully resolved before further analysis.
 
+<!-- review: The previous docs referenced these lists by the lookup identifiers `trusted-domains`, `disposable-providers`, `freemail-providers`, and `url-redirectors`. Confirm that these are the exact namespace values used by MemoryLookupKey in the current schema, or update the prose accordingly. -->

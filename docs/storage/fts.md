@@ -4,37 +4,40 @@ sidebar_position: 4
 
 # Search store
 
-Stalwart supports full-text search (FTS) capabilities that greatly improve the user experience when searching through email content. Full-text indexing can be done internally using any of the supported data store backends, or externally using a third-party solution such as ElasticSearch:
+Full-text search (FTS) indexes message bodies, attachments, contacts, and calendar events so that search queries return quickly across large mailboxes. The backend used for full-text indexing is configured independently from the data store, allowing the search engine to be chosen to match query volume, language requirements, and operational constraints.
 
-- [ElasticSearch](/docs/storage/backends/elasticsearch) Delegate full-text search to ElasticSearch, a distributed, RESTful search and analytics engine.
-- [Meilisearch](/docs/storage/backends/meilisearch) Use Meilisearch, an open-source search engine that is fast and easy to deploy.
-- [Internal](/docs/storage/data): Use any of the supported [data store backends](/docs/storage/data) as a full-text index store.
+Backend selection is made on the [SearchStore](/docs/ref/object/search-store) singleton (found in the WebUI under <!-- breadcrumb:SearchStore --><!-- /breadcrumb:SearchStore -->). The object is a multi-variant type. The supported variants are:
+
+- [ElasticSearch](/docs/storage/backends/elasticsearch): a distributed, RESTful search engine.
+- [Meilisearch](/docs/storage/backends/meilisearch): a fast, relevance-focused search engine with minimal configuration.
+- The `Default` variant, which uses the configured data store as the full-text index. Supported for all data store variants, it stores indexes directly in the database using bloom filters.
+- FoundationDB, PostgreSQL, and MySQL may also be selected as dedicated search backends when their indexing characteristics are preferred.
 
 ## Choosing a search store
 
-The main advantages of using the internal full-text indexing are privacy, multi-language support and simplicity:
+The internal (data-store-backed) full-text index offers several advantages:
 
-- **Privacy**: Stalwart stores full-text indexes directly in the database using bloom filters, which are a space-efficient probabilistic data structure that can be used to determine whether an element is a member of a set. It’s important to note that, while bloom filters do not provide encryption, they do offer a level of privacy. This is because bloom filters obscure individual data items while allowing for effective searching, meaning that the content of your emails is not directly exposed in the search index.
-- **Automatic multi-language support**: Before indexing a message, Stalwart will try to automatically detect its language and use the appropriate analyzer for indexing. This allows for more accurate indexing and searching of messages in different languages.
-- **Simplicity**: Using the internal full-text indexing is the simplest way to enable full-text search in Stalwart. It does not require any additional configuration or external dependencies.
+- **Privacy**: indexes are kept in the database using bloom filters, a space-efficient probabilistic data structure that allows membership testing without exposing indexed tokens directly. While bloom filters do not encrypt data, they obscure individual terms.
+- **Automatic multi-language support**: message language is detected before indexing, and a language-appropriate analyser is applied.
+- **Simplicity**: no additional services are required.
 
-Full-text indexing engines such as ElasticSearch or Meilisearch offer the following advantages:
+External engines offer their own strengths:
 
-- **Advanced Text Analysis and Relevance Scoring**: They provide sophisticated text analysis features, including synonyms, and custom analyzers. This results in more relevant search results. They also use sophisticated algorithms for relevance scoring, helping users find the most pertinent results quickly.
-- **Ranking and Sorting**: They allow for more nuanced control over ranking and sorting of search results. They use a variety of factors (like text relevance, field values, and custom algorithms) to rank the results, giving users more accurate and tailored outputs.
-- **Storage efficient**: They use index structures that are designed and optimized for full-text search, allowing for more efficient use of storage space.
+- **Advanced text analysis and relevance scoring**: synonyms, custom analysers, and sophisticated ranking algorithms.
+- **Ranking and sorting flexibility**: more control over how results are ordered, combining text relevance with structured fields.
+- **Storage efficiency**: purpose-built index structures designed for full-text search.
 
 :::tip Encryption and full-text search
 
-It is important to note that when [encryption at rest](/docs/encryption/overview) is enabled, only the message headers will be stored in the full-text index.
+When [encryption at rest](/docs/encryption/overview) is enabled, only message headers are stored in the full-text index.
 
 :::
 
 ### Limitations
 
-All full text search (FTS) backends involve tradeoffs. No single engine is optimal for every deployment, and each supported backend makes different design choices that affect scalability, accuracy, resource usage, and query expressiveness. When selecting a full text search backend, administrators should carefully consider these limitations in the context of their expected mail volume, query patterns, and operational constraints.
+Every FTS backend involves trade-offs. No single engine is optimal for every deployment; each backend makes design choices that affect scalability, accuracy, resource usage, and query expressiveness. Administrators should consider these in the context of expected mail volume, query patterns, and operational constraints.
 
-The following table summarizes the primary limitations of each full text search engine supported by Stalwart:
+The following table summarises the primary limitations of each supported engine:
 
 | Full Text Search Engine | Key Limitations                                                                                |
 | ----------------------- | ---------------------------------------------------------------------------------------------- |
@@ -44,53 +47,18 @@ The following table summarizes the primary limitations of each full text search 
 | MySQL                   | [No stemming support](/docs/storage/backends/mysql#fts-limitations) and no support for indexing multiple languages within the same column.     |
 | Internal FTS            | Higher write amplification compared to external full text search backends.                     |
 
-These limitations are not defects but consequences of architectural and design decisions made by each engine. If search accuracy, language support, scalability, or operational simplicity are critical requirements, you may need to evaluate multiple backends to determine which best aligns with your deployment needs.
+These limitations are not defects but consequences of architectural choices. If search accuracy, language support, scalability, or operational simplicity is a critical requirement, evaluating multiple backends may be necessary.
 
 ## Configuration
 
-To configure the search store, you need to specify the ID of the store you wish to use under the `storage.fts` attribute in the configuration file. For example, to use the `postgresql` store as the search store:
+To change the search backend, update the SearchStore singleton and select the appropriate variant. Variant-specific fields such as [`url`](/docs/ref/object/search-store#url), [`httpAuth`](/docs/ref/object/search-store#httpauth), [`numShards`](/docs/ref/object/search-store#numshards), and [`numReplicas`](/docs/ref/object/search-store#numreplicas) apply to the ElasticSearch variant; [`url`](/docs/ref/object/search-store#url), [`pollInterval`](/docs/ref/object/search-store#pollinterval), and [`maxRetries`](/docs/ref/object/search-store#maxretries) apply to the Meilisearch variant. See the [SearchStore reference](/docs/ref/object/search-store) for the full field list per variant.
 
-```toml
-[storage]
-fts = "postgresql"
-```
+### Index configuration
 
-### Disabling an index
+Which entities are indexed, and which of their fields, is controlled through the [Search](/docs/ref/object/search) object (found in the WebUI under <!-- breadcrumb:Search --><!-- /breadcrumb:Search -->). Indexing for each entity type can be enabled or disabled independently through [`indexEmail`](/docs/ref/object/search#indexemail), [`indexContacts`](/docs/ref/object/search#indexcontacts), [`indexCalendar`](/docs/ref/object/search#indexcalendar), and [`indexTelemetry`](/docs/ref/object/search#indextelemetry).
 
-By default, Stalwart indexes all supported entities (emails, contacts, calendar events, tracing spans). However, you can selectively disable indexing for specific entities if needed. An index can be selectively enabled/disabled via the `storage.search-index.<index>.enabled` property, where `index` is one of the supported search indexes:
-
-- `email`
-- `contacts`
-- `calendar`
-- `tracing`
-
-If the property resolves to `false`, that index is skipped and no fields are registered for it. 
-
-Example:
-
-```toml
-[storage.search-index.email]
-enabled = true
-
-[storage.search-index.calendar]
-enabled = false
-```
-
-### Configuring fields to index
-
-Fields to be indexed are read from `storage.search-index.<index>.fields`, which is a list of field names. If the property is missing or empty, all supported fields for that index are registered.
-
-```toml
-[storage.search-index.email]
-enabled = true
-fields = ["subject", "body", "from", "to", "cc", "bcc"]
-```
+The fields indexed per entity are controlled through [`indexEmailFields`](/docs/ref/object/search#indexemailfields), [`indexContactFields`](/docs/ref/object/search#indexcontactfields), [`indexCalendarFields`](/docs/ref/object/search#indexcalendarfields), and [`indexTracingFields`](/docs/ref/object/search#indextracingfields). Each accepts a list of field names; if the list is empty, all supported fields for that entity are registered.
 
 ### Default language
 
-Before indexing a message in the internal store, Stalwart attempts to automatically detect its language. However, in certain scenarios where language detection may not be possible (for instance, if the text is too short or doesn't have clear language characteristics), the system will default to using the configured default language for text processing and indexing determined by the `storage.search-index.default-language` attribute. For example:
-
-```toml
-[storage.search-index]
-default-language = "en"
-```
+When language detection fails (for example, when the text is too short or ambiguous), the server falls back to the language configured in [`defaultLanguage`](/docs/ref/object/search#defaultlanguage) on the Search object. The default is `"en_US"`. Specific languages can be excluded from detection through [`disableLanguages`](/docs/ref/object/search#disablelanguages).

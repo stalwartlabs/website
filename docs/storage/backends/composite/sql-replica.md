@@ -4,33 +4,20 @@ sidebar_position: 4
 
 # SQL Read Replicas
 
-SQL read replicas are a database architecture pattern used to improve performance and scalability by separating read and write operations. A primary database handles all write operations, ensuring that data is consistently updated and stored. Read replicas, on the other hand, are synchronized copies of the primary database and are used exclusively for read operations. This separation helps distribute the load, reducing strain on the primary database and enabling efficient handling of high-volume read queries.
+SQL read replicas are a well-known database architecture pattern for separating read and write traffic. A primary database handles all write operations, ensuring consistent updates; one or more read replicas, synchronised from the primary, handle read traffic. This separation reduces load on the primary and allows the read path to scale horizontally.
 
-In Stalwart, the SQL read replicas composite store allows administrators to apply this pattern with any SQL database that supports read replicas, such as PostgreSQL, MySQL, MariaDB, Galera, or AlloyDB. Using SQL read replicas improves server performance in read-heavy environments while maintaining data consistency.
+Stalwart supports this pattern for any SQL backend that itself supports read replicas (PostgreSQL, MySQL, MariaDB, Galera, AlloyDB, and similar). Using read replicas improves throughput in read-heavy environments while preserving write consistency.
 
 :::tip Enterprise feature
 
-This feature is available exclusively in the [Enterprise Edition](/docs/server/enterprise) of Stalwart and not included in the Community Edition.
+This feature is available exclusively in the [Enterprise Edition](/docs/server/enterprise) of Stalwart and is not included in the Community Edition.
 
 :::
 
 ## Configuration
 
-Configuring SQL read replicas in Stalwart is straightforward. The configuration requires specifying the ID of the primary SQL store for write operations, along with a list of one or more SQL read replica store IDs. This distributes read and write operations across the defined stores, providing a scalable setup for database management.
+Read replicas are configured on the primary SQL variant itself. On the [DataStore](/docs/ref/object/data-store) object (found in the WebUI under <!-- breadcrumb:DataStore --><!-- /breadcrumb:DataStore -->), when the `PostgreSql` or `MySql` variant is selected, the [`readReplicas`](/docs/ref/object/data-store#readreplicas) field accepts a list of replica connection settings. Each replica entry defines a full set of connection parameters: [`host`](/docs/ref/object/data-store#host), [`port`](/docs/ref/object/data-store#port), [`database`](/docs/ref/object/data-store#database), [`authUsername`](/docs/ref/object/data-store#authusername), and [`authSecret`](/docs/ref/object/data-store#authsecret).
 
-The following configuration settings are available for SQL Read Replica Stores, which are specified under the `store.<name>` section of the configuration file:
+Write operations always target the primary connection, while read operations are distributed across the replicas. The same pattern is available on the [BlobStore](/docs/ref/object/blob-store) and [SearchStore](/docs/ref/object/search-store) objects when their PostgreSQL or MySQL variants are selected.
 
-- `type`: Specifies the type of database, set to `"sql-read-replica"` for SQL read replicas.
-- `primary`: The identifier of the primary SQL store that handles write operations.
-- `replicas`: A list of SQL store identifiers that serve as read replicas. Each identifier corresponds to a read replica store backend, such as PostgreSQL, MySQL, or MariaDB.
-
-
-## Example
-
-```toml
-[store."sql-read-replica"]
-type = "sql-read-replica"
-primary = "postgresql-primary"
-replicas = ["postgresql-replica-1", "postgresql-replica-2"]
-```
-
+<!-- review: The previous configuration exposed a dedicated `sql-read-replica` composite store with `primary` and `replicas` fields. The current schema instead appears to attach `readReplicas` directly to the primary SQL variant. Confirm that no standalone SQL-read-replica variant exists at the top level of DataStore/BlobStore/SearchStore. -->

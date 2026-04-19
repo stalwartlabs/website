@@ -4,51 +4,37 @@ sidebar_position: 6
 
 # Quotas
 
-Quotas in **Stalwart** provide a mechanism for regulating resource consumption within the system, ensuring fair allocation of storage and object capacity across users and tenants. They define explicit limits on the amount of space or number of items that an account can hold, preventing misuse and maintaining optimal system performance. Quotas are an integral part of the directory and account management architecture, capable of being enforced at various levels, including per-account or per-tenant.
+Quotas regulate resource consumption on the server, ensuring fair allocation of storage and object capacity across accounts and tenants. They define limits on the amount of data an account may hold, as well as the number of objects of a given kind it may create. Quotas can be enforced per account or, in multi-tenant deployments, per tenant.
 
-The quota system in Stalwart encompasses several types, most notably disk usage quotas and object quotas. **Disk usage quotas** control the total amount of disk space consumed by a user’s stored data, while **object quotas** constrain the number of distinct items (such as messages, mailboxes, calendar events, or address book entries) that can be created or stored. Together, these mechanisms offer administrators fine-grained control over resource utilization and service scaling.
+Stalwart supports two broad categories of quota. Disk-usage quotas control the total storage consumed by an account's data, while object quotas cap the number of distinct items (messages, mailboxes, calendar events, address book entries, and similar) that an account can hold.
+
+Per-account limits are carried on the [Account](/docs/ref/object/account) object (found in the WebUI under <!-- breadcrumb:Account --><!-- /breadcrumb:Account -->) via its [`quotas`](/docs/ref/object/account#quotas) field, which is a map from a `StorageQuota` key to a numeric limit. Per-tenant limits are carried on the [Tenant](/docs/ref/object/tenant) object (found in the WebUI under <!-- breadcrumb:Tenant --><!-- /breadcrumb:Tenant -->) via its [`quotas`](/docs/ref/object/tenant#quotas) field, which maps a `TenantStorageQuota` key to a numeric limit.
 
 ## Disk Usage Quotas
 
-Stalwart supports disk usage quotas that define the maximum amount of disk space an account or tenant may consume. These quotas can be applied globally or configured individually per account or [tenant](/docs/auth/authorization/tenants#quotas).
+The total amount of disk space an account may consume is expressed through the `maxDiskQuota` entry in the account's [`quotas`](/docs/ref/object/account#quotas) map, in bytes. Tenants expose an equivalent entry on their [`quotas`](/docs/ref/object/tenant#quotas) map, capping total storage across the tenant's members.
 
-Disk usage quotas are typically defined in the directory from which users are authenticated, ensuring that quota policies are integrated into existing account management systems. This allows organizations to maintain consistency across authentication sources such as LDAP or SQL directories while enforcing storage limits.
+When an external directory is used for authentication, the same disk-quota value can be surfaced from the directory. For LDAP directories this is controlled by the `attrQuota` attribute configured on the [Directory](/docs/ref/object/directory) object (found in the WebUI under <!-- breadcrumb:Directory --><!-- /breadcrumb:Directory -->); the attribute returns an integer number of bytes.
 
-Administrators may also override these quota settings dynamically using the **WebAdmin interface** or the **REST API**, allowing on-demand adjustments without requiring changes to the underlying directory configuration. This capability is particularly useful in environments where user storage requirements vary or where temporary quota increases are needed for administrative or operational reasons.
+<!-- review: The previous LDAP reference documented an `attributes.quota` mapping. The LDAP variant of the Directory object lists attrClass, attrDescription, attrEmail, attrEmailAlias, attrMemberOf, attrSecret, and attrSecretChanged, but no attribute for the user's disk quota. Confirm whether the quota attribute has been removed, renamed, or moved. -->
+
+Administrators can override per-account or per-tenant disk quota values from the WebUI or the JMAP API without changing the underlying directory entry.
 
 ## Object Quotas
 
-Object quotas govern the total number of data objects that can be stored within an account. These objects encompass all logical entities managed by Stalwart, including emails, mailboxes, calendars, events, address books, contacts, and files. By enforcing object quotas, administrators can prevent excessive object creation, which could otherwise degrade system performance or lead to storage inefficiencies.
+Object quotas cap the number of items of each kind that can be stored under an account or tenant. The available keys are defined by the `StorageQuota` enum on the Account object, and by the `TenantStorageQuota` enum on the Tenant object. Relevant `StorageQuota` values include [`maxEmails`](/docs/ref/object/account#storagequota), [`maxMailboxes`](/docs/ref/object/account#storagequota), [`maxCalendars`](/docs/ref/object/account#storagequota), [`maxCalendarEvents`](/docs/ref/object/account#storagequota), [`maxAddressBooks`](/docs/ref/object/account#storagequota), [`maxContactCards`](/docs/ref/object/account#storagequota), [`maxFiles`](/docs/ref/object/account#storagequota), [`maxEmailIdentities`](/docs/ref/object/account#storagequota), [`maxEmailSubmissions`](/docs/ref/object/account#storagequota), [`maxSieveScripts`](/docs/ref/object/account#storagequota), [`maxPushSubscriptions`](/docs/ref/object/account#storagequota), [`maxAppPasswords`](/docs/ref/object/account#storagequota), and [`maxApiKeys`](/docs/ref/object/account#storagequota).
 
-The default limits for each object type are defined through configuration settings following the convention `object-quota.<name>`, where `<name>` corresponds to the object category:
+<!-- review: The previous docs listed default values for `object-quota.<name>` keys (mailbox 250, calendar 250, address-book 250, identity 20, email-submission 500, sieve-script 100, push-subscription 15, others unlimited). These are no longer documented on the Account reference page, which lists StorageQuota values without defaults. Confirm the current default for each object-quota kind so they can be stated here. -->
 
+To restrict the number of calendars and address books that a single account may create, set the relevant entries on the account's [`quotas`](/docs/ref/object/account#quotas) field:
 
-| **Object Quota Name**           |      **Default Value** |
-| -------------------------------- | ---------------------: |
-| `email`                          | Unlimited |
-| `mailbox`                        |                    250 |
-| `calendar`                       |                    250 |
-| `calendar-event`                 | Unlimited |
-| `address-book`                   |                    250 |
-| `contact-card`                   | Unlimited |
-| `file-node`                      | Unlimited |
-| `identity`                       |                     20 |
-| `email-submission`               |                    500 |
-| `sieve-script`                   |                    100 |
-| `push-subscription`              |                     15 |
-
-Example:
-
-```toml
-[object-quota]
-calendar = 300
-address-book = 500
+```json
+{
+  "quotas": {
+    "maxCalendars": 300,
+    "maxAddressBooks": 500
+  }
+}
 ```
 
-While these defaults establish baseline constraints across the system, they can be overridden on a per-user basis through either the **WebAdmin interface** or the **REST API**, providing administrators with granular control over individual user capacities. This design ensures a consistent yet flexible quota management model that aligns with the operational policies of diverse deployments.
-
-:::tip Note
-
-Object quotas are not being enforced yet for the `email`, `mailbox` and `file-node` types. This functionality is planned for version `0.15.0`.
-
-:::
+Default maximum numbers of per-account app passwords and API keys are also controlled globally through [`maxAppPasswords`](/docs/ref/object/authentication#maxapppasswords) and [`maxApiKeys`](/docs/ref/object/authentication#maxapikeys) on the [Authentication](/docs/ref/object/authentication) singleton (found in the WebUI under <!-- breadcrumb:Authentication --><!-- /breadcrumb:Authentication -->).

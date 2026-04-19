@@ -4,13 +4,13 @@ sidebar_position: 4
 
 # Apache Mesos
 
-**Apache Mesos** is a distributed systems kernel designed to abstract and pool resources (such as CPU, memory, storage, and network) across an entire datacenter or cloud environment. It enables efficient resource sharing across diverse workloads, making it well-suited for running large-scale, fault-tolerant distributed applications.
+Apache Mesos is a distributed systems kernel that abstracts and pools resources (CPU, memory, storage, and network) across a data centre or cloud environment. It supports efficient resource sharing across diverse workloads, which suits large-scale, fault-tolerant distributed applications.
 
-Mesos provides a two-level scheduling model, where it manages low-level resource allocation and delegates task scheduling to higher-level frameworks. This design allows complex systems like Stalwart to run alongside other services in a shared infrastructure while still maintaining control over how and where tasks are executed.
+Mesos uses a two-level scheduling model: it manages low-level resource allocation and delegates task scheduling to higher-level frameworks. This allows systems such as Stalwart to run alongside other services in a shared infrastructure while retaining control over how and where tasks are executed.
 
-Stalwart can be deployed on Apache Mesos either as a containerized service using Mesos's native support for Docker and other container runtimes, or through a dedicated framework or scheduler that manages Stalwart node placement and health monitoring.
+Stalwart can be deployed on Apache Mesos either as a containerised service using Mesos support for Docker and other container runtimes, or through a dedicated framework or scheduler that manages node placement and health monitoring.
 
-Running Stalwart under Mesos provides administrators with a flexible and scalable orchestration solution, particularly in environments where Mesos is already used to manage a diverse set of workloads. With proper coordination and configuration, Mesos ensures that Stalwart nodes are automatically restarted on failure, scaled based on demand, and distributed across available resources for optimal resilience and performance.
+Running Stalwart under Mesos offers administrators a flexible and scalable orchestration option, particularly in environments where Mesos is already used for a diverse set of workloads. With appropriate coordination and configuration, Mesos restarts Stalwart nodes on failure, scales them based on demand, and distributes them across available resources.
 
 ## Deployment
 
@@ -20,7 +20,7 @@ Deploy Stalwart using the Marathon CLI:
 $ marathon app add stalwart.json
 ```
 
-Below is an example of a JSON configuration file for deploying Stalwart on Apache Mesos using Marathon:
+Below is an example JSON configuration file for deploying Stalwart on Apache Mesos via Marathon:
 
 ```json
 {
@@ -87,3 +87,5 @@ Below is an example of a JSON configuration file for deploying Stalwart on Apach
   }
 }
 ```
+
+<!-- review: The example relies on `STALWART_HOSTNAME`, `STALWART_DOMAINS`, `STALWART_ADMIN_PASSWORD`, and several `STALWART_DB_*` environment variables that are not documented in `/docs/configuration/environment-variables.md` (which lists only the recovery/bootstrap variables and `STALWART_ROLE` / `STALWART_PUSH_SHARD`). Confirm whether these deployment variables still apply or whether storage and domain configuration is now expected to be seeded through the bootstrap flow instead. -->

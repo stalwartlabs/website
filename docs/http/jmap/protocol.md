@@ -4,71 +4,31 @@ sidebar_position: 2
 
 # Protocol
 
-The JMAP Protocol settings section covers the configuration parameters for the JMAP server. These parameters influence various aspects of the protocol's behavior, such as request handling, data uploading, quota management, email and mailbox settings, and event processing. 
+JMAP protocol behaviour is configured on the [Jmap](/docs/ref/object/jmap) singleton (found in the WebUI under <!-- breadcrumb:Jmap --><!-- /breadcrumb:Jmap -->). The fields below influence request handling, upload quotas, and the size of responses returned by get, set, query, and changes methods.
 
-## Requests Limits
+## Request limits
 
-Request limits are used to prevent abuse of the JMAP server. The following parameters can be set under the `jmap.protocol.request` section:
+Request limits guard the JMAP server against resource exhaustion:
 
-- `max-concurrent`: Restricts the number of concurrent requests a user can make to the JMAP server.
-- `max-size`: Defines the maximum size of a single request, in bytes, that the server will accept.
-- `max-calls`: Limits the maximum number of method calls that can be included in a single request.
+- [`maxConcurrentRequests`](/docs/ref/object/jmap#maxconcurrentrequests): the number of concurrent requests a single user may have in flight. Default `4`.
+- [`maxRequestSize`](/docs/ref/object/jmap#maxrequestsize): the maximum size of a single request, in bytes. Default `10000000`.
+- [`maxMethodCalls`](/docs/ref/object/jmap#maxmethodcalls): the maximum number of method calls that can be included in a single request. Default `16`.
 
-Example:
-    
-```toml
-[jmap.protocol.request]
-max-concurrent = 4
-max-size = 10000000
-max-calls = 16
-```
+## Upload limits
 
-## Upload Limits
+Upload limits restrict how often and how much data users can upload:
 
-Upload limits control how often and how many files users can upload to the JMAP server. The following parameters can be configured under the `jmap.protocol.upload` section:
-
-- `max-size`: Defines the maximum file size, in bytes, for file uploads to the server.
-- `max-concurrent`: Restricts the number of concurrent file uploads a user can perform.
-- `ttl`: specifies the Time-To-Live (TTL) for each uploaded file, after which the file is [deleted from temporary storage](/docs/storage/blob#maintenance).
-- `quota.files`: Specifies the maximum number of files that a user can upload within a certain period.
-- `quota.size`: Defines the total size of files, in bytes, that a user can upload within a certain period.
-
-Example:
-    
-```toml
-[jmap.protocol.upload]
-max-size = 50000000
-max-concurrent = 4
-ttl = "1h"
-
-[jmap.protocol.upload.quota]
-files = 1000
-size = 50000000
-```
+- [`maxUploadSize`](/docs/ref/object/jmap#maxuploadsize): the maximum size of a single uploaded file, in bytes. Default `50000000`.
+- [`maxConcurrentUploads`](/docs/ref/object/jmap#maxconcurrentuploads): the number of concurrent uploads a single user may have in flight. Default `4`.
+- [`uploadTtl`](/docs/ref/object/jmap#uploadttl): how long each uploaded file is kept in temporary storage before it is [deleted](/docs/storage/blob#maintenance). Default `"1h"`.
+- [`maxUploadCount`](/docs/ref/object/jmap#maxuploadcount): the maximum number of files a user may upload within the quota window. Default `1000`.
+- [`uploadQuota`](/docs/ref/object/jmap#uploadquota): the total aggregate size of uploaded files allowed per user within the quota window, in bytes. Default `50000000`.
 
 ## Object limits
 
-Object limits are used to restrict the number of objects that can be fetched, modified, or returned by a method call. The following parameters can be configured:
+Object limits restrict the number of objects returned or modified by a single method call:
 
-- `jmap.protocol.get.max-objects`: Determines the maximum number of objects that can be fetched in a single method call.
-- `jmap.protocol.set.max-objects`: Establishes the maximum number of objects that can be modified in a single method call.
-- `jmap.protocol.query.max-results`: Sets the maximum number of results that a Query method can return.
-- `jmap.protocol.changes.max-results`: Determines the maximum number of change objects that a Changes method can return.
-
-Example:
-    
-```toml
-[jmap.protocol.get]
-max-objects = 500
-
-[jmap.protocol.set]
-max-objects = 500
-
-[jmap.protocol.query]
-max-results = 5000
-
-[jmap.protocol.changes]
-max-results = 5000
-
-```
-
+- [`getMaxResults`](/docs/ref/object/jmap#getmaxresults): the maximum number of objects that can be fetched in a single method call. Default `500`.
+- [`setMaxObjects`](/docs/ref/object/jmap#setmaxobjects): the maximum number of objects that can be modified in a single method call. Default `500`.
+- [`queryMaxResults`](/docs/ref/object/jmap#querymaxresults): the maximum number of results returned by a Query method. Default `5000`.
+- [`changesMaxResults`](/docs/ref/object/jmap#changesmaxresults): the maximum number of change objects returned by a Changes method. Default `5000`.

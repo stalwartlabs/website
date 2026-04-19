@@ -4,45 +4,48 @@ sidebar_position: 9
 
 # AI Models
 
-Stalwart supports the integration of AI models for email processing. AI models, particularly Large Language Models (LLMs), can analyze and interpret email content to perform a range of tasks. With AI integration, Stalwart can be configured for operations such as [spam classification](/docs/spamfilter/llm), threat detection, and [message categorization](/docs/sieve/llm).
-
-Stalwart allows users to integrate cloud-based AI models from providers like OpenAI or Anthropic, or access locally hosted models using solutions such as LocalAI. Any AI model that exposes an OpenAI-compatible API can be integrated into Stalwart, so administrators can choose between cloud-based or on-premise AI infrastructure depending on their needs and privacy requirements.
-
-Through AI integration, Stalwart can improve email security, simplify email management, and perform more advanced message processing.
+Stalwart can call out to large language models for tasks such as [spam classification](/docs/spamfilter/llm), threat detection, and [message categorization](/docs/sieve/llm). Any endpoint that exposes an OpenAI-compatible chat or text-completion API is supported, whether hosted by a provider such as OpenAI or Anthropic or run locally through a tool such as LocalAI. This choice lets operators balance cost, latency, and privacy according to the deployment.
 
 :::tip Enterprise feature
 
-This feature is available exclusively in the [Enterprise Edition](/docs/server/enterprise) of Stalwart and not included in the Community Edition.
+This feature is available exclusively in the [Enterprise Edition](/docs/server/enterprise) of Stalwart and is not included in the Community Edition.
 
 :::
 
 ## Configuration
 
-Stalwart allows for the integration of AI models through a configurable section in its configuration file. This section provides a flexible framework to define how the server interacts with AI models, including settings for connection, authentication, and behavior customization.
+Each AI endpoint is represented by an [AiModel](/docs/ref/object/ai-model) object (found in the WebUI under <!-- breadcrumb:AiModel --><!-- /breadcrumb:AiModel -->). The relevant fields are:
 
-Below is a description of the available configuration options under the `enterprise.ai.<id>` section of the configuration file:
+- [`name`](/docs/ref/object/ai-model#name): short identifier for the model within Stalwart.
+- [`url`](/docs/ref/object/ai-model#url): full URL of the OpenAI-compatible endpoint (for example `https://api.openai.com/v1/chat/completions`).
+- [`model`](/docs/ref/object/ai-model#model): the model name to send to the endpoint, such as `gpt-4`.
+- [`modelType`](/docs/ref/object/ai-model#modeltype): `Chat` for chat completions or `Text` for text completions. Default `Chat`.
+- [`timeout`](/docs/ref/object/ai-model#timeout): maximum time to wait for a response. Default `"2m"`.
+- [`temperature`](/docs/ref/object/ai-model#temperature): randomness of the response, in the range `0.0` to `1.0`. Default `0.7`.
+- [`allowInvalidCerts`](/docs/ref/object/ai-model#allowinvalidcerts): whether to accept invalid TLS certificates. Default `false`. Recommended only for local or self-signed endpoints.
+- [`httpAuth`](/docs/ref/object/ai-model#httpauth): authentication method, either `Unauthenticated`, `Basic`, or `Bearer`.
+- [`httpHeaders`](/docs/ref/object/ai-model#httpheaders): additional HTTP headers sent with every request.
 
-- **`endpoint`**: This option specifies the API endpoint that the Stalwart will use to interact with the AI model. It should be a fully qualified URL that points to the appropriate AI service, whether it is a cloud-based provider or a locally hosted instance.
-- **`model`**: This option defines the specific AI model to be used for processing requests. The value can represent any model supported by the selected endpoint, such as a particular version of an LLM (e.g., GPT-4).
-- **`type`**: This option indicates the type of completion the AI model should handle. It can either be set to `chat` for handling chat-style completions or `text` for traditional text completions.
-- **`timeout`**: This option sets the maximum amount of time the server will wait for a response from the AI model before timing out. This value can be customized based on performance requirements.
-- **`default-temperature`**: This option controls the level of randomness in the AI model’s responses. A lower value makes the output more focused and deterministic, while a higher value encourages more creative or varied responses.
-- **`allow-invalid-certs`**: This option determines whether or not to allow invalid SSL/TLS certificates when connecting to the AI model’s endpoint. This is typically useful for local or self-hosted models, but for security reasons, should be set cautiously in production environments.
-- **`headers`**: This option allows you to specify additional HTTP headers to be included in requests sent to the AI model endpoint. These headers can be used to pass custom information or configure special options required by the AI service.
-- **`auth.token`**: For secure access to the AI model, this option defines the authentication token used for authorization when making requests to the AI endpoint. The token is sent as part of the request to authenticate the Stalwart with the AI service.
+For example, a chat endpoint authenticated with a bearer token and an extra custom header:
 
-Example:
-
-```toml
-[enterprise.ai."chat"]
-endpoint = "https://api.openai.com/v1/chat/completions"
-model = "gpt-4"
-type = "chat"
-timeout = "2m"
-default-temperature = "0.7"
-allow-invalid-certs = "false"
-headers = [ "X-My-Header: my-value" ]
-
-[enterprise.ai."chat".auth]
-token = "my-secret-token"
+```json
+{
+  "name": "chat",
+  "url": "https://api.openai.com/v1/chat/completions",
+  "model": "gpt-4",
+  "modelType": "Chat",
+  "timeout": "2m",
+  "temperature": 0.7,
+  "allowInvalidCerts": false,
+  "httpAuth": {
+    "@type": "Bearer",
+    "bearerToken": {
+      "@type": "Value",
+      "secret": "my-secret-token"
+    }
+  },
+  "httpHeaders": {
+    "X-My-Header": "my-value"
+  }
+}
 ```

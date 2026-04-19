@@ -4,26 +4,20 @@ sidebar_position: 2
 
 # Local
 
-Local lookup lists are static lists that are kept entirely in memory. They are defined directly in the configuration file and are useful for storing small amounts of static data that do not change often.
-lookup lists are used from expressions or Sieve filters and their contents can be defined directly in the configuration file or loaded from local files or from remote HTTP resources.
+Local lookup lists hold key-only membership sets and key-value pairs entirely in memory. They are well suited to small, slow-changing sets of static data, consulted from expressions or Sieve filters.
 
-## Configuration
+## Key-only lists
 
-Local lookup lists are specified in the configuration file under the `lookup.<name>` section, where `<name>` is the unique identifier for the lookup list. Keys under the `lookup.<name>` section define the entries in the lookup list, where the key is the lookup key and the value is the lookup value. 
+Key-only lists, useful for membership tests such as allow-lists and deny-lists, are defined through the [MemoryLookupKey](/docs/ref/object/memory-lookup-key) object (found in the WebUI under <!-- breadcrumb:MemoryLookupKey --><!-- /breadcrumb:MemoryLookupKey -->). Each record has:
 
-For example, to create the `allow-list-domain` lookup list with the keys `example.com` and `example.org`, the configuration would look like this:
+- [`namespace`](/docs/ref/object/memory-lookup-key#namespace): the lookup namespace the key belongs to (required). All records sharing a namespace form a single lookup list.
+- [`key`](/docs/ref/object/memory-lookup-key#key): the key name (required, up to 255 characters).
+- [`isGlobPattern`](/docs/ref/object/memory-lookup-key#isglobpattern): when `true`, the key is interpreted as a glob pattern, matching multiple concrete keys (for example `*.example.com` or `mx?.example.org`). Default: `false`.
 
-```toml
-[lookup."allow-list-domain"]
-example.com = true
-example.org = true
-```
+To build a list of allowed domains, for instance, create one MemoryLookupKey record per entry, all sharing the namespace `allow-list-domain`, with the domain as the key.
 
-It is also possible to use glob patterns in the keys to match multiple entries. For example, to create an lookup list that matches all subdomains of `example.com` and all mail exchangers of `example.org`, the configuration would look like this:
+## Key-value lists
 
-```toml
-[lookup."allow-list-domain"]
-"*.example.com" = true
-"mx?.example.org" = true
-```
+Lists that associate a value with each key are defined through the [MemoryLookupKeyValue](/docs/ref/object/memory-lookup-key-value) object (found in the WebUI under <!-- breadcrumb:MemoryLookupKeyValue --><!-- /breadcrumb:MemoryLookupKeyValue -->). Each record has the same [`namespace`](/docs/ref/object/memory-lookup-key-value#namespace), [`key`](/docs/ref/object/memory-lookup-key-value#key), and [`isGlobPattern`](/docs/ref/object/memory-lookup-key-value#isglobpattern) fields as MemoryLookupKey, plus:
 
+- [`value`](/docs/ref/object/memory-lookup-key-value#value): the value associated with the key (required).

@@ -4,93 +4,42 @@ sidebar_position: 1
 
 # Overview
 
-Directories are a critical component of the system, serving as the central repository for user account information. These directories contain essential details such as user accounts, passwords, email addresses, and other user-specific settings. The primary functions of directories include:
+Directories are the central repository for user account information. They hold the accounts, passwords, email addresses, and settings used to authenticate users and validate message recipients. Their primary functions are:
 
-- **Authentication**: They are used to authenticate users, ensuring that only authorized individuals can access their email accounts.
-- **Email Address and Domain Validation**: They check whether an email address or domain is valid and exists within the system.
-- **Account Information**: They store account details such as account name, disk quotas and group memberships.
+- **Authentication**: verifying account credentials so that only authorised users can access their mailboxes.
+- **Email and domain validation**: confirming that a recipient address exists on the server.
+- **Account information**: storing account metadata such as the account name, disk quota, and group memberships.
 
 ## Directory types
 
-Stalwart offers the possibility to use either an internal directory or connect to an external directory service. The choice between these options depends on the specific needs and existing infrastructure of the organization. 
+Stalwart can either use its own internal directory or delegate authentication and account lookup to an external directory service. The choice depends on the environment and on any existing identity infrastructure.
 
-### Internal Directory
+### Internal directory
 
-When the internal directory is used, Stalwart manages all user-related data within its own system. This option is suitable for environments where Stalwart is the primary system for email management and no external user management systems are in place. In this setup, all account management tasks, such as creating new user accounts, updating passwords, and setting quotas, are performed directly within Stalwart. This offers a straightforward and integrated approach to user management.
+The internal directory stores account information inside Stalwart itself. It is intended for deployments where Stalwart is the primary system managing email users and no external identity system is in place. All account management tasks (creating accounts, updating passwords, setting quotas) are carried out directly on the server.
 
-### External Directory
+### External directory
 
-Stalwart can also be configured to integrate with external directories, such as LDAP (Lightweight Directory Access Protocol) servers or SQL databases. This option is ideal for organizations that already have an established user management system and prefer to maintain a central directory for all services, including email. When an external directory is utilized, all user account management must be performed within that external system. Stalwart will rely on this external directory for authentication and user information but will not have the ability to directly modify user details. It is important to ensure that the external directory is properly maintained and synchronized to prevent access issues or inconsistencies in user data.
+Stalwart can also be configured against an external directory such as LDAP or an SQL database. This mode is useful when user accounts are already managed by another system and those accounts should be reused by the mail server. Account changes are made in the external directory; Stalwart queries the directory to authenticate users and to resolve email addresses. The external directory must be kept consistent to avoid stale or inconsistent state.
 
 ## Configuration
 
-Directory servers are configured under the `directory.<name>` section of the configuration file. Each directory requires the `type` attribute that specifies the type of directory server. Supported types are:
+External directories are represented by the [Directory](/docs/ref/object/directory) object (found in the WebUI under <!-- breadcrumb:Directory --><!-- /breadcrumb:Directory -->). The object is multi-variant, with one variant per backend kind. The variants supported in the current release are the LDAP variant, the SQL variant, and the OIDC variant.
 
-- `internal`: Internal directory
-- `sql`: SQL database
-- `ldap`: LDAP server
-- `oidc`: [OpenID](/docs/auth/openid/overview) Connect server
-- `memory`: In-memory static directory (for small deployments or testing purposes)
+<!-- review: The previous docs also listed in-memory, SMTP, LMTP, and IMAP directory types for the standalone SMTP package. The current Directory object defines only Ldap, Sql, and Oidc variants. Confirm whether in-memory/SMTP/LMTP/IMAP directories still exist in v0.16 and, if so, how they are modelled (separate object, another variant of Directory, or removed outright). -->
 
-Additionally, when running the standalone SMTP package, it is also possible to perform authentication against a remote SMTP, LMTP or IMAP server:
-
-- `smtp`: Remote SMTP server
-- `lmtp`: Remote LMTP server
-- `imap`: Remote IMAP server
-
-For example:
-
-```toml
-[directory."default"]
-type = "internal"
-store = "rocksdb"
-```
+Use of the internal directory is indicated by leaving the [`directoryId`](/docs/ref/object/authentication#directoryid) field unset on the [Authentication](/docs/ref/object/authentication) singleton (found in the WebUI under <!-- breadcrumb:Authentication --><!-- /breadcrumb:Authentication -->). To delegate authentication to an external directory, set `directoryId` to the id of the desired Directory object.
 
 ### Connection pool
 
-Some external directories such as LDAP, SMTP, LMTP and IMAP have their own connection pool. This connection pool is used to reduce the number of connections made to the directory server and to improve performance. The connection pool is configured through the following parameters located under the `directory.<name>.pool` key in the configuration file. It accepts the following parameters:
-
-- `max-connections`: This setting defines the maximum number of connections that can be maintained simultaneously in the connection pool. 
-- `timeout.create`: Defines the maximum amount of time that the connection pool will wait for a new connection to be created.
-- `timeout.wait`: Defines the maximum amount of time that the connection pool will wait for a connection to become available.
-- `timeout.recycle`: Defines the maximum amount of time that the connection pool manager will wait for a connection to be recycled.
-
-For example:
-
-```toml
-[directory."imap".pool]
-max-connections = 10
-
-[directory."imap".pool.timeout]
-create = "30s"
-wait = "30s"
-recycle = "30s"
-```
+The LDAP variant of the Directory object maintains its own connection pool. The pool is configured through [`poolMaxConnections`](/docs/ref/object/directory#poolmaxconnections), [`poolTimeoutCreate`](/docs/ref/object/directory#pooltimeoutcreate), [`poolTimeoutRecycle`](/docs/ref/object/directory#pooltimeoutrecycle), and [`poolTimeoutWait`](/docs/ref/object/directory#pooltimeoutwait) on the object. `poolMaxConnections` caps the number of simultaneous connections, while the three timeout fields cap how long the pool waits to create, recycle, and hand out a connection, respectively.
 
 ### Cache
 
-In order to reduce the number of requests made to a directory, it is possible to enable caching for certain directory lookups. Stalwart uses S3-FIFO caching and maintains separate positive and negative caches for each query. Successful lookups are stored in the positive cache while failed or non-existent lookups are stored in the negative cache. The directory cache is configured through the following parameters located under the `directory.<name>.cache` key in the configuration file:
+Directory result caching is no longer configured per directory. Server-wide lookup caches are centralised on the [Cache](/docs/ref/object/cache) singleton (found in the WebUI under <!-- breadcrumb:Cache --><!-- /breadcrumb:Cache -->).
 
-- `size`: Specifies the size in bytes of the cache. The cache will automatically evict the least recently used entries when the cache size exceeds this value.
-- `ttl.positive`: Defines how long entries in the positive cache will be kept before they are considered stale and are refreshed. For example, a value of `1h` means that if a directory lookup returns a positive result (i.e., the requested user or account information is found), that result will be kept in the cache for 1 hour. 
-- `ttl.negative`: Defines how long entries in the negative cache will be kept before they are considered stale and are refreshed. For example, a value of `10m` means that if a directory lookup returns a negative result (i.e., the requested user or account information is not found), that result will be kept in the cache for 10 minutes. These settings help balance cache efficiency with data freshness.
+<!-- review: The previous docs described per-directory caches with `directory.<name>.cache.size`, `cache.ttl.positive`, and `cache.ttl.negative`. The current Directory variants expose no cache fields. Confirm that directory caching now lives entirely on the Cache singleton and identify the specific fields on Cache that correspond to the old positive/negative TTLs. -->
 
-For example:
+### Default directory
 
-```toml
-[directory."sql".cache]
-size = 1048576
-ttl = {positive = '1h', negative = '10m'}
-```
-
-### Default Directory
-
-The default directory to authenticate [JMAP](/docs/http/jmap/overview), [IMAP](/docs/email/imap), [ManageSieve](/docs/sieve/managesieve) and HTTP API requests against can be configured using the `storage.directory` configuration attribute.
-
-For example, to use the `sql` directory as the default directory:
-
-```toml
-[storage]
-directory = "sql"
-```
-
+The default directory used for JMAP, IMAP, ManageSieve, and HTTP API authentication is selected by setting [`directoryId`](/docs/ref/object/authentication#directoryid) on the [Authentication](/docs/ref/object/authentication) singleton to the id of the relevant Directory object.

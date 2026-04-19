@@ -4,105 +4,75 @@ sidebar_position: 2
 
 # Envelope
 
-Address rewriting is a process where the email addresses in the envelope of a message are altered as it moves through the mail server. This envelope, separate from the message content itself, contains essential routing information, including the sender (return-path) and recipient addresses.
+Address rewriting alters the email addresses in the envelope of a message as it passes through the mail server. The envelope, distinct from the message content, carries the routing information (sender or return path, and recipients).
 
-Address rewriting can be used for several purposes. For instance, you might want to change outgoing mail addresses to match a specific domain for branding purposes or adjust incoming mail addresses to redirect certain emails to a different inbox.
+Address rewriting can be used to change outgoing mail addresses to match a specific domain for branding, or to adjust incoming addresses to redirect specific messages to a different inbox. Rewriting rules use regular expressions for pattern-based matching and transformation, and [Sieve scripts](/docs/sieve/overview) for cases requiring finer control.
 
-Address rewriting rules can be defined using regular expressions for pattern-based matching and transformation of addresses. For cases that require more control, address rewriting can also be managed from [Sieve scripts](/docs/sieve/overview).
-
-Stalwart supports address rewriting on both the sender and recipient parts of the envelope, allowing flexible transformations to suit different email traffic requirements. 
+Stalwart supports address rewriting on both the sender and recipient parts of the envelope.
 
 ## Expressions
 
-Address rewriting in Stalwart uses [expressions](/docs/configuration/expressions/overview) and regular expressions (regex). If the regular expression matches the email address, the components captured by the regex can be rearranged or modified to form a new address.
+Address rewriting uses [expressions](/docs/configuration/expressions/overview) and regular expressions. When a regex matches the email address, the captured components can be rearranged or modified to form a new address.
 
-The capture groups in the regex, which are delineated by parentheses, are numbered sequentially from 0. The 0th group always refers to the entire address that is matched by the regex, while subsequent numbers correspond to the respective groups in the order they appear.
+Capture groups are numbered sequentially from 0 (the whole match). The `${pos}` syntax refers to a capture group by its position number. For example, the expression `matches('^([^.]+)\.([^.]+)@(.+)$', rcpt)` matches addresses of the form `alias.name@domain`, and a rewrite expression such as `$1 + '+' + $2 + '@' + $3` transforms them into `alias+name@domain`. When the expression does not match, the `else` branch returns `false` and no rewriting takes place.
 
-The replacement syntax `${pos}` is used in the configuration to refer to the numbered capture groups. The variable `pos` here is the position number of the captured group, and `${pos}` would be replaced by the corresponding part of the matched address.
-
-In the given example:
-
-```toml
-[session.rcpt]
-rewrite = [ { if = "is_local_domain('%{DEFAULT_DIRECTORY}%', rcpt_domain) & matches('^([^.]+)\.([^.]+)@(.+)$', rcpt)", then = "$1 + '+' + $2 + '@' + $3" },
-            { else = false } ]
-```
-
-The configuration is set to rewrite recipient addresses (`if = "rcpt"`). If an address matches the regular expression in the `matches` attribute, it's then rewritten according to the pattern in the `then` attribute, which uses the `${pos}` syntax to refer to the captured groups. If an address does not match the regular expression, as indicated by `{ else = false }`, no rewriting occurs.
-
-In the configuration file, address rewriting expressions are defined in the `session.mail.rewrite` and `session.rcpt.rewrite` sections. The `session.mail.rewrite` section is used to rewrite the sender address, while the `session.rcpt.rewrite` section is used to rewrite the recipient address.
+Sender addresses are rewritten by the [`rewrite`](/docs/ref/object/mta-stage-mail#rewrite) field on the [MtaStageMail](/docs/ref/object/mta-stage-mail) singleton (found in the WebUI under <!-- breadcrumb:MtaStageMail --><!-- /breadcrumb:MtaStageMail -->). Recipient addresses are rewritten by the [`rewrite`](/docs/ref/object/mta-stage-rcpt#rewrite) field on the [MtaStageRcpt](/docs/ref/object/mta-stage-rcpt) singleton (found in the WebUI under <!-- breadcrumb:MtaStageRcpt --><!-- /breadcrumb:MtaStageRcpt -->).
 
 ## Sieve
 
-In situations where the task of address rewriting cannot be accomplished using regular expressions alone, Stalwart offers the flexibility to use [Sieve scripts](/docs/sieve/overview). Sieve is a scripting language designed specifically for mail filtering. It is easy to write and understand, making it a versatile tool for mail server administrators. Stalwart supports the `envelope` Sieve extension, which provides access to details of the message envelope such as sender and recipient addresses, as well as other envelope information such as Delivery Status Notifications (DSN).
+When address rewriting cannot be expressed with regular expressions alone, a [Sieve script](/docs/sieve/overview) can be used. Sieve is a scripting language designed for mail filtering. Stalwart supports the `envelope` Sieve extension, which provides access to details of the message envelope such as sender and recipient addresses, as well as other envelope information such as Delivery Status Notifications (DSN).
 
-In order to modify parts of the envelope within a Sieve script, the `set` command is used. The `set` command allows you to define and modify variables within your script, which can then be applied to elements of the envelope. This opens up an extensive range of possibilities for address rewriting, providing the power to construct elaborate rules for customizing how your mail server processes and directs incoming and outgoing messages.
+To modify parts of the envelope within a Sieve script, the `set` command defines and modifies variables. Assigning a new value to `envelope.to` or `envelope.from` replaces the corresponding envelope address.
 
-Rewriting rules defined in Sieve scripts are configured in the `sieve.trusted.scripts` section of the configuration file. The `sieve.trusted.scripts` section is a table of key-value pairs, where the key is the name of the script and the value is the script itself. The name of the script is used to refer to it in the `session.mail.script` and `session.rcpt.script` sections. For more details please refer to the [Sieve scripts](/docs/sieve/overview), [MAIL FROM](/docs/mta/inbound/mail) stage and [RCPT TO](/docs/mta/inbound/rcpt) stage sections of the documentation.
+System-level Sieve scripts are defined as [SieveSystemScript](/docs/ref/object/sieve-system-script) objects. The script name is referenced from the [`script`](/docs/ref/object/mta-stage-mail#script) field on MtaStageMail or the [`script`](/docs/ref/object/mta-stage-rcpt#script) field on MtaStageRcpt. See the [Sieve scripts](/docs/sieve/overview), [MAIL FROM](/docs/mta/inbound/mail) stage, and [RCPT TO](/docs/mta/inbound/rcpt) stage sections for details.
 
 ## Examples
 
 ### Ignore dots
 
-Gmail has a specific functionality where it disregards any periods '.' in the local part (before the '@') of an email address. This means that if you have an email address like 'example@gmail.com', you will still receive emails sent to 'ex.ample@gmail.com' or 'e.x.a.m.p.l.e@gmail.com'. This is a handy feature that provides flexibility to the users and ensures that the email is delivered even if someone mistakenly adds dots to the email address.
+Gmail disregards periods in the local part of an email address, so `example@gmail.com` receives mail also sent to `ex.ample@gmail.com` or `e.x.a.m.p.l.e@gmail.com`. The same behaviour can be implemented in Stalwart with a Sieve script:
 
-In Stalwart, you can accomplish the same effect using Sieve scripts. 
-
-```toml
-[session.rcpt]
-script = "'remove-dots'"
-
-[sieve.trusted.scripts.remove-dots]
-contents = '''require ["variables", "envelope", "regex"];
+```sieve
+require ["variables", "envelope", "regex"];
 
 if allof( envelope :localpart :contains "to" ".",
           envelope :regex "to" "(.+)@(.+)$") {
     set :replace "." "" "to" "${1}";
     set "envelope.to" "${to}@${2}";
-}'''
-
+}
 ```
 
-Here is a breakdown of how the script works:
+How the script works:
 
-- The script starts with `require ["variables", "envelope", "regex"];` which indicates the Sieve extensions that will be used in this script. In this case, we use the 'variables' extension for setting and modifying variables, 'envelope' for accessing envelope information, and 'regex' for using regular expressions.
+- The `require` clause declares the Sieve extensions used: `variables` for variable handling, `envelope` for envelope access, and `regex` for pattern matching.
+- The `if allof(...)` conditional checks that the local part of the recipient contains a period and that the address splits into local and domain parts.
+- `set :replace "." "" "to" "${1}"` strips the periods from the local part and stores the result in the variable `to`.
+- `set "envelope.to" "${to}@${2}"` reconstructs the recipient address and updates the envelope.
 
-- The `if allof(...)` conditional checks two conditions:
-    1. If the local part of the recipient ('to') contains any periods.
-    2. If the 'to' address can be broken down into a local part and a domain part using regular expression.
-
-    If both conditions are met, the script continues with the `set` commands inside the `if` block.
-
-- `set :replace "." "" "to" "${1}";` This command removes any periods from the local part of the address by replacing them with nothing (""), and stores the result in a variable called "to".
-- `set "envelope.to" "${to}@${2}";` This command constructs the new recipient address by joining the modified local part (without periods) with the original domain, and sets the envelope 'to' address to this new value.
-
-This effectively mimics Gmail's period-ignoring functionality, ensuring that emails reach their intended recipient even if additional periods are inserted in the address.
-
+The script is referenced from the [`script`](/docs/ref/object/mta-stage-rcpt#script) field on MtaStageRcpt.
 
 ### Silent bounces
 
-There might be situations where it is necessary to modify additional parts of the SMTP envelope. For instance, certain SMTP parameters such as:
+Certain SMTP parameters control delivery-time behaviour:
 
-- `NOTIFY`: Determines when the sender should be notified about the status of the delivery of the email. It can have values like "NEVER", "SUCCESS", "FAILURE", or "DELAY".
-- `ENVID`: Used for associating a unique identifier with a message, which is helpful for tracking purposes.
-- `ORCPT`: Used to provide the original recipient address when it's different from the address in the envelope. This is useful in cases of address rewriting or forwarding.
+- `NOTIFY`: when the sender should be notified about delivery status. Values include `NEVER`, `SUCCESS`, `FAILURE`, and `DELAY`.
+- `ENVID`: unique identifier associated with the message, useful for tracking.
+- `ORCPT`: original recipient address when different from the envelope recipient, useful after forwarding or rewriting.
 
-Now, let's consider an example where you might want to disable Delivery Status Notifications (DSN) for a specific recipient (like a mailer-daemon address). The following script can be used for this purpose:
+To disable DSNs for messages sent to any mailer-daemon address:
 
-```toml
-[session.rcpt]
-script = "'silent-bounce'"
-
-[sieve.trusted.scripts.silent-bounce]
-contents = '''require ["variables", "envelope"];
+```sieve
+require ["variables", "envelope"];
 
 if envelope :matches "to" "mailer-daemon@*" {
     set "envelope.notify" "NEVER";
-}'''
+}
 ```
 
-Here is a breakdown of how the script works:
+How the script works:
 
-- The script itself begins by requiring the "variables" and "envelope" extensions.
-- The conditional `if envelope :matches "to" "mailer-daemon@*"` checks if the recipient address matches the pattern "mailer-daemon@*". If it does, the script proceeds to execute the `set` command within the `if` block.
-- The line `set "envelope.notify" "NEVER";` sets the envelope's NOTIFY parameter to "NEVER", thereby disabling DSNs for emails sent to any "mailer-daemon" address. This would ensure that no DSNs are sent for emails directed to these addresses, thereby suppressing unnecessary notifications.
+- The `require` clause declares the `variables` and `envelope` extensions.
+- The `if envelope :matches "to" "mailer-daemon@*"` check matches recipient addresses of the form `mailer-daemon@<domain>`.
+- `set "envelope.notify" "NEVER"` clears the notification setting so no DSN is sent.
+
+The script is referenced from the [`script`](/docs/ref/object/mta-stage-rcpt#script) field on MtaStageRcpt.

@@ -4,29 +4,31 @@ sidebar_position: 4
 
 # Values
 
-Dynamic Values are an integral part of configuration that allows for more sophisticated and adaptable setups. Through dynamic values, Stalwart provides administrators with a high degree of flexibility, allowing them to create configurations that adapt in real-time to the context of the server operation.
+Values produced by an expression can be assembled from literal strings, context variables, and regex capture groups. Two substitution mechanisms are available: positional variables from a regex match, and references to context variables.
 
-Dynamic Values are essentially expressions that are evaluated at runtime using data from either environment variables or matching conditions defined within an `if` clause. These expressions can reference any of the supported environment [variables](/docs/configuration/variables) or positional variables captured by a regular expression.
+## Positional variables
 
-## Positional Variables
+Positional variables refer to data matched by a regular expression. They are written as `$n`, where `n` is the index of the capture group. `$0` holds the entire matched string; `$1`, `$2`, and so on hold the individual groups. For example, rewriting a recipient address by extracting the local part and the top-level domain:
 
-These variables refer to the data matched by a regex or other [expressions](/docs/configuration/expressions/overview). They are denoted as `$n`, where `n` is a number that represents the position of the matched group in a regular expression. For instance:
-
-```toml
-[session.rcpt]
-rewrite = [ { if = "listener != 'smtp' & matches('^([^.]+)@([^.]+)\.(.+)$', rcpt)", then = "$1 + '@' + $3" }, 
-            { else = false } ]
+```json
+{
+  "rewrite": {
+    "match": [
+      {"if": "listener != 'smtp' && matches('^([^.]+)@([^.]+)\\.(.+)$', rcpt)", "then": "$1 + '@' + $3"}
+    ],
+    "else": "false"
+  }
+}
 ```
 
-In this configuration expression `$n` would be replaced by the nth capture group from the regular expression match. Here, `$0` would represent the entire matched string. 
+At runtime, `$1` and `$3` are replaced by the first and third capture groups of the regex match.
 
-## Environment Variables
+## Context variables
 
-Dynamic Values can also be generated using environment variables. Any of the supported [environment variables](/docs/configuration/variables) such as `remote_ip`, `local_ip`, or `listener` can be used. These variables can be referenced directly within the dynamic value string, making them incredibly useful for creating settings that adapt to the environment of the running application. For example:
+Values can also be assembled from [context variables](/docs/configuration/variables) such as `remote_ip`, `local_ip`, or `listener`. The variable name is referenced directly inside the expression string. For example, selecting a directory whose identifier depends on the active listener:
 
-```toml
-directory = "'sql_' + listener"
+```json
+{"else": "'sql_' + listener"}
 ```
 
-In this example, `listener` will be replaced at runtime by the value of the `listener` environment variable.
-
+At runtime, `listener` is replaced with the identifier of the listener accepting the current connection (for example `smtp` or `submission`), producing values such as `'sql_smtp'` or `'sql_submission'`.

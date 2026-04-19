@@ -4,145 +4,56 @@ sidebar_position: 5
 
 # OpenID Connect
 
-Stalwart can be configured to authenticate users against a third-party **OpenID Connect (OIDC) provider**. This allows Stalwart to delegate user authentication to an external identity provider, integrating with an existing identity management system. Common third-party OIDC providers include services like Google, Microsoft, or any OpenID Connect-compliant identity provider.
+Stalwart can authenticate users against a third-party **OpenID Connect (OIDC) provider**. This allows the server to delegate authentication to an existing identity system, for example Google, Microsoft Entra ID, or any OIDC-compliant provider.
 
-However, as Stalwart is primarily a **mail server** rather than a traditional web application, there are important distinctions in how it handles the OIDC authentication process. Specifically, Stalwart expects to receive **access tokens** directly via the **OAUTHBEARER SASL mechanism** and does not initiate the OIDC authentication flow itself. As a result, it relies on external means to retrieve user identity information, since it does not directly handle the **ID token** issued by the OIDC server.
+As Stalwart is primarily a mail server, it handles OIDC somewhat differently from a typical web application. Clients authenticate over IMAP, POP3, SMTP, or JMAP using the `OAUTHBEARER` SASL mechanism, which carries an access token already obtained from the identity provider. Stalwart does not initiate the OIDC flow itself and does not consume an ID token directly; it validates the access token and uses it to resolve the user's identity.
 
-## Authentication Flow
+## Authentication flow
 
-As a mail server, Stalwart expects clients (such as email applications) to authenticate using the **OAUTHBEARER SASL mechanism**. This means the client provides an **access token** (obtained from the third-party OIDC provider) to the mail server when attempting to authenticate. Unlike a typical web-based OIDC client, Stalwart does not participate in the full OIDC authentication flow (such as redirecting users to a login page or handling authorization codes).
+Clients (such as mail applications) present an access token issued by the external OIDC provider using the `OAUTHBEARER` SASL mechanism. Because Stalwart is not part of the OIDC flow, it does not see the [ID token](/docs/auth/openid/id-tokens). To identify the user associated with an access token, Stalwart validates the token against the OIDC provider.
 
-Since Stalwart does not initiate the OIDC flow, it does not have direct access to the [ID token](/docs/auth/openid/id-tokens), which typically contains key identity information about the user (such as the username or email). Instead, it operates with the **access token** provided by the client via OAUTHBEARER. Therefore, to retrieve the user’s identity (such as their account name and email address), Stalwart must be configured to query either the OIDC **UserInfo endpoint** or the **OAuth token introspection endpoint** provided by the OIDC server.
+In the current release this validation is performed automatically through the provider's standard OIDC discovery document (the `/.well-known/openid-configuration` endpoint). From that document Stalwart resolves the userinfo endpoint and signing keys, validates the token, and extracts the user's identity from the claims that the provider returns.
 
-To map the access token received via OAUTHBEARER to the user’s identity, Stalwart can be configured to query one of the following endpoints on the third-party OIDC provider:
-
-- **UserInfo Endpoint:** The standard OpenID Connect endpoint that returns information about the authenticated user associated with a given access token. This endpoint typically provides key user attributes such as the user’s unique identifier (subject), email address, and other profile information. By querying this endpoint, Stalwart can retrieve the user’s identity and link it to the corresponding mail account.
-- **Token Introspection Endpoint:** Alternatively, Stalwart can be configured to use the **OAuth 2.0 Token Introspection endpoint**. The introspection endpoint allows the mail server to validate an access token and retrieve metadata about it, including the user’s identity. This endpoint returns information about the token’s status (whether it is active or expired) and, if valid, includes details such as the user’s identifier and scopes.
+<!-- review: The previous docs documented four distinct endpoint/auth combinations for OIDC integration: UserInfo, Introspect without authentication, Introspect with basic authentication, Introspect with a bearer token, and Introspect using the user-provided token. The current OIDC variant of the Directory object exposes `issuerUrl`, `requireAudience`, `requireScopes`, `claimUsername`, `usernameDomain`, `claimName`, and `claimGroups`, with no explicit endpoint type or client-authentication fields. Confirm whether token introspection with client credentials is still supported (and via which fields) or whether the integration now relies solely on OIDC discovery + userinfo. -->
 
 ## Limitations
 
-When using an external OpenID Connect (OIDC) provider as an authentication backend in Stalwart, it is important to understand certain limitations due to the nature of OIDC and its integration with the mail server. 
+### Offline access
 
-### Offline Access
+Stalwart learns about an account only after the first time that account authenticates. OIDC does not provide an offline directory lookup, so an account that exists in the identity provider but has not yet signed in is unknown to the server. Mail addressed to such an account is rejected because the address does not resolve to a local recipient.
 
-One of the key limitations is that Stalwart only becomes aware of user accounts after they have authenticated at least once with the system. This limitation arises because OIDC does not provide a mechanism to query or validate user information offline without an active and valid token. As a result, if an email message is sent to an address that exists in the external OIDC provider but the corresponding account has never logged into Stalwart, Stalwart will not recognize the account. In this scenario, the server will bounce the message, as it does not have the email address in its internal database. This happens even if the address is valid in the OIDC system because Stalwart cannot perform offline verifications against the OIDC provider.
-
-To avoid this issue, it is necessary to pre-deploy accounts in Stalwart before users log in for the first time. Administrators can manually create these accounts through the [Webadmin](/docs/management/webadmin/overview) interface or in bulk via the [REST API](/docs/api/management/overview). By pre-creating user accounts, Stalwart will recognize the email addresses and accept incoming messages, even if the users have not yet logged in. This ensures that all necessary accounts are set up to receive mail, even if they have not authenticated via OIDC.
+To avoid this, create accounts in Stalwart before users sign in for the first time. Accounts can be created through the [WebUI](/docs/management/webui/overview), the JMAP API, or the [CLI](/docs/management/cli/overview). Pre-creating the accounts ensures that inbound mail is accepted from the start, even for users who have not yet authenticated via OIDC.
 
 ### `OAUTHBEARER` SASL
 
-Another limitation relates to the `OAUTHBEARER` (or `XOAUTH2`) SASL mechanism, which is required for mail clients to authenticate with OAuth tokens. Unfortunately, many mainstream mail clients, such as Outlook, Thunderbird, and Apple Mail, do not support this mechanism. As a result, users of these clients cannot directly authenticate using OAuth tokens. To work around this limitation, administrators need to set up [App Passwords](/docs/auth/authentication/app-password) for these users. These App Passwords allow users to access their mail accounts securely in clients that do not support `OAUTHBEARER` (or `XOAUTH2`). For more details on this, refer to the [interoperability](/docs/auth/oauth/interoperability) section of the OAuth documentation.
+Many widely deployed mail clients, including Outlook, Thunderbird, and Apple Mail, do not support the `OAUTHBEARER` or `XOAUTH2` SASL mechanism with third-party OAuth providers. Users of those clients cannot authenticate directly with OIDC. The standard workaround is to provision [App Passwords](/docs/auth/authentication/app-password) for those users, as described in the [interoperability](/docs/auth/oauth/interoperability) section of the OAuth documentation.
 
 ## Configuration
 
-Stalwart can be configured to authenticate users against a third-party OpenID Connect (OIDC) provider by querying the provider’s endpoints to retrieve user identity information. The server supports different methods for interacting with OIDC providers, such as using the **UserInfo endpoint** or the **Token Introspection endpoint** with various authentication methods. This documentation outlines how to configure Stalwart to work with these methods.
+An OIDC integration is configured through the OIDC variant of the [Directory](/docs/ref/object/directory) object (found in the WebUI under <!-- breadcrumb:Directory --><!-- /breadcrumb:Directory -->). The relevant fields are:
 
-Before diving into the specific methods, there are common configuration settings that apply across all types of OIDC provider integrations:
+- [`issuerUrl`](/docs/ref/object/directory#issuerurl): the base URL of the OIDC provider, for example `https://accounts.example.org/realms/myrealm`. Stalwart uses this URL to discover the provider's endpoints.
+- [`requireAudience`](/docs/ref/object/directory#requireaudience): if set, access tokens whose `aud` claim does not include this value are rejected. The default is `"stalwart"`. Set this to the client id or resource identifier registered for Stalwart at the provider.
+- [`requireScopes`](/docs/ref/object/directory#requirescopes): if set, access tokens must include every listed scope. Default `["openid", "email"]`.
+- [`claimUsername`](/docs/ref/object/directory#claimusername): the claim used to derive the account login name. Default `"preferred_username"`. If the claim value is not already an email address and [`usernameDomain`](/docs/ref/object/directory#usernamedomain) is set, the domain is appended automatically.
+- [`usernameDomain`](/docs/ref/object/directory#usernamedomain): the domain to append to the username claim when it does not already contain an `@`. When unset, the server falls back to the `email` claim.
+- [`claimName`](/docs/ref/object/directory#claimname): the claim used for the user's display name. Default `"name"`.
+- [`claimGroups`](/docs/ref/object/directory#claimgroups): the claim used for group memberships. Typical values are `"groups"` or `"roles"`, depending on the provider.
 
-- `type`: This is always set to `"oidc"`, indicating that the integration is with an OIDC provider.
-- `timeout`: Defines the maximum time allowed for Stalwart to wait for a response from the OIDC provider. For example, `timeout = "1s"` specifies a timeout of 1 second.
-- `endpoint.url`: This is the URL of the OIDC provider’s endpoint, which can either be the **UserInfo** or **Token Introspection** endpoint, depending on the chosen method.
-- `fields.email`, `fields.username`, `fields.full-name`: These fields map the information returned by the OIDC provider to the user attributes within Stalwart. Common fields are the email (`fields.email`), username (`fields.username`), and full name (`fields.full-name`), which are typically part of the claims provided by the OIDC server.
+Example integration with a Keycloak-style provider that issues `preferred_username` as a bare username and exposes groups on the `groups` claim:
 
-### UserInfo Endpoint
-
-When using the **UserInfo endpoint**, Stalwart queries this endpoint to obtain user identity information after validating the access token provided by the client. This method directly fetches the user's information (such as email and username) from the OIDC provider.
-
-Example:
-
-```toml
-[directory."oidc-userinfo"]
-type = "oidc"
-timeout = "1s"
-endpoint.url = "https://accounts.example.org/userinfo"
-endpoint.method = "userinfo"
-fields.email = "email"
-fields.username = "preferred_username"
-fields.full-name = "name"
+```json
+{
+  "@type": "Oidc",
+  "description": "External IdP",
+  "issuerUrl": "https://accounts.example.org/realms/myrealm",
+  "requireAudience": "stalwart",
+  "requireScopes": ["openid", "email"],
+  "claimUsername": "preferred_username",
+  "usernameDomain": "example.org",
+  "claimName": "name",
+  "claimGroups": "groups"
+}
 ```
 
-In this setup, Stalwart queries the specified `userinfo` endpoint to retrieve the user's details using the access token provided by the client during the authentication process.
-
-### Introspection Endpoint without Authentication
-
-When using the **Token Introspection endpoint without authentication**, Stalwart sends the access token to the introspection endpoint without requiring any authentication for the request itself. The introspection endpoint verifies the token and returns information about the token’s owner.
-
-Example:
-
-```toml
-[directory."oidc-introspect-none"]
-type = "oidc"
-timeout = "1s"
-endpoint.url = "https://accounts.example.org/introspect-none"
-endpoint.method = "introspect"
-auth.method = "none"
-fields.email = "email"
-fields.username = "preferred_username"
-fields.full-name = "name"
-```
-
-Here, no additional authentication method is required to access the token introspection endpoint, meaning that the token is sent directly to the OIDC provider for validation and user information retrieval.
-
-### Introspection Endpoint with Basic Authentication
-
-In cases where the **Token Introspection endpoint requires basic authentication**, Stalwart needs to provide a valid username and password when querying the introspection endpoint. This method adds a layer of security by requiring client credentials in addition to the access token.
-
-Example:
-
-```toml
-[directory."oidc-introspect-basic"]
-type = "oidc"
-timeout = "1s"
-endpoint.url = "https://accounts.example.org/introspect-basic"
-endpoint.method = "introspect"
-auth.method = "basic"
-auth.username = "myuser"
-auth.secret = "mypass"
-fields.email = "email"
-fields.username = "preferred_username"
-fields.full-name = "name"
-```
-
-In this configuration, Stalwart provides the `auth.username` and `auth.secret` as credentials to authenticate with the OIDC provider’s introspection endpoint.
-
-### Introspection Endpoint with Bearer Token Authentication
-
-Some OIDC providers require a **Bearer token** for accessing the Token Introspection endpoint. In this setup, Stalwart needs to send an additional token (provided by the admin) along with the access token for token introspection.
-
-Example:
-
-```toml
-[directory."oidc-introspect-token"]
-type = "oidc"
-timeout = "1s"
-endpoint.url = "https://accounts.example.org/introspect-token"
-endpoint.method = "introspect"
-auth.method = "token"
-auth.token = "token_of_gratitude"
-fields.email = "email"
-fields.username = "preferred_username"
-fields.full-name = "name"
-```
-
-In this case, the `auth.token` is included in the request to authenticate Stalwart when querying the introspection endpoint.
-
-### Introspection Endpoint with User-Provided Access Token
-
-In this method, Stalwart uses the access token provided by the user during the OAUTHBEARER SASL authentication process to query the **Token Introspection endpoint**. No additional authentication method is required, as the user’s token itself is used.
-
-Example:
-
-```toml
-[directory."oidc-introspect-user-token"]
-type = "oidc"
-timeout = "1s"
-endpoint.url = "https://accounts.example.org/introspect-user-token"
-endpoint.method = "introspect"
-auth.method = "user-token"
-fields.email = "email"
-fields.username = "preferred_username"
-fields.full-name = "name"
-```
-
-In this configuration, the introspection endpoint validates the user-provided token, and Stalwart retrieves the user’s identity from the response.
-
+Once configured, the Directory object is selected as the active authentication source by setting [`directoryId`](/docs/ref/object/authentication#directoryid) on the [Authentication](/docs/ref/object/authentication) singleton (found in the WebUI under <!-- breadcrumb:Authentication --><!-- /breadcrumb:Authentication -->) to its id.

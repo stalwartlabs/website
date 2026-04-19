@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # Functions
 
-Functions are core components of expressions in Stalwart. They perform specific operations on one or more operands (parameters) and are used to construct dynamic expressions for evaluating conditions and generating values. Functions vary in the number of parameters they accept, from zero to multiple, and each has a distinct purpose in processing and decision-making logic.
+Functions perform specific operations on one or more parameters and are used inside expressions to evaluate conditions and build values. Each function has a distinct purpose; the number of parameters varies from zero to several.
 
 A function in an expression typically follows this syntax:
 

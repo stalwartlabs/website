@@ -4,15 +4,17 @@ sidebar_position: 4
 
 # Topology
 
-In a Stalwart cluster, administrators have full control over how user-facing services are distributed across nodes. This is distinct from [node roles](/docs/cluster/configuration/roles), which assign background maintenance tasks such as purging or certificate renewal. **Cluster topology** focuses on which protocols (such as **IMAP, JMAP, WebDAV, and SMTP**) each node will serve.
+In a Stalwart cluster, administrators control how user-facing services are distributed across nodes. This is distinct from [node roles](/docs/cluster/configuration/roles), which assign background maintenance tasks such as store maintenance or certificate renewal. Cluster topology focuses on which protocols (IMAP, JMAP, WebDAV, SMTP) each node serves.
 
-Stalwart allows for flexible service distribution: each node can be configured to handle one, several, or all supported protocols. This lets administrators optimize performance, resource usage, and fault tolerance according to real-world traffic patterns and operational goals.
+Stalwart allows flexible service distribution: each node can be configured to handle one, several, or all supported protocols. This supports tuning for performance, resource usage, and fault tolerance according to real-world traffic patterns and operational goals.
 
-Below are several common topology strategies used in Stalwart clusters:
+Listener selection per node is driven by the [ClusterRole](/docs/ref/object/cluster-role) object (found in the WebUI under <!-- breadcrumb:ClusterRole --><!-- /breadcrumb:ClusterRole -->), through its [`listeners`](/docs/ref/object/cluster-role#listeners) field (a [ClusterListenerGroup](/docs/ref/object/cluster-role#clusterlistenergroup) that names specific [NetworkListener](/docs/ref/object/network-listener) ids).
 
-## Unified Service Model
+The sections below describe common topology strategies used in Stalwart clusters.
 
-In this approach, **all nodes in the cluster handle all services**: IMAP, JMAP, WebDAV, and SMTP. For example, in a 1024-node deployment, each server would be configured identically and capable of handling any type of client or protocol request.
+## Unified service model
+
+In this approach, every node handles every service: IMAP, JMAP, WebDAV, and SMTP. For example, in a 1024-node deployment, each server is configured identically and can handle any client or protocol.
 
 ```mermaid
 flowchart LR
@@ -35,17 +37,17 @@ flowchart LR
     Cluster --> Storage
 ```
 
-This model is ideal for:
+This model suits:
 
-* Simpler management and uniform configuration
-* Maximizing redundancy (any node can fail without loss of service)
-* Smaller or mid-sized environments where service traffic is evenly distributed
+- Simpler management with uniform configuration
+- Redundancy, since any node can fail without losing service
+- Smaller or mid-sized environments where traffic is evenly distributed
 
 The unified model also simplifies load balancing and reduces operational complexity, though it may be less efficient in scenarios where some services see significantly more traffic than others.
 
-## Service-Specific Allocation
+## Service-specific allocation
 
-In this model, nodes are **dedicated to specific protocols**. For example, a 1024-node cluster might be divided into 256 SMTP nodes, 384 IMAP nodes, 256 JMAP nodes and 128 WebDAV nodes.
+In this model, nodes are dedicated to specific protocols. For example, a 1024-node cluster might be divided into 256 SMTP nodes, 384 IMAP nodes, 256 JMAP nodes, and 128 WebDAV nodes.
 
 ```mermaid
 flowchart TB
@@ -73,25 +75,24 @@ flowchart TB
     SMTP & IMAP & JMAP & WebDAV --> Storage
 ```
 
-
 This separation of concerns is useful when:
 
-* You want to isolate workloads for performance tuning
-* Certain services (e.g., SMTP) need different network access or security policies
-* Teams are structured around managing specific services
+- Isolating workloads for performance tuning
+- Certain services (for example, SMTP) need different network access or security policies
+- Teams are structured around managing specific services
 
-Service-specific allocation allows more granular resource planning but may require more sophisticated monitoring and load balancing.
+Service-specific allocation allows more granular resource planning, at the cost of more sophisticated monitoring and load balancing.
 
-## Weighted Allocation Based on Load
+## Weighted allocation based on load
 
-Clusters can also be sized **according to expected usage patterns**. For instance, if IMAP usage is significantly heavier than JMAP or WebDAV, the topology could look like this:
+Clusters can also be sized according to expected usage patterns. For instance, if IMAP usage is significantly heavier than JMAP or WebDAV, the topology could look like this:
 
 | Protocol | Nodes | Rationale |
 |----------|-------|-----------|
 | IMAP | 512 | Long-lived connections, high memory |
 | SMTP | 256 | Burst traffic, queue processing |
 | JMAP | 192 | API-heavy, mobile clients |
-| WebDAV | 64 | Calendar/contacts, lower volume |
+| WebDAV | 64 | Calendar and contacts, lower volume |
 
 ```mermaid
 flowchart LR
@@ -104,21 +105,21 @@ flowchart LR
     end
 ```
 
-This model strikes a balance between redundancy and efficiency, allocating more resources to higher-demand services while still covering less-used protocols.
+This model balances redundancy and efficiency, allocating more resources to higher-demand services while still covering less-used protocols.
 
-It's especially effective in:
+It suits:
 
-* Enterprise environments with known usage trends
-* Scenarios where IMAP or SMTP dominate traffic
-* Clusters designed to scale incrementally
+- Enterprise environments with known usage trends
+- Scenarios where IMAP or SMTP dominate traffic
+- Clusters designed to scale incrementally
 
-## Protocol Pairing Model
+## Protocol pairing model
 
-Some organizations prefer to group **complementary protocols** together. A common configuration might look like:
+Some organisations prefer to group complementary protocols. A common configuration looks like:
 
-* 40% of the nodes for **IMAP + JMAP**
-* 20% of the nodes for **WebDAV**
-* 40% of the nodes for **SMTP Inbound + Outbound**
+- 40 percent of the nodes for IMAP and JMAP
+- 20 percent of the nodes for WebDAV
+- 40 percent of the nodes for inbound and outbound SMTP
 
 ```mermaid
 flowchart TB
@@ -165,19 +166,19 @@ flowchart TB
 
 This model offers:
 
-* Reduced configuration duplication
-* Logical pairing of user-facing services (e.g., IMAP and JMAP both serve mail clients)
-* Efficient use of resources while still enabling role separation
+- Reduced configuration duplication
+- Logical pairing of user-facing services (for example, IMAP and JMAP both serve mail clients)
+- Efficient use of resources while still allowing role separation
 
-Pairing services can also simplify routing and firewall policies, especially when grouped by access patterns (e.g., client-facing vs. mail-routing).
+Pairing services also simplifies routing and firewall policies, especially when grouped by access pattern (client-facing versus mail-routing).
 
-## Geographically Distributed Topology
+## Geographically distributed topology
 
-In larger or multi-site deployments, nodes may be distributed across **data centers or geographic regions**, with services colocated according to regional demand:
+In larger or multi-site deployments, nodes may be distributed across data centres or geographic regions, with services colocated by regional demand:
 
-* Region A: 384 nodes (IMAP, SMTP Inbound)
-* Region B: 448 nodes (IMAP, JMAP, SMTP Outbound)
-* Region C: 192 nodes (WebDAV, JMAP, SMTP)
+- Region A: 384 nodes (IMAP, SMTP inbound)
+- Region B: 448 nodes (IMAP, JMAP, SMTP outbound)
+- Region C: 192 nodes (WebDAV, JMAP, SMTP)
 
 ```mermaid
 flowchart TB
@@ -209,14 +210,14 @@ flowchart TB
 
 This approach improves:
 
-* Latency for users in different regions
-* Resilience to regional outages
-* Load isolation by physical location
+- Latency for users in different regions
+- Resilience to regional outages
+- Load isolation by physical location
 
 Geographically distributed clusters typically rely on global load balancers, DNS-based routing, or geo-aware proxies to direct traffic efficiently.
 
-## Choosing the Right Topology
+## Choosing the right topology
 
-There is no one-size-fits-all topology. The best approach depends on your organization’s size, usage patterns, and operational preferences. One of Stalwart’s key strengths is that **topologies are flexible and easily adjusted over time**. You can start with a simple unified model and transition to a more specialized layout as your needs evolve.
+There is no one-size-fits-all topology. The best choice depends on organisational size, usage patterns, and operational preferences. One of the strengths of the Stalwart architecture is that topologies are flexible and can be adjusted over time. A simple unified model can be a starting point, with a transition to a more specialised layout as needs evolve.
 
-Additionally, you can **mix and match** approaches (running unified nodes alongside dedicated ones), or shift services dynamically as demand grows.
+Approaches can also be mixed and matched, running unified nodes alongside dedicated ones, or shifting services dynamically as demand grows.

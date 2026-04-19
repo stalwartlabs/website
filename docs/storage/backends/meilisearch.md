@@ -4,49 +4,32 @@ sidebar_position: 9
 
 # Meilisearch
 
-Meilisearch is an open-source search engine designed for fast, relevance-focused queries with minimal configuration. It offers features such as typo tolerance, synonyms, filters, and faceted search, allowing users to find relevant information quickly.
+Meilisearch is an open-source search engine designed for fast, relevance-focused queries with minimal configuration. It offers features such as typo tolerance, synonyms, filters, and faceted search.
 
 ## Configuration
 
-The following configuration settings are available for Meilisearch, which are specified under the `store.<name>` section of the configuration file:
+The Meilisearch backend is selected by choosing the `Meilisearch` variant on the [SearchStore](/docs/ref/object/search-store) object (found in the WebUI under <!-- breadcrumb:SearchStore --><!-- /breadcrumb:SearchStore -->). The variant exposes the following fields:
 
-- `type`: Specifies the type of store, set to `"meilisearch"` for Meilisearch.
-- `url`: The URL of the Meilisearch server.
-- `auth.token`: The API key used for authentication.
-- `tls.allow-invalid-certs`: Determines whether to allow connections with invalid TLS certificates. This is a boolean setting, and setting it to `true` can be useful in development or testing environments.
-- `task.poll-interval`: The interval (in milliseconds) at which to poll for task completion. Default is `500ms`.
-- `task.poll-retries`: The number of times to retry polling for task completion. Default is `60`.
-
-Example:
-
-```toml
-[store."meilisearch"]
-type = "meilisearch"
-url = "https://localhost:9200"
-
-[store."meilisearch".task]
-poll-interval = "500ms"
-poll-retries = 60
-
-[store."meilisearch".auth]
-token = "API_KEY_HERE"
-
-[store."meilisearch".tls]
-allow-invalid-certs = true
-
-```
+- [`url`](/docs/ref/object/search-store#url): URL of the Meilisearch server (required).
+- [`timeout`](/docs/ref/object/search-store#timeout): maximum time to wait for an HTTP response. Default: `"30s"`.
+- [`allowInvalidCerts`](/docs/ref/object/search-store#allowinvalidcerts): when `true`, accepts connections with invalid TLS certificates. Default: `false`.
+- [`httpAuth`](/docs/ref/object/search-store#httpauth): authentication method used for HTTP requests (required). For the Meilisearch API key, select the `Bearer` variant of `httpAuth` and supply the API key as the bearer token.
+- [`httpHeaders`](/docs/ref/object/search-store#httpheaders): additional headers attached to every HTTP request.
+- [`pollInterval`](/docs/ref/object/search-store#pollinterval): interval between polls for Meilisearch task completion. Default: `"500ms"`.
+- [`maxRetries`](/docs/ref/object/search-store#maxretries): maximum number of times to poll for task completion before giving up. Default: `120`.
+- [`failOnTimeout`](/docs/ref/object/search-store#failontimeout): when `true`, the operation fails if the task does not complete within the polling retries. Default: `true`.
 
 ## Limitations
 
 ### Number of Results
 
-By default, Meilisearch limits the total number of documents returned by a search query to **1,000 results**. This limit applies even if more documents match the query. For many use cases, this default is not an issue. Typical search interfaces only display a small subset of results and rely on pagination, making it unnecessary to retrieve every matching document.
+By default, Meilisearch limits the total number of documents returned by a search query to **1,000 results**. This limit applies even if more documents match the query. For many use cases this default is not an issue: typical search interfaces display only a small page of results and rely on pagination.
 
-However, this behavior can be problematic for **email search workloads**. IMAP and JMAP clients commonly request **all matching message IDs** for a given search expression, not just the first page of results. When the number of matching messages exceeds Meilisearch’s default limit, the result set will be **silently truncated** to the first 1,000 documents. As a result, clients may miss valid matches without receiving any indication that the result set is incomplete.
+However, this behaviour can be problematic for **email search workloads**. IMAP and JMAP clients commonly request **all matching message IDs** for a given search expression, not just the first page of results. When the number of matching messages exceeds Meilisearch's default limit, the result set is **silently truncated** to the first 1,000 documents. Clients may miss valid matches without any indication that the result set is incomplete.
 
 #### Increasing the Limit
 
-This limit can be raised by increasing the `maxTotalHits` setting in Meilisearch. Increasing `maxTotalHits` allows Meilisearch to return a larger number of matching document IDs, which is often required to correctly support IMAP and JMAP search semantics. To change this setting, you will need to update the [Meilisearch server configuration](https://www.meilisearch.com/docs/reference/api/settings#pagination-object) directly, as it is not configurable through Stalwart.
+This limit can be raised by increasing the `maxTotalHits` setting in Meilisearch. A larger `maxTotalHits` allows Meilisearch to return a larger number of matching document IDs, which is often required to correctly support IMAP and JMAP search semantics. This setting is changed through the [Meilisearch server configuration](https://www.meilisearch.com/docs/reference/api/settings#pagination-object) directly; it is not configurable through Stalwart.
 
 #### Performance Considerations
 
@@ -54,9 +37,9 @@ Meilisearch explicitly warns about increasing this value:
 
 > Setting `maxTotalHits` to a value higher than the default will negatively impact search performance. Setting `maxTotalHits` to values over **20,000** may result in queries taking seconds to complete.
 
-Administrators should carefully balance correctness and performance when tuning this setting. For mailboxes with very large folders or frequent broad searches, raising `maxTotalHits` may be necessary to avoid truncated results, but doing so can significantly increase query latency and resource usage.
+Administrators should balance correctness and performance when tuning this setting. For mailboxes with very large folders or frequent broad searches, raising `maxTotalHits` may be necessary to avoid truncated results, but can significantly increase query latency and resource usage.
 
-This limitation is inherent to Meilisearch’s pagination model and should be considered when evaluating it as a full-text search backend for large or heavily queried mail stores.
+This limitation is inherent to Meilisearch's pagination model and should be considered when evaluating it as a full-text search backend for large or heavily queried mail stores.
 
 ### Query Mapping
 
@@ -88,8 +71,8 @@ This query combines text searches (`FROM`, `SUBJECT`, `BODY`, `TO`), structured 
 
 In Meilisearch, full-text conditions must be collapsed into a single `q` parameter, while structured conditions must be expressed separately as `filter`. There is no way to accurately represent the above query structure because it requires text searches and filters to be evaluated together within nested logical groups.
 
-When an IMAP or JMAP query cannot be accurately mapped to Meilisearch’s `q` and `filter` model, Stalwart will still execute the closest possible approximation of the query. No errors will be returned to the client, and the search request will appear to succeed.
+When an IMAP or JMAP query cannot be accurately mapped to Meilisearch's `q` and `filter` model, Stalwart executes the closest possible approximation of the query. No errors are returned to the client, and the search request appears to succeed.
 
 However, because the original query semantics cannot be fully preserved, the results returned may differ from what some end users expect. This can include missing messages, extra matches, or results that do not strictly follow the intended logical structure of the original IMAP or JMAP query.
 
-These limitations are inherent to Meilisearch’s query model and should be taken into account when deciding whether it is suitable as a search backend for workloads that rely heavily on complex, deeply nested IMAP or JMAP search expressions.
+These limitations are inherent to Meilisearch's query model and should be taken into account when deciding whether it is suitable as a search backend for workloads that rely heavily on complex, deeply nested IMAP or JMAP search expressions.

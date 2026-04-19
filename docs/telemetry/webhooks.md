@@ -2,48 +2,78 @@
 sidebar_position: 5
 ---
 
-# Webhooks 
+# Webhooks
 
-Webhooks are a flexible way to receive real-time notifications about events in your system. By configuring webhooks, you can set up HTTP callbacks that are triggered when specific events occur, allowing your applications to respond immediately and automatically to important occurrences.
-
-Stalwart offers built-in support for webhooks, enabling real-time notifications for a variety of events. This capability allows administrators to set up HTTP callbacks that are triggered by specific occurrences, facilitating immediate and automated responses to critical events within the email system. For example, you can configure webhooks to notify you when an email message is received or delivered. This ensures that you are promptly informed about the flow of emails through your server. Similarly, notifications can be set up for user authentication events, alerting you whenever a user successfully logs in or fails to authenticate, which is crucial for security monitoring.
-
-Using the webhook functionality in Stalwart, you can automate responses and monitor email activity and security events across your infrastructure.
+Webhooks deliver real-time notifications about server events by posting to an HTTP endpoint of the operator's choice. They let external systems react to activity in the server without polling; typical uses include recording deliveries into an analytics pipeline, flagging authentication anomalies to a SIEM, or triggering automated workflows on message ingestion.
 
 ## Configuration
 
-Webhooks are configured in the `webhook.<id>` section of the configuration file, where `<id>` is a unique identifier for the webhook. The following parameters can be configured for webhooks:
+Each webhook is represented by a [WebHook](/docs/ref/object/web-hook) object (found in the WebUI under <!-- breadcrumb:WebHook --><!-- /breadcrumb:WebHook -->). Relevant fields are:
 
-- `url`: This parameter specifies the endpoint to which the webhook POST requests will be sent. The URL should be a valid HTTP or HTTPS address where your webhook handler is located.
-- `events`: This parameter is a list of [events](/docs/telemetry/events#event-types) that will trigger the webhook. Wildcards can be used to match multiple events (e.g., `"*"` for all events or `"auth.*"` for all authentication events).
-- `timeout`: This parameter defines the maximum time the server will wait for a response from the webhook endpoint. The value is specified in seconds (e.g., "30s").
-- `throttle`: This parameter determines the frequency with which requests are sent to the webhook endpoint. Events occurring within this period are grouped and sent in batches. The value is specified in seconds (e.g., "1s").
-- `signature-key`: This optional parameter provides an HMAC key used to sign the body of the webhook request. The signature is encoded in base64 and included in the `X-Signature` header. This allows for verification of the request's authenticity at the receiving endpoint.
-- `headers`: This parameter specifies additional headers to be included in the webhook requests. Each header should be defined in the format `"Header-Name: header-value"`.
-- `allow-invalid-certs`: This boolean parameter indicates whether to allow requests to endpoints with invalid SSL certificates. Setting this to `false` ensures that only valid SSL certificates are accepted, enhancing security.
-- `auth.username`: This parameter specifies the username for HTTP basic authentication. It is used in conjunction with the `secret` parameter to authenticate the webhook request at the receiving endpoint.
-- `auth.secret`: This parameter specifies the password or secret for HTTP basic authentication. It works with the `username` parameter to authenticate the webhook request.
-- `lossy`: When set to `true`, this parameter allows the system to drop events if the webhook endpoint is unreachable or returns an error. This can help prevent backlogs of events in case of temporary issues with the endpoint.
+- [`url`](/docs/ref/object/web-hook#url): endpoint to which `POST` requests are sent.
+- [`events`](/docs/ref/object/web-hook#events) and [`eventsPolicy`](/docs/ref/object/web-hook#eventspolicy): list of events and how to interpret it. With `eventsPolicy` set to `include`, only the listed events trigger the webhook; with `exclude`, all events except the listed ones trigger it. Event identifiers are documented on the [Events](/docs/telemetry/events#event-types) page.
+- [`timeout`](/docs/ref/object/web-hook#timeout): maximum time to wait for a response. Default `"30s"`.
+- [`throttle`](/docs/ref/object/web-hook#throttle): minimum interval between batches. Events that fall within the same window are grouped. Default `"1s"`.
+- [`discardAfter`](/docs/ref/object/web-hook#discardafter): duration after which an undelivered webhook request is discarded. Default `"5m"`.
+- [`signatureKey`](/docs/ref/object/web-hook#signaturekey): optional HMAC key used to sign each request body. The signature is base64-encoded and carried in the `X-Signature` header. The field is a `SecretKeyOptional` with variants `None`, `Value`, `EnvironmentVariable`, and `File`.
+- [`httpAuth`](/docs/ref/object/web-hook#httpauth): HTTP authentication used by the request. A nested type with variants `Unauthenticated`, `Basic`, and `Bearer`.
+- [`httpHeaders`](/docs/ref/object/web-hook#httpheaders): additional HTTP headers to include on each request.
+- [`allowInvalidCerts`](/docs/ref/object/web-hook#allowinvalidcerts): whether to permit requests to endpoints with an invalid TLS certificate. Default `false`.
+- [`lossy`](/docs/ref/object/web-hook#lossy): whether to drop events when the endpoint is unreachable or persistently failing. When `false`, events accumulate until delivery succeeds or [`discardAfter`](/docs/ref/object/web-hook#discardafter) elapses.
+- [`enable`](/docs/ref/object/web-hook#enable): whether the webhook is active.
+- [`level`](/docs/ref/object/web-hook#level): minimum severity of events delivered to this endpoint.
 
-For a full list of supported events and their descriptions, refer to the [Event Types](/docs/telemetry/events#event-types) documentation.
+## API documentation
 
-## API Documentation
+### Response object
 
-Please refer to the [Webhooks API](/docs/api/webhooks) documentation for detailed information on the webhook API, including request and response formats, event types, and examples.
+The main object in the webhook response is `WebhookEvents`, which contains a list of `WebhookEvent` objects:
+
+```json
+{
+    "events": [
+        {
+            "id": "12345",
+            "createdAt": "2023-06-21T14:55:00Z",
+            "type": "auth.success",
+            "data": {}
+        }
+    ]
+}
+```
+
+Each `WebhookEvent` contains the following fields:
+
+- `id` (String): Unique identifier for the event.
+- `createdAt` (RFC3339 timestamp): Timestamp when the event was created.
+- `type` (WebhookType): Type of the [event](/docs/telemetry/events#event-types).
+- `data` (WebhookPayload): Detailed data associated with the event.
+
+### Data payload
+
+The `data` payload is a nested object that contains additional information about the event. The structure of the `data` object varies depending on the event type and it may contain any of the supported [keys](/docs/telemetry/events#key-types).
 
 ## Example
 
-```toml
-[webhook."my-webhook"]
-url = "https://example.com/webhook"
-events = [ "auth.success", "store.ingest" ]
-timeout = "30s"
-throttle = "1s"
-signature-key = "my-secret-key"
-headers = [ "X-My-Header: my-value" ]
-allow-invalid-certs = false
+The equivalent of a webhook firing on `auth.success` and `store.ingest`, signed with a shared secret, with a custom header and Basic authentication:
 
-[webhook."my-webhook".auth]
-username = "account"
-secret = "password"
+```json
+{
+  "url": "https://example.com/webhook",
+  "events": ["auth.success", "store.ingest"],
+  "eventsPolicy": "include",
+  "timeout": "30s",
+  "throttle": "1s",
+  "signatureKey": {"@type": "Value", "secret": "my-secret-key"},
+  "httpHeaders": {"X-My-Header": "my-value"},
+  "httpAuth": {
+    "@type": "Basic",
+    "username": "account",
+    "secret": {"@type": "Value", "secret": "password"}
+  },
+  "allowInvalidCerts": false,
+  "enable": true
+}
 ```
+
+<!-- review: The previous docs described event matching as glob-style wildcards (for example `"*"` for all events or `"auth.*"` for every authentication event). The current WebHook object pairs `events` with `eventsPolicy` (`include`/`exclude`) and the EventType enum references individual events. Confirm whether wildcard expansion is still supported, or whether the equivalent effect is now obtained by leaving `events` empty with `eventsPolicy: "exclude"`. -->

@@ -4,75 +4,85 @@ sidebar_position: 4
 
 # EHLO stage
 
-The `EHLO` (Extended Hello) is sent by an email client to the server to initiate an SMTP session and negotiate the features and extensions that will be used during the session. The `EHLO` command provides a way for the email client to identify itself, and for the server to advertise the capabilities and extensions it supports, such as authentication mechanisms, message size limits, and others. The response to the `EHLO` command provides information to the client about the server's capabilities, which the client can then use to determine the best way to send the email.
+The `EHLO` (Extended Hello) command is sent by an email client to the server to initiate an SMTP session and negotiate the features and extensions that will be used during the session. The `EHLO` command provides a way for the email client to identify itself, and for the server to advertise the capabilities and extensions it supports, such as authentication mechanisms, message size limits, and others. The response to the `EHLO` command provides information to the client about the server's capabilities, which the client can then use to determine the best way to send the email.
 
 ## Settings
 
-The `session.ehlo` key in the configuration file controls the behavior of the `EHLO` (and `HELO`, `LHLO`) command. The following attributes are available under this key:
+EHLO-stage behaviour is configured on the [MtaStageEhlo](/docs/ref/object/mta-stage-ehlo) singleton (found in the WebUI under <!-- breadcrumb:MtaStageEhlo --><!-- /breadcrumb:MtaStageEhlo -->). The relevant fields are [`require`](/docs/ref/object/mta-stage-ehlo#require) (whether the remote client must send an `EHLO`, `HELO`, or `LHLO` command before starting an SMTP transaction; enabling this lets Stalwart verify the [SPF](/docs/mta/authentication/spf) EHLO identity of the client, default `true`), [`rejectNonFqdn`](/docs/ref/object/mta-stage-ehlo#rejectnonfqdn) (whether to reject `EHLO` commands that do not include a fully-qualified domain name as a parameter; the default enables the check only on `local_port == 25`, so that submission listeners accept client hostnames that may not be fully qualified), and [`script`](/docs/ref/object/mta-stage-ehlo#script) (the [Sieve script](/docs/sieve/overview) to run after a successful `EHLO` command; a typical use is to block specific HELO domains by matching the `helo_domain` variable against an in-memory list).
 
-- `require`: Specifies whether the remote client must send an `EHLO` command before starting an SMTP transaction. It is recommended to set this value to `true` to allow Stalwart to verify the [SPF](/docs/mta/authentication/spf) EHLO identity of the client.
-- `reject-non-fqdn`: Determines whether to reject `EHLO` commands that do not include a fully-qualified domain name as a parameter. To reduce the amount of spam, it is recommended to enable this option for the standard SMTP port 25, but disable it for authenticated sessions on the SMTP submissions port.
-- `script`: The name of the [Sieve script](/docs/sieve/overview) to run after a successful `EHLO` command.
+Example configuration setting all three fields together, including a per-listener override for `rejectNonFqdn` and a Sieve script selector:
 
-Example:
-
-```toml
-[session.ehlo]
-require = true
-reject-non-fqdn = [ { if = "listener = 'smtp'", then = true },
-                    { else = false } ]
-script = "'ehlo'"
-
-[sieve.trusted.scripts.ehlo]
-contents = '''
-    require ["variables", "extlists", "reject"];
-
-    if string :list "${env.helo_domain}" "list/blocked-domains" {
-        reject "551 5.1.1 Your domain '${env.helo_domain}' has been blocklisted.";
-    }
-'''
-
-[store."list/blocked-domains"]
-type = "memory"
-format = "list"
-values = ["mail.spammer.test", "mail.spammer.example"]
+```json
+{
+  "require": {"else": "true"},
+  "rejectNonFqdn": {
+    "match": [{"if": "listener == 'smtp'", "then": "true"}],
+    "else": "false"
+  },
+  "script": {"else": "'ehlo'"}
+}
 ```
 
-## SMTP Extensions
+A companion Sieve script `ehlo` rejects HELO domains present in a blocked-domain list:
 
-Stalwart supports [various SMTP extensions](/docs/development/rfcs#smtp-and-extensions) which can be enabled through the following attributes under the `session.extensions` key:
+```sieve
+require ["variables", "extlists", "reject"];
 
-- `pipelining`: This attribute enables SMTP pipelining (RFC 2920), which enables multiple commands to be sent in a single request to speed up communication between the client and server.
-- `chunking`: This attribute enables chunking (RFC 3030), an extension that allows large messages to be transferred in chunks which may reduce the load on the network and server.
-- `requiretls`: This attribute enables require TLS (RFC 8689), an extension that allows clients to require TLS encryption for the SMTP session.
-- `no-soliciting`: This attribute specifies the text to include in the `NOSOLICITING` (RFC 3865) message, which indicates that the server does not accept unsolicited commercial email (UCE or spam).
-- `dsn`: This attribute enables delivery status notifications (RFC 3461), which allows the sender to request a delivery status notification (DSN) from the recipient's mail server.
-- `future-release`: This attribute specifies the maximum time that a message can be held for delivery using the `FUTURERELEASE` (RFC 4865) extension. To disable this extension, specify `false`.
-- `deliver-by`: This attribute specifies the maximum delivery time for a message using the `DELIVERBY` (RFC 2852) extension, which allows the sender to request a specific delivery time for a message. To disable this extension, specify `false`.
-- `mt-priority`: This attribute specifies the priority assignment policy to advertise on the `MT-PRIORITY` (RFC 6710) extension, which allows the sender to specify a priority for a message. Available policies are `mixer`, `stanag4406` and `nsep`, or `false` to disable this extension.
-- `vrfy`: This attribute specifies whether to enable the `VRFY` command, which allows the sender to verify the existence of a mailbox. It is recommended to disable this command to prevent spammers from harvesting email addresses.
-- `expn`: This attribute specifies whether to enable the `EXPN` command, which allows the sender to request the membership of a mailing list. It is recommended to disable this command to prevent spammers from harvesting email addresses.
+if string :list "${env.helo_domain}" "list/blocked-domains" {
+    reject "551 5.1.1 Sending domain '${env.helo_domain}' has been blocklisted.";
+}
+```
 
-Stalwart additionally supports the `SIZE`, `ENHANCEDSTATUSCODES`, `8BITMIME`, and `SMTPUTF8` extensions, which are not configurable. However, the `AUTH` extension can be configured from its respective sections within the configuration file.
+<!-- review: The original example defined an in-memory blocked-domains list via `[store."list/blocked-domains"] type = "memory" format = "list" values = [...]`. In the new model, in-memory lists are created through the [InMemoryStore](/docs/ref/object/in-memory-store) object together with [MemoryLookupKey](/docs/ref/object/memory-lookup-key); the exact path/shape for a `list` format source consumed by Sieve `:list` is not reproduced here. Confirm the correct object wiring. -->
 
-Example:
+## SMTP extensions
 
-```toml
-[session.extensions]
-pipelining = true
-chunking = true
-requiretls = true
-no-soliciting = ""
-dsn = [ { if = "!is_empty(authenticated_as)", then = true},
-        { else = false } ]
-future-release = [ { if = "!is_empty(authenticated_as)", then = "7d"},
-                   { else = false } ]
-deliver-by = [ { if = "!is_empty(authenticated_as)", then = "15d"},
-               { else = false } ]
-mt-priority = [ { if = "!is_empty(authenticated_as)", then = "mixer"},
-                { else = false } ]
-vrfy = [ { if = "!is_empty(authenticated_as)", then = true},
-                { else = false } ]
-expn = [ { if = "!is_empty(authenticated_as)", then = true},
-                { else = false } ]                
+Stalwart supports a range of [SMTP extensions](/docs/development/rfcs#smtp-and-extensions), configured on the [MtaExtensions](/docs/ref/object/mta-extensions) singleton (found in the WebUI under <!-- breadcrumb:MtaExtensions --><!-- /breadcrumb:MtaExtensions -->). Each field accepts an expression that returns either a boolean, a duration, or the extension-specific value described below.
+
+- [`pipelining`](/docs/ref/object/mta-extensions#pipelining): SMTP pipelining (RFC 2920). Multiple commands can be sent in a single request.
+- [`chunking`](/docs/ref/object/mta-extensions#chunking): chunking (RFC 3030). Large messages can be transferred in chunks.
+- [`requireTls`](/docs/ref/object/mta-extensions#requiretls): REQUIRETLS (RFC 8689). Clients can require TLS encryption for the SMTP session.
+- [`noSoliciting`](/docs/ref/object/mta-extensions#nosoliciting): text advertised via `NOSOLICITING` (RFC 3865), indicating the server does not accept unsolicited commercial email.
+- [`dsn`](/docs/ref/object/mta-extensions#dsn): delivery status notifications (RFC 3461). Senders can request a DSN from the recipient's mail server.
+- [`futureRelease`](/docs/ref/object/mta-extensions#futurerelease): maximum time a message can be held for delivery via the `FUTURERELEASE` (RFC 4865) extension. Returning `false` disables the extension.
+- [`deliverBy`](/docs/ref/object/mta-extensions#deliverby): maximum delivery time allowed by the `DELIVERBY` (RFC 2852) extension. Returning `false` disables the extension.
+- [`mtPriority`](/docs/ref/object/mta-extensions#mtpriority): priority-assignment policy advertised on the `MT-PRIORITY` (RFC 6710) extension. Accepted values are `mixer`, `stanag4406`, and `nsep`, or `false` to disable the extension.
+- [`vrfy`](/docs/ref/object/mta-extensions#vrfy): whether to advertise the `VRFY` command, used by senders to verify the existence of a mailbox. Disabling it by default prevents address harvesting; the default policy only enables it for authenticated sessions.
+- [`expn`](/docs/ref/object/mta-extensions#expn): whether to advertise the `EXPN` command, used to request the membership of a mailing list. The default policy mirrors `vrfy`.
+
+The `SIZE`, `ENHANCEDSTATUSCODES`, `8BITMIME`, and `SMTPUTF8` extensions are always advertised and are not configurable. The `AUTH` extension is governed by the [AUTH stage](/docs/mta/inbound/auth).
+
+Example configuration restricting advanced extensions to authenticated sessions:
+
+```json
+{
+  "pipelining": {"else": "true"},
+  "chunking": {"else": "true"},
+  "requireTls": {"else": "true"},
+  "noSoliciting": {"else": "''"},
+  "dsn": {
+    "match": [{"if": "!is_empty(authenticated_as)", "then": "true"}],
+    "else": "false"
+  },
+  "futureRelease": {
+    "match": [{"if": "!is_empty(authenticated_as)", "then": "7d"}],
+    "else": "false"
+  },
+  "deliverBy": {
+    "match": [{"if": "!is_empty(authenticated_as)", "then": "15d"}],
+    "else": "false"
+  },
+  "mtPriority": {
+    "match": [{"if": "!is_empty(authenticated_as)", "then": "mixer"}],
+    "else": "false"
+  },
+  "vrfy": {
+    "match": [{"if": "!is_empty(authenticated_as)", "then": "true"}],
+    "else": "false"
+  },
+  "expn": {
+    "match": [{"if": "!is_empty(authenticated_as)", "then": "true"}],
+    "else": "false"
+  }
+}
 ```

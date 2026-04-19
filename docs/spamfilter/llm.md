@@ -2,127 +2,91 @@
 sidebar_position: 4
 ---
 
-# LLM Classifier
+# LLM classifier
 
-The LLM Classifier in Stalwart enhances the spam filtering capabilities by utilizing AI models to detect threats, unsolicited emails, and commercial messages. By integrating with any of the configured [AI models](/docs/server/ai-models), the LLM Classifier improves the accuracy of spam detection, analyzing the content of incoming messages through advanced natural language processing techniques. This approach allows the spam filter to better understand the nature of the emails and identify potential risks.
+The LLM classifier extends Stalwart's spam filtering by using a large language model to detect unsolicited, commercial, or harmful messages. It integrates with any configured [AI model](/docs/server/ai-models) and analyses message subjects and bodies through natural language processing, complementing the statistical classifier with higher-level semantic reasoning.
 
-
-The LLM Classifier operates by sending a prompt, which can be customized, to the AI model along with the subject and body of the email. The default prompt instructs the AI model to categorize the email into one of four categories: Unsolicited, Commercial, Harmful, or Legitimate. This classification helps the system identify whether the message is unwanted, promotional, malicious, or safe for delivery. In addition to categorization, the model also assigns a confidence level (High, Medium, or Low) to each classification. This confidence level enables the system to assess the certainty of the classification, providing valuable input for how the message should be handled by the spam filter.
-
-Once the AI model returns its classification and confidence levels, the spam filter converts this information into tags. Each tag is associated with a [customizable score](/docs/spamfilter/settings/scores), which influences the overall spam score of the email. For example, if the AI model identifies an email as Unsolicited with a high confidence level, the spam filter assigns the tag `LLM_UNSOLICITED_HIGH`, which has a default score of 3.0. This indicates a strong likelihood that the email is unsolicited and increases its spam score. On the other hand, if the message is categorized as Legitimate with high confidence, the filter assigns the tag `LLM_LEGITIMATE_HIGH`, which has a default score of -3.0. This lowers the spam score and signals that the message is likely legitimate and should be delivered safely. These tags and their corresponding scores can be fully customized to align with the specific needs and policies of the organization.
+The LLM classifier sends a customisable prompt to the AI model, along with the subject and body of the message. The default prompt asks the model to assign one of four categories (Unsolicited, Commercial, Harmful, or Legitimate) and a confidence level (High, Medium, or Low). The returned category and confidence are combined into a tag, which is assigned to the message and contributes to the overall spam score through the [Scores](/docs/spamfilter/settings/scores) configuration. For example, `LLM_UNSOLICITED_HIGH` carries a default score of 3.0, while `LLM_LEGITIMATE_HIGH` carries −3.0.
 
 :::tip Enterprise feature
 
-This feature is available exclusively in the [Enterprise Edition](/docs/server/enterprise) of Stalwart and not included in the Community Edition.
+This feature is available exclusively in the [Enterprise Edition](/docs/server/enterprise) of Stalwart and is not included in the Community Edition.
 
 :::
 
 ## Caveats
 
-While integrating LLMs into Stalwart’s spam filtering system can improve detection of unsolicited and harmful emails, it is important to consider the performance and cost implications, especially when processing a high volume of incoming messages.
+Integrating an LLM into spam filtering has performance and cost implications, especially under high message volumes.
 
-### Performance Considerations
+### Performance considerations
 
-When self-hosting AI models, the performance of the system heavily depends on the hardware used. Without dedicated hardware, especially GPUs (Graphics Processing Units) designed for machine learning tasks, running LLMs can introduce significant delays in processing each email. Passing the subject and body of every incoming message through the AI model requires substantial computational resources, and using only CPU-based processing can slow down the email intake times considerably. This latency may become problematic in environments with high traffic, where maintaining prompt email delivery is critical. Therefore, organizations opting for self-hosted models should ensure they have sufficient hardware, preferably with GPU acceleration, to avoid bottlenecks in their email processing workflow.
+When self-hosting AI models, throughput depends heavily on the hardware. Without dedicated hardware (in particular GPUs designed for machine-learning workloads), classifying every message with the LLM can introduce significant latency, because each call runs a substantial inference workload. CPU-only deployments in particular may see email intake slow down noticeably. Sites that self-host should ensure they have hardware headroom, preferably with GPU acceleration, before enabling the LLM classifier in production.
 
-### Cost Implications
+### Cost implications
 
-For users integrating cloud-based AI models, such as those from OpenAI or Anthropic, the primary concern shifts from performance to cost. These providers typically charge based on the number of tokens processed per request. Since each email is passed to the AI model for analysis, each request consumes tokens depending on the length of the email's subject and body, along with the response generated by the model. As the volume of incoming emails increases, the number of tokens processed can scale rapidly, leading to significant costs over time. Organizations should carefully consider these factors and evaluate their budget when relying on cloud-based LLM providers for spam filtering, especially in high-traffic email environments.
+For cloud-hosted AI models (such as those offered by OpenAI or Anthropic), the primary concern is cost rather than latency. Providers typically charge per token processed. Each message submitted to the model consumes tokens in proportion to the subject, body, and returned response, so costs scale with message volume. Sites using cloud-based models should estimate usage against the provider's pricing before enabling the LLM classifier on high-traffic servers.
 
-In both cases, whether using self-hosted or cloud-based AI models, there are trade-offs between performance, cost, and the quality of spam detection. While LLMs provide enhanced detection capabilities, ensuring that the solution scales efficiently for both performance and budget is essential for long-term sustainability.
+In either case there is a trade-off between performance, cost, and the incremental accuracy the LLM adds over the statistical classifier.
 
 ## Configuration
 
-By default, the LLM Classifier is disabled in Stalwart. To enable it, set the `spam-filter.llm.enable` option to `true` in the configuration file. This activates the LLM Classifier, allowing it to process incoming emails and assign tags based on the AI model's classification.
+The LLM classifier is configured on the [SpamLlm](/docs/ref/object/spam-llm) singleton (found in the WebUI under <!-- breadcrumb:SpamLlm --><!-- /breadcrumb:SpamLlm -->). SpamLlm is a multi-variant object: the `Disable` variant turns the classifier off (the default), and the `Enable` variant activates it and carries the configuration fields.
 
 ### Model
 
-The LLM Classifier configuration requires specifying the [AI model](/docs/server/ai-models) to be used for processing email content. This is done by setting the `spam-filter.llm.model` option in the configuration file. The value of this option should correspond to the ID of the AI model defined in the `enterprise.ai.<id>` section of the configuration file.
+The `Enable` variant requires an [`modelId`](/docs/ref/object/spam-llm#modelid) field referring to an [AiModel](/docs/ref/object/ai-model) object. For example, to use an AI model with id `chat`:
 
-Example:
-
-```toml
-[spam-filter.llm]
-model = "chat"
+```json
+{
+  "@type": "Enable",
+  "modelId": "chat"
+}
 ```
 
 ### Prompt
 
-The LLM Classifier's prompt is fully configurable, allowing administrators to adjust the instructions given to the AI model based on the unique requirements of their email environment. Whether the focus is on general spam detection or more specialized content filtering, administrators can fine-tune the model’s behavior to ensure optimal results. The prompt can be customized from the `spam-filter.llm.prompt` setting in the configuration file, for example:
+The [`prompt`](/docs/ref/object/spam-llm#prompt) field carries the instructions sent to the AI model alongside each message. Administrators can rewrite the prompt to match local classification needs, for example:
 
-```toml
-[spam-filter.llm]
-prompt = "You are an AI assistant specialized in analyzing email content to detect unsolicited, commercial, or harmful messages. Your task is to examine the provided email, including its subject line, and determine if it falls into any of these categories. Please follow these steps:
-
-- Carefully read the entire email content, including the subject line.
-- Look for indicators of unsolicited messages, such as:
-   * Lack of prior relationship or consent
-   * Mass-mailing characteristics
-   * Vague or misleading sender information
-- Identify commercial content by checking for:
-   * Promotional language
-   * Product or service offerings
-   * Call-to-action for purchases
-- Detect potentially harmful content by searching for:
-   * Phishing attempts (requests for personal information, suspicious links)
-   * Malware indicators (suspicious attachments, urgent calls to action)
-   * Scams or fraudulent schemes
-- Analyze the overall tone, intent, and legitimacy of the email.
-- Determine the most appropriate single category for the email: Unsolicited, Commercial, Harmful, or Legitimate.
-- Assess your confidence level in this determination: High, Medium, or Low.
-- Provide a brief explanation for your determination.
-- Format your response as follows, separated by commas: Category,Confidence,Explanation
-  * Example: Unsolicited,High,The email contains mass-mailing characteristics without any prior relationship context.
-
-Here's the email to analyze, please provide your analysis based on the above instructions, ensuring your response is in the specified comma-separated format:"
+```json
+{
+  "@type": "Enable",
+  "modelId": "chat",
+  "prompt": "You are an AI assistant specialized in analyzing email content to detect unsolicited, commercial, or harmful messages. Your task is to examine the provided email, including its subject line, and determine if it falls into any of these categories. Please follow these steps:\n\n- Carefully read the entire email content, including the subject line.\n- Look for indicators of unsolicited messages, such as:\n   * Lack of prior relationship or consent\n   * Mass-mailing characteristics\n   * Vague or misleading sender information\n- Identify commercial content by checking for:\n   * Promotional language\n   * Product or service offerings\n   * Call-to-action for purchases\n- Detect potentially harmful content by searching for:\n   * Phishing attempts (requests for personal information, suspicious links)\n   * Malware indicators (suspicious attachments, urgent calls to action)\n   * Scams or fraudulent schemes\n- Analyze the overall tone, intent, and legitimacy of the email.\n- Determine the most appropriate single category for the email: Unsolicited, Commercial, Harmful, or Legitimate.\n- Assess your confidence level in this determination: High, Medium, or Low.\n- Provide a brief explanation for your determination.\n- Format your response as follows, separated by commas: Category,Confidence,Explanation\n  * Example: Unsolicited,High,The email contains mass-mailing characteristics without any prior relationship context.\n\nHere's the email to analyze, please provide your analysis based on the above instructions, ensuring your response is in the specified comma-separated format:"
+}
 ```
 
 ### Temperature
 
-The LLM Classifier allows you to adjust the temperature parameter used during the sampling process when generating responses from the AI model. The temperature parameter controls the randomness of the responses, with lower values producing more deterministic outputs and higher values introducing more randomness. By default, the temperature is set to `0.5`, which provides a balance between generating diverse responses and maintaining coherence. To customize the temperature, set the `spam-filter.llm.temperature` option in the configuration file.
-
-Example:
-
-```toml
-[spam-filter.llm]
-temperature = "0.5"
-```
+The [`temperature`](/docs/ref/object/spam-llm#temperature) field sets the sampling temperature used by the AI model. Lower values produce more deterministic responses, higher values introduce more variation. The default is `0.5`, which balances diversity and coherence.
 
 ### Responses
 
-Response parsing is used to extract the category, confidence level, and explanation from the AI model's output. The LLM Classifier requires this information to assign tags to the email based on the classification and confidence level. The returned category and confidence level are combined to form the tag assigned to the email. The tag is constructed by concatenating the category and confidence level with an underscore `_` in between. For example, if the AI model classifies an email as Unsolicited with a high confidence level, the tag assigned to the email will be `LLM_UNSOLICITED_HIGH`.
+Response parsing extracts the category, confidence level, and explanation from the AI model's output. The category and confidence are concatenated with an underscore to form the tag assigned to the message; for example, an Unsolicited classification with High confidence produces the tag `LLM_UNSOLICITED_HIGH`.
 
-The following options are available for response parsing:
+The relevant fields are:
 
-- `spam-filter.llm.separator`: The character used to separate the category, confidence level, and explanation in the AI model's response. The default value is `,`.
-- `spam-filter.llm.index.category`: The index of the category in the response string. The default value is `0`.
-- `spam-filter.llm.index.confidence`: The index of the confidence level in the response string. The default value is `1`.
-- `spam-filter.llm.index.explanation`: The index of the explanation in the response string. The default value is `2`.
-- `spam-filter.llm.categories`: A list of categories that the AI model can assign to the email. A response with a category not in this list will be ignored. The default value is `["Unsolicited", "Commercial", "Harmful", "Legitimate"]`.
-- `spam-filter.llm.confidence`: A list of confidence levels that the AI model can assign to the email. A response with a confidence level not in this list will be ignored. The default value is `["High", "Medium", "Low"]`.
+- [`separator`](/docs/ref/object/spam-llm#separator): the character used to split the AI model's response into fields. Default `,`.
+- [`responsePosCategory`](/docs/ref/object/spam-llm#responseposcategory): zero-based index of the category in the response. Default `0`.
+- [`responsePosConfidence`](/docs/ref/object/spam-llm#responseposconfidence): zero-based index of the confidence in the response. Default `1`.
+- [`responsePosExplanation`](/docs/ref/object/spam-llm#responseposexplanation): zero-based index of the explanation in the response. Default `2`.
+- [`categories`](/docs/ref/object/spam-llm#categories): accepted category labels. Responses outside this list are ignored. Default `["Unsolicited", "Commercial", "Harmful", "Legitimate"]`.
+- [`confidence`](/docs/ref/object/spam-llm#confidence): accepted confidence labels. Responses outside this list are ignored. Default `["High", "Medium", "Low"]`.
 
-Example:
+Example showing the defaults explicitly:
 
-```toml
-[spam-filter.llm]
-separator = ","
-categories = ["Unsolicited", "Commercial", "Harmful", "Legitimate"]
-confidence = ["High", "Medium", "Low"]
-
-[spam-filter.llm.index]
-category = 0
-confidence = 1
-explanation = 2
+```json
+{
+  "@type": "Enable",
+  "modelId": "chat",
+  "separator": ",",
+  "categories": ["Unsolicited", "Commercial", "Harmful", "Legitimate"],
+  "confidence": ["High", "Medium", "Low"],
+  "responsePosCategory": 0,
+  "responsePosConfidence": 1,
+  "responsePosExplanation": 2
+}
 ```
 
 ### Headers
 
-The LLM Classifier allows you to add the `X-Spam-LLM` header to the email, which contains the classification and confidence level determined by the AI model. This header can be used for further processing or analysis of the email content. To enable this feature, set the `spam-filter.header.llm.enable` option to `true` in the configuration file. The name of the header can be customized using the `spam-filter.header.llm.name` option.
-
-Example:
-
-```toml
-[spam-filter.header.llm]
-enable = true
-name = "X-Spam-LLM"
-```
+<!-- review: The previous docs exposed `spam-filter.header.llm.enable` and `spam-filter.header.llm.name` for controlling an `X-Spam-LLM` response header. SpamLlm in the current schema has no equivalent fields and no similar control appears elsewhere. Confirm whether the X-Spam-LLM header is now unconditionally added with a fixed name, has been removed, or is controlled elsewhere. -->

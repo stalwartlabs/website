@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Bootstrap mode
 
-The first time Stalwart is started without a `config.json`, it enters bootstrap mode. No mail services are started. The server listens on HTTP port `8080` (configurable with `STALWART_RECOVERY_MODE_PORT`) and serves only the [WebUI](/docs/management/webui) and the management API, with the JMAP API restricted to a single object type: [Bootstrap](/docs/ref/object/bootstrap).
+The first time Stalwart is started without a `config.json`, it enters bootstrap mode. No mail services are started. The server listens on HTTP port `8080` (configurable with `STALWART_RECOVERY_MODE_PORT`) and serves only the [WebUI](/docs/management/webui/overview) and the management API, with the JMAP API restricted to a single object type: [Bootstrap](/docs/ref/object/bootstrap).
 
 To enable the initial sign-in, Stalwart generates a temporary administrator account and prints the credentials to standard output:
 

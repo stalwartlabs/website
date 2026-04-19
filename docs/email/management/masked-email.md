@@ -1,0 +1,73 @@
+---
+sidebar_position: 2
+---
+
+# Masked email
+
+:::tip Enterprise feature
+
+Masked email is available exclusively in the [Enterprise Edition](/docs/server/enterprise) of Stalwart and is not included in the Community Edition.
+
+:::
+
+A masked email is a disposable address that forwards to an existing account without revealing the account's real address. Each mask is bound to one account and can be disabled or destroyed independently, so end users can hand out a different address to every external service and cut any of them off without affecting the others. The typical use case is signing up for newsletters, shopping sites, or third-party applications where the receiving party should not learn the user's primary address.
+
+Masks are represented by the [MaskedEmail](/docs/ref/object/masked-email) object (found in the WebUI under <!-- breadcrumb:MaskedEmail --><!-- /breadcrumb:MaskedEmail -->). Each instance belongs to exactly one [Account](/docs/ref/object/account) through the read-only [`accountId`](/docs/ref/object/masked-email#accountid) reference, and the server fills in the generated address in the [`email`](/docs/ref/object/masked-email#email) field.
+
+## Lifecycle
+
+End users create masks from the account-management area of the WebUI or through a password-manager integration that speaks the JMAP API. At creation time, the user may supply a short [`description`](/docs/ref/object/masked-email#description) to remember what the mask is for and a [`forDomain`](/docs/ref/object/masked-email#fordomain) value naming the site the address was issued to. Password managers typically fill these in automatically when storing a new login. A [`url`](/docs/ref/object/masked-email#url) can also be attached to deep-link back into the integrator that owns the entry.
+
+The server records the creation time in [`createdAt`](/docs/ref/object/masked-email#createdat) and, when the request comes in with recognisable client credentials, the originating application's name in [`createdBy`](/docs/ref/object/masked-email#createdby). If the server has been configured to expire masks, the [`expiresAt`](/docs/ref/object/masked-email#expiresat) field is populated read-only and the mask stops resolving once that time has passed.
+
+Masks are toggled through [`enabled`](/docs/ref/object/masked-email#enabled). Disabling a mask leaves the record in place but causes the server to reject incoming mail for that address, which is useful when a service starts misbehaving without the user wanting to lose the record of where the address was handed out. Destroying the mask removes it outright.
+
+<!-- review: The schema documents `expiresAt` as read-only and server-set; verify whether expiry is driven by a server-wide policy, a per-tenant setting, or a field on the Account, and document the source once confirmed. -->
+
+## Address generation
+
+By default the server picks the local part of a new mask and chooses a domain from its configured set of mask domains. Integrators that need a specific shape can pass [`emailPrefix`](/docs/ref/object/masked-email#emailprefix) to require the generated address to start with a given string (up to 64 characters, limited to lowercase letters, digits, and underscore) or [`emailDomain`](/docs/ref/object/masked-email#emaildomain) to force a particular domain. Both fields are honoured only at creation time and are ignored on update.
+
+<!-- review: Confirm how the pool of domains available to `emailDomain` is configured; the schema does not name the setting. -->
+
+## Managing masks
+
+Three surfaces share the same JMAP methods:
+
+- **WebUI.** The account manager shows every mask owned by the signed-in user, with controls to disable, re-enable, or destroy each one. Administrators with the corresponding `sysMaskedEmail*` permissions can list and manage masks across accounts for support purposes.
+- **CLI.** `stalwart-cli` covers the same operations for automation. For example, `stalwart-cli create masked-email --field description='Newsletter signup' --field forDomain=example.com` creates a mask, `stalwart-cli update masked-email <id> --field enabled=false` disables it, and `stalwart-cli delete masked-email --ids <id>` removes it. The full command list is on the [MaskedEmail object page](/docs/ref/object/masked-email#cli).
+- **JMAP API.** Password managers and other integrators call `x:MaskedEmail/get`, `x:MaskedEmail/query`, and `x:MaskedEmail/set` under the `urn:stalwart:jmap` capability. The methods follow the standard RFC 8620 shapes.
+
+A minimal creation request, as a password manager might issue it:
+
+```json
+{
+  "methodCalls": [
+    [
+      "x:MaskedEmail/set",
+      {
+        "create": {
+          "new1": {
+            "description": "Newsletter signup",
+            "forDomain": "https://example.com",
+            "createdBy": "ACME Password Manager",
+            "enabled": true
+          }
+        }
+      },
+      "c1"
+    ]
+  ],
+  "using": ["urn:ietf:params:jmap:core", "urn:stalwart:jmap"]
+}
+```
+
+Listing the masks that belong to a given user is done with `x:MaskedEmail/query` filtered by `accountId`; updating or destroying a mask uses the `update` and `destroy` arguments of `x:MaskedEmail/set`.
+
+## Permissions and quotas
+
+Each operation is gated by a dedicated permission: `sysMaskedEmailGet`, `sysMaskedEmailQuery`, `sysMaskedEmailCreate`, `sysMaskedEmailUpdate`, and `sysMaskedEmailDestroy`. End-user roles grant these permissions for masks owned by the signed-in account, while administrative roles can be configured to manage masks on behalf of other accounts.
+
+The total number of masks an account may hold is bounded by the `maxMaskedAddresses` entry in the account's [`quotas`](/docs/ref/object/account#quotas) map. Setting this quota to zero disables the feature for that account even when the Enterprise license is active.
+
+<!-- review: The Account schema lists `maxMaskedAddresses` as a StorageQuota entry; confirm that unset means unlimited and zero means disabled, matching the server's behaviour. -->

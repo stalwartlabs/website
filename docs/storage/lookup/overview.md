@@ -4,12 +4,13 @@ sidebar_position: 1
 
 # Overview
 
-Lookup lists function similarly to [in-memory stores](/docs/storage/in-memory) like Redis but with a key distinction: lookup lists are static and do not support write operations. Lookup lists are ideal for use cases where values remain unchanged during server operation.
+Lookup lists serve a similar role to in-memory stores such as Redis, but with one key distinction: they are read-only at runtime. They hold key-value pairs that remain unchanged during server operation and are well suited to cases where a fixed set of values is consulted from configuration expressions or scripts.
 
-The primary way to interact with lookup lists is through [expressions](/docs/configuration/expressions/overview) using specialized functions such as `key_get`, `counter_get`, and others. These functions allow administrators to query values from the lists and dynamically evaluate configuration settings based on predefined key-value pairs. Lookup lists introduce flexibility into the configuration process, making it easy to adapt the server's behavior to specific operational needs.
+The primary way to interact with lookup lists is through [expressions](/docs/configuration/expressions/overview), using specialised functions such as `key_get`, `counter_get`, and others. These functions allow administrators to query values from the lists and evaluate configuration dynamically based on predefined key-value pairs.
 
 Stalwart supports both local and remote lookup lists:
 
-- [Local lookup lists](/docs/storage/lookup/local) are defined directly within the server's configuration file, making them suitable for scenarios where all necessary key-value pairs are known in advance. These lists are static and remain entirely under the server's control, ensuring straightforward and predictable management.
-- [Remote lookup lists](/docs/storage/lookup/remote), by contrast, are retrieved over HTTP, allowing the server to access key-value pairs stored externally. This is useful in dynamic environments where configurations are managed centrally or updated independently of the server's local settings. Remote lookups let the server integrate with external configuration systems.
+- [Local lookup lists](/docs/storage/lookup/local) are held as records managed through the [MemoryLookupKey](/docs/ref/object/memory-lookup-key) and [MemoryLookupKeyValue](/docs/ref/object/memory-lookup-key-value) objects. They are suitable for cases where all key-value pairs are known in advance and managed directly by the administrator.
+- [Remote lookup lists](/docs/storage/lookup/remote) are fetched over HTTP and defined through the [HttpLookup](/docs/ref/object/http-lookup) object. They are useful in dynamic environments where configuration is managed centrally or updated independently of the server.
 
+Additionally, the [StoreLookup](/docs/ref/object/store-lookup) object exposes an external data store as a lookup namespace, which is convenient when an existing database already holds the data the server should consult.

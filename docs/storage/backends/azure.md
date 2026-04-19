@@ -4,30 +4,16 @@ sidebar_position: 11
 
 # Azure Blob Storage
 
-For distributed and larger-scale implementations, Stalwart supports Azure Blob Storage as a backend for storing blobs (e-mail messages, Sieve scripts, etc.). Azure Blob Storage is a cloud-based object storage service that provides scalable storage for large amounts of unstructured data. By using Azure Blob Storage, Stalwart can store blobs on remote servers, which supports large-scale storage management, data replication, and backup.
+For distributed and larger-scale deployments, Stalwart supports Azure Blob Storage as a blob store. Azure Blob Storage is a cloud-based object storage service designed for scalable storage of unstructured data, and is well suited to large-scale storage management, replication, and backup of email bodies, Sieve scripts, and other blobs.
 
 ## Configuration
 
-The Azure Blob Storage service is configured under the `store.<name>` section of the configuration file. The following attributes are supported:
+The Azure backend is selected by choosing the `Azure` variant on the [BlobStore](/docs/ref/object/blob-store) object (found in the WebUI under <!-- breadcrumb:BlobStore --><!-- /breadcrumb:BlobStore -->). The variant exposes the following fields:
 
-- `type`: Specifies the type of storage, set to `"azure"` for Azure Blob Storage.
-- `storage-account`: This option is used to specify the Azure Storage Account name where blobs (e-mail messages, Sieve scripts, etc.) will be stored.
-- `container`: This option is used to specify the Azure Blob Storage container where blobs will be stored.
-- `azure-access-key`: This option is used for authentication with the Azure Blob Storage service. The `azure-access-key` serves as a password for the Azure Storage Account.
-- `sas-token`: This option is used for authentication with the Azure Blob Storage service. The `sas-token` is a shared access signature token that provides secure access to the Azure Storage Account.
-- `max-retries`: This option specifies the maximum number of times the server will retry a failed operation before giving up.
-- `timeout`: This option defines the maximum amount of time the server will wait for a response from the Azure service before it gives up. 
-- `key-prefix`: This option is used to specify a prefix that will be added to the keys of all objects stored in the Azure container. This can be useful for organizing and segregating data within the bucket.
-
-## Example
-
-```toml
-[store."azure"]
-type = "azure"
-storage-account = "stalwart"
-container = "mail"
-azure-access-key = "your-access-key"
-timeout = "30s"
-key-prefix = "stalwart/"
-```
-
+- [`storageAccount`](/docs/ref/object/blob-store#storageaccount): the Azure Storage Account used to hold blobs (required).
+- [`container`](/docs/ref/object/blob-store#container): the container within the Storage Account where blobs are stored (required).
+- [`accessKey`](/docs/ref/object/blob-store#accesskey): the access key for the Storage Account (required). The secret may be supplied inline, read from an environment variable, or loaded from a file.
+- [`sasToken`](/docs/ref/object/blob-store#sastoken): shared access signature token, used instead of an access key for SAS-based authentication.
+- [`timeout`](/docs/ref/object/blob-store#timeout): maximum time to wait for a response from the Azure service. Default: `"30s"`.
+- [`maxRetries`](/docs/ref/object/blob-store#maxretries): maximum number of retries for a failed operation. Default: `3`.
+- [`keyPrefix`](/docs/ref/object/blob-store#keyprefix): optional prefix prepended to every object key, useful for organising or segregating data within a container.

@@ -4,46 +4,28 @@ sidebar_position: 2
 
 # Connect stage
 
-The connect stage is the initial stage of an SMTP session, where the server and client establish a connection. This stage is used to set up the initial parameters of the session, such as the hostname and greeting message.
+The connect stage is the initial stage of an SMTP session, where the server and client establish a connection. It determines the hostname and greeting the server advertises, and can run a Sieve script against the incoming connection.
+
+Connect-stage behaviour is configured on the [MtaStageConnect](/docs/ref/object/mta-stage-connect) singleton (found in the WebUI under <!-- breadcrumb:MtaStageConnect --><!-- /breadcrumb:MtaStageConnect -->).
 
 ## Hostname
 
-The `session.connect.hostname` attribute is an expression that specifies the hostname that the server will use to identify itself during the SMTP session.
-
-Example:
-
-```toml
-[session.connect]
-hostname = "config_get('server.hostname')"
-```
+The [`hostname`](/docs/ref/object/mta-stage-connect#hostname) field is an expression that returns the hostname the server uses to identify itself during the SMTP session. By default it resolves to the system hostname via `system('hostname')`.
 
 ## Greeting
 
-The `session.connect.greeting` attribute is an expression that specifies the greeting message that the server will send to the client when the SMTP session begins.
-
-Example:
-
-```toml
-[session.connect]
-greeting = "'Stalwart ESMTP at your service'"
-```
+The [`smtpGreeting`](/docs/ref/object/mta-stage-connect#smtpgreeting) field is an expression that returns the greeting message sent to the client when the SMTP session begins. The default greeting combines the system hostname with `Stalwart ESMTP at your service`.
 
 ## Sieve script
 
-The `session.connect.script` attribute specifies the name of the [Sieve script](/docs/sieve/overview) to run before the SMTP session begins. This can be useful for filtering connections based on their remote IP address, for example.
+The [`script`](/docs/ref/object/mta-stage-connect#script) field selects a [Sieve script](/docs/sieve/overview) to run before the SMTP session is allowed to proceed. This is typically used to filter connections by remote IP address: an expression selects the script name at runtime, and the script itself may reject the connection based on connection-level variables such as `remote_ip`.
 
-Example:
+For example, setting [`script`](/docs/ref/object/mta-stage-connect#script) to the expression `"'connect_filter'"` runs a Sieve script named `connect_filter` which can inspect `env.remote_ip` and reject unwanted sources:
 
-```toml
-[session.connect]
-script = "'connect_filter'"
-
-[sieve.trusted.scripts.connect_filter]
-contents = '''
+```sieve
 require ["variables", "reject"];
 
 if string "${env.remote_ip}" "192.0.2.88" {
-    reject "Your IP '${env.remote_ip}' is not welcomed here.";
+    reject "Connection from this IP is not accepted.";
 }
-'''
 ```

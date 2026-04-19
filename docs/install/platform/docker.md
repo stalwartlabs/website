@@ -4,42 +4,119 @@ sidebar_position: 3
 
 # Docker
 
-Stalwart is available as a Docker image that includes JMAP, IMAP, SMTP and WebDAV servers. To get started, pull the `stalwart:latest` image, for example:
+Stalwart is distributed as a multi-architecture Docker image that bundles the server binary and a minimal Debian runtime, covering JMAP, IMAP, POP3, SMTP, WebDAV, and the management HTTP interface. The image is published to both Docker Hub and GitHub Container Registry.
+
+## Pin the image version
+
+The `latest` tag tracks the newest release and moves forward as new versions ship. For production deployments, pin to a `v<major>.<minor>` tag such as `v0.16`. The CI publishes this short form in addition to the full `v<major>.<minor>.<patch>` tag and `edge` (latest build from the main branch), so picking the short form keeps deployments on a single minor series and avoids breaking semver changes on upgrade.
 
 ```bash
-$ docker pull stalwartlabs/stalwart:latest
+$ docker pull stalwartlabs/stalwart:v0.16
 ```
 
-Then, create a directory on your host machine where you will store the configuration files and the data for the mail server, for example:
+Replace `v0.16` with the current stable release if a newer minor version has shipped.
+
+:::tip FoundationDB edition
+
+No pre-built FoundationDB image is published: multiple FoundationDB client versions exist and shipping a single default would break deployments that rely on a different client. To produce a FoundationDB-enabled image, use the `Dockerfile.fdb` file available in the [stalwartlabs/stalwart](https://github.com/stalwartlabs/stalwart) repository as a starting point.
+
+:::
+
+## Start the container
+
+The image declares two volumes:
+
+| Volume | Purpose |
+| --- | --- |
+| `/etc/stalwart` | Configuration directory (contains `config.json` after first start) |
+| `/var/lib/stalwart` | Persistent application data (RocksDB database, local blobs, bootstrap registry) |
+
+The data volume is only written to when Stalwart uses a local storage backend such as RocksDB. Deployments that rely exclusively on external stores (S3, PostgreSQL, MySQL, Redis, Azure Blob, NATS) can leave the data volume empty. Application logs are written to the container's standard output and captured by Docker's log driver, so no dedicated log volume is required.
+
+Create named Docker volumes and start the container with the full set of mail and management ports published to the host:
 
 ```bash
-$ mkdir /var/lib/stalwart
+$ docker volume create stalwart-etc
+$ docker volume create stalwart-data
+$ docker run -d --name stalwart \
+    --restart unless-stopped \
+    -p 443:443 -p 8080:8080 \
+    -p 25:25 -p 587:587 -p 465:465 \
+    -p 143:143 -p 993:993 \
+    -p 110:110 -p 995:995 \
+    -p 4190:4190 \
+    -v stalwart-etc:/etc/stalwart \
+    -v stalwart-data:/var/lib/stalwart \
+    stalwartlabs/stalwart:v0.16
 ```
 
-Once you have completed the setup instructions, start the Stalwart container:
+Publishing every port is not required. Internal deployments that only need, for example, submission (`587`) and IMAPS (`993`) can prune the list accordingly. Refer to the [securing your server](/docs/install/security) documentation for guidance on which ports to expose.
+
+The image runs as an unprivileged `stalwart` user (UID 2000). Docker's default capability set is sufficient for binding ports below 1024 on Linux: the binary carries the `cap_net_bind_service` file capability, so no `--cap-add` or `--privileged` flag is needed. Starting the container with `--cap-drop NET_BIND_SERVICE` causes the binary to fail at exec time.
+
+:::note Bind-mounts and UID 2000
+
+The example above uses named Docker volumes, which are populated with the correct ownership automatically. When bind-mounting host directories instead (for example `-v /srv/stalwart/config:/etc/stalwart`), the host directory must be owned by UID 2000 so the service account can read and write it. Run `chown 2000:2000 /srv/stalwart/config /srv/stalwart/data` on the host before starting the container.
+
+:::
+
+## Retrieve the bootstrap administrator credentials
+
+After the container starts for the first time, Stalwart runs in **bootstrap mode**. A temporary administrator account is generated with a random password and the credentials are written to the container's standard error. Bootstrap mode is a transient phase intended only to reach the setup wizard, after which a permanent administrator account is provisioned.
+
+Print the container logs and locate the bootstrap banner:
 
 ```bash
-$ docker run -d -ti -p 443:443 -p 8080:8080 \
-             -p 25:25 -p 587:587 -p 465:465 \
-             -p 143:143 -p 993:993 -p 4190:4190 \
-             -p 110:110 -p 995:995 \
-             -v <STALWART_DIR>:/opt/stalwart \
-             --name stalwart stalwartlabs/stalwart:latest
+$ docker logs stalwart 2>&1 | grep -A8 'bootstrap mode'
 ```
 
-Make sure to replace `<STALWART_DIR>` with the path to the directory you created above. Please note that it is not necessary to expose all these ports, read the [securing your server](/docs/install/security) documentation for more information.
+The block to look for looks like this:
 
-### Log in to the web interface
+```
+════════════════════════════════════════════════════════════
+🔑 Stalwart bootstrap mode - temporary administrator account
 
-Execute `docker logs stalwart` to obtain the system the administrator account and password: 
+   username: admin
+   password: XXXXXXXXXXXXXXXX
+
+Use these credentials to complete the initial setup at the
+/admin web UI. Once setup is done, Stalwart will provision a
+permanent administrator and this temporary account will no
+longer apply.
+════════════════════════════════════════════════════════════
+```
+
+Copy the 16-character password from the `password:` line. This is the only time the value appears in the logs.
+
+### Alternative: pin a credential via an environment variable
+
+To avoid relying on a log-extracted temporary password, a fixed credential can be set at container start time. Pass the value via `-e`:
 
 ```bash
-$ docker logs stalwart
-✅ Configuration file written to /opt/stalwart/etc/config.toml
-🔑 Your administrator account is 'admin' with password 'w95Yuiu36E'.
+$ docker run -d --name stalwart \
+    -e STALWART_RECOVERY_ADMIN=admin:mySecretPass \
+    --restart unless-stopped \
+    -p 443:443 -p 8080:8080 \
+    -p 25:25 -p 587:587 -p 465:465 \
+    -p 143:143 -p 993:993 \
+    -p 110:110 -p 995:995 \
+    -p 4190:4190 \
+    -v stalwart-etc:/etc/stalwart \
+    -v stalwart-data:/var/lib/stalwart \
+    stalwartlabs/stalwart:v0.16
 ```
 
-With this information, you can log in to the web interface at `http://yourserver.org:8080/login`.
+The administrator credentials will match the configured value and no temporary password will be generated. The same variable can also be placed in a Docker Compose `environment:` block or sourced from a Compose `env_file:` entry.
+
+## Open the setup wizard
+
+With the bootstrap credentials in hand, open a web browser and navigate to:
+
+```
+http://<hostname>:8080/admin
+```
+
+Replace `<hostname>` with the hostname or IP address of the Docker host. For a local container, `http://127.0.0.1:8080/admin` works. Sign in using `admin` as the username and the password retrieved above, then follow the setup wizard to complete the initial configuration.
 
 ### Choose where to store your data
 

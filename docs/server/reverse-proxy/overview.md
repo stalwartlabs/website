@@ -4,20 +4,18 @@ sidebar_position: 1
 
 # Overview
 
-A reverse proxy is a type of proxy server that retrieves resources on behalf of a client from one or more servers. These resources are then returned to the client as if they originated from the proxy server itself. Reverse proxies are typically used to balance load among several servers, cache content to improve performance, and provide a single point of access with enhanced security and monitoring capabilities.
+A reverse proxy accepts client connections on behalf of one or more back-end servers and relays traffic between them. Placing a reverse proxy in front of a mail server typically provides load balancing across multiple back-end nodes, a single ingress point for operational monitoring, and centralised TLS termination when that is the desired topology.
 
-Stalwart is designed to operate efficiently behind a reverse proxy. By placing Stalwart behind a reverse proxy, you can take advantage of these benefits to ensure high availability, scalability, and security for your email infrastructure.
+Stalwart operates without modification behind a reverse proxy, and is compatible with common reverse-proxy products such as HAProxy, Caddy, NGINX, and Traefik.
 
 ## Proxy Protocol
 
-The [Proxy Protocol](/docs/server/reverse-proxy/proxy-protocol), developed by HAProxy, is a simple and efficient way to transport connection information from the client to the server across multiple layers of proxies. This protocol provides the server with important details about the original client connection, including the client's IP address and the status of the TLS connection.
+The [Proxy Protocol](/docs/server/reverse-proxy/proxy-protocol), introduced by HAProxy, forwards connection metadata (the original client IP and whether the transport is TLS) from the proxy to the back-end server. Without this extension, Stalwart sees only the proxy's IP address and cannot distinguish one client from another.
 
-While Stalwart does not require the Proxy Protocol to function behind a reverse proxy, enabling it is highly recommended. The Proxy Protocol ensures that Stalwart receives crucial information about the client connection, which is essential for several key functions.
+Enabling the Proxy Protocol is recommended whenever Stalwart runs behind a reverse proxy. Several pieces of server behaviour depend on it:
 
-Firstly, the client’s remote IP address is necessary to perform sender authentication checks such as SPF (Sender Policy Framework) and DMARC (Domain-based Message Authentication, Reporting & Conformance). These checks help verify that the email comes from an authorized source and is not a spoofed or fraudulent email.
+- **Sender authentication** checks such as SPF and DMARC rely on the remote client's IP address. Without the Proxy Protocol those checks run against the proxy's address and are meaningless.
+- **Rate limiting and auto-banning** need the real client IP to enforce per-source limits and to create [BlockedIp](/docs/ref/object/blocked-ip) entries against the offending source rather than against the proxy.
+- **Policy decisions and logging** often depend on whether the original connection was protected by TLS; the Proxy Protocol carries that bit across the proxy hop.
 
-Secondly, enforcing limits on the number of connections or the volume of emails from a single IP address can prevent abuse and protect the server from being overwhelmed by malicious traffic. Accurate knowledge of the client's IP address enables Stalwart to implement these protective measures effectively.
-
-Lastly, knowing whether the connection was encrypted via TLS can help in policy enforcement and logging, ensuring that sensitive data is transmitted securely. This information allows Stalwart to maintain high security standards and enforce policies that may depend on the encryption status of the connection.
-
-Using the Proxy Protocol allows Stalwart to correctly authenticate senders, enforce security policies, and preserve the integrity of email communications. Configuring a reverse proxy with the Proxy Protocol ensures that the server has the client connection details it needs to operate correctly.
+Configuring the reverse proxy to emit the Proxy Protocol header and the server to accept it from the proxy's address is what preserves these signals end-to-end.

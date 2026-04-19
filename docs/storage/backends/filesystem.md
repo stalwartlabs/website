@@ -4,22 +4,11 @@ sidebar_position: 7
 
 # Filesystem
 
-For single-node installations, Stalwart supports storing emails and blobs on the local filesystem. This is done using a hashed directory structure, which is designed to prevent filesystem slowdowns when storing large numbers of files in a single directory.
+For single-node installations, Stalwart can store email bodies and other blobs directly on the local filesystem. A hashed directory layout distributes files into nested subdirectories to avoid the performance issues that arise when a single directory contains a very large number of files.
 
 ## Configuration
 
-The following configuration settings are available for the filesystem blob store, which are specified under the `store.<name>` section of the configuration file:
+The filesystem backend is selected by choosing the `FileSystem` variant on the [BlobStore](/docs/ref/object/blob-store) object (found in the WebUI under <!-- breadcrumb:BlobStore --><!-- /breadcrumb:BlobStore -->). The variant exposes the following fields:
 
-- `type`: Specifies the type of storage, set to `"fs"` for filesystem storage.
-- `path`: This option specifies the path to the directory where blobs (e-mail messages, Sieve scripts, etc.) will be stored.
-- `depth`: This option specifies the number of subdirectories to create. The default value is `2`, which means that the directory structure will be two levels deep. 
-
-### Example
-
-```toml
-[store."filesystem"]
-type = "fs"
-path = "/var/lib/data/blobs"
-depth = 2
-```
-
+- [`path`](/docs/ref/object/blob-store#path): filesystem path where blobs are stored (required).
+- [`depth`](/docs/ref/object/blob-store#depth): maximum depth of the nested directory hierarchy. Default: `2`.

@@ -4,7 +4,7 @@ sidebar_position: 5
 
 # Endpoints
 
-Stalwart provides multiple OAuth endpoints to facilitate secure authentication and authorization processes. These endpoints allow clients to interact with the OAuth server for tasks such as obtaining access tokens, authorizing devices, and validating tokens. Below is a description of the available endpoints and their functions.
+Stalwart exposes several OAuth endpoints that clients use to obtain access tokens, authorize devices, and validate tokens. The endpoint behaviour is governed by the [OidcProvider](/docs/ref/object/oidc-provider) singleton (found in the WebUI under <!-- breadcrumb:OidcProvider --><!-- /breadcrumb:OidcProvider -->), which defines token lifetimes, the authorization-code retry limit, and related policy.
 
 ## `/.well-known/oauth-authorization-server`
 

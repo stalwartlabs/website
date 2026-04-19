@@ -4,77 +4,84 @@ sidebar_position: 5
 
 # Setting up DNS
 
-When deploying a mail server, correctly configuring DNS records is essential to ensure email delivery, client compatibility, and security. DNS records direct email traffic, authenticate outgoing messages, enforce transport security, and enable mail clients to discover and connect to the server automatically.
+Correctly configured DNS records are essential for email delivery, client compatibility, and transport security. The records listed below direct incoming mail, authenticate outgoing messages, enforce TLS, advertise policy to remote senders, and allow mail clients to discover and connect to the server automatically.
 
-Stalwart simplifies this process by automatically generating the necessary DNS records for each domain you configure. These records can be easily copied and added to your domain’s DNS provider. Below is a detailed explanation of each record type and its role in the mail infrastructure.
+## Automatic or manual publication
 
+Stalwart offers two ways to publish the records a domain needs.
 
-## Mail Exchange (MX) Records
+The recommended path is **automatic DNS management**. When a domain is linked to a [DnsServer](/docs/ref/object/dns-server) object configured for a supported provider, Stalwart publishes the full record set against the provider's API the first time the domain is created and keeps it in sync over time. Updates driven by events such as DKIM key rotation or a change to the MTA-STS policy propagate without manual intervention. The set of supported providers and the discovery protocol used is described under [DNS provider integration](/docs/server/dns/overview); the fields that link a specific domain to a provider are documented on [DNS record setup](/docs/domains/dns-records).
 
-MX records specify which mail server is responsible for receiving email messages for your domain. These are critical for directing incoming email traffic to your server.
+If the DNS provider is not supported, or when manual control over the zone is preferred, the same records can be obtained from the [WebUI](/docs/management/webui/overview) under the domain's management page, or exported as a zone file through the [CLI](/docs/management/cli/overview). The resulting records can then be pasted into the provider's DNS control panel.
+
+The remainder of this page describes each record type and its role. The examples assume the domain `example.org` and the host `mail.example.org`.
+
+## Mail Exchange (MX) records
+
+MX records specify which host is responsible for receiving email for a domain. These records direct incoming traffic to the mail server.
 
 ```
 MX	example.org.	10 mail.example.org.
 ```
 
-In this example, email for `example.org` is directed to `mail.example.org` with a priority of 10. Lower numbers indicate higher priority when multiple servers are listed.
+Email for `example.org` is directed to `mail.example.org` with a priority of `10`. When several MX records are published, the lowest priority value is tried first; higher values act as fallbacks.
 
-## DKIM Records
+## DKIM records
 
-[DomainKeys Identified Mail (DKIM)](/docs/mta/authentication/dkim/overview) adds a digital signature to outgoing emails to prove they originated from your domain and haven’t been altered in transit. DKIM uses TXT records that publish public keys used to verify these signatures.
+[DomainKeys Identified Mail (DKIM)](/docs/mta/authentication/dkim/overview) adds a digital signature to outgoing messages, proving that a message was sent by an authorised mail server for the domain and that it was not modified in transit. DKIM uses TXT records that publish the public keys used to verify those signatures.
 
 ```
 TXT	202404e._domainkey.example.org.	v=DKIM1; k=ed25519; h=sha256; p=N/BkJD6xbEiMb39v7JW6AwdPHO5gKB3fcCnod4zQ31U=
 TXT	202404r._domainkey.example.org.	v=DKIM1; k=rsa; h=sha256; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqlddLN3BjInvBqI1KpdouG7feBsEt5t233jWQJW7FaY7sR/MfWNxuzTObLoZ3l76DFq3xPjVhmy/YYiOAnMOtq9hUFqgBVTSwUNHYPz1YUEcrI5+Ban7P7LV8kggvTAaWhAI3iSXJIFaUq78K8YYr/zrGyBlg5HCPpd+DMRAB8j1ID8bcWFaVebwAOrartXOO/f8Bn9jrRrLhjP3c8UlmkJLXkSncXPp69R9VpevrKJtpBjaFxKtx7DXGie821MHuWJ7pWMdU1Uf3z8UBKF9bnrCZ5v0SdiaFkPXR1Iiq/gR6bMwdlWvST9V6ePnqZqX+Iv4FA28byOot73/CIINFwIDAQAB
 ```
 
-Each DKIM record corresponds to a cryptographic key and is referenced by a selector, like `202404e` or `202404r`.
+Each DKIM record corresponds to a cryptographic key and is referenced by a selector such as `202404e` or `202404r`. When keys are rotated, the new selector is published alongside the retiring one until the transition is complete.
 
-## SPF Records
+## SPF records
 
-The [Sender Policy Framework (SPF)](/docs/mta/authentication/spf) helps mail servers verify whether an email claiming to come from your domain was sent from an authorized server. SPF records are published as TXT records.
+The [Sender Policy Framework (SPF)](/docs/mta/authentication/spf) tells receiving servers which hosts are permitted to send mail for a domain. SPF policies are published as TXT records.
 
 ```
 TXT	mail.example.org.	v=spf1 a ra=postmaster -all
 TXT	example.org.	v=spf1 mx ra=postmaster -all
 ```
 
-These policies indicate that mail can be sent from the server defined by the domain’s MX or A records, and instruct recipient servers to reject emails from unauthorized sources.
+These policies indicate that mail may originate from the host matched by the domain's `A` record (or MX record, for the apex domain), and that messages from any other source should be rejected.
 
-## DMARC Record
+## DMARC record
 
-[Domain-based Message Authentication, Reporting & Conformance (DMARC)](/docs/mta/authentication/dmarc) builds on SPF and DKIM, specifying what to do when an email fails authentication and where to send reports.
+[Domain-based Message Authentication, Reporting, and Conformance (DMARC)](/docs/mta/authentication/dmarc) builds on SPF and DKIM, instructing receiving servers how to handle a message that fails authentication and where to send aggregate and forensic reports.
 
 ```
 TXT	_dmarc.example.org.	v=DMARC1; p=reject; rua=mailto:postmaster@example.org; ruf=mailto:postmaster@example.org
 ```
 
-This example tells receiving servers to reject non-authenticating messages and send both aggregate (`rua`) and forensic (`ruf`) reports to the postmaster.
+The example tells receiving servers to reject unauthenticated messages and to deliver aggregate (`rua`) and forensic (`ruf`) reports to the postmaster address.
 
-## MTA-STS Records
+## MTA-STS records
 
-[Mail Transfer Agent Strict Transport Security (MTA-STS)](/docs/mta/transport-security/mta-sts) ensures that emails sent to your domain are encrypted and sent over a secure channel.
+[Mail Transfer Agent Strict Transport Security (MTA-STS)](/docs/mta/transport-security/mta-sts) requires that inbound SMTP connections from compliant senders take place over TLS with a valid certificate matching a known host.
 
 ```
 CNAME	mta-sts.example.org.	mail.example.org.
 TXT	_mta-sts.example.org.	v=STSv1; id=16561011793845132961
 ```
 
-The CNAME record points to where your MTA-STS policy is hosted, while the TXT record identifies the version and policy ID to track changes.
+The CNAME record points to the host that serves the MTA-STS policy document; the TXT record carries the policy version and a stable identifier used by remote servers to detect changes.
 
-## TLS Reporting (TLS-RPT) Record
+## TLS Reporting (TLS-RPT) record
 
-[SMTP TLS Reporting](/docs/mta/reports/tls) allows mail servers to send reports about failed TLS negotiations when trying to deliver email to your domain.
+[SMTP TLS Reporting](/docs/mta/reports/tls) lets remote servers deliver daily reports describing failed TLS negotiations to the target domain.
 
 ```
 TXT	_smtp._tls.example.org.	v=TLSRPTv1; rua=mailto:postmaster@example.org
 ```
 
-This record tells sending servers where to report TLS issues, helping you monitor and improve secure transport.
+The record specifies the address at which the domain is willing to receive such reports, making it easier to detect and diagnose TLS problems affecting inbound mail.
 
-## SRV Records for Client Services
+## SRV records for client services
 
-SRV records guide email clients like Thunderbird, Outlook, or mobile apps to the correct server and port for various services.
+SRV records advertise the hostnames and ports that mail clients should use for each protocol.
 
 ```
 SRV	_imap._tcp.example.org.	0 1 110 mail.example.org.
@@ -83,29 +90,39 @@ SRV	_submissions._tcp.example.org.	0 1 465 mail.example.org.
 SRV	_submission._tcp.example.org.	0 1 587 mail.example.org.
 ```
 
-These entries specify the protocols and ports your mail clients should use to connect to services like IMAP and SMTP.
+These records let clients that support SRV-based discovery locate the server without the user entering host and port information manually.
 
-## Autoconfiguration Records
+## Autoconfiguration records
 
-To enable [automatic configuration](/docs/server/autoconfig) of email clients, these CNAME records should point to your mail server:
+[Autoconfiguration](/docs/server/autoconfig) allows a mail client to retrieve its settings from the domain without manual entry. The legacy Mozilla autoconfig and Microsoft Autodiscover formats expect to find their endpoints on dedicated subdomains, typically pointed at the mail host:
 
 ```
 CNAME	autoconfig.example.org.	mail.example.org.
 CNAME	autodiscover.example.org.	mail.example.org.
 ```
 
-This makes it easier for users to set up their email clients without needing to enter server details manually.
+The newer PACC protocol does not require its own subdomain; compliant clients fetch the configuration from `https://example.org/.well-known/user-agent-configuration` directly.
 
-## TLSA Records (DANE)
+## Certificate Authority Authorization (CAA) records
 
-[TLSA records](/docs/mta/transport-security/dane) are part of DNS-based Authentication of Named Entities (DANE), providing cryptographic links between your mail server’s TLS certificate and its DNS records. These are optional but recommended for improving TLS security.
+CAA records tell certificate authorities which of them are allowed to issue TLS certificates for a domain. When a CA (including those used by ACME clients) receives a certificate request, it consults the target domain's CAA records and refuses the request if it is not listed. Publishing CAA records narrows the set of authorities that could legitimately issue a certificate for the domain, which reduces the risk of an unauthorised or mistakenly issued certificate.
+
+```
+CAA	example.org.	0 issue "letsencrypt.org"
+CAA	example.org.	0 iodef "mailto:postmaster@example.org"
+```
+
+The first record authorises Let's Encrypt to issue certificates for `example.org`. The second specifies the address at which violations or misissuance notifications can be reported. When Stalwart obtains certificates through an [ACME provider](/docs/domains/tls-certificates), the corresponding CAA record lists that provider's authorisation identifier, for example `letsencrypt.org` for Let's Encrypt. Additional `issue` entries can be added when more than one CA is used, and an `issuewild` entry can further restrict wildcard certificates.
+
+## TLSA records (DANE)
+
+[TLSA records](/docs/mta/transport-security/dane) are part of DNS-based Authentication of Named Entities (DANE). They cryptographically link the mail server's TLS certificate to its DNS records, allowing remote servers to verify that the certificate presented during SMTP delivery matches the one published by the domain. Publishing TLSA records is optional but recommended for inbound transport security.
 
 ```
 TLSA	_25._tcp.mail.example.org.	3 0 1 064dbc632f1ba7d0a2a3faeadeedfebd6f90f850dfb852c97ee9df9b6e5c5e7c
 ...
 ```
 
-You can publish one or more TLSA records depending on your certificate management strategy. If you don’t rotate keys frequently, a single record with a usage of `3` (DANE-EE) is usually sufficient. For frequent rotations, including multiple TLSA records provides resilience and avoids service interruptions during key transitions.
+One or more TLSA records can be published depending on the certificate management strategy in use. When keys are not rotated frequently, a single record with a usage of `3` (DANE-EE) is usually sufficient. For frequent rotations, publishing several TLSA records in parallel provides resilience and avoids service interruptions during key transitions.
 
-Proper DNS configuration is critical to the secure and reliable operation of your mail server. Stalwart makes it easy to generate these records, but it’s up to administrators to ensure they are published correctly at your DNS provider. Always verify propagation and check your setup with testing tools after making changes.
-
+Correct DNS configuration is central to secure and reliable mail server operation. When automatic DNS management is used, Stalwart keeps the full record set in sync with server state. When records are managed manually, propagation should be verified after every change using the standard DNS lookup tools.

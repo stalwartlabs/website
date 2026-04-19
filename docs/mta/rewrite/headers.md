@@ -8,14 +8,14 @@ Message header rewriting involves the process of adding, removing, or modifying 
 
 There are various reasons why header rewriting might be useful:
 
-- **Obfuscating internal details:** Internal server names, IP addresses, or other specifics could be present in the headers. Removing or modifying these can help keep your internal infrastructure private and enhance your security posture.
+- **Obfuscating internal details:** Internal server names, IP addresses, or other specifics could be present in the headers. Removing or modifying these helps keep internal infrastructure private and improves the security posture.
 - **Compliance and regulatory reasons:** Certain industries or legal environments require specific information to be present in email headers. By adding or modifying headers, an organization can ensure it meets these requirements.
 - **Message enhancement and organization:** Headers can be added to include additional information about the email, such as categorization information, which can be used by email clients to sort or filter messages.
 - **Troubleshooting and Monitoring:** By adding custom headers, it's possible to track the path an email took through the system, which can be invaluable for troubleshooting delivery issues or monitoring system performance.
 
-In Stalwart, headers can be modified using [Sieve scripts](/docs/sieve/overview), which is a language designed for filtering email messages. To use Sieve for header modification, you'll need to write a Sieve script that contains the specific commands to add, delete, or alter email headers as per your needs. These scripts can then be referenced from the `session.data.script` property of the SMTP [DATA stage](/docs/mta/inbound/data#sieve).
+Headers can be modified using [Sieve scripts](/docs/sieve/overview), which is a language designed for filtering email messages. A Sieve script containing the specific add, delete, or alter commands is defined as a [SieveSystemScript](/docs/ref/object/sieve-system-script) object and referenced from the [`script`](/docs/ref/object/mta-stage-data#script) field on the [MtaStageData](/docs/ref/object/mta-stage-data) singleton (found in the WebUI under <!-- breadcrumb:MtaStageData --><!-- /breadcrumb:MtaStageData -->); see the [DATA stage](/docs/mta/inbound/data#sieve) documentation.
 
-The Sieve language has a rich set of commands, allowing you to precisely define how to manage email headers. For instance, you can use the `addheader` action to add a new header, the `deleteheader` action to delete a header, or combine them to change a header's value. These modifications can be applied conditionally based on various aspects of the email, such as the sender, recipient, subject line, or any other header.
+The Sieve language has a rich set of commands for precise header manipulation. The `addheader` action adds a new header, `deleteheader` removes a header, and combining the two effectively replaces a header's value. Modifications can be applied conditionally based on attributes such as sender, recipient, subject line, or any other header.
 
 ## Examples
 
@@ -39,7 +39,7 @@ deleteheader "X-Custom-Header";
 
 ### Replacing headers
 
-Sieve does not have a built-in replace command to modify a header. However, you can use the `deleteheader` command to remove the old header and the `addheader` command to add a new header with the updated value. Here's an example where we replace the value of "X-Custom-Header":
+Sieve does not have a built-in replace command to modify a header. The `deleteheader` command removes the old header and the `addheader` command adds a new header with the updated value. The following example replaces the value of "X-Custom-Header":
 
 ```sieve
 require ["editheader", "variables"];

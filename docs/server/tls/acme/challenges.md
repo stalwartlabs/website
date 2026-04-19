@@ -4,84 +4,84 @@ sidebar_position: 2
 
 # Challenge Types
 
-The ACME protocol supports several types of challenges to prove control over a domain name. Each challenge type verifies that the ACME client (in this case, Stalwart) controls the domain it claims to represent. The choice of challenge depends on the user’s environment and the specific security requirements:
+ACME validates control of a domain through a challenge. The ACME server issues a token, the ACME client (in this case Stalwart) proves it can respond to that token on behalf of the domain, and the server then issues or renews the certificate. Three challenge types are in common use, each suited to a different deployment:
 
-- **HTTP-01 Challenge**: This method requires the server to respond to a HTTP request made to a specific URL on the domain. It's suitable for services with an active web server.
-- **DNS-01 Challenge**: This approach involves creating a specific DNS record in the domain’s DNS zone. It is useful for services that have control over their DNS records.
-- **TLS-ALPN-01 Challenge**: This challenge type involves presenting a special TLS certificate to prove control over a domain. It's particularly relevant for services operating over TLS, such as mail servers.
+- **HTTP-01**: the server answers a challenge HTTP request on port 80. Suitable when the host already serves HTTP.
+- **DNS-01**: the server publishes a TXT record in the domain's DNS zone. Suitable when DNS can be updated under automation, and the only challenge type that supports wildcard certificates.
+- **TLS-ALPN-01**: the server presents a purpose-built TLS certificate on port 443 using the ACME-specific ALPN protocol. Suitable when HTTP traffic is restricted but TLS is reachable.
 
 ## HTTP-01
 
-The HTTP-01 challenge is designed to prove control over a domain by making an HTTP request to it.
+The HTTP-01 challenge proves control of a domain by serving a token over HTTP.
 
-Process:
+Steps:
 
-- **Token Creation**: The ACME server generates a token and sends it to Stalwart.
-- **File Creation**: Stalwart creates a file containing the token and a key authorization derived from the token and the server’s ACME account key.
-- **File Placement**: This file is at `http://<YOUR_DOMAIN>/.well-known/acme-challenge/<TOKEN>`, which is accessible via the web on port 80.
-- **Verification**: The ACME server accesses the URL. If the server retrieves the correct response, the domain validation is considered successful.
+- **Token creation**: the ACME server generates a token and sends it to Stalwart.
+- **Response file**: Stalwart builds a response consisting of the token and a key authorization derived from the token and the server's ACME account key.
+- **File placement**: the response is served at `http://<DOMAIN>/.well-known/acme-challenge/<TOKEN>` on port 80.
+- **Verification**: the ACME server retrieves the URL. If the response matches, the domain is validated.
 
 Considerations:
 
-- The domain must resolve publicly to the server where the challenge response is hosted.
-- Port 80 must be open to inbound connections.
-- This challenge does not validate any request for domain depth (e.g., subdomains).
+- The domain must resolve publicly to the host serving the challenge response.
+- Port 80 must accept inbound connections.
+- HTTP-01 cannot validate a wildcard domain.
 
 ## DNS-01
 
-The DNS-01 challenge validates domain ownership by requiring the user to create a DNS record.
+The DNS-01 challenge proves control of a domain by publishing a TXT record.
 
-Process:
+Steps:
 
-- **Token Creation**: The ACME server provides a token to Stalwart.
-- **Record Creation**: Stalwart uses the token to create a TXT record for the domain in the format `_acme-challenge.<YOUR_DOMAIN>`.
-- **Record Placement**: The TXT record's value is set to a key authorization digest, which is a SHA-256 digest of the token combined with the server's ACME account key.
-- **Verification**: The ACME server queries the DNS records for the TXT entry. If the TXT record matches the expected digest, the domain is considered validated.
+- **Token creation**: the ACME server sends a token to Stalwart.
+- **Record creation**: Stalwart derives a key authorization from the token and publishes it as a TXT record at `_acme-challenge.<DOMAIN>`.
+- **Record value**: the TXT record's value is the SHA-256 digest of the token combined with the server's ACME account key.
+- **Verification**: the ACME server queries DNS for the TXT record. If the value matches, the domain is validated.
 
 Considerations:
 
-- The DNS changes must propagate fully before verification can succeed, which can take time.
-- Useful for scenarios where direct web traffic control is not feasible.
-- Supports wildcard certificate issuance as it validates the domain at a higher level.
+- DNS changes must propagate before verification can succeed, which may take minutes.
+- DNS-01 works even when the host is not reachable over HTTP.
+- Only DNS-01 supports wildcard certificates.
 
 ## TLS-ALPN-01
 
-The TLS-ALPN-01 challenge uses the TLS Application-Layer Protocol Negotiation extension and a specific ACME validation protocol to prove domain control.
+The TLS-ALPN-01 challenge proves control of a domain over TLS by negotiating a dedicated ACME ALPN protocol identifier and presenting a purpose-built certificate.
 
-Process:
+Steps:
 
-- **Token Creation**: The ACME server sends a token to Stalwart.
-- **Certificate Generation**: Stalwart generates a self-signed certificate that includes the token and a specific ACME OID in the Subject Alternative Name (SAN) extension.
-- **TLS Configuration**: Stalwart configures itself to respond to HTTPS (port 443) requests using the ACME-specific TLS-ALPN protocol ID.
-- **Verification**: The ACME server connects to the domain via TLS-ALPN. If the server presents the correct certificate, the domain is validated.
+- **Token creation**: the ACME server sends a token to Stalwart.
+- **Certificate generation**: Stalwart creates a self-signed certificate whose Subject Alternative Name carries the token and the ACME OID.
+- **TLS response**: Stalwart serves the certificate on port 443 when the client negotiates the `acme-tls/1` ALPN identifier.
+- **Verification**: the ACME server connects, negotiates the ALPN protocol, and validates the presented certificate.
 
 Considerations:
 
-- Requires configuration at the TLS layer, which can be complex.
-- Port 443 must be open to inbound connections.
-- Particularly useful for environments where HTTP traffic is restricted or where DNS changes are infeasible.
+- Requires TLS-level configuration that is more involved than HTTP-01.
+- Port 443 must accept inbound connections.
+- Works where HTTP traffic is restricted or where DNS changes are not feasible.
 
-## Choosing the Right Challenge
+## Choosing the right challenge
 
-When setting up Stalwart to use the Automated Certificate Management Environment (ACME) protocol for SSL/TLS certificate management, selecting the appropriate challenge type is crucial. This short guide will help you decide between HTTP-01, DNS-01, and TLS-ALPN-01 challenges based on your server configuration and specific requirements.
+The challenge type depends on which ports are reachable, whether wildcard certificates are needed, and whether DNS can be updated from automation.
 
-#### HTTP-01
-This is the most straightforward method if your server has port 80 open and accessible from the internet. The HTTP-01 challenge proves control over your domain by responding to HTTP requests from the ACME server.
-  
-- **Advantages**: Simple setup; does not require DNS record management.
-- **Disadvantages**: Does not support wildcard certificates and requires port 80 to be open, which might not be preferable for all configurations.
+### HTTP-01
 
-#### TLS-ALPN-01
+Pick HTTP-01 when port 80 is reachable from the internet and no wildcard is required. It has the simplest setup and needs no DNS automation.
 
-If your server has port 443 open and reachable, the TLS-ALPN-01 challenge is recommended. This challenge verifies domain control by using TLS with the ACME-specific Application Layer Protocol Negotiation (ALPN) protocol.
+- Advantages: simple; no DNS management needed.
+- Disadvantages: no wildcard support; requires port 80 open to the internet.
 
-- **Advantages**: Works well in environments where HTTP traffic is restricted; suitable for securing communications on the standard HTTPS port.
-- **Disadvantages**: Does not support wildcard certificates and does not work behind certain types of reverse proxies or firewalls; use `DNS-01` or `HTTP-01` if this is your case.
+### TLS-ALPN-01
 
-#### DNS-01
+Pick TLS-ALPN-01 when port 443 is reachable from the internet, port 80 is not, and no wildcard is required.
 
-The DNS-01 challenge should be used if you need to issue wildcard certificates, as it is the only challenge type that supports them. This method involves creating a TXT record in your DNS configuration.
+- Advantages: works when HTTP is blocked; uses the already-required HTTPS port.
+- Disadvantages: no wildcard support; does not work through certain reverse proxies or firewalls. Use DNS-01 or HTTP-01 in those cases.
 
-- **Advantages**: Supports wildcard certificates; does not require any specific ports to be open.
-- **Disadvantages**: Requires DNS management capabilities and may take longer due to DNS propagation times.
+### DNS-01
 
+Pick DNS-01 when wildcard certificates are required, or when neither port 80 nor port 443 is reachable from the public internet.
+
+- Advantages: supports wildcards; needs no public port open.
+- Disadvantages: requires DNS update automation; validation waits for DNS propagation.

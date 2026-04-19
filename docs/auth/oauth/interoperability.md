@@ -4,7 +4,7 @@ sidebar_position: 4
 
 # Interoperability
 
-OAuth is widely used in web-based applications to provide secure, token-based authentication and authorization. In Stalwart, OAuth can be used to access [JMAP](/docs/http/jmap/overview) as well as its [Webadmin](/docs/management/webadmin/overview) or [self-service portals](/docs/management/webadmin/selfservice), as these are web-based interfaces that natively support OAuth flows. This usage aligns with the typical OAuth implementation where users authenticate through a browser, and the application interacts with the OAuth server to obtain and validate access tokens.
+OAuth is widely used in web-based applications to provide secure, token-based authentication and authorization. In Stalwart, OAuth can be used to access [JMAP](/docs/http/jmap/overview) as well as the [WebUI and self-service portal](/docs/management/webui/overview), which are web-based interfaces that natively support OAuth flows. This usage matches the typical OAuth pattern: users authenticate through a browser, and the application exchanges authorization artefacts for access tokens with the OAuth server.
 
 However, using OAuth in traditional mail clients, such as Outlook, Thunderbird, or Apple Mail, introduces additional complexities. To achieve this, the mail client needs to support the `OAUTHBEARER` (or `XOAUTH2`) Simple Authentication and Security Layer (SASL) mechanism, which allows OAuth tokens to be used for authenticating against the mail server.
 

@@ -4,17 +4,16 @@ sidebar_position: 3
 
 # Caddy
 
-Caddy is an open-source, HTTP/2-enabled web server known for its simplicity, flexibility, and automatic HTTPS. It is designed to make setting up web servers quick, with an emphasis on security and performance. Caddy is highly configurable, supporting a wide range of use cases, from static file serving to reverse proxy setups, while providing automatic TLS certificate management.
+[Caddy](https://caddyserver.com) is an open-source, HTTP/2-enabled web server with automatic HTTPS. It covers static file serving, simple reverse proxies, and TLS management out of the box, and is often chosen for the conciseness of its Caddyfile syntax.
 
-Stalwart supports Caddy, allowing you to use Caddy to manage and route traffic to your email server. Using Caddy as a reverse proxy, you benefit from its automatic HTTPS configuration and simple configuration syntax.
+Stalwart can sit behind Caddy for HTTP traffic. Caddy handles HTTPS termination and certificate management, then forwards requests to Stalwart.
 
 ## Note on Layer 4 support
 
-Caddy, while being an easy-to-use web server and reverse proxy, does not natively support raw TCP streams (layer 4) and consequently the [Proxy Protocol](/docs/server/reverse-proxy/proxy-protocol). This protocol is typically used to pass client connection information such as IP addresses and TLS connection statuses through multiple layers of proxies. To achieve this functionality, you would need to integrate [HAProxy](/docs/server/reverse-proxy/haproxy) or [NGINX](/docs/server/reverse-proxy/nginx), which can handle the Proxy Protocol and forward traffic to Caddy for further processing.
+Caddy does not natively forward raw TCP streams, so it cannot forward the mail ports (SMTP, IMAP, POP3, ManageSieve) or preserve the [Proxy Protocol](/docs/server/reverse-proxy/proxy-protocol) on them. To carry client IPs into Stalwart's mail listeners, either put [HAProxy](/docs/server/reverse-proxy/haproxy) or [NGINX](/docs/server/reverse-proxy/nginx) in front of Caddy, or build a Caddy binary that includes the community-maintained `caddy-l4` plugin. The plugin adds layer-4 forwarding and Proxy Protocol emission to Caddy.
 
-For those looking to enable Layer 4 support directly within Caddy, there is a community-contributed plugin called caddy-l4. This plugin is a listener wrapper for Caddy that adds support for Layer 4 forwarding and Proxy headers on new connections, allowing Caddy to handle the Proxy Protocol directly without the need for HAProxy.
+For example, using `xcaddy`:
 
-For examle, using `xcaddy`:
 ```txt
 xcaddy build --with github.com/mholt/caddy-l4/modules/l4proxy \
     --with github.com/mholt/caddy-l4/modules/l4tls \
@@ -23,7 +22,7 @@ xcaddy build --with github.com/mholt/caddy-l4/modules/l4proxy \
 
 ## Configuration
 
-The following is an example of a Caddyfile configuration that can be used to set up Caddy as a reverse proxy for Stalwart. This configuration includes support for the Proxy Protocol, which is essential for preserving client IP addresses and TLS connection information when using Caddy in front of Stalwart.
+The following Caddyfile forwards the mail ports (25, 465, 993, 4190) using `caddy-l4` with Proxy Protocol v2 and reverse-proxies HTTPS for `mail.example.com`:
 
 ```txt
 {
@@ -90,7 +89,7 @@ mail.example.com {
 
 ### Crontab
 
-The following crontab entries can be used to automate copying the certificates obtained by Caddy:
+Automate copying Caddy-issued certificates into Stalwart's certificate directory from cron:
 
 ```bash
 0 3 * * * cat /var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/example.com/example.com.crt > /opt/stalwart/cert/example.com.pem
@@ -99,7 +98,7 @@ The following crontab entries can be used to automate copying the certificates o
 
 ### Systemd
 
-As an alternative to crontab, it is also possible to let systemd watch the certificate file for updates, copy the renewed certificate files and restart Stalwart:
+As an alternative to cron, a systemd path unit can watch the Caddy certificate file, copy the renewed files into place, and trigger a hot reload on Stalwart:
 
 *stalwart.path:*
 
@@ -124,7 +123,7 @@ Description=imports certs from caddy to stalwart
 Type=oneshot
 ExecStart=/usr/bin/cp -f /var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/mail.example.com/mail.example.com.pem /opt/stalwart/cert/
 ExecStart=/usr/bin/cp -f /var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/mail.example.com/mail.example.com.priv.pem /opt/stalwart/cert/
-ExecStart=/usr/bin/curl -X GET -H "Accept: application/json" -H "Authorization: Bearer <TOKEN>"  https://mail.example.com/api/reload/certificate 
+ExecStart=/usr/bin/curl -X GET -H "Accept: application/json" -H "Authorization: Bearer <TOKEN>"  https://mail.example.com/api/reload/certificate
 
 [Install]
 WantedBy=multi-user.target
@@ -132,9 +131,17 @@ WantedBy=multi-user.target
 
 ## Stalwart configuration
 
-```toml
-server.tls.certificate = "default"
-certificate.default.cert = "%{file:/opt/stalwart/cert/example.com.pem}%"
-certificate.default.default = true
-certificate.default.private-key = "%{file:/opt/stalwart/cert/example.com.priv.pem}%"
+Create a [Certificate](/docs/ref/object/certificate) object (found in the WebUI under <!-- breadcrumb:Certificate --><!-- /breadcrumb:Certificate -->) pointing at the copied certificate and private-key files, and reference it from [`defaultCertificateId`](/docs/ref/object/system-settings#defaultcertificateid) on the [SystemSettings](/docs/ref/object/system-settings) singleton (found in the WebUI under <!-- breadcrumb:SystemSettings --><!-- /breadcrumb:SystemSettings -->) so that it is presented when clients do not send SNI. The Certificate fields look like:
+
+```json
+{
+  "certificate": {
+    "@type": "File",
+    "filePath": "/opt/stalwart/cert/example.com.pem"
+  },
+  "privateKey": {
+    "@type": "File",
+    "filePath": "/opt/stalwart/cert/example.com.priv.pem"
+  }
+}
 ```

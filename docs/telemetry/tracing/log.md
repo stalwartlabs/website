@@ -4,25 +4,27 @@ sidebar_position: 3
 
 # Log file
 
-Stalwart provides the ability to log information to a text file that can be rotated at a specified interval. When the `log` method is selected, the following configuration options are available under the `tracer.<id>` key:
+Log-file output writes entries to a text file on disk. The file can be rotated at a fixed frequency so that long-running installations do not accumulate a single unbounded log.
 
-- `path`: The path to the directory where the log files will be stored.
-- `prefix`: The prefix to be used for each log file.
-- `ansi`: Whether to use ANSI escape sequences to colorize the log output.
-- `rotate`: The frequency of log file rotation. Acceptable values are `daily`, `hourly`, `minutely`, or `never`.
-- `multiline`: Whether to log messages on multiple lines.
-- `lossy`: Whether to drop log messages when the queue is full.
+Log-file output is represented by the `Log` variant of the [Tracer](/docs/ref/object/tracer) object (found in the WebUI under <!-- breadcrumb:Tracer --><!-- /breadcrumb:Tracer -->). Alongside the common tracer fields ([`enable`](/docs/ref/object/tracer#enable), [`level`](/docs/ref/object/tracer#level), [`lossy`](/docs/ref/object/tracer#lossy), [`events`](/docs/ref/object/tracer#events), [`eventsPolicy`](/docs/ref/object/tracer#eventspolicy)), the variant carries:
 
-Example:
+- [`path`](/docs/ref/object/tracer#path): directory in which the log files are written. Required.
+- [`prefix`](/docs/ref/object/tracer#prefix): filename prefix for each log file. Default `"stalwart"`.
+- [`rotate`](/docs/ref/object/tracer#rotate): rotation frequency. One of `daily`, `hourly`, `minutely`, or `never`. Default `daily`.
+- [`ansi`](/docs/ref/object/tracer#ansi): whether ANSI escape sequences are used to colour the output. Default `true`.
+- [`multiline`](/docs/ref/object/tracer#multiline): whether each entry spans multiple lines. Default `false`.
 
-```toml
-[tracer.log]
-type = "log"
-path = "/opt/stalwart/logs"
-prefix = "stalwart.log"
-rotate = "daily"
-level = "info"
-ansi = true
-enable = true
+For example:
+
+```json
+{
+  "@type": "Log",
+  "path": "/opt/stalwart/logs",
+  "prefix": "stalwart.log",
+  "rotate": "daily",
+  "ansi": true,
+  "multiline": false,
+  "enable": true,
+  "level": "info"
+}
 ```
-

@@ -8,9 +8,9 @@ Stalwart is configured through a small startup file called `config.json` and a d
 
 Those objects are not edited by hand. The server exposes them over a JMAP API, and two tools make that API easy to use:
 
-The [WebUI](/docs/management/webui) is the browser-based administration console. It includes a setup wizard for first-time installations and forms for every configurable object. Most operators only ever need this.
+The [WebUI](/docs/management/webui/overview) is the browser-based administration console. It includes a setup wizard for first-time installations and forms for every configurable object. Most operators only ever need this.
 
-The [CLI](/docs/management/cli) (`stalwart-cli`) calls the same JMAP API from the command line. It is the right tool for scripting, automation, and declarative deployments on platforms such as NixOS, Ansible or Terraform.
+The [CLI](/docs/management/cli/overview) (`stalwart-cli`) calls the same JMAP API from the command line. It is the right tool for scripting, automation, and declarative deployments on platforms such as NixOS, Ansible or Terraform.
 
 This arrangement differs from the traditional model of a Unix daemon driven by a large configuration file. The trade-off is that changes take effect immediately across every node in a cluster, every setting is validated before it is saved, and backing up or cloning a deployment becomes a single operation against the API.
 
@@ -28,7 +28,7 @@ The file contains a single [DataStore](/docs/ref/object/data-store) object telli
 {"@type":"RocksDb","path":"/var/lib/stalwart/"}
 ```
 
-The `@type` field selects the backend. RocksDB is the default and works well for most single-node deployments; PostgreSQL, MySQL, SQLite and FoundationDB are also supported. Each backend has its own set of fields, documented on the [DataStore](/docs/ref/object/data-store) reference page.
+RocksDB is the default backend variant and works well for most single-node deployments; PostgreSQL, MySQL, SQLite and FoundationDB are also supported. Each variant has its own set of fields, documented on the [DataStore](/docs/ref/object/data-store) reference page.
 
 Once the server is running, `config.json` is rarely touched again. The datastore location is the only setting that cannot be changed through the API, because the API itself is served out of the datastore.
 

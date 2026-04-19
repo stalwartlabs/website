@@ -4,57 +4,49 @@ sidebar_position: 8
 
 # Form Handling
 
-Stalwart offers a **Form Submissions** feature, which allows you to receive form submissions via HTTP and automatically turn them into email messages. This feature is particularly useful for web forms, such as contact forms or feedback forms, where submissions need to be forwarded to a designated group of local recipients on the mail server. The form data is sent via a **POST** request to the `/form` endpoint, and the server processes this data, converting it into an email message.
+Stalwart can accept HTTP form submissions on the `/form` endpoint and turn each submission into an email message delivered to one or more local recipients. The feature is typically used for web forms such as contact or feedback forms, where submissions need to be forwarded to a designated group of local recipients on the mail server.
 
-This feature is limited to **local recipients only**, meaning that email messages generated from form submissions can only be delivered to users within the mail server. External recipients (such as email addresses outside your domain) are not allowed to prevent misuse and ensure that the feature is used for internal purposes.
+Deliveries are limited to **local recipients only**. External recipients are rejected to prevent the form endpoint from being used as an open relay.
 
 ## Security Features
 
-To prevent abuse and spam, the Form Submissions feature includes two key security mechanisms:
+Two anti-abuse mechanisms protect the form endpoint:
 
-- **Rate limiting** is applied on a per-IP address basis to restrict the number of form submissions a client can send within a specified time frame. This measure helps to protect the mail server from being overwhelmed by automated bots or malicious users who might attempt to flood the server with form submissions. By limiting the rate of submissions from any single IP address, Stalwart can ensure that legitimate traffic is prioritized, while potentially abusive requests are throttled.
-- A **honeypot field** is a hidden form field that is invisible to human users but visible to bots. It is a common anti-spam technique used to detect and block automated submissions. Legitimate users won’t see or fill out the honeypot field, but bots, which often attempt to fill out every field in a form, will interact with it. If the honeypot field is filled out, the server will flag the submission as likely spam and discard it. This method helps to filter out automated submissions without requiring users to deal with more intrusive anti-spam measures like CAPTCHAs.
+- Per-IP rate limiting throttles how many submissions a single client can send within a given window, so that legitimate traffic is not crowded out by automated floods.
+- A honeypot field is a hidden form field that is invisible to human users but visible to bots. Legitimate users will not fill it out; bots that attempt to fill every input will, and the server discards any submission in which the honeypot field is populated. This avoids the friction of CAPTCHAs while still filtering out automated spam.
 
 ## Configuration
 
-The Form Submissions feature in Stalwart allows HTTP POST form data submitted to the `/form` endpoint to be converted into emails and sent to a list of local recipients. This feature is configurable with several settings to control the size, validation, rate limiting, and email formatting. Below is an explanation of each configuration field and what it does.
+Form handling is configured through the [HttpForm](/docs/ref/object/http-form) singleton (found in the WebUI under <!-- breadcrumb:HttpForm --><!-- /breadcrumb:HttpForm -->). The relevant fields are:
 
-- `form.enable`: This setting enables or disables the form submissions feature. When set to `true`, the mail server will accept and process form submissions made via the `/form` endpoint. If set to `false`, the feature is disabled, and the server will not process any form data.
-- `form.max-size`: This setting controls the maximum size (in bytes) of the form data that can be submitted. It limits the total size of the form to ensure that excessively large submissions are not processed, which helps protect the server from resource overload.
-- `form.validate-domain` When this setting is enabled (`true`), the server will validate the domain in the submitted email address to ensure it matches a valid external domain.
-- `form.rate-limit`: This setting applies rate limiting to form submissions based on the IP address of the submitter. The value defines the number of form submissions allowed over a specific time period. For example, you can configure the server to allow a maximum of 5 form submissions per hour per IP address. This helps protect against abuse and spam by limiting the frequency of submissions.
-- `form.deliver-to`: This setting defines the email address (or addresses) of the **local recipient(s)** to whom the email generated from the form submission will be delivered. The email must be a valid local address within the Stalwart, as the form submissions feature does not allow external recipients for security reasons.
-- `form.email.field`: This setting specifies the name of the form field that contains the sender’s email address. The value of this form field will be used as the "From" address when generating the email.
-- `form.email.default`: In cases where the form submission does not include an email address in the specified form field, this default email address will be used as the "From" address in the generated email. This ensures that the email submission can still be processed even if the email field is missing or empty.
-- `form.honey-pot.field`: The honeypot field is a hidden form field used to detect spam bots. This setting specifies the name of the honeypot field in the form. If a bot fills out this field, which legitimate users will not see or interact with, the form submission is flagged as spam and discarded, helping prevent automated abuse.
-- `form.name.field`: This setting defines the name of the form field that contains the sender’s name. The value from this field will be used in the email’s "From" header to identify the sender by name.
-- `form.name.default`: If the form submission does not include a name in the specified form field, this default value will be used as the sender’s name. This ensures that the generated email always includes a name, even if the user leaves this field blank.
-- `form.subject.field`: This setting defines the name of the form field that contains the subject of the email. The value of this field will be used as the subject line of the generated email.
-- `form.subject.default`: If the form submission does not include a subject in the specified form field, this default value will be used as the email's subject line. This ensures that all form submissions have a relevant subject, even if the submitter leaves this field empty.
+- [`enable`](/docs/ref/object/http-form#enable): turns the feature on or off. When `false`, the server returns an error for any request to `/form`. Default `false`.
+- [`maxSize`](/docs/ref/object/http-form#maxsize): maximum size of a single submission. Default `"100kb"`.
+- [`validateDomain`](/docs/ref/object/http-form#validatedomain): whether the server validates the domain of the sender's email address. Default `true`.
+- [`rateLimit`](/docs/ref/object/http-form#ratelimit): per-IP submission rate, as a count over a time period. Default five submissions per hour.
+- [`deliverTo`](/docs/ref/object/http-form#deliverto): the list of local email addresses that receive the generated message.
+- [`fieldEmail`](/docs/ref/object/http-form#fieldemail): the name of the form field that carries the sender's email address, used as the message `From` address.
+- [`defaultFromAddress`](/docs/ref/object/http-form#defaultfromaddress): fallback `From` address used when the submission does not include one. Default `"postmaster@localhost"`.
+- [`fieldHoneyPot`](/docs/ref/object/http-form#fieldhoneypot): the name of the hidden honeypot field; a populated value flags the submission as spam.
+- [`fieldName`](/docs/ref/object/http-form#fieldname): the name of the form field that carries the sender's name, used in the `From` header.
+- [`defaultName`](/docs/ref/object/http-form#defaultname): fallback name used when the submission does not include one. Default `"Anonymous"`.
+- [`fieldSubject`](/docs/ref/object/http-form#fieldsubject): the name of the form field that carries the message subject.
+- [`defaultSubject`](/docs/ref/object/http-form#defaultsubject): fallback subject line used when the submission does not include one. Default `"Contact form submission"`.
 
-Example:
+Example configuration:
 
-
-```toml
-[form]
-enable = true
-max-size = 10240
-validate-domain = true
-rate-limit = "5/1h"
-deliver-to = ["jane@example.org", "john@example.org"]
-
-[form.email]
-field = "email"
-default = "unknown@sender.org"
-
-[form.honey-pot]
-field = "subject"
-
-[form.name]
-field = "name"
-default = "Anonymous"
-
-[form.subject]
-field = "subject"
-default = "Contact Form"
+```json
+{
+  "enable": true,
+  "maxSize": 10240,
+  "validateDomain": true,
+  "rateLimit": {"count": 5, "period": "1h"},
+  "deliverTo": ["jane@example.org", "john@example.org"],
+  "fieldEmail": "email",
+  "defaultFromAddress": "unknown@sender.org",
+  "fieldHoneyPot": "subject",
+  "fieldName": "name",
+  "defaultName": "Anonymous",
+  "fieldSubject": "subject",
+  "defaultSubject": "Contact Form"
+}
 ```

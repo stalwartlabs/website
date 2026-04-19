@@ -4,13 +4,11 @@ sidebar_position: 3
 
 # OIDC Provider
 
-Stalwart comes with the **OpenID Connect (OIDC) provider** feature automatically enabled. This means that clients and applications can authenticate users and obtain ID tokens through the server, which acts as the identity provider. The OIDC provider in Stalwart is compliant with OpenID Connect standards and supports a range of cryptographic signing algorithms to ensure the integrity and security of issued ID tokens.
-
-The OIDC provider uses JSON Web Tokens (JWT) to issue ID tokens, and these tokens are signed using various algorithms that fall into two categories: **symmetric** and **asymmetric** signing algorithms.
+Stalwart includes an OpenID Connect (OIDC) provider, enabled automatically. Clients and applications can therefore authenticate users against Stalwart and obtain ID tokens directly. The provider is OIDC-compliant and supports a range of JWT signing algorithms, both symmetric and asymmetric.
 
 ## Signing Algorithms
 
-Stalwart supports the following signing algorithms for ID tokens:
+The following algorithms are supported for signing ID tokens:
 
 - **ES256**: ECDSA using P-256 and SHA-256 (asymmetric)
 - **ES384**: ECDSA using P-384 and SHA-384 (asymmetric)
@@ -24,30 +22,29 @@ Stalwart supports the following signing algorithms for ID tokens:
 - **HS384**: HMAC using SHA-384 (symmetric)
 - **HS512**: HMAC using SHA-512 (symmetric)
 
-**Symmetric Algorithms** (such as HS256, HS384, HS512) use the same secret key for both signing and verifying the JWT. The key is shared between the OIDC provider (Stalwart) and the client. Symmetric algorithms, such as the HMAC (HS*) family, are easier to set up because they require only a single secret key. However, they are less secure for use in distributed systems because both parties (issuer and verifier) must share the same secret key, which can lead to potential security risks if the key is compromised.
+Symmetric algorithms (`HS256`, `HS384`, `HS512`) use the same secret key for signing and verifying. The key must be shared between the provider (Stalwart) and every verifier, which is convenient but extends the surface on which a compromised key can be observed.
 
-**Asymmetric Algorithms** (such as ES256, ES384, PS256, PS384, PS512, RS256, RS384, RS512) use a pair of cryptographic keys, a private key for signing the token and a public key for verifying the token. The private key is kept secure on the server, while the public key is distributed to clients or anyone needing to verify the token's authenticity. Asymmetric algorithms, such as the RSA (RS*) or ECDSA (ES*) families, are generally recommended for OIDC token signing because they offer better security. The client or verifier does not need access to the private key, only the public key, which minimizes the risk of key compromise.
+Asymmetric algorithms (`ES256`, `ES384`, `PS256`, `PS384`, `PS512`, `RS256`, `RS384`, `RS512`) use a private key for signing and a matching public key for verification. The private key stays on the server; the public key is distributed to verifiers through the `.well-known/openid-configuration` metadata. This is generally preferable in production: verifiers never see the private key, so losing a verifier does not compromise the signing key.
 
 ## Configuration
 
-If no specific signing algorithm is provided in the configuration, Stalwart defaults to using **HS256** (HMAC with SHA-256), a symmetric signing algorithm. In this case, Stalwart automatically generates a random symmetric key for signing ID tokens. While this setup works for environments where simplicity is preferred, relying on symmetric keys is not the most secure option in distributed or production environments, especially when multiple clients need to verify tokens. Symmetric keys require sharing the same key between the server and clients, increasing the risk of key compromise.
+Signing is controlled by two fields on the [OidcProvider](/docs/ref/object/oidc-provider) singleton (found in the WebUI under <!-- breadcrumb:OidcProvider --><!-- /breadcrumb:OidcProvider -->):
 
-For enhanced security, it is strongly recommended that users configure **asymmetric signing algorithms**, such as **RS256** (RSA with SHA-256) or **ES256** (ECDSA with SHA-256), in the Stalwart’s configuration. Using asymmetric algorithms ensures that only the server has access to the private signing key, while the public verification key can be distributed to clients. To configure an asymmetric key, administrators need to generate a key pair (private and public keys) and configure Stalwart to use the private key for signing ID tokens. The corresponding public key can be shared with clients through the `.well-known/oauth-authorization-server` metadata endpoint, allowing them to verify the authenticity and integrity of the ID tokens issued by the server.
+- [`signatureAlgorithm`](/docs/ref/object/oidc-provider#signaturealgorithm): the JWT signature algorithm. Default `"hs256"`. Acceptable values are `es256`, `es384`, `ps256`, `ps384`, `ps512`, `rs256`, `rs384`, `rs512`, `hs256`, `hs384`, `hs512`.
+- [`signatureKey`](/docs/ref/object/oidc-provider#signaturekey): the private key used to sign JWTs, wrapped in a `SecretText` variant that can be a direct text value, an environment-variable reference, or a file reference.
 
-The following settings available under the `outh.oidc` section of the configuration file allow you to configure the OIDC provider's signing algorithm and key:
+If `signatureAlgorithm` is left at its default, Stalwart signs tokens with `hs256` and auto-generates a symmetric key. That works for simple deployments but is not the strongest option when multiple services verify tokens. For production it is preferable to configure an asymmetric algorithm such as `rs256` or `es256`, provide a PEM-encoded private key through `signatureKey`, and let verifiers fetch the matching public key from the discovery endpoint.
 
-- `signature-key`: The private key used for signing ID tokens. This key should be kept secure and not shared with unauthorized parties. The key should be in PEM format and can be generated using tools like OpenSSL.
-- `signature-algorithm`: The signing algorithm used to sign ID tokens. This should match the algorithm used by the private key.
+Example using an ECDSA P-256 private key stored directly:
 
-Example:
-
-```toml
-[oauth.oidc]
-signature-key = '''-----BEGIN PRIVATE KEY-----
-MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQggybcqc86ulFFiOon
-WiYrLO4z8/kmkqvA7wGElBok9IqhRANCAAQxZK68FnQtHC0eyh8CA05xRIvxhVHn
-0ymka6XBh9aFtW4wfeoKhTkSKjHc/zjh9Rr2dr3kvmYe80fMGhW4ycGA
------END PRIVATE KEY-----
-'''
-signature-algorithm = "ES256"
+```json
+{
+  "signatureAlgorithm": "es256",
+  "signatureKey": {
+    "@type": "Text",
+    "secret": "-----BEGIN PRIVATE KEY-----\nMIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQggybcqc86ulFFiOon\nWiYrLO4z8/kmkqvA7wGElBok9IqhRANCAAQxZK68FnQtHC0eyh8CA05xRIvxhVHn\n0ymka6XBh9aFtW4wfeoKhTkSKjHc/zjh9Rr2dr3kvmYe80fMGhW4ycGA\n-----END PRIVATE KEY-----\n"
+  }
+}
 ```
+
+For production deployments, the same key can be sourced from an environment variable or a file by switching the `SecretText` variant to `EnvironmentVariable` or `File`, which keeps the raw PEM out of any persisted configuration object.

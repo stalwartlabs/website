@@ -4,41 +4,40 @@ sidebar_position: 2
 
 # Events
 
-Events are specific occurrences or actions within the system that are recorded for monitoring, auditing, and troubleshooting purposes. These events can range from user authentication attempts to message delivery notifications. Stalwart emits hundreds of different events, such as "auth successful," "message delivered," and many others, each capturing a particular aspect of the server's operation.
+Events are specific occurrences within the server that are recorded for monitoring, auditing, and troubleshooting. They cover every aspect of operation, from authentication attempts to message delivery. Stalwart emits hundreds of distinct events, each identified by a hierarchical name such as `auth.success` or `delivery.delivered`.
 
-Each event is assigned a default logging level, which indicates the importance or severity of the event. The logging levels help to categorize events, making it easier to filter and manage them based on their significance. Tracers and loggers in Stalwart use these logging levels to decide which events to record. By configuring the logging levels, administrators can control the granularity of the data collected, choosing to log only critical events, all events, or anything in between.
+Each event carries a default logging level that reflects its severity. Tracers use that level to decide whether an event is recorded, so the verbosity of each output can be tuned independently through its [`level`](/docs/ref/object/tracer#level) field.
 
-Stalwart supports multiple [loggers and tracers](/docs/telemetry/tracing/overview), each with its own configured logging level. This flexibility allows for different aspects of the system to be monitored with varying levels of detail. For instance, a logger configured to capture detailed debugging information might run alongside another that logs only errors and critical issues.
+Multiple [tracers](/docs/telemetry/tracing/overview) can run in parallel, each with its own level and event filter, so different consumers can receive different slices of the event stream. For example, a file-based tracer might record at `debug`, while a journal tracer captures only `error` and `warn` events.
 
-It is important to note that [Webhooks](/docs/telemetry/webhooks) operate differently from loggers and tracers. They do not rely on logging levels. Instead, they are configured to send a predefined list of events to external systems or services. This means that Webhooks can be used to deliver specific notifications in real-time, regardless of the event's logging level, providing a flexible mechanism for integrating Stalwart with other applications and services.
+[Webhooks](/docs/telemetry/webhooks) work differently. They do not filter by severity level; instead, each [WebHook](/docs/ref/object/web-hook) object lists the events that should trigger it through [`events`](/docs/ref/object/web-hook#events) and [`eventsPolicy`](/docs/ref/object/web-hook#eventspolicy). A webhook delivers notifications regardless of an event's default level.
 
-## Event Levels
+## Event levels
 
-Logging levels  define the severity or importance of events that are captured and recorded. They help in filtering the events, allowing administrators and developers to focus on the most relevant information. Here's a brief explanation of each logging level:
+Event levels describe severity. The available values are:
 
-- `info`: This level captures general information about the system's operations. It is typically used for logging normal, successful operations and significant milestones in the application's flow.
-- `warn`: This level captures events that are not errors but may indicate potential issues or unusual situations that should be monitored. Warnings are useful for highlighting situations that could potentially lead to problems.
-- `error`: This level captures events that indicate a failure or an issue that has occurred. Errors are critical problems that typically require immediate attention, as they may affect the system's functionality or stability.
-- `debug`: This level captures detailed diagnostic information useful for developers when troubleshooting or diagnosing issues. Debug logs provide more granular details than Info logs, often including internal state information.
-- `trace`: This is the most detailed level of logging, capturing fine-grained information about the system's operations. Trace logs are useful for in-depth debugging, as they record almost everything happening within the system.
-- `disable`: This level effectively disables logging. No events are captured or recorded when this level is set. It's useful when logging is not needed or to reduce overhead in production environments where minimal logging is required.
+- `info`: normal operations and significant milestones.
+- `warn`: unusual situations that may indicate a problem.
+- `error`: failures that typically require attention.
+- `debug`: detailed diagnostic information for troubleshooting.
+- `trace`: the most verbose level, recording nearly every internal operation.
 
-By using these logging levels, administrators can tailor the verbosity of logs according to their needs, balancing the amount of collected data with the relevance and importance of the information. This flexibility helps in managing storage, performance, and the ease of troubleshooting and monitoring the system.
+A tracer with [`level`](/docs/ref/object/tracer#level) set to one of the above values records every event whose default level is at that value or more severe. To disable a tracer without removing it, set [`enable`](/docs/ref/object/tracer#enable) to `false`.
 
-### Overriding
+### Overriding the level of an event
 
-The default severity or logging level of each event can be overridden to customize which events are captured based on specific needs. This is done by setting the `tracing.level.<event_id>` key in the configuration file to the desired logging level.
+The default level of any event can be overridden through the [EventTracingLevel](/docs/ref/object/event-tracing-level) object (found in the WebUI under <!-- breadcrumb:EventTracingLevel --><!-- /breadcrumb:EventTracingLevel -->). Each instance targets a single event, identified by [`event`](/docs/ref/object/event-tracing-level#event), and sets its effective severity through [`level`](/docs/ref/object/event-tracing-level#level).
 
-For example, if the default level for a particular event, such as `auth.success` is set to `info` but you want to capture it at the `debug` level for more detailed information, you can adjust the configuration accordingly. For example:
+For example, to raise `auth.success` from its default `info` to `debug`:
 
-```toml
-[tracing.level]
-auth.success = "debug"
+```json
+{
+  "event": "auth.success",
+  "level": "debug"
+}
 ```
 
-This allows for fine-tuning of the logging output, ensuring that only relevant events are recorded at the appropriate level of detail.
-
-By overriding the default levels, you can increase the verbosity for specific events that require closer monitoring or reduce it for less critical events to save on storage and processing resources. This flexibility is particularly useful in environments where different components or services may require different levels of attention and detail in their logging.
+Overriding levels is useful when a particular event needs closer monitoring or, conversely, when a noisy event should be suppressed.
 
 ## Event Types
 

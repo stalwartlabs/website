@@ -4,28 +4,26 @@ sidebar_position: 3
 
 # Roles
 
-Roles in Stalwart are used to group [permissions](/docs/auth/authorization/permissions), making it easier to manage access control across individuals, groups, and tenants. Roles are stored in the directory as principals, just like individuals or groups, and they can also contain subroles (roles within other roles) allowing for a hierarchical structure of access permissions. 
+Roles group [permissions](/docs/auth/authorization/permissions) so that access can be managed across individuals, groups, and tenants without assigning every permission individually. Each role is represented by a [Role](/docs/ref/object/role) object (found in the WebUI under <!-- breadcrumb:Role --><!-- /breadcrumb:Role -->) and can reference other roles, producing a hierarchical model in which a parent role inherits the permissions of its subroles.
 
-Roles are a way to simplify permission management by assigning sets of predefined permissions to users, groups, or tenants. Instead of assigning permissions individually, administrators can assign roles that encapsulate multiple permissions at once.
+A Role object carries the following fields:
 
-A role [principal](/docs/auth/principals/overview) includes the following fields that define its properties and how it functions within the mail server:
+- [`description`](/docs/ref/object/role#description): a human-readable description of the role's purpose. This also serves as the role's display label in the WebUI.
+- [`memberTenantId`](/docs/ref/object/role#membertenantid): the tenant that owns the role, used in multi-tenant deployments to scope roles to a specific tenant.
+- [`roleIds`](/docs/ref/object/role#roleids): a list of roles this role extends. Permissions from the listed roles are inherited by this role.
+- [`enabledPermissions`](/docs/ref/object/role#enabledpermissions): permissions explicitly granted by the role.
+- [`disabledPermissions`](/docs/ref/object/role#disabledpermissions): permissions explicitly denied by the role. Disabled permissions take precedence over inherited permissions.
 
-- **name**: The name field is the identifier of the role within the system. It should be a unique name that represents the role's purpose (e.g., `admin`, `user`, `support-admin`).
-- **type**: Specifies the principal type, which for roles is always set to `"role"`. This field helps the system differentiate between roles and other types of principals such as individuals or groups.
-- **description**: A human-readable description of the role, providing additional context about its function. This field can be used to clarify the role's purpose, especially when custom roles are created by administrators.
-- **members**: The members field lists the principals (such as **individuals**, **groups**, or other **roles**) that are using this role. When a principal is a member of a role, they inherit the permissions defined by that role.
-- **tenant**: Indicates the [tenant](/docs/auth/authorization/tenants) to which the role belongs. This is important in multi-tenant environments, as each tenant may have its own set of roles that apply only to the users and groups within that tenant.
-- **roles**: Roles can include subroles, meaning a role can be a collection of other roles. The **roles** field lists any subroles that this role includes. When subroles are included, their permissions are also inherited by the role.
-- **enabledPermissions**: This field defines the set of [permissions](/docs/auth/authorization/permissions) that the role grants to its members. These permissions determine what actions and resources the role's members can access and perform within the system.
-- **disabledPermissions**: This field lists any [permissions](/docs/auth/authorization/permissions) that are explicitly disabled for the role, ensuring that members of the role are restricted from performing certain actions, even if those actions are enabled in a subrole or elsewhere.
+<!-- review: The previous docs described a `name` field and a `members` field listing principals that use the role. The current Role object exposes only description, memberTenantId, roleIds, enabledPermissions, and disabledPermissions. Confirm whether the role name is now implicit (the id) and whether membership is tracked on the member principals (e.g. via Account.roles) rather than on the role itself. -->
 
-Roles are an essential tool for efficiently managing permissions in Stalwart. By grouping permissions into roles, administrators can assign access rights more easily to individuals, groups, or entire tenants. The built-in roles (**user**, **admin**, and **tenant-admin**) provide a ready-made starting point for typical scenarios, but custom roles can also be created to meet specific needs. Through the flexible use of **enabledPermissions**, **disabledPermissions**, and **subroles**, roles offer granular control over what resources can be accessed and what actions can be performed within the mail server.
+Assigning a role to an account is done from the target principal. On an Account object (found in the WebUI under <!-- breadcrumb:Account --><!-- /breadcrumb:Account -->), the [`roles`](/docs/ref/object/account#roles) field selects either a built-in role or a `Custom` role set that references one or more Role ids. Groups and tenants expose their own `roles` field of the same shape.
 
 ## Built-in Roles
 
-Stalwart includes three **built-in roles** to simplify common access control scenarios:
+Stalwart provides three built-in roles for common scenarios. The Account object references them through the `UserRoles` variants `User` and `Admin`, and tenant-level administration is covered by a dedicated role set.
 
-- `user`: This role grants access to all regular services offered by the mail server, such as email sending, receiving, and accessing mailboxes. It is designed for standard users who need full access to their email functions without any administrative rights.
-- `admin`: The admin role has the broadest scope in Stalwart. It enables **every single permission type** within the system, giving the user full control over all aspects of the mail server, including configuration changes, user management, and system operations.
-- `tenant-admin`:This role is intended for administrators of a specific **tenant** or **domain**. It grants basic administrative permissions to manage users, groups, and settings for their tenant or domain, but it restricts access to critical system configurations to prevent unintended changes at the global level.
+- **user**: grants access to the regular services offered by the server, such as sending and receiving email and accessing mailboxes. It is intended for standard end-user accounts.
+- **admin**: grants every permission defined by the server, including configuration and principal management. Intended for system administrators.
+- **tenant-admin**: grants the administrative permissions required to manage users, groups, and settings within a single tenant or domain, without exposing global configuration changes.
 
+Default roles automatically assigned to new accounts, groups, tenants, and administrators are configured on the [Authentication](/docs/ref/object/authentication) singleton (found in the WebUI under <!-- breadcrumb:Authentication --><!-- /breadcrumb:Authentication -->) through [`defaultUserRoleIds`](/docs/ref/object/authentication#defaultuserroleids), [`defaultGroupRoleIds`](/docs/ref/object/authentication#defaultgrouproleids), [`defaultTenantRoleIds`](/docs/ref/object/authentication#defaulttenantroleids), and [`defaultAdminRoleIds`](/docs/ref/object/authentication#defaultadminroleids).

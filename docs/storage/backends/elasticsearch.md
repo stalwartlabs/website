@@ -4,49 +4,26 @@ sidebar_position: 8
 
 # ElasticSearch
 
-Elasticsearch is an open-source, distributed search and analytics engine. It is built on Apache Lucene and handles a wide variety of data types, including textual, numerical, geospatial, structured, and unstructured data. Elasticsearch provides high scalability and real-time search, making it a flexible choice for managing large-scale data in various applications.
+Elasticsearch is an open-source, distributed search and analytics engine built on Apache Lucene. It handles textual, numerical, geospatial, structured, and unstructured data, providing high scalability and near real-time search. When full-text search volumes grow beyond what the internal engine handles comfortably, Elasticsearch is a common choice as an external search backend.
 
 ## Configuration
 
-The following configuration settings are available for Elasticsearch, which are specified under the `store.<name>` section of the configuration file:
+The Elasticsearch backend is selected by choosing the `ElasticSearch` variant on the [SearchStore](/docs/ref/object/search-store) object (found in the WebUI under <!-- breadcrumb:SearchStore --><!-- /breadcrumb:SearchStore -->). The variant exposes the following fields:
 
-- `type`: Specifies the type of store, set to `"elasticsearch"` for Elasticsearch.
-- `url`: The URL of the Elasticsearch server or cluster.
-- `tls.allow-invalid-certs`: Determines whether to allow connections with invalid TLS certificates. This is a boolean setting, and setting it to `true` can be useful in development or testing environments.
+- [`url`](/docs/ref/object/search-store#url): URL of the Elasticsearch server or cluster endpoint (required).
+- [`timeout`](/docs/ref/object/search-store#timeout): maximum time to wait for an HTTP response. Default: `"30s"`.
+- [`allowInvalidCerts`](/docs/ref/object/search-store#allowinvalidcerts): when `true`, accepts connections with invalid TLS certificates. Default: `false`.
+- [`httpAuth`](/docs/ref/object/search-store#httpauth): authentication method used for HTTP requests (required). The `Unauthenticated`, `Basic`, and `Bearer` variants are supported.
+- [`httpHeaders`](/docs/ref/object/search-store#httpheaders): additional headers attached to every HTTP request.
 
-### Authentication Configuration
+### Authentication
 
-Basic authentication can be configured using the following settings:
+For HTTP Basic authentication, select the `Basic` variant of [`httpAuth`](/docs/ref/object/search-store#httpauth) and supply `username` and `secret`. For bearer-token authentication, select the `Bearer` variant and supply `bearerToken`. Secrets may be provided inline, read from an environment variable, or loaded from a file.
 
-- `auth.username`: The username used for authentication with the Elasticsearch server or cluster.
-- `auth.secret`: The password for the specified user.
+### Index settings
 
-Bearer token authentication can be configured using the following setting:
+Stalwart maps its search data to an Elasticsearch index whose shape is controlled by the following fields:
 
-- `auth.token`: The bearer token used for authentication.
-
-### Index Configuration
-
-The following configuration settings are available for the index where Stalwart stores its data, which are specified under the `store.<name>.index` section of the configuration file:
-
-- `shards`: Specifies the number of primary shards that an index should have. Shards are the basic unit of scalability in Elasticsearch.
-- `replicas`: Sets the number of replica shards (copies) that each primary shard should have. Replicas provide high availability and redundancy.
-
-### Example
-
-```toml
-[store."elasticsearch"]
-type = "elasticsearch"
-url = "https://localhost:9200"
-
-[store."elasticsearch".auth]
-username = "elastic"
-secret = "myelasticpassword"
-
-[store."elasticsearch".tls]
-allow-invalid-certs = true
-
-[store."elasticsearch".index]
-shards = 3
-replicas = 0
-```
+- [`numShards`](/docs/ref/object/search-store#numshards): number of primary shards for the index. Default: `3`.
+- [`numReplicas`](/docs/ref/object/search-store#numreplicas): number of replica shards per primary. Default: `0`.
+- [`includeSource`](/docs/ref/object/search-store#includesource): when `true`, indexes the full source document alongside the inverted index. Default: `false`.

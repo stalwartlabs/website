@@ -2,41 +2,38 @@
 sidebar_position: 9
 ---
 
-# Collaborative Digests
+# Collaborative digests
 
-Collaborative spam detection is one of the more effective tools against unsolicited emails. By using distributed networks and shared reputation data, collaborative spam detection provides a dynamic and continuously-updated defense against spam.
-
-Collaborative spam detection and filtering networks, like Pyzor, Razor, and DCC, primarily use message digests or hashes. When a user identifies an email as spam, these systems generate a unique hash or digest of that email. This hash is then shared across the network. When another user receives an email, its hash is compared against the repository of spam hashes. If a match is found, the email is flagged as spam.
-
-The underlying principle is straightforward: if one user in the network identifies an email as spam, others in the network are immediately protected from that particular spam email, thanks to the shared hash.
+Collaborative spam detection networks such as Pyzor, Razor, and DCC rely on message digests. When a user identifies an email as spam, the system generates a unique hash of the message and shares it across the network. Incoming messages are then compared against the repository of spam hashes; if a hash matches, the message is flagged. The principle is straightforward: once one participant in the network identifies a spam wave, all other participants are immediately protected from the same messages.
 
 ## Pyzor
 
-Pyzor is a prominent example of a collaborative spam detection system. It's an open-source tool that uses collective intelligence to identify and filter out spam. When users across the network mark emails as spam, Pyzor creates and shares their hashes. Conversely, it can also recognize legitimate emails, ensuring that genuine communications are not mistakenly flagged.
+Pyzor is an open-source collaborative spam detection system that uses collective intelligence to identify and filter spam. When users across the network mark messages as spam, Pyzor creates and shares their hashes; it also tracks messages users have reported as legitimate, reducing the risk that genuine mail is mistakenly flagged.
 
 ### Configuration
 
-Pyzor is enabled by default in Stalwart and it is configured to use the public Pyzor server at `public.pyzor.org` with a lookup timeout of 5 seconds.
+Pyzor is configured through the [SpamPyzor](/docs/ref/object/spam-pyzor) singleton (found in the WebUI under <!-- breadcrumb:SpamPyzor --><!-- /breadcrumb:SpamPyzor -->). It is enabled by default and points at the public Pyzor server `public.pyzor.org` with a five-second lookup timeout.
 
-The following settings can be configured in the server's configuration file:
+Relevant fields are:
 
-- `spam-filter.pyzor.enable`: Enables or disables Pyzor.
-- `spam-filter.pyzor.host`: The Pyzor server host.
-- `spam-filter.pyzor.port`: The Pyzor server port.
-- `spam-filter.pyzor.timeout`: The lookup timeout for Pyzor.
-- `spam-filter.pyzor.count`: The minimum times a message hash has to appear in the Pyzor blocklist database to be considered.
-- `spam-filter.pyzor.wl-count`: The minimum times a message hash has to appear in the Pyzor allowlist database to be considered.
-- `spam-filter.pyzor.ratio`: The ratio of the message hash count in the blocklist to the allowlist for the message to be considered spam.
+- [`enable`](/docs/ref/object/spam-pyzor#enable): enables or disables Pyzor.
+- [`host`](/docs/ref/object/spam-pyzor#host): the Pyzor server hostname.
+- [`port`](/docs/ref/object/spam-pyzor#port): the Pyzor server port.
+- [`timeout`](/docs/ref/object/spam-pyzor#timeout): maximum time to wait for a response before the check is treated as failed.
+- [`blockCount`](/docs/ref/object/spam-pyzor#blockcount): minimum number of times a hash must appear in the Pyzor blocklist for the message to be considered.
+- [`allowCount`](/docs/ref/object/spam-pyzor#allowcount): minimum number of times a hash must appear in the Pyzor allowlist for the message to be considered.
+- [`ratio`](/docs/ref/object/spam-pyzor#ratio): the ratio of blocklist hits to allowlist hits above which the message is treated as spam.
 
-Example:
+Example configuration matching the default public server:
 
-```toml
-[spam-filter.pyzor]
-enable = true
-host "public.pyzor.org"
-port = "24441"
-timeout = 5s
-count = 5
-wl-count = 10
-ratio = "0.2"
+```json
+{
+  "enable": true,
+  "host": "public.pyzor.org",
+  "port": 24441,
+  "timeout": "5s",
+  "blockCount": 5,
+  "allowCount": 10,
+  "ratio": 0.2
+}
 ```

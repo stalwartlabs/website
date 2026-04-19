@@ -4,133 +4,130 @@ sidebar_position: 3
 
 # Untrusted Interpreter
 
-The untrusted interpreter is used to execute Sieve scripts that are created by end-users. Stalwart includes support for [JMAP for Sieve Scripts](https://www.rfc-editor.org/rfc/rfc9661.html) as well as [ManageSieve](https://datatracker.ietf.org/doc/html/rfc5804), which allows users to upload and manage their Sieve scripts.
+The untrusted interpreter runs Sieve scripts created by end-users. Stalwart supports [JMAP for Sieve Scripts](https://www.rfc-editor.org/rfc/rfc9661.html) and [ManageSieve](https://datatracker.ietf.org/doc/html/rfc5804) for uploading and managing user scripts.
+
+Interpreter settings, resource limits, and the list of globally available scripts are configured through the [SieveUserInterpreter](/docs/ref/object/sieve-user-interpreter) singleton (found in the WebUI under <!-- breadcrumb:SieveUserInterpreter --><!-- /breadcrumb:SieveUserInterpreter -->) and the [SieveUserScript](/docs/ref/object/sieve-user-script) object (found in the WebUI under <!-- breadcrumb:SieveUserScript --><!-- /breadcrumb:SieveUserScript -->).
 
 ## Limits
 
-Sieve scripts are safely executed in a controlled sandbox that ensures that scripts do not exceed or abuse their allocated system resources. Different type of limits can be enforced on Sieve scripts to prevent users from abusing the system resources. The following parameters can be configured under the `sieve.untrusted.limits` section:
+User scripts execute in a sandbox that bounds their use of server resources. The limits are expressed as fields on the SieveUserInterpreter singleton:
 
-- ``script-size``: Maximum size of a Sieve script in bytes. Defaults to ``1048576`` (1MB).
-- ``string-length``: Maximum size of a constant string. Defaults to ``4096``.
-- ``nested-blocks``: Maximum number of nested ``if`` / ``elsif`` / ``else`` blocks. Defaults to ``15``.
-- ``nested-tests``: Maximum number of nested tests. Defaults to ``15``.
-- ``nested-foreverypart``: Maximum number of nested ``foreverypart`` loops. Defaults to ``3``.
-- ``match-variables``: Maximum number of ``matches`` and ``regex`` variables that can be captured. Defaults to ``30``.
-- ``local-variables``: Maximum number of local variables that can be in scope at any given time. Defaults to ``128``.
-- ``header-size``: Maximum length of an RFC822 header value. Defaults to ``1024``.
-- ``includes``: Maximum number of ``include`` instructions per script. Defaults to ``3``.
-- ``nested-includes``: Maximum number of nested ``include``. Defaults to ``3``.
-- ``cpu``: Maximum number of instructions that a script can execute (including instructions from ``include`` scripts). Defaults to ``5000``.
-- ``variable-name-length``: Maximum length of a variable name. Defaults to ``32``.
-- ``variable-size``: Maximum length of a variable, after this limit variable contents are truncated. Defaults to ``4096``.
-- ``redirects``: Maximum number of message redirections per execution. Defaults to ``1``.
-- ``received-headers``: Maximum number of ``Received`` headers before a message is considered to be in a loop. Defaults to ``10``.
-- ``outgoing-messages``: Maximum number of outgoing e-mail messages that can be sent from a script including vacation responses, notifications and redirects. Defaults to ``3``.
+- [`maxScriptSize`](/docs/ref/object/sieve-user-interpreter#maxscriptsize): maximum size of a Sieve script. Default `"100kb"`.
+- [`maxStringLength`](/docs/ref/object/sieve-user-interpreter#maxstringlength): maximum size of a constant string. Default `4096`.
+- [`maxNestedBlocks`](/docs/ref/object/sieve-user-interpreter#maxnestedblocks): maximum depth of nested `if` / `elsif` / `else` blocks. Default `15`.
+- [`maxNestedTests`](/docs/ref/object/sieve-user-interpreter#maxnestedtests): maximum depth of nested tests. Default `15`.
+- [`maxNestedForEvery`](/docs/ref/object/sieve-user-interpreter#maxnestedforevery): maximum depth of nested `foreverypart` loops. Default `3`.
+- [`maxMatchVars`](/docs/ref/object/sieve-user-interpreter#maxmatchvars): maximum number of match and regex variables that can be captured. Default `30`.
+- [`maxLocalVars`](/docs/ref/object/sieve-user-interpreter#maxlocalvars): maximum number of local variables in scope at any point. Default `128`.
+- [`maxHeaderSize`](/docs/ref/object/sieve-user-interpreter#maxheadersize): maximum length of an RFC 822 header value. Default `1024`.
+- [`maxIncludes`](/docs/ref/object/sieve-user-interpreter#maxincludes): maximum number of `include` instructions per script. Default `3`.
+- [`maxNestedIncludes`](/docs/ref/object/sieve-user-interpreter#maxnestedincludes): maximum depth of nested `include` instructions. Default `3`.
+- [`maxCpuCycles`](/docs/ref/object/sieve-user-interpreter#maxcpucycles): maximum number of instructions a script can execute, counted across any included scripts. Default `5000`.
+- [`maxVarNameLength`](/docs/ref/object/sieve-user-interpreter#maxvarnamelength): maximum length of a variable name. Default `32`.
+- [`maxVarSize`](/docs/ref/object/sieve-user-interpreter#maxvarsize): maximum size of a variable; contents beyond this point are truncated. Default `4096`.
+- [`maxRedirects`](/docs/ref/object/sieve-user-interpreter#maxredirects): maximum number of message redirections per execution. Default `1`.
+- [`maxReceivedHeaders`](/docs/ref/object/sieve-user-interpreter#maxreceivedheaders): maximum number of `Received` headers before a message is treated as looping. Default `10`.
+- [`maxOutMessages`](/docs/ref/object/sieve-user-interpreter#maxoutmessages): maximum number of outgoing messages (including vacation responses, notifications, and redirects) a script can send. Default `3`.
+- [`maxScriptNameLength`](/docs/ref/object/sieve-user-interpreter#maxscriptnamelength): maximum length of a script name. Default `512`.
+- [`maxScripts`](/docs/ref/object/sieve-user-interpreter#maxscripts): default maximum number of Sieve scripts a single account may create. Default `100`.
 
-Example:
-    
-```toml
-[sieve.untrusted.limits]
-name-length = 512
-script-size = 102400
-string-length = 4096
-variable-name-length = 32
-variable-size = 4096
-nested-blocks = 15
-nested-tests = 15
-nested-foreverypart = 3
-match-variables = 30
-local-variables = 128
-header-size = 1024
-includes = 3
-nested-includes = 3
-cpu = 5000
-redirects = 1
-received-headers = 10
-outgoing-messages = 3
+Example limits:
+
+```json
+{
+  "maxScriptNameLength": 512,
+  "maxScriptSize": "100kb",
+  "maxStringLength": 4096,
+  "maxVarNameLength": 32,
+  "maxVarSize": 4096,
+  "maxNestedBlocks": 15,
+  "maxNestedTests": 15,
+  "maxNestedForEvery": 3,
+  "maxMatchVars": 30,
+  "maxLocalVars": 128,
+  "maxHeaderSize": 1024,
+  "maxIncludes": 3,
+  "maxNestedIncludes": 3,
+  "maxCpuCycles": 5000,
+  "maxRedirects": 1,
+  "maxReceivedHeaders": 10,
+  "maxOutMessages": 3
+}
 ```
 
 ## Extensions
 
-Stalwart includes support for [all existing Sieve extensions](https://www.iana.org/assignments/sieve-extensions/sieve-extensions.xhtml) which are enabled
-by default. However, system administrators might want to disable certain extensions such as *enotify* which allow users to send outgoing emails from
-a script, or extensions that allow modifying the contents of a message such as *editheader*, *replace* or *enclose*.
+Stalwart supports [all registered Sieve extensions](https://www.iana.org/assignments/sieve-extensions/sieve-extensions.xhtml) and enables them by default. Administrators often want to disable extensions that let a user send outgoing email from a script (for example `enotify`) or modify message content (for example `editheader`, `replace`, `enclose`).
 
-Disabling Sieve extensions can be done by setting the ``sieve.untrusted.disable-capabilities`` with the capabilities to disable, for example:
+Disabled extensions are listed in [`disableCapabilities`](/docs/ref/object/sieve-user-interpreter#disablecapabilities) on SieveUserInterpreter. The accepted values are documented on the [SieveCapability](/docs/ref/object/sieve-user-interpreter#sievecapability) enum.
 
-```toml
-[sieve.untrusted]
-disable-capabilities = ["editheader", "replace", "enclose", "enotify"]
+```json
+{
+  "disableCapabilities": ["editheader", "replace", "enclose", "enotify"]
+}
 ```
 
 ## Notification URIs
 
-The list of allowed notification URIs can be configured under the ``sieve.untrusted.notification-uris`` section. For example:
+The allowed URI schemes for the `notify` extension are configured through [`allowedNotifyUris`](/docs/ref/object/sieve-user-interpreter#allowednotifyuris). The default is `["mailto"]`.
 
-```toml
-[sieve.untrusted]
-notification-uris = ["mailto"]
+```json
+{
+  "allowedNotifyUris": ["mailto"]
+}
 ```
 
 ## Protected Headers
 
-Protected headers allows system administrators to configure under ``sieve.untrusted.protected-headers`` a list of headers that cannot be deleted or added using the ``editheader`` extension. For example:
+Headers that cannot be added or removed by the `editheader` extension are listed in [`protectedHeaders`](/docs/ref/object/sieve-user-interpreter#protectedheaders). The default list is `["Original-Subject", "Original-From", "Received", "Auto-Submitted"]`.
 
-```toml
-[sieve.untrusted]
-protected-headers = ["Original-Subject", "Original-From", "Received", "Auto-Submitted"]
+```json
+{
+  "protectedHeaders": ["Original-Subject", "Original-From", "Received", "Auto-Submitted"]
+}
 ```
 
 ## Vacation defaults
 
-Defaults for the vacation extension can be configured under the ``sieve.untrusted.vacation`` section:
+Defaults for the `vacation` extension are exposed on SieveUserInterpreter through:
 
-- ``default-subject``: Default subject of vacation responses. Defaults to ``Automated reply``.
-- ``subject-prefix``: Default subject prefix of vacation responses. Defaults to ``Auto: ``.
+- [`defaultSubject`](/docs/ref/object/sieve-user-interpreter#defaultsubject): default subject of vacation responses. Default `"Automated reply"`.
+- [`defaultSubjectPrefix`](/docs/ref/object/sieve-user-interpreter#defaultsubjectprefix): prefix prepended to vacation response subjects. Default `"Auto: "`.
 
-For example:
-
-```toml
-[sieve.untrusted.vacation]
-default-subject = "Automated reply"
-subject-prefix = "Auto: "
+```json
+{
+  "defaultSubject": "Automated reply",
+  "defaultSubjectPrefix": "Auto: "
+}
 ```
 
 ## Expiration defaults
 
-The default expiration time for IDs stored by the ``vacation`` and ``duplicate`` extensions can be configured under the ``sieve.untrusted.default-expiry`` section. For example:
+The default lifetimes for identifiers stored by the `vacation` and `duplicate` extensions are controlled by:
 
-```toml
-[sieve.untrusted.default-expiry]
-vacation = "30d"
-duplicate = "7d"
+- [`defaultExpiryVacation`](/docs/ref/object/sieve-user-interpreter#defaultexpiryvacation): default expiration for vacation response tracking. Default `"30d"`.
+- [`defaultExpiryDuplicate`](/docs/ref/object/sieve-user-interpreter#defaultexpiryduplicate): default expiration for identifiers stored by the `duplicate` extension. Default `"7d"`.
+
+```json
+{
+  "defaultExpiryVacation": "30d",
+  "defaultExpiryDuplicate": "7d"
+}
 ```
 
 ## Global Scripts
 
-Global user Sieve scripts are specified under the `sieve.untrusted.scripts.<name>.contents` key and can be imported from user scripts using the `include :global` command. In the configuration file, Sieve scripts can be either embedded as text or loaded from external files using a the [file macro](/docs/configuration/macros), for example:
+Global user scripts are published as [SieveUserScript](/docs/ref/object/sieve-user-script) records. Each record carries a [`name`](/docs/ref/object/sieve-user-script#name), an optional [`description`](/docs/ref/object/sieve-user-script#description), an [`isActive`](/docs/ref/object/sieve-user-script#isactive) flag, and the script body in [`contents`](/docs/ref/object/sieve-user-script#contents). Users reference these scripts from their own scripts with `include :global`.
 
-```toml
-[sieve.untrusted.scripts.global_one]
-contents = '''
-    # Declare the extensions used by this script.
-    #
-    require ["reject"];
+For example, a global script that rejects messages larger than 100 KB:
 
-    # Messages bigger than 100K will be rejected with an error message
-    #
-    if size :over 100K {
-        reject "I'm sorry, I do not accept mail over 100kb in size. Please upload larger files to a server and send me a link. Thanks.";
-    }
-
-'''
-
-[sieve.untrusted.scripts.global_two]
-contents = "%{file:/opt/stalwart-smtp/etc/sieve/global-script.sieve}%"
+```json
+{
+  "name": "global_one",
+  "description": "Reject oversized messages",
+  "isActive": true,
+  "contents": "# Declare the extensions used by this script.\n#\nrequire [\"reject\"];\n\n# Messages bigger than 100K will be rejected with an error message\n#\nif size :over 100K {\n    reject \"I'm sorry, I do not accept mail over 100kb in size. Please upload larger files to a server and send me a link. Thanks.\";\n}\n"
+}
 ```
 
-:::tip Note
-
-If you use a file macro to load an external script, make sure to add `sieve.untrusted.*` as a [local configuration key](/docs/configuration/overview#local-and-database-settings) in the configuration file. Otherwise, the file macro will not be expanded.
-
-:::
+<!-- review: The previous docs allowed the script body to be loaded from an external file through the configuration-file `file` macro. With scripts stored through the JMAP API, the `contents` field takes the script text directly. Confirm whether there is still a supported way to load the script body from a file at create/update time (for example a CLI flag on `stalwart-cli create sieve-user-script`) and document it here if so. -->

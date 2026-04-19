@@ -4,32 +4,22 @@ sidebar_position: 2
 
 # Proxy Protocol
 
-The HAProxy protocol, often referred to as the Proxy Protocol, is a network protocol designed to solve a common challenge faced when running servers behind load balancers or reverse proxies. In a typical setup without this protocol, the server sees only the IP address of the proxy, not the original client. This limitation can be problematic, especially for services that need to know the client's actual IP address for security, logging, or communication purposes. The Proxy Protocol was introduced as a solution to this issue. It allows the proxy to forward the client's original IP address and other relevant details to the server. This way, the server has access to the necessary client information, despite being behind a proxy.
+The Proxy Protocol (also known as the HAProxy protocol) extends a TCP connection with metadata describing the original client. Without it, a server behind a proxy sees only the proxy's IP address, which breaks IP-based access controls, sender authentication, and accurate logging. The Proxy Protocol prepends each forwarded connection with a small header that the back-end server parses to recover the original client IP and the TLS status of the original connection.
 
-When operating Stalwart behind a proxy such as HAProxy, Caddy, NGinx, or Traefik, enabling the Proxy Protocol is highly recommended for a multitude of reasons. Primarily, this protocol is crucial for the server to accurately obtain the original IP addresses of the clients connecting to it. In the absence of the Proxy Protocol, Stalwart only recognizes the IP address of the proxy, which can impede its ability to effectively manage client connections and compromise important security measures like IP-based access controls and accurate logging. Furthermore, the Proxy Protocol plays a vital role in informing the server whether a client is connecting via TLS (Transport Layer Security). This information is essential for Stalwart to understand and handle the security level of each connection appropriately. Without this insight, the server might not correctly secure client communications, potentially leading to vulnerabilities. Therefore, implementing the Proxy Protocol is not only a matter of enhancing functionality but is also critical for maintaining stringent security standards and ensuring the mail server operates effectively behind a proxy.
+When Stalwart runs behind HAProxy, Caddy, NGINX, or Traefik, enabling the Proxy Protocol preserves every signal the server needs. The client's remote IP is required for SPF and DMARC checks; per-IP rate limiting and auto-banning need the real source address; and whether the incoming connection was protected by TLS is a policy input on several code paths.
 
 ## Configuration
 
-Stalwart offers support for both versions 1 and 2 of the HAProxy protocol, including the TLV (Type-Length-Value) extensions introduced in version 2. Enabling the Proxy Protocol involves specifying the trusted IP addresses or network masks from which the proxy connections originate. This is done in the `server.proxy.trusted-networks` section of the configuration file, for example:
+Stalwart supports both version 1 and version 2 of the Proxy Protocol, including the version-2 TLV extensions. The Proxy Protocol is enabled by declaring the set of trusted IP addresses or CIDR ranges from which Proxy Protocol headers will be accepted. Connections from other addresses are rejected if they carry a Proxy Protocol header and processed without it otherwise.
 
-```toml
-[server.proxy]
-trusted-networks = ["127.0.0.0/8", "::1", "10.0.0.0/8"]
-```
+Server-wide trusted networks are set through [`proxyTrustedNetworks`](/docs/ref/object/system-settings#proxytrustednetworks) on the [SystemSettings](/docs/ref/object/system-settings) singleton (found in the WebUI under <!-- breadcrumb:SystemSettings --><!-- /breadcrumb:SystemSettings -->). Each entry is an IP address or a CIDR mask, for example `127.0.0.0/8`, `::1`, or `10.0.0.0/8`.
 
-It is also possible to define trusted networks on a per-listener basis by setting the `server.listener.<id>.proxy.trusted-networks` parameter in the listener's configuration, for example:
-
-```toml
-[server.listener."smtp".proxy]
-trusted-networks = ["127.0.0.0/8", "::1", "10.0.0.0/8"]
-```
-
-By defining these trusted networks, Stalwart can accurately identify and accept incoming connections that are relayed through a proxy.
+The same list can also be set on an individual [NetworkListener](/docs/ref/object/network-listener) through [`overrideProxyTrustedNetworks`](/docs/ref/object/network-listener#overrideproxytrustednetworks). The per-listener value replaces the server-wide list for that listener, so different listeners can trust different proxies.
 
 :::tip Note
 
-- When enabling the Proxy Protocol, ensure that both the proxy and Stalwart are correctly configured to use it. Misconfiguration can lead to connection issues.
-- Not all proxies support the Proxy Protocol. Verify that your chosen proxy solution is compatible before proceeding with the setup.
-- The implementation of the Proxy Protocol may vary slightly depending on the proxy used. Consult the documentation of your specific proxy for detailed setup instructions.
+- Configure the Proxy Protocol on both the proxy and Stalwart. A mismatch (only one side sending or accepting the header) will break connections silently or expose the proxy's address instead of the client's.
+- Not every proxy supports the Proxy Protocol; confirm compatibility before wiring it into a production path.
+- The exact syntax for enabling the Proxy Protocol varies between proxies. See the Stalwart pages for [HAProxy](/docs/server/reverse-proxy/haproxy), [Caddy](/docs/server/reverse-proxy/caddy), [NGINX](/docs/server/reverse-proxy/nginx), and [Traefik](/docs/server/reverse-proxy/traefik) for product-specific examples.
 
 :::

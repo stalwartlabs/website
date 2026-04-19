@@ -4,93 +4,62 @@ sidebar_position: 6
 
 # Contacts
 
-Stalwart includes built-in support for **contact management and synchronization** through the **JMAP for Contacts** and **CardDAV**, enabling users to store, access, and maintain address book data across devices and applications.
+Stalwart includes built-in support for contact management and synchronization through JMAP for Contacts and CardDAV, covering storage, access, and maintenance of address book data across devices and applications.
 
 ## JMAP for Contacts
 
-**JMAP for Contacts** is a modern alternative to CardDAV, built on the same JSON-based foundation as other JMAP specifications. It allows clients to manage address books and contact data efficiently through a structured, schema-defined JSON representation known as JSContact.
+JMAP for Contacts is a modern alternative to CardDAV, built on the same JSON-based foundation as other JMAP specifications. It allows clients to manage address books and contact data through a schema-defined JSON representation known as JSContact.
 
-While CardDAV relies on XML-based WebDAV extensions and uses the vCard format for storing contact information, JMAP for Contacts replaces both layers with clear, well-defined JSON objects and operations.
+Where CardDAV relies on XML-based WebDAV extensions and the vCard format, JMAP for Contacts replaces both layers with JSON objects and operations.
 
 ## CardDAV
 
-**CardDAV** is a standardized extension of WebDAV that allows clients to interact with contact data stored on a server. It provides a reliable and interoperable way for users to manage personal and shared address books, and is widely supported by contact applications on both desktop and mobile platforms, including Apple Contacts, Thunderbird, and many others.
+CardDAV is a standardized extension of WebDAV that allows clients to interact with contact data stored on a server. It provides an interoperable way to manage personal and shared address books, and is supported by contact applications on desktop and mobile platforms including Apple Contacts and Thunderbird.
 
-Through CardDAV, users can create and edit contact entries, organize them into address books, and synchronize changes across multiple devices. This keeps contact information consistent and up-to-date regardless of where it’s accessed. By supporting CardDAV, Stalwart provides a standards-compliant contact management system that integrates with standard communication and collaboration workflows. This section covers how contact data is structured, how clients access it, and how administrators manage and configure contact-related features.
+Through CardDAV, contacts can be created and edited, organised into address books, and synchronised across devices. Stalwart's CardDAV implementation integrates with the rest of the collaboration stack so that the same underlying data is available to JMAP clients.
 
-### Accessing Contacts
+### Accessing contacts
 
-CardDAV clients can access address book data on the Stalwart using standardized URLs, ensuring compatibility with a wide range of contact management applications. The recommended method for client configuration is through the **autodiscovery endpoint** located at `/.well-known/carddav`. When a client queries this path, the server redirects the request to the appropriate CardDAV resource associated with the authenticated user. This simplifies setup by allowing most modern clients to automatically locate and configure contacts access without requiring manual URL input.
+CardDAV clients can access address book data on Stalwart using standardized URLs. The recommended method for client configuration is through the autodiscovery endpoint located at `/.well-known/carddav`. When a client queries this path, the server redirects the request to the appropriate CardDAV resource associated with the authenticated account.
 
-Alternatively, CardDAV address books can be accessed directly via the path `/dav/card/<account_name>`, where `<account_name>` is the username of the account. For example, the address book for user `alice` would be available at `/dav/card/alice`. This direct path can be used in clients that support manual CardDAV configuration or when troubleshooting.
+Alternatively, CardDAV address books can be accessed directly via the path `/dav/card/<account_name>`, where `<account_name>` is the username of the account. For example, the address book for the account `alice` is available at `/dav/card/alice`.
 
-Both methods provide access to the same contacts data and are fully compatible with the CardDAV protocol. Stalwart’s support for these endpoints ensures smooth integration with existing CardDAV clients while offering flexibility for both automatic and manual configuration.
+Both methods provide access to the same contact data and are fully compatible with the CardDAV protocol.
 
 ## Limits
 
-To ensure optimal performance and protect server resources, Stalwart allows administrators to define limits on address book-related operations. These settings help prevent abuse or misconfiguration from clients that may attempt to create excessively large contact entries.
+Address-book-wide limits are configured on the [AddressBook](/docs/ref/object/address-book) singleton (found in the WebUI under <!-- breadcrumb:AddressBook --><!-- /breadcrumb:AddressBook -->).
 
-### vCard Object Size
+### vCard object size
 
-The `contacts.max-size` setting defines the maximum allowed size (in bytes) of a single vCard object submitted to the server. By default, this limit is set to **512 KB**. This helps prevent clients from uploading unreasonably large contact entries that could impact memory usage or processing performance. If needed, this value can be increased or decreased depending on your deployment’s use case and client behavior.
+[`maxVCardSize`](/docs/ref/object/address-book#maxvcardsize) defines the maximum accepted size of a single vCard object submitted to the server. The default is `524288` (512 KB). Raise or lower the limit to suit expected client behaviour.
 
-Example:
+### JMAP parsing limit
 
-```toml
-[contacts]
-max-size = 524288
-```
+The JMAP `ContactCard/parse` method is bounded by [`parseLimitContact`](/docs/ref/object/jmap#parselimitcontact) on the [Jmap](/docs/ref/object/jmap) singleton (found in the WebUI under <!-- breadcrumb:Jmap --><!-- /breadcrumb:Jmap -->), which sets the maximum number of vCard items that can be parsed in a single request. The default is `10`.
 
-### JMAP Parsing Limit
+## Default address book
 
-When using JMAP to interact with contact data, the `jmap.contact.parse.max-items` setting limits how many vCard objects can be parsed in a single JMAP `ContactCard/parse` request. The default value is **100 items**. This prevents excessively large requests from consuming too many server resources. If your use case requires processing more items in a single request, this limit can be adjusted.
+To improve client compatibility and allow contact operations to proceed without manual setup, Stalwart automatically creates a default address book when an account is accessed and no address books currently exist for it. The URL path of the auto-created address book is controlled by [`defaultHrefName`](/docs/ref/object/address-book#defaulthrefname) on the AddressBook singleton. The default value is `"default"`, so for an account named `john` the default address book is created at `/dav/card/john/default`.
 
-Example:
+### Disabling automatic creation
 
-```toml
-[jmap.contact.parse]
-max-items = 100
-```
+Automatic creation can be suppressed by clearing [`defaultHrefName`](/docs/ref/object/address-book#defaulthrefname) (leaving it unset). In that case, Stalwart does not create a default address book and clients that connect to an account with no address books receive an appropriate error response.
 
-## Default Address Book
+<!-- review: The pre-migration docs described `contacts.default.href-name = false` as the explicit way to disable automatic default-address-book creation. The current AddressBook object exposes `defaultHrefName` as an optional String. Confirm that unsetting the field is equivalent to the previous boolean disable, and that no separate enable flag controls automatic creation. -->
 
-To improve client compatibility and allow contact management operations to proceed without manual setup, Stalwart **automatically creates** a default address book when a user account is accessed and no address books exist for that user.
-The location (URL path) of the automatically created address book is determined by the `contacts.default.href-name` setting. By default, this is set to `"default"`, which means that for a user named `john`, the default address book will be created at `/dav/cal/john/default`. This behavior ensures that CalDAV clients always have at least one address book to work with, avoiding errors or empty interfaces when first connecting to the server.
+### Default display name
 
-```toml
-[contacts.default]
-href-name = "default"
-```
+The display name assigned to the auto-created address book is controlled by [`defaultDisplayName`](/docs/ref/object/address-book#defaultdisplayname). The default is `"Stalwart Address Book"`; the value can be adjusted to match organisational branding or language preferences.
 
-### Disabling Automatic Creation
+## Per-account limits
 
-If automatic address book creation is not desired (for example, in environments where address books are provisioned manually or via external tools), you can disable this feature by setting `contacts.default.href-name` to `false`. Example:
+The AddressBook singleton also sets default caps on per-account address-book resources: [`maxAddressBooks`](/docs/ref/object/address-book#maxaddressbooks) caps the number of address books an account can create (default `250`), and [`maxContacts`](/docs/ref/object/address-book#maxcontacts) caps the number of contact cards. These apply unless overridden at the account or tenant level.
 
-```toml
-[contacts.default]
-href-name = false
-```
+## Spam filter integration
 
-When this setting is disabled, Stalwart will **not** create a default address book automatically, and clients attempting to access contact data for an account without any address books will receive an appropriate error response.
+Stalwart's contact management system is integrated with the [built-in spam filter](/docs/spamfilter/overview) to improve filtering accuracy and reduce false positives. When enabled, the spam filter references an account's address book to identify trusted senders so that their messages are not marked as spam.
 
-### Default Display Name
+In addition to [bypassing spam classification](/docs/spamfilter/settings/general#address-book-integration) for known contacts, the address book can be used to [improve the spam classifier](/docs/spamfilter/classifier/autolearn#address-books). When a message from a known contact is incorrectly flagged as spam, the classifier can learn from the mistake and recognise similar messages in future.
 
-The display name used for the default address book (as shown in client applications) is controlled by the `contacts.default.display-name` setting. By default, this value is set to `Stalwart Address Book`.
-
-Example:
-
-```toml
-[contacts.default]
-display-name = "Stalwart Address Book"
-```
-
-This name is assigned to the address book’s `display-name` property and can be customized to better match your organization's branding or language preferences.
-
-## Spam Filter Integration
-
-Stalwart’s contact management system is closely integrated with the [built-in spam filter](/docs/spamfilter/overview) to enhance filtering accuracy and reduce the chances of false positives. When enabled, the spam filter can reference a user’s address book to identify trusted senders and ensure their messages are not mistakenly marked as spam.
-
-In addition to [bypassing spam classification](/docs/spamfilter/settings/general#address-book-integration) for known contacts, Stalwart can also use this information to [improve its spam classifier](/docs/spamfilter/classifier/autolearn#address-books). If a message from a known contact is incorrectly flagged as spam, the system can automatically learn from the mistake and train its classifier model to better recognize similar messages in the future.
-
-This integration between the address book and the spam filter provides more personalized filtering. For more information on how to configure these features, see the [spam filter documentation](/docs/spamfilter/overview).
-
+For details on configuring these features, see the [spam filter documentation](/docs/spamfilter/overview).

@@ -4,9 +4,8 @@ sidebar_position: 2
 
 # Spam filter
 
-Spam filtering is an essential component of any modern mail server, designed to sift through vast amounts of incoming email to identify and segregate unsolicited or potentially harmful messages. These unsolicited messages, commonly known as spam, not only clutter an individual's inbox but can also pose significant security risks. Efficient spam filtering ensures that genuine, legitimate emails reach their intended recipients, while unwanted or malicious emails are quarantined or discarded.
+Spam filtering is an essential component of any modern mail server, designed to identify and segregate unsolicited or potentially harmful messages from the legitimate mail flow. Unsolicited messages (spam) clutter mailboxes and can pose significant security risks; efficient spam filtering ensures that genuine messages reach their recipients while unwanted or malicious ones are quarantined or discarded.
 
-Stalwart includes a built-in Spam and Phishing filter. The filter consists of multiple Sieve scripts, which administrators can modify or extend with new rules to suit their specific requirements. 
+Stalwart includes a built-in spam and phishing filter implemented as a collection of Sieve scripts. Administrators can modify or extend these scripts to suit their deployment.
 
-Please refer to the [Spam and Phishing filter](/docs/spamfilter/overview) section for more information on the filter's inner workings.
-
+See the [Spam and Phishing filter](/docs/spamfilter/overview) section for details on the filter's rules, training, and tuning.

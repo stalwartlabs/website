@@ -4,13 +4,13 @@ sidebar_position: 5
 
 # NGINX
 
-NGINX is a high-performance web server that can also function as a reverse proxy, load balancer, and HTTP cache. Known for its stability, feature set, and low resource consumption, NGINX is widely used to improve the performance and reliability of web and application services. Its configuration options make it a good fit for managing and routing traffic in a variety of environments.
+[NGINX](https://nginx.org) is a web server that also functions as a reverse proxy, load balancer, and HTTP cache. The `stream` module extends it with TCP / UDP proxying, which is what Stalwart needs for the mail ports.
 
-Stalwart supports NGINX, so you can use NGINX to manage and route email traffic. Using NGINX as a reverse proxy for Stalwart provides high availability, scalability, and additional security for your email infrastructure. NGINX’s support for the Proxy Protocol lets Stalwart receive client connection details such as the client’s IP address and TLS connection status, which are required for accurate sender authentication and security policy enforcement.
+Stalwart can sit behind NGINX for both HTTP and mail traffic. When NGINX is built with the `stream` module and speaks the [Proxy Protocol](/docs/server/reverse-proxy/proxy-protocol) to Stalwart, the original client IP and TLS status are preserved so that sender authentication and rate limiting continue to work correctly. Stalwart accepts the Proxy Protocol header when the source address is listed in [`proxyTrustedNetworks`](/docs/ref/object/system-settings#proxytrustednetworks) on the [SystemSettings](/docs/ref/object/system-settings) singleton (found in the WebUI under <!-- breadcrumb:SystemSettings --><!-- /breadcrumb:SystemSettings -->) or in [`overrideProxyTrustedNetworks`](/docs/ref/object/network-listener#overrideproxytrustednetworks) on the matching [NetworkListener](/docs/ref/object/network-listener).
 
 ## Configuration
 
-Ensure that NGINX is built with the `--with-stream` module, as the `stream` module is required to handle TCP traffic.
+NGINX must be built with `--with-stream` for TCP proxying to be available.
 
 ```txt
 # /etc/nginx/nginx.conf

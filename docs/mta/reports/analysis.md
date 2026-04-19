@@ -4,21 +4,22 @@ sidebar_position: 6
 
 # Analysis
 
-Stalwart has the ability to automatically analyze incoming DMARC, DKIM, SPF, and TLS reports that are sent by other domains, which eliminates the need for manual intervention and saves time and effort for the system administrator. In case any TLS or message authentication issues are found, an event is recorded in the log file or sent to [OpenTelemetry](/docs/telemetry/tracing/opentelemetry). By turning reports into actionable events, system administrators can quickly detect and respond to configuration errors and any instances of abuse, such as spam or phishing, which helps to maintain the integrity of the email system.
+Stalwart automatically analyses incoming DMARC, DKIM, SPF, and TLS reports sent by other domains, removing the need for manual intervention and saving time for administrators. If TLS or message-authentication issues are detected, an event is recorded in the log file or sent to [OpenTelemetry](/docs/telemetry/tracing/opentelemetry). Turning reports into actionable events allows administrators to detect and respond to configuration errors and abuse (such as spam or phishing), helping maintain the integrity of the email system.
 
 ## Settings
 
-The configuration for report analysis can be found under the `report.analysis` key and includes the following attributes:
+Inbound analysis is configured on the [ReportSettings](/docs/ref/object/report-settings) singleton (found in the WebUI under <!-- breadcrumb:ReportSettings --><!-- /breadcrumb:ReportSettings -->):
 
-- `addresses`: A list of addresses (which may include wildcards) from which reports will be intercepted and analyzed. This address need to a real routable address.
-- `forward`: Whether reports should be forwarded to their final recipient after analysis.
-- `store`: The duration for which reports should be stored before being deleted, of `false` to disable storage.
+- [`inboundReportAddresses`](/docs/ref/object/report-settings#inboundreportaddresses): list of addresses (with optional wildcards) from which reports are intercepted and analysed. These addresses must be routable. Default `["postmaster@*"]`.
+- [`inboundReportForwarding`](/docs/ref/object/report-settings#inboundreportforwarding): whether reports are forwarded to their final recipient after analysis. Default `true`.
 
-Example:
+Example intercepting `dmarc@*` and `abuse@*` while still forwarding the report to the original recipient:
 
-```toml
-[report.analysis]
-addresses = ["dmarc@*", "abuse@*"]
-forward = true
-store = "30d"
+```json
+{
+  "inboundReportAddresses": ["dmarc@*", "abuse@*"],
+  "inboundReportForwarding": true
+}
 ```
+
+<!-- review: The previous `report.analysis.store` setting controlled the retention period for stored inbound reports (a duration, or `false` to disable storage). The current ReportSettings object does not expose a retention field; confirm whether retention of inbound reports is now governed globally by the [DataRetention](/docs/ref/object/data-retention) object or whether a dedicated field exists. -->

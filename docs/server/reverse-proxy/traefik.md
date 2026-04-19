@@ -4,13 +4,13 @@ sidebar_position: 2
 
 # Traefik
 
-Traefik is a dynamic reverse proxy and load balancer designed for microservice deployments. It integrates with major container orchestrators like Docker and Kubernetes, automatically discovering services and adjusting configurations. Traefik's dynamic configuration and integration options make it well-suited to routing traffic to microservice applications.
+[Traefik](https://traefik.io) is a reverse proxy and load balancer designed for containerised deployments. It integrates with Docker and Kubernetes, discovers services automatically, and reloads its routing at runtime when services come or go.
 
-Stalwart supports Traefik, allowing you to take advantage of Traefik's capabilities to manage and route traffic efficiently to your email server. By using Traefik as a reverse proxy, you can ensure high availability, scalability, and security for your Stalwart. Additionally, Traefik’s support for the Proxy Protocol further enhances Stalwart’s ability to perform sender authentication and enforce security policies effectively.
+Stalwart can sit behind Traefik for both HTTP and raw-TCP traffic. Traefik speaks the [Proxy Protocol](/docs/server/reverse-proxy/proxy-protocol), so the original client IP and TLS status are carried through to Stalwart. Stalwart accepts the Proxy Protocol header when the source address is listed in [`proxyTrustedNetworks`](/docs/ref/object/system-settings#proxytrustednetworks) on the [SystemSettings](/docs/ref/object/system-settings) singleton (found in the WebUI under <!-- breadcrumb:SystemSettings --><!-- /breadcrumb:SystemSettings -->) or in [`overrideProxyTrustedNetworks`](/docs/ref/object/network-listener#overrideproxytrustednetworks) on the matching [NetworkListener](/docs/ref/object/network-listener).
 
 ## Configuration
 
-The following example demonstrates how to configure Traefik to use the Proxy Protocol with Stalwart:
+The following example runs Traefik and Stalwart in Docker Compose, with Traefik terminating TLS for HTTP traffic and forwarding the mail ports with Proxy Protocol v2.
 
 ### Traefik Compose
 
@@ -186,37 +186,78 @@ providers:
 
 ### Stalwart configuration
 
-In the example below the proxy protocol is enabled on all mail ports except for the HTTP port:
+The following objects configure Stalwart so that every mail listener accepts Proxy Protocol headers from the Traefik network, while the plain-HTTP listener does not. The default certificate is loaded from the files Traefik writes into the shared certificate volume.
 
-```toml
-certificate.default.cert = "%{file:/data/certs/mail.example.com/cert.pem}%"
-certificate.default.default = true
-certificate.default.private-key = "%{file:/data/certs/mail.example.com/key.pem}%"
-server.hostname = "mail.example.com"
-http.hsts = true
-http.permissive-cors = false
-http.url = "protocol + '://' + config_get('server.hostname') + ':' + local_port"
-http.use-x-forwarded = true
-server.listener.http.bind = "[::]:8080"
-server.listener.http.protocol = "http"
-server.listener.https.bind = "[::]:443"
-server.listener.https.protocol = "http"
-server.listener.https.tls.implicit = true
-server.listener.imaptls.bind = "[::]:993"
-server.listener.imaptls.protocol = "imap"
-server.listener.imaptls.proxy.override = true
-server.listener.imaptls.proxy.trusted-networks.0 = "172.19.0.2"
-server.listener.imaptls.proxy.trusted-networks.1 = "172.19.0.0/16"
-server.listener.imaptls.tls.implicit = true
-server.listener.smtp.bind = "[::]:25"
-server.listener.smtp.protocol = "smtp"
-server.listener.smtp.proxy.override = true
-server.listener.smtp.proxy.trusted-networks.0 = "172.19.0.2"
-server.listener.smtp.proxy.trusted-networks.1 = "172.19.0.0/16"
-server.listener.submissions.bind = "[::]:465"
-server.listener.submissions.protocol = "smtp"
-server.listener.submissions.proxy.override = true
-server.listener.submissions.proxy.trusted-networks.0 = "172.19.0.2"
-server.listener.submissions.proxy.trusted-networks.1 = "172.19.0.0/16"
-server.listener.submissions.tls.implicit = true
+A [Certificate](/docs/ref/object/certificate) object (found in the WebUI under <!-- breadcrumb:Certificate --><!-- /breadcrumb:Certificate -->) loading the Traefik-issued certificate and private key from disk:
+
+```json
+{
+  "certificate": {
+    "@type": "File",
+    "filePath": "/data/certs/mail.example.com/cert.pem"
+  },
+  "privateKey": {
+    "@type": "File",
+    "filePath": "/data/certs/mail.example.com/key.pem"
+  }
+}
+```
+
+The [SystemSettings](/docs/ref/object/system-settings) singleton points [`defaultHostname`](/docs/ref/object/system-settings#defaulthostname) at `mail.example.com` and [`defaultCertificateId`](/docs/ref/object/system-settings#defaultcertificateid) at the Certificate record created above:
+
+```json
+{
+  "defaultHostname": "mail.example.com",
+  "defaultCertificateId": "<certificate-id>"
+}
+```
+
+HTTP-level security headers are configured on the [Http](/docs/ref/object/http) singleton (found in the WebUI under <!-- breadcrumb:Http --><!-- /breadcrumb:Http -->): [`enableHsts`](/docs/ref/object/http#enablehsts), [`usePermissiveCors`](/docs/ref/object/http#usepermissivecors), and [`useXForwarded`](/docs/ref/object/http#usexforwarded).
+
+```json
+{
+  "enableHsts": true,
+  "usePermissiveCors": false,
+  "useXForwarded": true
+}
+```
+
+<!-- review: The previous docs also set `http.url` to a dynamic expression (`protocol + '://' + config_get('server.hostname') + ':' + local_port`) used to build callback URLs. The current Http object does not expose a matching field. Confirm whether public URL generation is now fixed from `defaultHostname` or has moved to another object. -->
+
+The mail and HTTP listeners are defined as [NetworkListener](/docs/ref/object/network-listener) objects (found in the WebUI under <!-- breadcrumb:NetworkListener --><!-- /breadcrumb:NetworkListener -->). Each mail listener carries an [`overrideProxyTrustedNetworks`](/docs/ref/object/network-listener#overrideproxytrustednetworks) value that trusts the Traefik network:
+
+```json
+[
+  {
+    "name": "http",
+    "protocol": "http",
+    "bind": ["[::]:8080"]
+  },
+  {
+    "name": "https",
+    "protocol": "http",
+    "bind": ["[::]:443"],
+    "tlsImplicit": true
+  },
+  {
+    "name": "smtp",
+    "protocol": "smtp",
+    "bind": ["[::]:25"],
+    "overrideProxyTrustedNetworks": ["172.19.0.2", "172.19.0.0/16"]
+  },
+  {
+    "name": "submissions",
+    "protocol": "smtp",
+    "bind": ["[::]:465"],
+    "tlsImplicit": true,
+    "overrideProxyTrustedNetworks": ["172.19.0.2", "172.19.0.0/16"]
+  },
+  {
+    "name": "imaptls",
+    "protocol": "imap",
+    "bind": ["[::]:993"],
+    "tlsImplicit": true,
+    "overrideProxyTrustedNetworks": ["172.19.0.2", "172.19.0.0/16"]
+  }
+]
 ```

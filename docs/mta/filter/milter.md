@@ -4,89 +4,83 @@ sidebar_position: 4
 
 # Milter filters
 
-Milter, or "mail filter", is an extension to mail servers based on the Sendmail protocol. Milters allow third-party software to access mail messages as they are being processed in order to filter, modify, or annotate them. By using Milters, a mail server can utilize a variety of functionalities such as spam filtering, virus scanning, and other types of mail processing, beyond what is built into the mail server itself. Milters operate at the SMTP protocol level, which means they have access to both the SMTP envelope and the message contents.
+Milter, short for "mail filter", is an extension to mail servers based on the Sendmail protocol. Milters allow third-party software to access mail messages as they are being processed in order to filter, modify, or annotate them. Through milter, an MTA can add functionality such as spam filtering, virus scanning, and other kinds of message processing. Milters operate at the SMTP protocol level, so they have access to both the SMTP envelope and the message contents.
 
-When a mail is received and reaches the [DATA stage](/docs/mta/inbound/data), Stalwart calls the configured Milter filters. Each Milter filter can inspect and potentially modify the message, adding, changing, or removing headers, altering the body, or even rejecting the message outright. The modifications requested by each Milter are merged, meaning that the effects of multiple Milter filters are combined. Once all Milters have been processed, the potentially modified message enters the Stalwart queue and proceeds through the rest of the delivery process. 
+When a message reaches the [DATA stage](/docs/mta/inbound/data) (or any earlier configured stage), Stalwart calls the configured milter filters. Each filter can inspect and potentially modify the message, adding, changing, or removing headers, altering the body, or rejecting it outright. The modifications requested by each milter are merged. Once all milters have been processed, the message enters the queue and proceeds through the rest of the delivery process.
 
 ## Configuration
 
-Milters are defined under the `session.milter.<id>` section and are configured using the following attributes:
+Each milter is defined as an [MtaMilter](/docs/ref/object/mta-milter) object (found in the WebUI under <!-- breadcrumb:MtaMilter --><!-- /breadcrumb:MtaMilter -->). The relevant fields are:
 
-- `enable`: Determines whether this Milter is turned on or off. This setting can be dynamically set using [expressions](/docs/configuration/expressions/overview) which allows a certain Milter to be enabled or disabled based on the specific circumstances of an SMTP transaction.
-- `hostname`: Hostname or IP address of the server where the Milter filter is running.
-- `port`: Network port on the Milter filter host server. 
-- `stages`: This parameter is a list of stages at which this Milter will be called. The supported stages are `connect`, `ehlo`, `mail`, `rcpt` and `data`.
-- `tls`: Whether to use Transport Layer Security (TLS) for the connection between Stalwart and the Milter filter. Usually Milters are run on the same server as the mail server, so this setting should be set to `false` unless the Milter filter is running on a different server
-- `allow-invalid-certs`: Whether Stalwart should accept connections to a Milter filter server that has an invalid TLS certificate. If set to `true`, it allows connections even if the Milter filter server's certificate is expired, self-signed, or otherwise not trusted. This should generally be set to `false`, except perhaps in testing environments, to maintain the security of the connection.
+- [`enable`](/docs/ref/object/mta-milter#enable): expression that determines whether this milter is active. Defaults to `true`, but can be set to conditionally enable a milter based on session state (for example only for the SMTP listener).
+- [`hostname`](/docs/ref/object/mta-milter#hostname): hostname or IP address of the milter server.
+- [`port`](/docs/ref/object/mta-milter#port): network port on the milter server. Default 11332.
+- [`stages`](/docs/ref/object/mta-milter#stages): list of SMTP stages at which this milter is invoked. Possible values are `connect`, `ehlo`, `auth`, `mail`, `rcpt`, and `data`. Default `["data"]`.
+- [`useTls`](/docs/ref/object/mta-milter#usetls): whether to use TLS for the connection. Default `false`, since milters usually run on the same host as the MTA.
+- [`allowInvalidCerts`](/docs/ref/object/mta-milter#allowinvalidcerts): whether Stalwart should connect to a milter that presents an invalid TLS certificate. Default `false`.
 
-For example, to filter messages received on the SMTP listener through both Rspamd and ClamAV using milter:
+A typical deployment runs Rspamd and ClamAV as separate milters. For example, filtering messages received on the SMTP listener through both, each running on the same host on a distinct port:
 
-```toml
-[session.milter."rspamd"]
-enable = [ { if = "listener = 'smtp'", then = true }, 
-           { else = false } ]
-hostname = "127.0.0.1"
-port = 11332
-stages = ["connect", "ehlo", "mail", "rcpt", "data"]
-tls = false
-allow-invalid-certs = false
-
-[session.milter."clamav"]
-enable = [ { if = "listener = 'smtp'", then = true }, 
-           { else = false } ]
-hostname = "127.0.0.1"
-port = 15112
-tls = false
-allow-invalid-certs = false
+```json
+[
+  {
+    "hostname": "127.0.0.1",
+    "port": 11332,
+    "stages": ["connect", "ehlo", "mail", "rcpt", "data"],
+    "enable": {
+      "match": [{"if": "listener == 'smtp'", "then": "true"}],
+      "else": "false"
+    },
+    "useTls": false,
+    "allowInvalidCerts": false
+  },
+  {
+    "hostname": "127.0.0.1",
+    "port": 15112,
+    "stages": ["data"],
+    "enable": {
+      "match": [{"if": "listener == 'smtp'", "then": "true"}],
+      "else": "false"
+    },
+    "useTls": false,
+    "allowInvalidCerts": false
+  }
+]
 ```
 
-### Timeout settings
+### Timeouts
 
-The timeout settings define the maximum amount of time that Stalwart will wait for certain types of responses from a Milter. The following attributes can be configured under the `session.milter.<id>.timeout` section:
+Timeouts for milter communication are set with [`timeoutConnect`](/docs/ref/object/mta-milter#timeoutconnect) (maximum time to establish a connection with the milter, default 30 seconds), [`timeoutCommand`](/docs/ref/object/mta-milter#timeoutcommand) (maximum time for a command sent to the milter, default 30 seconds), and [`timeoutData`](/docs/ref/object/mta-milter#timeoutdata) (maximum time to wait for a response, default 60 seconds):
 
-- `connect`: Defines the maximum amount of time that Stalwart will wait to establish a connection with a Milter server. 
-- `command`: Determines how long Stalwart will wait to send a command to the Milter server. 
-- `data`: Represents the maximum amount of time Stalwart will wait for a response from the Milter server. 
-
-For example:
-
-```toml
-[session.milter."rspamd".timeout]
-connect = "30s"
-command = "30s"
-data = "60s"
+```json
+{
+  "timeoutConnect": "30s",
+  "timeoutCommand": "30s",
+  "timeoutData": "60s"
+}
 ```
 
 ### Options
 
-The following configuration options for a Milter filter can be set under the `session.milter.<id>.options` section:
+Additional options include [`tempFailOnError`](/docs/ref/object/mta-milter#tempfailonerror) (whether to respond with a temporary failure, typically 4xx, when an error occurs while talking to the milter so that the sender retries later, default `true`), [`maxResponseSize`](/docs/ref/object/mta-milter#maxresponsesize) (maximum response size accepted from the milter, in bytes, default 52428800, 50 MB), [`protocolVersion`](/docs/ref/object/mta-milter#protocolversion) (milter protocol version to use, `v2` or `v6`, default `v6`), and [`flagsAction`](/docs/ref/object/mta-milter#flagsaction) / [`flagsProtocol`](/docs/ref/object/mta-milter#flagsprotocol) (optional action and protocol flags advertised during option negotiation):
 
-- `tempfail-on-error`: If this setting is enabled, Stalwart will respond with a temporary failure (typically a 4xx SMTP status code) when it encounters an error while communicating with a Milter server. This tells the sending mail server to try delivering the message again later.
-- `max-response-size`: Maximum size, in bytes, of a response that Stalwart will accept from a Milter server. If a Milter server sends a response that exceeds this size, Stalwart will consider it an error and handle it according to the `tempfail-on-error` setting.
-- `version`: Version of the Milter protocol that Stalwart should use when communicating with Milter servers. Supported versions are `2` and `6`. The value should be set to match the version of the Milter protocol supported by your Milter server, usually version `6`.
-- `flags.actions`: Actions flags that Stalwart will advertise when negotiating options with Milter server. Defaults to `0xff` (`255`).
-- `flags.protocol`: Protocol flags that Stalwart will advertise while negotiating options with Milter server. Defaults to `0x42` (`66`).
-
-For example:
-
-```toml
-[session.milter."rspamd".options]
-tempfail-on-error = true
-max-response-size = 52428800 # 50mb
-version = 6
-
-[session.milter."rspamd".options.flags]
-actions = 255
-protocol = 66
+```json
+{
+  "tempFailOnError": true,
+  "maxResponseSize": 52428800,
+  "protocolVersion": "v6",
+  "flagsAction": 255,
+  "flagsProtocol": 66
+}
 ```
 
 ## Development
 
-The following sections are specifically intended for developers who are creating Milter filters to interact with Stalwart. They provide information about the actions that Stalwart can take upon receiving instructions from a Milter filter, and the macros that Stalwart uses to communicate specific session or message information to the Milter filter. For general users of Stalwart, these sections can be ignored. 
+The following sections are intended for developers creating milter filters to interact with Stalwart. They describe the actions Stalwart can take in response to instructions from a milter, and the macros Stalwart uses to communicate session or message information to the milter. General users of Stalwart can skip this section.
 
-### Supported Actions
+### Supported actions
 
-Stalwart supports the following actions and modifications that can be requested by a Milter filter:
+Stalwart supports the following actions and modifications that can be requested by a milter filter:
 
 | Code | Name | Description |
 |---|---|---|
@@ -109,13 +103,11 @@ Stalwart supports the following actions and modifications that can be requested 
 | SMFIR_REJECT (`r`) | Reject | Rejects the email |
 | SMFIR_SKIP (`s`) | Skip | Skip rest of body, send EOB |
 | SMFIR_TEMPFAIL (`t`) | Temporary Failure | Return a temporary failure |
-| SMFIR_REPLYCODE (`y`) | Reply Code | Reply with a given SMTPy code, etc. |
+| SMFIR_REPLYCODE (`y`) | Reply Code | Reply with a given SMTP reply code |
 
-### Supported Macros
+### Supported macros
 
-Macros are variables that are used to communicate specific session or message information between the mail server and the Milter application. When the MTA (Mail Transfer Agent) starts a Milter application, it sends an initial set of predefined macros. The specific macros sent can change throughout the SMTP transaction, providing different context at each stage (e.g., connection, helo, mail, rcpt, data, end-of-header, and end-of-message).
-
-For instance, macros can provide information about the client's IP address, the authenticated user, the message's sender and recipient addresses, and more. The Milter application can use these macro values to make decisions about how to process or modify the message or even whether to accept the message at all.
+Macros are variables used to communicate specific session or message information between the MTA and the milter. When the MTA starts a milter, it sends an initial set of predefined macros. The specific macros sent change throughout the SMTP transaction, providing different context at each stage (connection, helo, mail, rcpt, data, end-of-header, and end-of-message).
 
 Stalwart supports the following macros:
 

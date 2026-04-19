@@ -4,31 +4,30 @@ sidebar_position: 3
 
 # Verifying
 
-Stalwart supports verifying the DKIM signatures of incoming messages using the `ED25519-SHA256` (Edwards-Curve Digital Signature Algorithm), `RSA-SHA256` or `RSA-SHA1` algorithms. The `auth.dkim.verify` attribute indicates the DKIM verification policy:
+Stalwart can verify the DKIM signatures of incoming messages using the `ED25519-SHA256`, `RSA-SHA256`, or `RSA-SHA1` algorithms. Verification is configured on the [SenderAuth](/docs/ref/object/sender-auth) singleton (found in the WebUI under <!-- breadcrumb:SenderAuth --><!-- /breadcrumb:SenderAuth -->).
 
-- `relaxed`: Verify DKIM and report the results in the `Authentication-Results` header.
-- `strict`: Reject the message if all DKIM signatures fail verification, otherwise report the results in the `Authentication-Results` header.
-- `disable`: Do not perform DKIM verification.
+The [`dkimVerify`](/docs/ref/object/sender-auth#dkimverify) field accepts an expression that returns one of:
 
-Example:
+- `relaxed`: verify DKIM and report the results in the `Authentication-Results` header.
+- `strict`: reject the message if all DKIM signatures fail verification; otherwise report the results.
+- `disable`: do not perform DKIM verification.
 
-```toml
-[auth.dkim]
-verify = "relaxed"
+The default is `relaxed`:
+
+```json
+{
+  "dkimVerify": {"else": "relaxed"}
+}
 ```
 
-## Insecure Signatures
+## Insecure signatures
 
-An insecure DKIM signature contains parameters that, although conforming to the standards, are configured in ways that could potentially be exploited by attackers. For example, the DKIM's l= parameter, which specifies the exact number of octets in the email body that the signature covers, can be particularly problematic. An attacker could manipulate this by appending additional content to the message body beyond the specified l= value. Since the signature itself remains valid for the portion of the message it covers, this could lead to scenarios where forged or tampered content is added without invalidating the DKIM signature. Such situations are especially dangerous as they can mislead both automated systems and end-users, undermining trust indicators such as Brand Indicators for Message Identification (BIMI).
+An insecure DKIM signature is one whose parameters, although conforming to the standards, can be exploited. A common example is the DKIM `l=` parameter, which specifies the exact number of octets in the message body covered by the signature. An attacker can append content beyond the covered length, and the original signature remains valid for the covered portion. Such signatures can mislead automated systems and end-users, undermining trust indicators such as Brand Indicators for Message Identification (BIMI).
 
-By default, Stalwart is configured to ignore these insecure signatures, thus enhancing the security of the email handling process. This setting helps prevent scenarios where emails with potentially forged content could be mistakenly trusted.
+Stalwart ignores insecure signatures by default. To accept all signatures, including those deemed insecure, set [`dkimStrict`](/docs/ref/object/sender-auth#dkimstrict) to `false`:
 
-If necessary, this behavior can be altered to accept all signatures, including those deemed insecure, by modifying the configuration setting `auth.dkim.strict` to `false`.
-
-Example:
-
-```toml
-[auth.dkim]
-strict = false
+```json
+{
+  "dkimStrict": false
+}
 ```
-

@@ -4,36 +4,35 @@ sidebar_position: 2
 
 # Certificates
 
-When deploying TLS encryption with manually provided certificates, Stalwart automatically parses each certificate to extract all available subject names embedded within the certificate. These subject names indicate the domains and subdomains for which the certificate is valid, essentially determining the scope of its applicability for securing connections.
+When TLS is terminated on the server with manually provided certificates, Stalwart parses each certificate at load time and extracts its Subject Alternative Names. The extracted names drive certificate selection during the TLS handshake: the server matches the hostname from the client's Server Name Indication (SNI) extension against the stored SAN list and presents the matching certificate. SNI is what makes it possible to host several domains on a single IP address and still serve the correct certificate for each connection.
 
-During the TLS handshake process (the initial phase of establishing a TLS-secured connection) the server dynamically selects the appropriate certificate to present based on the server name provided by the client via the Server Name Indication (SNI) extension. SNI is a TLS extension that allows a client to specify the host it is trying to connect to at the start of the handshake process. This capability is crucial for servers hosting multiple domains or services under a single IP address, enabling them to present the correct certificate matching the requested domain.
-
-While Stalwart's automatic parsing and selection mechanism efficiently handles the determination and usage of certificates based on SNI, administrators also have the option to manually specify the list of subjects (i.e., domain names) for which a certificate is valid. However, this manual specification is generally unnecessary, given the server's ability to intelligently derive this information directly from the certificate itself.
-
-In scenarios where a client does not provide an SNI server name (possibly due to older client software or specific configuration choices) Stalwart allows for the configuration of a default certificate. This default certificate is used for TLS connections in which the client does not specify a server name, ensuring that the connection remains secure even when the optimal certificate selection via SNI is not possible.
+For clients that do not send an SNI value, the server falls back to a single default certificate. This default is selected globally by [`defaultCertificateId`](/docs/ref/object/system-settings#defaultcertificateid) on the [SystemSettings](/docs/ref/object/system-settings) singleton, which points at one of the configured Certificate records.
 
 ## Configuration
 
-TLS certificates are defined in the configuration file under the `certificate.<name>` key and require the following parameters:
+Certificates are stored as [Certificate](/docs/ref/object/certificate) objects (found in the WebUI under <!-- breadcrumb:Certificate --><!-- /breadcrumb:Certificate -->). Each record carries:
 
-- `cert`: The path or content of the TLS certificate file. This can either be directly embedded in the configuration file or referenced from an external file using a [file macro](/docs/configuration/macros).
-- `private-key`: The path or content of the TLS private key file. This should not be embedded directly in the configuration file, and instead be referenced from an external file using a [file macro](/docs/configuration/macros).
-- `subjects`: The list of subject alternative names (SANs) for the certificate. This is an optional parameter and can be used to specify additional domain names or IP addresses for which the certificate is valid.
-- `default`: If set to `true`, this certificate will be used when the client does not provide an SNI server name.
+- [`certificate`](/docs/ref/object/certificate#certificate): the PEM-encoded certificate chain. Accepts direct text, an environment-variable reference, or a file reference.
+- [`privateKey`](/docs/ref/object/certificate#privatekey): the PEM-encoded private key. A secret value; typically loaded from a file rather than stored inline.
+- [`subjectAlternativeNames`](/docs/ref/object/certificate#subjectalternativenames): the SAN list parsed from the certificate. Server-set, so manual entry is not needed.
+- [`notValidBefore`](/docs/ref/object/certificate#notvalidbefore) / [`notValidAfter`](/docs/ref/object/certificate#notvalidafter): the certificate's validity window. Server-set.
+- [`issuer`](/docs/ref/object/certificate#issuer): the issuing certificate authority. Server-set.
 
-The following example defines a TLS certificate named `default` with an embedded certificate and the contents of the private key read from a file:
+For example, a certificate pasted inline with its private key read from a file on disk:
 
-```toml
-[certificate."default"]
-cert = '''-----BEGIN CERTIFICATE-----
-MIIFCTCCAvGgAwIBAgIUCgHGQYUqtelbHGVSzCVwBL3fyEUwDQYJKoZIhvcNAQEL
-...
-0fR8+xz9kDLf8xupV+X9heyFGHSyYU2Lveaevtr2Ij3weLRgJ6LbNALoeKXk
------END CERTIFICATE-----
-'''
-private-key = "%{file:/opt/stalwart-smtp/etc/private/tls.key}%"
+```json
+{
+  "certificate": {
+    "@type": "Text",
+    "value": "-----BEGIN CERTIFICATE-----\nMIIFCTCCAvGgAwIBAgIUCgHGQYUqtelbHGVSzCVwBL3fyEUwDQYJKoZIhvcNAQEL\n...\n0fR8+xz9kDLf8xupV+X9heyFGHSyYU2Lveaevtr2Ij3weLRgJ6LbNALoeKXk\n-----END CERTIFICATE-----\n"
+  },
+  "privateKey": {
+    "@type": "File",
+    "filePath": "/opt/stalwart-smtp/etc/private/tls.key"
+  }
+}
 ```
 
 ## Reloading certificates
 
-When TLS certificates are updated, it is necessary to reload them in order for the changes to take effect. This can be done without stopping the server by using the [web-admin](/docs/management/webadmin/overview) or [command line interface](/docs/management/cli/overview).
+When a certificate file is rotated on disk, the running server needs to be told to re-read it. This can be triggered without stopping the server from the [WebUI](/docs/management/webui/overview) or the [CLI](/docs/management/cli/overview).

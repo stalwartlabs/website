@@ -4,32 +4,21 @@ sidebar_position: 3
 
 # WebSockets
 
-WebSockets is a protocol described in [RFC6455](https://www.rfc-editor.org/rfc/rfc6455) that allows clients to a start two-way communication channels with a web server. Unlike HTTP that is unidirectional and requires clients to create a new connection for each request, a WebSocket creates a full-duplex persistent connection with the server in which data can be exchanged in both directions.
+WebSockets, described in [RFC 6455](https://www.rfc-editor.org/rfc/rfc6455), allow clients to open a two-way communication channel with a web server. Unlike HTTP, which is unidirectional and requires a new connection for each request, a WebSocket maintains a full-duplex persistent connection in which data can flow in both directions.
 
 ## JMAP over WebSocket
 
-JMAP over WebSocket is a subprotocol described in [RFC8887](https://www.rfc-editor.org/rfc/rfc8887.html) that allows the JMAP protocol to be used over a WebSocket transport layer. 
-Using JMAP over WebSocket provides higher performance than JMAP over HTTP by keeping a single persistent connection open between JMAP clients and servers, which eliminates the performance hit of having to process and authenticate multiple HTTP requests from clients.
-When using JMAP over WebSocket, clients are only authenticated once when the connection is started and their credentials remain in effect  for the duration of the WebSocket connection.
+JMAP over WebSocket is a subprotocol described in [RFC 8887](https://www.rfc-editor.org/rfc/rfc8887.html) that runs the JMAP protocol over a WebSocket transport layer. It delivers higher throughput than JMAP over HTTP by keeping a single persistent connection open between the client and the server, removing the per-request overhead of setting up and authenticating a new HTTP request. Clients authenticate once when the connection is established; credentials remain in effect for the lifetime of the connection.
 
-JMAP over WebSocket is enabled by default in Stalwart and is available to JMAP clients at `wss://your-domain.example`.
+JMAP over WebSocket is enabled by default in Stalwart and is available to JMAP clients at `wss://mail.example.com`.
 
 ## Configuration
 
-The WebSocket following parameters can be configured under the `jmap.web-socket` section:
+WebSocket behaviour is controlled by the following fields on the [Jmap](/docs/ref/object/jmap) singleton (found in the WebUI under <!-- breadcrumb:Jmap --><!-- /breadcrumb:Jmap -->):
 
-- ``timeout``: Connection timeout for WS clients, the amount of seconds before a WS connection times out. Defaults to 10 seconds.
-- ``heartbeat``: Heartbeat interval, the amount of seconds between heartbeat packets sent to WS clients. Defaults to 5 seconds.
-- ``throttle``: Notifications throttle, the amount of time to wait before sending a batch of notifications to a WS client. Defaults to 1000 milliseconds (1 second).
-
-Example:
-
-```toml
-[jmap.web-socket]
-throttle = "1s"
-timeout = "10m"
-heartbeat = "1m"
-```
+- [`websocketTimeout`](/docs/ref/object/jmap#websockettimeout): time after which an inactive WebSocket connection is closed. Default `"10m"`.
+- [`websocketHeartbeat`](/docs/ref/object/jmap#websocketheartbeat): interval between heartbeat packets sent to WebSocket clients. Default `"1m"`.
+- [`websocketThrottle`](/docs/ref/object/jmap#websocketthrottle): time to wait before sending a batch of notifications to a WebSocket client. Default `"1s"`.
 
 ## Conformed RFCs
 

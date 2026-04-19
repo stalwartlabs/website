@@ -4,40 +4,41 @@ sidebar_position: 1
 
 # Overview
 
-Coordination is the process by which nodes in a distributed system exchange information, maintain consistency, and respond collectively to changes within the cluster. In the context of Stalwart, coordination ensures that each server instance remains aware of the state of the others, allowing the cluster to behave as a unified system even when composed of many independent nodes.
+Coordination is the process by which nodes in a distributed system exchange information, maintain consistency, and respond collectively to changes within the cluster. In Stalwart, coordination keeps every server instance aware of the state of the others, so the cluster behaves as a unified system even when composed of many independent nodes.
 
-When running in a clustered environment, Stalwart nodes must be able to communicate with one another to share internal updates and detect failures in real time. This communication is essential for providing responsive service regardless of which node a user is connected to. For example, when a user is connected to an IMAP session via node A and a change occurs in their mailbox on node B, the change must be communicated back to node A so the user can be notified via an IDLE response. The IMAP IDLE command allows clients to maintain a persistent connection and receive immediate updates about changes to mailboxes without polling.
+When running in a clustered environment, Stalwart nodes must communicate to share internal updates and detect failures in real time. This communication keeps service responsive regardless of which node a user is connected to. For example, when a user is connected to an IMAP session via node A and a change occurs in their mailbox on node B, the change must reach node A so the user can be notified via an IDLE response. The IMAP IDLE command allows clients to maintain a persistent connection and receive immediate updates about mailbox changes without polling.
 
-Push notifications function in a similar way. If a user is subscribed to receive notifications on one node, but their mailbox activity is processed on another, coordination ensures that the notification is correctly routed and delivered.
+Push notifications work in a similar way. If a user is subscribed to notifications on one node, but their mailbox activity is processed on another, coordination routes and delivers the notification correctly.
 
-Coordination is also used for internal housekeeping tasks across the cluster. For instance, if one server blocks an IP address due to suspicious activity, it can propagate this update to all other nodes, ensuring consistent security enforcement. Likewise, when a new ACME TLS certificate is issued, the cluster must distribute this update so that all servers can reload and apply the new certificate without manual intervention.
+Coordination is also used for internal housekeeping across the cluster. When one server blocks an IP address because of suspicious activity, the update propagates to the rest of the cluster so security enforcement stays consistent. When a new ACME TLS certificate is issued, the cluster distributes it so every server reloads and applies the new certificate automatically.
 
-These examples highlight the critical role coordination plays in maintaining consistency, security, and real-time responsiveness within a distributed Stalwart deployment.
+These examples show why coordination matters for consistency, security, and real-time responsiveness in a distributed Stalwart deployment.
 
-## Coordination Mechanisms
+## Coordination mechanisms
 
-Stalwart supports multiple coordination backends, allowing organizations to choose the solution that best fits their environment and scale. The following options are available:
+Stalwart supports multiple coordination backends, so administrators can choose one that fits the environment and scale. The options are:
 
-- [Peer-to-Peer](/docs/cluster/coordination/peer-to-peer): This mode operates without a central coordinator. Instead, each node communicates directly with its peers using a decentralized protocol powered by Eclipse Zenoh. This approach simplifies deployment by removing external dependencies, while still enabling real-time coordination across nodes.
-- [Apache Kafka / Redpanda](/docs/cluster/coordination/kafka): A high-throughput distributed event streaming platform, Kafka is ideal for handling large volumes of messages. In a Stalwart cluster, Kafka can act as the message bus for update propagation and event coordination.
-- [NATS](/docs/cluster/coordination/nats): A lightweight and high-performance messaging system, NATS is well-suited for clusters that require real-time messaging without the complexity of heavier systems like Kafka. It provides publish-subscribe semantics with minimal latency and overhead.
-- [Redis](/docs/cluster/coordination/redis.md): While Redis is typically used as an in-memory key-value store, it also supports pub/sub messaging. Stalwart can use Redis for cluster coordination, especially in environments where Redis is already used to store ephemeral state, thereby avoiding the need to introduce an additional coordination service.
+- [Peer-to-peer](/docs/cluster/coordination/peer-to-peer): no central coordinator; each node communicates directly with its peers using a decentralised protocol powered by Eclipse Zenoh. This removes external dependencies while still providing real-time coordination across nodes.
+- [Apache Kafka / Redpanda](/docs/cluster/coordination/kafka): a distributed event streaming platform suited to large volumes of messages. In a Stalwart cluster, Kafka acts as the message bus for update propagation and event coordination.
+- [NATS](/docs/cluster/coordination/nats): a lightweight and high-performance messaging system, well-suited to clusters that need real-time messaging without the complexity of Kafka. It provides publish/subscribe semantics with low latency and low overhead.
+- [Redis](/docs/cluster/coordination/redis): commonly used as an in-memory key-value store, Redis also supports pub/sub messaging. Stalwart can use Redis for cluster coordination, especially in environments where Redis is already used to hold ephemeral state, avoiding an additional coordination service.
 
-## Choosing a Coordination Mechanism
+Each backend corresponds to a variant on the [Coordinator](/docs/ref/object/coordinator) singleton (found in the WebUI under <!-- breadcrumb:Coordinator --><!-- /breadcrumb:Coordinator -->). Configuration details for each variant are covered in the dedicated subsections.
 
-The best coordination mechanism depends on the size and nature of the deployment, as well as the organization’s operational preferences.
+## Choosing a coordination mechanism
 
-[Peer-to-peer coordination](/docs/cluster/coordination/peer-to-peer) is recommended for **small clusters** or environments where simplicity is a priority. It eliminates the need to provision or manage an external coordination service. However, it's important to note that this approach introduces a modest processing overhead to each Stalwart node, as the coordination duties are handled internally by the mail server process itself.
+The choice of coordination mechanism depends on the size and nature of the deployment and on operational preferences.
 
-For **very large-scale deployments** (especially those processing **millions of messages per second**), [Apache Kafka or Redpanda](/docs/cluster/coordination/kafka) is the preferred choice. These platforms are designed for high-throughput, durable event streaming and provide strong guarantees around message delivery and partitioning across large clusters.
+[Peer-to-peer coordination](/docs/cluster/coordination/peer-to-peer) suits small clusters or environments where simplicity is a priority. It removes the need to provision or manage an external coordination service. Because the coordination duties are handled inside the mail server process, this approach adds a modest amount of processing to each node.
 
-For **medium-sized deployments**, [NATS](/docs/cluster/coordination/nats) strikes a good balance between performance and operational complexity. It offers lower latency and simpler configuration compared to Kafka, while still scaling to handle high messaging volumes reliably.
+For very large deployments, especially those processing millions of messages per second, [Apache Kafka or Redpanda](/docs/cluster/coordination/kafka) is preferred. These platforms are built for high-throughput, durable event streaming and offer strong delivery and partitioning guarantees across large clusters.
 
-[Redis](/docs/cluster/coordination/redis) is a viable coordination option for **small to medium-sized clusters**, especially in scenarios where Redis is already being used by Stalwart for [in-memory ephemeral data](/docs/storage/in-memory). While Redis does not scale as well as Kafka or NATS in high-throughput environments, its inclusion in an existing stack can reduce system complexity by avoiding the need for additional services.
+For medium-sized deployments, [NATS](/docs/cluster/coordination/nats) balances performance with operational simplicity. It has lower latency and simpler configuration than Kafka while still scaling to handle high messaging volumes.
 
-Ultimately, the choice of coordination mechanism should be guided by the expected cluster size, message volume, operational overhead, and existing infrastructure within the organization.
+[Redis](/docs/cluster/coordination/redis) is a viable coordination option for small to medium clusters, especially where Redis is already used by Stalwart for [in-memory ephemeral data](/docs/storage/in-memory). Redis does not scale as well as Kafka or NATS in high-throughput environments, but reusing an existing component can reduce complexity.
 
-## Topic Name
+The choice of coordination mechanism should be guided by expected cluster size, message volume, operational overhead, and existing infrastructure.
 
-Stalwart uses the `stwt.agora` topic name for all coordination messages. This topic is used for all coordination backends, including peer-to-peer, Kafka, NATS, and Redis. This topic name is not currently configurable, but it is recommended to avoid using it for any other purpose to prevent conflicts with Stalwart's internal coordination messages.
+## Topic name
 
+Stalwart uses the `stwt.agora` topic name for all coordination messages. The same topic name applies to every coordination backend, including peer-to-peer, Kafka, NATS, and Redis. This topic name is not configurable, so it should not be reused by other services to prevent conflicts with Stalwart internal coordination messages.

@@ -2,86 +2,75 @@
 sidebar_position: 8
 ---
 
-# ASN & GeoIP
+# ASN and GeoIP
 
-ASN (Autonomous System Number) and GeoIP are essential tools for identifying the origin and characteristics of network traffic. An ASN represents the autonomous system that manages a specific range of IP addresses, providing insight into the organization or entity responsible for those addresses. GeoIP, on the other hand, offers geographical data about an IP address, such as the country, region, or city where it is located.
+An Autonomous System Number (ASN) identifies the network operator responsible for a range of IP addresses. GeoIP data maps IP addresses to a country, region, or city. Together, these sources describe who operates an address and where it is located, allowing incoming connections to be classified by network and geography.
 
-Stalwart utilizes ASN and GeoIP information for several critical purposes. Within [expressions](/docs/configuration/expressions/overview), this data allows administrators to create dynamic configuration rules that adapt based on the geographic or network identity of an incoming connection. For example, specific rules can be applied to connections originating from certain regions or managed by particular autonomous systems, enabling fine-tuned control over email handling.
+Stalwart uses ASN and GeoIP information in several places. The [spam filter](/docs/spamfilter/overview) tracks reputation metrics by IP, sender, domain, and ASN, and the spam classifier incorporates the same data during training. When processing messages, the server includes ASN and GeoIP details in the `Received` header so that message paths can be audited after the fact.
 
-In spam filtering, ASN and GeoIP information play a significant role. The built-in [spam filter](/docs/spamfilter/overview) uses this data to track reputation metrics for IP addresses, senders, domains, and ASNs, enhancing its ability to detect and block malicious traffic. Additionally, GeoIP and ASN data are integrated into the training of the Spam classifier, improving its accuracy by considering geographical and network patterns associated with spam.
-
-To further improve transparency and traceability, Stalwart includes ASN and GeoIP information in the `Received` headers of emails it processes. This addition helps administrators and recipients better understand the path and origin of messages, aiding in troubleshooting and security assessments.
-
-Stalwart supports obtaining ASN and GeoIP data in two ways. The recommended method is downloading data files from HTTP resources, ensuring the information remains up-to-date and accurate. Alternatively, the server can query TXT records from a DNS service offering ASN and GeoIP information, providing a lightweight option for environments where HTTP downloads may not be feasible.
+Two data-loading strategies are supported. The preferred approach downloads CSV files from HTTP resources, which keeps ASN-to-IP and country-to-IP mappings current. A DNS-based alternative queries TXT records exposed by services such as Team Cymru; this mode is useful where outbound HTTP is restricted but carries slightly less detail.
 
 ## Configuration
 
-The ASN and GeoIP settings in Stalwart allows administrators to choose between different methods for obtaining ASN and GeoIP data. Configuration is defined in the `asn` section of the configuration file, with several options available to tailor the setup based on the environment and requirements.
+ASN and GeoIP data sources are configured through the [Asn](/docs/ref/object/asn) singleton (found in the WebUI under <!-- breadcrumb:Asn --><!-- /breadcrumb:Asn -->). The object is multi-variant: each instance selects one of `Disabled`, `Resource`, or `Dns`, and the chosen variant determines which fields apply.
 
-- `asn.type`: Specifies the method used to retrieve ASN and GeoIP data. Supported values are:
-  - `resource`: Use HTTP resources to download ASN and GeoIP data files.
-  - `dns`: Query TXT records from a DNS service offering ASN and GeoIP information.
-  - `disabled`: Disables ASN and GeoIP lookups.
+### HTTP resources
 
-### HTTP Resources
+The `Resource` variant downloads CSV data files over HTTP. It exposes the following fields:
 
-When `asn.type` is set to `resource`, the server uses URLs to download ASN and GeoIP data files. The following additional settings are available:
+- [`asnUrls`](/docs/ref/object/asn#asnurls): URLs of the CSV files that contain IP-to-ASN mappings.
+- [`geoUrls`](/docs/ref/object/asn#geourls): URLs of the CSV files that contain IP-to-country mappings.
+- [`expires`](/docs/ref/object/asn#expires): refresh interval for downloaded data. Default `"1d"`.
+- [`timeout`](/docs/ref/object/asn#timeout): maximum time to wait for a fetch. Default `"5m"`.
+- [`maxSize`](/docs/ref/object/asn#maxsize): maximum size accepted for a downloaded file. Default `"100mb"`.
+- [`httpAuth`](/docs/ref/object/asn#httpauth): HTTP authentication method (`Unauthenticated`, `Basic`, or `Bearer`).
+- [`httpHeaders`](/docs/ref/object/asn#httpheaders): additional HTTP headers sent with each request.
 
-- `asn.expires`: Defines the expiration period for downloaded data files. After this period, the server will re-fetch the data to ensure it remains up-to-date.
-- `asn.timeout`: Sets the maximum time the server waits for a response when fetching data files.
-- `asn.max-size`: Specifies the maximum allowable size for downloaded data files.
-- `asn.urls.asn`: A list of URLs providing ASN data. Each URL points to a file containing ASN-to-IP mappings, such as:
-  ```
-  "https://cdn.jsdelivr.net/npm/@ip-location-db/asn/asn-ipv4.csv"
-  "https://cdn.jsdelivr.net/npm/@ip-location-db/asn/asn-ipv6.csv"
-  ```
-- `asn.urls.geo`:A list of URLs providing GeoIP data. Each URL points to a file containing geographical mappings for IP ranges, such as:
-  ```
-  "https://cdn.jsdelivr.net/npm/@ip-location-db/geolite2-geo-whois-asn-country/geolite2-geo-whois-asn-country-ipv4.csv"
-  ```
+For example:
 
-Example:
-
-```toml
-[asn]
-type = "resource"
-expires = "1d"
-timeout = "5m"
-max-size = 104857600
-
-[asn.urls]
-asn = [ "https://cdn.jsdelivr.net/npm/@ip-location-db/asn/asn-ipv4.csv", 
-        "https://cdn.jsdelivr.net/npm/@ip-location-db/asn/asn-ipv6.csv" ]
-geo = [ "https://cdn.jsdelivr.net/npm/@ip-location-db/geolite2-geo-whois-asn-country/geolite2-geo-whois-asn-country-ipv4.csv", 
-        "https://cdn.jsdelivr.net/npm/@ip-location-db/geolite2-geo-whois-asn-country/geolite2-geo-whois-asn-country-ipv6.csv" ]
+```json
+{
+  "@type": "Resource",
+  "expires": "1d",
+  "timeout": "5m",
+  "maxSize": "100mb",
+  "asnUrls": [
+    "https://cdn.jsdelivr.net/npm/@ip-location-db/asn/asn-ipv4.csv",
+    "https://cdn.jsdelivr.net/npm/@ip-location-db/asn/asn-ipv6.csv"
+  ],
+  "geoUrls": [
+    "https://cdn.jsdelivr.net/npm/@ip-location-db/geolite2-geo-whois-asn-country/geolite2-geo-whois-asn-country-ipv4.csv",
+    "https://cdn.jsdelivr.net/npm/@ip-location-db/geolite2-geo-whois-asn-country/geolite2-geo-whois-asn-country-ipv6.csv"
+  ],
+  "httpAuth": {"@type": "Unauthenticated"}
+}
 ```
 
-### DNS Queries
+### DNS queries
 
-When `asn.type` is set to `dns`, the server queries ASN and GeoIP data from DNS TXT records. Additional settings for DNS-based configurations include:
+The `Dns` variant queries TXT records from a zone that exposes ASN and geolocation data (for example Team Cymru's `origin.asn.cymru.com` and `origin6.asn.cymru.com`). Its fields are:
 
-- `asn.separator`: Specifies the character used to separate fields in the DNS TXT record (e.g., `|`).
-- `asn.zone.ipv4` and `asn.zone.ipv6`: Define the DNS zones for querying ASN and GeoIP data. For example:
-  - IPv4: `"origin.asn.cymru.com"`
-  - IPv6: `"origin6.asn.cymru.com"`
-- `asn.index`: Maps the fields in the DNS TXT record to specific data points:
-  - `asn.index.asn`: Index of the ASN field.
-  - `asn.index.asn-name`: Index of the ASN name field.
-  - `asn.index.country`: Index of the country field.
+- [`zoneIpV4`](/docs/ref/object/asn#zoneipv4): DNS zone queried for IPv4 addresses.
+- [`zoneIpV6`](/docs/ref/object/asn#zoneipv6): DNS zone queried for IPv6 addresses.
+- [`separator`](/docs/ref/object/asn#separator): character that separates fields in the TXT record. Default `"|"`.
+- [`indexAsn`](/docs/ref/object/asn#indexasn): zero-based position of the ASN field. Default `0`.
+- [`indexAsnName`](/docs/ref/object/asn#indexasnname): position of the ASN name field.
+- [`indexCountry`](/docs/ref/object/asn#indexcountry): position of the country-code field.
 
-Example:
+For example:
 
-```toml
-[asn]
-type = "dns"
-separator = "|"
-
-[asn.zone]
-ipv4 = "origin.asn.cymru.com"
-ipv6 = "origin6.asn.cymru.com"
-
-[asn.index]
-asn = 0
-asn-name = 1
-country = 2
+```json
+{
+  "@type": "Dns",
+  "separator": "|",
+  "zoneIpV4": "origin.asn.cymru.com",
+  "zoneIpV6": "origin6.asn.cymru.com",
+  "indexAsn": 0,
+  "indexAsnName": 1,
+  "indexCountry": 2
+}
 ```
+
+### Disabling lookups
+
+Selecting the `Disabled` variant turns off both ASN and GeoIP resolution.

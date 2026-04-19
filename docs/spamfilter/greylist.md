@@ -4,29 +4,20 @@ sidebar_position: 11
 
 # Greylisting
 
-Greylisting is a method where an email server temporarily rejects emails from unknown senders. In essence, when an email from an unfamiliar source arrives, the server sends back a "try again later" message. Legitimate email servers, following standard email protocols, will attempt to resend the email after a short delay. Most spammers, on the other hand, don't bother with resending, and hence, the email never gets through.
+Greylisting temporarily rejects messages from unknown senders. When a message from an unfamiliar source arrives, the server returns a "try again later" response. Legitimate MTAs follow standard retry logic and will attempt the delivery again after a short delay, at which point the message is accepted. Many spam senders do not retry, so their messages never get through.
 
-The primary criterion for greylisting is a triplet: the sender's IP address, the sender's email address, and the recipient's email address. Stalwart employs this triplet to apply greylisting for a duration of 30 days.
-
-In the ongoing battle against unwanted emails, greylisting stands as one of the various techniques employed to thwart the efforts of spammers. But like all tools, it comes with its own set of advantages and challenges.
+The decision to greylist is based on a triplet: the sender's IP address, the sender's email address, and the recipient's email address. A given triplet is held in the greylist for a configurable duration.
 
 ## Advantages
 
-- **Efficiency**: Greylisting is effective against bulk email senders who do not use standard retry mechanisms. By simply delaying the acceptance of emails, a significant amount of spam can be curtailed.
-- **Low Overhead**: Unlike content-based filters, greylisting doesn't require the server to scan the content of each email, thus conserving computational resources.
+- **Effective against bulk senders**: greylisting stops senders that do not implement proper retry mechanisms, which captures a significant amount of spam.
+- **Low overhead**: unlike content-based filters, greylisting does not scan the body of each message and therefore consumes few resources.
 
 ## Challenges
 
-- **Delay in Email Delivery**: One of the foundational principles of email is its near-instantaneous delivery. Greylisting introduces a deliberate delay, potentially disrupting time-sensitive communications.
-- **Adaptive Spammers**: With the rise in the use of greylisting, many spammers have adapted their tactics to include retry mechanisms, thus diminishing the efficacy of greylisting as a standalone spam prevention technique.
+- **Delivery delay**: greylisting introduces a deliberate delay, potentially disrupting time-sensitive communications.
+- **Adaptive senders**: many bulk senders have adopted retry logic, reducing the efficacy of greylisting as a standalone technique.
 
 ## Configuration
 
-Greylisting can be enabled in Stalwart by specifying the amount of time a sender should be greylisted. This can be done by setting the `spam-filter.grey-list.duration` property in the configuration file.
-
-For example, to greylist a sender for 30 days:
-
-```toml
-[spam-filter.grey-list]
-duration = "30d"
-```
+Greylisting is configured through the [`greylistFor`](/docs/ref/object/spam-settings#greylistfor) field on the [SpamSettings](/docs/ref/object/spam-settings) singleton (found in the WebUI under <!-- breadcrumb:SpamSettings --><!-- /breadcrumb:SpamSettings -->). The value is a duration that sets how long a triplet remains in the greylist; leaving the field unset disables greylisting. For example, setting `greylistFor` to `"30d"` keeps each triplet greylisted for thirty days.

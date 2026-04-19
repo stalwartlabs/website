@@ -4,52 +4,23 @@ sidebar_position: 2
 
 # FoundationDB
 
-FoundationDB is a distributed database designed to handle large volumes of data across a network of machines. It combines the power of ACID (Atomicity, Consistency, Isolation, Durability) transactions with the scalability of NoSQL databases. FoundationDB is engineered to provide high performance, fault tolerance, and easy scalability, making it an ideal choice for distributed systems.
-
-FoundationDB is the recommended backend for distributed setups of Stalwart due to its ability to manage large-scale, distributed data storage and processing needs effectively.
+FoundationDB is a distributed database designed to handle large volumes of data across multiple machines. It combines ACID transactions with the scalability of NoSQL systems, providing high performance, fault tolerance, and straightforward horizontal scaling. It is the recommended backend for distributed deployments of Stalwart.
 
 :::tip Note
 
-Make sure you have the FoundationDB client library installed on your system before using it as a backend for Stalwart. 
+The FoundationDB client library must be installed on the host before Stalwart can connect to a FoundationDB cluster.
 
 :::
 
 ## Configuration
 
-The following configuration settings are available for FoundationDB, which are specified under the `store.<name>` section of the configuration file:
+The FoundationDB backend is selected by choosing the `FoundationDb` variant on the [DataStore](/docs/ref/object/data-store) object (found in the WebUI under <!-- breadcrumb:DataStore --><!-- /breadcrumb:DataStore -->). The variant exposes the following fields:
 
-- `type`: Indicates the type of store being used. For FoundationDB, this is set to `"foundationdb"`.
-- `cluster-file`: Specifies the file system path to the FoundationDB cluster configuration file. This file contains necessary information for the server to connect and interact with the FoundationDB cluster. If left unspecified, the default path `/etc/foundationdb/fdb.cluster` is used.
+- [`clusterFile`](/docs/ref/object/data-store#clusterfile): filesystem path to the FoundationDB cluster configuration file. If unset, the default `/etc/foundationdb/fdb.cluster` is used.
+- [`transactionTimeout`](/docs/ref/object/data-store#transactiontimeout): duration after which a transaction times out if not completed.
+- [`transactionRetryLimit`](/docs/ref/object/data-store#transactionretrylimit): maximum number of transaction retries before giving up.
+- [`transactionRetryDelay`](/docs/ref/object/data-store#transactionretrydelay): maximum delay between transaction retries.
+- [`machineId`](/docs/ref/object/data-store#machineid): optional identifier for the machine, useful for logging and cluster-aware behaviour.
+- [`datacenterId`](/docs/ref/object/data-store#datacenterid): optional identifier for the data centre hosting the machine, used when tuning cross-datacentre replication.
 
-## Transaction Configuration
-
-The following configuration settings are available for FoundationDB transactions, which are specified under the `store.<name>.transaction` section of the configuration file:
-
-- `timeout`: Defines the duration after which a transaction will time out if not completed. This is set as a string representing time, such as `"5s"` for 5 seconds.
-- `retry-limit`: Specifies the maximum number of times a transaction will be retried in case of failure before giving up. Example: `10`.
-- `max-retry-delay`: Sets the maximum delay between retries for a transaction. This delay is specified as a string representing time, like `"1s"` for 1 second.
-
-
-## IDs Configuration
-
-Machine and Datacenter IDs may be specified under the `store.<name>.ids` section of the configuration file:
-
-- `machine`: A unique identifier for the machine. This can be used for logging or for customizing the behavior of the database on a per-machine basis. Example: `"stalwart"`.
-- `datacenter`: Identifies the data center where the machine is located. This can be important for configuring and optimizing cross-data-center replication and other distributed behaviors. Example: `"my-datacenter"`.
-
-## Example
-
-```toml
-[store."foundationdb"]
-type = "foundationdb"
-cluster-file = "/etc/foundationdb/fdb.cluster"
-
-[store."foundationdb".transaction]
-timeout = "5s"
-retry-limit = 10
-max-retry-delay = "1s"
-
-[store."foundationdb".ids]
-machine = "stalwart"
-datacenter = "my-datacenter"
-```
+FoundationDB is also available as a backend for the blob store, search store, and in-memory store; the same set of cluster-file and transaction fields is exposed on each of those objects under the `FoundationDb` variant.

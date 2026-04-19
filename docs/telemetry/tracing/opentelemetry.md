@@ -4,52 +4,51 @@ sidebar_position: 2
 
 # OpenTelemetry
 
-OpenTelemetry is an open-source standard for distributed tracing of applications. It provides a single set of APIs, libraries, agents, and collector services to capture distributed traces and metrics from applications.
+OpenTelemetry is an open-source standard for distributed tracing and metrics. It defines a common set of APIs, SDKs, and collector services that applications use to emit traces, logs, and metrics to an observability backend.
 
-By enabling OpenTelemetry in Stalwart, administrators can gain insight into the performance and behavior of the system, which is useful for identifying and resolving issues. With OpenTelemetry, administrators can understand how messages are flowing through the system, where bottlenecks are occurring, and how the server is performing under different loads. This information can help to identify performance issues and make improvements to the system, ensuring that the server is operating at optimal levels and delivering the best possible experience to end-users.
+Directing Stalwart's traces and logs to an OpenTelemetry collector lets them be correlated with signals from the rest of the infrastructure in a single observability stack, which helps with diagnosing distributed issues and monitoring the health of the mail service.
 
-The following options are available under `tracer.<id>` for configuring an OpenTelemetry tracer:
+OpenTelemetry output is represented by two variants of the [Tracer](/docs/ref/object/tracer) object (found in the WebUI under <!-- breadcrumb:Tracer --><!-- /breadcrumb:Tracer -->): `OtelHttp` for the HTTP transport and `OtelGrpc` for the gRPC transport. Both variants share the same set of fields:
 
-- `transport`: The transport protocol to use for sending tracing information.
-- `enable.log-exporter`: A boolean value that determines whether to enable the log exporter. If set to `true`, the log exporter will be enabled. If set to `false`, the log exporter will be disabled. The default value is `false`.
-- `enable.span-exporter`: A boolean value that determines whether to enable the span exporter. If set to `true`, the span exporter will be enabled. If set to `false`, the span exporter will be disabled. The default value is `true`.
-- `throttle`: How long to wait before sending the next batch of spans or logs. The default value is `1s`.
-- `lossy`: A boolean value that determines whether to drop spans when the queue is full. If set to `true`, spans will be dropped when the queue is full. If set to `false`, spans will be buffered until the queue is no longer full. The default value is `false`.
+- [`endpoint`](/docs/ref/object/tracer#endpoint): endpoint URL of the collector. Required for `OtelHttp`; optional for `OtelGrpc` (when omitted, the SDK default endpoint is used).
+- [`enableLogExporter`](/docs/ref/object/tracer#enablelogexporter): whether logs are exported. Default `true`.
+- [`enableSpanExporter`](/docs/ref/object/tracer#enablespanexporter): whether spans are exported. Default `true`.
+- [`throttle`](/docs/ref/object/tracer#throttle): minimum interval between batches. Default `"1s"`.
+- [`timeout`](/docs/ref/object/tracer#timeout): maximum time to wait for a response. Default `"10s"`.
+- [`httpAuth`](/docs/ref/object/tracer#httpauth): HTTP authentication used by the exporter. A nested type with variants `Unauthenticated`, `Basic`, and `Bearer`.
+- [`httpHeaders`](/docs/ref/object/tracer#httpheaders): additional HTTP headers to include on each request.
 
-## Transports
+The common tracer fields ([`enable`](/docs/ref/object/tracer#enable), [`level`](/docs/ref/object/tracer#level), [`lossy`](/docs/ref/object/tracer#lossy), [`events`](/docs/ref/object/tracer#events), [`eventsPolicy`](/docs/ref/object/tracer#eventspolicy)) also apply.
 
-Stalwart is capable of sending tracing information to both gRPC and HTTP collectors. The transport protocol for sending tracing information is specified using the `tracer.<id>.transport` key, with options for either gRPC or HTTP transport:
+## gRPC transport
 
-- `grpc`: Tracing information is sent via gRPC.
-- `http`: Tracing information is sent via HTTP.
+The `OtelGrpc` variant sends traces and logs over gRPC. For example:
 
-### gRPC
-
-The address of the gRPC OpenTelemetry collector can be defined using the optional `tracer.<id>.endpoint` argument, otherwise the default endpoint is used.
-
-Example:
-
-```toml
-[tracer.otel]
-type = "open-telemetry"
-transport = "grpc"
-endpoint = "https://127.0.0.1/otel"
-level = "info"
-enable = true
+```json
+{
+  "@type": "OtelGrpc",
+  "endpoint": "https://127.0.0.1/otel",
+  "httpAuth": {"@type": "Unauthenticated"},
+  "enable": true,
+  "level": "info"
+}
 ```
 
-### HTTP
+## HTTP transport
 
-The endpoint URL for the HTTP OpenTelemetry collector is specified with the `tracer.<id>.endpoint` attribute, while the headers to be used can be defined with the `tracer.<id>.headers` attribute.
+The `OtelHttp` variant sends traces and logs over HTTP. Use [`httpHeaders`](/docs/ref/object/tracer#httpheaders) for any custom headers the collector requires, and [`httpAuth`](/docs/ref/object/tracer#httpauth) for bearer or basic credentials. For example:
 
-Example:
-
-```toml
-[tracer.otel]
-type = "open-telemetry"
-transport = "http"
-endpoint = "https://tracing.mydomain.test/v1/otel"
-headers = ["Authorization: <place_auth_here>"]
-level = "debug"
-enable = true
+```json
+{
+  "@type": "OtelHttp",
+  "endpoint": "https://tracing.mydomain.test/v1/otel",
+  "httpAuth": {
+    "@type": "Bearer",
+    "bearerToken": {"@type": "Value", "secret": "<token>"}
+  },
+  "enable": true,
+  "level": "debug"
+}
 ```
+
+<!-- review: The previous docs documented the custom-header path as a `headers` array of `"Name: value"` strings. The current Tracer object exposes `httpHeaders` as a `Map<String, String>`. Confirm that arbitrary authorization tokens should now be passed via `httpAuth` (Bearer/Basic) rather than as an `Authorization` entry in `httpHeaders`. -->

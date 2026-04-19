@@ -4,58 +4,39 @@ sidebar_position: 2
 
 # WebDAV
 
-WebDAV (Web Distributed Authoring and Versioning) is an extension of the HTTP protocol that allows clients to remotely manage content on a server. It supports operations such as creating, editing, and deleting files, as well as accessing and synchronizing calendars and contacts. WebDAV is widely used in collaborative environments for file sharing, calendar coordination, and contact management, making it a key component of Stalwart.
+WebDAV (Web Distributed Authoring and Versioning) extends the HTTP protocol with operations for remote content management: creating, editing, and deleting files, as well as accessing and synchronising calendars and contacts. WebDAV is widely used in collaborative environments for file sharing, calendar coordination, and contact management.
 
-This section focuses specifically on WebDAV storage-related settings, such as limits on property lengths and lock behavior, which help administrators manage resource usage and performance. These settings control how the server handles incoming WebDAV operations at the storage level. For details on configuring WebDAV protocol behavior, including access controls and path routing, please refer to the [WebDAV Protocol Documentation](/docs/http/webdav/overview).
+This page covers WebDAV storage-related settings, such as limits on property length and lock behaviour. All such settings are carried on the [WebDav](/docs/ref/object/web-dav) singleton (found in the WebUI under <!-- breadcrumb:WebDav --><!-- /breadcrumb:WebDav -->). For WebDAV protocol behaviour, including access controls and path routing, see the [WebDAV protocol documentation](/docs/http/webdav/overview).
 
-## WebDAV Properties
+## WebDAV properties
 
-WebDAV extends the capabilities of HTTP by allowing clients to store, retrieve, and manipulate metadata about resources using **WebDAV properties**. These properties are pieces of information associated with a file, calendar entry, contact, or other resource, similar to attributes or metadata. They are typically accessed and modified via the `PROPFIND`, `PROPPATCH`, and other WebDAV methods.
+WebDAV allows clients to store, retrieve, and manipulate metadata about resources using WebDAV properties. These properties are pieces of information associated with a file, calendar entry, contact, or other resource, accessed through methods such as `PROPFIND` and `PROPPATCH`.
 
-WebDAV properties are divided into two categories: **dead properties** and **live properties**:
+WebDAV properties fall into two categories, dead properties and live properties:
 
-- **Dead properties** are arbitrary name-value pairs set and maintained by the client. The server stores them without interpreting or enforcing any semantics. For example, a client might add a dead property such as `displayColor` or `clientTag`, and the server will simply store and return this data as-is. Dead properties are useful for storing custom metadata, user preferences, or other auxiliary information that doesn’t require server-side processing.
-- **Live properties**, on the other hand, are understood and actively managed by the server. These properties typically represent dynamic or system-managed values, such as `getlastmodified`, `resourcetype`, `quota-available-bytes`, or calendar-specific fields defined by the CalDAV or CardDAV standards. The server may generate, update, or restrict modifications to these properties automatically in response to changes in the resource or system state.
+- **Dead properties** are arbitrary name-value pairs set and maintained by the client. The server stores them without interpreting or enforcing any semantics. For example, a client might add a dead property such as `displayColor` or `clientTag`; the server stores and returns the data as-is. Dead properties are useful for custom metadata, user preferences, and other auxiliary information that does not require server-side processing.
+- **Live properties** are understood and actively managed by the server. They typically represent dynamic or system-managed values such as `getlastmodified`, `resourcetype`, `quota-available-bytes`, or calendar-specific fields defined by the CalDAV or CardDAV standards. The server generates, updates, or restricts modifications to these properties automatically in response to changes in the resource or system state.
 
-The key difference between the two lies in **server awareness and behavior**: live properties have defined meaning and behavior enforced by the server, while dead properties are simply stored and returned without interpretation.
+The difference lies in server awareness: live properties have defined meaning and behaviour enforced by the server; dead properties are stored and returned without interpretation.
 
-To ensure efficient resource usage and prevent abuse, Stalwart allows administrators to configure the maximum size of both **dead** and **live** WebDAV properties:
+The maximum size of dead properties is controlled by [`deadPropertyMaxSize`](/docs/ref/object/web-dav#deadpropertymaxsize); the default is `1024` bytes per property. The maximum size of live properties is controlled by [`livePropertyMaxSize`](/docs/ref/object/web-dav#livepropertymaxsize); the default is `250` bytes per property. Both limits apply to the total size of each individual property value and can be adjusted to accommodate larger or smaller metadata as required.
 
-- The maximum size of **dead properties** (those stored as client-defined name-value pairs) is controlled using the `dav.property.max-size.dead` setting. By default, this is set to **1024 bytes**. This limit applies to the total size of each individual dead property’s value. Administrators can adjust this value to allow larger or smaller client-defined properties depending on organizational needs.
-- For **live properties**, which are managed and often generated by the server, the `dav.property.max-size.live` setting defines the upper limit. The default value for this setting is **250 bytes** per property. This limit helps maintain performance and ensures predictable behavior when processing server-managed metadata.
+## WebDAV locks
 
-Example:
+WebDAV includes a locking mechanism that guards against conflicting changes when multiple clients access the same resource concurrently. Locks are particularly important in collaborative environments where shared files or calendar entries may be written by more than one client at once.
 
-```toml
-[dav.property.max-size]
-dead = 1024
-live = 250
-```
+A WebDAV lock claims temporary exclusive or shared access to a resource. While a lock is held, the operations other clients can perform on the resource are restricted depending on the lock type. Two lock types are defined:
 
-## WebDAV Locks
+- **Exclusive locks** prevent any other client from modifying the locked resource. Only the lock holder can make changes for the duration of the lock.
+- **Shared locks** allow multiple clients to read and potentially modify a resource concurrently, provided each holds a shared lock and respects the others' operations.
 
-WebDAV includes support for **locking mechanisms** that help prevent conflicting changes to resources when multiple clients or users access the same file or data concurrently. Locks are particularly important in collaborative environments where users may be reading from or writing to shared files or calendar entries at the same time.
+Locks are typically associated with a [lock token](/docs/development/urn#resource-types), which the client must include in subsequent requests to confirm ownership. Locks may also have an expiration time, after which they are automatically released if not refreshed. Clients use the `LOCK` and `UNLOCK` HTTP methods to acquire and release locks.
 
-A **WebDAV lock** allows a client to claim temporary exclusive or shared access to a resource. When a lock is in place, other clients are restricted in the operations they can perform on that resource, depending on the lock type. This helps ensure data consistency and prevents unintentional overwrites or concurrent modifications.
+Two fields bound locking behaviour:
 
-There are two main types of WebDAV locks:
+- [`maxLockTimeout`](/docs/ref/object/web-dav#maxlocktimeout) defines the maximum duration a WebDAV lock can remain active. The default is `"1h"`. If a client requests a longer timeout, the server caps it at this value. A reasonable timeout prevents stale locks from blocking shared resources indefinitely.
+- [`maxLocks`](/docs/ref/object/web-dav#maxlocks) limits the total number of active WebDAV locks a single account can hold at once. The default is `10`. The limit guards against clients accumulating excessive locks, whether inadvertently or maliciously.
 
-- **Exclusive locks** prevent any other client from modifying the locked resource. Only the client that holds the lock can make changes during the lock’s duration.
-- **Shared locks** allow multiple clients to read and potentially modify a resource concurrently, provided they all hold a shared lock and respect each other’s operations.
+## Request and result limits
 
-Locks in WebDAV are typically associated with a [lock token](/docs/development/urn#resource-types), which the client must include in subsequent requests to confirm ownership of the lock. Locks may also have an expiration time, after which they are automatically released if not refreshed.
-
-In Stalwart, WebDAV locks can be used to coordinate safe file editing, manage access to shared calendars, and prevent race conditions when clients sync data. Clients use the `LOCK` and `UNLOCK` HTTP methods to acquire and release locks, and the server enforces lock semantics according to the WebDAV specification.
-
-Stalwart provides administrators with configurable limits on WebDAV locking behavior to help maintain server performance and prevent misuse. These settings control how long locks can persist and how many locks a user can hold simultaneously.
-
-- The **`dav.lock.max-timeout`** setting defines the maximum duration, that a WebDAV lock can remain active. By default, this is set to **3600 seconds** (1 hour). This value limits the time a client can hold a lock before it must be refreshed or released. Setting a reasonable timeout helps prevent stale locks from lingering indefinitely and blocking access to shared resources. If a client requests a longer timeout than the configured maximum, the server will automatically cap the timeout to this value.
-- The **`dav.locks.max-per-user`** setting limits the total number of active WebDAV locks a single user can hold at any given time. The default is **10 locks per user**. This restriction helps avoid scenarios where clients inadvertently or maliciously accumulate excessive locks, which could lead to resource exhaustion or unintentional denial of service for other users.
-
-Example:
-
-```toml
-[dav.lock]
-max-timeout = "1h"
-max-per-user = 10
-```
+Two further fields bound the scale of a single WebDAV operation. [`requestMaxSize`](/docs/ref/object/web-dav#requestmaxsize) sets the maximum XML body size the server will accept for a WebDAV request; the default is `"25mb"`. [`maxResults`](/docs/ref/object/web-dav#maxresults) caps the number of results returned by a WebDAV query; the default is `2000`.

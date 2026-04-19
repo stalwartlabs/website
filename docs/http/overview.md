@@ -6,7 +6,7 @@ sidebar_position: 1
 
 Stalwart includes an HTTP service that is enabled by default. It supports JMAP access, WebDAV access, API management, ACME certificate issuance, autoconfig/autodiscover protocols, well-known resources, metrics collection, and OAuth authentication.
 
-Additionally, Stalwart allows the definition of multiple HTTP services with customizable [access control rules](/docs/http/access-control). Administrators can set these rules based on IP address, resource, method name, and more, ensuring secure and tailored access to the server's HTTP services. This flexibility ensures that the server can be effectively managed and integrated with other systems, meeting diverse operational needs.
+Multiple HTTP services can be defined, each with custom [access control rules](/docs/http/access-control) expressed on the [Http](/docs/ref/object/http) singleton (found in the WebUI under <!-- breadcrumb:Http --><!-- /breadcrumb:Http -->). Rules can filter requests by IP address, resource, method name, or listener identity.
 
 ## HTTP Endpoints
 
@@ -29,7 +29,7 @@ The following endpoints are available through the HTTP service:
 - `/healthz/ready`: The health check endpoint indicates whether the server is ready to accept requests.
 - `/healthz/live`: The health check endpoint indicates whether the server is live and operational.
 - `/robots.txt`: The robots.txt file provides instructions to web crawlers and other user agents about the server's content.
-- `/*`: The default endpoint serves static files from the [webadmin bundle](/docs/management/webadmin/overview).
+- `/*`: The default endpoint serves static files from the [WebUI bundle](/docs/management/webui/overview).
 
 ## Well-known Resources
 

@@ -2,62 +2,61 @@
 sidebar_position: 8
 ---
 
-# Phishing Protection
+# Phishing protection
 
-Phishing is a deceptive technique employed by cybercriminals to trick individuals into revealing sensitive information, such as passwords, credit card numbers, and other personal details. Typically, these attacks use counterfeit emails, websites, or messages that appear to be from legitimate sources, luring the unsuspecting user into providing their data. As cyber threats evolve, phishing attempts have become more sophisticated, sometimes making them challenging to distinguish from genuine communications.
+Phishing is a deceptive technique used by attackers to trick recipients into revealing sensitive information, such as passwords or credit card numbers. Typical phishing attacks use counterfeit emails, websites, or messages that appear to come from a legitimate source. Over time, phishing attempts have become more sophisticated and harder to distinguish from genuine communications.
 
-Stalwart includes built-in mechanisms to detect phishing attempts. The server analyzes attributes of incoming emails, including embedded URLs, domain reputation, and email content patterns commonly associated with phishing. Combined with an up-to-date knowledge base, this lets Stalwart identify subtle phishing attempts. Any suspected phishing email is flagged, so administrators and end users can take appropriate precautions.
+Stalwart includes built-in mechanisms that analyse attributes of incoming messages, including embedded URLs, domain reputation, and content patterns commonly associated with phishing. Combined with an up-to-date knowledge base, this allows Stalwart to identify subtle phishing attempts and flag them so that administrators and end users can take appropriate precautions.
 
 ## URL analysis
 
-The phishing filter also analyzes every URL in the message for a variety of deceptive patterns, ensuring maximum protection against phishing and other malicious tactics.
+The phishing filter analyses every URL in the message for a range of deceptive patterns.
 
 ### Homograph attacks
 
-An Internationalized Domain Name (IDN) homograph attack is a malicious technique wherein attackers exploit the resemblance between different characters from distinct scripts to create deceptive URLs. These URLs, at a cursory glance, appear to be legitimate and familiar domain names. However, they use characters from different scripts or languages that look similar to expected Latin characters. For instance, using the Cyrillic "а" (which looks like the Latin "a") to craft a fake domain that seems like a known brand or website.
+An Internationalized Domain Name (IDN) homograph attack exploits the resemblance between characters from distinct scripts to create deceptive URLs. These URLs appear to be legitimate but use characters from different scripts that look similar to the expected Latin characters. For example, an attacker may substitute the Cyrillic "а" for the Latin "a" to craft a fake domain that resembles a known brand.
 
-Stalwart's phishing filter is adept at identifying these deceptive tactics. The filter thoroughly scans both HTML and plain text parts of messages to detect any URL that might be a result of a homograph attack. Upon identifying such a URL, the filter tags the email with **HOMOGRAPH_URL**, indicating a potential deceptive link within the message. This tag carries a high spam score, emphasizing the malicious nature of the content.
+Stalwart's phishing filter scans both HTML and plain text parts of a message to detect URLs that look like the result of a homograph attack. When such a URL is identified, the message is tagged with `HOMOGRAPH_URL`, which carries a high spam score.
 
-Additionally, the phishing filter remains vigilant against URLs that might not be overtly malicious but still raise suspicion. For instance, if a URL combines Unicode characters from multiple scripts, it's tagged with **MIXED_CHARSET_URL**. While such a URL might not always have malicious intent, its presence is deemed suspicious, and users are alerted to exercise caution.
+The filter also flags URLs that combine Unicode characters from multiple scripts even when no specific homograph is detected. Such URLs are tagged with `MIXED_CHARSET_URL`. These are not necessarily malicious, but their presence is suspicious enough to warrant a warning.
 
 ### Phishing databases
 
-An important component of Stalwart's phishing filter is its use of phishing databases. These databases maintain lists of URLs identified as part of phishing campaigns, giving the filter an up-to-date reference to compare against incoming emails. Two primary databases the phishing filter consults are:
+Stalwart's phishing filter can consult external phishing databases that maintain lists of URLs identified as part of active phishing campaigns. The two primary databases used are:
 
-- **OpenPhish**: A community-driven platform that gathers, verifies, and shares phishing URLs. OpenPhish's extensive list is derived from various sources, including industry partners, voluntary contributors, and automated crawlers.
-- **PhishTank**: Operated by the cybersecurity company OpenDNS, PhishTank allows users to submit, verify, and share phishing URLs. It's a collaborative platform where the community actively participates in identifying and flagging phishing attempts.
+- **OpenPhish**: a community-driven platform that gathers, verifies, and shares phishing URLs from industry partners, voluntary contributors, and automated crawlers.
+- **PhishTank**: operated by OpenDNS, a collaborative platform where users submit, verify, and share phishing URLs.
 
-Both these lists are defined as [HTTP lookup lists](/docs/storage/lookup/remote) in the configuration file. To ensure optimal protection, it's crucial that the phishing filter references the most recent data. The frequency with which Stalwart refreshes its connection to these databases can be configured by administrators.
+Both lists are configured as [HTTP lookup lists](/docs/storage/lookup/remote). The refresh interval controls how often Stalwart downloads the latest version of each list.
 
-### Zero Width Spaces
+### Zero-width spaces
 
-Zero width spaces are non-printing characters that, as the name suggests, have no width. They are often inserted within URLs to obscure them, making malicious URLs appear legitimate. For instance, an attacker could insert a zero width space in a well-known domain name, causing the URL to bypass rudimentary filters while appearing unchanged to the human eye. The phishing filter actively scans for the presence of these spaces in URLs, ensuring that such deceptive tactics are identified and flagged.
+Zero-width spaces are non-printing Unicode characters. Attackers sometimes insert them inside URLs to obscure the real target while leaving the URL visually unchanged to the reader. The phishing filter scans for zero-width spaces inside URLs and flags any it finds.
 
-### Obscured Unicode Characters
+### Obscured Unicode characters
 
-Attackers can employ certain Unicode characters that might look benign or be easily overlooked but serve to disguise the true nature of a URL. By embedding these obscured characters in URLs, cybercriminals aim to bypass security measures while presenting a seemingly safe link to users. Stalwart's phishing filter is equipped to detect such manipulations, adding an additional layer of scrutiny to URL examination.
+Attackers can also embed certain Unicode characters inside URLs to disguise the true target while presenting a seemingly safe link to the user. Stalwart's phishing filter identifies these manipulations as part of its URL examination.
 
-### Link Verification
+### Link verification
 
-One common phishing tactic involves displaying a legitimate-looking URL as the clickable text in a hyperlink while directing users to a different, malicious site when they click on it. To counteract this, the phishing filter verifies every link in the HTML message parts. It ensures that the hostname in the `a href=""` attribute matches the hostname in the visible, clickable text. If a discrepancy is found, it's a strong indicator of a deceptive link, and the message is flagged accordingly.
+A common phishing tactic is to display a legitimate-looking URL in the visible text of a hyperlink while pointing the `href` attribute at a different, malicious site. The phishing filter compares the hostname in the `a href` attribute of each hyperlink against the hostname in the visible, clickable text. If the two differ, the link is treated as deceptive and the message is flagged.
 
 ### Shortened URLs
 
-URL shortening services are often used to create short, easy-to-share links. However, these services can also be exploited by attackers to mask the true destination of a URL. Stalwart's phishing filter is equipped to identify such shortened URLs and expand them to their original form. This allows the filter to analyze the full URL and determine if it's part of a phishing attempt.
+URL shortening services are convenient but can also be used to mask the true destination of a link. Stalwart's phishing filter recognises URLs served by known shorteners and expands them to their original form, so that the full target can be analysed for phishing indicators.
 
 ## Sender analysis
 
-Stalwart doesn't just stop at analyzing the content and URLs of a message, it also inspects the headers of an email, which often carry telltale signs of phishing attempts. Key headers like the From, To, and Reply-To are under constant scrutiny, as they are frequent targets for manipulation by cybercriminals.
+The phishing filter also inspects message headers, which frequently carry telltale signs of phishing attempts. The `From`, `To`, and `Reply-To` headers in particular are common targets for manipulation.
 
-### Spoofed Sender
+### Spoofed sender
 
-A spoofed sender address involves the use of a deceptive "From" name that appears to come from a legitimate or trusted domain, but the actual email address (enclosed in angle brackets) belongs to a different domain. This tactic is designed to exploit users' trust in familiar names or brands.
+A spoofed sender address involves a display name that resembles a trusted domain, while the actual email address (in angle brackets) belongs to a completely different domain. The aim is to exploit the recipient's trust in a familiar name.
 
-For example, a message might display the sender as `From: "user@my-bank.test" <user@cybercriminal.test>`. Here, while the displayed name suggests the email is from "my-bank.test", the actual sender's address is from "cybercriminal.test". Upon detecting such discrepancies between the displayed name and the actual email address, the phishing filter flags the message as suspicious, alerting users to the potential threat.
+For example, a message might display the sender as `From: "user@my-bank.test" <user@cybercriminal.test>`. The display name suggests a message from `my-bank.test`, while the actual sender is `cybercriminal.test`. Stalwart's phishing filter flags such discrepancies between the display name and the address.
 
 ### Spoofed Reply-To
 
-In a spoofed Reply-To attack, the "Reply-To" header is manipulated to direct replies to an email address different from the sender's address. Often, this is a tactic used to collect responses or personal information from unsuspecting users, believing they are communicating with a trusted entity.
+In a spoofed Reply-To attack, the `Reply-To` header directs replies to an email address that belongs to a different party from the apparent sender. This is often used to collect responses under the guise of a trusted organisation.
 
-For example, an email might be sent from a legitimate-looking address, but the "Reply-To" directs responses to a completely different domain, unassociated with the sender. Stalwart's phishing filter diligently checks the "Reply-To" header against the "From" header. If it detects a mismatch, especially if the reply-to domain has no clear relation to the sender's domain, the message is flagged, ensuring users remain cautious before responding.
-
+For example, a message might be sent from a legitimate-looking address, while the `Reply-To` header directs replies to a different, unrelated domain. The phishing filter compares the `Reply-To` header against the `From` header and flags mismatches, particularly when the reply-to domain has no clear relationship to the sender's domain.

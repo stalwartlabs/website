@@ -4,26 +4,26 @@ sidebar_position: 4
 
 # App Passwords
 
-Application Passwords are unique passwords that allow users to access their email accounts on devices or applications that do not support [Two-Factor Authentication](/docs/auth/authentication/2fa) (2FA). These passwords provide a secure way to use legacy mail clients or other applications that do not support the `OAUTHBEARER` or `XOAUTH2` SASL mechanisms while maintaining the enhanced security provided by 2FA.
+Application Passwords are unique passwords that allow users to access their email accounts from devices or applications that do not support [Two-Factor Authentication](/docs/auth/authentication/2fa). They provide a way to use legacy mail clients or tools that do not support the `OAUTHBEARER` or `XOAUTH2` SASL mechanisms while preserving the benefits of 2FA on the primary account password.
 
-Application Passwords are particularly useful in several scenarios. For instance, older email clients that do not support OAuth authentication cannot prompt for a TOTP code, making it impractical to use them with standard 2FA. Application Passwords enable these clients to access the email account securely. Similarly, various third-party applications and services that need access to the email account might not support modern authentication methods. Application Passwords allow these services to connect without compromising security. Additionally, automated scripts and tools that require access to email accounts cannot interact with interactive authentication prompts. Application Passwords provide a way for these scripts to authenticate and perform necessary actions.
+Application Passwords are most useful in a few scenarios. Older email clients that do not support OAuth cannot prompt for a TOTP code, so standard 2FA is impractical with them; an Application Password allows these clients to authenticate securely. Third-party applications and services that have not adopted modern authentication mechanisms can also connect using an Application Password rather than the main account password. Finally, automated scripts and tools that need non-interactive access to a mailbox can authenticate with an Application Password scoped to the required permissions.
 
-By using Application Passwords, users can maintain access to their email accounts on all their devices and applications while still benefiting from the added security of Two-Factor Authentication. These passwords are typically managed through the self-service portal, where users can create, view, and revoke them as needed.
+Each Application Password is managed as a distinct credential, so it can be named, inspected, and revoked without affecting other sessions.
 
 ## Managing App Passwords
 
-Users can create and remove Application Passwords through the [self-service portal](/docs/management/webadmin/selfservice). This functionality is available under the "App Passwords" menu option. By navigating to this section, users can generate new Application Passwords for use with devices and applications that do not support Two-Factor Authentication (2FA). Additionally, users can view a list of their existing Application Passwords and revoke any that are no longer needed to maintain account security.
+Users create and remove Application Passwords from the [self-service portal](/docs/management/webui/overview), under the App Passwords menu option. The portal lists existing Application Passwords and allows individual entries to be revoked.
 
-Administrators, on the other hand, have limited control over Application Passwords through the [webadmin](/docs/management/webadmin/overview) interface. While administrators can view and remove a user's Application Passwords, they do not have the capability to create new Application Passwords on behalf of users. 
+Each Application Password is represented by an [AppPassword](/docs/ref/object/app-password) object (found in the WebUI under <!-- breadcrumb:AppPassword --><!-- /breadcrumb:AppPassword -->). The credential carries a [`description`](/docs/ref/object/app-password#description), an optional [`expiresAt`](/docs/ref/object/app-password#expiresat), an optional list of [`allowedIps`](/docs/ref/object/app-password#allowedips) that restrict where the credential may be used, and a [`permissions`](/docs/ref/object/app-password#permissions) mode controlling whether the credential inherits, restricts, or replaces the account's permissions. The secret itself is server-set and returned only on creation.
+
+Administrators have limited control over Application Passwords. They can view and revoke a user's Application Passwords but cannot create new ones on a user's behalf.
 
 :::tip Note
 
-Application Passwords can only be managed from the self-service portal or the webadmin interface when Stalwart is configured to use the [internal directory](/docs/auth/backend/internal). If the server is set up to use an external directory, such as LDAP or SQL, administrators need to manually add the App Password secret as one of the account secrets to add a new Application Password for user accounts.
+Application Passwords can be managed from the WebUI only when Stalwart is configured to use the [internal directory](/docs/auth/backend/internal). When the server is configured with an external directory, such as LDAP or SQL, administrators must add the App Password secret as one of the account secrets in the external directory.
 
 :::
 
 ## Internal Storage
 
-Application Passwords are securely stored within the user's account as one of the account's secrets. Each Application Password is stored in a specific format to ensure it is uniquely identified and securely hashed. The format used is `$app$name$password` where `$app$` indicates that the secret is an Application Password, `name` is the unique identifier for the Application Password, and `password` is the hashed version of the Application Password.
-
-The `$app$` prefix helps distinguish Application Passwords from other types of account secrets. The `name` component provides a unique identifier for each Application Password, allowing users and administrators to easily manage multiple passwords. The `password` part of the format is the hashed version of the actual Application Password, ensuring that it is not stored in plain text and remains secure. 
+Each Application Password is stored on the account as one of its secrets, in the form `$app$name$password`, where `$app$` marks the secret as an Application Password, `name` is the unique identifier for the credential, and `password` is the hashed secret. The `$app$` prefix keeps Application Passwords distinguishable from other credential kinds, and storing only the hash of the generated secret prevents the raw password from being recovered from the directory.

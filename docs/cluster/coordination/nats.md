@@ -4,55 +4,49 @@ sidebar_position: 4
 
 # NATS
 
-NATS is a lightweight, high-performance messaging system designed for cloud-native and edge environments. Built for simplicity, speed, and scalability, NATS provides a publish-subscribe model that enables services to communicate in real time with minimal latency and overhead. It is well-suited for distributed systems that require fast, reliable event propagation without the operational complexity of more heavyweight platforms like Apache Kafka.
+NATS is a lightweight messaging system built for cloud-native and edge environments. It provides a publish/subscribe model for real-time communication with low latency and low overhead. NATS suits distributed systems that need fast, reliable event propagation without the operational complexity of heavier platforms such as Apache Kafka.
 
-As a coordination backend in a Stalwart cluster, NATS facilitates the exchange of internal events between nodes, allowing them to stay synchronized and respond to changes throughout the system. When a mailbox is updated on one node, a push notification needs to be triggered, or an IP address is blocked due to abuse, NATS ensures that this information is immediately disseminated to other nodes in the cluster.
+As a coordination backend in a Stalwart cluster, NATS handles the exchange of internal events between nodes, keeping the cluster synchronised. When a mailbox is updated on one node, a push notification is triggered, or an IP address is blocked for abuse, NATS disseminates the information to the other nodes.
 
-NATS is particularly well-matched to medium-sized Stalwart deployments where low-latency communication is essential, but the full durability and message persistence features of Kafka are not required. Its compact footprint and straightforward configuration also make it a good option for teams looking to minimize operational overhead while still benefiting from reliable coordination.
+NATS is well-matched to medium-sized deployments where low-latency communication is essential but Kafka-level durability and persistence are not required. Its compact footprint and straightforward configuration also suit teams that want to minimise operational overhead while retaining reliable coordination.
 
-Though NATS does not persist messages in the same way Kafka does (unless extended via JetStream), it excels in real-time scenarios where speed and efficiency take priority over long-term storage. For many organizations, it offers the ideal balance between performance, simplicity, and scalability for coordinating distributed mail services.
+NATS does not persist messages in the same way as Kafka (unless extended via JetStream), but it excels in real-time scenarios where speed and efficiency matter more than long-term storage. For many organisations, it balances performance, simplicity, and scalability for distributed mail coordination.
 
 ## Configuration
 
-To use **NATS** as a coordination backend in Stalwart, you must define the connection parameters under a dedicated store section. NATS provides fast, reliable messaging through a lightweight publish/subscribe model, making it a great choice for real-time coordination in distributed environments.
+NATS coordination is configured by selecting the `Nats` variant on the [Coordinator](/docs/ref/object/coordinator) singleton (found in the WebUI under <!-- breadcrumb:Coordinator --><!-- /breadcrumb:Coordinator -->). The variant carries the following fields:
 
-The following configuration settings are available for NATS, which are specified under the `store.<name>` section of the configuration file:
+- [`addresses`](/docs/ref/object/coordinator#addresses): list of NATS server addresses. Default `["127.0.0.1:4444"]`; at least one address is required.
+- [`authUsername`](/docs/ref/object/coordinator#authusername) and [`authSecret`](/docs/ref/object/coordinator#authsecret): optional basic authentication credentials. `authSecret` is a [SecretKeyOptional](/docs/ref/object/coordinator#secretkeyoptional), which accepts a direct value, an environment-variable reference, or a file reference.
+- [`credentials`](/docs/ref/object/coordinator#credentials): a [SecretTextOptional](/docs/ref/object/coordinator#secrettextoptional) holding a JWT used for authentication; an alternative to the username/password pair.
+- [`noEcho`](/docs/ref/object/coordinator#noecho): when enabled, prevents clients from receiving messages they publish themselves. Recommended for coordination to avoid redundant updates. Default `true`.
+- [`useTls`](/docs/ref/object/coordinator#usetls): enables TLS for encrypted communication with NATS servers. Default `false`.
+- [`timeoutConnection`](/docs/ref/object/coordinator#timeoutconnection): maximum time to wait when establishing a connection. Default `"5s"`.
+- [`timeoutRequest`](/docs/ref/object/coordinator#timeoutrequest): timeout for request/response operations. Default `"10s"`.
+- [`pingInterval`](/docs/ref/object/coordinator#pinginterval): interval between pings sent to maintain connection health. Default `"60s"`.
+- [`maxReconnects`](/docs/ref/object/coordinator#maxreconnects): number of reconnection attempts after a connection is lost. When left unset the client reconnects indefinitely.
+- [`capacityClient`](/docs/ref/object/coordinator#capacityclient): internal channel size for outgoing client operations. Default `2048`.
+- [`capacitySubscription`](/docs/ref/object/coordinator#capacitysubscription): capacity of the internal channel for message subscriptions. Default `65536`.
+- [`capacityReadBuffer`](/docs/ref/object/coordinator#capacityreadbuffer): size of the read buffer for incoming messages. Default `65535`.
 
-- `address`:  A required list of NATS server addresses to which Stalwart should connect.
-- `user` / `password`:  Optional basic authentication credentials. If provided, they will be used to authenticate with the NATS server.
-- `credentials`: An optional text value containing the JWT (JSON Web Token) used for authentication with the NATS server. This is an alternative to the `user` and `password` options.
-- `no-echo`:  When enabled, prevents clients from receiving messages they publish themselves. This is typically enabled in coordination scenarios to avoid redundant updates (default: `true`).
-- `tls.enable`: Enables or disables TLS for encrypted communication with NATS servers (default: `false`).
-- `timeout.connection`: Maximum time to wait for establishing a connection to a NATS server (default: `5s`).
-- `timeout.request`: Timeout for request/response operations over NATS (default: `10s`).
-- `ping-interval`: Interval between ping messages sent to NATS servers to maintain connection health (default: `60s`).
-- `max-reconnects`: Specifies how many times to attempt reconnection after a connection is lost. Setting this to `0` disables reconnections (default: unlimited).
-- `capacity.client`:  Size of the internal channel for handling outgoing client operations (default: `2048`).
-- `capacity.subscription`: Capacity of the internal channel for message subscriptions (default: `65536`).
-- `capacity.read-buffer`:  Size of the read buffer for incoming messages from the NATS server (default: `65535`).
+For example:
 
-Example:
-
-```toml
-[store."nats"]
-type = "nats"
-address = ["nats1:4222", "nats2:4222"]
-user = "nats-user"
-password = "nats-password"
-ping-interval = "60s"
-max-reconnects = 0
-no-echo = true
-tls.enable = false
-
-[store."nats".timeout]
-connection = "5s"
-request = "10s"
-
-[store."nats".capacity]
-client = 2048
-subscription = 65536
-read-buffer = 65535
-
-[cluster]
-coordinator = "nats"
+```json
+{
+  "@type": "Nats",
+  "addresses": ["nats1:4222", "nats2:4222"],
+  "authUsername": "nats-user",
+  "authSecret": {
+    "@type": "Value",
+    "secret": "nats-password"
+  },
+  "pingInterval": "60s",
+  "noEcho": true,
+  "useTls": false,
+  "timeoutConnection": "5s",
+  "timeoutRequest": "10s",
+  "capacityClient": 2048,
+  "capacitySubscription": 65536,
+  "capacityReadBuffer": 65535
+}
 ```

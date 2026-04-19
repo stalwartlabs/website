@@ -4,67 +4,73 @@ sidebar_position: 9
 
 # Quotas
 
-Quotas allows to set limits on the message queue to control its size and total number of messages. Stalwart supports enforcing dynamic quotas on the message queue, which means that it can limit the total size and number of messages waiting to be delivered based on multiple variables. If a queue quota is exceeded, messages will be temporarily rejected with a 4xx SMTP code. This is useful in preventing the server from becoming overwhelmed by too many messages and ensuring that important messages are delivered promptly.
+Quotas set limits on the message queue to control its size and total number of messages. Stalwart supports dynamic quotas, which can limit the total size and number of messages waiting to be delivered based on multiple variables. When a queue quota is exceeded, messages are temporarily rejected with a 4xx SMTP code, protecting the server from becoming overwhelmed while ensuring important messages continue to be delivered.
 
 ## Settings
 
-Stalwart supports an unlimited number of queue quotas, which can be dynamically configured to limit resource usage based on multiple variables. Quotas are defined as TOML arrays under the `queue.quota[]` keys using the following attributes:
+Each queue quota is defined as an [MtaQueueQuota](/docs/ref/object/mta-queue-quota) object (found in the WebUI under <!-- breadcrumb:MtaQueueQuota --><!-- /breadcrumb:MtaQueueQuota -->). The relevant fields are:
 
-- `messages`: Specifies the maximum number of messages that will be allowed.
-- `size`: Specifies the maximum queue size in bytes.
-- `key`: An optional list of context variables that determine where this quota should be enforced.
-- `match`: An optional rule that indicates the conditions under which this quota should be enforced.
-- `enable`: An boolean attribute that specifies whether the quota is enabled. If not specified, the quota is ignored.
+- [`enable`](/docs/ref/object/mta-queue-quota#enable): whether the quota is active. Default `true`.
+- [`messages`](/docs/ref/object/mta-queue-quota#messages): optional maximum number of messages that the queue will accept.
+- [`size`](/docs/ref/object/mta-queue-quota#size): optional maximum total size of messages in the queue.
+- [`key`](/docs/ref/object/mta-queue-quota#key): list of context variables that determine the grouping of this quota (see [Groups](#groups) below).
+- [`match`](/docs/ref/object/mta-queue-quota#match): expression evaluated to decide whether the quota applies to a given message.
 
-Quotas can either define both a message limit and size limit, or just one of the two.
+A quota may define only a message limit, only a size limit, or both. An MtaQueueQuota with an empty `key` list and a `match` expression that always returns true imposes a global limit.
 
-For example, to create a global queue quota of 100,000 messages and 10gb:
+A global quota of 100,000 messages / 10 GB:
 
-```toml
-[[queue.quota]]
-messages = 100000
-size = 10737418240 # 10gb
-enable = true
+```json
+{
+  "enable": true,
+  "key": [],
+  "match": {"else": "true"},
+  "messages": 100000,
+  "size": 10737418240
+}
 ```
 
-Please note that the above example will impose a global limit on all queues, to apply a more granular quota please refer to the [quota groups](#groups) section below.
+## Groups {#groups}
 
-## Groups
+The [`key`](/docs/ref/object/mta-queue-quota#key) field creates quota groups based on a combination of context variables. Available values are:
 
-The `queue.quota[].key` attribute enables the creation of quota groups based on a combination of context variables. Available context variables are:
+- `sender`: the return path specified in the `MAIL FROM` command.
+- `senderDomain`: the domain component of the return path.
+- `rcpt`: the recipient address specified in the `RCPT TO` command.
+- `rcptDomain`: the domain component of the recipient address.
 
-- `sender`: The return path specified in the `MAIL FROM` command.
-- `sender_domain`: The domain component of the return path specified in the `MAIL FROM` command.
-- `rcpt`: The recipient's address specified in the `RCPT TO` command.
-- `rcpt_domain`: The domain component of the recipient's address specified in the `RCPT TO` command.
+For example, to limit to 10 the total number of queued messages for any single recipient:
 
-For example, to limit to 10 the total number of queued messages for any recipient:
-
-```toml
-[[queue.quota]]
-key = ["rcpt"]
-messages = 10
-enable = true
+```json
+{
+  "enable": true,
+  "key": ["rcpt"],
+  "match": {"else": "true"},
+  "messages": 10
+}
 ```
 
-And, to limit the queue size to 5MB for a combination of sender and recipient domain:
+And, to limit the queue size to 5 MB per combination of sender domain and recipient domain:
 
-```toml
-[[queue.quota]]
-key = ["sender_domain", "rcpt_domain"]
-size = 5242880 # 5mb
-enable = true
+```json
+{
+  "enable": true,
+  "key": ["senderDomain", "rcptDomain"],
+  "match": {"else": "true"},
+  "size": 5242880
+}
 ```
 
-## Expressions
+## Conditional quotas
 
-Expressions enable the imposition of quotas on the message queue only when a specific condition is met. These [expressions](/docs/configuration/expressions/overview) can be configured using the `queue.quota[].match` attribute. For example, to impose a 900 messages and 7mb quota by recipient only for messages sent from the domain "example.org":
+The [`match`](/docs/ref/object/mta-queue-quota#match) expression can restrict a quota to specific conditions. For example, applying a 900-message / 7 MB quota by recipient only to messages sent from `example.org`:
 
-```toml
-[[queue.quota]]
-match = "sender_domain = 'example.org'"
-key = ["rcpt"]
-messages = 900
-size = 7340032 # 7mb
-enable = true
+```json
+{
+  "enable": true,
+  "key": ["rcpt"],
+  "match": {"else": "sender_domain == 'example.org'"},
+  "messages": 900,
+  "size": 7340032
+}
 ```

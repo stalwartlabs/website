@@ -4,22 +4,25 @@ sidebar_position: 5
 
 # Journal
 
-**Journal** is the logging system provided by the `systemd` suite, specifically managed by the `systemd-journald` service. Unlike traditional logging methods in Linux which rely on plain-text log files (e.g., `/var/log/syslog` or `/var/log/messages`), the journal captures system and service messages in a binary format. This format ensures better indexing, querying, and verification capabilities.
+The journal is the logging facility provided by the `systemd` suite, managed by the `systemd-journald` service. Unlike text-file logging (for example `/var/log/syslog` or `/var/log/messages`), the journal captures system and service messages in a binary format, which supports indexed queries and integrity checks.
 
-The journal logs are stored in **journal files**. By default, these files are located at:
+Journal data is stored in journal files. By default these live at:
 
-- `/run/log/journal/`: For volatile logs, meaning they're stored in memory and will be lost after a reboot.
-- `/var/log/journal/`: For persistent logs, which are saved to disk and will persist across reboots.
+- `/run/log/journal/` for volatile logs, which are held in memory and lost on reboot.
+- `/var/log/journal/` for persistent logs, which are written to disk and survive reboots.
 
-If the directory `/var/log/journal/` exists, logs will be stored persistently; otherwise, they will remain volatile.
-It's important to note that, due to its binary nature, the content of the journal cannot be read using regular text tools like `cat` or `less`. Instead, you would use the `journalctl` command to access, read, and query the logs.
+If `/var/log/journal/` exists, logs are persistent; otherwise they remain volatile. The binary format means the content cannot be read with tools such as `cat` or `less`; the `journalctl` command is used to query and display entries.
 
-To enable journal logging, set the `tracer.<id>.type` attribute to `journal` in the configuration file. For example:
+Journal output is represented by the `Journal` variant of the [Tracer](/docs/ref/object/tracer) object (found in the WebUI under <!-- breadcrumb:Tracer --><!-- /breadcrumb:Tracer -->). The variant carries no variant-specific fields; only the common tracer fields apply ([`enable`](/docs/ref/object/tracer#enable), [`level`](/docs/ref/object/tracer#level), [`lossy`](/docs/ref/object/tracer#lossy), [`events`](/docs/ref/object/tracer#events), [`eventsPolicy`](/docs/ref/object/tracer#eventspolicy)).
 
-```toml
-[tracer.journal]
-type = "journal"
-level = "info"
-enable = true
+For example:
+
+```json
+{
+  "@type": "Journal",
+  "enable": true,
+  "level": "info"
+}
 ```
 
+The `Journal` variant is only available on Linux systems running `systemd`.

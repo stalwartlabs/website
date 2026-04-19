@@ -26,4 +26,4 @@ The following logical, arithmetic and comparison operators can be used within an
     - `>=`: Greater than or equal to
     - `<=`: Less than or equal to
 
-When working with logical and comparison operators, it is crucial to ensure that the data types being compared are compatible. For instance, comparing a string to a number using an operator like `>` may not yield the expected results. Always ensure that the variables and constants in your expressions have expected and consistent types to avoid unexpected behaviors.
+When using logical and comparison operators, the compared values must have compatible types. Comparing a string to a number with `>` may not yield the expected result; the variables and constants in an expression must have consistent types to avoid surprising behaviour.

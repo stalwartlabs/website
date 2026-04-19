@@ -4,65 +4,38 @@ sidebar_position: 3
 
 # Remote
 
-Remote lookup lists enable the retrieval of key-value pairs from external sources over HTTP, providing a flexible solution for configurations that need centralized management or periodic updates. These lists support two formats: a simple list format, where each entry is defined on a separate line, and CSV, offering more structured data handling capabilities.
+Remote lookup lists retrieve key-value pairs from an external source over HTTP, allowing lookup data to be managed centrally and refreshed periodically. Two formats are supported: a simple list format where each entry occupies a single line, and CSV for more structured data.
 
-To ensure the data remains current, remote lookup lists can be configured with an expiration time. Once expired, the server automatically re-fetches the list at a configurable interval, maintaining up-to-date values without manual intervention. This feature makes remote lookup lists ideal for dynamic environments where configuration settings are shared or frequently updated.
+Each list is associated with a refresh interval and a retry interval. Once the refresh interval elapses, the server automatically re-fetches the list so that values remain current without manual intervention.
 
 ## Configuration
 
-Remote lookup lists are defined under the `http-lookup.<id>` section of the configuration file, where `<id>` is a unique identifier for each list. The configuration allows control over how these lists are fetched and managed. Below are the key settings available for configuring remote lookup lists:
+Remote lookup lists are defined through the [HttpLookup](/docs/ref/object/http-lookup) object (found in the WebUI under <!-- breadcrumb:HttpLookup --><!-- /breadcrumb:HttpLookup -->). Each record has the following fields:
 
-- `enable`: Determines whether the remote lookup list is active. Set to `true` to enable the list.
-- `url`: Specifies the HTTP endpoint from which the list will be retrieved.
-- `format`: Defines the format of the remote list. Supported values are:
-  - `list`: A simple format with one entry per line.
-  - `csv`: Comma-separated values for structured data.
-- `retry`: Defines the interval for retrying the fetch operation if the initial attempt fails (e.g., `1h` for 1 hour).
-- `refresh`: Specifies how often the server should re-fetch the list to ensure it remains up-to-date (e.g., `12h` for 12 hours).
-- `timeout`: Sets the maximum time allowed for the server to wait for a response during the fetch operation (e.g., `30s` for 30 seconds).
+- [`url`](/docs/ref/object/http-lookup#url): HTTP endpoint from which the list is fetched (required).
+- [`enable`](/docs/ref/object/http-lookup#enable): when `true`, the list is active. Default: `true`.
+- [`format`](/docs/ref/object/http-lookup#format): format of the remote list (required). Two variants are supported: `List` (one entry per line) and `Csv` (comma-separated values with configurable parsing).
+- [`isGzipped`](/docs/ref/object/http-lookup#isgzipped): when `true`, the payload is decompressed with gzip before parsing. Default: `false`.
+- [`refresh`](/docs/ref/object/http-lookup#refresh): how often to re-fetch the list. Default: `"12h"`.
+- [`retry`](/docs/ref/object/http-lookup#retry): how long to wait before retrying a failed fetch. Default: `"1h"`.
+- [`timeout`](/docs/ref/object/http-lookup#timeout): maximum time allowed for the fetch operation. Default: `"30s"`.
+- [`namespace`](/docs/ref/object/http-lookup#namespace): the namespace under which the list's entries are exposed to lookup functions (read-only; derived from the record identifier).
 
-When the `format` is set to `csv`, the following options may be configured:
-  - `separator`: Specifies the delimiter used in the CSV file.
-  - `index.key`: Indicates the column index (starting from 0) to use as the key.
-  - `index.value`: Indicates the column index (starting from 0) to use as the value, this is optional.
-  - `skip-first`: Skips the first line of the file if it contains headers (`true` or `false`).
-  - `gzipped`: Indicates whether the file is compressed using Gzip (`true` or `false`).
+### CSV parsing options
 
-Resource constraints for the remote list are configured under `limits`:
-  - `limits.size`: Maximum size of the list in bytes.
-  - `limits.entries`: Maximum number of entries allowed in the list.
-  - `limits.entry-size`: Maximum size of a single entry in bytes.
+When [`format`](/docs/ref/object/http-lookup#format) is set to the `Csv` variant, the variant carries additional fields:
 
-Example:
+- [`separator`](/docs/ref/object/http-lookup#separator): the delimiter between columns. Default: `","`.
+- [`indexKey`](/docs/ref/object/http-lookup#indexkey): zero-based column index used as the lookup key. Default: `0`.
+- [`indexValue`](/docs/ref/object/http-lookup#indexvalue): optional zero-based column index used as the lookup value.
+- [`skipFirst`](/docs/ref/object/http-lookup#skipfirst): when `true`, the first line is treated as a header and skipped. Default: `false`.
 
-```toml
-[http-lookup.openphish]
-enable = true
-url = "https://openphish.com/feed.txt"
-format = "list"
-retry = "1h"
-refresh = "12h"
-timeout = "30s"
+### Resource limits
 
-[http-lookup.openphish.limits]
-size = 104857600
-entries = 100000
-entry-size = 512
+The size of the retrieved list and each of its entries is bounded by:
 
-[http-lookup.phishtank]
-enable = true
-url = "http://data.phishtank.com/data/online-valid.csv.gz"
-format = "csv"
-separator = ","
-index.key = 1
-skip-first = true
-gzipped = true
-retry = "1h"
-refresh = "6h"
-timeout = "30s"
+- [`maxSize`](/docs/ref/object/http-lookup#maxsize): maximum total size of the list in bytes. Default: `"100mb"`.
+- [`maxEntries`](/docs/ref/object/http-lookup#maxentries): maximum number of entries retained. Default: `100000`.
+- [`maxEntrySize`](/docs/ref/object/http-lookup#maxentrysize): maximum size of a single entry in bytes. Default: `512`.
 
-[http-lookup.phishtank.limits]
-size = 104857600
-entries = 100000
-entry-size = 512
-```
+The list is truncated if it exceeds any of these limits.

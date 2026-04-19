@@ -4,125 +4,77 @@ sidebar_position: 2
 
 # Listeners
 
-Stalwart offers the ability to configure multiple listeners, which are responsible for receiving incoming TCP connections. There is no limit to the number of listeners that can be created, and the behavior of each listener can be customized by the administrator. 
+Stalwart accepts incoming TCP connections through one or more listeners. Each listener is represented by a [NetworkListener](/docs/ref/object/network-listener) object (found in the WebUI under <!-- breadcrumb:NetworkListener --><!-- /breadcrumb:NetworkListener -->), and any number of listeners can coexist on the server.
 
 ## Bind settings
 
-Listeners are set up in the configuration file using the `server.listener.<id>.bind` attribute and specifying the IP addresses and ports where the listener will receive incoming connections. A listener can be bound to multiple IP v4 or v6 addresses and ports, for example:
+The addresses and ports a listener accepts connections on are set through [`bind`](/docs/ref/object/network-listener#bind), which takes a list of `host:port` entries. A single listener can bind to multiple IPv4 and IPv6 endpoints:
 
-```toml
-[server.listener."smtp"]
-bind = ["192.0.2.1:25", "203.0.113.9:25", "2001:db8::2"]
+```json
+{
+  "name": "smtp",
+  "protocol": "smtp",
+  "bind": ["192.0.2.1:25", "203.0.113.9:25", "[2001:db8::2]:25"]
+}
 ```
 
-Or, to bind a listener to all interfaces:
-
-```toml
-[server.listener."smtp"]
-bind = "[::]:25"
-```
+To bind on every interface, use an unspecified address such as `[::]:25`.
 
 ## Protocol
 
-Listeners require the `protocol` attribute to be set to the protocol that the listener should use to receive incoming connections:
+Each listener selects its application protocol through [`protocol`](/docs/ref/object/network-listener#protocol). The supported values are `smtp`, `lmtp`, `http`, `imap`, `pop3`, and `manageSieve`. For example, an SMTP listener on port 25 alongside an IMAP listener on port 143:
 
-- `http`: HTTP protocol.
-- `imap`: IMAP protocol.
-- `smtp`: SMTP protocol.
-- `pop3`: POP3 protocol.
-- `lmtp`: LMTP protocol.
-- `managesieve`: ManageSieve protocol.
-
-For example, to start an SMTP server on port 25 and an IMAP server on port 143, you can use the following configuration:
-
-```toml
-[server.listener."smtp"]
-bind = ["[::]:25"]
-protocol = "smtp"
-
-[server.listener."imap"]
-bind = ["[::]:143"]
-protocol = "imap"
+```json
+[
+  {"name": "smtp", "protocol": "smtp", "bind": ["[::]:25"]},
+  {"name": "imap", "protocol": "imap", "bind": ["[::]:143"]}
+]
 ```
-
 
 ## Maximum connections
 
-Listeners can be configured to limit the number of simultaneous connections that they can handle at any given moment. This setting is controlled by the `server.max-connections` parameter in the configuration file:
+The server-wide cap on concurrent connections is set through [`maxConnections`](/docs/ref/object/system-settings#maxconnections) on the [SystemSettings](/docs/ref/object/system-settings) singleton, and defaults to `8192`. Each NetworkListener also exposes its own [`maxConnections`](/docs/ref/object/network-listener#maxconnections) field so that a specific listener (for example an implicit-TLS submissions endpoint) can be capped independently of the server default:
 
-```toml
-[server]
-max-connections = 8192
-```
-
-This value can also be overridden on a per-listener basis by setting the `max-connections` parameter in the listener's configuration, for example:
-
-```toml
-[server.listener."submissions"]
-bind = ["[::]:465"]
-protocol = "smtp"
-tls.implicit = true
-max-connections = 1024
+```json
+{
+  "name": "submissions",
+  "protocol": "smtp",
+  "bind": ["[::]:465"],
+  "tlsImplicit": true,
+  "maxConnections": 1024
+}
 ```
 
 ## TCP socket options
 
-The default TCP socket options for the server can be found under the `server.socket` key and include the following options:
+Socket-level behaviour is configured per listener through the following fields on [NetworkListener](/docs/ref/object/network-listener):
 
-- `reuse-addr:` Specifies whether the socket can be bound to an address that is already in use by another socket. Setting this option to `true` allows the socket to reuse the address and helps reduce the number of errors caused by trying to bind to an address that is already in use.
-- `reuse-port`: Specifies whether multiple sockets can be bound to the same address and port. Setting this option to `true` allows multiple sockets to listen on the same port, which can be useful in some load balancing scenarios.
-- `backlog`: Specifies the maximum number of incoming connections that can be pending in the backlog queue. When the number of incoming connections exceeds this value, new connections may be rejected.
-- `ttl`: Specifies the time-to-live (TTL) value for the socket, which determines how many hops a packet can make before it is discarded.
-- `send-buffer-size`: Specifies the size of the buffer used for sending data. Increasing the size of the buffer can help improve the performance of the socket, but also increases memory usage.
-- `recv-buffer-size`: Specifies the size of the buffer used for receiving data. Increasing the size of the buffer can help improve the performance of the socket, but also increases memory usage.
-- `linger`: Specifies the time to wait before closing a socket when there is still unsent data. Setting this option to a non-zero value can help ensure that all data is sent before the socket is closed.
-- `tos`: Specifies the type of service (TOS) value for the socket, which determines the priority of the traffic sent through the socket.
-- `nodelay`: Specifies whether the Nagle algorithm should be disabled for the socket. Setting this option to `true` can help improve the performance of the socket, but may also increase network traffic.
+- [`socketReuseAddress`](/docs/ref/object/network-listener#socketreuseaddress): whether the socket can be bound to an address that is already in use. Default `true`.
+- [`socketReusePort`](/docs/ref/object/network-listener#socketreuseport): whether multiple sockets can be bound to the same address and port, useful for certain load-balancing scenarios. Default `true`.
+- [`socketBacklog`](/docs/ref/object/network-listener#socketbacklog): maximum number of pending incoming connections. Default `1024`.
+- [`socketTtl`](/docs/ref/object/network-listener#socketttl): time-to-live value for outgoing packets.
+- [`socketSendBufferSize`](/docs/ref/object/network-listener#socketsendbuffersize): size of the send buffer in bytes.
+- [`socketReceiveBufferSize`](/docs/ref/object/network-listener#socketreceivebuffersize): size of the receive buffer in bytes.
+- [`socketTosV4`](/docs/ref/object/network-listener#sockettosv4): type-of-service (TOS) value for IPv4 traffic, used to signal traffic priority.
+- [`socketNoDelay`](/docs/ref/object/network-listener#socketnodelay): whether the Nagle algorithm should be disabled. Default `true`.
 
-It is possible to override the default TCP socket options on a per-listener basis as detailed in the following sections.
+<!-- review: The previous docs listed a `linger` socket option; no matching field appears on NetworkListener in the current schema. Confirm whether linger has been removed or renamed. -->
 
-## Overriding defaults
+## TLS on a listener
 
-Both the TLS settings and TCP socket options can be customized for each listener individually by adding the desired attribute to the `server.listener.<id>` key of that specific listener. For example, to override implicit TLS for a listener:
+Listener-level TLS is controlled by [`useTls`](/docs/ref/object/network-listener#usetls), [`tlsImplicit`](/docs/ref/object/network-listener#tlsimplicit), [`tlsTimeout`](/docs/ref/object/network-listener#tlstimeout), [`tlsDisableProtocols`](/docs/ref/object/network-listener#tlsdisableprotocols), [`tlsDisableCipherSuites`](/docs/ref/object/network-listener#tlsdisableciphersuites), and [`tlsIgnoreClientOrder`](/docs/ref/object/network-listener#tlsignoreclientorder). Because each NetworkListener carries its own TLS fields, implicit TLS on a submissions endpoint is set by flipping [`tlsImplicit`](/docs/ref/object/network-listener#tlsimplicit) on that listener alone, without touching other listeners. See [TLS overview](/docs/server/tls/overview) for the list of supported protocols and cipher suites.
 
-```toml
-[server.listener."submissions"]
-tls.implicit = true
-
-[server.tls]
-implicit = false
-```
-
-Or, to increase the backlog for a certain listener:
-
-```toml
-[server.listener."smtp"]
-socket.backlog = 2048
-
-[server.socket]
-backlog = 1024
-```
+<!-- review: In the previous model there was a central `server.tls` block that set defaults inherited by every listener. NetworkListener now exposes each TLS field directly and there is no global TLS object in the reference catalogue. Confirm that each listener is configured independently and that no shared TLS defaults object survives. -->
 
 ## Example
 
-The following example defines an SMTP listener on port `25`, an SMTP submissions listener on port `587` and a secure SMTP submissions listener on port `465` with implicit TLS enabled:
+The following listeners define an SMTP server on port 25, an explicit-TLS submission endpoint on port 587, an implicit-TLS submissions endpoint on port 465, and an HTTP management endpoint on port 8080:
 
-```toml
-[server.listener."smtp"]
-bind = ["[::]:25"]
-protocol = "smtp"
-
-[server.listener."submission"]
-bind = ["[::]:587"]
-protocol = "smtp"
-
-[server.listener."submissions"]
-bind = ["[::]:465"]
-protocol = "smtp"
-tls.implicit = true
-
-[server.listener."management"]
-bind = ["127.0.0.1:8080"]
-protocol = "http"
+```json
+[
+  {"name": "smtp", "protocol": "smtp", "bind": ["[::]:25"]},
+  {"name": "submission", "protocol": "smtp", "bind": ["[::]:587"]},
+  {"name": "submissions", "protocol": "smtp", "bind": ["[::]:465"], "tlsImplicit": true},
+  {"name": "management", "protocol": "http", "bind": ["127.0.0.1:8080"]}
+]
 ```
-

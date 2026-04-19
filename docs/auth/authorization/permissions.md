@@ -4,35 +4,33 @@ sidebar_position: 2
 
 # Permissions
 
-Permissions in Stalwart determine the specific actions and resources that a user, group, or entity is allowed to access. Permissions allow administrators to control fine-grained access to various operations within the mail server, providing a clear distinction between what actions an entity can or cannot perform. Permissions can be assigned directly to [individuals](/docs/auth/principals/individual), [groups](/docs/auth/principals/group), [roles](/docs/auth/authorization/roles), or entire [tenants](/docs/auth/authorization/tenants), giving administrators fine-grained control over access policies.
+Permissions in Stalwart determine which actions and resources a principal is allowed to access. They can be assigned directly to [individuals](/docs/auth/principals/individual) or [groups](/docs/auth/principals/group), through [roles](/docs/auth/authorization/roles), or on a [tenant](/docs/auth/authorization/tenants) as a whole.
 
-To simplify the management of permissions, multiple permissions can be grouped together into [roles](/docs/auth/authorization/roles). Assigning roles to users or groups allows administrators to more easily manage access by bundling related permissions rather than having to assign them individually.
+To simplify management, multiple permissions can be grouped into a [Role](/docs/ref/object/role) object (found in the WebUI under <!-- breadcrumb:Role --><!-- /breadcrumb:Role -->) and assigned through a single reference on the principal.
 
 ## Effective Permissions
 
-Each principal type in Stalwart (such as individuals, groups, or roles) has two important fields related to permissions: `enabledPermissions` and `disabledPermissions`. The **effective permissions** for an individual are calculated using a combination of permissions from various levels:
+Each principal carries two permission-related fields: [`enabledPermissions`](/docs/ref/object/role#enabledpermissions) and [`disabledPermissions`](/docs/ref/object/role#disabledpermissions). On Account and Group objects these are wrapped by a `Permissions` mode that can be `Inherit`, `Merge`, or `Replace`, selecting how the listed permissions combine with those inherited from roles and the containing tenant. The effective permissions of a principal are computed as follows:
 
-- **Enabled Permissions**:  
-   - Start with the `enabledPermissions` assigned directly to the **individual**.
-   - Combine these with the `enabledPermissions` of any **roles** that are assigned to the individual.
-   - Finally, intersect these with the `enabledPermissions` of the **tenant** to which the individual belongs.
-- **Disabled Permissions**:  
-   - Any permissions explicitly listed in the `disabledPermissions` field of the **individual**, **roles**, or **tenant** are subtracted from the total. This ensures that even if a permission is enabled at one level, it will be disabled if explicitly restricted at another.
+- Start from the enabled permissions of any assigned roles.
+- Apply the principal's own `enabledPermissions` according to the configured mode (inherit, merge with, or replace the role-derived set).
+- Intersect with the tenant's enabled permissions, in multi-tenant deployments.
+- Subtract every permission listed in `disabledPermissions` at any level. Disabled permissions always take precedence.
 
-This mechanism allows for a flexible yet precise approach to access control, ensuring that permissions are layered and can be modified at various levels to suit the needs of the organization.
+The result is a layered model in which permissions can be added or removed at the role, principal, or tenant level.
 
 ## Permissions vs. ACLs
 
-It's important to note that permissions in Stalwart are distinct from Access Control Lists (ACLs). 
+Permissions in Stalwart are distinct from Access Control Lists (ACLs).
 
-- **Permissions**: Defined by the **administrator**, permissions control access to specific resources and actions within the mail server itself. These determine what a user or entity is allowed to do globally within the system, such as managing settings, accessing logs, or sending emails.
-- **Access Control Lists (ACLs)**: Managed by **users** and are used to grant other users or groups access to their emails, folders, or other specific data. ACLs, typically controlled via the IMAP ACL extension or JMAP, regulate how one user's data is shared with others and are applied on a per-folder or per-resource basis.
+- **Permissions** are defined by administrators and control which server-wide actions a principal may perform, such as managing settings, viewing logs, or sending email.
+- **Access Control Lists** are managed by users and grant other principals access to specific mailboxes, folders, or other per-resource data. ACLs are controlled through the IMAP ACL extension or JMAP and apply per resource.
 
-In summary, permissions are centrally controlled by administrators to define what actions and resources can be accessed by whom, while ACLs give users control over how their own data is shared and accessed by others. Together, they provide flexible security and access control within the Stalwart environment.
+Permissions are an administrative policy; ACLs are a user-level sharing mechanism.
 
 ## Available Permissions
 
-Stalwart provides a wide range of permissions that can be assigned to users, groups, roles, or tenants. These permissions cover various aspects of the mail server, including managing users, domains, settings, and more. The following table lists the available permissions as well as the [built-in roles](/docs/auth/authorization/roles) that include them:
+The following table lists the permissions recognised by the server and the [built-in roles](/docs/auth/authorization/roles) that include them:
 
 | Permission | Description | Admin role | Tenant admin role | User role  |
 |-----------------|--------------------|--------------------|--------------------|--------------------|

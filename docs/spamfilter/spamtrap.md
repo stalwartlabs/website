@@ -4,14 +4,14 @@ sidebar_position: 12
 
 # Spamtrap
 
-The ongoing war against spam requires innovative and multifaceted strategies. One such strategy, known as a spam trap, serves as a deceptive mechanism to lure in spammers, thereby allowing for the identification and mitigation of spam sources.
+A spam trap is an email address set up specifically to attract spam. These addresses are not used for regular communication and do not belong to real users, so any message sent to one is, by definition, unsolicited. Spam traps therefore provide a reliable indicator of spam activity.
 
-A spam trap is an email address specifically set up to attract spam. These addresses are not used for regular communication and do not belong to real users. Any email sent to a spam trap address is, by definition, unsolicited, making it a reliable indicator of spam or other malicious activities.
+Beyond flagging individual messages, spam traps also help train and refine the [spam classifier](/docs/spamfilter/classifier/overview). Each message received at a trap address is treated as a clear spam sample; Stalwart can automatically add it to the training data so that the classifier adapts to the latest spam tactics.
 
-One of the significant advantages of a spam trap is its ability to aid in the continual training and refining of spam classifiers. When a message is received in the spam trap, it provides a clear sample of spam. Stalwart automatically utilizes these trapped messages to train its [spam classifier](/docs/spamfilter/classifier/overview), ensuring the classifier remains updated with the latest spam patterns and tactics.
+The list of spam trap addresses is maintained as an in-memory lookup list entry. Each trap address is a [MemoryLookupKey](/docs/ref/object/memory-lookup-key) (found in the WebUI under <!-- breadcrumb:MemoryLookupKey --><!-- /breadcrumb:MemoryLookupKey -->) in the `spam-trap` namespace. When a delivery matches a configured trap address, the message is tagged with `SPAMTRAP`. By default, this tag is associated with the `Discard` action (via a [SpamTag](/docs/ref/object/spam-tag) object), so messages hitting a trap are dropped silently and never reach a real inbox.
 
-The list of spam trap email addresses can be customized by administrators and is located in the `spam-trap` lookup list. When a message is identified as having entered the spam trap, it is tagged with the `SPAMTRAP` label. By default, this tag is associated with a "discard" action, ensuring that the spam message is immediately discarded and doesn't reach any real inbox.
+Administrators can change the action associated with the `SPAMTRAP` tag by editing the corresponding [SpamTag](/docs/ref/object/spam-tag) entry under the [Spam scores](/docs/spamfilter/settings/scores) configuration.
 
-However, recognizing the diverse needs of different setups, Stalwart provides flexibility in how the `SPAMTRAP` tag is handled. Administrators can alter the default behavior associated with this tag by making adjustments in the [Spam scores](/docs/spamfilter/settings/scores).
+Automatic learning from spam traps is controlled by [`learnSpamFromTraps`](/docs/ref/object/spam-classifier#learnspamfromtraps) on the [SpamClassifier](/docs/ref/object/spam-classifier) singleton.
 
-In essence, the spam trap serves as both a honeypot to identify spammers and a valuable resource for improving the accuracy of spam detection mechanisms.
+<!-- review: The previous docs referred to the spam-trap list by the lookup identifier `spam-trap`. Confirm that the namespace used for trap addresses on MemoryLookupKey in the current schema is still `spam-trap`, or update the prose to reflect the current namespace. -->

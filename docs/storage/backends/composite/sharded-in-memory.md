@@ -4,29 +4,18 @@ sidebar_position: 2
 
 # Sharded In-Memory Store
 
-Sharding is a technique used to distribute data across multiple storage backends, improving performance and scalability by evenly spreading the load. In the context of Stalwart's sharded in-memory store, sharding works by hashing the key of the data to be stored or retrieved and using a modulus operation to determine which in-memory store should handle the request. This ensures that each backend is responsible for a specific subset of the keys, enabling efficient use of resources and preventing bottlenecks.
+Sharding distributes data across multiple backends to improve throughput and balance load. In the sharded in-memory store, each key is hashed and a modulus operation selects one of the configured backends to hold or serve the associated value. Each backend owns a deterministic subset of keys, which avoids hotspots and allows capacity to scale horizontally.
 
 :::tip Enterprise feature
 
-This feature is available exclusively in the [Enterprise Edition](/docs/server/enterprise) of Stalwart and not included in the Community Edition.
+This feature is available exclusively in the [Enterprise Edition](/docs/server/enterprise) of Stalwart and is not included in the Community Edition.
 
 :::
 
 ## Configuration
 
-Configuring a sharded in-memory store in Stalwart is straightforward. It requires defining a list of two or more in-memory store identifiers in the configuration. These identifiers correspond to the individual in-memory stores that make up the shard.
+The sharded in-memory backend is selected by choosing the `Sharded` variant on the [InMemoryStore](/docs/ref/object/in-memory-store) object (found in the WebUI under <!-- breadcrumb:InMemoryStore --><!-- /breadcrumb:InMemoryStore -->). The variant exposes a single field:
 
-The following configuration settings are available for Sharded In-Memory Stores, which are specified under the `store.<name>` section of the configuration file:
+- [`stores`](/docs/ref/object/in-memory-store#stores): list of two or more backend in-memory stores that make up the shard. Each entry selects one of the base in-memory variants (Redis or Redis Cluster).
 
-- `type`: Specifies the type of database, set to `"sharded-in-memory"` for sharded in-memory store.
-- `stores`: A list of in-memory store identifiers that make up the shard. Each identifier corresponds to an in-memory store backend, such as Redis or Memcached.
-
-**IMPORTANT**: It is crucial to note that the order and number of in-memory stores in the configuration must remain consistent once set. Changing the order or adding/removing stores will alter the hash-to-store mapping, resulting in misplaced or inaccessible data. To maintain data integrity, careful planning and stability in the shard configuration are essential.
-
-## Example
-
-```toml
-[store."sharded-in-memory"]
-type = "sharded-in-memory"
-stores = ["redis1", "redis2", "redis3"]
-```
+**IMPORTANT**: the order and number of backends in [`stores`](/docs/ref/object/in-memory-store#stores) must remain stable once set. Reordering or adding or removing entries changes the hash-to-store mapping and leaves previously written data unreachable. Plan capacity carefully before configuring a shard.

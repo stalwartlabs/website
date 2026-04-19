@@ -4,155 +4,54 @@ sidebar_position: 10
 
 # Caching
 
-Caching is a technique used to store frequently accessed data in memory, enabling faster retrieval and reducing the load on underlying systems. In Stalwart, caching is utilized for various critical operations, including storing email account data, security access tokens, and DNS query results. By caching this information, the server enhances performance, reduces latency, and minimizes resource usage.
+Stalwart keeps a set of in-memory caches in front of slower backends (the data store, the DNS resolver, the authentication subsystem). Caching frequently accessed records reduces latency and takes load off the underlying backends without changing their consistency guarantees.
 
-Stalwart employs an efficient caching algorithm with an advanced eviction policy. The eviction mechanism is a modified version of the Clock-PRO algorithm, which closely resembles the later-published S3-FIFO algorithm. This algorithm is designed to be “scan-resistant,” meaning it avoids cache eviction caused by temporary spikes in access patterns. It provides high cache hit rates, outperforming traditional Least Recently Used (LRU) eviction policies and delivering results comparable to other modern algorithms such as W-TinyLFU. This approach keeps cached data relevant and contributes to the server's overall efficiency.
+The eviction policy is a modified Clock-PRO algorithm, close in spirit to the later S3-FIFO scheme. It is scan-resistant, so a transient burst of unrelated lookups does not evict hot entries, and it reaches hit rates comparable to LRU and W-TinyLFU on realistic workloads.
 
-## Memory Usage
+## Memory usage
 
-The memory usage of the cache is an important consideration, especially in systems with varying hardware configurations and user loads. For systems with ample memory and a high number of users, it is recommended to increase the default cache sizes. Larger cache sizes allow the server to store more data in memory, resulting in fewer evictions and higher hit rates, which improves performance in busy environments.
-
-Conversely, systems with limited memory may need to reduce the default cache sizes to avoid excessive memory consumption. Smaller cache sizes help conserve system resources but may slightly reduce cache efficiency. Administrators should monitor the server’s memory usage and adjust cache sizes to strike a balance between performance and resource availability.
+Cache sizes should be matched to the workload. On hosts with ample memory and many users, larger caches reduce evictions and improve hit rates. On hosts with limited memory, smaller caches conserve RAM at the cost of some hit rate; monitoring resident set size and the cache-hit metrics published by the server is the normal way to pick an appropriate balance.
 
 ## Configuration
 
-Stalwart provides a variety of cache options that can be configured to optimize performance and memory usage. Each cache is configured under the `cache.NAME.size` parameter, where `NAME` is the name of the cache as defined in the system. The size is specified in bytes and controls the maximum memory allocated for each cache.
+Every cache is configured through the [Cache](/docs/ref/object/cache) singleton (found in the WebUI under <!-- breadcrumb:Cache --><!-- /breadcrumb:Cache -->). Each field is a byte-size value with a suffix (for example `"50mb"`); minimum size is `2048` bytes.
 
-### Email Cache
+### Data caches
 
-The Email Cache stores email account data, including message UIDs, flags, and mailbox information. By caching account data, the system ensures fast and efficient interactions with the email server. It is configured under the `cache.email.size` setting and has a default size of 50 MB.
+- [`messages`](/docs/ref/object/cache#messages): email account data including message UIDs, flags, and mailbox metadata. Default `"50mb"`.
+- [`events`](/docs/ref/object/cache#events): calendar events, including start / end times and timezone data. Default `"10mb"`.
+- [`scheduling`](/docs/ref/object/cache#scheduling): calendar scheduling state. Default `"1mb"`.
+- [`contacts`](/docs/ref/object/cache#contacts): address-book and contact data. Default `"10mb"`.
+- [`files`](/docs/ref/object/cache#files): file-storage metadata such as paths and permissions. Default `"10mb"`.
+- [`mailingLists`](/docs/ref/object/cache#mailinglists): mailing-list metadata. Default `"2mb"`.
+- [`dkimSignatures`](/docs/ref/object/cache#dkimsignatures): parsed DKIM signing configurations. Default `"10mb"`.
 
-```toml
-[cache]
-message.size = 52428800
-```
+### Directory caches
 
-### Calendar Cache
+- [`accounts`](/docs/ref/object/cache#accounts): resolved account records. Default `"20mb"`.
+- [`domains`](/docs/ref/object/cache#domains): domain records. Default `"5mb"`.
+- [`domainNames`](/docs/ref/object/cache#domainnames): positive domain-name lookup results. Default `"10mb"`.
+- [`domainNamesNegative`](/docs/ref/object/cache#domainnamesnegative): negative (not-found) domain-name lookup results. Default `"1mb"`.
+- [`emailAddresses`](/docs/ref/object/cache#emailaddresses): positive email-address lookup results. Default `"10mb"`.
+- [`emailAddressesNegative`](/docs/ref/object/cache#emailaddressesnegative): negative email-address lookup results. Default `"2mb"`.
+- [`roles`](/docs/ref/object/cache#roles): role definitions. Default `"5mb"`.
+- [`tenants`](/docs/ref/object/cache#tenants): tenant records. Default `"5mb"`.
+- [`negativeTtl`](/docs/ref/object/cache#negativettl): how long to keep negative domain and account lookup entries. Default `"1h"`.
 
-The Calendar Cache stores calendar-related data, such as event start/end times and timezone information. This cache improves the performance of calendar operations, including event retrieval and scheduling. It is configured under the `cache.events.size` setting and has a default size of 10 MB.
+### Security caches
 
-```toml
-[cache]
-events.size = 10485760
-```
+- [`accessTokens`](/docs/ref/object/cache#accesstokens): resolved access tokens, reducing revalidation during authentication. Default `"10mb"`.
+- [`httpAuth`](/docs/ref/object/cache#httpauth): short-lived state for HTTP authentication. Default `"1mb"`.
 
-### Contacts Cache
+<!-- review: The previous docs listed a dedicated `cache.permission.size` for role / permission mappings (default 5 MB). The current Cache singleton exposes `roles` (5 MB default) but no separate `permissions` entry. Confirm that role and permission caching is now subsumed under `roles`, and whether an equivalent permissions-cache field still exists. -->
 
-The Contacts Cache stores contact-related data, including contact metadata and other relevant information. This cache enhances the performance of contact-related operations, such as searching and retrieving contact details. It is configured under the `cache.contacts.size` setting and has a default size of 10 MB.
+### DNS caches
 
-```toml
-[cache]
-contacts.size = 10485760
-```
-
-### File Storage Cache
-
-The File Storage Cache stores metadata related to file storage operations, such as file paths and access permissions. This cache improves the performance of file-related operations, such as listing files and checking permissions. It is configured under the `cache.files.size` setting and has a default size of 10 MB.
-
-```toml
-[cache]
-files.size = 10485760
-```
-
-### Security Cache
-
-#### Access Tokens
-
-The Access Token Cache is used to store security access tokens required for authentication purposes. Caching access tokens reduces the need for frequent revalidation, ensuring faster and more efficient authentication processes. It is configured under the `cache.access-token.size` setting and has a default size of 10 MB.
-
-```toml
-[cache]
-access-token.size = 10485760
-```
-
-#### HTTP Authentication
-
-The HTTP Authentication Cache stores temporary data related to HTTP-based authentication. By caching this data, the system speeds up repeated authentication attempts, reducing the overhead for frequent HTTP requests. It is configured under the `cache.http-auth.size` setting and has a default size of 1 MB.
-
-```toml
-[cache]
-http-auth.size = 1048576
-```
-
-#### Permissions
-
-The Permissions Cache is used to store role and permission mappings for user accounts. This cache allows the system to quickly verify access rights without repeatedly querying the database. It is configured under the `cache.permission.size` setting and has a default size of 5 MB.
-
-```toml
-[cache]
-permission.size = 5242880
-```
-
-### DNS Cache
-
-#### TXT Records
-
-The TXT DNS Cache stores the results of DNS TXT record lookups, which are commonly used for SPF, DKIM, and DMARC verifications. By caching these results, the server reduces the latency of DNS queries. It is configured under the `cache.dns.txt.size` setting and has a default size of 5 MB.
-
-```toml
-[cache]
-dns.txt.size = 5242880
-```
-
-#### MX Records
-
-The MX DNS Cache stores the results of DNS MX record lookups, which are essential for email routing and delivery. Caching these results improves the speed of email processing. It is configured under the `cache.dns.mx.size` setting and has a default size of 5 MB.
-
-```toml
-[cache]
-dns.mx.size = 5242880
-```
-
-#### PTR Records
-
-The PTR DNS Cache stores the results of reverse DNS (PTR) record lookups, which resolve IP addresses to hostnames. This cache enhances the efficiency of reverse DNS queries. It is configured under the `cache.dns.ptr.size` setting and has a default size of 1 MB.
-
-```toml
-[cache]
-dns.ptr.size = 1048576
-```
-
-#### IPv4 Records
-
-The IPv4 DNS Cache stores the results of IPv4 address queries. Caching these results reduces the frequency of DNS lookups, improving overall performance. It is configured under the `cache.dns.ipv4.size` setting and has a default size of 5 MB.
-
-```toml
-[cache]
-dns.ipv4.size = 5242880
-```
-
-#### IPv6 Records
-
-The IPv6 DNS Cache stores the results of IPv6 address queries. Like the IPv4 DNS Cache, it reduces the need for repeated DNS lookups and improves efficiency. It is configured under the `cache.dns.ipv6.size` setting and has a default size of 5 MB.
-
-```toml
-[cache]
-dns.ipv6.size = 5242880
-```
-
-#### TLSA Records
-
-The TLSA DNS Cache stores the results of TLSA record lookups, which are used for DANE authentication. By caching these records, the server ensures faster processing of secure email communication. It is configured under the `cache.dns.tlsa.size` setting and has a default size of 1 MB.
-
-```toml
-[cache]
-dns.tlsa.size = 1048576
-```
-
-#### MTA-STS Records
-
-The MTA-STS Cache stores Mail Transfer Agent Strict Transport Security (MTA-STS) policies, which are used to enforce secure email delivery. This cache reduces the need for frequent policy retrievals. It is configured under the `cache.dns.mta-sts.size` setting and has a default size of 1 MB.
-
-```toml
-[cache]
-dns.mta-sts.size = 1048576
-```
-
-#### RBL Records
-
-The RBL DNS Cache stores the results of Real-Time Blocklist (RBL) queries, which are used to identify and block potentially malicious IP addresses. This cache minimizes the latency of RBL lookups. It is configured under the `cache.dns.rbl.size` setting and has a default size of 5 MB.
-
-```toml
-[cache]
-dns.rbl.size = 5242880
-```
+- [`dnsTxt`](/docs/ref/object/cache#dnstxt): TXT records used for SPF, DKIM, and DMARC. Default `"5mb"`.
+- [`dnsMx`](/docs/ref/object/cache#dnsmx): MX records used for outbound routing. Default `"5mb"`.
+- [`dnsPtr`](/docs/ref/object/cache#dnsptr): reverse (PTR) lookup results. Default `"1mb"`.
+- [`dnsIpv4`](/docs/ref/object/cache#dnsipv4): forward IPv4 (A) lookup results. Default `"5mb"`.
+- [`dnsIpv6`](/docs/ref/object/cache#dnsipv6): forward IPv6 (AAAA) lookup results. Default `"5mb"`.
+- [`dnsTlsa`](/docs/ref/object/cache#dnstlsa): TLSA records used for DANE validation. Default `"1mb"`.
+- [`dnsMtaSts`](/docs/ref/object/cache#dnsmtasts): MTA-STS policy records. Default `"1mb"`.
+- [`dnsRbl`](/docs/ref/object/cache#dnsrbl): DNSBL / RBL lookup results. Default `"5mb"`.

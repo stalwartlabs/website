@@ -4,71 +4,42 @@ sidebar_position: 4
 
 # MySQL / MariaDB
 
-MySQL is a widely used open-source relational database management system (RDBMS). It is renowned for its reliability, simplicity, and compatibility with various platforms and programming languages. MySQL is designed to efficiently manage large volumes of data, making it a popular choice for web applications and online transaction processing. 
+MySQL is a widely used open-source relational database management system, known for its reliability, simplicity, and broad platform compatibility. It handles large volumes of data efficiently and is a popular choice for web applications and online transaction processing. MariaDB is a drop-in compatible fork of MySQL and is supported through the same variant.
 
 ## Configuration
 
-The following configuration settings are available for mySQL, which are specified under the `store.<name>` section of the configuration file:
+The MySQL backend is selected by choosing the `MySql` variant on the [DataStore](/docs/ref/object/data-store) object (found in the WebUI under <!-- breadcrumb:DataStore --><!-- /breadcrumb:DataStore -->). The variant exposes the following fields:
 
-- `type`: Specifies the type of database, set to `"mysql"` for MySQL.
-- `host`: The hostname or IP address of the MySQL server.
-- `port`: The port number on which the MySQL server listens.
-- `database`: The name of the database to connect to within the MySQL server.
-- `user`: The username used to log in to the MySQL database.
-- `password`: The password associated with the specified user.
-- `max-allowed-packet`: The maximum size of the packet (specified in bytes) that can be sent to or received from the MySQL server. The default value is `4MB`.
-- `timeout`: Defines the maximum time the system should wait for a response from the MySQL server before timing out. The time is specified as a string, such as `"15s"` for 15 seconds.
-- `tls.enable`: If set to `true`, enables TLS encryption for the connection to the MySQL server.
-- `tls.allow-invalid-certs`: If set to `true`, allows the use of self-signed certificates or certificates signed by unknown certificate authorities. This is useful for testing or development environments.
+- [`host`](/docs/ref/object/data-store#host): hostname or IP address of the MySQL server (required).
+- [`port`](/docs/ref/object/data-store#port): TCP port. Default: `3306`.
+- [`database`](/docs/ref/object/data-store#database): name of the database. Default: `"stalwart"`.
+- [`authUsername`](/docs/ref/object/data-store#authusername): username used to authenticate. Default: `"stalwart"`.
+- [`authSecret`](/docs/ref/object/data-store#authsecret): password or other secret reference used to authenticate (required).
+- [`timeout`](/docs/ref/object/data-store#timeout): maximum time to wait when establishing a connection. Default: `"15s"`.
+- [`maxAllowedPacket`](/docs/ref/object/data-store#maxallowedpacket): maximum size of a single network packet sent to or received from the server, in bytes.
 
-### Connection Pool
+### Connection pool
 
-The following configuration settings are available for the connection pool, which are specified under the `store.<name>.pool` section of the configuration file:
+Pool sizing is controlled through [`poolMaxConnections`](/docs/ref/object/data-store#poolmaxconnections) (default `10`) and [`poolMinConnections`](/docs/ref/object/data-store#poolminconnections) (default `5`). The minimum ensures a baseline of ready connections at all times.
 
-- `max-connections`: Specifies the maximum number of active connections to the MySQL server that can be maintained in the pool.
-- `min-connections`: Determines the minimum number of active connections that are maintained in the pool, ensuring a baseline level of readiness and resource allocation.
+### TLS
 
-### Directory queries
+TLS is enabled through [`useTls`](/docs/ref/object/data-store#usetls). When enabled, [`allowInvalidCerts`](/docs/ref/object/data-store#allowinvalidcerts) determines whether connections with invalid certificates are accepted, which is typically only useful in development or testing.
 
-When mySQL is used as a [directory](/docs/auth/backend/overview), it is necessary to define the SQL queries that will be used to retrieve authentication data from the database. These queries are specified under the `store.<name>.query` section of the configuration file. For more details on the queries, please refer to the [SQL directory queries](/docs/auth/backend/sql#directory-queries) section.
+### Read replicas
 
-Example:
+For Enterprise deployments, [`readReplicas`](/docs/ref/object/data-store#readreplicas) accepts a list of replica connection settings. See the [SQL read replicas](/docs/storage/backends/composite/sql-replica) page for details.
 
-```toml
-[store."mysql".query]
-name = "SELECT name, type, secret, description, quota FROM accounts WHERE name = ? AND active = true"
-members = "SELECT member_of FROM group_members WHERE name = ?"
-recipients = "SELECT name FROM emails WHERE address = ? ORDER BY name ASC"
-emails = "SELECT address FROM emails WHERE name = ? ORDER BY type DESC, address ASC"
-```
-
-## Example
-
-```toml
-[store."mysql"]
-type = "mysql"
-host = "localhost"
-port = 3306
-database = "stalwart"
-user = "root"
-password = "password"
-disable = true
-max-allowed-packet = 1073741824
-timeout = "15s"
-
-[store."mysql".pool]
-max-connections = 10
-min-connections = 5
-```
+<!-- review: The previous configuration defined directory queries (`name`, `members`, `recipients`, `emails`) under `store.<name>.query` when MySQL was used as an authentication directory. Locate the equivalent configuration surface in the new model (likely on the Directory object with a SQL variant) and link to it here. -->
 
 ## FTS Limitations
 
-MySQL’s built-in full text search is a lightweight feature designed primarily for simple keyword matching. While it can be sufficient for basic search use cases, it has several inherent limitations that are important to understand when using it as a full text search backend for email.
+MySQL's built-in full-text search is a lightweight feature designed primarily for simple keyword matching. While sufficient for basic search use cases, it has several inherent limitations that are important to understand when using it as a full-text search backend for email.
 
-One significant limitation is that MySQL full text search does not support **multiple languages within the same indexed column**. A full text index is tied to a single parser and language configuration, which means that messages containing mixed languages cannot be tokenized or ranked correctly. In mail environments where users regularly exchange messages in different languages, this can lead to inconsistent or incomplete search results.
+One significant limitation is that MySQL full-text search does not support **multiple languages within the same indexed column**. A full-text index is tied to a single parser and language configuration, which means messages containing mixed languages cannot be tokenised or ranked correctly. In mail environments where users regularly exchange messages in different languages, this can lead to inconsistent or incomplete search results.
 
-MySQL full text search also does **not support stemming**. Words are indexed and matched in their exact forms, so different grammatical variants of the same word (such as singular versus plural or different verb tenses) are treated as unrelated terms. As a result, searches are less tolerant of natural language variation and may miss relevant messages unless users search for the exact word forms present in the message.
+MySQL full-text search also does **not support stemming**. Words are indexed and matched in their exact forms, so different grammatical variants of the same word (singular versus plural, different verb tenses) are treated as unrelated terms. As a result, searches are less tolerant of natural-language variation and may miss relevant messages unless the exact word forms present in the message are used.
 
-Another important constraint is that **words shorter than three characters are not indexed** by default. Common short words, abbreviations, and identifiers (many of which are common in email content) will therefore not be searchable at all. This can be particularly noticeable when searching for short names, acronyms, or codes.
+Another important constraint is that **words shorter than three characters are not indexed** by default. Common short words, abbreviations, and identifiers (many of which appear in email content) are therefore not searchable at all. This is particularly noticeable when searching for short names, acronyms, or codes.
 
-Taken together, these limitations can significantly affect search quality and recall. If accurate, language-aware search behavior is a priority for your deployment, it is strongly recommended to use a different [full text search backend](/docs/storage/fts) that provides better linguistic support and indexing.
+Taken together, these limitations can significantly affect search quality and recall. If accurate, language-aware search behaviour is a priority for the deployment, a different [full-text search backend](/docs/storage/fts) that provides better linguistic support and indexing is strongly recommended.

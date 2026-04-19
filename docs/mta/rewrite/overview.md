@@ -4,10 +4,8 @@ sidebar_position: 1
 
 # Overview
 
-Message rewriting refers to the process of altering aspects of an email as it's being processed by the mail server. This can involve changing the sender or recipient addresses in the envelope (the 'outside' of the email), or modifying the contents of the email itself, including headers, bodies, and attachments. 
+Message rewriting alters aspects of an email message as it is processed by the mail server. This can involve changing the sender or recipient addresses in the envelope (the 'outside' of the message), or modifying the content itself, including headers, body, and attachments.
 
-There are a variety of scenarios in which you might want to rewrite a message. For example, you may need to [change recipient addresses](/docs/mta/rewrite/address) to redirect mail traffic, obfuscate the original sender's address for privacy, or alter the domain in an address to match a company's branding. 
+Typical reasons for rewriting a message include [changing recipient addresses](/docs/mta/rewrite/address) to redirect mail traffic, obfuscating the original sender's address for privacy, or altering the domain in an address to match an organisation's branding. Modifying the content of a message is useful for managing how it is presented to the recipient: operators may [add, delete, or change headers](/docs/mta/rewrite/headers) for tracking or compliance, [alter the body](/docs/mta/rewrite/content) to append a disclaimer or signature, or manage attachments for security, for example by removing potentially harmful files.
 
-Similarly, modifying the contents of an email is useful for managing how the email is presented to the recipient. You may want to [add, delete, or change headers](/docs/mta/rewrite/headers) for tracking or compliance purposes, [alter the body](/docs/mta/rewrite/content) text to append a legal disclaimer or a promotional signature, or even manage attachments for security reasons, such as by removing potentially harmful files.
-
-In all these cases, Stalwart provides the required flexibility through its support for address rewriting and email content modification.
+Stalwart supports both address rewriting and content modification.

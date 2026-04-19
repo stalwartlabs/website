@@ -4,19 +4,37 @@ sidebar_position: 2
 
 # Passwords
 
-In Stalwart, passwords for user accounts can be stored either in the internal directory or through external directories such as LDAP or SQL. The server supports multiple password hashing schemes to enhance security, and accounts are able to store multiple password hashes. While it is technically possible to store passwords in plain text, this practice is strongly discouraged due to security risks.
+Account passwords can be stored in the internal directory or in an external directory such as LDAP or SQL. The server supports multiple password hashing schemes, and accounts may hold more than one password hash simultaneously. Storing passwords in plain text is possible but strongly discouraged.
 
-Below is a list of the supported password hashing schemes, ranging from modern, secure algorithms like Argon2 to legacy options like MD5. Each hash type is identified by a specific prefix, making it easy to recognize the hashing method in use. If a stored password does not match a known hash prefix, it will be treated as plain text for comparison.
+Each hash type is identified by a specific prefix, which is how the server recognises the hashing method in use. If a stored password does not match a known hash prefix, it is compared as plain text.
 
-- **Argon2:** A password-hashing function that was selected as the winner of the Password Hashing Competition in 2015. Identified by the prefix `"$argon2"` in the hashed secret.
-- **PBKDF2 (Password-Based Key Derivation Function 2):** A key derivation function that is part of RSA Laboratories' Public-Key Cryptography Standards (PKCS) series. Identified by the prefix `"$pbkdf2"` in the hashed secret.
-- **Scrypt:** A password-based key derivation function created by Colin Percival, originally for the Tarsnap online backup service. Identified by the prefix `"$scrypt"` in the hashed secret.
-- **bcrypt (Blowfish Crypt):** A password hashing method based on the Blowfish cipher, it uses a salt to protect against rainbow table attacks and a cost factor to increase the amount of work to check a password, thereby slowing down any brute-force attempts. Identified by the prefix `"$2"` in the hashed secret.
-- **SHA-512 Crypt and SHA-256 Crypt:** Cryptographic hash functions, designed by the NSA, which produce a hash of 512 bits and 256 bits, respectively. Identified by the prefixes `"$6$"` and `"$5$"` in the hashed secret.
-- **SHA-1 Crypt:** An older cryptographic hash function which produces a 160-bit hash value. Identified by the prefix `"$sha1"` in the hashed secret.
-- **MD5-based hash:** An older and weaker hash function that produces a 128-bit hash value. Identified by the prefix `"$1"` in the hashed secret.
-- **BSDi Crypt (Enhanced DES-based hash):** A password hashing method that is a slight modification of the original Unix crypt function. Identified by the prefix `"_"` in the hashed secret.
-- **Base64-encoded SHA-1, Salted SHA-1, SHA-256, Salted SHA-256, SHA-512, Salted SHA-512, MD5:** These hashing algorithms are identified by a prefix enclosed in curly braces, such as `"{SHA}"` or `"{SSHA}"`. The salted variants use a random value (salt) to guard against pre-computed lookup table attacks (rainbow tables).
-- **Unix Crypt:** Traditional Unix password hashing method. Identified by the prefix `"{CRYPT}"` or `"{crypt}"`.
-- **Plain Text:** In some cases, passwords may be stored as plain text, although this is generally not recommended due to security concerns. Identified by the prefixes `"{PLAIN}"`, `"{plain}"`, `"{CLEAR}"`, or `"{clear}"`.
+Password hashing and the password policy enforced on the internal directory are both configured on the [Authentication](/docs/ref/object/authentication) singleton (found in the WebUI under <!-- breadcrumb:Authentication --><!-- /breadcrumb:Authentication -->). The hashing algorithm is selected through [`passwordHashAlgorithm`](/docs/ref/object/authentication#passwordhashalgorithm), which accepts `argon2id` (the default), `bcrypt`, `scrypt`, or `pbkdf2`. The specific policy fields are discussed in the next section.
+
+The server recognises stored password hashes produced by the following schemes:
+
+- **Argon2:** Winner of the 2015 Password Hashing Competition. Identified by the prefix `"$argon2"`.
+- **PBKDF2:** Key derivation function defined in RSA Laboratories' PKCS series. Identified by the prefix `"$pbkdf2"`.
+- **Scrypt:** Key derivation function originally developed for the Tarsnap backup service. Identified by the prefix `"$scrypt"`.
+- **bcrypt:** Password hashing method based on the Blowfish cipher, with a salt and a configurable cost factor. Identified by the prefix `"$2"`.
+- **SHA-512 Crypt and SHA-256 Crypt:** SHA-based password hashing schemes producing 512-bit and 256-bit hashes. Identified by the prefixes `"$6$"` and `"$5$"`.
+- **SHA-1 Crypt:** Older password hashing scheme producing a 160-bit hash. Identified by the prefix `"$sha1"`.
+- **MD5-based hash:** Older and weaker hash function producing a 128-bit hash. Identified by the prefix `"$1"`.
+- **BSDi Crypt (Enhanced DES-based hash):** Slight modification of the original Unix crypt function. Identified by the prefix `"_"`.
+- **Base64-encoded SHA-1, Salted SHA-1, SHA-256, Salted SHA-256, SHA-512, Salted SHA-512, MD5:** Identified by a prefix in curly braces, such as `"{SHA}"` or `"{SSHA}"`. The salted variants use a random salt to mitigate pre-computed lookup attacks.
+- **Unix Crypt:** Traditional Unix password hashing. Identified by the prefix `"{CRYPT}"` or `"{crypt}"`.
+- **Plain Text:** Passwords stored without hashing. Identified by the prefixes `"{PLAIN}"`, `"{plain}"`, `"{CLEAR}"`, or `"{clear}"`. Not recommended.
+
+## Password policy
+
+The policy that applies to passwords set through the internal directory is configured on the [Authentication](/docs/ref/object/authentication) singleton. These checks run when a user creates a new password or an administrator resets one; they do not apply retroactively to existing stored hashes, and they do not apply when credentials are validated against an external directory, which enforces its own policy.
+
+The [`passwordMinLength`](/docs/ref/object/authentication#passwordminlength) and [`passwordMaxLength`](/docs/ref/object/authentication#passwordmaxlength) fields set the lower and upper bounds on the length of a newly chosen password. The defaults are 8 and 128 characters respectively. The upper bound prevents resource-exhaustion attempts against the hashing function and should be left generous.
+
+Complexity is expressed through [`passwordMinStrength`](/docs/ref/object/authentication#passwordminstrength), which rejects candidates below a configurable level on the zxcvbn scale. The available levels are `zero` (too guessable), `one` (very guessable), `two` (somewhat guessable), `three` (safely unguessable, the default), and `four` (very unguessable). Using zxcvbn rather than character-class rules allows long passphrases built from common words to pass while short passwords padded with symbols are still rejected.
+
+The [`passwordDefaultExpiry`](/docs/ref/object/authentication#passworddefaultexpiry) field sets a default lifetime for passwords stored in the internal directory. When a value is supplied, users are required to choose a new password once this duration has elapsed since their last password change. Leaving the field unset disables default expiry, so passwords remain valid until the user or an administrator rotates them.
+
+The related fields [`maxAppPasswords`](/docs/ref/object/authentication#maxappasswords) and [`maxApiKeys`](/docs/ref/object/authentication#maxapikeys) cap the number of [application passwords](/docs/auth/authentication/app-password) and [API keys](/docs/auth/authentication/api-key) each account may hold; these are separate credentials from the account password and are covered on their own pages.
+
+<!-- review: The v0.16 Authentication singleton exposes passwordMinLength, passwordMaxLength, passwordMinStrength, and passwordDefaultExpiry. It does not appear to carry a password-history or reuse-prevention field, nor an explicit rotation schedule beyond `passwordDefaultExpiry`. Verify that these are the only policy fields currently implemented and that no character-class or history settings have been added since the schema was captured. -->
 

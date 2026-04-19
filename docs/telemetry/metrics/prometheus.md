@@ -4,37 +4,38 @@ sidebar_position: 3
 
 # Prometheus
 
-Prometheus is an open-source systems monitoring and alerting toolkit designed for reliability and scalability. Developed by SoundCloud in 2012 and now part of the Cloud Native Computing Foundation, Prometheus has become one of the most popular monitoring solutions in the industry. It provides a flexible data model, a query language (PromQL), and time-series data collection, making it suitable for monitoring dynamic, complex environments.
+Prometheus is an open-source monitoring and alerting toolkit developed originally at SoundCloud and now part of the Cloud Native Computing Foundation. It uses a time-series data model, a dedicated query language (PromQL), and a pull-based scraping model where the server collects metrics from each monitored target at regular intervals.
 
-Prometheus works by scraping metrics from instrumented targets, which expose their metrics via HTTP endpoints. It then stores these metrics in a time-series database, allowing users to query and visualize the data using built-in tools or third-party integrations like Grafana. Prometheus also supports alerting, enabling users to define rules that trigger notifications when certain conditions are met, helping to ensure timely responses to potential issues.
+Stalwart exposes a Prometheus-compatible scraping endpoint so that a Prometheus instance (or any Prometheus-format scraper) can collect metrics directly. From there, metrics can be queried with PromQL, visualised in Grafana, or used to drive alerting rules.
 
-Stalwart supports exporting metrics via pull to Prometheus. By enabling the Prometheus exporter, Stalwart makes its metrics available through a dedicated endpoint that Prometheus can scrape at regular intervals.
+## Scraping endpoint
 
-The Prometheus integration lets users create custom dashboards to visualize metrics, define alerting rules, and use PromQL to perform queries and analyses. Administrators can use this to monitor server performance, detect and resolve issues, and make decisions based on real-time data.
-
-## Scraping Metrics 
-
-When the Prometheus exporter is enabled, Stalwart exposes its metrics under the `/metrics/prometheus` scraping endpoint. This endpoint exposes metrics that cover server performance and health, including resource usage, request handling, and error rates.
-
-Configuring Prometheus to scrape metrics from Stalwart involves adding a job definition to the Prometheus configuration file. This definition specifies the target endpoint (i.e., the `/metrics/prometheus` URL) and the scraping interval. Once configured, Prometheus will automatically query the endpoint at the defined intervals, collect the metrics, and store them in its time-series database.
+When the Prometheus exporter is enabled, metrics are exposed under `/metrics/prometheus`. A Prometheus job definition should point at this path on the Stalwart host and set the scrape interval required by the monitoring setup.
 
 ## Configuration
 
-The following options are available under `metrics.prometheus` for configuring the Prometheus metrics pull exporter:
+The Prometheus exporter is configured through [`prometheus`](/docs/ref/object/metrics#prometheus) on the [Metrics](/docs/ref/object/metrics) singleton (found in the WebUI under <!-- breadcrumb:Metrics --><!-- /breadcrumb:Metrics -->). The field is a multi-variant nested type with two variants:
 
-- `enable`: Enables or disables the Prometheus metrics exporter. When set to `true`, Stalwart will expose metrics for scraping by Prometheus. The default value is `false`.
-- `auth.username`: The username for basic authentication when accessing the Prometheus metrics endpoint. This option is optional.
-- `auth.secret`: The password or secret token for basic authentication when accessing the Prometheus metrics endpoint. This option is optional.
+- `Disabled` turns the endpoint off.
+- `Enabled` exposes `/metrics/prometheus` and accepts optional Basic authentication credentials.
+
+The `Enabled` variant carries:
+
+- [`authUsername`](/docs/ref/object/metrics#metricsprometheusproperties): optional username for Basic authentication.
+- [`authSecret`](/docs/ref/object/metrics#metricsprometheusproperties): optional secret for Basic authentication. A `SecretKeyOptional` with variants `None`, `Value`, `EnvironmentVariable`, and `File`.
+
+Leaving both credentials unset exposes the endpoint without authentication.
 
 ## Example
 
-Here is an example configuration snippet for setting up the Prometheus metrics pull exporter in Stalwart:
+The equivalent of enabling the endpoint with Basic authentication credentials `prometheus` / `password123`:
 
-```toml
-[metrics.prometheus]
-enable = true
-
-[metrics.prometheus.auth]
-username = "prometheus"
-secret = "password123"
+```json
+{
+  "prometheus": {
+    "@type": "Enabled",
+    "authUsername": "prometheus",
+    "authSecret": {"@type": "Value", "secret": "password123"}
+  }
+}
 ```

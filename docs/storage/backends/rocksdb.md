@@ -4,29 +4,15 @@ sidebar_position: 1
 
 # RocksDB
 
-RocksDB is an embeddable, high performance, and persistent key-value store originally built by Facebook. It is particularly well-suited for storing data on fast storage devices, such as SSDs. With its efficient use of CPU and RAM, RocksDB is designed for fast data retrieval, making it a popular choice for various applications.
-
-RocksDB is the recommended backend for single-node setups of Stalwart due to its speed and reliability, which are essential for mail server operation.
+RocksDB is an embeddable, high-performance, persistent key-value store originally developed at Facebook. It is well suited to fast storage devices such as SSDs, and its efficient use of CPU and memory makes it a popular choice for embedded workloads. RocksDB is the recommended backend for single-node installations of Stalwart because of its speed and reliability.
 
 ## Configuration
 
-The following configuration settings are available for RocksDB, which are specified under the `store.<name>` section of the configuration file:
+The RocksDB backend is selected by choosing the `RocksDb` variant on the [DataStore](/docs/ref/object/data-store) object (found in the WebUI under <!-- breadcrumb:DataStore --><!-- /breadcrumb:DataStore -->). The variant exposes the following fields:
 
-- `type`: Specifies the type of store to be used. For RocksDB, this is set to `"rocksdb"`.
-- `path`: Defines the file system path where the RocksDB data will be stored. Example: `"/var/lib/data"`.
-- `min-blob-size`: This setting determines the minimum size of a blob (Binary Large OBject) in RocksDB. It affects how data is stored and retrieved. The value is set in bytes.
-- `write-buffer-size`: Defines the size of the in-memory write buffer. A larger buffer can improve write performance but consumes more memory. The value is set in bytes.
-- `pool.workers`: Specifies the number of worker threads in the pool. This setting controls the level of concurrency for database operations, with a higher number potentially leading to better performance, especially on systems with multiple cores. The default value is the number of CPU cores available on the system.
+- [`path`](/docs/ref/object/data-store#path): filesystem path where the RocksDB data directory is stored (required).
+- [`blobSize`](/docs/ref/object/data-store#blobsize): minimum size, in bytes, for an object to be stored in the blob store rather than inline in the metadata store. Default: `16834`.
+- [`bufferSize`](/docs/ref/object/data-store#buffersize): size of the in-memory write buffer, in bytes. A larger buffer improves write throughput at the cost of memory. Default: `134217728` (128 MB).
+- [`poolWorkers`](/docs/ref/object/data-store#poolworkers): number of worker threads dedicated to database operations. Defaults to the number of CPU cores available on the host.
 
-## Example
-
-```toml
-[store."rocksdb"]
-type = "rocksdb"
-path = "/opt/stalwart/data"
-min-blob-size = 16834
-write-buffer-size = 134217728
-
-[store."rocksdb".pool]
-workers = 10
-```
+RocksDB is also available as a backend for other stores (blob, search, in-memory) through the `Default` variant of the [BlobStore](/docs/ref/object/blob-store), [SearchStore](/docs/ref/object/search-store), and [InMemoryStore](/docs/ref/object/in-memory-store) objects, in which case they reuse the configured data store.

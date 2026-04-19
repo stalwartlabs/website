@@ -4,37 +4,30 @@ sidebar_position: 7
 
 # File Storage
 
-Stalwart includes support for **file storage and remote file management** through the **JMAP for File Storage** and **WebDAV** protocols, allowing users to store, organize, and access files directly from their account.
+Stalwart includes support for file storage and remote file management through the JMAP for File Storage and WebDAV protocols, allowing accounts to store, organise, and access files directly.
 
 ## JMAP for File Storage
 
-**JMAP for File Storage** (also known as JMAP for FileNode) is a JMAP-based replacement for traditional WebDAV file storage. It allows clients to manage files and folders (upload, download, move, rename, share, etc.) using the same JMAP framework as Mail, Calendars, and Contacts.
+JMAP for File Storage (also known as JMAP for FileNode) is a JMAP-based replacement for traditional WebDAV file storage. It allows clients to manage files and folders (upload, download, move, rename, share) using the same JMAP framework as Mail, Calendars, and Contacts.
 
-Instead of WebDAV’s XML-based PROPFIND/REPORT operations and custom HTTP methods, JMAP for File Storage exposes a well-defined JSON data model for files and collections. It integrates natively with JMAP Sharing and Access Control mechanisms.
+Instead of WebDAV's XML-based PROPFIND/REPORT operations and custom HTTP methods, JMAP for File Storage exposes a JSON data model for files and collections. It integrates with JMAP Sharing and access-control mechanisms.
 
 ## WebDAV
 
-With WebDAV, users can **connect to their Stalwart account as a remote drive**, enabling them to browse, upload, download, and manage files using standard file manager applications on desktop and mobile devices. This provides a convenient and secure way to share documents, access files on the go, or centralize data storage, without the need for additional software or proprietary protocols.
+With WebDAV, an account can be connected as a remote drive, so that files can be browsed, uploaded, downloaded, and managed from standard file manager applications on desktop and mobile devices. This provides a protocol-neutral way to share documents, access files remotely, or centralise data storage.
 
-File storage in Stalwart is tightly integrated with the server's existing resource management features. **The same quota system used for email storage also applies to WebDAV file storage**, ensuring consistent usage policies across services. This allows administrators to control total storage consumption per user or tenant, simplifying resource planning and enforcement.
+File storage is integrated with the server's existing resource management features. The same quota system used for email storage also applies to WebDAV file storage, so usage policies remain consistent across services. Total storage consumption can be controlled per account or per tenant.
 
-By supporting WebDAV-based file storage, Stalwart extends its functionality beyond communication and scheduling, offering a unified platform for collaborative work and secure data access.
+### Accessing files
 
-### Accessing Files
+Accounts access file storage through the WebDAV protocol at a consistent URL path. Each account's file storage area is located under `/dav/file/<account_name>`. For example, the account `jane` has its root file storage directory at `/dav/file/jane`.
 
-Users can access their file storage on Stalwart using the WebDAV protocol at a predictable and consistent URL path. Each user’s file storage area is located under `/dav/file/<account_name>`. For example, if the user’s account name is `jane`, her root file storage directory will be accessible at `/dav/file/jane`.
-
-Clients can connect to this path using any standard WebDAV-compatible file manager or application to browse directories, upload and download files, and organize content. This allows users to interact with their Stalwart-hosted files as they would with a remote drive or shared network folder. There is no autodiscovery mechanism for file storage, so users or client applications must be configured with the correct path to access their file space. Once connected, file operations are handled using standard WebDAV methods such as `GET`, `PUT`, `DELETE`, and `MKCOL`.
+Clients connect to this path using any WebDAV-compatible file manager or application to browse directories, upload and download files, and organise content. There is no autodiscovery mechanism for file storage, so clients must be configured with the correct path. Once connected, file operations are handled using standard WebDAV methods such as `GET`, `PUT`, `DELETE`, and `MKCOL`.
 
 ## Limits
 
-To ensure optimal performance and protect server resources, Stalwart allows administrators to define limits on file-related operations. These settings help prevent abuse or misconfiguration from clients that may attempt to create excessively large files. 
+File storage limits are configured on the [FileStorage](/docs/ref/object/file-storage) singleton (found in the WebUI under <!-- breadcrumb:FileStorage --><!-- /breadcrumb:FileStorage -->).
 
-The `file-storage.max-size` setting defines the maximum allowed size (in bytes) of a single file submitted to the server. By default, this limit is set to **25 MB**. This helps prevent clients from uploading unreasonably large files that could impact memory usage or processing performance. If needed, this value can be increased or decreased depending on your deployment’s use case and client behavior.
+The [`maxSize`](/docs/ref/object/file-storage#maxsize) field defines the maximum accepted size of a single file submitted to the server. The default is `"25mb"`. Raise or lower the limit to match deployment-specific needs.
 
-Example:
-
-```toml
-[file-storage]
-max-size = 26214400
-```
+The singleton also sets default caps on per-account file resources: [`maxFiles`](/docs/ref/object/file-storage#maxfiles) caps the number of files an account can create, and [`maxFolders`](/docs/ref/object/file-storage#maxfolders) caps the number of folders. Both are optional and apply unless overridden at the account or tenant level.

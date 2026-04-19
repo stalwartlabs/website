@@ -4,31 +4,33 @@ sidebar_position: 1
 
 # Overview
 
-Stalwart provides detailed tracing and logging information to help users monitor and understand its behavior. The logging mechanisms can be configured to output to a file, standard output, or send tracing information to OpenTelemetry. It is possible to configure multiple loggers to output to different destinations, and the level of detail can be adjusted per logger. This makes it easier for users to diagnose issues and understand the inner workings of the software.
+Stalwart produces detailed tracing and logging output that can be directed to several destinations in parallel, each with its own severity threshold and event filters. Multiple tracers can be configured side by side; the destination and filter choices determine what each consumer receives.
 
-The available tracing mechanisms include:
+Each tracer is an instance of the [Tracer](/docs/ref/object/tracer) object (found in the WebUI under <!-- breadcrumb:Tracer --><!-- /breadcrumb:Tracer -->). The object is multi-variant: the chosen variant selects the output method and the fields it carries, while a set of common fields ([`enable`](/docs/ref/object/tracer#enable), [`level`](/docs/ref/object/tracer#level), [`lossy`](/docs/ref/object/tracer#lossy), [`events`](/docs/ref/object/tracer#events), [`eventsPolicy`](/docs/ref/object/tracer#eventspolicy)) apply to every variant.
 
-- [OpenTelemetry](/docs/telemetry/tracing/opentelemetry): A vendor-neutral standard that provides a set of tools and APIs for collecting distributed traces and metrics. It integrates with various observability platforms, allowing consistent monitoring across different systems and services.
-- [Log Files](/docs/telemetry/tracing/log): Traditional text-based files where Stalwart records detailed logs of system events and activities. These logs can be stored locally and accessed for troubleshooting, auditing, or analysis.
-- [Journald](/docs/telemetry/tracing/journal): A system service for collecting and managing log data, particularly in Linux environments. Journald provides structured and centralized logging, making it easier to search, filter, and manage logs.
-- [Console](/docs/telemetry/tracing/console): The standard output and error streams where Stalwart can display real-time logs and messages. This is useful for debugging and monitoring the system during active sessions.
+The supported variants are:
 
-## Tracing method
+- [OpenTelemetry](/docs/telemetry/tracing/opentelemetry): sends traces and logs to an OpenTelemetry collector over HTTP or gRPC. Two variants, `OtelHttp` and `OtelGrpc`, cover the two transports.
+- [Log file](/docs/telemetry/tracing/log): writes entries to a text file with rotation (`Log` variant).
+- [Journal](/docs/telemetry/tracing/journal): forwards entries to the systemd journal (`Journal` variant). Linux only.
+- [Console](/docs/telemetry/tracing/console): prints entries to standard error (`Stdout` variant).
 
-In the configuration file, the method for each tracer is defined with the `tracer.<id>.type` attribute, where `<id>` is a unique identifier for the tracer. The supported tracers are:
+## Logging levels
 
-- `open-telemetry`: Sends tracing information to an OpenTelemetry collector.
-- `log`: Writes tracing information to a log file.
-- `console`: Prints tracing information to the console.
-- `journal`: Sends tracing information to the systemd journal. Only available on Linux/Unix systems.
+The verbosity of a tracer is set through [`level`](/docs/ref/object/tracer#level). The available levels are:
 
-The level of tracing information recorded is determined by the `tracer.<id>.level` attribute. The available levels are:
+- `error`: only critical errors that threaten normal operation.
+- `warn`: warnings that indicate potential problems.
+- `info`: general informational output.
+- `debug`: detailed diagnostic information useful when troubleshooting.
+- `trace`: the most verbose level, logging nearly every internal operation.
 
-- `error`: Log only the most critical errors that could prevent the system from functioning properly.
-- `warn`: Log warnings, which indicate potential problems that could impact the system's stability.
-- `info`: Log informational messages, which provide a general overview of the system's behavior.
-- `debug`: Used for debugging purposes and provides detailed information about the system's internal operations.
-- `trace`: This level is the most verbose logging level and provides an extremely detailed log of all events that occur in the system.
-- `disable`: Disables the tracer.
+A tracer can be switched off without deleting it by setting [`enable`](/docs/ref/object/tracer#enable) to `false`.
 
-Tracers can be enabled or disabled by setting the `tracer.<id>.enable` attribute to `true` or `false`, respectively. When a tracer is disabled, no tracing information will be recorded by that tracer.
+## Event filters
+
+Each tracer can be narrowed to a specific set of events through [`events`](/docs/ref/object/tracer#events) together with [`eventsPolicy`](/docs/ref/object/tracer#eventspolicy). The policy is either `include` (only the listed events are emitted) or `exclude` (the listed events are suppressed and everything else is emitted). The list of event identifiers is documented on the [Events](/docs/telemetry/events) page.
+
+## Backpressure
+
+If a tracer cannot keep up with the emitted volume, the default behaviour is to apply backpressure. Setting [`lossy`](/docs/ref/object/tracer#lossy) to `true` lets the server drop entries instead, which is appropriate when loss of detail is preferable to slowing down the main event path.

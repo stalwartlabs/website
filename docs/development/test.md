@@ -136,7 +136,7 @@ Stalwart's IMAP protocol compliance may be also tested with Dovecot's ImapTest:
 - Download [ImapTest](https://www.imapwiki.org/ImapTest/Installation).
 - Start a test Stalwart instance by running:
     ```bash
-    $ cargo run --manifest-path=crates/main/Cargo.toml -- --config=./tests/resources/test_config.toml
+    $ cargo run --manifest-path=crates/main/Cargo.toml -- --config=./tests/resources/test_config.json
     ```
 - Run the compliance tests as follows:
     ```bash
@@ -155,7 +155,7 @@ Stress testing Stalwart can be done with Dovecot's ImapTest:
 - Download [ImapTest](https://www.imapwiki.org/ImapTest/Installation).
 - Start a test Stalwart instance by running:
     ```bash
-    $ cargo run --manifest-path=crates/main/Cargo.toml -- --config=./tests/resources/test_config.toml
+    $ cargo run --manifest-path=crates/main/Cargo.toml -- --config=./tests/resources/test_config.json
     ```
 - Create a test `users.txt` file by running:
     ```bash

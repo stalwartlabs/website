@@ -4,21 +4,23 @@ sidebar_position: 4
 
 # DMARC
 
-DMARC (Domain-based Message Authentication, Reporting & Conformance) is an email authentication protocol that provides a mechanism for email receivers to determine if incoming messages are legitimate and were sent from authorized sources. It allows a sender's domain to publish a policy that specifies how email receivers should handle messages that fail SPF and/or DKIM authentication checks. The DMARC policy is stored in a specially-formatted TXT record in the domain's DNS records, and email receivers can use this information to decide whether to accept, reject, or flag an incoming message based on the results of SPF and DKIM checks. DMARC also provides a reporting mechanism that enables the sender to receive feedback on how their messages are being handled by email receivers. This feedback can be used to improve the accuracy and effectiveness of SPF and DKIM configurations, as well as monitor for potential abuse of the sender's domain.
+DMARC (Domain-based Message Authentication, Reporting & Conformance) is an email-authentication protocol that allows receivers to determine whether incoming messages are legitimate and were sent from authorised sources. A sending domain publishes a DMARC policy as a DNS TXT record, specifying how receivers should treat messages that fail SPF or DKIM authentication. DMARC also provides a reporting mechanism that lets the sender receive feedback on how their messages are handled, which can be used to detect abuse of the domain.
 
 ## Verification
 
-Stalwart supports the following DMARC verification policies which are configured with the `auth.dmarc.verify` attribute:
+DMARC verification is configured on the [SenderAuth](/docs/ref/object/sender-auth) singleton (found in the WebUI under <!-- breadcrumb:SenderAuth --><!-- /breadcrumb:SenderAuth -->). The [`dmarcVerify`](/docs/ref/object/sender-auth#dmarcverify) field accepts an expression that returns one of:
 
-- `relaxed`: Verify DMARC and report the results in the `Authentication-Results` header.
-- `strict`: Reject the message if DMARC fails verification, otherwise report the results in the `Authentication-Results` header.
-- `disable`: Do not perform DMARC verification.
+- `relaxed`: verify DMARC and report the results in the `Authentication-Results` header.
+- `strict`: reject the message if DMARC fails verification; otherwise report the results.
+- `disable`: do not perform DMARC verification.
 
-Example:
+The default policy applies `relaxed` when `local_port == 25` and `disable` otherwise, so verification runs only on the cleartext inbound SMTP port. The equivalent configuration is:
 
-```toml
-[auth.dmarc]
-verify = [ { if = "listener = 'smtp'", then = "relaxed" },
-           { else = "disable" } ]
+```json
+{
+  "dmarcVerify": {
+    "match": [{"if": "listener == 'smtp'", "then": "relaxed"}],
+    "else": "disable"
+  }
+}
 ```
-

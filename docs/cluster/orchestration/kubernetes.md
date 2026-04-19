@@ -4,25 +4,25 @@ sidebar_position: 2
 
 # Kubernetes
 
-Kubernetes, often referred to as "K8s", is an open-source platform designed to automate the deployment, scaling, and management of containerized applications. It orchestrates computing, networking, and storage infrastructure on behalf of user workloads. This means it handles the deployment of applications, maintains their desired state, scales them as needed, and manages updates and service discovery within the cluster. A Kubernetes cluster consists of at least one master node and multiple worker nodes that host the pods (the smallest deployable units that can be created, scheduled, and managed).
+Kubernetes, often referred to as "K8s", is an open-source platform that automates the deployment, scaling, and management of containerised applications. It orchestrates computing, networking, and storage infrastructure on behalf of user workloads: it handles deployment, maintains the desired state of applications, scales them as needed, and manages updates and service discovery within the cluster. A Kubernetes cluster consists of at least one master node and several worker nodes that host pods, the smallest deployable units that can be created, scheduled, and managed.
 
-Running Stalwart in a Kubernetes environment enables scalable and resilient deployment, benefiting from Kubernetes' management features such as automated rollouts, rollbacks, scaling, and self-healing. This ensures that Stalwart can be effectively integrated into modern cloud infrastructures, enhancing its deployment flexibility and operational efficiency.
+Running Stalwart in a Kubernetes environment supports scalable and resilient deployment, with the benefit of Kubernetes features such as automated rollouts, rollbacks, scaling, and self-healing. Stalwart integrates with modern cloud infrastructure and benefits from flexible deployment and operational automation.
 
-## Liveness and Readiness Endpoints
+## Liveness and readiness endpoints
 
-In Kubernetes, liveness and readiness probes are mechanisms designed to ensure that containers are running properly and are ready to handle requests. The liveness probe checks if an application is running and if it fails, Kubernetes will kill the container and restart it, assuming something has gone wrong. This feature helps recover from situations where an application might be running but is stuck or unable to continue its work.
+In Kubernetes, liveness and readiness probes check that containers are running and ready to handle requests. The liveness probe checks whether an application is running; if it fails, Kubernetes kills the container and restarts it. This helps recover from situations where an application is running but stuck or unable to continue its work.
 
-On the other hand, the readiness probe determines if an application is ready to start accepting traffic. When the readiness probe fails, Kubernetes will temporarily remove the pod from its service endpoints, preventing it from receiving any traffic. This is particularly useful for scenarios where an application might need some initialization time before it can serve requests or when it needs to shut down gracefully.
+The readiness probe determines whether an application is ready to accept traffic. When the readiness probe fails, Kubernetes temporarily removes the pod from its service endpoints, preventing it from receiving traffic. This is useful when an application needs initialisation time before serving requests or when it shuts down gracefully.
 
-In Stalwart, the endpoints for these probes are predefined as follows: the liveness endpoint is located at `/healthz/live`, and the readiness endpoint can be found at `/healthz/ready`. These endpoints can be configured in your Kubernetes deployment files to ensure that the Stalwart containers are properly monitored and managed.
+In Stalwart, the endpoints for these probes are predefined: the liveness endpoint is at `/healthz/live` and the readiness endpoint is at `/healthz/ready`. These endpoints are referenced in Kubernetes deployment manifests so that Stalwart containers are monitored and managed.
 
-## Helm Chart
+## Helm chart
 
-Below are the steps to create a Helm chart, which is a package containing all the necessary files and configurations to deploy Stalwart on Kubernetes. This Helm chart will simplify the process of setting up Stalwart in a Kubernetes cluster by defining all the required resources in a cohesive and structured format.
+Below are the steps to create a Helm chart, a package containing the files and configuration needed to deploy Stalwart on Kubernetes. The Helm chart simplifies setup in a Kubernetes cluster by defining the required resources in a cohesive structure.
 
-### Step 1: Directory Structure
+### Step 1: Directory structure
 
-First, create the directory structure for your Helm chart:
+First, create the directory structure for the Helm chart:
 
 ```
 stalwart/
@@ -36,7 +36,7 @@ stalwart/
 
 ### Step 2: Chart.yaml
 
-This file contains metadata about your chart. Here's an example:
+This file contains metadata about the chart:
 
 ```yaml
 apiVersion: v2
@@ -48,7 +48,7 @@ appVersion: "latest"
 
 ### Step 3: values.yaml
 
-This file contains the default values for your chart. Users can override these values either by editing this file or by passing their own values file at the time of chart deployment.
+This file contains default values for the chart. Operators can override these values either by editing the file or by passing their own values file at deploy time.
 
 ```yaml
 image:
@@ -80,7 +80,7 @@ replicaCount: 1
 
 ### Step 4: deployment.yaml
 
-This file defines the Kubernetes deployment for your mail server.
+This file defines the Kubernetes deployment for the mail server.
 
 ```yaml
 apiVersion: apps/v1
@@ -133,9 +133,11 @@ spec:
           claimName: {{ include "stalwart.fullname" . }}
 ```
 
+Deployments that rely on cluster roles should propagate the [`STALWART_ROLE`](/docs/configuration/environment-variables#clustering) and, where applicable, [`STALWART_PUSH_SHARD`](/docs/configuration/environment-variables#clustering) environment variables to the container. See [Roles](/docs/cluster/configuration/roles) for details.
+
 ### Step 5: service.yaml
 
-This file defines the Kubernetes service for your mail server.
+This file defines the Kubernetes service for the mail server.
 
 ```yaml
 apiVersion: v1
@@ -175,12 +177,12 @@ spec:
     {{- include "stalwart.selectorLabels" . | nindent 4 }}
 ```
 
-### Deploying the Chart
+### Deploying the chart
 
-To deploy the chart, you would navigate to the root of the Helm chart directory and run:
+To deploy the chart, navigate to the root of the Helm chart directory and run:
 
 ```sh
 helm install stalwart .
 ```
 
-This deployment command initializes your Stalwart with the settings specified in the `values.yaml` and the resources defined in the `templates/` directory. Adjust the `values.yaml` according to your actual requirements regarding storage and node specifics.
+This command initialises Stalwart with the values in `values.yaml` and the resources defined in the `templates/` directory. Adjust `values.yaml` to match the actual storage and node requirements.

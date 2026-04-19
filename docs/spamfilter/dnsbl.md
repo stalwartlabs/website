@@ -2,102 +2,96 @@
 sidebar_position: 6
 ---
 
-# DNS Blocklists
+# DNS blocklists
 
-In email security and spam filtering, two widely used tools are DNSBL (DNS-based Block List) and DNSWL (DNS-based Allowlist). DNSBLs and DNSWLs are maintained by various organizations and are updated in real time to reflect the latest information about spam and malicious activity on the Internet. These tools utilize DNS (Domain Name System) queries to quickly and efficiently determine the reputation of sending IP addresses or domain names, aiding in the decision-making process of whether to accept, reject, or further scrutinize an incoming email.
+In email security and spam filtering, two widely used tools are DNSBL (DNS-based Block List) and DNSWL (DNS-based Allowlist). Both are maintained by external organisations and updated continuously to reflect the latest information about spam and malicious activity. The lists are queried over DNS, so lookups are fast and cacheable, and are used to decide whether to accept, reject, or further scrutinise an incoming message.
 
-**DNSBL (DNS-based Block List)** provide a list of IP addresses or domain names published through the Internet Domain Name System. The primary purpose of a DNSBL is to catalog IP addresses or domain names known to be sources of spam, malicious activities, or other undesirable content. When an email server receives an incoming email, it queries the DNSBL to check if the sender is on the blacklist. If a match is found, the email can be flagged, rejected, or subjected to further checks based on the server's configuration.
+A **DNSBL** lists IP addresses or domain names known to be sources of spam, malicious activity, or other undesirable content. When a message is received, the mail server queries the DNSBL to determine whether the sender appears on any of the lists. A positive match can cause the message to be flagged, rejected, or subjected to additional checks, depending on configuration.
 
-Operating in contrast to DNSBL, a **DNSWL (DNS-based Allowlist)** is a list of trusted IP addresses or domain names. These are typically IP addresses, ranges or domain names known to send legitimate emails. By querying a DNSWL, email servers can quickly identify and prioritize emails from trusted senders, reducing false positives and ensuring that genuine messages reach their intended recipients without unnecessary delays.
+A **DNSWL** is the converse: a list of trusted IP addresses or domain names known to send legitimate email. Querying a DNSWL allows the mail server to identify and prioritise messages from reputable senders, reducing false positives.
 
-The following DNSBL checks are done by Stalwart:
+The following DNSBL checks are performed by Stalwart:
 
-- **IP Address**: Verifying the reputation of the originating IP addresses is a common first step in email filtering. Stalwart checks both the IP addresses of remote hosts and every IP address found in the 'Received' headers of an email. Checking the full Received chain improves the accuracy of spam detection and reduces the chance of legitimate emails being misclassified.
-- **Domain**: While IP addresses are a significant identifier for email filtering, domain names are equally important. They provide a clearer view of the email's origin. Stalwart checks domain names extracted from incoming messages against DNS-based block and allow lists.
-- **URL**: The system also performs URL checks against DNSBLs to identify malicious links embedded within emails. By cross-referencing URLs against known blocklists, the server can detect and prevent users from accessing potentially harmful websites or content. This proactive approach to URL filtering helps safeguard users against phishing attempts, malware distribution, and other cyber threats.
-- **Hashes**: Beyond domain and IP checks, the system uses hash-based checks. This method creates hashes (digital 'fingerprints') of specific components within the email and validates them against known blocklists. Hash checks can identify threats even when senders slightly modify their tactics or domain names.
+- **IP address**: the reputation of the remote host, as well as of every IP address found in the `Received` headers of a message, is verified against configured lists. Checking the full received chain improves the accuracy of spam detection and reduces the risk of legitimate messages being misclassified.
+- **Domain**: domain names extracted from incoming messages are checked against DNS-based block and allow lists.
+- **URL**: URLs embedded in messages are checked against URL-oriented blocklists to identify malicious links.
+- **Hashes**: hashes of specific components of the message are checked against hash-based blocklists, so that threats can be identified even when senders slightly modify their tactics or domain names.
 
-## DNSBL Checks
+## DNSBL checks
 
-Stalwart allows administrators to configure custom DNSBL checks for the spam filter. These DNSBL checks use [expressions](/docs/configuration/expressions/overview) to evaluate specific aspects of incoming messages and assign tags based on the results. By integrating DNSBL checks, administrators can enhance the spam filter’s capabilities and tailor its behavior to meet specific security and operational requirements.
+Each DNSBL check is defined as a [SpamDnsblServer](/docs/ref/object/spam-dnsbl-server) object (found in the WebUI under <!-- breadcrumb:SpamDnsblServer --><!-- /breadcrumb:SpamDnsblServer -->). This is a multi-variant object: the variant selects which part of the message the DNSBL applies to (`Ip`, `Domain`, `Url`, `Email`, `Header`, `Body`, or `Any`).
 
-Each DNSBL server check is defined under the `spam-filter.dnsbl.server.<id>` section of the configuration, where `<id>` is a unique identifier for the server. The following settings are used to configure DNSBL servers in the spam filter:
+Each SpamDnsblServer instance carries:
 
-- `enable`:  This setting determines whether the DNSBL server is enabled. When set to `true`, the server will be active for DNSBL checks.
-- `scope`   Specifies the part of the message to which the DNSBL server should apply. 
-- `zone` : Defines an expression that evaluates to the DNSBL zone to query. If the expression evaluates to `false`, the DNSBL server is skipped for that message. This allows dynamic decision-making on when and how DNSBL queries are performed.
-- `tag` : Specifies an expression that evaluates to the tag to apply to the message based on the DNS query result. If the expression evaluates to `false`, no tag is applied. This setting enables precise tagging based on the returned DNS results, allowing for flexible spam filter actions.
+- [`enable`](/docs/ref/object/spam-dnsbl-server#enable): whether the server is active.
+- [`zone`](/docs/ref/object/spam-dnsbl-server#zone): an [`Expression`](/docs/ref/object/spam-dnsbl-server#expression) that evaluates to the DNS zone to query. If the expression evaluates to `false`, the DNSBL server is skipped for that message.
+- [`tag`](/docs/ref/object/spam-dnsbl-server#tag): an [`Expression`](/docs/ref/object/spam-dnsbl-server#expression) that evaluates to the tag to apply to the message based on the DNS query result. If the expression evaluates to `false`, no tag is applied.
 
-Supported scopes include:
+Example reproducing the Mailspike IP DNSBL using the `Ip` variant:
 
-- `url`: Applies to URLs in the message.
-- `domain`: Applies to domains found in the message.
-- `email`: Applies to email addresses in the message.
-- `ip`: Applies to IP addresses associated with the message.
-- `header`: Applies to message headers.
-- `body`: Applies to the message body.
-- `any`: Applies to any part of the message.
-
-Example:
-
-```toml
-[spam-filter.dnsbl.server.STWT_RBL_MAILSPIKE_IP]
-enable = true
-zone = [ { if = "location == 'tcp'", then = "ip_reverse + '.rep.mailspike.net'" },
-		{ else = false } ]
-tag = [ { if = "octets[0] != 127", then = "false" },
-        { if = "octets[3] == 10", then = "'RBL_MAILSPIKE_WORST'" },
-        { if = "octets[3] == 11", then = "'RBL_MAILSPIKE_VERYBAD'" },
-        { if = "octets[3] == 12", then = "'RBL_MAILSPIKE_BAD'" },
-        { if = "octets[3] >= 13 && octets[3] <= 16", then = "'RWL_MAILSPIKE_NEUTRAL'" },
-        { if = "octets[3] == 17", then = "'RWL_MAILSPIKE_POSSIBLE'" },
-        { if = "octets[3] == 18", then = "'RWL_MAILSPIKE_GOOD'" },
-        { if = "octets[3] == 19", then = "'RWL_MAILSPIKE_VERYGOOD'" },
-        { if = "octets[3] == 20", then = "'RWL_MAILSPIKE_EXCELLENT'" },
-		{ else = false } ]
-scope = "ip"
-```
-## Core DNSBLs
-
-Core DNSBL servers is a list of predefined DNS-based Blocklist (DNSBL) servers maintained by Stalwart Labs. These servers are identified by an ID starting with `STWT_` and include popular DNSBL providers such as Spamhaus, Spamcop, Barracuda, and dozens of others. Core DNSBL servers are regularly updated to ensure they remain effective against the latest spam sources and threats.
-
-The latest version of core DNSBL servers is maintained in the [Spam Filter repository](https://github.com/stalwartlabs/spam-filter). Stalwart can be configured to automatically download and apply the latest rule [updates](/docs/spamfilter/settings/general#updates), ensuring the DNSBL checks stay current without manual intervention.
-
-Administrators should avoid modifying `STWT_` core DNSBL server configurations directly, as any changes will be overwritten during the next update. The only exception is the `enable` setting, which allows administrators to control whether a core DNSBL server is active. This setting is preserved across updates. If a core DNSBL server requires modification beyond enabling or disabling it, the recommended approach is to disable the core server and create a custom DNSBL server configuration with the desired changes. This ensures that customizations are retained while still benefiting from updates to the core DNSBL server list.
-
-Example:
-
-```toml
-[spam-filter.dnsbl.server.STWT_DNSBL_SERVER]
-enable = false
-
-[spam-filter.dnsbl.server.STWT_MY_DNSBL_SERVER]
-enable = true
-zone = "zone expression"
-tag = "tag expression"
-scope = "ip"
+```json
+{
+  "@type": "Ip",
+  "name": "STWT_RBL_MAILSPIKE_IP",
+  "enable": true,
+  "zone": {
+    "match": [{"if": "location == 'tcp'", "then": "ip_reverse + '.rep.mailspike.net'"}],
+    "else": "false"
+  },
+  "tag": {
+    "match": [
+      {"if": "octets[0] != 127", "then": "false"},
+      {"if": "octets[3] == 10", "then": "'RBL_MAILSPIKE_WORST'"},
+      {"if": "octets[3] == 11", "then": "'RBL_MAILSPIKE_VERYBAD'"},
+      {"if": "octets[3] == 12", "then": "'RBL_MAILSPIKE_BAD'"},
+      {"if": "octets[3] >= 13 && octets[3] <= 16", "then": "'RWL_MAILSPIKE_NEUTRAL'"},
+      {"if": "octets[3] == 17", "then": "'RWL_MAILSPIKE_POSSIBLE'"},
+      {"if": "octets[3] == 18", "then": "'RWL_MAILSPIKE_GOOD'"},
+      {"if": "octets[3] == 19", "then": "'RWL_MAILSPIKE_VERYGOOD'"},
+      {"if": "octets[3] == 20", "then": "'RWL_MAILSPIKE_EXCELLENT'"}
+    ],
+    "else": "false"
+  }
+}
 ```
 
-By following this approach, administrators can customize the behavior of DNSBL server checks while maintaining compatibility with automatic updates. This ensures that the server remains both flexible and equipped with the latest anti-spam resources.
+## Core DNSBL servers
 
+Stalwart ships a set of predefined DNSBL server definitions maintained by Stalwart Labs. These are identified by a name starting with `STWT_` and cover Spamhaus, Spamcop, Barracuda, and dozens of other popular providers. Core DNSBL servers are regularly updated to remain effective against the latest threat sources.
 
+The latest version of the core list is maintained in the [Spam Filter repository](https://github.com/stalwartlabs/spam-filter). Stalwart can be configured to download and apply the latest definitions automatically; see [updates](/docs/spamfilter/settings/general#updates).
 
+Core definitions should not be modified directly, because any changes are overwritten on the next update. The only safe in-place modification is toggling [`enable`](/docs/ref/object/spam-dnsbl-server#enable) on a core entry, which is preserved across updates. To apply custom behaviour beyond enabling or disabling a core entry, disable the core server and create a custom SpamDnsblServer with the desired values.
+
+For example, to disable a core entry and add a custom server:
+
+```json
+{
+  "@type": "Ip",
+  "name": "STWT_DNSBL_SERVER",
+  "enable": false
+}
+```
+
+```json
+{
+  "@type": "Ip",
+  "name": "STWT_MY_DNSBL_SERVER",
+  "enable": true,
+  "zone": {"else": "zone expression"},
+  "tag": {"else": "tag expression"}
+}
+```
+
+This keeps customisations intact while still benefiting from ongoing updates to the core list.
 
 ## Limits
 
-The maximum number of DNSBL queries that can be made for a single email is determined by the following settings:
+The maximum number of DNSBL queries that can be performed per message is configured on the [SpamDnsblSettings](/docs/ref/object/spam-dnsbl-settings) singleton (found in the WebUI under <!-- breadcrumb:SpamDnsblSettings --><!-- /breadcrumb:SpamDnsblSettings -->). The per-message limits are:
 
-- `spam-filter.dnsbl.max-check.ip`: The maximum number of IP address queries allowed per email.
-- `spam-filter.dnsbl.max-check.domain`: The maximum number of domain queries allowed per email.
-- `spam-filter.dnsbl.max-check.email`: The maximum number of email queries allowed per email.
-- `spam-filter.dnsbl.max-check.url`: The maximum number of URL queries allowed per email.
+- [`ipLimit`](/docs/ref/object/spam-dnsbl-settings#iplimit): maximum number of IP address queries.
+- [`domainLimit`](/docs/ref/object/spam-dnsbl-settings#domainlimit): maximum number of domain name queries.
+- [`emailLimit`](/docs/ref/object/spam-dnsbl-settings#emaillimit): maximum number of email address queries.
+- [`urlLimit`](/docs/ref/object/spam-dnsbl-settings#urllimit): maximum number of URL queries.
 
-Example:
-
-```toml
-[spam-filter.dnsbl.max-check]
-ip = 50
-domain = 50
-email = 50
-url = 50
-```
+All four limits default to 50.

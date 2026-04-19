@@ -4,53 +4,60 @@ sidebar_position: 5
 
 # DMARC
 
-DMARC (Domain-based Message Authentication, Reporting & Conformance) is an email authentication protocol that provides a mechanism for email receivers to determine if incoming messages are legitimate and were sent from authorized sources. It allows a sender's domain to publish a policy that specifies how email receivers should handle messages that fail SPF and/or DKIM authentication checks. The DMARC policy is stored in a specially-formatted TXT record in the domain's DNS records, and email receivers can use this information to decide whether to accept, reject, or flag an incoming message based on the results of SPF and DKIM checks. DMARC also provides a reporting mechanism that enables the sender to receive feedback on how their messages are being handled by email receivers. This feedback can be used to improve the accuracy and effectiveness of SPF and DKIM configurations, as well as monitor for potential abuse of the sender's domain.
+DMARC (Domain-based Message Authentication, Reporting & Conformance) is an email-authentication protocol that provides a mechanism for receivers to determine whether incoming messages are legitimate and were sent from authorised sources. A sending domain publishes a DMARC policy as a DNS TXT record, specifying how receivers should handle messages that fail SPF or DKIM authentication. DMARC also defines a reporting mechanism that lets the sender receive feedback on how their messages are being handled, which can be used to tune SPF and DKIM configurations and monitor for abuse of the domain.
 
-## Failure Reports
+All outgoing DMARC reports (both failure and aggregate) are configured on the [DmarcReportSettings](/docs/ref/object/dmarc-report-settings) singleton (found in the WebUI under <!-- breadcrumb:DmarcReportSettings --><!-- /breadcrumb:DmarcReportSettings -->).
 
-DMARC authentication failure reporting is a mechanism for receiving feedback about email messages that fail DMARC evaluation. It allows the owners of a domain to receive reports from mail receivers about messages claiming to be from their domain that are not aligned with their DMARC policy. These reports contain information about the message, including the envelope sender address, the header from address, and the IP address of the sending server, as well as the DMARC evaluation results. By analyzing these reports, domain owners can identify potential misuses of their domain, such as spam or phishing campaigns, and take action to protect their domain's reputation.
+## Failure reports {#failure-reports}
 
-Outgoing DMARC failure reports are configured under the `report.dmarc` key using the following options:
+DMARC authentication-failure reporting lets domain owners receive feedback about messages that fail DMARC evaluation. Reports include the envelope sender address, the header From address, and the IP address of the sending server, together with the DMARC evaluation results. Analysing these reports helps domain owners identify potential abuse of their domain and take corrective action.
 
-- `from-name`: The name that will be used in the `From` header of the DMARC report email.
-- `from-address`: The email address that will be used in the `From` header of the DMARC report email. The default value is the expression `'noreply-dmarc@' + config_get('report.domain')`.
-- `subject`: The subject name that will be used in the DMARC report email.
-- `send`: The rate at which DMARC reports will be sent to a given email address. When this rate is exceeded, no further DMARC failure reports will be sent to that address. Set to `false` to disable DMARC authentication failure reporting.
-- `sign`: The list of [DKIM](/docs/mta/authentication/dkim/overview) signatures to use when signing the DMARC report.
+Failure reports are configured by the following fields:
+
+- [`failureFromName`](/docs/ref/object/dmarc-report-settings#failurefromname): expression returning the name used in the `From` header of the report. Default `'Report Subsystem'`.
+- [`failureFromAddress`](/docs/ref/object/dmarc-report-settings#failurefromaddress): expression returning the email address used in the `From` header. Default `'noreply-dmarc@' + system('domain')`.
+- [`failureSubject`](/docs/ref/object/dmarc-report-settings#failuresubject): expression returning the report subject. Default `'DMARC Authentication Failure Report'`.
+- [`failureSendFrequency`](/docs/ref/object/dmarc-report-settings#failuresendfrequency): expression returning the rate at which failure reports are sent to a given address. Default `[1, 1d]`. Returning `false` disables failure reporting.
+- [`failureDkimSignDomain`](/docs/ref/object/dmarc-report-settings#failuredkimsigndomain): expression returning the domain whose [DKIM](/docs/mta/authentication/dkim/overview) signatures sign the outgoing report. Default `system('domain')`.
 
 Example:
 
-```toml
-[report.dmarc]
-from-name = "'Report Subsystem'"
-from-address = "'noreply-dmarc@example.org'"
-subject = "'DMARC Authentication Failure Report'"
-send = "1/1d"
-sign = ["rsa"]
+```json
+{
+  "failureFromName": {"else": "'Report Subsystem'"},
+  "failureFromAddress": {"else": "'noreply-dmarc@example.org'"},
+  "failureSubject": {"else": "'DMARC Authentication Failure Report'"},
+  "failureSendFrequency": {"else": "[1, 1d]"},
+  "failureDkimSignDomain": {"else": "'example.org'"}
+}
 ```
 
-## Aggregate Reports
+## Aggregate reports {#aggregate-reports}
 
-DMARC aggregate reporting allows organizations to receive reports on messages that pass or fail DMARC evaluation, by sending the reports to a specified email address. The reports are generated by receiving mail servers and contain information about messages sent from the domain, including the sending IP address, the results of SPF and DKIM authentication, and the disposition of the message (pass, fail, or quarantine). The aggregate reports provide valuable insights into the email security posture of a domain, allowing domain owners to monitor the use of their domain for email and take necessary actions to secure their email infrastructure. The reports are typically sent on a daily or weekly basis and are formatted in a machine-readable format, such as XML, to allow for easy analysis and processing.
+DMARC aggregate reporting lets organisations receive reports on messages that pass or fail DMARC evaluation. Aggregate reports are generated by receiving mail servers and contain information about messages sent from the domain, including the sending IP address, SPF and DKIM authentication results, and the disposition of the message (pass, fail, or quarantine). They are typically sent daily or weekly in a machine-readable format (XML).
 
-Outgoing DMARC aggregate reports are configured under the `report.dmarc.aggregate` key using the following options:
+Aggregate reports are configured by the following fields:
 
-- `from-name`: The name that will be used in the `From` header of the DMARC aggregate report email.
-- `from-address`: The email address that will be used in the `From` header of the DMARC aggregate report email. The default value is the expression `'noreply-dmarc@' + config_get('report.domain')`.
-- `org-name`: The name of the organization to be included in the report.
-- `send`: The frequency at which the DMARC aggregate reports will be sent. The options are `hourly`, `daily`, `weekly`, or `never` to disable reporting.
-- `max-size`: The maximum size of the DMARC aggregate report in bytes.
-- `sign`: The list of [DKIM](/docs/mta/authentication/dkim/overview) signatures to use when signing the DMARC aggregate report.
+- [`aggregateFromName`](/docs/ref/object/dmarc-report-settings#aggregatefromname): expression returning the name used in the `From` header of the aggregate report. Default `'Report Subsystem'`.
+- [`aggregateFromAddress`](/docs/ref/object/dmarc-report-settings#aggregatefromaddress): expression returning the email address used in the `From` header. Default `'noreply-dmarc@' + system('domain')`.
+- [`aggregateSubject`](/docs/ref/object/dmarc-report-settings#aggregatesubject): expression returning the report subject. Default `'DMARC Aggregate Report'`.
+- [`aggregateOrgName`](/docs/ref/object/dmarc-report-settings#aggregateorgname): expression returning the organisation name included in the report. Default `system('domain')`.
+- [`aggregateContactInfo`](/docs/ref/object/dmarc-report-settings#aggregatecontactinfo): optional expression returning contact information for the reporting organisation.
+- [`aggregateSendFrequency`](/docs/ref/object/dmarc-report-settings#aggregatesendfrequency): expression returning the frequency at which aggregate reports are sent. Supported values are `hourly`, `daily`, `weekly`, and `never`. Default `daily`.
+- [`aggregateMaxReportSize`](/docs/ref/object/dmarc-report-settings#aggregatemaxreportsize): expression returning the maximum size of the aggregate report in bytes. Default 5242880 (5 MB).
+- [`aggregateDkimSignDomain`](/docs/ref/object/dmarc-report-settings#aggregatedkimsigndomain): expression returning the domain whose DKIM signatures sign the outgoing report. Default `system('domain')`.
 
 Example:
 
-```toml
-[report.dmarc.aggregate]
-from-name = "'DMARC Report'"
-from-address = "'noreply-dmarc@example.org'"
-org-name = "'The example Organization'"
-contact-info = "'jane@example.org'"
-send = "daily"
-max-size = 26214400 # 25mb
-sign = "['rsa']"
+```json
+{
+  "aggregateFromName": {"else": "'DMARC Report'"},
+  "aggregateFromAddress": {"else": "'noreply-dmarc@example.org'"},
+  "aggregateSubject": {"else": "'DMARC Aggregate Report'"},
+  "aggregateOrgName": {"else": "'The example Organization'"},
+  "aggregateContactInfo": {"else": "'jane@example.org'"},
+  "aggregateSendFrequency": {"else": "daily"},
+  "aggregateMaxReportSize": {"else": "26214400"},
+  "aggregateDkimSignDomain": {"else": "'example.org'"}
+}
 ```

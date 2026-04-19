@@ -4,63 +4,66 @@ sidebar_position: 3
 
 # Configuration
 
-Stalwart supports automatic TLS deployment and renewals using the ACME protocol, enhancing security and ease of management for mail server administrators. ACME in configured in the `acme.<name>` section of the configuration file. The following attributes are available:
+ACME providers are registered as [AcmeProvider](/docs/ref/object/acme-provider) objects (found in the WebUI under <!-- breadcrumb:AcmeProvider --><!-- /breadcrumb:AcmeProvider -->). Each provider describes where to talk to the CA, which challenge to use, and which contacts are notified. The relevant fields are:
 
-- `directory`: The directory URL of the ACME provider you're using. For Let's Encrypt, the live directory URL is `https://acme-v02.api.letsencrypt.org/directory` and is used for actual certificate issuance. The staging directory URL is `https://acme-staging-v02.api.letsencrypt.org/directory` and is primarily used for testing. 
-- `challenge`: The [challenge type](/docs/server/tls/acme/challenges) to use for validation. Supported values are `http-01`, `dns-01`, and `tls-alpn-01` (default).
-- `contact`: Specifies the contact email address, which is used for important communications regarding your ACME account and certificates. 
-- `cache`: Specifies the directory where ACME-related data will be stored. 
-- `renew-before`: Determines how early before expiration the certificate should be renewed. The default setting is `30d`, which means that renewal attempts will start 30 days before the certificate expires.
-- `domains`: A list of subject names for which the certificate should be issued. Wildcard domains are specified using the `*` character, for example, `*.example.org`.
-- `eab.kid`: External Account Binding (EAB) key identifier
-- `eab.hmac-key`: External Account Binding (EAB) HMAC key
-- `default`: If set to `true`, certificate obtained by this ACME provided will be used when the client does not provide an SNI server name.
+- [`directory`](/docs/ref/object/acme-provider#directory): the directory URL of the ACME provider. Let's Encrypt's production directory is `https://acme-v02.api.letsencrypt.org/directory` (the default); the staging directory `https://acme-staging-v02.api.letsencrypt.org/directory` is used for test runs that do not consume production rate-limit budget.
+- [`challengeType`](/docs/ref/object/acme-provider#challengetype): the [challenge type](/docs/server/tls/acme/challenges) used to validate control of each domain. One of `TlsAlpn01` (default), `Dns01`, `DnsPersist01`, or `Http01`.
+- [`contact`](/docs/ref/object/acme-provider#contact): one or more contact email addresses. Used by the CA for expiry warnings and security notices.
+- [`renewBefore`](/docs/ref/object/acme-provider#renewbefore): how early renewal starts, expressed as a fraction of the remaining lifetime. Default `R23` (two thirds of the remaining validity period has elapsed).
+- [`maxRetries`](/docs/ref/object/acme-provider#maxretries): number of attempts before giving up on a failed challenge. Default `10`.
+- [`eabKeyId`](/docs/ref/object/acme-provider#eabkeyid) / [`eabHmacKey`](/docs/ref/object/acme-provider#eabhmackey): External Account Binding (EAB) credentials when the CA requires them.
+- [`memberTenantId`](/docs/ref/object/acme-provider#membertenantid): tenant scope of the provider (Enterprise deployments only).
+
+<!-- review: The previous docs included a `domains` list on the ACME provider (the subject names the certificate should cover, including wildcards such as `*.example.org`) and a `cache` filesystem path for account data. Neither field appears on the AcmeProvider object. Confirm where the list of covered domains is configured in the new model (for example, on Domain records or via the `subjectAlternativeNames` list on issued Certificate records) and whether ACME account material is now stored via the data store rather than in a filesystem cache. -->
+
+<!-- review: The previous docs also exposed a `default` boolean on each ACME provider, marking the certificate issued by that provider as the one used when clients do not send SNI. AcmeProvider has no `default` field; the default-certificate selection in the new schema is `SystemSettings.defaultCertificateId`. Confirm that flagging an ACME provider as default is now implicit (when the ACME-issued certificate is selected via `defaultCertificateId`). -->
 
 :::tip Note
 
-- Regularly check your contact email for any communications from the ACME provider.
-- It's recommended to initially use the staging environment to ensure your configuration works correctly before switching to the live environment to avoid hitting rate limits.
+- Regularly check the contact email for messages from the ACME provider.
+- Point a new provider at the staging directory first to verify the configuration; switching to production afterwards avoids consuming the production rate-limit budget on failed runs.
 
 :::
 
 ## DNS-01 configuration
 
-When using the DNS-01 challenge, the following additional attributes are available in the `acme.<name>` section:
+When [`challengeType`](/docs/ref/object/acme-provider#challengetype) is set to `Dns01`, Stalwart publishes the validation record through a configured DNS provider. DNS providers are stored as [DnsServer](/docs/ref/object/dns-server) objects (found in the WebUI under <!-- breadcrumb:DnsServer --><!-- /breadcrumb:DnsServer -->). Each DnsServer carries its own variant (`Tsig`, `Sig0`, or `Cloudflare`) with the fields needed to talk to that provider. Common timing fields that apply to every DNS variant are:
 
-- `provider`: Specifies the DNS provider to use for DNS record management.
-- `polling-interval`: Specifies the interval at which the DNS records are checked for propagation. The default value is `15s`.
-- `propagation-timeout`: Specifies the maximum time to wait for DNS records to propagate. The default value is `1m`.
-- `ttl`: Specifies the TTL (Time to Live) value for the DNS records. The default value is `5m`.
-- `origin`: Optional setting specifying the DNS zone origin where the DNS records will be created. This is typically the domain name for which the certificate is being issued. If not specified, the domain name is automatically extracted from the specified subject names.
+- [`pollingInterval`](/docs/ref/object/dns-server#pollinginterval): how often to check whether the TXT record has propagated. Default `"15s"`.
+- [`propagationTimeout`](/docs/ref/object/dns-server#propagationtimeout): maximum time to wait for propagation. Default `"1m"`.
+- [`ttl`](/docs/ref/object/dns-server#ttl): TTL applied to new records. Default `"5m"`.
+- [`timeout`](/docs/ref/object/dns-server#timeout): per-request timeout against the DNS API. Default `"30s"`.
+
+<!-- review: The previous docs described an `origin` field that pinned the DNS zone used for record updates. No matching field appears on DnsServer in the current schema. Confirm whether the zone is now inferred exclusively from the certificate's subject names, or whether zone selection has moved to a different object. -->
 
 ### RFC2136 (TSIG)
 
-The RFC2136 with TSIG authentication provider is selected by setting `acme.<name>.provider` to `rfc2136-tsig`. The following additional attributes are available in the `acme.<name>` section:
+The `Tsig` variant of DnsServer speaks RFC 2136 dynamic update with TSIG authentication. Its fields are:
 
-- `host`: Specifies the DNS server hostname.
-- `port`: Specifies the DNS server port. The default value is `53`.
-- `protocol`: Specifies the DNS server protocol. Supported values are `udp` and `tcp`. The default value is `udp`.
-- `tsig-algorithm`: Specifies the TSIG algorithm to use for authentication. Supported values are `hmac-md5`, `gss`, `hmac-sha1`, `hmac-sha224`, `hmac-sha256`, `hmac-sha256-128`, `hmac-sha384`, `hmac-sha384-192`, `hmac-sha512`, and `hmac-sha512-256`.
-- `key`: Specifies the TSIG key name.
-- `secret`: Specifies the TSIG key secret.
+- [`host`](/docs/ref/object/dns-server#host): IP address of the authoritative DNS server.
+- [`port`](/docs/ref/object/dns-server#port): port used to reach the server. Default `53`.
+- [`protocol`](/docs/ref/object/dns-server#protocol): `udp` or `tcp`. Default `udp`.
+- [`tsigAlgorithm`](/docs/ref/object/dns-server#tsigalgorithm): TSIG HMAC algorithm. Default `hmac-sha512`.
+- [`keyName`](/docs/ref/object/dns-server#keyname): TSIG key name.
+- [`key`](/docs/ref/object/dns-server#key): TSIG key secret.
 
 ### Cloudflare
 
-The Cloudflare provider is selected by setting `acme.<name>.provider` to `cloudflare`. The following additional attributes are available in the `acme.<name>` section:
+The `Cloudflare` variant of DnsServer drives the Cloudflare DNS API. Its fields are:
 
-- `secret`: Specifies the Cloudflare API token.
-- `email`: Optional setting to authenticate using the `X-Auth-Email` header. If specified the `secret` attribute is used as the `X-Auth-Key` header value.
-- `timeout`: Specifies the timeout for API requests. The default value is `30s`.
+- [`secret`](/docs/ref/object/dns-server#secret): Cloudflare API token, or API key when `email` is set.
+- [`email`](/docs/ref/object/dns-server#email): account email used with the legacy `X-Auth-Email` / `X-Auth-Key` flow. Leave unset to authenticate with an API token.
+- [`timeout`](/docs/ref/object/dns-server#timeout): HTTP request timeout. Default `"30s"`.
 
 ## Example
 
-The following example configures Stalwart to use Let's Encrypt's live directory URL using the `tls-alpn-01` challenge type.
-```toml
-[acme."letsencrypt"]
-directory = "https://acme-v02.api.letsencrypt.org/directory"
-challenge = "tls-alpn-01"
-contact = ["postmaster@%{DEFAULT_DOMAIN}%"]
-domains = ["mail.example.org", "imap.example.org", "mx.example.org"]
-cache = "%{BASE_PATH}%/etc/acme"
-renew-before = "30d"
+An ACME provider pointing at the Let's Encrypt production directory and using TLS-ALPN-01:
+
+```json
+{
+  "directory": "https://acme-v02.api.letsencrypt.org/directory",
+  "challengeType": "TlsAlpn01",
+  "contact": ["postmaster@example.org"],
+  "renewBefore": "R23"
+}
 ```

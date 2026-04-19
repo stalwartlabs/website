@@ -10,26 +10,19 @@ With DANE, domain owners can publish their own certificate information in the DN
 
 ## Configuration
 
-DANE can be enabled in Stalwart with the `queue.tls.<id>.dane` property, where `<id>` is the name of the [TLS strategy](/docs/mta/outbound/tls). This property accepts the following values:
+DANE enforcement is configured per TLS strategy on the [MtaTlsStrategy](/docs/ref/object/mta-tls-strategy) object (found in the WebUI under <!-- breadcrumb:MtaTlsStrategy --><!-- /breadcrumb:MtaTlsStrategy -->). The [`dane`](/docs/ref/object/mta-tls-strategy#dane) field accepts one of:
 
-- `optional`: Use DANE only if TLSA records for the domain are available.
-- `require`: Require DANE and do not delivery unless a valid TLSA record is available (not recommended unless used under a custom rule).
-- `disable`: Never use DANE.
+- `optional`: use DANE only if TLSA records for the domain are available.
+- `require`: require DANE and refuse delivery unless a valid TLSA record is available. Not recommended as a global default.
+- `disable`: never use DANE.
 
-Example:
+## TLSA records
 
-```toml
-[queue.tls.default]
-dane = "optional"
-```
+TLSA records are DNS records containing the certificate information for a domain. They are used by DANE to authenticate the server's certificate. A TLSA record contains:
 
-## TLSA Records
+- **Usage**: specifies how the certificate is used.
+- **Selector**: specifies which part of the certificate is used.
+- **Matching Type**: specifies how the certificate is matched.
+- **Certificate Association Data**: the certificate data itself.
 
-TLSA records are DNS records that contain the certificate information for a domain. They are used by DANE to authenticate the server's certificate. A TLSA record contains the following information:
-
-- **Usage**: Specifies how the certificate is used.
-- **Selector**: Specifies which part of the certificate is used.
-- **Matching Type**: Specifies how the certificate is matched.
-- **Certificate Association Data**: Contains the certificate data.
-
-Stalwart automatically generates the TLSA records for the TLS certificates it uses. To obtain the TLSA records for a domain, go to the `Management` > `Directory` > `Domains` section in the [Webadmin](/docs/management/webadmin/overview.md).
+Stalwart automatically generates TLSA records for the TLS certificates it uses. Generated TLSA records for a domain are available in the [WebUI](/docs/management/webui/overview) under Management > Directory > Domains.

@@ -4,51 +4,47 @@ sidebar_position: 5
 
 # MAIL stage
 
-The `MAIL FROM` command is used to initiate an SMTP message transfer by identifying the sender of the message. After the MAIL FROM command is issued, the receiving mail server checks the validity of the sender email address and ensures that the sender is authorized to send messages on behalf of that domain. If the sender email address is deemed valid, the message transfer process continues and the next command is issued to specify the recipient email address using the SMTP `RCPT TO` command.
+The `MAIL FROM` command initiates an SMTP message transfer by identifying the sender of the message. After the command is issued, the receiving mail server validates the sender address and checks whether the sender is authorised to send messages on behalf of that domain. If valid, the transaction proceeds to the `RCPT TO` stage.
+
+MAIL-stage behaviour is configured on the [MtaStageMail](/docs/ref/object/mta-stage-mail) singleton (found in the WebUI under <!-- breadcrumb:MtaStageMail --><!-- /breadcrumb:MtaStageMail -->).
 
 ## Address rewriting
 
-Rewriting expressions can be used to modify the sender address of an email. This can be useful, for instance, for obfuscating the sender address for privacy reasons, or for changing the domain in an address to match a company's branding. Sender address rewriting is configured using the `session.mail.rewrite` attribute.
+The [`rewrite`](/docs/ref/object/mta-stage-mail#rewrite) field accepts an expression that can modify the sender address. This is useful for obfuscating the sender for privacy, or for changing the domain to match organisational branding. For background on the expression-based rewrite model see the [address rewriting](/docs/mta/rewrite/address) documentation.
 
-For example, the following configuration will remove any subdomain from the sender address:
+For example, the following configuration removes any subdomain from the sender address on non-SMTP listeners:
 
-```toml
-[session.mail]
-rewrite = [ { if = "listener != 'smtp' & matches('^([^.]+)@([^.]+)\.(.+)$', rcpt)", then = "$1 + '@' + $3" },
-            { else = false } ]
+```json
+{
+  "rewrite": {
+    "match": [{"if": "listener != 'smtp' & matches('^([^.]+)@([^.]+)\\.(.+)$', rcpt)", "then": "$1 + '@' + $3"}],
+    "else": "false"
+  }
+}
 ```
-
-For more information, please refer to the [address rewriting](/docs/mta/rewrite/address) documentation.
 
 ## Allowed senders
 
-The `session.mail.is-allowed` attribute specifies an expression that determines whether the sender is allowed to send mail. If the expression evaluates to `false`, the sender is rejected. This can be useful, for instance, for rejecting certain senders or domains.
+The [`isSenderAllowed`](/docs/ref/object/mta-stage-mail#issenderallowed) field accepts an expression that determines whether the sender is accepted. If the expression evaluates to `false`, the sender is rejected. The default policy allows the sender when authenticated or when the sender domain is not present in the `spam-block` list.
 
 For example, to block domains present in the `spam-block` list:
 
-```toml
-[session.mail]
-is-allowed = "!key_exists('spam-block', sender_domain)"
+```json
+{
+  "isSenderAllowed": {"else": "!key_exists('spam-block', sender_domain)"}
+}
 ```
 
 ## Sieve script
 
-The `session.mail.script` attribute specifies the name of the [Sieve script](/docs/sieve/overview) to run after a successful `MAIL FROM` command. This can be useful, for instance, for rejecting certain senders or rewriting the sender address.
+The [`script`](/docs/ref/object/mta-stage-mail#script) field selects a [Sieve script](/docs/sieve/overview) to run after a successful `MAIL FROM` command. Typical uses include rejecting specific senders or rewriting the sender address using the `envelope` Sieve extension.
 
-Example:
+For example, setting [`script`](/docs/ref/object/mta-stage-mail#script) to the expression `"'return_path_filter'"` runs a Sieve script named `return_path_filter` which can reject messages whose return path matches a known-bad local part:
 
-```toml
-[session.connect]
-mail = "'return_path_filter'"
+```sieve
+require ["variables", "envelope", "reject"];
 
-[sieve.trusted.scripts.return_path_filter]
-contents = '''
-  require ["variables", "envelope", "reject"];
-
-  if envelope :localpart :is "from" "known_spammer" {
-      reject "We do not accept SPAM here.";
-  }
-'''
+if envelope :localpart :is "from" "known_spammer" {
+    reject "Messages from this sender are not accepted.";
+}
 ```
-
-

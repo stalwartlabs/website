@@ -4,23 +4,23 @@ sidebar_position: 3
 
 # Docker Swarm
 
-**Docker Swarm** is Docker’s native clustering and orchestration solution, allowing users to deploy and manage containers across a group of machines as a single, unified cluster. It provides built-in features for service discovery, load balancing, scaling, and fault tolerance, while maintaining a simple and familiar Docker CLI and Compose-based workflow.
+Docker Swarm is the native clustering and orchestration solution from Docker. It deploys and manages containers across a group of machines as a single cluster, providing built-in features for service discovery, load balancing, scaling, and fault tolerance while preserving the familiar Docker CLI and Compose workflow.
 
-With Docker Swarm, administrators can define multi-container services and have Docker handle the scheduling, replication, and failover of containers across the swarm nodes. This makes it an accessible and lightweight orchestration option for environments that already rely on Docker for containerization.
+With Docker Swarm, multi-container services are defined once, and Docker handles the scheduling, replication, and failover of containers across swarm nodes. This makes Swarm an accessible orchestration option for environments that already rely on Docker for containerisation.
 
-Stalwart can be deployed on Docker Swarm as a set of replicated or distributed services, each running one or more components of the mail and collaboration stack. Swarm handles container placement, restarts failed containers, and ensures that services remain available, even in the event of hardware or node failure.
+Stalwart can be deployed on Docker Swarm as a set of replicated or distributed services, each running one or more components of the mail and collaboration stack. Swarm handles container placement, restarts failed containers, and keeps services available, including in the event of hardware or node failure.
 
-For teams looking for a straightforward orchestration layer without the complexity of Kubernetes or the scale of Mesos, Docker Swarm provides an effective solution to manage Stalwart clusters in small to medium-sized environments.
+For teams that want a straightforward orchestration layer without the complexity of Kubernetes or the scale of Mesos, Docker Swarm is a practical option for managing Stalwart clusters in small to medium environments.
 
 ## Deployment
 
-Set up the necessary node labels to ensure proper placement of the mail server:
+Set up the necessary node labels to control placement of the mail server:
 
 ```bash
 $ docker node update --label-add mail=true <NODE-ID>
 ```
 
-Deploy the stack to your swarm:
+Deploy the stack to the swarm:
 
 ```bash
 $ docker stack deploy -c stalwart-mail-stack.yml stalwart-mail
@@ -32,7 +32,7 @@ Check deployment status:
 $ docker stack ps stalwart-mail
 ```
 
-Below is an example of a Docker Compose file for deploying Stalwart on Docker Swarm:
+Below is an example Docker Compose file for deploying Stalwart on Docker Swarm:
 
 ```yaml
 version: '3.8'
@@ -117,3 +117,5 @@ networks:
     driver_opts:
       encrypted: "true"
 ```
+
+<!-- review: The `STALWART_HOSTNAME` and `STALWART_DOMAINS` environment variables shown in the example are not listed among the documented startup environment variables in `/docs/configuration/environment-variables.md`. Confirm whether they still apply in the current model (where hostname is carried on `SystemSettings.defaultHostname` and domains are modelled as Domain objects) or whether the example should be updated. -->

@@ -4,27 +4,25 @@ sidebar_position: 1
 
 # Overview
 
-Spam filtering is an essential component of any modern mail server, designed to sift through vast amounts of incoming email to identify and segregate unsolicited or potentially harmful messages. These unsolicited messages, commonly known as spam, not only clutter an individual's inbox but can also pose significant security risks. Efficient spam filtering ensures that genuine, legitimate emails reach their intended recipients, while unwanted or malicious emails are quarantined or discarded.
+Spam filtering identifies and segregates unsolicited or potentially harmful messages before they reach an inbox. Stalwart includes a built-in spam and phishing filter whose behaviour is defined by a set of customizable rules, tags, scores, and statistical classifiers. The bulk of the spam and phishing rules shipped with Stalwart are ported directly from RSpamd, with a small number derived from SpamAssassin. Combined with [expressions](/docs/configuration/expressions/overview), this provides comparable filtering depth to those systems while keeping the configuration inside the JMAP object model.
 
-Stalwart includes a built-in Spam and Phishing filter. The filter consists of customizable rules, which administrators can modify or extend to suit their specific requirements. 
+Global behaviour is configured on the [SpamSettings](/docs/ref/object/spam-settings) singleton (found in the WebUI under <!-- breadcrumb:SpamSettings --><!-- /breadcrumb:SpamSettings -->), which carries the master [`enable`](/docs/ref/object/spam-settings#enable) flag and the score thresholds described below.
 
-Stalwart's Spam and Phishing filter offers a protection level on par with popular tools such as RSpamd and SpamAssassin. This is not a coincidence: the bulk of the spam and phishing rules in Stalwart have been ported directly from RSpamd, with a handful also derived from SpamAssassin. Combined with the customization offered by [expressions](/docs/configuration/expressions/overview), this provides a comparable level of email filtering.
+## Tags and scores
 
-## Tags and Scores
+When a message arrives the filter analyses its content, headers, and sender attributes. Each facet of the analysis produces a tag that describes a specific characteristic or outcome. For example, a message composed entirely of HTML without a text part is tagged `MIME_HTML_ONLY`, while a message that passes DMARC is tagged `DMARC_POLICY_ALLOW`.
 
-Every time a message arrives, the filter thoroughly analyzes both its content and the sender. Each facet of this analysis yields a tag, reflecting the specific characteristic or outcome of that evaluation. For instance, if a message is composed solely of HTML without a corresponding text part, the filter assigns the tag `MIME_HTML_ONLY`. Similarly, when a message successfully clears DMARC checks, it is labeled with the tag `DMARC_POLICY_ALLOW`.
+Each tag contributes a score, which may be positive or negative. Positive scores indicate spam-like characteristics; negative scores indicate ham-like (legitimate) characteristics. The cumulative score across all tags is compared against the thresholds on SpamSettings to determine the final classification. The default spam threshold is 5.0; administrators can adjust it via [`scoreSpam`](/docs/ref/object/spam-settings#scorespam).
 
-Each tag generated during this process carries a specific score, which can be either positive or negative. A positive score implies an increased likelihood that the message is spam, while a negative score suggests the opposite, indicating the message is ham (legitimate and not spam). The cumulative score derived from all the tags determines the message's classification. Typically, any message that accumulates a score surpassing 6 is deemed as Spam. However, this threshold is not rigid; administrators have the flexibility to adjust this value as per their preferences or organizational needs.
+Tag-to-score mappings, as well as special "discard" or "reject" actions per tag, are configured through the [SpamTag](/docs/ref/object/spam-tag) object (found in the WebUI under <!-- breadcrumb:SpamTag --><!-- /breadcrumb:SpamTag -->). See [Scores](/docs/spamfilter/settings/scores) for details.
 
-## Analysis Outcomes
+## Analysis outcomes
 
-The Spam and Phishing filter is designed with a conservative approach in mind; by default, it does not reject any incoming email messages, regardless of how high they might score in terms of potential spam characteristics. That said, system administrators have the flexibility to configure the filter to take more proactive measures. They can set it up to either discard or reject messages that cross a specified score threshold or when certain tags are detected.
+By default the filter is conservative: no incoming message is rejected solely on the basis of its spam score. This can be changed by setting the [`scoreDiscard`](/docs/ref/object/spam-settings#scorediscard) or [`scoreReject`](/docs/ref/object/spam-settings#scorereject) thresholds on SpamSettings, or by attaching a `Discard` or `Reject` variant of [SpamTag](/docs/ref/object/spam-tag) to a specific tag.
 
-For messages that navigate through without being discarded or rejected, two crucial headers are added: `X-Spam-Status` and `X-Spam-Result`. These headers provide invaluable information for end users, allowing them to establish their own filters using the Sieve scripting language (either with [ManageSieve](/docs/sieve/managesieve) or [JMAP Sieve](/docs/sieve/jmap)). On their scripts, users can use this information to filter messages based on the spam result (either 'yes' or 'no'), the spam score, or the presence of specific tags.
+For messages that are neither discarded nor rejected, Stalwart adds the `X-Spam-Status` and `X-Spam-Result` headers so that end users can build their own filters on top of the filter's output, for example using Sieve via [ManageSieve](/docs/sieve/managesieve) or [JMAP Sieve](/docs/sieve/jmap). The `X-Spam-Status` header reports `Yes` or `No` along with the final score. The `X-Spam-Result` header lists each tag that fired and its contribution.
 
-The `X-Spam-Status` header succinctly indicates whether the message is classified as spam. It provides a simple 'Yes' or 'No', determined by whether the message's score surpasses the predefined spam threshold, along with the final score. On the other hand, the `X-Spam-Result` header offers a detailed breakdown, listing each tag applied by the spam filter and the score associated with that tag.
-
-Here's a practical illustration of what these headers might look like:
+Example headers on a message classified as spam:
 
 ```
 X-Spam-Result: DMARC_POLICY_ALLOW (-0.50),
@@ -47,4 +45,4 @@ X-Spam-Result: DMARC_POLICY_ALLOW (-0.50),
 X-Spam-Status: Yes, score=13.45
 ```
 
-This detailed feedback allows users and administrators to make informed decisions about how to handle incoming emails.
+<!-- review: The previous docs exposed per-header enable/name settings (`spam-filter.header.status.enable`, `spam-filter.header.status.name`, `spam-filter.header.result.enable`, `spam-filter.header.result.name`) to control the X-Spam-Status and X-Spam-Result headers. These fields do not appear on SpamSettings or any other object in the current schema. Confirm whether the headers are now unconditionally added (and whether their names are fixed), or whether the controls live on an object that has not been surfaced here. -->

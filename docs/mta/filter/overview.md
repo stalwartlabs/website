@@ -4,15 +4,11 @@ sidebar_position: 1
 
 # Overview
 
-E-mail filtering is a crucial part of any modern mail server system. Filtering serves various purposes including the management of incoming and outgoing messages, blocking or flagging spam, removing viruses from attachments, automating organization of messages, and implementing various user-defined rules for message handling. Effective filtering is essential not only for the organization and security of the mail system but also for user productivity and the overall quality of the email experience.
+Email filtering is an essential part of any modern mail server. Filtering covers the management of incoming and outgoing messages, blocking or flagging spam, removing viruses from attachments, automating the organisation of messages, and implementing user-defined rules for message handling. Effective filtering protects the security of the mail system and supports user productivity.
 
-Stalwart supports various filtering mechanisms, which allow a high degree of flexibility and customization for system administrators to define their filtering rules and operations:
+Stalwart supports several filtering mechanisms, which can be combined:
 
-- [Spam filter](/docs/mta/filter/spam): Stalwart includes a built-in Spam and Phishing filter.
-
-- [Sieve scripts](/docs/sieve/overview): These are scripts written in the Sieve language, a straightforward scripting language designed for mail filtering. Sieve scripts allow both [administrators](/docs/sieve/overview.md) and [users](/docs/sieve/managesieve) to specify rules for how incoming mail should be handled.
-
-- [Milter](/docs/mta/filter/milter): Milter (short for "mail filter") is a dynamic extension for mail servers, which allows external software to inspect or modify messages as they're being processed. Milters can be used for a wide range of purposes, such as spam filtering, virus scanning, or adding footers to outgoing messages.
-
-- [MTA Hooks](/docs/mta/filter/mtahooks): MTA Hooks is a replacement for the milter protocol for managing and processing email transactions within Mail Transfer Agents (MTAs). Unlike milter, which operates at a lower level and uses a custom protocol, MTA Hooks uses HTTP, which makes integration and deployment simpler.
-
+- [Spam filter](/docs/mta/filter/spam): a built-in spam and phishing filter.
+- [Sieve scripts](/docs/sieve/overview): scripts written in the Sieve language, a standard scripting language for mail filtering. Sieve scripts let administrators and users specify rules for handling incoming mail.
+- [Milter](/docs/mta/filter/milter): a dynamic extension for mail servers that allows external software to inspect or modify messages as they are being processed. Milters support spam filtering, virus scanning, and similar workflows.
+- [MTA Hooks](/docs/mta/filter/mtahooks): an HTTP-based alternative to milter for managing and processing email transactions.

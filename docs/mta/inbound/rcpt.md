@@ -4,162 +4,103 @@ sidebar_position: 6
 
 # RCPT stage
 
-The `RCPT TO` command is a used to specify the recipient of an email message during the SMTP message transfer. It is used in conjunction with the `MAIL FROM` command, which specifies the sender of the email. After the `RCPT TO` command is issued, the SMTP server responds with a status code indicating whether the recipient is valid and whether it is willing to accept the email message for that recipient. If the recipient is valid and the server is willing to accept the email, the SMTP client can then proceed to send the email message using the `DATA` command.
+The `RCPT TO` command specifies the recipient of an email message during the SMTP message transfer. It is used in conjunction with the `MAIL FROM` command. After the command is issued, the SMTP server responds with a status code indicating whether the recipient is valid and the server is willing to accept the message. If the recipient is valid, the SMTP client proceeds with the `DATA` command.
+
+RCPT-stage behaviour is configured on the [MtaStageRcpt](/docs/ref/object/mta-stage-rcpt) singleton (found in the WebUI under <!-- breadcrumb:MtaStageRcpt --><!-- /breadcrumb:MtaStageRcpt -->).
 
 ## Directory
 
-In order to handle mail for local accounts, it's necessary to configure a [directory](/docs/auth/backend/overview). This directory plays a crucial role in managing mail delivery as it fulfills several tasks:
+Handling of local accounts relies on a configured [directory](/docs/auth/backend/overview), which performs the following roles:
 
-- **Identifying Local Domains**: Emails destined for these domains are processed and stored by the server.
-- **Validating Recipients**: It checks whether a given recipient's address corresponds to a valid, existing local account before accepting the email for delivery.
-- **Verifying Addresses**: The SMTP `VRFY` (verify) command is used to validate an email address without sending a message. If a sender uses this command, the server checks the directory to confirm whether the given address is valid.
-- **Expanding Addresses**: The SMTP `EXPN` (expand) command is used to get the actual delivery addresses when a single address is aliased to a group of addresses.
+- **Identifying local domains**: messages destined for these domains are accepted for local processing and storage.
+- **Validating recipients**: the directory confirms whether a recipient address corresponds to a valid local account before the server accepts the message.
+- **Verifying addresses**: the SMTP `VRFY` command queries the directory to confirm that an address is valid.
+- **Expanding addresses**: the SMTP `EXPN` command retrieves the actual delivery addresses when a single address is aliased to a group.
 
-Without this directory configured, Stalwart won't accept any emails, as it has no way of validating or processing them. The only exception would be if [relay functionality](#relay) is enabled, allowing Stalwart to simply pass on emails to another server for delivery. 
+Without a directory, Stalwart cannot accept mail for local delivery, except in the case where [relay functionality](#relay) is enabled so that messages can be forwarded to another server.
 
-The directory to be used can be configured using the `session.rcpt.directory` attribute. For more information, please refer to the [directory](/docs/auth/backend/overview) documentation.
-
-Example:
-
-```toml
-[session.rcpt]
-directory = "'sql'"
-```
+<!-- review: The previous docs configured the directory per-stage via `session.rcpt.directory`. MtaStageRcpt in the current schema does not expose a directory selector; confirm whether directory selection is now global (via a dedicated Directory or Authentication singleton) and how to override it per RCPT stage if at all. -->
 
 ## Relay
 
-Relaying is a fundamental operation in email delivery, it refers to the process of transferring an email from one mail server to another. In more detail, when an email is sent, it may not directly reach its final destination server. Instead, it often travels through multiple intermediate servers - these servers "relay" the email towards its final destination. This is especially true when the sender and recipient are on different networks or domains.
+Relaying is the process of transferring an email from one mail server to another. When relaying is enabled, Stalwart acts as an intermediary, accepting messages from sending clients or servers and forwarding them to their ultimate destination. This is useful when Stalwart is deployed as a front-end server in a larger email infrastructure, but it must be restricted to authorised senders or networks to prevent open-relay abuse.
 
-In the context of Stalwart, the `relay` parameter dictates whether the server is permitted to relay messages intended for non-local domains. If relaying is enabled, Stalwart acts as an intermediary, accepting messages from sending clients or servers and forwarding them to their ultimate destinations.
+The [`allowRelaying`](/docs/ref/object/mta-stage-rcpt#allowrelaying) field accepts an expression that determines whether the SMTP server accepts messages for non-local domains. The default policy only allows relaying when the session is authenticated:
 
-This functionality can be beneficial in various scenarios, such as when Stalwart is configured as a front-end server in a larger email infrastructure. However, care must be taken to properly secure relay functionality, as an open relay can be exploited for spamming purposes. Thus, it's crucial to ensure only authorized users or networks are allowed to use Stalwart for relaying messages.
-
-The `session.rcpt.relay` setting specifies whether the SMTP server should relay messages for non-local domain names. This attribute is useful when configured as an [expression](/docs/configuration/expressions/overview) that only allows relaying for authenticated users.
-
-For example:
-
-```toml
-[session.rcpt]
-relay = [ { if = "!is_empty(authenticated_as)", then = true }, 
-          { else = false } ]
+```json
+{
+  "allowRelaying": {
+    "match": [{"if": "!is_empty(authenticated_as)", "then": "true"}],
+    "else": "false"
+  }
+}
 ```
 
 ## Subaddressing
 
-Subaddressing, also known as plus addressing or detailed addressing, is a mechanism that allows the creation of dynamic, disposable email addresses under a primary email address. By adding a `+` sign and any string of text to the local part (the part before the `@`) of an email address, users can create an infinite number of unique email addresses. For example, `jane.doe+newsletters@example.org` is a subaddress of `jane.doe@example.org`. The primary benefit of this feature is that it allows users to filter and sort their incoming mail more efficiently, providing an easy way to manage subscriptions, sign-ups, and more without needing to create multiple separate email accounts.
+Subaddressing, also known as plus addressing or detailed addressing, allows the creation of dynamic, disposable email addresses under a primary email address. By adding a `+` sign and any string of text to the local part of an address (for example `jane.doe+newsletters@example.org`), users can create an unlimited number of unique addresses that all deliver to the same mailbox. This makes it easier to filter and sort incoming mail, for example to separate subscriptions from personal correspondence.
 
-### Standard
-
-To enable subaddressing, set the `sub-addressing` option to `true` in the `session.rcpt` section of the configuration file. For example:
-
-```toml
-[session.rcpt]
-subaddressing = true
-```
-
-### Custom
- 
-In addition to the standard subaddressing that uses the `+` symbol in the local part of the email address, Stalwart also supports custom subaddressing expressions. This ability provides enhanced obfuscation tactics against spammers by enabling users to create non-standard ways of handling subaddressing.
-
-This functionality works by matching the user's email address using a custom [expression](/docs/configuration/expressions/overview), defined by the `session.rcpt.sub-addressingg` parameter in the configuration. If the `if` expression returns `true`, the email address generated by the `then` expression is used. If the `if` expression returns `false`, the `else` expression is used. If the `else` expression is not defined or `false`, the original email address is used. 
-
-To understand this better, let's take a look at the following example:
-
-```toml
-[session.rcpt]
-sub-addressing = [ { if = "matches('^([^.]+)\.([^.]+)@(.+)$', rcpt)", then = "$2 + '@' + $3" }, 
-                  { else = false } ]
-```
-
-Here, the `if` expression uses a regex pattern designed to capture three groups separated by the '.' and '@' symbols in the incoming email address. The `then` expression then reassembles these captured groups in a new format. In this specific example, the configuration is rewriting the recipient address by removing the first part before the dot, essentially transforming 'alias.user@example.com' to 'user@example.com'. 
+<!-- review: The previous docs exposed `session.rcpt.sub-addressing` both as a boolean (enable standard `+` subaddressing) and as an expression (custom subaddressing pattern). MtaStageRcpt in the current schema does not list a subaddressing field; confirm whether subaddressing is now always enabled, is a domain-level setting, or is configured elsewhere (for example on the Directory or Domain object). Historical examples included a regex pattern such as `matches('^([^.]+)\.([^.]+)@(.+)$', rcpt)` with `then = "$2 + '@' + $3"` to strip an alias prefix. These should be reinstated once the correct field is identified. -->
 
 ## Catch-all addresses
 
-A catch-all email address is a mailbox that is designed to receive all messages sent to incorrect or non-existent email addresses within a specific domain. It acts as a sort of safety net, ensuring that no email messages are lost due to misspelling or outdated email addresses. For instance, if someone were to accidentally send a message to `jn.doe@example.org` instead of `jane.doe@example.org`, the catch-all address would receive the message. This feature can be especially useful in a business environment where missing an important email communication can lead to undesirable consequences.
+A catch-all address receives all messages sent to non-existent addresses within a domain, preventing loss of mail due to misspellings. A catch-all is typically designated by adding `@<DOMAIN_NAME>` as an associated email address for a given account in the directory.
 
-### Standard
-
-Catch-all addresses can be enabled by setting the `catch-all` option to `true` in the `session.rcpt` section of the configuration file. For example:
-
-```toml
-[session.rcpt]
-catch-all = true
-```
-
-To designate a specific account as the catch-all address, add `@<DOMAIN_NAME>` as an associated email address for the account. If you are using an SQL directory with the [sample directory schema](/docs/auth/backend/sql#sample-directory-schema), you can find an example of how to create catch-all addresses in the [adding email aliases](/docs/auth/backend/sql#adding-an-email-alias) section. 
-
-### Custom
-
-In addition to the standard catch-all functionality described above, it is also possible to define custom recipient addresses to act as a catch-all. This customization is achieved by using an expression in the `session.rcpt.catch-all` parameter in the configuration, much like the [subaddressing feature](#custom). If the `if` expression returns `true`, the email address generated by the `then` expression is used as a catch-all email address. If the `if` expression returns `false`, the `else` expression is used. If the `else` expression is not defined or `false`, the email is rejected. 
-
-Let's examine this example:
-
-```toml
-[session.rcpt]
-catch-all = [ { if = "matches('(.+)@(.+)$', rcpt)", then = "'info@' + $2" },
-              { else = false } ]
-```
-
-In this configuration, the `if` expression is using a regular expression designed to capture the local part and the domain part of an incoming email address. The `then` expression then creates the catch-all address by replacing the local part with 'info' while retaining the original domain. For instance, if a message is sent to 'nonexistent@example.com' and there's no such recipient, the email would be redirected to 'info@example.com'. 
+<!-- review: The previous docs exposed `session.rcpt.catch-all` as a boolean and as an expression for custom catch-all behaviour, for example `matches('(.+)@(.+)$', rcpt)` with `then = "'info@' + $2"` to route all unknown recipients to `info@<domain>`. MtaStageRcpt in the current schema does not list a catch-all field; confirm whether catch-all behaviour is now always inferred from the directory or is configured elsewhere (for example on the Domain object). -->
 
 ## Address rewriting
 
-Recipient addresses can be rewritten using regular expressions, adding a high degree of flexibility and control to the handling of incoming messages. This can be particularly useful in several scenarios. For instance, if you need to correct common misspellings of recipient addresses, obfuscate the original recipient's address for privacy reasons, or redirect mail traffic from one address to another, regex rewriting can be a potent solution. 
+The [`rewrite`](/docs/ref/object/mta-stage-rcpt#rewrite) field accepts an expression that can modify the recipient address. Typical uses include correcting common misspellings, obfuscating the original recipient's address for privacy, or redirecting mail traffic from one address to another. For background on the expression-based rewrite model see the [address rewriting](/docs/mta/rewrite/address) documentation.
 
-Recipient address rewriting is configured using the `session.rcpt.rewrite` attribute. For example, the following configuration will replace the '.' in the recipient address with a '+' sign:
+For example, the following configuration rewrites `first.last@example.org` to `first+last@example.org` for local domains only:
 
-```toml
-[session.rcpt]
-rewrite = [ { if = "is_local_domain('', rcpt_domain) & matches('^([^.]+)\.([^.]+)@(.+)$', rcpt)", then = "$1 + '+' + $2 + '@' + $3" },
-            { else = false } ]
+```json
+{
+  "rewrite": {
+    "match": [{"if": "is_local_domain('', rcpt_domain) & matches('^([^.]+)\\.([^.]+)@(.+)$', rcpt)", "then": "$1 + '+' + $2 + '@' + $3"}],
+    "else": "false"
+  }
+}
 ```
-
-For more information, please refer to the [address rewriting](/docs/mta/rewrite/address) documentation.
 
 ## Sieve script
 
-In order to provide more flexibility and control over the handling of incoming messages, [Sieve scripts](/docs/sieve/overview) can also be executed during the `RCPT TO` stage of the SMTP transaction. Typically, Sieve scripts are run at the delivery stage, but running them during the `RCPT TO` stage opens up more possibilities. At this stage, the sending server is indicating who the email is for. With the ability to manipulate this with Sieve scripts, administrators have an array of tools at their disposal.
+Running Sieve at the RCPT stage opens up uses that the delivery-time Sieve runtime cannot satisfy. Recipients can be rejected based on criteria such as the recipient domain; [address rewriting](/docs/mta/rewrite/address#sieve) can correct common misspellings or redirect mail; and policies such as greylisting (temporarily rejecting mail from unknown sources and asking the sender to retry) can be implemented against the envelope before the message body is accepted.
 
-For instance, scripts can be configured to reject certain recipients based on specific criteria, such as the recipient address or domain. This can be useful in managing email traffic and preventing unwanted emails. [Address rewriting](/docs/mta/rewrite/address#sieve) is another option, allowing for automatic correction of common misspellings or redirecting emails from one address to another. Additionally, more advanced functionality like greylisting, a common method of defending against spam, can be implemented. This involves temporarily rejecting emails from unknown sources and asking the sender to try again later - a test most spam sources fail. 
+The [`script`](/docs/ref/object/mta-stage-rcpt#script) field selects the [Sieve script](/docs/sieve/overview) to run at this stage. A common use is greylisting, implemented by storing a `remote_ip.sender.recipient` triplet in a store and rejecting the first attempt with a `422` temporary failure; the client then retries, and legitimate senders succeed while most spam sources do not.
 
-The `session.rcpt.script` attribute specifies the Sieve script to execute during the RCPT TO stage. For more information, please refer to the [Sieve scripts](/docs/sieve/overview) documentation.
+For example, the following expression runs a `greylist` Sieve script only for unauthenticated sessions:
 
-For example, the following script implements greylisting using an SQL database:
+```json
+{
+  "script": {
+    "match": [{"if": "is_empty(authenticated_as)", "then": "'greylist'"}],
+    "else": "false"
+  }
+}
+```
 
-```toml
-[session.rcpt]
-script = [ { if = "is_empty(authenticated-as)", then = "'greylist'" }, 
-           { else = false } ]
+A companion `greylist` Sieve script stores the triplet in a store and rejects the first attempt:
 
-[sieve.trusted.scripts.greylist]
-contents = '''
-    require ["variables", "vnd.stalwart.execute", "envelope", "reject"];
+```sieve
+require ["variables", "vnd.stalwart.execute", "envelope", "reject"];
 
-    set "triplet" "${env.remote_ip}.${envelope.from}.${envelope.to}";
+set "triplet" "${env.remote_ip}.${envelope.from}.${envelope.to}";
 
-    if not query "SELECT 1 FROM greylist WHERE addr=? LIMIT 1" ["${triplet}"] {
-        query "INSERT INTO greylist (addr) VALUES (?)" ["${triplet}"];
-        reject "422 4.2.2 Greylisted, please try again in a few moments.";
-    }
-'''
+if not query "SELECT 1 FROM greylist WHERE addr=? LIMIT 1" ["${triplet}"] {
+    query "INSERT INTO greylist (addr) VALUES (?)" ["${triplet}"];
+    reject "422 4.2.2 Greylisted, please try again in a few moments.";
+}
 ```
 
 ## Limits
 
-The following attributes under the `session.rcpt` key, control the maximum number of recipients allowed per message, as well as how to handle invalid recipients.
+Recipient-handling limits are configured via [`maxRecipients`](/docs/ref/object/mta-stage-rcpt#maxrecipients) (maximum number of recipients allowed per message, default 100), [`maxFailures`](/docs/ref/object/mta-stage-rcpt#maxfailures) (maximum number of invalid-recipient errors allowed before the session is disconnected, default 5), and [`waitOnFail`](/docs/ref/object/mta-stage-rcpt#waitonfail) (amount of time to wait after an invalid recipient is received, default 5 seconds):
 
-- `max-recipients`: Specifies the maximum number of recipients allowed per message.
-- `rcpt.errors.total`: Specifies the maximum number of invalid recipients allowed before a session is disconnected.
-- `rcpt.errors.wait`: Specifies the amount of time to wait when an invalid recipient is received.
-
-Example:
-
-```toml
-[session.rcpt]
-max-recipients = 25
-
-[session.rcpt.errors]
-total = 5
-wait = "5s"
+```json
+{
+  "maxRecipients": {"else": "25"},
+  "maxFailures": {"else": "5"},
+  "waitOnFail": {"else": "5s"}
+}
 ```
-

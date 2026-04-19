@@ -4,9 +4,9 @@ sidebar_position: 1
 
 # Overview
 
-Stalwart offers support for multiple database and storage backends. The choice of backend depends primarily on the scale and distribution of your mail server setup. 
+Stalwart supports several database and object-storage backends. The choice of backend depends primarily on the scale and topology of the deployment.
 
-The following table summarizes the backend options available for each store type:
+The following table summarises which backend is available for each store type:
 
 |                    | Data store         | Blob store         | Search store       | In-memory store       |
 |--------------------|--------------------|--------------------|--------------------|--------------------|
@@ -22,10 +22,12 @@ The following table summarizes the backend options available for each store type
 | Meilisearch        |                    |                    | :white_check_mark: |                    |
 | Redis              |                    |                    |                    | :white_check_mark: |
 
-It's important to note that the support for each of these databases is compiled directly into the Stalwart binary. Therefore, to switch to certain backends such as FoundationDB, you'll need to utilize a different binary, corresponding to the desired backend(s).
+Backend support is compiled into the Stalwart binary. Switching to backends such as FoundationDB therefore requires running a different binary built with the corresponding feature enabled.
+
+Each store (data, blob, search, in-memory) is configured through its own singleton object: [DataStore](/docs/ref/object/data-store), [BlobStore](/docs/ref/object/blob-store), [SearchStore](/docs/ref/object/search-store), and [InMemoryStore](/docs/ref/object/in-memory-store). These objects are multi-variant: changing backend means selecting a different variant on the corresponding object, without restructuring the rest of the configuration.
 
 :::tip Note
 
-Be aware that a change in storage backend after initial setup implies a requirement for data migration. This means that all user data existing on the initial database backend would need to be transferred to the new backend. This could be a complex and time-consuming process, depending on the amount and type of data involved. Hence, it is advisable to carefully consider the most suitable database backend for your needs right at the start of your setup. 
+Changing the storage backend after initial setup requires data migration. All existing data on the previous backend must be transferred to the new backend, which can be time-consuming depending on the volume and type of data involved. It is therefore advisable to choose the appropriate backend at the start of the deployment.
 
 :::

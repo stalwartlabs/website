@@ -4,27 +4,33 @@ sidebar_position: 2
 
 # SPF
 
-SPF (Sender Policy Framework) is a simple email validation protocol designed to detect email spoofing. It is a security measure that is used to prevent unauthorized use of a domain name in email messages. SPF works by verifying that an incoming email message is coming from an IP address that is authorized by the domain owner. This is done by checking the message's source IP address against a list of authorized IP addresses that is published in the domain's SPF record in the DNS. If the source IP address of the email message is not listed in the domain's SPF record, the receiving email server can reject or flag the message as potentially fraudulent. This helps to reduce the risk of phishing and other types of email-based fraud and abuse.
+SPF (Sender Policy Framework) is an email-validation protocol designed to detect email spoofing. It prevents unauthorised use of a domain name in email messages by verifying that an incoming message comes from an IP address authorised by the domain owner. The authorised IPs are published in the domain's SPF record in DNS; if the source IP of a message is not listed, the receiving server can reject or flag the message as potentially fraudulent.
 
-SPF reduces the likelihood of email spoofing, increases the deliverability of legitimate emails, and improves the overall security of email communications. By verifying SPF records, Stalwart can identify and reject emails that come from unauthorized sources, helping to protect users from spam, phishing and other types of email fraud.
+SPF reduces the likelihood of email spoofing, supports deliverability of legitimate mail, and improves overall email security.
 
 ## Verification
 
-Stalwart can verify the SPF HELO and MAIL FROM identities to ensure that the emails sent from a domain are from a legitimate source. SPF HELO identity verification is the process of checking the SPF record of the domain specified in the EHLO command to verify that the connecting server is authorized to send emails for that domain. On the other hand, MAIL FROM identity verification is the process of checking the SPF record of the domain specified in the MAIL FROM command.
+Stalwart verifies both the SPF `HELO` and `MAIL FROM` identities. HELO identity verification checks the SPF record of the domain named in the `EHLO` command to confirm that the connecting server is authorised to send mail for that domain. MAIL FROM identity verification checks the SPF record of the domain named in the `MAIL FROM` command.
 
-The `auth.spf.verify.ehlo` and `auth.spf.verify.mail-from` attributes indicate the SPF verification policy for the EHLO and MAIL-FROM identities respectively:
+SPF verification is configured on the [SenderAuth](/docs/ref/object/sender-auth) singleton (found in the WebUI under <!-- breadcrumb:SenderAuth --><!-- /breadcrumb:SenderAuth -->) via two fields: [`spfEhloVerify`](/docs/ref/object/sender-auth#spfehloverify) (SPF verification policy for the EHLO identity) and [`spfFromVerify`](/docs/ref/object/sender-auth#spffromverify) (SPF verification policy for the MAIL FROM identity).
 
-- `relaxed`: Verify SPF and report the results in the `Authentication-Results` and `Received-SPF` headers.
-- `strict`: Reject the message if SPF fails verification, otherwise report the results in the `Authentication-Results` and `Received-SPF` headers.
-- `disable`: Do not perform SPF verification.
+Each expression returns one of:
 
-Example:
+- `relaxed`: verify SPF and report the results in the `Authentication-Results` and `Received-SPF` headers.
+- `strict`: reject the message if SPF fails verification; otherwise report the results.
+- `disable`: do not perform SPF verification.
 
-```toml
-[auth.spf.verify]
-ehlo = [ { if = "listener = 'smtp'", then = "relaxed" },
-         { else = "disable" } ]
-mail-from = [ { if = "listener = 'smtp'", then = "relaxed" },
-              { else = "disable" } ]
+The default policy for both fields applies `relaxed` when `local_port == 25` and `disable` otherwise, which is equivalent to the following configuration:
+
+```json
+{
+  "spfEhloVerify": {
+    "match": [{"if": "listener == 'smtp'", "then": "relaxed"}],
+    "else": "disable"
+  },
+  "spfFromVerify": {
+    "match": [{"if": "listener == 'smtp'", "then": "relaxed"}],
+    "else": "disable"
+  }
+}
 ```
-

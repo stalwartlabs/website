@@ -4,109 +4,62 @@ sidebar_position: 3
 
 # Calendar
 
-Stalwart includes full support for **calendar management and scheduling** through the **JMAP** and **CalDAV** protocols, enabling users to create, access, and synchronize calendar data across devices and applications.
+Stalwart includes full support for calendar management and scheduling through the JMAP and CalDAV protocols, covering creation, access, and synchronization of calendar data across devices and applications.
 
 ## JMAP for Calendars
 
-**JMAP for Calendars** is a protocol that provides a modern, JSON-based API for managing calendar data such as events, tasks, and scheduling information. It is designed as a replacement for CalDAV and CalDAV Scheduling, offering the same functionality (creating, reading, updating, deleting, and sharing calendar data) but in a much simpler and more consistent way.
+JMAP for Calendars is a protocol that provides a JSON-based API for managing calendar data such as events, tasks, and scheduling information. It is designed as a replacement for CalDAV and CalDAV Scheduling, offering the same functionality (creating, reading, updating, deleting, and sharing calendar data) but in a simpler and more consistent way.
 
 Unlike CalDAV, which is built on top of WebDAV and uses XML combined with embedded iCalendar data, JMAP for Calendars is entirely JSON over HTTPS. It uses the same core request/response model as JMAP for Mail, providing a unified protocol for all personal data types.
 
 ## CalDAV
 
-**CalDAV** is a standardized extension of WebDAV that allows clients to interact with calendar data stored on a server. It is widely supported by calendar applications on desktops and mobile devices, including Apple Calendar, Thunderbird, Outlook (with plugins), and many others. CalDAV enables features such as creating events, setting recurring appointments, inviting participants, and viewing shared calendars, all using a common protocol. By supporting CalDAV, Stalwart provides a flexible and interoperable calendar system that fits both personal and organizational workflows. Calendars stored on the server can be accessed and managed from anywhere, ensuring consistent scheduling and collaboration across platforms.
+CalDAV is a standardized extension of WebDAV that allows clients to interact with calendar data stored on a server. It is supported by calendar applications on desktops and mobile devices, including Apple Calendar, Thunderbird, and Outlook (with plugins). CalDAV covers creating events, setting recurring appointments, inviting participants, and viewing shared calendars.
 
-### Accessing Calendars
+### Accessing calendars
 
-CalDAV clients can access calendar data on the Stalwart using standardized URLs, ensuring compatibility with a wide range of calendar applications. The recommended method for client configuration is through the **autodiscovery endpoint** located at `/.well-known/caldav`. When a client queries this path, the server redirects the request to the appropriate CalDAV resource associated with the authenticated user. This simplifies setup by allowing most modern clients to automatically locate and configure calendar access without requiring manual URL input.
+CalDAV clients can access calendar data on Stalwart using standardized URLs. The recommended method for client configuration is through the autodiscovery endpoint located at `/.well-known/caldav`. When a client queries this path, the server redirects the request to the appropriate CalDAV resource associated with the authenticated account. This simplifies setup by allowing most modern clients to automatically locate and configure calendar access without manual URL input.
 
-Alternatively, CalDAV calendars can be accessed directly via the path `/dav/cal/<account_name>`, where `<account_name>` is the username of the account. For example, the calendar for user `alice` would be available at `/dav/cal/alice`. This direct path can be used in clients that support manual CalDAV configuration or when troubleshooting.
+Alternatively, CalDAV calendars can be accessed directly via the path `/dav/cal/<account_name>`, where `<account_name>` is the username of the account. For example, the calendar for the account `alice` is available at `/dav/cal/alice`. This direct path can be used in clients that support manual CalDAV configuration or when troubleshooting.
 
-Both methods provide access to the same calendar data and are fully compatible with the CalDAV protocol. Stalwart’s support for these endpoints ensures smooth integration with existing CalDAV clients while offering flexibility for both automatic and manual configuration.
+Both methods provide access to the same calendar data and are fully compatible with the CalDAV protocol.
 
 ## Limits
 
-To ensure optimal performance and protect server resources, Stalwart allows administrators to define limits on calendar-related operations. These settings help prevent abuse or misconfiguration from clients that may attempt to create excessively large or complex calendar entries.
+Calendar-wide limits are configured on the [Calendar](/docs/ref/object/calendar) singleton (found in the WebUI under <!-- breadcrumb:Calendar --><!-- /breadcrumb:Calendar -->). They protect server resources against clients that attempt to create excessively large or complex calendar entries.
 
-### Recurrence Expansion
+### Recurrence expansion
 
-The `calendar.max-recurrence-expansions` setting is one of the most important calendar performance settings. The iCalendar format allows clients to define repeating events using **RRULEs** (recurrence rules), which define how an event repeats over time (e.g., every day, every week, etc.). When such an event is created, **Stalwart pre-expands the recurrence pattern into individual instances** and stores them. This approach improves performance by avoiding expensive RRULE calculations on every calendar query.
+The iCalendar format allows clients to define repeating events using RRULEs (recurrence rules). When such an event is created, Stalwart pre-expands the recurrence pattern into individual instances and stores them, avoiding expensive RRULE calculations on every calendar query.
 
-However, recurrence expansion is a computationally intensive task, especially for long-term or infinitely repeating events. To safeguard the server, the `calendar.max-recurrence-expansions` setting limits the number of instances that will be generated from a recurrence rule. The default value is **3000**, which is sufficient for most realistic scheduling needs (e.g., daily events over several years). If a recurrence rule would exceed this limit, the server will reject or truncate the event, depending on context.
+Recurrence expansion is computationally intensive, especially for long-term or infinitely repeating events. The [`maxRecurrenceExpansions`](/docs/ref/object/calendar#maxrecurrenceexpansions) field on the Calendar singleton limits the number of instances generated from a recurrence rule. The default value is `3000`, sufficient for most realistic scheduling needs (for example, daily events spanning several years). If a recurrence rule would exceed this limit, the server rejects or truncates the event depending on context. Raising the value may significantly affect server performance.
 
-Administrators should be cautious when increasing this value, as very high recurrence expansions may significantly impact server performance.
+### iCalendar object size
 
-Example:
+[`maxICalendarSize`](/docs/ref/object/calendar#maxicalendarsize) defines the maximum accepted size of a single iCalendar object (VEVENT, VTODO, and so on). The default is `"512kb"`. Lowering or raising the limit protects against unreasonably large calendar entries while accommodating deployment-specific client behaviour.
 
-```toml
-[calendar]
-max-recurrence-expansions = 3000
-```
+### Attendee limit
 
-### iCalendar Object Size
+[`maxAttendees`](/docs/ref/object/calendar#maxattendees) controls the maximum number of attendees allowed in a single iCalendar instance. The default is `20`. Deployments that regularly schedule large meetings may raise this value.
 
-The `calendar.max-size` setting defines the maximum allowed size (in bytes) of a single iCalendar object (VEVENT, VTODO, etc.) submitted to the server. By default, this limit is set to **512 KB**. This helps prevent clients from uploading unreasonably large calendar entries that could impact memory usage or processing performance. If needed, this value can be increased or decreased depending on your deployment’s use case and client behavior.
+### JMAP parsing limit
 
-Example:
+The JMAP `CalendarEvent/parse` method is bounded by [`parseLimitEvent`](/docs/ref/object/jmap#parselimitevent) on the [Jmap](/docs/ref/object/jmap) singleton (found in the WebUI under <!-- breadcrumb:Jmap --><!-- /breadcrumb:Jmap -->), which sets the maximum number of iCalendar items that can be parsed in a single request. The default is `10`.
 
-```toml
-[calendar]
-max-size = 524288
-```
+## Default calendar
 
-### Attendee Limit
+To improve client compatibility and allow calendar operations to proceed without manual setup, Stalwart automatically creates a default calendar when an account is accessed and no calendars currently exist for it. The URL path of the auto-created calendar is controlled by [`defaultHrefName`](/docs/ref/object/calendar#defaulthrefname) on the Calendar singleton. The default value is `"default"`, so for an account named `john` the default calendar is created at `/dav/cal/john/default`. CalDAV clients then always see at least one calendar on first connection.
 
-The `calendar.max-attendees-per-instance` setting controls the maximum number of attendees allowed per calendar event instance. The default value is **20 attendees**. This helps protect against unusually large meeting invitations that could overwhelm the system or client applications. If your organization regularly schedules large meetings or events, this limit can be raised accordingly.
+### Disabling automatic creation
 
-Example:
+Automatic creation can be suppressed by clearing [`defaultHrefName`](/docs/ref/object/calendar#defaulthrefname) (leaving it unset). In that case, Stalwart does not create a default calendar and clients that connect to an account with no calendars receive an appropriate error response.
 
-```toml
-[calendar]
-max-attendees-per-instance = 20
-```
+<!-- review: The pre-migration docs described `calendar.default.href-name = false` as the explicit way to disable automatic default-calendar creation. The current Calendar object exposes `defaultHrefName` as an optional String. Confirm that unsetting the field is equivalent to the previous boolean disable, and that no separate enable flag controls automatic creation. -->
 
-### JMAP Parsing Limit
+### Default display name
 
-When using JMAP to interact with calendar data, the `jmap.calendar.parse.max-items` setting limits how many iCalendar objects can be parsed in a single JMAP `CalendarEvent/parse` request. The default value is **100 items**. This prevents excessively large requests from consuming too many server resources. If your use case requires processing more items in a single request, this limit can be adjusted.
+The display name assigned to the auto-created calendar (as shown in client applications) is controlled by [`defaultDisplayName`](/docs/ref/object/calendar#defaultdisplayname). The default is `"Stalwart Calendar"`; the value can be adjusted to match organisational branding or language preferences.
 
-Example:
+## Per-account limits
 
-```toml
-[jmap.calendar.parse]
-max-items = 100
-```
-
-## Default Calendar
-
-To improve client compatibility and allow calendar operations to proceed without manual setup, Stalwart **automatically creates** a default calendar when a user account is accessed and no calendars currently exist for that user.
-The location (URL path) of the automatically created calendar is determined by the `calendar.default.href-name` setting. By default, this is set to `"default"`, which means that for a user named `john`, the default calendar will be created at `/dav/cal/john/default`. This behavior ensures that CalDAV clients always have at least one calendar to work with, avoiding errors or empty interfaces when first connecting to the server.
-
-```toml
-[calendar.default]
-href-name = "default"
-```
-
-### Disabling Automatic Creation
-
-If automatic calendar creation is not desired (for example, in environments where calendars are provisioned manually or via external tools), you can disable this feature by setting `calendar.default.href-name` to `false`. Example:
-
-```toml
-[calendar.default]
-href-name = false
-```
-
-When this setting is disabled, Stalwart will **not** create a default calendar automatically, and clients attempting to access calendar data for an account without any calendars will receive an appropriate error response.
-
-### Default Display Name
-
-The display name used for the default calendar (as shown in client applications) is controlled by the `calendar.default.display-name` setting. By default, this value is set to `Stalwart Calendar`.
-
-Example:
-
-```toml
-[calendar.default]
-display-name = "Stalwart Calendar"
-```
-
-This name is assigned to the calendar’s `display-name` property and can be customized to better match your organization's branding or language preferences.
-
+The Calendar singleton also sets default caps on per-account calendar resources: [`maxCalendars`](/docs/ref/object/calendar#maxcalendars) caps the number of calendars an account can create (default `250`), [`maxEvents`](/docs/ref/object/calendar#maxevents) caps the number of events, [`maxParticipantIdentities`](/docs/ref/object/calendar#maxparticipantidentities) caps participant identities (default `100`), and [`maxEventNotifications`](/docs/ref/object/calendar#maxeventnotifications) caps event notifications. These apply unless overridden at the account or tenant level.
