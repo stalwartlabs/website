@@ -22,7 +22,7 @@ Stalwart’s directory system is flexible and designed to fit a wide range of us
 :::tip Remember that...
 
 - When the internal directory is used, Stalwart manages all user-related data within its own system. In this setup, all account management tasks, such as creating new user accounts, updating passwords, and setting quotas, are performed directly within Stalwart.
-- When an external LDAP or SQL directory is utilized, all user account management must be performed within that external system. Stalwart will rely on this external directory for authentication and user information but will not have the ability to directly modify user details from the [web-based admin](/docs/management/webadmin/overview).
+- When an external LDAP or SQL directory is utilized, all user account management must be performed within that external system. Stalwart will rely on this external directory for authentication and user information but will not have the ability to directly modify user details from the [web-based admin](/docs/management/webui/overview).
 
 :::
 

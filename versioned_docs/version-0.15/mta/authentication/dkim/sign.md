@@ -85,7 +85,7 @@ sign = [ { if = "sender_domain = 'example.org'", then = "'rsa_foo'" },
 
 ## Generating keys
 
-The simplest way to generate and publish a DKIM key pair is using the [web-admin](/docs/management/webadmin/overview). However, you can also generate the keys manually using the `openssl` command.
+The simplest way to generate and publish a DKIM key pair is using the [web-admin](/docs/0.15/management/webadmin/overview). However, you can also generate the keys manually using the `openssl` command.
 
 ### RSA
 

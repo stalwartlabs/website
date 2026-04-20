@@ -17,5 +17,5 @@ The following configuration settings are available for the internal directory, w
 
 ## Account management
 
-Account management can be performed using the [web-admin](/docs/management/webadmin/overview) interface or the [REST API](/docs/api/management/overview).
+Account management can be performed using the [web-admin](/docs/0.15/management/webadmin/overview) interface or the [REST API](/docs/0.15/api/management/overview).
 

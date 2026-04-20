@@ -55,4 +55,4 @@ max-age = "7d"
 mx = ["mx1.example.com", "mx2.example.com"]
 ```
 
-Stalwart can automatically generate the MTA-STS DNS records for your domains. To obtain them, go to the `Management` > `Directory` > `Domains` section in the [Webadmin](/docs/management/webadmin/overview.md).
+Stalwart can automatically generate the MTA-STS DNS records for your domains. To obtain them, go to the `Management` > `Directory` > `Domains` section in the [Webadmin](/docs/0.15/management/webadmin/overview).

@@ -5,7 +5,7 @@ sidebar_position: 1
 # Overview
 
 The Stalwart Command Line Interface (CLI) allows system administrators to perform tasks such as managing the internal directory, queues, migrating information and more. 
-Although the recommended way to manage and configure Stalwart is using the [web-admin](/docs/management/webadmin/overview), the CLI tool can be useful for automating tasks or performing some operations that are not available in the web interface.
+Although the recommended way to manage and configure Stalwart is using the [web-admin](/docs/0.15/management/webadmin/overview), the CLI tool can be useful for automating tasks or performing some operations that are not available in the web interface.
 
 ## Installation
 

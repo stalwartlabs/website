@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Management
 
-Stalwart includes a [self-service portal](/docs/management/webadmin/selfservice) that allows end users to control their own data security and independently manage encryption at rest for their accounts. This self-service interface allows users to enable or disable encryption without needing to involve or rely on the system administrator. To manage their encryption settings, users need to access the web management UI located under "/account/crypto" on the JMAP server base URL. For instance, if your JMAP server base URL is `https://jmap.example.org:8080`, then your users can access the encryption at rest management interface at `https://jmap.example.org:8080/account/crypto`.
+Stalwart includes a [self-service portal](/docs/0.15/management/webadmin/selfservice) that allows end users to control their own data security and independently manage encryption at rest for their accounts. This self-service interface allows users to enable or disable encryption without needing to involve or rely on the system administrator. To manage their encryption settings, users need to access the web management UI located under "/account/crypto" on the JMAP server base URL. For instance, if your JMAP server base URL is `https://jmap.example.org:8080`, then your users can access the encryption at rest management interface at `https://jmap.example.org:8080/account/crypto`.
 
 ## Enabling Encryption
 

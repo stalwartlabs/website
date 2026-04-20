@@ -29,7 +29,7 @@ For a full list of supported events and their descriptions, refer to the [Event 
 
 ## API Documentation
 
-Please refer to the [Webhooks API](/docs/api/webhooks) documentation for detailed information on the webhook API, including request and response formats, event types, and examples.
+Please refer to the [Webhooks API](/docs/0.15/api/webhooks) documentation for detailed information on the webhook API, including request and response formats, event types, and examples.
 
 ## Example
 

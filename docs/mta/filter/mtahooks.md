@@ -10,7 +10,7 @@ Each stage of the SMTP transaction is handled by sending a POST request to a con
 
 ## Configuration
 
-Each hook is defined as an [MtaHook](/docs/ref/object/mta-hook) object (found in the WebUI under <!-- breadcrumb:MtaHook --><!-- /breadcrumb:MtaHook -->). The relevant fields are:
+Each hook is defined as an [MtaHook](/docs/ref/object/mta-hook) object (found in the WebUI under <!-- breadcrumb:MtaHook --><svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M10 5H3" /><path d="M12 19H3" /><path d="M14 3v4" /><path d="M16 17v4" /><path d="M21 12h-9" /><path d="M21 19h-5" /><path d="M21 5h-7" /><path d="M8 10v4" /><path d="M8 12H3" /></svg> Settings › <svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="6" cy="19" r="3" /><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15" /><circle cx="18" cy="5" r="3" /></svg> MTA › Filters › MTA Hooks<!-- /breadcrumb:MtaHook -->). The relevant fields are:
 
 - [`enable`](/docs/ref/object/mta-hook#enable): expression that determines whether this hook is active. Defaults to `true`, but can branch on session state.
 - [`url`](/docs/ref/object/mta-hook#url): URL of the HTTP endpoint that handles hook callbacks.

@@ -258,10 +258,19 @@ The following RFCs are implemented by Stalwart.
 - [RFC 8188 - Encrypted Content-Encoding for HTTP](https://datatracker.ietf.org/doc/html/rfc8188)
 - [RFC 8291 - Message Encryption for Web Push](https://datatracker.ietf.org/doc/html/rfc8291)
 
+## Mail Autoconfig
+
+- [draft-ietf-mailmaint-pacc - Automatic Configuration of Email, Calendar, and Contact Server Settings (PACC)](https://datatracker.ietf.org/doc/draft-ietf-mailmaint-pacc/)
+
+## ACME
+
+- [draft-ietf-acme-dns-persist - ACME Challenge for Persistent DNS TXT Record Validation (dns-persist-01)](https://datatracker.ietf.org/doc/draft-ietf-acme-dns-persist/)
+
 ## OpenID & OAuth
 
 - [RFC 6749 - The OAuth 2.0 Authorization Framework](https://www.rfc-editor.org/rfc/rfc6749)
 - [RFC 6750 - The OAuth 2.0 Authorization Framework: Bearer Token Usage](https://datatracker.ietf.org/doc/html/rfc6750)
+- [RFC 7636 - Proof Key for Code Exchange by OAuth Public Clients (PKCE)](https://datatracker.ietf.org/doc/html/rfc7636)
 - [RFC 8414 - OAuth 2.0 Authorization Server Metadata](https://www.rfc-editor.org/rfc/rfc8414)
 - [RFC 8628 - OAuth 2.0 Device Authorization Grant](https://www.rfc-editor.org/rfc/rfc8628)
 - [RFC 7591 - OAuth 2.0 Dynamic Client Registration Protocol](https://www.rfc-editor.org/rfc/rfc7591.html)

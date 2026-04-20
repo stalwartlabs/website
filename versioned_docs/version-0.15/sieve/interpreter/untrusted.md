@@ -108,7 +108,7 @@ duplicate = "7d"
 
 ## Global Scripts
 
-Global user Sieve scripts are specified under the `sieve.untrusted.scripts.<name>.contents` key and can be imported from user scripts using the `include :global` command. In the configuration file, Sieve scripts can be either embedded as text or loaded from external files using a the [file macro](/docs/configuration/macros), for example:
+Global user Sieve scripts are specified under the `sieve.untrusted.scripts.<name>.contents` key and can be imported from user scripts using the `include :global` command. In the configuration file, Sieve scripts can be either embedded as text or loaded from external files using a the [file macro](/docs/0.15/configuration/macros), for example:
 
 ```toml
 [sieve.untrusted.scripts.global_one]

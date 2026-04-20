@@ -36,21 +36,21 @@ Yes, Stalwart includes a web interface that allows users to manage their account
 
 ### How do I create and manage users?
 
-It depends on the directory backend you are using. If you are using the [internal directory](/docs/auth/backend/internal), you can create and manage users using the [web-admin](/docs/management/webadmin/overview) interface. If you are using an external directory such as [LDAP](/docs/auth/backend/ldap) or [SQL](/docs/auth/backend/sql), you will need to use the tools provided by that directory server.
+It depends on the directory backend you are using. If you are using the [internal directory](/docs/auth/backend/internal), you can create and manage users using the [web-admin](/docs/0.15/management/webadmin/overview) interface. If you are using an external directory such as [LDAP](/docs/auth/backend/ldap) or [SQL](/docs/auth/backend/sql), you will need to use the tools provided by that directory server.
 
 ### How do I add a new domain?
 
-It also depends on the directory backend you are using. If you are using the [internal directory](/docs/auth/backend/internal), you can create and manage domains using the [web-admin](/docs/management/webadmin/overview) interface. If you are using an external directory such as [LDAP](/docs/auth/backend/ldap) or [SQL](/docs/auth/backend/sql), it is not necessary to configure new domain names in order to start receiving emails for it. Just like user accounts, your local domains are also retrieved the directory server. For [SQL](/docs/auth/backend/sql) servers this is done by executing the `domains` [lookup query](/docs/auth/backend/sql#lookup-queries) and in [LDAP](/docs/auth/backend/ldap) servers this is done by searching for objects using `domain` [lookup query](/docs/auth/backend/ldap#lookup-queries).
+It also depends on the directory backend you are using. If you are using the [internal directory](/docs/auth/backend/internal), you can create and manage domains using the [web-admin](/docs/0.15/management/webadmin/overview) interface. If you are using an external directory such as [LDAP](/docs/auth/backend/ldap) or [SQL](/docs/auth/backend/sql), it is not necessary to configure new domain names in order to start receiving emails for it. Just like user accounts, your local domains are also retrieved the directory server. For [SQL](/docs/auth/backend/sql) servers this is done by executing the `domains` [lookup query](/docs/auth/backend/sql#lookup-queries) and in [LDAP](/docs/auth/backend/ldap) servers this is done by searching for objects using `domain` [lookup query](/docs/auth/backend/ldap#lookup-queries).
 
 Sending emails from a new domain does not require any additional configuration either, but to improve deliverability it is recommended that you [create a new DKIM key](/docs/mta/authentication/dkim/sign#generating-dkim-keys), add it to your [DNS records](/docs/mta/authentication/dkim/sign#publishing-dkim-keys) and [enable DKIM signing](/docs/mta/authentication/dkim/sign#multiple-domains) for the new domain.
 
 ### How can I migrate from another server?
 
-Stalwart includes a command line interface to facilitate [data migration](/docs/management/cli/database/migrate) from a previous version of the server or from third-party servers.
+Stalwart includes a command line interface to facilitate [data migration](/docs/0.15/management/cli/database/migrate) from a previous version of the server or from third-party servers.
 
 ### How do I backup my data?
 
-The backup procedure depends on which database and blob storage backend you are using. Please refer to the [backup documentation](/docs/management/cli/database/backup) for detailed instructions.
+The backup procedure depends on which database and blob storage backend you are using. Please refer to the [backup documentation](/docs/0.15/management/cli/database/backup) for detailed instructions.
 
 ## E-mail
 
@@ -117,7 +117,7 @@ DNS Blocklists (DNSBLs) are databases that track IP addresses known for sending 
 
 ### How can I customize the spam filter settings?
 
-Administrators can easily customize settings from the [web-admin](/docs/management/webadmin/overview) or, for advanced users, the `spam-filter` Sieve script.
+Administrators can easily customize settings from the [web-admin](/docs/0.15/management/webadmin/overview) or, for advanced users, the `spam-filter` Sieve script.
 
 ### What is greylisting, and how does it help?
 
@@ -125,7 +125,7 @@ Greylisting temporarily defers emails from unknown senders. If the sender is leg
 
 ### How can I set up spam traps?
 
-You can set up decoy email addresses to catch and analyze spam. Any messages sent to these addresses are considered spam. The list of spamtrap email addresses can be managed from the [web-admin](/docs/management/webadmin/overview).
+You can set up decoy email addresses to catch and analyze spam. Any messages sent to these addresses are considered spam. The list of spamtrap email addresses can be managed from the [web-admin](/docs/0.15/management/webadmin/overview).
 
 ### I've heard about sender reputation tracking. How does that work in Stalwart?
 

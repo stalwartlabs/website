@@ -19,7 +19,7 @@ Each strategy type is evaluated independently, but together they define a comple
 
 ## Configuration
 
-Delivery behaviour is governed by four fields on the [MtaOutboundStrategy](/docs/ref/object/mta-outbound-strategy) singleton (found in the WebUI under <!-- breadcrumb:MtaOutboundStrategy --><!-- /breadcrumb:MtaOutboundStrategy -->):
+Delivery behaviour is governed by four fields on the [MtaOutboundStrategy](/docs/ref/object/mta-outbound-strategy) singleton (found in the WebUI under <!-- breadcrumb:MtaOutboundStrategy --><svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M10 5H3" /><path d="M12 19H3" /><path d="M14 3v4" /><path d="M16 17v4" /><path d="M21 12h-9" /><path d="M21 19h-5" /><path d="M21 5h-7" /><path d="M8 10v4" /><path d="M8 12H3" /></svg> Settings › <svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="6" cy="19" r="3" /><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15" /><circle cx="18" cy="5" r="3" /></svg> MTA › Outbound › Strategy<!-- /breadcrumb:MtaOutboundStrategy -->):
 
 - [`route`](/docs/ref/object/mta-outbound-strategy#route): expression selecting the route name, resolved to an [MtaRoute](/docs/ref/object/mta-route) object.
 - [`schedule`](/docs/ref/object/mta-outbound-strategy#schedule): expression selecting the scheduling strategy name, resolved to an [MtaDeliverySchedule](/docs/ref/object/mta-delivery-schedule) object.

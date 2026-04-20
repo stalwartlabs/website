@@ -26,7 +26,7 @@ The essential ports are:
 - **Port 25 (SMTP)**: Used for receiving email from other mail servers. This port must remain open for your domain to receive external email traffic reliably.
 - **Port 465 (SMTPS)**: Handles email submission with implicit TLS encryption. Recommended for securely sending outgoing mail from user clients. It is best to keep this port open and use it in preference to port 587.
 - **Port 993 (IMAPS)**: IMAP over implicit TLS. Required for secure email access via IMAP clients. Keep this port open to allow encrypted mail retrieval.
-- **Port 443 (HTTPS)**: A critical port used for multiple secure web-based services, including [web administration](/docs/management/webadmin/overview), [JMAP](/docs/http/jmap/overview), [REST API](/docs/api/management/overview), [OAuth](/docs/auth/oauth/overview), TLS certificate provisioning ([ACME challenges](/docs/server/tls/acme/challenges#tls-alpn-01)), [autoconfig](/docs/server/autoconfig), and [MTA-STS](/docs/mta/transport-security/mta-sts#policy-publishing). This port must remain open in nearly all deployments.
+- **Port 443 (HTTPS)**: A critical port used for multiple secure web-based services, including [web administration](/docs/management/webui/overview), [JMAP](/docs/http/jmap/overview), [OAuth](/docs/auth/oauth/overview), TLS certificate provisioning ([ACME challenges](/docs/server/tls/acme/challenges#tls-alpn-01)), [autoconfig](/docs/server/autoconfig), and [MTA-STS](/docs/mta/transport-security/mta-sts#policy-publishing). This port must remain open in nearly all deployments.
 
 
 The non-essential ports are:

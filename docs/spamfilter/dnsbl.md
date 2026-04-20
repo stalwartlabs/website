@@ -19,7 +19,7 @@ The following DNSBL checks are performed by Stalwart:
 
 ## DNSBL checks
 
-Each DNSBL check is defined as a [SpamDnsblServer](/docs/ref/object/spam-dnsbl-server) object (found in the WebUI under <!-- breadcrumb:SpamDnsblServer --><!-- /breadcrumb:SpamDnsblServer -->). This is a multi-variant object: the variant selects which part of the message the DNSBL applies to (`Ip`, `Domain`, `Url`, `Email`, `Header`, `Body`, or `Any`).
+Each DNSBL check is defined as a [SpamDnsblServer](/docs/ref/object/spam-dnsbl-server) object (found in the WebUI under <!-- breadcrumb:SpamDnsblServer --><svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M10 5H3" /><path d="M12 19H3" /><path d="M14 3v4" /><path d="M16 17v4" /><path d="M21 12h-9" /><path d="M21 19h-5" /><path d="M21 5h-7" /><path d="M8 10v4" /><path d="M8 12H3" /></svg> Settings › <svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" /><path d="M12 8v4" /><path d="M12 16h.01" /></svg> Spam Filter › DNSBL › Servers<!-- /breadcrumb:SpamDnsblServer -->). This is a multi-variant object: the variant selects which part of the message the DNSBL applies to (`Ip`, `Domain`, `Url`, `Email`, `Header`, `Body`, or `Any`).
 
 Each SpamDnsblServer instance carries:
 
@@ -87,7 +87,7 @@ This keeps customisations intact while still benefiting from ongoing updates to 
 
 ## Limits
 
-The maximum number of DNSBL queries that can be performed per message is configured on the [SpamDnsblSettings](/docs/ref/object/spam-dnsbl-settings) singleton (found in the WebUI under <!-- breadcrumb:SpamDnsblSettings --><!-- /breadcrumb:SpamDnsblSettings -->). The per-message limits are:
+The maximum number of DNSBL queries that can be performed per message is configured on the [SpamDnsblSettings](/docs/ref/object/spam-dnsbl-settings) singleton (found in the WebUI under <!-- breadcrumb:SpamDnsblSettings --><svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M10 5H3" /><path d="M12 19H3" /><path d="M14 3v4" /><path d="M16 17v4" /><path d="M21 12h-9" /><path d="M21 19h-5" /><path d="M21 5h-7" /><path d="M8 10v4" /><path d="M8 12H3" /></svg> Settings › <svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" /><path d="M12 8v4" /><path d="M12 16h.01" /></svg> Spam Filter › DNSBL › Settings<!-- /breadcrumb:SpamDnsblSettings -->). The per-message limits are:
 
 - [`ipLimit`](/docs/ref/object/spam-dnsbl-settings#iplimit): maximum number of IP address queries.
 - [`domainLimit`](/docs/ref/object/spam-dnsbl-settings#domainlimit): maximum number of domain name queries.

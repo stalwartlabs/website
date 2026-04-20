@@ -37,7 +37,7 @@ After enabling this setting, the OAuth server will mandate that all clients regi
 
 ## Client Authentication
 
-Before a client can register with the OAuth server, it must authenticate itself. The recommended approach for client authentication during registration is to create an [API Key](/docs/auth/principals/api-key) for the OAuth client. This API Key should be assigned specific [permissions](/docs/auth/authorization/permissions) that allow the client to authenticate and register itself. Specifically, the API Key should be configured with the following permissions: `authenticate` and `oauth-client-registration`. These permissions ensure that the client can both authenticate with the OAuth server and perform the necessary registration steps securely.
+Before a client can register with the OAuth server, it must authenticate itself. The recommended approach for client authentication during registration is to create an [API Key](/docs/0.15/auth/principals/api-key) for the OAuth client. This API Key should be assigned specific [permissions](/docs/auth/authorization/permissions) that allow the client to authenticate and register itself. Specifically, the API Key should be configured with the following permissions: `authenticate` and `oauth-client-registration`. These permissions ensure that the client can both authenticate with the OAuth server and perform the necessary registration steps securely.
 
 ## Anonymous Registrations
 
@@ -54,13 +54,13 @@ However, it is strongly advised that this setting remains disabled (which is the
 
 ## Managing Clients
 
-Once dynamic client registration is enabled and a client registers successfully, Stalwart stores the client’s information in its directory as an [OAuth Client principal](/docs/auth/principals/oauth-client). This stored information includes the client ID, redirect URIs, and other metadata related to the client's access to the OAuth system. The server maintains a detailed record of all registered clients, enabling administrators to manage client credentials, access permissions, and general configurations.
+Once dynamic client registration is enabled and a client registers successfully, Stalwart stores the client’s information in its directory as an [OAuth Client principal](/docs/0.15/auth/principals/oauth-client). This stored information includes the client ID, redirect URIs, and other metadata related to the client's access to the OAuth system. The server maintains a detailed record of all registered clients, enabling administrators to manage client credentials, access permissions, and general configurations.
 
-Administrators can modify or remove these registered clients using either the [Webadmin](/docs/management/webadmin/overview) or [REST API](/docs/api/management/overview).
+Administrators can modify or remove these registered clients using either the [Webadmin](/docs/0.15/management/webadmin/overview) or [REST API](/docs/0.15/api/management/overview).
 
 ## Webadmin Client
 
-The Stalwart [Webadmin](/docs/management/webadmin/overview) interface, which also includes a [Self-Service Portal](/docs/management/webadmin/selfservice) for user management, relies on OAuth to authenticate users. If the option to require client registration (`oauth.client-registration.require = true`) is enabled, the Webadmin interface will stop functioning unless it is registered as an OAuth client, because its default client ID (`webadmin`) won't be automatically registered.
+The Stalwart [Webadmin](/docs/0.15/management/webadmin/overview) interface, which also includes a [Self-Service Portal](/docs/0.15/management/webadmin/selfservice) for user management, relies on OAuth to authenticate users. If the option to require client registration (`oauth.client-registration.require = true`) is enabled, the Webadmin interface will stop functioning unless it is registered as an OAuth client, because its default client ID (`webadmin`) won't be automatically registered.
 
 ### Manual Registration
 

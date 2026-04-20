@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Settings
 
-Stalwart includes a built-in HTTP server, which primarily serves two functions: handling [JMAP](/docs/http/jmap/overview), [WebDAV](/docs/http/webdav/overview) requests and processing requests to the [REST management API](/docs/api/management/overview). The following settings can be configured to customize the behavior of the HTTP server.
+Stalwart includes a built-in HTTP server, which primarily serves two functions: handling [JMAP](/docs/http/jmap/overview), [WebDAV](/docs/http/webdav/overview) requests and processing requests to the [REST management API](/docs/0.15/api/management/overview). The following settings can be configured to customize the behavior of the HTTP server.
 
 ## URL
 

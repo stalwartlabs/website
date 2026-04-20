@@ -26,7 +26,7 @@ A tracer with [`level`](/docs/ref/object/tracer#level) set to one of the above v
 
 ### Overriding the level of an event
 
-The default level of any event can be overridden through the [EventTracingLevel](/docs/ref/object/event-tracing-level) object (found in the WebUI under <!-- breadcrumb:EventTracingLevel --><!-- /breadcrumb:EventTracingLevel -->). Each instance targets a single event, identified by [`event`](/docs/ref/object/event-tracing-level#event), and sets its effective severity through [`level`](/docs/ref/object/event-tracing-level#level).
+The default level of any event can be overridden through the [EventTracingLevel](/docs/ref/object/event-tracing-level) object (found in the WebUI under <!-- breadcrumb:EventTracingLevel --><svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M10 5H3" /><path d="M12 19H3" /><path d="M14 3v4" /><path d="M16 17v4" /><path d="M21 12h-9" /><path d="M21 19h-5" /><path d="M21 5h-7" /><path d="M8 10v4" /><path d="M8 12H3" /></svg> Settings › <svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M3 3v16a2 2 0 0 0 2 2h16" /><path d="m19 9-5 5-4-4-3 3" /></svg> Telemetry › Event Levels<!-- /breadcrumb:EventTracingLevel -->). Each instance targets a single event, identified by [`event`](/docs/ref/object/event-tracing-level#event), and sets its effective severity through [`level`](/docs/ref/object/event-tracing-level#level).
 
 For example, to raise `auth.success` from its default `info` to `debug`:
 

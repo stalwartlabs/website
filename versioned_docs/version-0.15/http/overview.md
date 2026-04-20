@@ -16,7 +16,7 @@ The following endpoints are available through the HTTP service:
 - `/dav/*`: The WebDAV endpoint provides access to [WebDAV](/docs/http/webdav/overview) resources, allowing clients to manage calendar, contact and file resources.
 - `/calendar/rsvp`: The Calendar Scheduling [RSVP endpoint](/docs/collaboration/scheduling#http-rsvp) allows participants to respond to calendar invitations using a simple web interface.
 - `/.well-known/*`: The [well-known endpoint](#well-known-resources) provides access to resources that are commonly used by clients to discover service information.
-- `/api/*`: The API management endpoint provides access to the [REST management API](/docs/api/management/overview).
+- `/api/*`: The API management endpoint provides access to the [REST management API](/docs/0.15/api/management/overview).
 - `/auth/device`: The device authorization endpoint is used for [OAuth device authorization](/docs/auth/oauth/overview).
 - `/auth/token`: The token endpoint is used for [OAuth token exchange](/docs/auth/oauth/overview).
 - `/auth/introspect`: The token introspection endpoint is used for [OAuth token introspection](/docs/auth/oauth/endpoints#authintrospect).
@@ -29,7 +29,7 @@ The following endpoints are available through the HTTP service:
 - `/healthz/ready`: The health check endpoint indicates whether the server is ready to accept requests.
 - `/healthz/live`: The health check endpoint indicates whether the server is live and operational.
 - `/robots.txt`: The robots.txt file provides instructions to web crawlers and other user agents about the server's content.
-- `/*`: The default endpoint serves static files from the [webadmin bundle](/docs/management/webadmin/overview).
+- `/*`: The default endpoint serves static files from the [webadmin bundle](/docs/0.15/management/webadmin/overview).
 
 ## Well-known Resources
 

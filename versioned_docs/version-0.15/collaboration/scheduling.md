@@ -170,5 +170,5 @@ web = "<html> .. custom RSVP web template.. </html>"
 
 ### Logo
 
-Both default templates include a **logo**, which by default is the system-wide branding logo. This logo can be **overridden on a per-tenant or per-domain basis**, allowing organizations to display the appropriate branding for different users or business units. For more information on configuring domain-specific branding, administrators are encouraged to consult the [Branding](/docs/management/webadmin/branding) section of the documentation.
+Both default templates include a **logo**, which by default is the system-wide branding logo. This logo can be **overridden on a per-tenant or per-domain basis**, allowing organizations to display the appropriate branding for different users or business units. For more information on configuring domain-specific branding, administrators are encouraged to consult the [Branding](/docs/0.15/management/webadmin/branding) section of the documentation.
 

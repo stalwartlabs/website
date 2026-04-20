@@ -17,7 +17,7 @@ A group principal holds a set of fields that define its properties and how it in
 - **members**: Contains a list of [individuals](/docs/auth/principals/individual) and other **groups** that are members of this group. These members inherit certain privileges, such as accessing the group's shared inbox.
 - **tenant**: Indicates the [tenant](/docs/auth/authorization/tenants) to which the group belongs. This is relevant in multi-tenant environments where different organizations share the same mail server infrastructure.
 - **roles**: A list of [roles](/docs/auth/authorization/roles) assigned to the group. Roles help define what the group can do within the mail system, such as administrative roles or access to certain shared resources.
-- **lists**: Lists the [mailing lists](/docs/auth/principals/list) the group is a member of. This allows the group to receive messages sent to those mailing lists.
+- **lists**: Lists the [mailing lists](/docs/0.15/auth/principals/list) the group is a member of. This allows the group to receive messages sent to those mailing lists.
 - **enabledPermissions**: Specifies the [permissions](/docs/auth/authorization/permissions) that are enabled for the group. These define what the group, and its members, can do within the mail server environment, such as viewing shared inboxes or managing specific settings.
 - **disabledPermissions**: Specifies the [permissions](/docs/auth/authorization/permissions) that are explicitly disabled for the group. These limit what actions the group is allowed to perform, controlling access to certain features or resources.
 - **picture**: Stores the group's picture. This image can be used in email clients or within the server's management interface to visually represent the group.

@@ -18,7 +18,7 @@ Each store can be configured to use a different backend, allowing you to choose 
 In the configuration file, each store is defined under the `store.<name>` section, where `<name>` is a unique identifier for the store. The following attributes are common to all stores:
 
 - `type`: The type of store. This is the only required attribute.
-- `purge.frequency`: The frequency at which the store's maintenance task runs. This is specified using a simplified [cron-like syntax](/docs/configuration/values/cron).
+- `purge.frequency`: The frequency at which the store's maintenance task runs. This is specified using a simplified [cron-like syntax](/docs/0.15/configuration/values/cron).
 
 The following example shows the configuration for a data store using [RocksDB](/docs/storage/backends/rocksdb) as the backend:
 
@@ -54,6 +54,6 @@ retention = "30d"
 
 ### Recovery
 
-Administrators can easily restore deleted emails using the [web-based administration panel](/docs/management/webadmin/overview). This user-friendly interface provides a straightforward way to search for and recover emails within the retention period specified in the configuration.
+Administrators can easily restore deleted emails using the [web-based administration panel](/docs/0.15/management/webadmin/overview). This user-friendly interface provides a straightforward way to search for and recover emails within the retention period specified in the configuration.
 
-For more advanced users or automated systems, the REST API provides a flexible method to recover deleted emails. Detailed documentation on the specific API endpoints and usage can be found in the [API documentation](/docs/api/management/overview).
+For more advanced users or automated systems, the REST API provides a flexible method to recover deleted emails. Detailed documentation on the specific API endpoints and usage can be found in the [API documentation](/docs/0.15/api/management/overview).

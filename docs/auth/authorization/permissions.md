@@ -6,7 +6,7 @@ sidebar_position: 2
 
 Permissions in Stalwart determine which actions and resources a principal is allowed to access. They can be assigned directly to [individuals](/docs/auth/principals/individual) or [groups](/docs/auth/principals/group), through [roles](/docs/auth/authorization/roles), or on a [tenant](/docs/auth/authorization/tenants) as a whole.
 
-To simplify management, multiple permissions can be grouped into a [Role](/docs/ref/object/role) object (found in the WebUI under <!-- breadcrumb:Role --><!-- /breadcrumb:Role -->) and assigned through a single reference on the principal.
+To simplify management, multiple permissions can be grouped into a [Role](/docs/ref/object/role) object (found in the WebUI under <!-- breadcrumb:Role --><svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><rect width="20" height="14" x="2" y="3" rx="2" /><line x1="8" x2="16" y1="21" y2="21" /><line x1="12" x2="12" y1="17" y2="21" /></svg> Management › <svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><path d="M16 3.128a4 4 0 0 1 0 7.744" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><circle cx="9" cy="7" r="4" /></svg> Directory › Roles<!-- /breadcrumb:Role -->) and assigned through a single reference on the principal.
 
 ## Effective Permissions
 

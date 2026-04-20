@@ -24,7 +24,7 @@ MTA Hooks are configured in the `session.hook.<id>` section of the configuration
 
 ## API Documentation
 
-Please refer to the [MTA Hooks API](/docs/api/mta-hooks/overview) documentation for detailed information on the MTA Hooks API, including request and response formats, as well as examples.
+Please refer to the [MTA Hooks API](/docs/0.15/api/mta-hooks/overview) documentation for detailed information on the MTA Hooks API, including request and response formats, as well as examples.
 
 ## Example
 

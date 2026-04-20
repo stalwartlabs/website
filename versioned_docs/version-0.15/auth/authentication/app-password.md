@@ -12,9 +12,9 @@ By using Application Passwords, users can maintain access to their email account
 
 ## Managing App Passwords
 
-Users can create and remove Application Passwords through the [self-service portal](/docs/management/webadmin/selfservice). This functionality is available under the "App Passwords" menu option. By navigating to this section, users can generate new Application Passwords for use with devices and applications that do not support Two-Factor Authentication (2FA). Additionally, users can view a list of their existing Application Passwords and revoke any that are no longer needed to maintain account security.
+Users can create and remove Application Passwords through the [self-service portal](/docs/0.15/management/webadmin/selfservice). This functionality is available under the "App Passwords" menu option. By navigating to this section, users can generate new Application Passwords for use with devices and applications that do not support Two-Factor Authentication (2FA). Additionally, users can view a list of their existing Application Passwords and revoke any that are no longer needed to maintain account security.
 
-Administrators, on the other hand, have limited control over Application Passwords through the [webadmin](/docs/management/webadmin/overview) interface. While administrators can view and remove a user's Application Passwords, they do not have the capability to create new Application Passwords on behalf of users. 
+Administrators, on the other hand, have limited control over Application Passwords through the [webadmin](/docs/0.15/management/webadmin/overview) interface. While administrators can view and remove a user's Application Passwords, they do not have the capability to create new Application Passwords on behalf of users. 
 
 :::tip Note
 

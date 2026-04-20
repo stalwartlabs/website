@@ -12,7 +12,7 @@ Another significant function of the maintenance process involves the deletion of
 
 ## Schedule
 
-The schedule for the maintenance task is configured using a simplified [cron-like syntax](/docs/configuration/values/cron) and the frequency of the cleanup is determined by the `account.purge.frequency` attribute of the configuration file. 
+The schedule for the maintenance task is configured using a simplified [cron-like syntax](/docs/0.15/configuration/values/cron) and the frequency of the cleanup is determined by the `account.purge.frequency` attribute of the configuration file. 
 
 For example, to run the job every day at midnight local time, you would add the following to your configuration file:
 

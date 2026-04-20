@@ -15,4 +15,4 @@ For every incoming message the server performs the following analyses:
 
 Based on the outcome of these analyses, Stalwart assigns tags to the message, each with an associated score. For example, a DKIM verification failure produces the `DKIM_REJECT` tag, indicating a potential issue with authenticity or integrity. A message that passes DMARC authentication receives the `DMARC_POLICY_ALLOW` tag, signalling that the message has met the relevant validation standards and is likely legitimate.
 
-For more information about DMARC, SPF, DKIM and ARC, refer to the [Sender Authentication](/docs/mta/authentication) section.
+For more information about DMARC, SPF, DKIM and ARC, refer to the [Sender Authentication](/docs/category/sender-authentication) section.

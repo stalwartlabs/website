@@ -96,5 +96,5 @@ template = "<html> .. custom email alarm template .. </html>"
 
 The alarm email template includes a **logo**, which by default is the system-wide branding logo configured for the server. This logo can be **overridden per tenant or per domain**, allowing organizations to present appropriate branding to different user groups. For instance, separate business units, clients, or hosted domains can each display their own logo in alarm emails.
 
-For details on how to configure branding overrides, refer to the [Branding](/docs/management/webadmin/branding) section of the documentation.
+For details on how to configure branding overrides, refer to the [Branding](/docs/0.15/management/webadmin/branding) section of the documentation.
 

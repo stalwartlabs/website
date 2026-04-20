@@ -6,7 +6,7 @@ sidebar_position: 5
 
 Multi-tenancy is a feature in Stalwart that allows multiple independent organizations, known as **tenants**, to share the same mail server infrastructure while keeping their data and resources completely isolated from one another. A tenant is defined as a logical division within the mail server, representing a specific organization or group that has its own set of users, groups, mailing lists, and domains.
 
-Each tenant in Stalwart is defined as a [principal](/docs/auth/principals/overview) within the directory. Principals assigned to a specific tenant (such as [individuals](/docs/auth/principals/individual), [groups](/docs/auth/principals/group), and [lists](/docs/auth/principals/list)) are restricted to interacting only with other resources and users within the same tenant. This ensures complete separation between tenants, providing privacy and security for each organization. 
+Each tenant in Stalwart is defined as a [principal](/docs/auth/principals/overview) within the directory. Principals assigned to a specific tenant (such as [individuals](/docs/auth/principals/individual), [groups](/docs/auth/principals/group), and [lists](/docs/0.15/auth/principals/list)) are restricted to interacting only with other resources and users within the same tenant. This ensures complete separation between tenants, providing privacy and security for each organization. 
 
 Additionally, any permissions assigned within a tenant are bound by the permissions of the tenant itself. For instance, if a tenant administrator assigns a permission to a user that the tenant itself does not have, this permission is ignored. This ensures that tenant administrators cannot assign more privileges than the tenant is allowed.
 
@@ -41,4 +41,4 @@ In addition to disk usage, tenants also have quotas that limit the number of pri
 
 ## Branding
 
-Stalwart supports [branding](/docs/management/webadmin/branding) for tenants, allowing organizations to customize the appearance of the web administration interface. Each tenant can have its own **logo**, which is displayed to users when they access the [webadmin](/docs/management/webadmin/overview) portal. This feature is particularly useful in multi-tenant environments, as it allows each tenant to present its own branding and identity, making the user experience more personalized.
+Stalwart supports [branding](/docs/0.15/management/webadmin/branding) for tenants, allowing organizations to customize the appearance of the web administration interface. Each tenant can have its own **logo**, which is displayed to users when they access the [webadmin](/docs/0.15/management/webadmin/overview) portal. This feature is particularly useful in multi-tenant environments, as it allows each tenant to present its own branding and identity, making the user experience more personalized.

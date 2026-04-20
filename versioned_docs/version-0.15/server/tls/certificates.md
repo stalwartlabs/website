@@ -16,8 +16,8 @@ In scenarios where a client does not provide an SNI server name (possibly due to
 
 TLS certificates are defined in the configuration file under the `certificate.<name>` key and require the following parameters:
 
-- `cert`: The path or content of the TLS certificate file. This can either be directly embedded in the configuration file or referenced from an external file using a [file macro](/docs/configuration/macros).
-- `private-key`: The path or content of the TLS private key file. This should not be embedded directly in the configuration file, and instead be referenced from an external file using a [file macro](/docs/configuration/macros).
+- `cert`: The path or content of the TLS certificate file. This can either be directly embedded in the configuration file or referenced from an external file using a [file macro](/docs/0.15/configuration/macros).
+- `private-key`: The path or content of the TLS private key file. This should not be embedded directly in the configuration file, and instead be referenced from an external file using a [file macro](/docs/0.15/configuration/macros).
 - `subjects`: The list of subject alternative names (SANs) for the certificate. This is an optional parameter and can be used to specify additional domain names or IP addresses for which the certificate is valid.
 - `default`: If set to `true`, this certificate will be used when the client does not provide an SNI server name.
 
@@ -36,4 +36,4 @@ private-key = "%{file:/opt/stalwart-smtp/etc/private/tls.key}%"
 
 ## Reloading certificates
 
-When TLS certificates are updated, it is necessary to reload them in order for the changes to take effect. This can be done without stopping the server by using the [web-admin](/docs/management/webadmin/overview) or [command line interface](/docs/management/cli/overview).
+When TLS certificates are updated, it is necessary to reload them in order for the changes to take effect. This can be done without stopping the server by using the [web-admin](/docs/0.15/management/webadmin/overview) or [command line interface](/docs/management/cli/overview).

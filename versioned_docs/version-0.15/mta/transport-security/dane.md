@@ -32,4 +32,4 @@ TLSA records are DNS records that contain the certificate information for a doma
 - **Matching Type**: Specifies how the certificate is matched.
 - **Certificate Association Data**: Contains the certificate data.
 
-Stalwart automatically generates the TLSA records for the TLS certificates it uses. To obtain the TLSA records for a domain, go to the `Management` > `Directory` > `Domains` section in the [Webadmin](/docs/management/webadmin/overview.md).
+Stalwart automatically generates the TLSA records for the TLS certificates it uses. To obtain the TLSA records for a domain, go to the `Management` > `Directory` > `Domains` section in the [Webadmin](/docs/0.15/management/webadmin/overview).

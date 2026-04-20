@@ -125,7 +125,7 @@ The configuration of TLS for remote servers is managed through the following par
 Authentication can be configured using the following parameters located under the `route.<id>.auth` key in the configuration file:
 
 - `username`: The username to be used for authentication.
-- `secret`: The password to be used for authentication. Can also be specified using an [environment variable](/docs/configuration/macros).
+- `secret`: The password to be used for authentication. Can also be specified using an [environment variable](/docs/0.15/configuration/macros).
 
 ## Examples
 

@@ -12,9 +12,9 @@ Using TOTP with Stalwart significantly enhances the security of your email accou
 
 ## Enabling 2FA
 
-Users can enable Two-Factor Authentication (2FA) on their email accounts by logging into the [self-service portal](/docs/management/webadmin/selfservice). Once logged in, they need to click on the Two-factor Authentication link where the option to enable 2FA is available. A TOTP QR code will be presented, which users should scan using an authenticator app such as Google Authenticator or Authy. This process links the email account to the authenticator app, allowing users to generate the necessary codes for 2FA.
+Users can enable Two-Factor Authentication (2FA) on their email accounts by logging into the [self-service portal](/docs/0.15/management/webadmin/selfservice). Once logged in, they need to click on the Two-factor Authentication link where the option to enable 2FA is available. A TOTP QR code will be presented, which users should scan using an authenticator app such as Google Authenticator or Authy. This process links the email account to the authenticator app, allowing users to generate the necessary codes for 2FA.
 
-Administrators can enable 2FA on a user account by accessing the Manage Account section of the [webadmin interface](/docs/management/webadmin/overview). Within the account configuration, administrators need to enter the OTPAuth URL. After configuring the OTPAuth URL, the administrator must share the TOTP code with the user so they can add it to their authentication app. This ensures that the user can generate the necessary codes for 2FA.
+Administrators can enable 2FA on a user account by accessing the Manage Account section of the [webadmin interface](/docs/0.15/management/webadmin/overview). Within the account configuration, administrators need to enter the OTPAuth URL. After configuring the OTPAuth URL, the administrator must share the TOTP code with the user so they can add it to their authentication app. This ensures that the user can generate the necessary codes for 2FA.
 
 Both users and administrators should ensure that the authenticator app is properly set up and tested to avoid any access issues. Enabling 2FA significantly enhances the security of email accounts, providing robust protection against unauthorized access.
 

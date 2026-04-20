@@ -12,12 +12,12 @@ Stalwart supports a variety of principal types, which include both types defined
 
 - [Individual](/docs/auth/principals/individual): Represents a single person who can send, receive, and manage email within the system.
 - [Group](/docs/auth/principals/group): Represents a collection of individuals or other principals. This allows for easier management of permissions and access rights for multiple users at once.
-- [List](/docs/auth/principals/list): Represents a mailing list, allowing communication to multiple recipients through a single address.
-- [Domain](/docs/auth/principals/domain): Represents an entire domain within the mail system, enabling the management of domain-wide settings or resources.
+- [List](/docs/0.15/auth/principals/list): Represents a mailing list, allowing communication to multiple recipients through a single address.
+- [Domain](/docs/0.15/auth/principals/domain): Represents an entire domain within the mail system, enabling the management of domain-wide settings or resources.
 - [Tenant](/docs/auth/authorization/tenants): Represents an organizational or logical division within the system, allowing multi-tenant setups.
 - [Role](/docs/auth/authorization/roles): Represents a specific role that users or groups can assume, often used to define permissions or responsibilities.
-- [API Key](/docs/auth/principals/api-key): Represents an API key that can be used to authenticate requests to the mail server.
-- [OAuth Client](/docs/auth/principals/oauth-client): Represents an OAuth client that can be used to authenticate users or applications.
+- [API Key](/docs/0.15/auth/principals/api-key): Represents an API key that can be used to authenticate requests to the mail server.
+- [OAuth Client](/docs/0.15/auth/principals/oauth-client): Represents an OAuth client that can be used to authenticate users or applications.
 - **Resource**: Represents physical or digital resources, such as projectors, meeting rooms, or shared file storage.
 - **Location**: Represents a physical location, such as an office or a conference room.
 - **Other**: Represents any other type of principal that does not fall into the predefined categories.

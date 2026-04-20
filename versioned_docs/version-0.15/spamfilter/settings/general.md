@@ -86,7 +86,7 @@ card-is-ham = true
 
 Upon the initial execution of Stalwart, the Spam filter rules are automatically retrieved from the GitHub repository and stored locally as part of the configuration file. This ensures that the Spam filter is readily available and updated without manual intervention. 
 
-Staying current with the latest Spam filter rules is simple. Administrators can download and update new rule updates automatically by navigating to `Maintenance` > `Update SPAM rules` within the [Webadmin](/docs/management/webadmin/overview) interface. This feature ensures that the Spam filter remains up-to-date with the latest rules and security enhancements.
+Staying current with the latest Spam filter rules is simple. Administrators can download and update new rule updates automatically by navigating to `Maintenance` > `Update SPAM rules` within the [Webadmin](/docs/0.15/management/webadmin/overview) interface. This feature ensures that the Spam filter remains up-to-date with the latest rules and security enhancements.
 
 ### Resource Location
 
