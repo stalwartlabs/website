@@ -80,7 +80,7 @@ Initial setup shown the first time Stalwart starts. Configures the server's iden
 > Type: [<code>DirectoryBootstrap</code>](#directorybootstrap) · default: `{"@type":"Internal"}`
 >
 > Where user accounts and credentials come from.
-> The internal directory is recommended for new installations; external sources such as OIDC, LDAP or SQL databases can be alsdo configured.
+> The internal directory is recommended for ease of setup and management through the WebUI, but external OIDC or LDAP directories can be used for single sign-on and user provisioning in larger organizations.
 
 
 ##### `tracer`

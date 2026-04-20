@@ -15,7 +15,7 @@ This object can be configured from the [WebUI](/docs/management/webui/overview) 
 
 ##### `secret`
 
-> Type: <code>String</code> · required · secret
+> Type: <code>String?</code> · secret
 >
 > Secret value of the account
 

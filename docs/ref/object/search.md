@@ -27,11 +27,11 @@ This object can be configured from the [WebUI](/docs/management/webui/overview) 
 > Default language to use when language detection is not possible
 
 
-##### `disableLanguages`
+##### `supportedLanguages`
 
-> Type: [<code>Locale</code>](../enum/locale.md)<code>[]</code>
+> Type: [<code>Locale</code>](../enum/locale.md)<code>[]</code> · default: `["en_US"]`
 >
-> List of languages to disable for full-text search
+> List of languages to enable for full-text search
 
 
 ##### `indexCalendar`
