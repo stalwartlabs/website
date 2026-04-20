@@ -27,9 +27,9 @@ A Tenant object exposes the following fields:
 - [`quotas`](/docs/ref/object/tenant#quotas): a map from `TenantStorageQuota` keys to numeric limits. This includes the tenant's total disk quota and the maximum number of principals of each kind (accounts, groups, lists, domains) that the tenant can create.
 - [`usedDiskQuota`](/docs/ref/object/tenant#useddiskquota): the amount of disk space currently consumed by the tenant, computed by the server.
 
-<!-- review: The previous docs exposed a `description` field on tenants (a human-readable description separate from the name). The current Tenant object has only `name`, with no description field. Confirm that descriptive text is now carried via `name` alone, or identify the replacement field. -->
+The [`name`](/docs/ref/object/tenant#name) field carries the tenant's human-readable label. There is no separate description field on the Tenant object.
 
-Isolation, quotas, and custom role sets together allow secure and scalable multi-tenant operation, while still giving administrators the ability to regulate how much of the server each tenant can consume.
+Isolation, quotas, and custom role sets together allow multi-tenant operation, while still giving administrators the ability to regulate how much of the server each tenant can consume.
 
 ## Quotas
 

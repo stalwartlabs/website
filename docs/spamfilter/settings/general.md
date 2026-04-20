@@ -18,7 +18,7 @@ The `X-Spam-Status` header states whether the message was classified as spam, as
 
 The `X-Spam-Result` header lists every tag applied by the filter and its associated score, making the filter's decision auditable and easy to debug.
 
-<!-- review: The previous docs documented four fields controlling these headers (`spam-filter.header.status.enable`, `spam-filter.header.status.name`, `spam-filter.header.result.enable`, `spam-filter.header.result.name`) for turning each header on or off and renaming it. No equivalent fields appear on SpamSettings or any other object in the current schema. Confirm whether both headers are now unconditionally added under their default names, or whether the controls live on an object that has not been surfaced here. -->
+Both headers are added unconditionally under their fixed names.
 
 ## Thresholds
 
@@ -50,6 +50,6 @@ On first startup, Stalwart downloads the default spam filter rules from the GitH
 
 The URL from which spam filter rules are downloaded is set through [`spamFilterRulesUrl`](/docs/ref/object/spam-settings#spamfilterrulesurl) on SpamSettings. The default is `"https://github.com/stalwartlabs/spam-filter/releases/latest/download/spam-filter-rules.json.gz"`. A local `file://` URL can be used to serve rules from disk.
 
-### Automatic updates
+### Scheduled updates
 
-<!-- review: The previous docs exposed a `spam-filter.auto-update` boolean that, when `true`, caused the spam filter rules to be re-downloaded automatically on startup. No equivalent field appears on SpamSettings. Confirm whether automatic updates are now unconditional, have moved to a separate object (for example a task schedule), or have been removed entirely. -->
+Rule refreshes are triggered by a [Task](/docs/ref/object/task) (found in the WebUI under <!-- breadcrumb:Task --><!-- /breadcrumb:Task -->) of variant `SpamFilterMaintenance` with its operation set to `updateRules`. The task can be scheduled on demand by the administrator to re-download the rule set from [`spamFilterRulesUrl`](/docs/ref/object/spam-settings#spamfilterrulesurl). There is no built-in automatic schedule at present.

@@ -22,4 +22,6 @@ Example intercepting `dmarc@*` and `abuse@*` while still forwarding the report t
 }
 ```
 
-<!-- review: The previous `report.analysis.store` setting controlled the retention period for stored inbound reports (a duration, or `false` to disable storage). The current ReportSettings object does not expose a retention field; confirm whether retention of inbound reports is now governed globally by the [DataRetention](/docs/ref/object/data-retention) object or whether a dedicated field exists. -->
+## Retention
+
+How long intercepted reports are kept is controlled globally by the [DataRetention](/docs/ref/object/data-retention) singleton (found in the WebUI under <!-- breadcrumb:DataRetention --><!-- /breadcrumb:DataRetention -->) through the [`holdMtaReportsFor`](/docs/ref/object/data-retention#holdmtareportsfor) field, which accepts a duration or `null` to disable storage. The default is `30d`.

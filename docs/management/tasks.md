@@ -78,7 +78,7 @@ The `AcmeRenewal` variant renews the ACME-issued TLS certificate for a domain. T
 
 ### DKIM rotation
 
-The `DkimManagement` variant performs DKIM key rotation for a domain. The task carries the target [`domainId`](/docs/ref/object/task#domainid). <!-- review: ref label reads "Perform DKIM key rotation for a domain" but the variant is named DkimManagement; verify whether the same variant also covers initial key creation or only rotation. -->
+The `DkimManagement` variant performs DKIM key rotation for a domain. The task carries the target [`domainId`](/docs/ref/object/task#domainid).
 
 ### DNS record update
 

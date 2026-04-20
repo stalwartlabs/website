@@ -30,15 +30,13 @@ The tasks that a role can enable or disable are drawn from the `ClusterTaskType`
 - `spamClassifierTraining`: runs spam classifier training. Only one node should run this task at a time to avoid conflicting model updates.
 - `outboundMta`: processes outbound mail through the MTA queue.
 - `taskQueueProcessing`: executes queued background tasks.
-- `taskScheduler`: schedules recurring and deferred tasks.
+- `taskScheduler`: schedules recurring and deferred tasks. ACME renewal, iMIP processing, calendar-alert dispatch, and similar time-driven jobs are dispatched by the task scheduler.
 
-<!-- review: The previous TOML layout treated `purge.stores`, `purge.accounts`, `acme.renew`, `metrics.calculate`, `metrics.push`, `push-notifications`, `fts-indexing`, `spam-training`, `imip-processing`, and `calendar-alerts` as distinct role slots, each taking a list of node identifiers. The current ClusterRole object uses a broader task-type enum (storeMaintenance, accountMaintenance, metricsCalculate, metricsPush, pushNotifications, searchIndexing, spamClassifierTraining, outboundMta, taskQueueProcessing, taskScheduler). Confirm the mapping, in particular whether ACME renewal, iMIP processing, and calendar-alert dispatch are subsumed under taskScheduler / taskQueueProcessing, or whether these tasks now run on every node. -->
+Task assignment is driven entirely by the [ClusterRole](/docs/ref/object/cluster-role) object and the `STALWART_ROLE` environment variable. The role named in `STALWART_ROLE` selects both which [`tasks`](/docs/ref/object/cluster-role#tasks) the node runs and which [`listeners`](/docs/ref/object/cluster-role#listeners) it exposes, so a single role definition captures the full workload of a given node.
 
 ## Push notification sharding
 
-Push notification delivery must be sharded so that each subscriber receives exactly one notification across the cluster. A node is placed in a specific shard by setting the [`STALWART_PUSH_SHARD`](/docs/configuration/environment-variables#clustering) environment variable. Nodes in the same shard cooperate to deliver the subset of notifications assigned to that shard.
-
-<!-- review: The previous docs described role-level sharding that could apply to any role (`cluster.roles.purge.stores = ["1,4", "2,3", "5,6"]`, and so on). The current ClusterRole object does not expose shard groupings; the only documented sharding mechanism is STALWART_PUSH_SHARD for push notifications. Confirm whether sharding for other tasks (store purge, account purge, fts indexing) has been removed, is handled implicitly by the task scheduler, or is configured through a separate object. -->
+Push notification delivery must be sharded so that each subscriber receives exactly one notification across the cluster. A node is placed in a specific shard by setting the [`STALWART_PUSH_SHARD`](/docs/configuration/environment-variables#clustering) environment variable. Nodes in the same shard cooperate to deliver the subset of notifications assigned to that shard. Sharding is configured exclusively through this environment variable; ClusterRole does not carry shard groupings.
 
 ## Example
 

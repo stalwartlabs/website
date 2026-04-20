@@ -38,8 +38,6 @@ For example, to retain deleted and junk messages for thirty days before expungin
 }
 ```
 
-<!-- review: The previous docs exposed a single `email.auto-expunge` setting that accepted a duration or `false`. DataRetention splits retention targets into `expungeTrashAfter`, `expungeSubmissionsAfter`, `expungeShareNotifyAfter`, and `expungeSchedulingInboxAfter`. `expungeTrashAfter` is the closest analogue for the "Deleted Items"/"Junk Mail" case; verify this mapping and confirm that the disable semantic is `null` rather than a dedicated flag. -->
-
 ## Changes History
 
 Stalwart maintains a changelog, known as the changes history, which is used for synchronisation between the server and client email applications. The changelog is consumed by modern email clients over JMAP and by IMAP clients that support the `CONDSTORE`/`QRESYNC` extensions.

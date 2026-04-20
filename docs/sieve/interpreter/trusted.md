@@ -17,7 +17,7 @@ Interpreter settings and resource limits are configured on the [SieveSystemInter
 - [`messageIdHostname`](/docs/ref/object/sieve-system-interpreter#messageidhostname): local hostname used when generating the `Message-Id` header. When unset, the server hostname is used.
 - [`noCapabilityCheck`](/docs/ref/object/sieve-system-interpreter#nocapabilitycheck): when `true`, language extensions can be used without being declared through a `require` statement. Default `true`.
 
-<!-- review: The previous docs described the DKIM signing setting as a list of DKIM signature identifiers (for example `sign = "['rsa']"`). The current SieveSystemInterpreter exposes `dkimSignDomain`, an expression that selects a single signing domain. Confirm that multi-signature selection is now handled elsewhere (for example through the DkimSignature objects attached to the resolved domain) and that there is no list-of-identifiers setting on the interpreter itself. -->
+The [`dkimSignDomain`](/docs/ref/object/sieve-system-interpreter#dkimsigndomain) expression resolves to a single domain name; all DKIM signatures associated with that domain are then applied to outgoing notifications. A domain can have one or multiple DKIM signatures associated through its [DkimSignature](/docs/ref/object/dkim-signature) records.
 
 ### Limits
 
@@ -66,4 +66,4 @@ For example, a system script that rejects messages from blocklisted HELO domains
 }
 ```
 
-<!-- review: The previous docs allowed the script body to be loaded from an external file through the configuration-file `file` macro (for example `contents = "%{file:/opt/stalwart-smtp/etc/sieve/my-script.sieve}%"`). With scripts stored through the JMAP API, the `contents` field takes the script text directly. Confirm whether there is still a supported way to load the script body from a file at create/update time (for example a CLI flag on `stalwart-cli create sieve-system-script`) and document it here if so. -->
+The [`contents`](/docs/ref/object/sieve-system-script#contents) field holds the full script text; loading the script body from an external file is not supported.

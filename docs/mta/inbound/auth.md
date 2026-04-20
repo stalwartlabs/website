@@ -34,4 +34,6 @@ Example restricting `PLAIN` and `LOGIN` to TLS-protected submission ports and re
 }
 ```
 
-<!-- review: The previous docs referenced `session.auth.directory` to choose the authentication backend and `allow-plain-text` to forbid cleartext credentials. Neither appears on MtaStageAuth in the current schema; verify whether directory selection is now global (via an Authentication or Directory singleton) and whether cleartext-credentials policy is handled by the TLS requirement on the listener or elsewhere. -->
+## Directory selection
+
+The authentication backend is selected automatically based on the domain name supplied in the credentials. Stalwart matches the domain against the configured [Domain](/docs/ref/object/domain) objects and routes the authentication request to the [`directoryId`](/docs/ref/object/domain#directoryid) associated with that domain, falling back to the internal directory when no explicit directory is set. No per-stage directory field exists on MtaStageAuth.

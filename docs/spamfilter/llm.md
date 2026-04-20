@@ -89,4 +89,4 @@ Example showing the defaults explicitly:
 
 ### Headers
 
-<!-- review: The previous docs exposed `spam-filter.header.llm.enable` and `spam-filter.header.llm.name` for controlling an `X-Spam-LLM` response header. SpamLlm in the current schema has no equivalent fields and no similar control appears elsewhere. Confirm whether the X-Spam-LLM header is now unconditionally added with a fixed name, has been removed, or is controlled elsewhere. -->
+When the LLM classifier is enabled, the `X-Spam-LLM` header is added to each analysed message and reports the category, confidence, and explanation returned by the AI model. The header is added unconditionally under its fixed name.

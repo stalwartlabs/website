@@ -50,8 +50,6 @@ The `script` field on MtaStageEhlo then selects the script:
 }
 ```
 
-<!-- review: Confirm the correct object for defining the SQL-backed `blocked-domains` named query used by `:list "sql/blocked-domains"`. Previously this was `store."sql".query.blocked-domains`; verify that StoreLookup is the intended replacement and that the `sql/<name>` reference in Sieve still resolves against it. -->
-
 ## Message modification
 
 The following script modifies the incoming message, replacing the contents of each HTML MIME part with its uppercase form and adding a custom header to every part. Install it as a system script and reference it from the [`script`](/docs/ref/object/mta-stage-data#script) field on the [MtaStageData](/docs/ref/object/mta-stage-data) singleton (found in the WebUI under <!-- breadcrumb:MtaStageData --><!-- /breadcrumb:MtaStageData -->).

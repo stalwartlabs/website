@@ -28,12 +28,22 @@ A companion Sieve script `ehlo` rejects HELO domains present in a blocked-domain
 ```sieve
 require ["variables", "extlists", "reject"];
 
-if string :list "${env.helo_domain}" "list/blocked-domains" {
+if string :list "${env.helo_domain}" "blocked-domain" {
     reject "551 5.1.1 Sending domain '${env.helo_domain}' has been blocklisted.";
 }
 ```
 
-<!-- review: The original example defined an in-memory blocked-domains list via `[store."list/blocked-domains"] type = "memory" format = "list" values = [...]`. In the new model, in-memory lists are created through the [InMemoryStore](/docs/ref/object/in-memory-store) object together with [MemoryLookupKey](/docs/ref/object/memory-lookup-key); the exact path/shape for a `list` format source consumed by Sieve `:list` is not reproduced here. Confirm the correct object wiring. -->
+The `blocked-domain` list used by the `:list` match is backed by entries on the [MemoryLookupKey](/docs/ref/object/memory-lookup-key) object (found in the WebUI under <!-- breadcrumb:MemoryLookupKey --><!-- /breadcrumb:MemoryLookupKey -->). Each blocked domain is a separate key created under the `blocked-domain` [`namespace`](/docs/ref/object/memory-lookup-key#namespace), with the domain name itself as the [`key`](/docs/ref/object/memory-lookup-key#key):
+
+```json
+{
+  "namespace": "blocked-domain",
+  "key": "spammer.example",
+  "isGlobPattern": false
+}
+```
+
+Additional entries use the same namespace with different key values, and glob patterns such as `*.spammer.example` can be enabled by setting [`isGlobPattern`](/docs/ref/object/memory-lookup-key#isglobpattern) to `true`.
 
 ## SMTP extensions
 

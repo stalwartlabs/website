@@ -76,4 +76,4 @@ The equivalent of a webhook firing on `auth.success` and `store.ingest`, signed 
 }
 ```
 
-<!-- review: The previous docs described event matching as glob-style wildcards (for example `"*"` for all events or `"auth.*"` for every authentication event). The current WebHook object pairs `events` with `eventsPolicy` (`include`/`exclude`) and the EventType enum references individual events. Confirm whether wildcard expansion is still supported, or whether the equivalent effect is now obtained by leaving `events` empty with `eventsPolicy: "exclude"`. -->
+Each entry in [`events`](/docs/ref/object/web-hook#events) selects a single event from the EventType enum; wildcard patterns are not supported, so every event to be delivered must be listed explicitly.

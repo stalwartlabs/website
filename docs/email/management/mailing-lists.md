@@ -18,9 +18,7 @@ Both the primary address and every alias must reference a domain that already ex
 
 ## Recipients
 
-The set of destinations for a list is stored in [`recipients`](/docs/ref/object/mailing-list#recipients) as a flat list of email addresses. The addresses do not have to point at Stalwart accounts: any valid email address is accepted, so a list can mix internal accounts, nested lists, and external subscribers without extra configuration.
-
-<!-- review: The MailingList schema uses a flat `EmailAddress[]` for recipients rather than references to Account or Group ids. Confirm there is no separate membership object, and that adding a local account to a list is done by its email address rather than by its account id. -->
+The set of destinations for a list is stored in [`recipients`](/docs/ref/object/mailing-list#recipients) as a flat list of email addresses. There is no separate membership object and no reference to Account or Group identifiers: local accounts are added to a list by their email address, just like external subscribers. Any valid email address is accepted, so a list can mix internal accounts, nested lists, and external subscribers without extra configuration.
 
 ## Tenancy
 

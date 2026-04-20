@@ -19,13 +19,17 @@ Handling of local accounts relies on a configured [directory](/docs/auth/backend
 
 Without a directory, Stalwart cannot accept mail for local delivery, except in the case where [relay functionality](#relay) is enabled so that messages can be forwarded to another server.
 
-<!-- review: The previous docs configured the directory per-stage via `session.rcpt.directory`. MtaStageRcpt in the current schema does not expose a directory selector; confirm whether directory selection is now global (via a dedicated Directory or Authentication singleton) and how to override it per RCPT stage if at all. -->
+The directory that validates a given recipient is detected automatically from the recipient domain: Stalwart matches the RCPT address against the configured [Domain](/docs/ref/object/domain) objects and routes the lookup to the [`directoryId`](/docs/ref/object/domain#directoryid) associated with that domain, falling back to the internal directory when no explicit directory is set. MtaStageRcpt exposes no per-stage directory override.
+
+### Split-delivery relaying
+
+In split-delivery setups, Stalwart sits in front of another server that hosts a subset of a domain's mailboxes. Messages for recipients that are not present in the local directory can be forwarded upstream by setting [`allowRelaying`](/docs/ref/object/domain#allowrelaying) to `true` on the matching [Domain](/docs/ref/object/domain) object. With that flag set, recipients that do not resolve to a local account are accepted and relayed rather than rejected with an unknown-recipient error.
 
 ## Relay
 
 Relaying is the process of transferring an email from one mail server to another. When relaying is enabled, Stalwart acts as an intermediary, accepting messages from sending clients or servers and forwarding them to their ultimate destination. This is useful when Stalwart is deployed as a front-end server in a larger email infrastructure, but it must be restricted to authorised senders or networks to prevent open-relay abuse.
 
-The [`allowRelaying`](/docs/ref/object/mta-stage-rcpt#allowrelaying) field accepts an expression that determines whether the SMTP server accepts messages for non-local domains. The default policy only allows relaying when the session is authenticated:
+The [`allowRelaying`](/docs/ref/object/mta-stage-rcpt#allowrelaying) field on MtaStageRcpt accepts an expression that determines whether the SMTP server accepts messages for non-local domains. The default policy only allows relaying when the session is authenticated:
 
 ```json
 {
@@ -36,17 +40,44 @@ The [`allowRelaying`](/docs/ref/object/mta-stage-rcpt#allowrelaying) field accep
 }
 ```
 
+This controls relaying for entirely non-local domains. Relaying to unknown recipients within a domain that is otherwise local is governed by the domain-level [`allowRelaying`](/docs/ref/object/domain#allowrelaying) flag described above.
+
 ## Subaddressing
 
-Subaddressing, also known as plus addressing or detailed addressing, allows the creation of dynamic, disposable email addresses under a primary email address. By adding a `+` sign and any string of text to the local part of an address (for example `jane.doe+newsletters@example.org`), users can create an unlimited number of unique addresses that all deliver to the same mailbox. This makes it easier to filter and sort incoming mail, for example to separate subscriptions from personal correspondence.
+Subaddressing, also known as plus addressing or detailed addressing, allows the creation of dynamic, disposable email addresses under a primary email address. By adding a `+` sign and any string of text to the local part of an address (for example `jane.doe+newsletters@example.org`), messages sent to any of these variants are all delivered to the same mailbox. This makes it easier to filter and sort incoming mail, for example to separate subscriptions from personal correspondence.
 
-<!-- review: The previous docs exposed `session.rcpt.sub-addressing` both as a boolean (enable standard `+` subaddressing) and as an expression (custom subaddressing pattern). MtaStageRcpt in the current schema does not list a subaddressing field; confirm whether subaddressing is now always enabled, is a domain-level setting, or is configured elsewhere (for example on the Directory or Domain object). Historical examples included a regex pattern such as `matches('^([^.]+)\.([^.]+)@(.+)$', rcpt)` with `then = "$2 + '@' + $3"` to strip an alias prefix. These should be reinstated once the correct field is identified. -->
+Subaddressing is configured per domain on the [Domain](/docs/ref/object/domain) object (found in the WebUI under <!-- breadcrumb:Domain --><!-- /breadcrumb:Domain -->) through the [`subAddressing`](/docs/ref/object/domain#subaddressing) field. The field is a multi-variant value with three variants:
+
+- `Enabled`: standard `+` subaddressing is applied. This is the default.
+- `Disabled`: the `+` separator is not treated as a subaddress marker; the full local part is used for delivery.
+- `Custom`: a custom rule is applied through the `customRule` expression, which receives the RCPT variables and returns the rewritten local address. For example, to strip an alias prefix so that `alias.user@example.org` delivers to `user@example.org`:
+
+```json
+{
+  "subAddressing": {
+    "@type": "Custom",
+    "customRule": {
+      "match": [{"if": "matches('^([^.]+)\\.([^.]+)@(.+)$', rcpt)", "then": "$2 + '@' + $3"}],
+      "else": "rcpt"
+    }
+  }
+}
+```
 
 ## Catch-all addresses
 
-A catch-all address receives all messages sent to non-existent addresses within a domain, preventing loss of mail due to misspellings. A catch-all is typically designated by adding `@<DOMAIN_NAME>` as an associated email address for a given account in the directory.
+A catch-all address receives all messages sent to non-existent addresses within a domain, preventing loss of mail due to misspellings. The catch-all recipient is configured per domain on the [Domain](/docs/ref/object/domain) object through the [`catchAllAddress`](/docs/ref/object/domain#catchalladdress) field, which holds the destination email address that receives mail for unknown local recipients.
 
-<!-- review: The previous docs exposed `session.rcpt.catch-all` as a boolean and as an expression for custom catch-all behaviour, for example `matches('(.+)@(.+)$', rcpt)` with `then = "'info@' + $2"` to route all unknown recipients to `info@<domain>`. MtaStageRcpt in the current schema does not list a catch-all field; confirm whether catch-all behaviour is now always inferred from the directory or is configured elsewhere (for example on the Domain object). -->
+For example, to route all unmatched recipients on `example.org` to `info@example.org`:
+
+```json
+{
+  "name": "example.org",
+  "catchAllAddress": "info@example.org"
+}
+```
+
+When `catchAllAddress` is left unset, messages to unknown local recipients are rejected.
 
 ## Address rewriting
 

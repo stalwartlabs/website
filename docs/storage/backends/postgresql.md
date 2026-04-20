@@ -28,9 +28,17 @@ TLS is enabled through [`useTls`](/docs/ref/object/data-store#usetls). When enab
 
 ### Read replicas
 
-For Enterprise deployments, [`readReplicas`](/docs/ref/object/data-store#readreplicas) accepts a list of replica connection settings, distributing read traffic while writes continue to target the primary. See the [SQL read replicas](/docs/storage/backends/composite/sql-replica) page for an overview.
+In Enterprise deployments, write operations target the primary connection and read operations are distributed across one or more replicas. Replicas are configured through the [`readReplicas`](/docs/ref/object/data-store#readreplicas) field on the same DataStore object, which accepts a list of replica connection settings. Each entry defines a full set of connection parameters ([`host`](/docs/ref/object/data-store#host), [`port`](/docs/ref/object/data-store#port), [`database`](/docs/ref/object/data-store#database), [`authUsername`](/docs/ref/object/data-store#authusername), and [`authSecret`](/docs/ref/object/data-store#authsecret)). The same pattern is available on the [BlobStore](/docs/ref/object/blob-store) and [SearchStore](/docs/ref/object/search-store) objects when their `PostgreSql` variant is selected.
 
-<!-- review: In the previous configuration, when PostgreSQL was used as an authentication directory, directory queries (`name`, `members`, `recipients`, `emails`) were defined under `store.<name>.query`. Locate the equivalent configuration surface in the new model (likely on the Directory object with a SQL variant) and link to it here. -->
+:::tip Enterprise feature
+
+Read replicas are available exclusively in the [Enterprise Edition](/docs/server/enterprise) of Stalwart and are not included in the Community Edition.
+
+:::
+
+## Authentication directory
+
+When PostgreSQL is used as an authentication directory, the queries that resolve account names, group members, recipients, and email addresses are configured on the [Directory](/docs/ref/object/directory) object with the SQL variant, which references this store. See the [SQL directory](/docs/auth/backend/sql) page for details.
 
 ## FTS Limitations
 

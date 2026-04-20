@@ -96,8 +96,6 @@ When [`bindAuthentication`](/docs/ref/object/directory#bindauthentication) is se
 
 In this mode, the user's distinguished name is located by running the [`filterLogin`](/docs/ref/object/directory#filterlogin) search using the service account; the `?` placeholder in the filter is replaced with the login value. Once the DN is known, Stalwart attempts the user bind. Because the password hash is not available, Stalwart relies on the [`attrSecretChanged`](/docs/ref/object/directory#attrsecretchanged) attribute (by default `pwdChangeTime`) to detect password changes and invalidate cached OAuth tokens.
 
-<!-- review: The previous docs described a `template` bind mode that constructed the user DN directly from a template string (for example `cn={local},ou=svcaccts,dc={domain}`) with a `search` flag selecting whether the bind connection was reused for the lookup. The current Directory object exposes `bindAuthentication` (boolean) and `filterLogin`, but no template-based DN construction. Confirm that template-mode bind has been removed and that all bind-authentication deployments now rely on a search via `filterLogin`. -->
-
 For example:
 
 ```json
@@ -147,7 +145,7 @@ LDAP schemas vary between servers, so Stalwart has to be told which attributes t
 - [`attrEmail`](/docs/ref/object/directory#attremail): attribute carrying the primary email address. Default `["mail"]`.
 - [`attrEmailAlias`](/docs/ref/object/directory#attremailalias): attribute carrying email aliases. Default `["mailAlias"]`.
 
-<!-- review: The previous docs documented an `attributes.name` mapping for the account login name and an `attributes.quota` mapping for the per-account disk quota. Neither appears on the current LDAP Directory variant. Confirm whether the account name is now fixed (taken from the DN or from the login filter match) and whether the LDAP quota attribute has been removed. -->
+There is no attribute mapping for the account's login name or for a per-account disk quota: the login name is resolved from the entry returned by [`filterLogin`](/docs/ref/object/directory#filterlogin), and disk quotas are held on the [Account](/docs/ref/object/account) and [Tenant](/docs/ref/object/tenant) objects rather than read from the directory (see [Quotas](/docs/auth/authorization/quotas)).
 
 For example:
 

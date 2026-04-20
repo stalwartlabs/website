@@ -12,7 +12,7 @@ Stalwart never enters recovery mode automatically. It is activated by setting th
 
 ## Recovery administrator
 
-Recovery mode still requires a valid sign-in. If the regular administrator account is locked out, or if the external directory that normally handles authentication is unreachable, the ordinary credentials will not work. The recovery administrator is a built-in account that bypasses the directory and is valid only while the server is running in recovery or [bootstrap](/docs/configuration/bootstrap-mode) mode.
+Recovery mode still requires a valid sign-in. If the regular administrator account is locked out, or if the external directory that normally handles authentication is unreachable, the ordinary credentials will not work. The recovery administrator is a built-in account that bypasses the directory. It is honoured whenever `STALWART_RECOVERY_ADMIN` is set in the environment, including while the server is running normally, so emergency tasks such as promoting a directory account to administrator can be performed without taking services offline; [bootstrap](/docs/configuration/bootstrap-mode) and [recovery mode](#recovery-mode) also rely on the same variable when the directory is not reachable.
 
 The recovery administrator is configured with the `STALWART_RECOVERY_ADMIN` environment variable, in the form `username:password`. For example:
 

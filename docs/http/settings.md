@@ -29,4 +29,4 @@ When Stalwart runs behind a reverse proxy such as Cloudflare or Amazon CloudFron
 
 Care must be taken when enabling this feature. It should only be used when Stalwart is behind a trusted proxy, because untrusted sources can forge these headers and mislead logging or access control decisions. When no proxy is present, [`useXForwarded`](/docs/ref/object/http#usexforwarded) must remain `false` to prevent malicious clients from spoofing their source IP address.
 
-<!-- review: An `http.url` expression that set the base URL advertised in well-known responses (for example `/.well-known/jmap` and OAuth discovery) does not appear on the Http object in the current schema. Confirm whether the advertised URL is derived automatically from the listener address and server hostname, or whether a replacement field lives on another singleton. -->
+The base URL advertised in well-known responses (for example `/.well-known/jmap` and OAuth discovery metadata) is derived automatically from the listener address and server hostname; no explicit configuration field is required.

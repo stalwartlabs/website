@@ -4,13 +4,22 @@ sidebar_position: 2
 
 # Node ID
 
-Each Stalwart instance in a cluster must have a unique identifier that distinguishes it from other nodes. The identifier is carried on the [ClusterNode](/docs/ref/object/cluster-node) object (found in the WebUI under <!-- breadcrumb:ClusterNode --><!-- /breadcrumb:ClusterNode -->) through the [`nodeId`](/docs/ref/object/cluster-node#nodeid) field, and must be a positive integer. It drives coordination, logging, and internal message routing, allowing each node to be uniquely addressed within the cluster.
+Each Stalwart instance in a cluster must have a unique identifier that distinguishes it from other nodes. The identifier drives coordination, logging, and internal message routing.
 
-The node identifier must be unique across the entire cluster; no two nodes may share the same value. Duplicate identifiers cause unpredictable behaviour, coordination conflicts, and data inconsistencies.
+Node identifiers are assigned automatically through a lease mechanism. When a node starts, it reads its operating-system hostname and uses that value to acquire a node-id lease from the cluster. The node then renews the lease periodically while it remains online. As long as each node in the cluster has a unique hostname, a distinct node id is assigned to each node without any manual configuration.
 
-Each ClusterNode instance records the assigned [`nodeId`](/docs/ref/object/cluster-node#nodeid), along with the node [`hostname`](/docs/ref/object/cluster-node#hostname), the timestamp of its last lease renewal [`lastRenewal`](/docs/ref/object/cluster-node#lastrenewal), and its current [`status`](/docs/ref/object/cluster-node#status) (`active`, `stale`, or `inactive`).
+If two nodes share the same hostname they will compete for the same lease, which causes coordination conflicts and data inconsistencies. Ensuring that every node runs with a unique hostname is therefore a prerequisite for joining a cluster.
 
-For example, the first node in a cluster might be registered as:
+## ClusterNode
+
+The [ClusterNode](/docs/ref/object/cluster-node) object (found in the WebUI under <!-- breadcrumb:ClusterNode --><!-- /breadcrumb:ClusterNode -->) is a read-only view over the cluster's node registry. Querying it returns one entry per registered node with the following fields:
+
+- [`nodeId`](/docs/ref/object/cluster-node#nodeid): the integer identifier assigned to the node.
+- [`hostname`](/docs/ref/object/cluster-node#hostname): the operating-system hostname of the node.
+- [`lastRenewal`](/docs/ref/object/cluster-node#lastrenewal): the timestamp of the node's most recent lease renewal.
+- [`status`](/docs/ref/object/cluster-node#status): the current status of the node (`active`, `stale`, or `inactive`).
+
+A typical entry returned by the registry looks like:
 
 ```json
 {
@@ -21,6 +30,4 @@ For example, the first node in a cluster might be registered as:
 }
 ```
 
-Subsequent nodes are registered with different `nodeId` values (`2`, `3`, `4`, and so on), ensuring no overlap. A consistent, documented mapping of node identifiers is important, particularly in larger clusters or automated deployments.
-
-<!-- review: The previous docs configured the node identifier per-instance via a local `cluster.node-id` TOML setting, implying a bootstrap-time value. The current ClusterNode object is cluster-scoped and carries renewal timestamps, suggesting registration happens at runtime (likely through a bootstrap environment variable or the first-start flow). Confirm how a freshly provisioned node is told which nodeId it should register under, and whether that mapping is provided via an environment variable, the bootstrap wizard, or is auto-assigned. -->
+Because ClusterNode is read-only, node registration cannot be edited directly: nodes appear in the registry as they acquire leases and their status is updated as they renew or fail to renew. Administrators use the registry to inspect cluster membership, confirm that each host has obtained an identifier, and detect stale or inactive nodes.

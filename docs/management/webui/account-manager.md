@@ -32,14 +32,6 @@ The OTP Auth URL backing the secret is stored as a credential on the account via
 
 Self-service 2FA management is available only for accounts in the [internal directory](/docs/auth/backend/internal). When the server is configured with an external directory, the OTP Auth URL is provisioned by an administrator as one of the account secrets in that directory.
 
-## Email aliases
-
-Additional email addresses that should deliver into the same mailbox are declared as aliases on the user's [Account](/docs/ref/object/account) (found in the WebUI under <!-- breadcrumb:Account --><!-- /breadcrumb:Account -->) through the [`aliases`](/docs/ref/object/account#aliases) field. The Account Manager exposes this list so users can add, disable, or remove their own aliases without involving an administrator. Each entry is an `EmailAlias` record with a local part, a target domain drawn from the domains the account is allowed to use, an optional description, and an `enabled` flag that parks an address temporarily without removing it.
-
-Whether an account is allowed to manage its own aliases is controlled through the account's permissions. In deployments where alias management is reserved to administrators, the corresponding section is hidden from the Account Manager.
-
-<!-- review: Confirm that end-user alias self-service is driven by the same `aliases` field on Account rather than by a separate per-user object, and that visibility of the section in the Account Manager is governed by the matching `accountUpdate` (or alias-specific) permission. -->
-
 ## Masked email
 
 On the Enterprise Edition, end users can create disposable addresses from the Account Manager instead of handing out their real mailbox address. Each mask is a [MaskedEmail](/docs/ref/object/masked-email) object (found in the WebUI under <!-- breadcrumb:MaskedEmail --><!-- /breadcrumb:MaskedEmail -->) tied to the signed-in account; incoming mail for the mask delivers into the mailbox, and the mask can be disabled or destroyed without affecting any of the others. See [masked email](/docs/email/management/masked-email) for the address-generation rules, lifecycle, and quota settings.

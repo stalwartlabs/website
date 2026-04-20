@@ -26,7 +26,7 @@ The exact procedure for generating an OpenPGP key pair and exporting the public 
 
 A registered public key is represented as a [PublicKey](/docs/ref/object/public-key) object (found in the WebUI under <!-- breadcrumb:PublicKey --><!-- /breadcrumb:PublicKey -->). An account can register one or several public keys; encrypting against multiple keys is useful during key rotation, when recipients may still hold the older private key.
 
-OpenPGP public keys can be supplied in raw binary form or as ASCII-armored text. ASCII-armored input is the more common choice because the payload is human-readable and easy to paste or upload. An ASCII-armored file consists of one or more Base64-encoded keys enclosed between `-----BEGIN PGP PUBLIC KEY BLOCK-----` and `-----END PGP PUBLIC KEY BLOCK-----` lines. For example:
+OpenPGP public keys must be supplied as ASCII-armored text; raw binary keys are not accepted. An ASCII-armored file consists of one or more Base64-encoded keys enclosed between `-----BEGIN PGP PUBLIC KEY BLOCK-----` and `-----END PGP PUBLIC KEY BLOCK-----` lines. For example:
 
 ```txt
 -----BEGIN PGP PUBLIC KEY BLOCK-----
@@ -44,6 +44,4 @@ UuZhEDktxnY6Ehz3aB7FawA=
 -----END PGP PUBLIC KEY BLOCK-----
 ```
 
-The key material is carried in the [`key`](/docs/ref/object/public-key#key) field of the PublicKey object, alongside a required [`description`](/docs/ref/object/public-key#description) and optional [`expiresAt`](/docs/ref/object/public-key#expiresat) and [`emailAddresses`](/docs/ref/object/public-key#emailaddresses) fields. Registered keys are then referenced from [AccountSettings](/docs/ref/object/account-settings); see the [management interface](/docs/encryption/manage) for how to select a key and enable encryption.
-
-<!-- review: The PublicKey object reference lists a single generic `key` text field. Confirm that both raw-binary and ASCII-armored OpenPGP keys, as well as S/MIME DER and PEM certificates, are all accepted in this same field, and that the server auto-detects the format. -->
+The key material is carried in the [`key`](/docs/ref/object/public-key#key) field of the PublicKey object, alongside a required [`description`](/docs/ref/object/public-key#description) and optional [`expiresAt`](/docs/ref/object/public-key#expiresat) and [`emailAddresses`](/docs/ref/object/public-key#emailaddresses) fields. The server auto-detects whether the value is an OpenPGP key or an S/MIME certificate, so both variants share the same field; only text-armored input is accepted (ASCII-armored for OpenPGP, PEM for S/MIME). Registered keys are then referenced from [AccountSettings](/docs/ref/object/account-settings); see the [management interface](/docs/encryption/manage) for how to select a key and enable encryption.

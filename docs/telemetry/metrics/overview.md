@@ -34,5 +34,3 @@ For example, to suppress the noise of `auth.error` and `smtp.error` while leavin
   "metricsPolicy": "exclude"
 }
 ```
-
-<!-- review: The previous docs used a `metrics.disabled-events` array to turn specific metrics off. The current Metrics singleton exposes `metrics` + `metricsPolicy` (`include`/`exclude`). Confirm that this is the correct one-to-one replacement, and that the enum values accepted in `metrics` match the old event-name entries. -->

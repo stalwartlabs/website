@@ -6,7 +6,7 @@ sidebar_position: 2
 
 Stalwart exposes encryption-at-rest settings through the [self-service portal](/docs/management/webui/account-manager), which allows end users to register their own keys and toggle encryption for their accounts without involving a system administrator. The same settings are reachable over the JMAP API (through the [AccountSettings](/docs/ref/object/account-settings) and [PublicKey](/docs/ref/object/public-key) objects) and through the [CLI](/docs/management/cli/overview).
 
-<!-- review: The previous docs described a dedicated `/account/crypto` HTML page exposed on the JMAP server base URL. The current deployment routes end-user management through the WebUI self-service portal backed by AccountSettings and PublicKey. Confirm whether the legacy `/account/crypto` endpoint has been removed or is still available as a compatibility shim. -->
+Each account may register one or more [PublicKey](/docs/ref/object/public-key) objects holding an OpenPGP public key or an S/MIME certificate. Encryption at rest is then activated by referencing one of these keys from the [`encryptionAtRest`](/docs/ref/object/account-settings#encryptionatrest) field on the [AccountSettings](/docs/ref/object/account-settings) singleton.
 
 ## Enabling encryption
 

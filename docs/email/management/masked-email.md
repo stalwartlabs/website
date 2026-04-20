@@ -18,17 +18,15 @@ Masks are represented by the [MaskedEmail](/docs/ref/object/masked-email) object
 
 End users create masks from the account-management area of the WebUI or through a password-manager integration that speaks the JMAP API. At creation time, the user may supply a short [`description`](/docs/ref/object/masked-email#description) to remember what the mask is for and a [`forDomain`](/docs/ref/object/masked-email#fordomain) value naming the site the address was issued to. Password managers typically fill these in automatically when storing a new login. A [`url`](/docs/ref/object/masked-email#url) can also be attached to deep-link back into the integrator that owns the entry.
 
-The server records the creation time in [`createdAt`](/docs/ref/object/masked-email#createdat) and, when the request comes in with recognisable client credentials, the originating application's name in [`createdBy`](/docs/ref/object/masked-email#createdby). If the server has been configured to expire masks, the [`expiresAt`](/docs/ref/object/masked-email#expiresat) field is populated read-only and the mask stops resolving once that time has passed.
+The server records the creation time in [`createdAt`](/docs/ref/object/masked-email#createdat) and, when the request comes in with recognisable client credentials, the originating application's name in [`createdBy`](/docs/ref/object/masked-email#createdby). An optional [`expiresAt`](/docs/ref/object/masked-email#expiresat) can be set at creation time; once set, it is read-only because the expiry is encoded in the generated address itself and cannot be changed after the fact. The mask stops resolving once that time has passed.
 
-Masks are toggled through [`enabled`](/docs/ref/object/masked-email#enabled). Disabling a mask leaves the record in place but causes the server to reject incoming mail for that address, which is useful when a service starts misbehaving without the user wanting to lose the record of where the address was handed out. Destroying the mask removes it outright.
-
-<!-- review: The schema documents `expiresAt` as read-only and server-set; verify whether expiry is driven by a server-wide policy, a per-tenant setting, or a field on the Account, and document the source once confirmed. -->
+Masks are toggled through [`enabled`](/docs/ref/object/masked-email#enabled). Disabling a mask leaves the record in place but causes the server to reject incoming mail for that address, which is useful when a service starts misbehaving without losing the record of where the address was handed out. Destroying the mask removes it outright.
 
 ## Address generation
 
-By default the server picks the local part of a new mask and chooses a domain from its configured set of mask domains. Integrators that need a specific shape can pass [`emailPrefix`](/docs/ref/object/masked-email#emailprefix) to require the generated address to start with a given string (up to 64 characters, limited to lowercase letters, digits, and underscore) or [`emailDomain`](/docs/ref/object/masked-email#emaildomain) to force a particular domain. Both fields are honoured only at creation time and are ignored on update.
+By default the server picks the local part of a new mask and chooses a domain from those the account already has access to. Integrators that need a specific shape can pass [`emailPrefix`](/docs/ref/object/masked-email#emailprefix) to require the generated address to start with a given string (up to 64 characters, limited to lowercase letters, digits, and underscore) or [`emailDomain`](/docs/ref/object/masked-email#emaildomain) to force a particular domain. Both fields are honoured only at creation time and are ignored on update.
 
-<!-- review: Confirm how the pool of domains available to `emailDomain` is configured; the schema does not name the setting. -->
+The pool of domains available through [`emailDomain`](/docs/ref/object/masked-email#emaildomain) is not configured separately: a mask can be requested under any domain or alias the owning account is linked to. Requesting a domain the account has no access to, or a domain that does not exist, returns an error.
 
 ## Managing masks
 
@@ -68,6 +66,4 @@ Listing the masks that belong to a given user is done with `x:MaskedEmail/query`
 
 Each operation is gated by a dedicated permission: `sysMaskedEmailGet`, `sysMaskedEmailQuery`, `sysMaskedEmailCreate`, `sysMaskedEmailUpdate`, and `sysMaskedEmailDestroy`. End-user roles grant these permissions for masks owned by the signed-in account, while administrative roles can be configured to manage masks on behalf of other accounts.
 
-The total number of masks an account may hold is bounded by the `maxMaskedAddresses` entry in the account's [`quotas`](/docs/ref/object/account#quotas) map. Setting this quota to zero disables the feature for that account even when the Enterprise license is active.
-
-<!-- review: The Account schema lists `maxMaskedAddresses` as a StorageQuota entry; confirm that unset means unlimited and zero means disabled, matching the server's behaviour. -->
+The total number of masks an account may hold is bounded by the `maxMaskedAddresses` entry in the account's [`quotas`](/docs/ref/object/account#quotas) map. Leaving the quota unset allows an unlimited number of masks; setting it to zero disables the feature for that account even when the Enterprise license is active.

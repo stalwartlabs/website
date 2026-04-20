@@ -20,13 +20,13 @@ This object is available exclusively in the [Enterprise Edition](/docs/server/en
 
 A [Metric](/docs/ref/object/metric) is a single sampled data point of a server metric (counter, gauge, or histogram variants). Samples are collected on the schedule defined by [`metricsCollectionInterval`](/docs/ref/object/data-retention#metricscollectioninterval) and retained for the duration given by [`holdMetricsFor`](/docs/ref/object/data-retention#holdmetricsfor). Queries support filtering by metric name and time range and drive the Dashboard charts in the WebUI.
 
+Individual samples are consumed by the Dashboard in the WebUI and do not have a dedicated inspection surface; administrators who need raw samples can fetch them through the [CLI](/docs/management/cli/overview) or the JMAP API.
+
 :::tip Enterprise feature
 
 This object is available exclusively in the [Enterprise Edition](/docs/server/enterprise) of Stalwart and is not included in the Community Edition.
 
 :::
-
-<!-- review: Metric lacks a WebUI breadcrumb comment in the ref object page; if a dedicated Management surface exists for inspecting individual samples (beyond the Dashboard), add the breadcrumb here. -->
 
 ## Logs
 

@@ -24,9 +24,7 @@ Stalwart can also be configured against an external directory such as LDAP or an
 
 ## Configuration
 
-External directories are represented by the [Directory](/docs/ref/object/directory) object (found in the WebUI under <!-- breadcrumb:Directory --><!-- /breadcrumb:Directory -->). The object is multi-variant, with one variant per backend kind. The variants supported in the current release are the LDAP variant, the SQL variant, and the OIDC variant.
-
-<!-- review: The previous docs also listed in-memory, SMTP, LMTP, and IMAP directory types for the standalone SMTP package. The current Directory object defines only Ldap, Sql, and Oidc variants. Confirm whether in-memory/SMTP/LMTP/IMAP directories still exist in v0.16 and, if so, how they are modelled (separate object, another variant of Directory, or removed outright). -->
+External directories are represented by the [Directory](/docs/ref/object/directory) object (found in the WebUI under <!-- breadcrumb:Directory --><!-- /breadcrumb:Directory -->). The object is multi-variant, with one variant per backend kind. The variants supported are the LDAP variant, the SQL variant, and the OIDC variant.
 
 Use of the internal directory is indicated by leaving the [`directoryId`](/docs/ref/object/authentication#directoryid) field unset on the [Authentication](/docs/ref/object/authentication) singleton (found in the WebUI under <!-- breadcrumb:Authentication --><!-- /breadcrumb:Authentication -->). To delegate authentication to an external directory, set `directoryId` to the id of the desired Directory object.
 
@@ -34,12 +32,6 @@ Use of the internal directory is indicated by leaving the [`directoryId`](/docs/
 
 The LDAP variant of the Directory object maintains its own connection pool. The pool is configured through [`poolMaxConnections`](/docs/ref/object/directory#poolmaxconnections), [`poolTimeoutCreate`](/docs/ref/object/directory#pooltimeoutcreate), [`poolTimeoutRecycle`](/docs/ref/object/directory#pooltimeoutrecycle), and [`poolTimeoutWait`](/docs/ref/object/directory#pooltimeoutwait) on the object. `poolMaxConnections` caps the number of simultaneous connections, while the three timeout fields cap how long the pool waits to create, recycle, and hand out a connection, respectively.
 
-### Cache
-
-Directory result caching is no longer configured per directory. Server-wide lookup caches are centralised on the [Cache](/docs/ref/object/cache) singleton (found in the WebUI under <!-- breadcrumb:Cache --><!-- /breadcrumb:Cache -->).
-
-<!-- review: The previous docs described per-directory caches with `directory.<name>.cache.size`, `cache.ttl.positive`, and `cache.ttl.negative`. The current Directory variants expose no cache fields. Confirm that directory caching now lives entirely on the Cache singleton and identify the specific fields on Cache that correspond to the old positive/negative TTLs. -->
-
 ### Default directory
 
-The default directory used for JMAP, IMAP, ManageSieve, and HTTP API authentication is selected by setting [`directoryId`](/docs/ref/object/authentication#directoryid) on the [Authentication](/docs/ref/object/authentication) singleton to the id of the relevant Directory object.
+The default external directory used for authentication is selected by setting [`directoryId`](/docs/ref/object/authentication#directoryid) on the [Authentication](/docs/ref/object/authentication) singleton to the id of the relevant Directory object.

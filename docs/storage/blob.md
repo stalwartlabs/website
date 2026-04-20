@@ -20,9 +20,7 @@ To change the blob store backend, update the BlobStore singleton and select the 
 
 ## Compression
 
-Blob compression is controlled through the [Email](/docs/ref/object/email) object (found in the WebUI under <!-- breadcrumb:Email --><!-- /breadcrumb:Email -->) via the [`compressionAlgorithm`](/docs/ref/object/email#compressionalgorithm) field. The default is LZ4. Setting the field to `"none"` disables compression; setting it to `"lz4"` enables [LZ4](https://en.wikipedia.org/wiki/LZ4_(compression_algorithm)) compression for stored message data.
-
-<!-- review: Verify that `compressionAlgorithm` on the Email object applies to all blobs in the blob store (messages, Sieve scripts, attachments) and not only to inline email payloads. The previous setting was on the blob store backend itself. -->
+Blob compression is controlled through the [Email](/docs/ref/object/email) object (found in the WebUI under <!-- breadcrumb:Email --><!-- /breadcrumb:Email -->) via the [`compressionAlgorithm`](/docs/ref/object/email#compressionalgorithm) field. The setting applies to every blob written to the store (messages, attachments, Sieve scripts, and any other stored binary). The default is LZ4. Setting the field to `"none"` disables compression; setting it to `"lz4"` enables [LZ4](https://en.wikipedia.org/wiki/LZ4_(compression_algorithm)) compression.
 
 ## Maintenance
 

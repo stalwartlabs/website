@@ -22,9 +22,7 @@ The SMTP service is enabled by creating one or more listeners on the [NetworkLis
 
 Conventional SMTP configurations associate certain ports with specific types of connections: port 25 for cleartext SMTP between servers, port 587 for SMTP submission, and port 465 for SMTP submission with implicit TLS. Stalwart does not enforce these associations; each listener's role is defined by its configuration. See the main [listeners](/docs/server/listener) section for the complete listener configuration.
 
-A listener is created by setting its [`bind`](/docs/ref/object/network-listener#bind) addresses and selecting the appropriate [`protocol`](/docs/ref/object/network-listener#protocol) variant. The relevant protocol variants for MTA use are `smtp` and `lmtp`. Implicit TLS is enabled on submission listeners by selecting the corresponding TLS-enabled protocol variant.
-
-<!-- review: The previous docs showed `tls.implicit = true` as a listener option and a `greeting` field on the listener itself. The current NetworkListener object does not appear to expose these fields directly; verify how implicit TLS is selected (dedicated protocol value or a separate TLS field) and where per-listener SMTP greetings are configured, if they still exist. The SMTP greeting is defined on the [MtaStageConnect](/docs/ref/object/mta-stage-connect) singleton via [`smtpGreeting`](/docs/ref/object/mta-stage-connect#smtpgreeting), which accepts an expression that can branch on the listener identifier. -->
+A listener is created by setting its [`bind`](/docs/ref/object/network-listener#bind) addresses and selecting the appropriate [`protocol`](/docs/ref/object/network-listener#protocol) variant. The relevant protocol variants for MTA use are `smtp` and `lmtp`. Implicit TLS is enabled by setting the [`tlsImplicit`](/docs/ref/object/network-listener#tlsimplicit) field to `true` on the listener. The SMTP banner shown to connecting clients is not configured on the listener itself; it is defined on the [MtaStageConnect](/docs/ref/object/mta-stage-connect) singleton via the [`smtpGreeting`](/docs/ref/object/mta-stage-connect#smtpgreeting) expression, which can branch on the listener identifier to serve different banners per listener.
 
 ### SMTP port
 
@@ -32,7 +30,7 @@ Cleartext SMTP connections between servers are typically received on port 25. A 
 
 ### Submissions port (TLS)
 
-SMTP submissions with implicit TLS are typically received on port 465. A listener configured with [`bind`](/docs/ref/object/network-listener#bind) set to `[::]:465` and the SMTP protocol variant with implicit TLS enabled serves this role.
+SMTP submissions with implicit TLS are typically received on port 465. A listener configured with [`bind`](/docs/ref/object/network-listener#bind) set to `[::]:465`, the SMTP protocol variant, and [`tlsImplicit`](/docs/ref/object/network-listener#tlsimplicit) set to `true` serves this role.
 
 ### Submissions port
 

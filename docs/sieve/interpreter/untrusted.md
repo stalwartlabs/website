@@ -130,4 +130,4 @@ For example, a global script that rejects messages larger than 100 KB:
 }
 ```
 
-<!-- review: The previous docs allowed the script body to be loaded from an external file through the configuration-file `file` macro. With scripts stored through the JMAP API, the `contents` field takes the script text directly. Confirm whether there is still a supported way to load the script body from a file at create/update time (for example a CLI flag on `stalwart-cli create sieve-user-script`) and document it here if so. -->
+The [`contents`](/docs/ref/object/sieve-user-script#contents) field holds the full script text; loading the script body from an external file is not supported.

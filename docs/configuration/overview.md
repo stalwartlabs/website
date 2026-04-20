@@ -32,6 +32,14 @@ RocksDB is the default backend variant and works well for most single-node deplo
 
 Once the server is running, `config.json` is rarely touched again. The datastore location is the only setting that cannot be changed through the API, because the API itself is served out of the datastore.
 
+## Safe defaults
+
+Stalwart exposes over 2,400 individual settings, spread across 117 JMAP configuration objects, which the WebUI surfaces across 176 screens (one form per singleton, and a form plus a list view for every collection). In addition to those settings, the server defines 659 permissions, 339 metrics, and 671 event types that can be granted, scoped, or matched against alerting and logging rules independently.
+
+At first encounter this surface can feel overwhelming, but new operators are not expected to walk through it. Every setting ships with a safe default chosen to produce a hardened, production-ready configuration on the very first start: TLS is required on the listeners where it should be, authentication policy is strict, rate limits are conservative, spam filtering is active with sensible thresholds, logging is enabled, and so on. There is no need to audit every field to check that it makes sense; the defaults are already sound. Attention can be focused exclusively on the aspects of the deployment that require customisation.
+
+The default value of every field, along with its type and a short description, is documented on the object's page in the [schema reference](/docs/ref/).
+
 ## Recovery & Bootstrap modes
 
 If `config.json` is absent, Stalwart starts in [bootstrap mode](/docs/configuration/bootstrap-mode) and exposes an initial setup flow served from the browser. If `config.json` is present but the deployment requires maintenance, Stalwart can be started in [recovery mode](/docs/configuration/recovery-mode) to suspend all services and expose only the management API. Both modes, along with a few cluster-related behaviours, are controlled by a handful of [environment variables](/docs/configuration/environment-variables). For platforms such as NixOS, Ansible and Terraform, the [declarative deployments](/docs/configuration/declarative-deployments) page describes how to manage `config.json` and the rest of the configuration as code.

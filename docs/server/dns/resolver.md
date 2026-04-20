@@ -12,7 +12,7 @@ The DNS resolver is configured on the [DnsResolver](/docs/ref/object/dns-resolve
 - `Cloudflare`: use Cloudflare's public DNS service. A TLS option is available via the variant fields.
 - `Quad9`: use Quad9's public DNS service. A TLS option is available via the variant fields.
 - `Google`: use Google's public DNS service.
-- `Custom`: use a list of DNS servers supplied via the [`servers`](/docs/ref/object/dns-resolver#servers) field. Each entry is a `DnsCustomResolver` specifying a server URL.
+- `Custom`: use a list of DNS servers supplied via the [`servers`](/docs/ref/object/dns-resolver#servers) field. Each entry is a `DnsCustomResolver` with its own [`address`](/docs/ref/object/dns-resolver#dnscustomresolver), [`port`](/docs/ref/object/dns-resolver#dnscustomresolver) (default `53`), and [`protocol`](/docs/ref/object/dns-resolver#dnscustomresolver) (`udp`, `tcp`, or `tls`).
 
 DNSBL lookups are typically performed against the system resolver or a custom resolver, since most public DNSBL services do not accept queries from public open resolvers.
 
@@ -47,11 +47,9 @@ A custom resolver pointing at two local DNS servers and one public one:
 {
   "@type": "Custom",
   "servers": [
-    {"url": "udp://192.0.2.1:55"},
-    {"url": "tcp://192.0.2.3:55"},
-    {"url": "8.8.8.8"}
+    {"address": "192.0.2.1", "port": 55, "protocol": "udp"},
+    {"address": "192.0.2.3", "port": 55, "protocol": "tcp"},
+    {"address": "8.8.8.8"}
   ]
 }
 ```
-
-<!-- review: The exact field name on `DnsCustomResolver` for the server URL is not spelled out in the reference excerpt used during this migration. Confirm whether the entry field is `url` or a different identifier, and adjust the example above accordingly. -->

@@ -45,4 +45,4 @@ X-Spam-Result: DMARC_POLICY_ALLOW (-0.50),
 X-Spam-Status: Yes, score=13.45
 ```
 
-<!-- review: The previous docs exposed per-header enable/name settings (`spam-filter.header.status.enable`, `spam-filter.header.status.name`, `spam-filter.header.result.enable`, `spam-filter.header.result.name`) to control the X-Spam-Status and X-Spam-Result headers. These fields do not appear on SpamSettings or any other object in the current schema. Confirm whether the headers are now unconditionally added (and whether their names are fixed), or whether the controls live on an object that has not been surfaced here. -->
+Both `X-Spam-Status` and `X-Spam-Result` are added unconditionally under their fixed names.

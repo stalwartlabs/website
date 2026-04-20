@@ -13,5 +13,3 @@ The list of spam trap addresses is maintained as an in-memory lookup list entry.
 Administrators can change the action associated with the `SPAMTRAP` tag by editing the corresponding [SpamTag](/docs/ref/object/spam-tag) entry under the [Spam scores](/docs/spamfilter/settings/scores) configuration.
 
 Automatic learning from spam traps is controlled by [`learnSpamFromTraps`](/docs/ref/object/spam-classifier#learnspamfromtraps) on the [SpamClassifier](/docs/ref/object/spam-classifier) singleton.
-
-<!-- review: The previous docs referred to the spam-trap list by the lookup identifier `spam-trap`. Confirm that the namespace used for trap addresses on MemoryLookupKey in the current schema is still `spam-trap`, or update the prose to reflect the current namespace. -->

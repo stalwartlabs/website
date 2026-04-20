@@ -22,8 +22,6 @@ Retention is controlled by [`holdTracesFor`](/docs/ref/object/data-retention#hol
 
 For example, to retain delivery traces in the main data store for thirty days, set the `TracingStore` singleton to `{"@type": "Default"}` and leave [`holdTracesFor`](/docs/ref/object/data-retention#holdtracesfor) at its default.
 
-<!-- review: The previous docs paired `tracing.history.enable` with a separate `tracing.history.store` pointing at a named data-store identifier. The current TracingStore singleton combines both into a single multi-variant object (Disabled / Default / backend-specific). Confirm that there is no separate toggle and that the `Disabled` variant is the intended way to turn history off. -->
-
 ## Metrics history
 
 Metrics history is controlled through the [MetricsStore](/docs/ref/object/metrics-store) singleton (found in the WebUI under <!-- breadcrumb:MetricsStore --><!-- /breadcrumb:MetricsStore -->). The object is multi-variant in the same way as `TracingStore`: `Disabled` turns metrics history off, `Default` reuses the main data store, and the backend-specific variants point history at a dedicated store.
@@ -32,5 +30,3 @@ Retention and sampling frequency are set on the [DataRetention](/docs/ref/object
 
 - [`holdMetricsFor`](/docs/ref/object/data-retention#holdmetricsfor): duration for which metrics are retained. Default `"90d"`.
 - [`metricsCollectionInterval`](/docs/ref/object/data-retention#metricscollectioninterval): how often metrics are sampled. Specified as a cron expression. The default samples once per hour at minute zero.
-
-<!-- review: The previous docs exposed a single `metrics.history.interval` accepting the "simple cron" three-field syntax (`0 * *`). The current DataRetention.metricsCollectionInterval uses the structured Cron object (for example `{"@type":"Hourly","minute":0}`). Confirm that the structured form is the only way to express sampling intervals in the new model. -->

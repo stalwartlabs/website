@@ -135,5 +135,3 @@ Messages involving VIP clients can be routed to a dedicated queue. The schedule 
 ```
 
 The `vip-client` MtaDeliverySchedule targets a 1000-thread `vip` virtual queue with intervals `["1m", "5m", "10m"]`; `default` targets a 100-thread `default` virtual queue with the standard retry schedule.
-
-<!-- review: The original `sql_query` invocation was illustrative. Confirm whether the correct expression for a store lookup in the schedule context is `sql_query('<StoreLookup id>', ...)` or a newer equivalent in the v0.16 expression layer. -->

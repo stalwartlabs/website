@@ -26,31 +26,25 @@ Backend selection is made on the [InMemoryStore](/docs/ref/object/in-memory-stor
 
 In-memory stores operate as key-value stores. Stalwart assigns a unique integer prefix to each category of data so that keys never collide across subsystems. The mapping is fixed and shown below for reference:
 
-<!-- review:  -->
-
-| **Short name**                 | **Description**                                  | **Integer prefix** |
-|----------------------------|------------------------------------------------------|--------------|
-| `KV_ACME`                  | ACME tokens for SSL/TLS certificate management       | 0            |
-| `KV_OAUTH`                 | OAuth tokens for authentication                      | 1            |
-| `KV_RATE_LIMIT_RCPT`       | Rate limiting data for recipient addresses           | 2            |
-| `KV_RATE_LIMIT_SCAN`       | Rate limiting data for email scanning                | 3            |
-| `KV_RATE_LIMIT_LOITER`     | Rate limiting data for idle connections              | 4            |
-| `KV_RATE_LIMIT_AUTH`       | Rate limiting data for authentication attempts       | 5            |
-| `KV_RATE_LIMIT_SMTP`       | Rate limiting data for SMTP throttles                | 6            |
-| `KV_RATE_LIMIT_CONTACT`    | Rate limiting data for contact forms                 | 7            |
-| `KV_RATE_LIMIT_HTTP_AUTHENTICATED` | Rate limiting data for authenticated HTTP requests | 8            |
-| `KV_RATE_LIMIT_HTTP_ANONYMOUS`    | Rate limiting data for anonymous HTTP requests     | 9            |
-| `KV_RATE_LIMIT_IMAP`       | Rate limiting data for IMAP connections              | 10           |
-| `KV_TOKEN_REVISION`        | Revision number for access tokens                    | 11           |
-| `KV_GREYLIST`              | Spam filter greylist tokens                          | 16           |
-| `KV_TRUSTED_REPLY`         | Spam filter trusted replies tracking                 | 19           |
-| `KV_LOCK_PURGE_ACCOUNT`    | Lock for purging accounts                            | 20           |
-| `KV_LOCK_QUEUE_MESSAGE`    | Lock for SMTP message queues                         | 21           |
-| `KV_LOCK_QUEUE_REPORT`     | Lock for report queues                               | 22           |
-| `KV_LOCK_EMAIL_TASK`       | Lock for email-related tasks                         | 23           |
-| `KV_LOCK_HOUSEKEEPER`      | Lock for housekeeping tasks                          | 24           |
-| `KV_LOCK_DAV`              | WebDAV locks                                         | 25           |
-| `KV_SIEVE_ID`              | Sieve auto-responder tracking ids                    | 26           |
+| **Short name**                      | **Description**                                      | **Integer prefix** |
+|-------------------------------------|------------------------------------------------------|--------------------|
+| `KV_ACME`                           | ACME tokens for SSL/TLS certificate management       | 0                  |
+| `KV_OAUTH`                          | OAuth authorisation codes                            | 1                  |
+| `KV_RATE_LIMIT_RCPT`                | Rate limiting data for recipient addresses           | 2                  |
+| `KV_RATE_LIMIT_SCAN`                | Rate limiting data for email scanning                | 3                  |
+| `KV_RATE_LIMIT_LOITER`              | Rate limiting data for idle connections              | 4                  |
+| `KV_RATE_LIMIT_AUTH`                | Rate limiting data for authentication attempts       | 5                  |
+| `KV_RATE_LIMIT_SMTP`                | Rate limiting data for SMTP throttles                | 6                  |
+| `KV_RATE_LIMIT_CONTACT`             | Rate limiting data for contact forms                 | 7                  |
+| `KV_RATE_LIMIT_HTTP_AUTHENTICATED`  | Rate limiting data for authenticated HTTP requests   | 8                  |
+| `KV_RATE_LIMIT_HTTP_ANONYMOUS`      | Rate limiting data for anonymous HTTP requests       | 9                  |
+| `KV_RATE_LIMIT_IMAP`                | Rate limiting data for IMAP connections              | 10                 |
+| `KV_QUOTA_BLOB`                     | Blob-quota accounting                                | 11                 |
+| `KV_GREYLIST`                       | Spam filter greylist tokens                          | 16                 |
+| `KV_LOCK_QUEUE_MESSAGE`             | Lock for SMTP message queues                         | 21                 |
+| `KV_LOCK_TASK`                      | Lock for background tasks                            | 23                 |
+| `KV_LOCK_DAV`                       | WebDAV locks                                         | 25                 |
+| `KV_SIEVE_ID`                       | Sieve auto-responder tracking ids                    | 26                 |
 
 This structured approach ensures data integrity and prevents key collisions across subsystems within the in-memory store.
 
@@ -62,7 +56,9 @@ Most keys held in the in-memory store are transient: rate-limit counters, fail2b
 
 To change the in-memory store backend, update the InMemoryStore singleton and select the appropriate variant. Variant-specific fields such as [`url`](/docs/ref/object/in-memory-store#url) and [`timeout`](/docs/ref/object/in-memory-store#timeout) apply to the Redis variant; [`urls`](/docs/ref/object/in-memory-store#urls), [`authUsername`](/docs/ref/object/in-memory-store#authusername), [`authSecret`](/docs/ref/object/in-memory-store#authsecret), [`readFromReplicas`](/docs/ref/object/in-memory-store#readfromreplicas), and [`protocolVersion`](/docs/ref/object/in-memory-store#protocolversion) apply to the RedisCluster variant. See the [InMemoryStore reference](/docs/ref/object/in-memory-store) for the full field list per variant.
 
-<!-- review: The previous docs mentioned defining multiple in-memory stores for use from expressions and Sieve scripts. The current InMemoryStore singleton exposes only one primary in-memory backend. Confirm whether additional named in-memory stores for expressions/Sieve are still configured through a separate mechanism (possibly StoreLookup) and link to the correct object if so. -->
+## Lookup keys for expressions and Sieve
+
+Lookup data consumed by expressions and Sieve scripts is kept in the same InMemoryStore singleton; there is no separate named store per lookup. Individual entries are modelled as [MemoryLookupKey](/docs/ref/object/memory-lookup-key) (found in the WebUI under <!-- breadcrumb:MemoryLookupKey --><!-- /breadcrumb:MemoryLookupKey -->) for membership-style lookups and as [MemoryLookupKeyValue](/docs/ref/object/memory-lookup-key-value) (found in the WebUI under <!-- breadcrumb:MemoryLookupKeyValue --><!-- /breadcrumb:MemoryLookupKeyValue -->) for key-value lookups. Each record carries its own [`namespace`](/docs/ref/object/memory-lookup-key#namespace), so distinct lookup sets coexist within the single backend.
 
 ## Maintenance
 

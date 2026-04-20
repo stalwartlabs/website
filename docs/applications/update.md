@@ -39,15 +39,10 @@ The trigger is exposed through every management surface:
 
 The update procedure is identical whether it was triggered by the schedule or by an `UpdateApps` Action. For each enabled Application the server:
 
-1. Downloads the bundle from the configured [`resourceUrl`](/docs/ref/object/application#resourceurl).
-2. Verifies the downloaded archive before trusting its contents.
-3. Unpacks the new bundle into the working directory selected by [`unpackDirectory`](/docs/ref/object/application#unpackdirectory), alongside or in place of the previous unpacked copy.
-4. Swaps the live mount over to the newly unpacked files so that subsequent HTTP requests for the Application's [`urlPrefix`](/docs/ref/object/application#urlprefix) entries are served from the new version.
+1. Downloads the bundle from the configured [`resourceUrl`](/docs/ref/object/application#resourceurl) over HTTPS.
+2. Unpacks the archive into the working directory selected by [`unpackDirectory`](/docs/ref/object/application#unpackdirectory), rewriting the `<base href>` in `index.html` to match the mount path.
+3. Swaps the live mount over to the newly unpacked files so that subsequent HTTP requests for the Application's [`urlPrefix`](/docs/ref/object/application#urlprefix) entries are served from the new version.
 
-Disabled Applications (those with [`enabled`](/docs/ref/object/application#enabled) set to `false`) are skipped during both scheduled and on-demand runs. A failure at any stage (a network error, a corrupted archive, or a verification failure) is logged and leaves the previously installed bundle in service, so a failed update does not take an Application offline.
+No checksum or signature verification is performed on the downloaded bundle; see the [bundle format](/docs/applications/overview#bundle-format) section for the security implications. A malformed archive or an unreachable download is logged and leaves the previously installed bundle in service, so a failed update does not take an Application offline.
 
-<!-- review: Confirm the verification step and its failure mode. The Application schema exposes no signature or checksum field, so verification appears to be archive-format validation plus HTTPS transport. If a stronger check is performed, update step 2 accordingly. -->
-
-<!-- review: Confirm that the `UpdateApps` Action refreshes every enabled Application in a single run and that there is no per-Application scope on the variant. The Action schema lists `UpdateApps` with no fields, which supports this reading. -->
-
-<!-- review: Verify the CLI incantation. `stalwart-cli create action/reload-settings` is the shape documented on the Action reference page; `stalwart-cli create action/update-apps` is inferred from the same pattern. -->
+Disabled Applications (those with [`enabled`](/docs/ref/object/application#enabled) set to `false`) are skipped during both scheduled and on-demand runs. An `UpdateApps` Action always refreshes every enabled Application in a single run; the variant has no fields to limit the operation to a single Application.

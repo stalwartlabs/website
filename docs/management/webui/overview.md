@@ -33,8 +33,6 @@ The `/account` mount is the [Account Manager](/docs/management/webui/account-man
 
 When an account without administrator permissions signs in at `/admin`, the console redirects to the Account Manager rather than rejecting the request outright.
 
-<!-- review: Confirm that the administrator console and the Account Manager are served by a single Application with two `urlPrefix` entries, rather than by two separate Application records. The prose here assumes the single-record layout used by the default install. -->
-
 ## Access and routing
 
 The WebUI is served over HTTP and so depends on a [NetworkListener](/docs/ref/object/network-listener) (found in the WebUI under <!-- breadcrumb:NetworkListener --><!-- /breadcrumb:NetworkListener -->) whose [`protocol`](/docs/ref/object/network-listener#protocol) is set to `http`. Because the `/admin` and `/account` prefixes are matched against the same HTTP surface that carries JMAP, WebDAV, and the `.well-known` endpoints, operators can restrict exposure of the administrator console to a private listener while keeping the rest of the HTTP traffic on a public one. The mechanics of scoping mount paths to specific listeners are covered under [HTTP access control](/docs/http/access-control).

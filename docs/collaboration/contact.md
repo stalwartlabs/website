@@ -46,8 +46,6 @@ To improve client compatibility and allow contact operations to proceed without 
 
 Automatic creation can be suppressed by clearing [`defaultHrefName`](/docs/ref/object/address-book#defaulthrefname) (leaving it unset). In that case, Stalwart does not create a default address book and clients that connect to an account with no address books receive an appropriate error response.
 
-<!-- review: The pre-migration docs described `contacts.default.href-name = false` as the explicit way to disable automatic default-address-book creation. The current AddressBook object exposes `defaultHrefName` as an optional String. Confirm that unsetting the field is equivalent to the previous boolean disable, and that no separate enable flag controls automatic creation. -->
-
 ### Default display name
 
 The display name assigned to the auto-created address book is controlled by [`defaultDisplayName`](/docs/ref/object/address-book#defaultdisplayname). The default is `"Stalwart Address Book"`; the value can be adjusted to match organisational branding or language preferences.

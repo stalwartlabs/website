@@ -1,0 +1,120 @@
+With the bootstrap credentials in hand, open a web browser and navigate to:
+
+```
+http://<hostname>:8080/admin
+```
+
+Replace `<hostname>` with the hostname or IP address of the machine running Stalwart. On the machine itself, `http://127.0.0.1:8080/admin` works for local access. Sign in using `admin` as the username and the temporary password retrieved in the previous step; the setup wizard appears automatically.
+
+:::tip Advanced deployments
+
+Deployments that prefer command-line or infrastructure-as-code workflows can skip the wizard entirely and drive the same configuration from the CLI; see [bootstrap mode](/docs/configuration/bootstrap-mode) and [declarative deployments](/docs/configuration/declarative-deployments).
+
+:::
+
+The wizard presents five screens plus a final confirmation. Every field has a sensible default, so most installations only need to enter their hostname and domain and click through the rest.
+
+### Step 1 of 5: Server identity
+
+Two required fields plus two optional toggles.
+
+* **Server hostname:** 
+    > The public hostname this Stalwart server answers to, for example `mail.example.com`. This value appears in SMTP greetings, outgoing message headers, and TLS certificate requests. It must resolve through public DNS to the IP address of the server.
+
+* **Default email domain:** 
+    > The primary domain this installation will serve, for example `example.com`. Additional domains can be added at any time after setup.
+
+* **Automatically obtain TLS certificate**:
+    > Leave enabled to have Stalwart request a free TLS certificate for the server hostname from Let's Encrypt using the ACME protocol. This is the recommended option for most deployments, because mail and web clients can then connect securely on the very first start without any additional steps. Disable the checkbox only if a certificate will be uploaded manually later, or if TLS is terminated by a reverse proxy in front of Stalwart.
+
+* **Generate email signing keys:** 
+    > Leave enabled to have Stalwart generate DKIM signing keys for the default domain. DKIM cryptographically signs outgoing messages and significantly improves the chances that they are accepted by remote servers rather than classified as spam. Disable only when DKIM keys are managed externally.
+
+:::note ACME challenge method
+
+When the *automatically obtain TLS certificate* option is enabled and an automatic DNS provider is selected in [Step 5](#step-5-of-5-automatic-dns-management), Stalwart validates certificate requests with the DNS-01 challenge, which does not require any ports to be reachable from the internet. When DNS management is left manual in Step 5, Stalwart falls back to the TLS-ALPN-01 challenge, which Let's Encrypt validates by connecting directly to the server on **TCP port 443**. In that case, before restarting the server after the wizard, make sure that the machine is reachable from the public internet on port 443, that no reverse proxy or load balancer is intercepting the connection, and that the server hostname entered above resolves to this machine in public DNS. See [ACME challenge types](/docs/server/tls/acme/challenges) for the full picture.
+
+:::
+
+### Step 2 of 5: Storage
+
+Storage is split into four independent stores. All four default to RocksDB on local disk, which is the recommended configuration for single-node installations and requires no action. Each store can be moved to an external backend later through the WebUI without reinstalling.
+
+* **Main data storage:**
+    > Where structured data lives: email metadata, calendar events, address book entries, mailbox state, and every server settings object. The default is RocksDB. PostgreSQL, MySQL, SQLite, and FoundationDB are available for larger deployments or when a specific database is mandated by operations policy.
+
+* **Attachment and file storage:**
+    > Where the raw bytes of email messages, attachments, and other large files are stored. Leave set to *Use Data Store* to keep blobs alongside metadata; switch to a dedicated backend such as S3 or Azure Blob Storage for deployments with many attachments or when long-term object storage is preferable.
+
+* **Full-text search index:**
+    > Where the full-text search index is kept so that users can search across message bodies and attachments. Leave set to *Use Data Store* for single-node deployments; point to a dedicated search backend (Elasticsearch or Meilisearch) when the search workload is large enough to warrant it.
+
+* **Cache and temporary data:**
+    > Where short-lived state lives: session caches, rate-limit counters, authentication tokens. Leave set to *Use Data Store* for a single node; point to Redis for faster lookups and especially for multi-node deployments where cache state must be shared across the cluster.
+
+### Step 3 of 5: Account directory
+
+Stalwart can source user accounts from its own internal directory or delegate authentication to an external identity provider.
+
+* **Directory type:**
+    > Leave set to *Use the Internal Directory* for the simplest installation: accounts are created and managed through the WebUI, and the wizard generates an administrator credential on the final screen. Select an external directory (OIDC, LDAP, or SQL) for single sign-on or for integration with an existing identity system.
+
+The choice here affects the final screen. With the internal directory, a generated administrator credential is printed when the wizard finishes. With an external directory, no credential is generated; the administrator is provisioned after the first sign-in (see [Setup complete](#setup-complete) below).
+
+### Step 4 of 5: Logging
+
+**Log destination.** Where the server writes log messages, traces, and diagnostic events.
+
+- *Log File* writes rotating log files to disk under the data directory. This is appropriate whenever the server has persistent disk and rotation is handled directly by Stalwart.
+- *Console* writes log lines to standard output. Select this for containerised deployments so the orchestrator's log driver (Docker, Kubernetes, and so on) can capture them.
+
+Additional destinations (OpenTelemetry, journald, remote webhooks) can be added after setup through the [Tracer](/docs/ref/object/tracer) object.
+
+:::note Docker
+
+Docker users should select **Console** here. A file-based logger inside a container writes to an ephemeral filesystem that is lost on every container restart; the Console logger emits structured log lines to standard output, which Docker captures through its log driver.
+
+:::
+
+### Step 5 of 5: Automatic DNS management
+
+The DNS records a mail server needs (SPF, DKIM, DMARC, MX, MTA-STS, autoconfig, and so on) can either be published manually by the operator or generated and maintained by Stalwart on the operator's behalf.
+
+**DNS server type.** Leave set to *Manual DNS Server Management* to keep full control of the DNS records. Select a supported provider (Cloudflare, AWS Route 53, Google Cloud DNS, etc, or a BIND-compatible server via RFC 2136) to have Stalwart publish and update the zone entries automatically through the provider's API. See [DNS provider integration](/docs/server/dns/overview) for the supported providers and the credentials each one needs. The choice is not final; provider integration can be enabled, disabled, or changed later.
+
+#### Retrieving the DNS zone file
+
+When manual management is kept, Stalwart still generates the full set of records that must be published and makes them available as a ready-to-import zone file.
+
+From the WebUI, open the Domain list (found in the WebUI under <!-- breadcrumb:Domain --><!-- /breadcrumb:Domain -->), click the three-dot menu next to the relevant domain, and select **View DNS Zone file**.
+
+From the command line, list the configured domains and read the [`dnsZoneFile`](/docs/ref/object/domain#dnszonefile) field on the desired one:
+
+```bash
+$ stalwart-cli query domain
+$ stalwart-cli get domain <id> --fields dnsZoneFile
+```
+
+The returned zone file can be pasted into the DNS provider's control panel or imported as a zone template where the provider supports it. See [Setting up DNS](/docs/install/dns) for a per-record explanation of what each entry does.
+
+### Setup complete
+
+The final screen confirms that the server has been configured. What happens next depends on the directory chosen in Step 3.
+
+**Internal directory.** The wizard prints an email address and a randomly generated password for the new administrator account, for example:
+
+```
+admin@example.com
+onMjJfFMO83tQcCX
+```
+
+Write both down. The password is shown only on this screen and cannot be retrieved from the server logs afterwards. The credentials are used to sign in to the WebUI once the server has been restarted (see the platform-specific Restart section below).
+
+**External directory (OIDC / LDAP / SQL).** No administrator credential is generated, because an account from the external directory does not exist locally until it has authenticated at least once. The administrator needs to be promoted manually after the first sign-in using the existing recovery admin credentials. The procedure, carried out after the platform-specific restart described below, is:
+
+1. Keep `STALWART_RECOVERY_ADMIN=<username>:<password>` set in the service environment. The variable is honoured while the server is running normally, so this does not require recovery mode.
+2. Have the account that will become the administrator sign in once through the WebUI. Any successful authentication against the directory provisions the account locally in Stalwart.
+3. Sign in as the recovery administrator in a separate browser session and assign the appropriate administrator role to the newly provisioned account, either through the WebUI or through the CLI.
+4. Sign in as the promoted account to confirm that the assignment took effect.
+5. Remove `STALWART_RECOVERY_ADMIN` from the service environment and restart the server so that the backdoor credential is no longer active.
+

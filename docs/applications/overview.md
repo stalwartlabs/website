@@ -6,11 +6,11 @@ sidebar_position: 1
 
 Stalwart can download and host one or more single-page applications (SPAs) directly from the server. Each hosted application is configured on the [Application](/docs/ref/object/application) object (found in the WebUI under <!-- breadcrumb:Application --><!-- /breadcrumb:Application -->) and is served alongside the regular HTTP endpoints, without the need for a separate web server or reverse proxy in front.
 
-The built-in [WebUI](/docs/management/webui/overview) is itself an Application: it ships as two hosted bundles mounted at `/admin` (the administration console) and `/account` (the user self-service portal). Operators can register additional Applications on the same server, for example third-party management dashboards or self-hosted front-ends for the JMAP, CalDAV, CardDAV, and WebDAV stacks.
+The built-in [WebUI](/docs/management/webui/overview) is itself an Application: a single bundle mounted at both `/admin` (the administration console) and `/account` (the user self-service portal). Operators can register additional Applications on the same server, for example third-party management dashboards or self-hosted front-ends for the JMAP, CalDAV, CardDAV, and WebDAV stacks.
 
 ## What an Application is
 
-An Application is a static SPA bundle, distributed as a zip archive, that the server downloads, verifies, and unpacks locally. Once unpacked, the server serves the application's files in response to HTTP requests whose path matches one of the configured mount paths. The bundle is identified by the [`resourceUrl`](/docs/ref/object/application#resourceurl) field, which points to the archive that will be fetched (for example the latest GitHub release of the WebUI), and by the [`description`](/docs/ref/object/application#description) field, which carries a short human-readable label used in the management interfaces.
+An Application is a static SPA bundle, distributed as a zip archive, that the server downloads and unpacks locally. Once unpacked, the server serves the application's files in response to HTTP requests whose path matches one of the configured mount paths. The bundle is identified by the [`resourceUrl`](/docs/ref/object/application#resourceurl) field, which points to the archive that will be fetched (for example the latest GitHub release of the WebUI), and by the [`description`](/docs/ref/object/application#description) field, which carries a short human-readable label used in the management interfaces.
 
 Individual Applications can be disabled without removing them from the configuration by clearing the [`enabled`](/docs/ref/object/application#enabled) flag. A disabled Application is not downloaded and is not served, but its configuration is retained.
 
@@ -30,8 +30,20 @@ When [access control](/docs/http/access-control) rules are in force, requests to
 
 ## Installing an Application
 
-An Application is installed by creating an [Application](/docs/ref/object/application) record with the bundle's download URL in [`resourceUrl`](/docs/ref/object/application#resourceurl), the desired mount paths in [`urlPrefix`](/docs/ref/object/application#urlprefix), and a short [`description`](/docs/ref/object/application#description). The server then fetches the archive on the schedule described on the [Updates](/docs/applications/update) page, verifies it, unpacks it into the working directory, and begins serving the files. The same workflow is exposed through the WebUI, through `stalwart-cli`, and directly over the JMAP API on the `x:Application/set` method.
+An Application is installed by creating an [Application](/docs/ref/object/application) record with the bundle's download URL in [`resourceUrl`](/docs/ref/object/application#resourceurl), the desired mount paths in [`urlPrefix`](/docs/ref/object/application#urlprefix), and a short [`description`](/docs/ref/object/application#description). The server then fetches the archive on the schedule described on the [Updates](/docs/applications/update) page, unpacks it into the working directory, and begins serving the files. The same workflow is exposed through the WebUI, through `stalwart-cli`, and directly over the JMAP API on the `x:Application/set` method.
 
-<!-- review: Confirm the bundle format (zip) and the verification step performed during download. The Application schema does not expose a checksum or signature field; if verification is based on the transport (HTTPS of `resourceUrl`) rather than on a bundle-level signature, clarify here. -->
+## Bundle format
 
-<!-- review: Verify that the two WebUI bundles are modelled as a single Application with two `urlPrefix` entries (`/admin`, `/account`) rather than as two separate Application records. The user-facing description assumes the former. -->
+An Application bundle is a `.zip` archive that must contain an `index.html` at its root. When the archive is unpacked, the server rewrites the `<base href="/">` tag in `index.html` to match the mount path the bundle is served from, so the same archive can be mounted at `/admin`, `/account`, or any other prefix without being repackaged. Assets referenced by relative URLs inside the bundle therefore resolve correctly regardless of the mount path.
+
+No checksum or signature verification is performed on the downloaded archive. Applications are intended to be installed from trusted sources only; the transport is always HTTPS, but the contents of the bundle are not cryptographically validated against an external manifest.
+
+:::warning
+
+Because no bundle-level signature is checked, only install Applications whose [`resourceUrl`](/docs/ref/object/application#resourceurl) points at a source operated by a trusted publisher. A malicious bundle served from a hostile origin would be unpacked and served just like any other Application.
+
+:::
+
+## Multiple mount paths for a single Application
+
+The built-in WebUI is modelled as one Application with two entries in [`urlPrefix`](/docs/ref/object/application#urlprefix), `/admin` and `/account`; the prefixes are URL-path aliases for the same bundle rather than two separate installations. Additional Applications can follow the same pattern when several aliases need to resolve to the same files.

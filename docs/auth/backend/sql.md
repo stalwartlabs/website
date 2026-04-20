@@ -33,7 +33,7 @@ Column names in the database are mapped to account fields through the following 
 - [`columnClass`](/docs/ref/object/directory#columnclass): column holding the account kind (`individual`, `person`, or `group`). Default `"type"`.
 - [`columnDescription`](/docs/ref/object/directory#columndescription): column holding the account's full name or description. Default `"description"`.
 
-<!-- review: The previous docs documented a `directory.<name>.columns.quota` mapping for the account disk quota. The SQL variant of the Directory object exposes columnEmail, columnSecret, columnClass, and columnDescription, but no quota column. Confirm whether the quota column has been removed, folded into queryLogin / queryRecipient, or moved elsewhere. -->
+There is no column mapping for a per-account disk quota: quotas are held on the [Account](/docs/ref/object/account) and [Tenant](/docs/ref/object/tenant) objects rather than read from the SQL directory (see [Quotas](/docs/auth/authorization/quotas)).
 
 For example:
 
@@ -60,7 +60,7 @@ The following schema is a reference example for an SQL-backed directory. It may 
 #### SQLite
 
 ```sql
-CREATE TABLE accounts (name TEXT PRIMARY KEY, secret TEXT, description TEXT, type TEXT NOT NULL, quota INTEGER DEFAULT 0, active BOOLEAN DEFAULT 1)
+CREATE TABLE accounts (name TEXT PRIMARY KEY, secret TEXT, description TEXT, type TEXT NOT NULL, active BOOLEAN DEFAULT 1)
 CREATE TABLE group_members (name TEXT NOT NULL, member_of TEXT NOT NULL, PRIMARY KEY (name, member_of))
 CREATE TABLE emails (name TEXT NOT NULL, address TEXT NOT NULL, type TEXT, PRIMARY KEY (name, address))
 ```
@@ -68,7 +68,7 @@ CREATE TABLE emails (name TEXT NOT NULL, address TEXT NOT NULL, type TEXT, PRIMA
 #### PostgreSQL
 
 ```sql
-CREATE TABLE accounts (name TEXT PRIMARY KEY, secret TEXT, description TEXT, type TEXT NOT NULL, quota INTEGER DEFAULT 0, active BOOLEAN DEFAULT true);
+CREATE TABLE accounts (name TEXT PRIMARY KEY, secret TEXT, description TEXT, type TEXT NOT NULL, active BOOLEAN DEFAULT true);
 CREATE TABLE group_members (name TEXT NOT NULL, member_of TEXT NOT NULL, PRIMARY KEY (name, member_of));
 CREATE TABLE emails (name TEXT NOT NULL, address TEXT NOT NULL, type TEXT, PRIMARY KEY (name, address));
 ```
@@ -76,7 +76,7 @@ CREATE TABLE emails (name TEXT NOT NULL, address TEXT NOT NULL, type TEXT, PRIMA
 #### MySQL
 
 ```sql
-CREATE TABLE accounts (name VARCHAR(32) PRIMARY KEY, secret VARCHAR(1024), description VARCHAR(1024), type VARCHAR(32) NOT NULL, quota INTEGER DEFAULT 0, active BOOLEAN DEFAULT 1);
+CREATE TABLE accounts (name VARCHAR(32) PRIMARY KEY, secret VARCHAR(1024), description VARCHAR(1024), type VARCHAR(32) NOT NULL, active BOOLEAN DEFAULT 1);
 CREATE TABLE group_members (name VARCHAR(32) NOT NULL, member_of VARCHAR(32) NOT NULL, PRIMARY KEY (name, member_of));
 CREATE TABLE emails (name VARCHAR(32) NOT NULL, address VARCHAR(128) NOT NULL, type VARCHAR(32), PRIMARY KEY (name, address));
 ```

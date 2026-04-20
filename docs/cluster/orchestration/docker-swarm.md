@@ -32,7 +32,7 @@ Check deployment status:
 $ docker stack ps stalwart-mail
 ```
 
-Below is an example Docker Compose file for deploying Stalwart on Docker Swarm:
+Below is an example Docker Compose file for deploying Stalwart on Docker Swarm. Hostnames, domains, and storage backends are configured through the [bootstrap flow](/docs/configuration/bootstrap-mode) on first start rather than through dedicated environment variables; the container only needs the clustering variables to select the right [role](/docs/cluster/configuration/roles), and optionally [`STALWART_RECOVERY_ADMIN`](/docs/configuration/environment-variables#recovery-and-bootstrap) to pin a known administrator credential:
 
 ```yaml
 version: '3.8'
@@ -48,11 +48,11 @@ services:
       - "993:993"    # IMAPS
       - "443:443"    # HTTPS
     environment:
-      - STALWART_HOSTNAME=mail.example.com
-      - STALWART_DOMAINS=example.com
+      - STALWART_ROLE=frontend
+      - STALWART_RECOVERY_ADMIN=admin:YOUR_SECURE_PASSWORD
     volumes:
-      - mail_data:/opt/stalwart/data
-      - mail_config:/opt/stalwart/config
+      - mail_data:/var/lib/stalwart
+      - mail_etc:/etc/stalwart
     deploy:
       replicas: 1
       placement:
@@ -99,16 +99,8 @@ volumes:
       type: "nfs"
       o: "addr=nfs-server,nolock,soft,rw"
       device: ":/path/to/mail/data"
-  mail_config:
+  mail_etc:
     driver: local
-
-secrets:
-  stalwart_admin_password:
-    external: true
-  ssl_cert:
-    external: true
-  ssl_key:
-    external: true
 
 networks:
   mail_network:
@@ -118,4 +110,4 @@ networks:
       encrypted: "true"
 ```
 
-<!-- review: The `STALWART_HOSTNAME` and `STALWART_DOMAINS` environment variables shown in the example are not listed among the documented startup environment variables in `/docs/configuration/environment-variables.md`. Confirm whether they still apply in the current model (where hostname is carried on `SystemSettings.defaultHostname` and domains are modelled as Domain objects) or whether the example should be updated. -->
+`STALWART_ROLE` names the [ClusterRole](/docs/cluster/configuration/roles) the instance adopts. On first start the container enters bootstrap mode on port `8080`; domains, storage backend, and the remaining system settings are supplied through the WebUI or a [declarative deployment](/docs/configuration/declarative-deployments) and persisted to the shared data store, so subsequent replicas pick the same configuration up automatically. Pin a push-notification shard with [`STALWART_PUSH_SHARD`](/docs/configuration/environment-variables#clustering) when the role performs push delivery.

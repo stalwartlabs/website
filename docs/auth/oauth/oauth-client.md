@@ -27,5 +27,3 @@ The [`redirectUris`](/docs/ref/object/o-auth-client#redirecturis) field enumerat
 ## Tenant scoping
 
 In multi-tenant deployments, the [`memberTenantId`](/docs/ref/object/o-auth-client#membertenantid) field binds the client to a single [Tenant](/docs/ref/object/tenant). A tenant-scoped client can only request tokens for accounts within that tenant, and administrators of other tenants cannot see or modify it. Clients left without a tenant assignment are visible at the server level and can authenticate accounts regardless of tenancy.
-
-<!-- review: Verify that leaving `memberTenantId` unset in a multi-tenant setup produces a server-scoped client that can authenticate any tenant's accounts, rather than being silently rejected. -->

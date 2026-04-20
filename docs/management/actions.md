@@ -30,7 +30,7 @@ The `ReloadBlockedIps` variant reloads the blocked IP list applied by the inboun
 
 ### Update applications
 
-The `UpdateApps` variant installs pending updates for the server's bundled applications. No input fields are required. <!-- review: "applications" here is not defined on the ref page; verify whether UpdateApps refers to the WebUI bundle, the Spam filter rule packs, or another shipped component. -->
+The `UpdateApps` variant installs pending updates for the hosted web [Applications](/docs/ref/object/application), such as the WebUI bundle. No input fields are required. Spam-filter rule updates are handled separately through the asynchronous `SpamFilterMaintenance` variant of [Task](/docs/ref/object/task).
 
 ### Troubleshoot DMARC
 

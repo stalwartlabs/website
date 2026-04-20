@@ -15,6 +15,8 @@ Server-wide encryption-at-rest behaviour is configured on the [Email](/docs/ref/
 - [`encryptAtRest`](/docs/ref/object/email#encryptatrest): when `true` (the default), messages delivered via SMTP or LMTP are automatically encrypted before being written to disk, provided the recipient has registered an S/MIME certificate or OpenPGP public key. Setting this field to `false` disables the feature for all accounts.
 - [`encryptOnAppend`](/docs/ref/object/email#encryptonappend): when `true`, messages manually appended by a client over JMAP or IMAP are also encrypted. The default is `false`, which leaves appended messages untouched so that clients retain full control over the contents they store.
 
+The server-wide [`encryptOnAppend`](/docs/ref/object/email#encryptonappend) value is an override: when set to `true`, it applies to every account regardless of the per-account `encryptOnAppend` carried inside [`encryptionAtRest`](/docs/ref/object/account-settings#encryptionatrest). When the server-wide flag is `false`, the per-account setting applies.
+
 For example:
 
 ```json
@@ -25,5 +27,3 @@ For example:
 ```
 
 Per-account encryption settings, including the selection of a specific public key and the symmetric algorithm, are carried on the [AccountSettings](/docs/ref/object/account-settings) singleton (found in the WebUI under <!-- breadcrumb:AccountSettings --><!-- /breadcrumb:AccountSettings -->) through the [`encryptionAtRest`](/docs/ref/object/account-settings#encryptionatrest) field. Public keys themselves are stored as [PublicKey](/docs/ref/object/public-key) objects (found in the WebUI under <!-- breadcrumb:PublicKey --><!-- /breadcrumb:PublicKey -->); see [OpenPGP](/docs/encryption/pgp) and [S/MIME](/docs/encryption/smime) for the accepted key formats, and [Management](/docs/encryption/manage) for how end users manage their own settings.
-
-<!-- review: The previous docs exposed a single `email.encryption.append` flag that forced encryption of appended messages for every account. The current Email singleton pairs this server-wide `encryptOnAppend` with a per-account `encryptOnAppend` inside `AccountSettings.encryptionAtRest`. Confirm whether the server-wide flag acts as an override, a default, or a hard requirement, and whether the per-account value takes precedence. -->

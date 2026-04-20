@@ -54,8 +54,6 @@ To improve client compatibility and allow calendar operations to proceed without
 
 Automatic creation can be suppressed by clearing [`defaultHrefName`](/docs/ref/object/calendar#defaulthrefname) (leaving it unset). In that case, Stalwart does not create a default calendar and clients that connect to an account with no calendars receive an appropriate error response.
 
-<!-- review: The pre-migration docs described `calendar.default.href-name = false` as the explicit way to disable automatic default-calendar creation. The current Calendar object exposes `defaultHrefName` as an optional String. Confirm that unsetting the field is equivalent to the previous boolean disable, and that no separate enable flag controls automatic creation. -->
-
 ### Default display name
 
 The display name assigned to the auto-created calendar (as shown in client applications) is controlled by [`defaultDisplayName`](/docs/ref/object/calendar#defaultdisplayname). The default is `"Stalwart Calendar"`; the value can be adjusted to match organisational branding or language preferences.

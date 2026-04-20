@@ -20,7 +20,7 @@ Deploy Stalwart using the Marathon CLI:
 $ marathon app add stalwart.json
 ```
 
-Below is an example JSON configuration file for deploying Stalwart on Apache Mesos via Marathon:
+Below is an example JSON configuration file for deploying Stalwart on Apache Mesos via Marathon. Hostnames, domains, storage backends, and administrator credentials are no longer seeded through dedicated environment variables; they are configured through the [bootstrap flow](/docs/configuration/bootstrap-mode) on first start and then persisted in the data store. The container only needs the [clustering](/docs/configuration/environment-variables#clustering) variables to take on the right role, and optionally [`STALWART_RECOVERY_ADMIN`](/docs/configuration/environment-variables#recovery-and-bootstrap) to pin a known administrator credential during the initial bootstrap:
 
 ```json
 {
@@ -37,7 +37,7 @@ Below is an example JSON configuration file for deploying Stalwart on Apache Mes
     },
     "volumes": [
       {
-        "containerPath": "/opt/stalwart/data",
+        "containerPath": "/var/lib/stalwart",
         "persistent": {
           "type": "root",
           "size": 10240,
@@ -46,21 +46,15 @@ Below is an example JSON configuration file for deploying Stalwart on Apache Mes
         "mode": "RW"
       },
       {
-        "containerPath": "/opt/stalwart/config",
-        "hostPath": "/var/lib/stalwart/config",
+        "containerPath": "/etc/stalwart",
+        "hostPath": "/srv/stalwart/etc",
         "mode": "RO"
       }
     ]
   },
   "env": {
-    "STALWART_HOSTNAME": "mail.example.com",
-    "STALWART_DOMAINS": "example.com",
-    "STALWART_ADMIN_PASSWORD": "YOUR_SECURE_PASSWORD",
-    "STALWART_STORAGE_TYPE": "postgres",
-    "STALWART_DB_HOST": "postgres.example.com",
-    "STALWART_DB_NAME": "stalwart_mail",
-    "STALWART_DB_USER": "stalwart",
-    "STALWART_DB_PASSWORD": "db_password"
+    "STALWART_ROLE": "frontend",
+    "STALWART_RECOVERY_ADMIN": "admin:YOUR_SECURE_PASSWORD"
   },
   "portDefinitions": [
     { "port": 25, "protocol": "tcp", "name": "smtp" },
@@ -88,4 +82,4 @@ Below is an example JSON configuration file for deploying Stalwart on Apache Mes
 }
 ```
 
-<!-- review: The example relies on `STALWART_HOSTNAME`, `STALWART_DOMAINS`, `STALWART_ADMIN_PASSWORD`, and several `STALWART_DB_*` environment variables that are not documented in `/docs/configuration/environment-variables.md` (which lists only the recovery/bootstrap variables and `STALWART_ROLE` / `STALWART_PUSH_SHARD`). Confirm whether these deployment variables still apply or whether storage and domain configuration is now expected to be seeded through the bootstrap flow instead. -->
+`STALWART_ROLE` names the [ClusterRole](/docs/cluster/configuration/roles) the instance adopts. Once the first container reaches bootstrap mode, the domains, storage backend, and system-level settings are supplied through the WebUI or a [declarative deployment](/docs/configuration/declarative-deployments) and written to the shared data store, so subsequent instances pick the same configuration up automatically. Pin a push-notification shard with [`STALWART_PUSH_SHARD`](/docs/configuration/environment-variables#clustering) when the role performs push delivery.

@@ -72,8 +72,6 @@ For example, a pair of RSA and Ed25519 signatures for `example.org`, each coveri
 ]
 ```
 
-<!-- review: The previous TOML schema exposed a `set-body-length` flag on signatures (the DKIM `l=` parameter). The current DkimSignature schema does not list this field; confirm whether setting the body length is still possible (and if so, on which field). -->
-
 ## Multiple domains
 
 Although a single DKIM key may be used across multiple domains with [Authorized Third-Party Signatures](https://www.ietf.org/rfc/rfc6541.html), a separate key per domain is recommended. This gives more granular control and makes issues easier to isolate. Because [`dkimSignDomain`](/docs/ref/object/sender-auth#dkimsigndomain) returns a domain name, the correct signatures are selected automatically as long as each domain has its own signature definitions.

@@ -222,7 +222,7 @@ HTTP-level security headers are configured on the [Http](/docs/ref/object/http) 
 }
 ```
 
-<!-- review: The previous docs also set `http.url` to a dynamic expression (`protocol + '://' + config_get('server.hostname') + ':' + local_port`) used to build callback URLs. The current Http object does not expose a matching field. Confirm whether public URL generation is now fixed from `defaultHostname` or has moved to another object. -->
+Public callback URLs are built automatically from [`defaultHostname`](/docs/ref/object/system-settings#defaulthostname); no separate URL template needs to be configured.
 
 The mail and HTTP listeners are defined as [NetworkListener](/docs/ref/object/network-listener) objects (found in the WebUI under <!-- breadcrumb:NetworkListener --><!-- /breadcrumb:NetworkListener -->). Each mail listener carries an [`overrideProxyTrustedNetworks`](/docs/ref/object/network-listener#overrideproxytrustednetworks) value that trusts the Traefik network:
 

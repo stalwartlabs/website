@@ -20,15 +20,13 @@ Records are written to the zone the first time a Domain is saved with automatic 
 
 Propagation is driven by the DnsServer's polling and timeout settings. The server issues the update, waits for the configured [`propagationDelay`](/docs/ref/object/dns-server#propagationdelay), then polls every [`pollingInterval`](/docs/ref/object/dns-server#pollinginterval) until the record is observed or [`propagationTimeout`](/docs/ref/object/dns-server#propagationtimeout) is reached. Records are written with a TTL of [`ttl`](/docs/ref/object/dns-server#ttl).
 
-<!-- review: Confirm that creating or flipping a Domain to automatic DNS management synchronously schedules the initial publication, and whether a failure on the first pass blocks the save or simply marks the reconciliation as failing and pending retry. -->
+Flipping a Domain to automatic DNS management does not block the save: the server schedules a `DnsManagement` [Task](/docs/ref/object/task) (found in the WebUI under <!-- breadcrumb:Task --><!-- /breadcrumb:Task -->) that performs the initial publication asynchronously. The task's progress and outcome are visible on the Task record; if publication fails, the task is marked failed and its [`description`](/docs/ref/object/task#description) carries the details for diagnosis and retry.
 
 ## Refreshing records
 
-After initial publication, the record set is kept in sync by running the DNS management task. The task is a variant of the [Task](/docs/ref/object/task) object (the `DnsManagement` variant) and can be triggered manually from the WebUI or the CLI when a refresh is required, for example after editing the domain configuration, changing the report address, or rotating DKIM keys. Triggering the task causes the server to rebuild the expected record set for the domain, compare it to the live zone, and issue the required add, update, and delete operations against the DnsServer.
+After initial publication, the record set is kept in sync by running the DNS management task. The task is a variant of the [Task](/docs/ref/object/task) object (the `DnsManagement` variant) and can be triggered manually when a refresh is required, for example after editing the domain configuration, changing the report address, or rotating DKIM keys. In the WebUI, tasks are created from **Management > Tasks** via the **New Task** button; from the CLI, the Task object is created with `stalwart-cli` in the same way as any other object. Triggering the task causes the server to rebuild the expected record set for the domain, compare it to the live zone, and issue the required add, update, and delete operations against the DnsServer.
 
 The task carries two fields of operational interest. [`updateRecords`](/docs/ref/object/task#updaterecords) restricts the refresh to a subset of record types, which is useful when only a specific record (for example, DKIM) needs to be rewritten. [`onSuccessRenewCertificate`](/docs/ref/object/task#onsuccessrenewcertificate) chains an ACME renewal after a successful DNS update, which is relevant when the zone change is a prerequisite for a DNS-01 challenge.
-
-<!-- review: Confirm the exact UI surface for triggering a DnsManagement task (a button on the Domain detail view, a generic Tasks screen, or both). The WebUI breadcrumb on the Task object points to "Management > Tasks". -->
 
 ## Record coverage
 

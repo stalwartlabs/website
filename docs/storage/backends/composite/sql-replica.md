@@ -16,8 +16,4 @@ This feature is available exclusively in the [Enterprise Edition](/docs/server/e
 
 ## Configuration
 
-Read replicas are configured on the primary SQL variant itself. On the [DataStore](/docs/ref/object/data-store) object (found in the WebUI under <!-- breadcrumb:DataStore --><!-- /breadcrumb:DataStore -->), when the `PostgreSql` or `MySql` variant is selected, the [`readReplicas`](/docs/ref/object/data-store#readreplicas) field accepts a list of replica connection settings. Each replica entry defines a full set of connection parameters: [`host`](/docs/ref/object/data-store#host), [`port`](/docs/ref/object/data-store#port), [`database`](/docs/ref/object/data-store#database), [`authUsername`](/docs/ref/object/data-store#authusername), and [`authSecret`](/docs/ref/object/data-store#authsecret).
-
-Write operations always target the primary connection, while read operations are distributed across the replicas. The same pattern is available on the [BlobStore](/docs/ref/object/blob-store) and [SearchStore](/docs/ref/object/search-store) objects when their PostgreSQL or MySQL variants are selected.
-
-<!-- review: The previous configuration exposed a dedicated `sql-read-replica` composite store with `primary` and `replicas` fields. The current schema instead appears to attach `readReplicas` directly to the primary SQL variant. Confirm that no standalone SQL-read-replica variant exists at the top level of DataStore/BlobStore/SearchStore. -->
+Read replicas are configured directly on the [PostgreSQL](/docs/storage/backends/postgresql#read-replicas) or [MySQL / MariaDB](/docs/storage/backends/mysql#read-replicas) store; there is no standalone SQL-replica variant at the top level of [DataStore](/docs/ref/object/data-store), [BlobStore](/docs/ref/object/blob-store), or [SearchStore](/docs/ref/object/search-store). See the backend-specific pages for the exact field list and examples.

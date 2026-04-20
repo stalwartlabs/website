@@ -21,5 +21,3 @@ To change the data store backend, update the DataStore singleton and select the 
 ## Maintenance
 
 Scheduled clean-up of the data store is managed centrally through the [DataRetention](/docs/ref/object/data-retention) object (found in the WebUI under <!-- breadcrumb:DataRetention --><!-- /breadcrumb:DataRetention -->). The [`dataCleanupSchedule`](/docs/ref/object/data-retention#datacleanupschedule) field sets how often the data store clean-up task runs, using a cron expression. The default runs daily at 02:00. Related schedules include [`expungeSchedule`](/docs/ref/object/data-retention#expungeschedule) for auto-expunge and [`blobCleanupSchedule`](/docs/ref/object/data-retention#blobcleanupschedule) for blob store clean-up.
-
-<!-- review: Per-backend purge frequency was previously expressed as `store.<id>.purge.frequency`. The current DataRetention object only exposes global schedules (`dataCleanupSchedule`, `blobCleanupSchedule`, `expungeSchedule`). Confirm that no per-backend override exists in the new model. -->

@@ -12,10 +12,8 @@ Administrators can create one or more [Role](/docs/ref/object/role) objects that
 
 For emergency access when the regular administrative accounts are unavailable, see the [recovery administrator](/docs/configuration/recovery-mode#recovery-administrator) mechanism. It is an environment-variable credential that is only honoured while the server is running in [recovery mode](/docs/configuration/recovery-mode) or during first-time [bootstrap](/docs/configuration/bootstrap-mode), and is intended to be set temporarily while an incident is resolved.
 
-## Master User
+## Impersonation
 
-The master user is a special account granted full access to every mailbox on the server. It is used for system maintenance and monitoring, in particular operations that require reading messages across all accounts. Because its access is very broad, it should be used only for legitimate administrative tasks.
+There is no dedicated master-user configuration. Mailbox-wide access is instead granted by assigning the `impersonate` [permission](/docs/auth/authorization/permissions) to a regular account, typically through a [Role](/docs/ref/object/role). Any account that holds this permission can sign in on behalf of another account by supplying a composite login of the form `<target>%<impersonator>` together with the impersonator's password.
 
-<!-- review: The previous docs exposed the master user through `authentication.master.user` and `authentication.master.secret`. The current Authentication singleton has no corresponding fields and no other object in the reference documents the master user. Confirm where the master user is now configured (Bootstrap, a dedicated object, or an account-level flag), and what the current field names are. -->
-
-Once master user access is enabled, any mailbox can be accessed by signing in as `<account_name>%<master_user>`. For example, when the master user is `master`, the mailbox of `john` is accessed by logging in as `john%master`.
+For example, when the impersonating account is `master@example.org` and the target mailbox belongs to `john@example.org`, signing in as `john@example.org%master@example.org` with the password of `master@example.org` grants access to `john`'s mailbox. The same convention works for single-label account names on deployments that do not use `user@domain` logins. Because this access is broad, the `impersonate` permission should be granted sparingly and only for legitimate administrative tasks such as maintenance or incident response.

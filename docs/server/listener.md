@@ -58,13 +58,9 @@ Socket-level behaviour is configured per listener through the following fields o
 - [`socketTosV4`](/docs/ref/object/network-listener#sockettosv4): type-of-service (TOS) value for IPv4 traffic, used to signal traffic priority.
 - [`socketNoDelay`](/docs/ref/object/network-listener#socketnodelay): whether the Nagle algorithm should be disabled. Default `true`.
 
-<!-- review: The previous docs listed a `linger` socket option; no matching field appears on NetworkListener in the current schema. Confirm whether linger has been removed or renamed. -->
-
 ## TLS on a listener
 
-Listener-level TLS is controlled by [`useTls`](/docs/ref/object/network-listener#usetls), [`tlsImplicit`](/docs/ref/object/network-listener#tlsimplicit), [`tlsTimeout`](/docs/ref/object/network-listener#tlstimeout), [`tlsDisableProtocols`](/docs/ref/object/network-listener#tlsdisableprotocols), [`tlsDisableCipherSuites`](/docs/ref/object/network-listener#tlsdisableciphersuites), and [`tlsIgnoreClientOrder`](/docs/ref/object/network-listener#tlsignoreclientorder). Because each NetworkListener carries its own TLS fields, implicit TLS on a submissions endpoint is set by flipping [`tlsImplicit`](/docs/ref/object/network-listener#tlsimplicit) on that listener alone, without touching other listeners. See [TLS overview](/docs/server/tls/overview) for the list of supported protocols and cipher suites.
-
-<!-- review: In the previous model there was a central `server.tls` block that set defaults inherited by every listener. NetworkListener now exposes each TLS field directly and there is no global TLS object in the reference catalogue. Confirm that each listener is configured independently and that no shared TLS defaults object survives. -->
+Listener-level TLS is controlled by [`useTls`](/docs/ref/object/network-listener#usetls), [`tlsImplicit`](/docs/ref/object/network-listener#tlsimplicit), [`tlsTimeout`](/docs/ref/object/network-listener#tlstimeout), [`tlsDisableProtocols`](/docs/ref/object/network-listener#tlsdisableprotocols), [`tlsDisableCipherSuites`](/docs/ref/object/network-listener#tlsdisableciphersuites), and [`tlsIgnoreClientOrder`](/docs/ref/object/network-listener#tlsignoreclientorder). Each NetworkListener carries its own TLS fields and is configured independently: implicit TLS on a submissions endpoint is set by flipping [`tlsImplicit`](/docs/ref/object/network-listener#tlsimplicit) on that listener alone, without touching other listeners. See [TLS overview](/docs/server/tls/overview) for the list of supported protocols and cipher suites.
 
 ## Example
 

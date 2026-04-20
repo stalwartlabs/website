@@ -51,4 +51,4 @@ The `OtelHttp` variant sends traces and logs over HTTP. Use [`httpHeaders`](/doc
 }
 ```
 
-<!-- review: The previous docs documented the custom-header path as a `headers` array of `"Name: value"` strings. The current Tracer object exposes `httpHeaders` as a `Map<String, String>`. Confirm that arbitrary authorization tokens should now be passed via `httpAuth` (Bearer/Basic) rather than as an `Authorization` entry in `httpHeaders`. -->
+Authorization tokens are supplied through [`httpAuth`](/docs/ref/object/tracer#httpauth) rather than as an `Authorization` entry in [`httpHeaders`](/docs/ref/object/tracer#httpheaders); [`httpHeaders`](/docs/ref/object/tracer#httpheaders) is reserved for additional custom headers.

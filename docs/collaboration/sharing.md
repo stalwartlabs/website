@@ -40,8 +40,6 @@ For finer control, [permissions](/docs/auth/authorization/permissions) can be us
 
 JMAP Sharing records each sharing operation as a `ShareNotification`. Each notification captures who shared what with whom, the previous and new ACLs, and other contextual details. Retention of these records is controlled by [`expungeShareNotifyAfter`](/docs/ref/object/data-retention#expungesharenotifyafter) on the [DataRetention](/docs/ref/object/data-retention) singleton (found in the WebUI under <!-- breadcrumb:DataRetention --><!-- /breadcrumb:DataRetention -->). The value is a duration; the default is `"30d"`, after which notifications are removed during the routine auto-expunge run.
 
-<!-- review: The pre-migration docs referenced a `sharing.max-history` setting on the sharing configuration. The current model keeps sharing notification retention on `DataRetention.expungeShareNotifyAfter`. Confirm that the ShareNotification history is controlled exclusively by the DataRetention field and that no equivalent lives on the Sharing singleton. -->
-
 ## WebDAV assisted discovery
 
 Stalwart organises account and group resources using a hierarchical path structure. Each principal (an account, group, or other addressable entity) has its own namespace under which resources are stored. For example, calendars for the account `john` live under `/dav/cal/john`, while the address book for a group named `sales` is under `/dav/card/sales`. Within each principal's path, multiple collections can be created such as `/dav/cal/john/work` and `/dav/cal/john/personal`.

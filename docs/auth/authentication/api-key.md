@@ -16,8 +16,6 @@ Permissions attached to an API key are controlled through the [`permissions`](/d
 
 Tenant scoping is inherited from the owning account: an API key created by a tenant user can only act within that tenant, and the server rejects requests that attempt to cross tenant boundaries. Roles are likewise resolved through the owning account; the key does not carry an independent list of roles.
 
-<!-- review: The v0.15 docs described direct `roles`, `enabledPermissions`, and `disabledPermissions` fields on the API-key principal. The v0.16 ApiKey object exposes a single `permissions` field with `Inherit` / `Disable` / `Replace` modes instead. Verify that tenant scoping is purely inherited from the owning account in v0.16 and that there is no separate `tenant` field on ApiKey. -->
-
 ## Managing keys
 
 Users create and revoke API keys from the [self-service portal](/docs/management/webui/overview), under the API Keys menu option. Administrators can view and revoke keys belonging to any account. The newly generated secret is displayed once at creation and must be stored by the caller; there is no way to retrieve it again from the server.

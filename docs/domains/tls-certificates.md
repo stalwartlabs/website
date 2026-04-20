@@ -17,9 +17,7 @@ The mode is set through the [`certificateManagement`](/docs/ref/object/domain#ce
 
 A Certificate object stores a PEM-encoded public certificate in [`certificate`](/docs/ref/object/certificate#certificate) and the matching private key in [`privateKey`](/docs/ref/object/certificate#privatekey). Both fields accept inline values, an environment variable reference, or a file path, which allows secrets to be injected from the deployment environment rather than stored inline in the database.
 
-Once a Certificate is saved, the server parses it and populates read-only metadata: [`subjectAlternativeNames`](/docs/ref/object/certificate#subjectalternativenames), [`notValidBefore`](/docs/ref/object/certificate#notvalidbefore), [`notValidAfter`](/docs/ref/object/certificate#notvalidafter), and [`issuer`](/docs/ref/object/certificate#issuer). The TLS listener matches an incoming connection's Server Name Indication against the Subject Alternative Names of the installed Certificate objects and presents the matching certificate. Renewal in manual mode is a matter of replacing the certificate and private key on the Certificate object before the current one expires.
-
-<!-- review: Confirm that the server selects a manually managed Certificate purely by SNI/SAN match (i.e. there is no explicit link from Domain to a specific Certificate id for manual mode). -->
+Once a Certificate is saved, the server parses it and populates read-only metadata: [`subjectAlternativeNames`](/docs/ref/object/certificate#subjectalternativenames), [`notValidBefore`](/docs/ref/object/certificate#notvalidbefore), [`notValidAfter`](/docs/ref/object/certificate#notvalidafter), and [`issuer`](/docs/ref/object/certificate#issuer). Manual mode does not bind a Domain to a specific Certificate id; instead, the TLS listener matches an incoming connection's Server Name Indication against the Subject Alternative Names of every installed Certificate and presents the newest certificate that matches. Renewal therefore consists of adding a replacement Certificate with the same SAN set before the current one expires, or updating the [`certificate`](/docs/ref/object/certificate#certificate) and [`privateKey`](/docs/ref/object/certificate#privatekey) fields on the existing record.
 
 ## Automatic certificates
 
@@ -32,9 +30,7 @@ The AcmeProvider carries the lifecycle settings that apply to every domain bound
 
 ## Renewal
 
-Renewal in automatic mode is performed by the ACME renewal task, which is a variant of the [Task](/docs/ref/object/task) object (the `AcmeRenewal` variant). The task is scheduled by the server according to the `renewBefore` threshold on the AcmeProvider and can be triggered on demand when an immediate renewal is required, for example after adding a Subject Alternative Name. A successful renewal installs the new certificate into the store and replaces the one presented on subsequent TLS handshakes.
-
-<!-- review: Confirm where the AcmeRenewal task schedule is seeded (presumably on Domain save when automatic certificate management is enabled, or on AcmeProvider save) and whether the scheduler uses the AcmeProvider's `renewBefore` per issued certificate. -->
+Renewal in automatic mode is performed by the ACME renewal task, which is a variant of the [Task](/docs/ref/object/task) object (the `AcmeRenewal` variant). The first `AcmeRenewal` task is scheduled when a Domain is first configured with automatic certificate management. Each subsequent renewal schedules the next one: when an `AcmeRenewal` task completes, it creates a follow-up task timed from the AcmeProvider's [`renewBefore`](/docs/ref/object/acme-provider#renewbefore) relative to the new certificate's expiry. The task can also be triggered on demand when an immediate renewal is required, for example after adding a Subject Alternative Name. A successful renewal installs the new certificate into the store and replaces the one presented on subsequent TLS handshakes.
 
 ## Report generation
 

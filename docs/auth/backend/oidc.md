@@ -12,9 +12,7 @@ As Stalwart is primarily a mail server, it handles OIDC somewhat differently fro
 
 Clients (such as mail applications) present an access token issued by the external OIDC provider using the `OAUTHBEARER` SASL mechanism. Because Stalwart is not part of the OIDC flow, it does not see the [ID token](/docs/auth/openid/id-tokens). To identify the user associated with an access token, Stalwart validates the token against the OIDC provider.
 
-In the current release this validation is performed automatically through the provider's standard OIDC discovery document (the `/.well-known/openid-configuration` endpoint). From that document Stalwart resolves the userinfo endpoint and signing keys, validates the token, and extracts the user's identity from the claims that the provider returns.
-
-<!-- review: The previous docs documented four distinct endpoint/auth combinations for OIDC integration: UserInfo, Introspect without authentication, Introspect with basic authentication, Introspect with a bearer token, and Introspect using the user-provided token. The current OIDC variant of the Directory object exposes `issuerUrl`, `requireAudience`, `requireScopes`, `claimUsername`, `usernameDomain`, `claimName`, and `claimGroups`, with no explicit endpoint type or client-authentication fields. Confirm whether token introspection with client credentials is still supported (and via which fields) or whether the integration now relies solely on OIDC discovery + userinfo. -->
+Validation is performed automatically through the provider's OIDC discovery document (the `/.well-known/openid-configuration` endpoint). From that document Stalwart resolves the provider's signing keys and the userinfo endpoint. The server first attempts offline validation of the access token using the JWT signing keys; when offline validation cannot be completed (for example, opaque tokens that are not JWTs), Stalwart queries the userinfo endpoint with the token to resolve the user's identity. In both cases the user's claims are read from the resulting payload. Token introspection with client credentials is not used.
 
 ## Limitations
 

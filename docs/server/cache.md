@@ -34,7 +34,6 @@ Every cache is configured through the [Cache](/docs/ref/object/cache) singleton 
 - [`domainNamesNegative`](/docs/ref/object/cache#domainnamesnegative): negative (not-found) domain-name lookup results. Default `"1mb"`.
 - [`emailAddresses`](/docs/ref/object/cache#emailaddresses): positive email-address lookup results. Default `"10mb"`.
 - [`emailAddressesNegative`](/docs/ref/object/cache#emailaddressesnegative): negative email-address lookup results. Default `"2mb"`.
-- [`roles`](/docs/ref/object/cache#roles): role definitions. Default `"5mb"`.
 - [`tenants`](/docs/ref/object/cache#tenants): tenant records. Default `"5mb"`.
 - [`negativeTtl`](/docs/ref/object/cache#negativettl): how long to keep negative domain and account lookup entries. Default `"1h"`.
 
@@ -42,8 +41,6 @@ Every cache is configured through the [Cache](/docs/ref/object/cache) singleton 
 
 - [`accessTokens`](/docs/ref/object/cache#accesstokens): resolved access tokens, reducing revalidation during authentication. Default `"10mb"`.
 - [`httpAuth`](/docs/ref/object/cache#httpauth): short-lived state for HTTP authentication. Default `"1mb"`.
-
-<!-- review: The previous docs listed a dedicated `cache.permission.size` for role / permission mappings (default 5 MB). The current Cache singleton exposes `roles` (5 MB default) but no separate `permissions` entry. Confirm that role and permission caching is now subsumed under `roles`, and whether an equivalent permissions-cache field still exists. -->
 
 ### DNS caches
 

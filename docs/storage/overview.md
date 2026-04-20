@@ -32,12 +32,8 @@ This feature is available exclusively in the [Enterprise Edition](/docs/server/e
 
 ### Configuration
 
-The retention period is controlled by [`archiveDeletedItemsFor`](/docs/ref/object/data-retention#archivedeleteditemsfor) on the [DataRetention](/docs/ref/object/data-retention) object. The value is a duration, for example `"30d"` to retain deleted emails for thirty days before they are permanently removed. Leaving the field unset disables archiving, in which case deleted items are removed immediately.
-
-<!-- review: The previous docs described a single on/off-or-duration setting. In the new model, disabling archiving is expressed by leaving `archiveDeletedItemsFor` unset. Confirm this is the intended mapping and that no separate enable flag exists. -->
+The retention period is controlled by [`archiveDeletedItemsFor`](/docs/ref/object/data-retention#archivedeleteditemsfor) on the [DataRetention](/docs/ref/object/data-retention) object. The value is a duration, for example `"30d"` to retain deleted emails for thirty days before they are permanently removed. Leaving the field unset disables archiving, in which case deleted items are removed immediately. There is no separate enable flag; the presence or absence of a duration acts as the switch.
 
 ### Recovery
 
-Administrators can restore archived emails from the [WebUI](/docs/management/webui/overview), which surfaces archived items through a dedicated recovery view. The same operation is available over the JMAP API for automation through the [ArchivedItem](/docs/ref/object/archived-item) object and the [CLI](/docs/management/cli/overview).
-
-<!-- review: Verify which WebUI page hosts the recovery workflow and whether restoring an ArchivedItem uses a standard `x:ArchivedItem/set` patch or a dedicated Action variant. If an Action is involved, link to it here. -->
+Archived items are stored under individual accounts, so recovery is available to both administrators (over every account they manage) and end users (over their own account). The [WebUI](/docs/management/webui/overview) exposes archived items in the account view, from which they can be restored back into the mailbox. The same operation is available over the JMAP API as an `x:ArchivedItem/set` call on the [ArchivedItem](/docs/ref/object/archived-item) object and through the [CLI](/docs/management/cli/overview).

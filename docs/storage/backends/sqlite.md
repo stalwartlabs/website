@@ -14,4 +14,3 @@ The SQLite backend is selected by choosing the `Sqlite` variant on the [DataStor
 - [`poolMaxConnections`](/docs/ref/object/data-store#poolmaxconnections): maximum number of concurrent database connections. Default: `10`.
 - [`poolWorkers`](/docs/ref/object/data-store#poolworkers): number of worker threads dedicated to blocking database operations. Defaults to the number of CPU cores available on the host.
 
-<!-- review: The previous configuration defined directory queries (`name`, `members`, `recipients`, `emails`) under `store.<name>.query` when SQLite was used as an authentication directory. Locate the equivalent configuration surface in the new model (likely on the Directory object with a SQL variant) and link to it here. -->

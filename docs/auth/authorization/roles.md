@@ -14,7 +14,7 @@ A Role object carries the following fields:
 - [`enabledPermissions`](/docs/ref/object/role#enabledpermissions): permissions explicitly granted by the role.
 - [`disabledPermissions`](/docs/ref/object/role#disabledpermissions): permissions explicitly denied by the role. Disabled permissions take precedence over inherited permissions.
 
-<!-- review: The previous docs described a `name` field and a `members` field listing principals that use the role. The current Role object exposes only description, memberTenantId, roleIds, enabledPermissions, and disabledPermissions. Confirm whether the role name is now implicit (the id) and whether membership is tracked on the member principals (e.g. via Account.roles) rather than on the role itself. -->
+The role's display label in listings is drawn from [`description`](/docs/ref/object/role#description); there is no separate `name` field. Membership is not stored on the Role object itself, it is tracked on the principals that reference the role, through the `roles` field on [Account](/docs/ref/object/account) (including its `Group` variant) and on [Tenant](/docs/ref/object/tenant).
 
 Assigning a role to an account is done from the target principal. On an Account object (found in the WebUI under <!-- breadcrumb:Account --><!-- /breadcrumb:Account -->), the [`roles`](/docs/ref/object/account#roles) field selects either a built-in role or a `Custom` role set that references one or more Role ids. Groups and tenants expose their own `roles` field of the same shape.
 

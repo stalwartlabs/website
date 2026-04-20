@@ -34,16 +34,14 @@ Each [DkimSignature](/docs/ref/object/dkim-signature) carries a [`stage`](/docs/
 When the server determines that a rotation is due for a given algorithm, the sequence is:
 
 1. A new DkimSignature is created in the **pending** stage and the corresponding public key is pushed to the DnsServer as part of the domain's managed records.
-2. Once the DNS record has propagated (subject to the [DnsServer](/docs/ref/object/dns-server) propagation settings), the new key transitions to **active** and the previous active key transitions to **retiring**. Signing switches to the new selector at this point.
+2. The DnsServer polls until propagation of the new selector is confirmed; the transition from **pending** to **active** is driven by that confirmation, not by a fixed wall-clock delay. Once propagation is observed, the new key transitions to **active** and the previous active key transitions to **retiring**. Signing switches to the new selector at this point.
 3. After [`retireAfter`](/docs/ref/object/domain#retireafter) elapses, the retiring key transitions to **retired** and the DNS record for its selector is removed.
 4. After [`deleteAfter`](/docs/ref/object/domain#deleteafter) further elapses, the retired DkimSignature is deleted from the store.
 
 The schedule for the next rotation is rearmed from [`rotateAfter`](/docs/ref/object/domain#rotateafter) relative to the activation of the new key.
 
-<!-- review: Confirm the exact trigger that advances a pending key to active. It is likely tied to the DnsServer's propagation poll succeeding for the new selector, rather than a simple wall-clock delay; the docs should reflect whichever is authoritative. -->
-
 ## Triggering a rotation manually
 
-Rotation runs automatically on the schedule above, but it can also be driven on demand. Rotation is performed by the DKIM management task, which is the `DkimManagement` variant of the [Task](/docs/ref/object/task) object. Triggering the task for a domain evaluates the current keys against the configured schedule and advances any transitions that are due (generation, cutover, retirement, and deletion), regardless of whether the scheduled moment has been reached. This is the intended mechanism for emergency rotations, for example when a key is suspected to be compromised.
+Rotation runs automatically on the schedule above, but it can also be driven on demand. Rotation is performed by the DKIM management task, which is the `DkimManagement` variant of the [Task](/docs/ref/object/task) object. Triggering the task for a domain evaluates the current keys against the configured schedule and advances any transition that is due (generation, cutover, retirement, and deletion).
 
-<!-- review: Confirm whether triggering a DkimManagement task forces a fresh key generation even when `rotateAfter` has not elapsed, or whether an emergency rotation requires a separate action (for example, deleting the current active DkimSignature and then triggering the task). -->
+Running the task on its own does not force a fresh key to be generated before [`rotateAfter`](/docs/ref/object/domain#rotateafter) has elapsed. To force an emergency rotation (for example, when a key is suspected to be compromised), first set [`nextRotationAt`](/docs/ref/object/domain#nextrotationat) on the Domain to the current time, then trigger the `DkimManagement` task. On that run the task sees that a rotation is due and generates the replacement key immediately.

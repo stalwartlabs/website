@@ -36,5 +36,4 @@ The [`passwordDefaultExpiry`](/docs/ref/object/authentication#passworddefaultexp
 
 The related fields [`maxAppPasswords`](/docs/ref/object/authentication#maxappasswords) and [`maxApiKeys`](/docs/ref/object/authentication#maxapikeys) cap the number of [application passwords](/docs/auth/authentication/app-password) and [API keys](/docs/auth/authentication/api-key) each account may hold; these are separate credentials from the account password and are covered on their own pages.
 
-<!-- review: The v0.16 Authentication singleton exposes passwordMinLength, passwordMaxLength, passwordMinStrength, and passwordDefaultExpiry. It does not appear to carry a password-history or reuse-prevention field, nor an explicit rotation schedule beyond `passwordDefaultExpiry`. Verify that these are the only policy fields currently implemented and that no character-class or history settings have been added since the schema was captured. -->
-
+These are the only password policy controls offered by the internal directory. Deployments that require richer policies such as password history, reuse prevention, or character-class rules should delegate authentication to an external identity provider over [OIDC](/docs/auth/backend/oidc) and enforce those policies there.
