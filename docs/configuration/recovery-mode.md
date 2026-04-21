@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # Recovery mode
 
-Recovery mode is intended for situations where a running deployment requires maintenance and the normal services must not be active. Typical reasons include a misconfigured external directory that is preventing any administrator from signing in, a faulty setting that is causing the MTA to loop, or a pre-deployment provisioning step where a large batch of objects must be loaded before any mail traffic reaches the server.
+Recovery mode is intended for situations where a running deployment requires maintenance and the normal services must not be active. Typical reasons include a misconfigured external directory that is preventing any administrator from signing in, a faulty setting that is causing the MTA to loop, a pre-deployment provisioning step where a large batch of objects must be loaded before any mail traffic reaches the server, or a freshly [bootstrapped](/docs/configuration/bootstrap-mode) installation where HTTPS on the configured hostname is not yet reachable and the WebUI must remain available over HTTP to finish the setup.
 
 In this mode Stalwart starts with every background service disabled. The MTA does not accept or process messages, task workers do not run, cluster services do not join the coordinator, and scheduled jobs remain paused. The only active listener is the HTTP management endpoint on port `8080` (configurable with `STALWART_RECOVERY_MODE_PORT`), which serves the WebUI and the full JMAP management API. From there, administrators can use the WebUI or the [CLI](/docs/management/cli/overview) to inspect the configuration, correct the problem, and then restart the server without the recovery flag to return it to normal operation.
 

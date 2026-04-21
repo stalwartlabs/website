@@ -17,7 +17,8 @@ The following variables control the [recovery](/docs/configuration/recovery-mode
 
 ## Clustering
 
-When Stalwart runs as part of a cluster, two additional variables influence how a given node participates. Both are covered in detail in the clustering documentation and are listed here for completeness, so operators know which values the binary reads from the environment:
+When Stalwart runs as part of a cluster, additional variables influence how a given node participates. All are covered in detail in the clustering documentation and are listed here for completeness, so operators know which values the binary reads from the environment:
 
+- **`STALWART_HOSTNAME`**: overrides the hostname obtained from the operating system. The resulting value is used to acquire the [node id](/docs/cluster/configuration/node-id) lease, so setting this variable is the recommended way to assign a distinct identity to a node whose system hostname cannot be changed or is not unique across the cluster.
 - **`STALWART_ROLE`**: selects which [cluster role](/docs/cluster/configuration/roles) the node takes on, determining which tasks and listeners are active on that machine.
 - **`STALWART_PUSH_SHARD`**: assigns the node to a specific push notification shard.

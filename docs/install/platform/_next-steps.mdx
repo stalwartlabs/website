@@ -1,6 +1,18 @@
-### Next steps
+### Continue setup
 
-The server comes back up in normal operation. If the internal directory was chosen during the wizard, sign in at `https://<hostname>/admin` using the administrator credentials printed on the final wizard screen. If an external directory was chosen, follow the promotion procedure described under [Setup complete](#setup-complete) above.
+After the restart, the admin WebUI moves from the bootstrap URL at `http://<host>:8080/admin` to its final URL at `https://<hostname>/admin`, where `<hostname>` is the value entered in Step 1 of the wizard. Open that URL in the browser and sign in again to resume configuration: with the internal directory, use the administrator credentials printed on the final wizard screen; with an external directory, follow the promotion procedure described under [Setup complete](#setup-complete) above. Attempting to continue over HTTP on port `8080` after the restart will fail at the sign-in step.
+
+The protocol change is deliberate. Once the server hostname is known, Stalwart issues OAuth tokens bound to `https://<hostname>` and refuses to complete sign-in over plain HTTP. During bootstrap, when no hostname had been configured yet, a path-relative issuer was used, which is why plain HTTP worked up to this point.
+
+When *automatically obtain TLS certificate* was enabled in Step 1 of the wizard, the certificate from Let's Encrypt can take a minute or two to be issued after the restart. While the request is still in flight, the browser may show a warning because the server is presenting a self-signed fallback certificate. Accepting that warning for the initial sign-in is safe; the warning disappears once the ACME certificate has been installed and the page is reloaded. When the certificate option was disabled, the self-signed fallback remains in place until a certificate is uploaded or a reverse proxy terminates TLS in front of the server.
+
+:::tip HTTPS not yet reachable?
+
+If the configured hostname does not yet resolve in DNS, port `443` is not reachable from the browser, or the deployment cannot present a trusted certificate for any other reason, the server can be restarted in [recovery mode](/docs/configuration/recovery-mode) to keep the WebUI available on HTTP port `8080` with the path-relative issuer. This is intended as a temporary measure while the TLS and DNS side of the deployment is completed; once HTTPS on the configured hostname is reachable, the server should be restarted without the recovery flag to return to normal OAuth operation.
+
+:::
+
+### Next steps
 
 With the internal directory, additional user accounts can be added through the WebUI's Account Manager, or directly by creating [Account](/docs/ref/object/account) objects through the WebUI administration console or the [CLI](/docs/management/cli/overview). See [Individual accounts](/docs/auth/principals/individual) for the full field reference. With an external directory (OIDC, LDAP, or SQL), accounts continue to be provisioned and authenticated through the identity provider; any Stalwart-specific overrides are set on the local Account record that is created on first sign-in.
 
