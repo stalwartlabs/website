@@ -11,6 +11,8 @@ Software systems, especially large distributed ones, work much the same way. Rar
 
 Stalwart v0.15 is very much a release in this spirit. It does not introduce a long list of headline features. Instead, it is the result of revisiting core subsystems—spam filtering, search, storage, and data access—and making many targeted improvements that, together, have a significant impact on performance, reliability, and usability.
 
+<!-- truncate -->
+
 ## Rethinking Spam Classification
 
 Stalwart v0.14 (and earlier) included a spam classifier which was a direct port of the classifier used by Rspamd. This classifier is grounded in Bayesian theory and uses more advanced methods to combine probabilities, including sparse bigrams (OSB) and the inverse chi-square distribution. This approach is well understood and robust, particularly when training data is limited. It produces reasonable results quickly and has a long track record in production systems.

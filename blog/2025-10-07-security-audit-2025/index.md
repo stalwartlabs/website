@@ -7,6 +7,8 @@ tags: [security, audit, penetration, test]
 
 At Stalwart Labs, security is at the heart of everything we build. As part of our ongoing commitment to delivering a trustworthy email and collaboration server, we recently completed our **second independent security audit**, conducted by [Radically Open Security](https://radicallyopensecurity.com). Our previous audit took place exactly [two years ago](/blog/security-audit), in 2023 — and with significant changes to our codebase since then, a fresh and thorough assessment was essential.
 
+<!-- truncate -->
+
 ## Comprehensive Assessment
 
 The audit, conducted between **September 9 and September 25, 2025**, focused on version **v0.13.2** of Stalwart mail and collaboration server. The goal was clear: rigorously evaluate the security posture of the platform, identify potential vulnerabilities, and ensure our defenses are as strong as possible.

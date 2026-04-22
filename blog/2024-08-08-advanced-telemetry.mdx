@@ -7,6 +7,8 @@ tags: [telemetry, metrics, opentelemetry, prometheus, stalwart, mail, server]
 
 We are thrilled to announce the release of [Stalwart Mail Server](https://github.com/stalwartlabs/mail-server) version 0.9.1, which comes packed with significant enhancements to our telemetry capabilities. This release marks a major milestone in our ongoing efforts to provide robust and efficient monitoring and logging solutions, ensuring our users can achieve optimal server performance and reliability.
 
+<!-- truncate -->
+
 ### Enhanced Tracing
 
 In previous versions of Stalwart, tracing and logging provided valuable insights but lacked the detail and comprehensiveness needed for thorough monitoring. With version 0.9.1, we have completely rewritten the [tracing and logging](/docs/telemetry/tracing/overview) layer, resulting in a faster and more detailed system. The new implementation leverages a lock-free data structure, enabling Stalwart to record thousands of events per second without impacting server performance. This major upgrade ensures that every significant event is captured, providing a comprehensive view of the server's operations.

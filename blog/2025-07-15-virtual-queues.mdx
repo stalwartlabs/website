@@ -9,6 +9,8 @@ At Stalwart Labs, we're constantly working to evolve and improve our software ba
 
 This update is the result of valuable input from operators managing large-scale mail infrastructure. Many reported a recurring issue: when message volumes spiked, **low-priority traffic**, such as **DMARC aggregate reports** and **Delivery Status Notifications (DSNs)**, would often compete with or delay the delivery of **legitimate user mail**. Since all messages were processed through a **single delivery queue**, these traffic types were treated equally, regardless of urgency or purpose.
 
+<!-- truncate -->
+
 ## Smarter Queueing with Virtual Queues
 
 To solve this, we've introduced [virtual queues](/docs/mta/outbound/queue)—a powerful feature that allows administrators to define **separate, independently managed delivery queues** for different categories of mail.

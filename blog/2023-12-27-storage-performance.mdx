@@ -7,6 +7,8 @@ tags: [storage, performance, flexibility]
 
 We are excited to announce the release of Stalwart Mail Server v0.5.0. As we approach the end of the year, this significant update marks a major advancement in our journey to provide a robust, efficient, and versatile mail server solution. This latest version incorporates a range of performance enhancements, storage layer improvements, and new features, designed to elevate your email server experience.
 
+<!-- truncate -->
+
 ### Performance Enhancements
 
 In the realm of performance, Stalwart v0.5.0 introduces multiple improvements in how messages are handled and stored. Messages are now parsed only once, with their offsets stored in the database. This approach eliminates the need for parsing messages on every `FETCH` request, significantly boosting server efficiency and response time. Moreover, the server now performs full-text indexing in the background, seamlessly enhancing search capabilities. We have also optimized our database access functions, ensuring smoother and faster interactions with the underlying data store.

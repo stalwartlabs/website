@@ -7,6 +7,8 @@ tags: [smtp, smuggling, email, spoofing]
 
 In the world of email security, a recent concern has arisen known as [SMTP Smuggling](https://sec-consult.com/blog/detail/smtp-smuggling-spoofing-e-mails-worldwide/), a vulnerability that can be exploited to spoof emails. This blog post will explain what SMTP smuggling is and how [Stalwart Mail Server](https://github.com/stalwartlabs/mail-server) is designed to be immune to this vulnerability. We'll also discuss a new feature we've implemented to protect other servers that might be vulnerable.
 
+<!-- truncate -->
+
 ### Understanding SMTP Smuggling
 
 SMTP smuggling is an exploitation technique that manipulates SMTP conversations to send spoofed emails from arbitrary addresses. It leverages interpretation differences in the SMTP protocol to bypass security checks like SPF alignment. The technique was identified as effective against multiple email providers and could have significant implications for email security.

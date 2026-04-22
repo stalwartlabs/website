@@ -12,6 +12,12 @@ If the configured hostname does not yet resolve in DNS, port `443` is not reacha
 
 :::
 
+:::tip Reverse-proxy deployments
+
+When Stalwart sits behind a reverse proxy (NGINX, Traefik, Caddy, HAProxy, or similar), the smoothest path through the wizard and the first sign-in is to **bypass the proxy temporarily**. From a host on the same network, point a browser at `http://<stalwart-host>:8080/admin` directly to complete the wizard, then sign in once at `https://<stalwart-host>/admin` (accepting any self-signed certificate warning) before restoring the proxy configuration. This avoids the class of issues that happen when the proxy's hostname, port, or TLS handling does not yet match what the freshly-configured server publishes in its OAuth and JMAP discovery documents. The full reverse-proxy model, including how the published URLs are composed and the [`STALWART_HTTPS_PORT`](/docs/configuration/environment-variables#public-urls) variable for non-standard public ports, is documented under [Reverse proxy › Overview](/docs/server/reverse-proxy/overview).
+
+:::
+
 ### Next steps
 
 With the internal directory, additional user accounts can be added through the WebUI's Account Manager, or directly by creating [Account](/docs/ref/object/account) objects through the WebUI administration console or the [CLI](/docs/management/cli/overview). See [Individual accounts](/docs/auth/principals/individual) for the full field reference. With an external directory (OIDC, LDAP, or SQL), accounts continue to be provisioned and authenticated through the identity provider; any Stalwart-specific overrides are set on the local Account record that is created on first sign-in.

@@ -7,6 +7,8 @@ tags: [distributed, smtp, mail, server]
 
 This Valentine's Day, we're not just celebrating love and companionship; we're also celebrating the groundbreaking advancements in the [Stalwart Mail Server](https://github.com/stalwartlabs/mail-server) with the release of version `0.6.0`. In a world where reliability and flexibility in mail server management are more critical than ever, Stalwart Mail Server takes a significant leap forward with the introduction of distributed SMTP queues and the integration of expressions in configuration files. Let's delve into how these features transform your mail server experience, making it more robust, efficient, and customizable than ever before.
 
+<!-- truncate -->
+
 ### Distributed SMTP Queues: A Heartbeat of Reliability
 
 The latest iteration of Stalwart Mail Server introduces a feature that's set to be the cornerstone of reliability and fault tolerance—distributed SMTP [queues](/docs/mta/outbound/queue). Gone are the days when your SMTP queue was confined to the local hard drive, a vulnerability that could lead to data loss or downtime in the event of a server crash. With version `0.6.0`, Stalwart Mail Server stores your SMTP queues in the database, a move that not only enhances fault tolerance but also paves the way for queue load distribution across multiple servers in a cluster.

@@ -7,6 +7,8 @@ tags: [sieve, interpreter, rust]
 
 Sieve is a language that can be used to create filters for electronic mail. It is not tied to any particular operating system or mail architecture. It requires the use of RFC 822-compliant messages, but otherwise should generalize to other systems that meet these criteria.
 
+<!-- truncate -->
+
 Today, the [sieve-rs crate](https://crates.io/crates/sieve-rs) was released which is an interpreter for Sieve scripts written in Rust. The interpreter includes support for [all existing Sieve extensions](https://www.iana.org/assignments/sieve-extensions/sieve-extensions.xhtml).
 
 Currently the interpreter is available as a standalone library but it will be soon added to [Stalwart JMAP](https://github.com/stalwartlabs/jmap-server) (including JMAP Sieve support) and [Stalwart IMAP](https://github.com/stalwartlabs/imap-server) (including ManageSieve support).

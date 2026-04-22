@@ -7,6 +7,8 @@ tags: [spam, filter, email, security, stalwart, mail, server]
 
 As we step into 2025, we're excited to share some significant enhancements to [Stalwart Mail Server](https://github.com/stalwartlabs/mail-server) version `0.11.0`, starting with a complete overhaul of its built-in spam filter. These changes bring dramatic improvements in speed, ease of use, and flexibility while addressing feedback from our community. Here’s a closer look at what’s new.
 
+<!-- truncate -->
+
 ## A Faster, Smarter Spam Filter
 
 In earlier versions of Stalwart Mail Server, the spam filter was implemented as a Sieve script. This design choice was inspired by platforms like Rspamd, which use scripting languages like Lua to allow customizations. However, over time, we identified two key challenges with this approach. First, because it was an interpreted script, the spam filter’s performance was slightly slower than we’d like. Second, many users found it complicated to update the script when adding custom rules or configuring custom DNSBL (Domain Name System Blocklist) servers.

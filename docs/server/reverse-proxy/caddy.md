@@ -8,6 +8,8 @@ sidebar_position: 3
 
 Stalwart can sit behind Caddy for HTTP traffic. Caddy handles HTTPS termination and certificate management, then forwards requests to Stalwart.
 
+The example below forwards to Stalwart's HTTPS listener with Proxy Protocol v2, but a plain HTTP-upstream pattern (Caddy forwarding plain HTTP to Stalwart's port `8080`) works equally well and produces the same OAuth, OIDC, and JMAP discovery responses. See [How discovery URLs are composed](/docs/server/reverse-proxy/overview#how-discovery-urls-are-composed) for the model that drives those responses, and the [`STALWART_HTTPS_PORT`](/docs/configuration/environment-variables#public-urls) variable for deployments where Caddy listens on a port other than `443`.
+
 ## Note on Layer 4 support
 
 Caddy does not natively forward raw TCP streams, so it cannot forward the mail ports (SMTP, IMAP, POP3, ManageSieve) or preserve the [Proxy Protocol](/docs/server/reverse-proxy/proxy-protocol) on them. To carry client IPs into Stalwart's mail listeners, either put [HAProxy](/docs/server/reverse-proxy/haproxy) or [NGINX](/docs/server/reverse-proxy/nginx) in front of Caddy, or build a Caddy binary that includes the community-maintained `caddy-l4` plugin. The plugin adds layer-4 forwarding and Proxy Protocol emission to Caddy.

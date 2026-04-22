@@ -7,6 +7,8 @@ tags: [security, audit, penetration, test]
 
 We are thrilled to announce that **Stalwart Mail Server** has undergone a comprehensive security audit conducted by **Radically Open Security**. As a part of their assessment, a crystal-box penetration test was performed to ensure the robustness and security of the mail server.
 
+<!-- truncate -->
+
 ### How Was The Security Audit Conducted?
 
 - **Automated Scanning**: Radically Open Security employs state-of-the-art automated tools and scanners to root out common vulnerabilities, coding flaws, or misconfigurations within the codebase. These tools are invaluable in identifying potential problem areas that might necessitate a more in-depth manual analysis. They also confirm that the code adheres strictly to secure coding practices.

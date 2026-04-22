@@ -7,6 +7,8 @@ tags: [sieve, jmap, server]
 
 Sieve (RFC5228) is a scripting language for filtering email messages at or around the time of final delivery. It is suitable for running on a mail server where users may not be allowed to execute arbitrary programs as it has no user-controlled loops or the ability to run external programs. Sieve is a data-driven programming language, similar to earlier email filtering languages such as procmail and maildrop, and earlier line-oriented languages such as sed and AWK: it specifies conditions to match and actions to take on matching.
 
+<!-- truncate -->
+
 Today [Stalwart JMAP v0.2](https://github.com/stalwartlabs/jmap-server/) was released including support for the for [JMAP for Sieve Scripts](https://www.ietf.org/archive/id/draft-ietf-jmap-sieve-12.html) draft. Additionally, [ManageSieve](https://datatracker.ietf.org/doc/html/rfc5804) support was added to [Stalwart IMAP v0.2](https://github.com/stalwartlabs/imap-server/).
 
 Stalwart JMAP safely runs Sieve scripts in a controlled sandbox that ensures that programs do not exceed or abuse their allocated system resources.

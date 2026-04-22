@@ -1,6 +1,98 @@
 // @ts-check
 
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { themes as prismThemes } from 'prism-react-renderer';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+function parseFrontmatter(text) {
+  const m = text.match(/^---\n([\s\S]*?)\n---/);
+  if (!m) return {};
+  const out = {};
+  for (const line of m[1].split('\n')) {
+    const kv = line.match(/^([A-Za-z_][A-Za-z0-9_]*):\s*(.*)$/);
+    if (!kv) continue;
+    let v = kv[2].trim();
+    if (/^-?\d+$/.test(v)) v = Number(v);
+    else v = v.replace(/^["'](.*)["']$/, '$1');
+    out[kv[1]] = v;
+  }
+  return out;
+}
+
+function readJsonSafe(p) {
+  try { return JSON.parse(fs.readFileSync(p, 'utf-8')); }
+  catch { return null; }
+}
+
+function listDirEntries(dir) {
+  const out = [];
+  for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+    if (e.isFile() && /\.mdx?$/.test(e.name)) {
+      const name = e.name.replace(/\.mdx?$/, '');
+      if (name.startsWith('_')) continue;
+      const fm = parseFrontmatter(fs.readFileSync(path.join(dir, e.name), 'utf-8'));
+      out.push({
+        kind: 'doc',
+        name,
+        position: typeof fm.sidebar_position === 'number'
+          ? fm.sidebar_position
+          : Number.POSITIVE_INFINITY,
+      });
+    } else if (e.isDirectory()) {
+      const cat = readJsonSafe(path.join(dir, e.name, '_category_.json'));
+      out.push({
+        kind: 'dir',
+        name: e.name,
+        position: cat && typeof cat.position === 'number'
+          ? cat.position
+          : Number.POSITIVE_INFINITY,
+      });
+    }
+  }
+  out.sort((a, b) => (a.position - b.position) || a.name.localeCompare(b.name));
+  return out;
+}
+
+function firstDocPath(dir) {
+  for (const e of listDirEntries(dir)) {
+    if (e.kind === 'doc') return e.name;
+    const sub = firstDocPath(path.join(dir, e.name));
+    if (sub) return `${e.name}/${sub}`;
+  }
+  return null;
+}
+
+function hasDirIndex(dir) {
+  return fs.readdirSync(dir).some(n => /^(index|readme)\.mdx?$/i.test(n));
+}
+
+function buildDirRedirects(rootDir, urlPrefix) {
+  const out = [];
+  function walk(dir, urlDir) {
+    for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+      if (!e.isDirectory()) continue;
+      const sub = path.join(dir, e.name);
+      const subUrl = `${urlDir}/${e.name}`;
+      if (!hasDirIndex(sub)) {
+        const first = firstDocPath(sub);
+        if (first) out.push({ from: subUrl, to: `${subUrl}/${first}` });
+      }
+      walk(sub, subUrl);
+    }
+  }
+  walk(rootDir, urlPrefix);
+  return out;
+}
+
+const docsRoot = path.join(__dirname, 'docs');
+const v015Root = path.join(__dirname, 'versioned_docs', 'version-0.15');
+const directoryRedirects = [
+  ...buildDirRedirects(docsRoot, '/docs'),
+  ...(fs.existsSync(v015Root) ? buildDirRedirects(v015Root, '/docs/0.15') : []),
+];
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -32,7 +124,13 @@ const config = {
     },
   },
   themes: ['@docusaurus/theme-mermaid'],
-  plugins: ['@docsearch/docusaurus-adapter'],
+  plugins: [
+    '@docsearch/docusaurus-adapter',
+    [
+      '@docusaurus/plugin-client-redirects',
+      { redirects: directoryRedirects },
+    ],
+  ],
 
   presets: [
     [
