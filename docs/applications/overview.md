@@ -32,6 +32,14 @@ When [access control](/docs/http/access-control) rules are in force, requests to
 
 An Application is installed by creating an [Application](/docs/ref/object/application) record with the bundle's download URL in [`resourceUrl`](/docs/ref/object/application#resourceurl), the desired mount paths in [`urlPrefix`](/docs/ref/object/application#urlprefix), and a short [`description`](/docs/ref/object/application#description). The server then fetches the archive on the schedule described on the [Updates](/docs/applications/update) page, unpacks it into the working directory, and begins serving the files. The same workflow is exposed through the WebUI, through `stalwart-cli`, and directly over the JMAP API on the `x:Application/set` method.
 
+## Outbound network requirement
+
+Each Application's bundle is fetched over HTTPS from the [`resourceUrl`](/docs/ref/object/application#resourceurl) configured on its record, so outbound HTTPS connectivity from the Stalwart host to that URL is a hard requirement for the Application to be served. When the very first download of an Application fails, no previously installed bundle exists to fall back to and HTTP requests against the Application's mount paths return `404 Not Found` until the next refresh succeeds.
+
+For deployments behind a restrictive egress firewall, the firewall must allow HTTPS from the Stalwart host to whatever hosts serve each configured `resourceUrl`. When outbound internet access is not permitted at all, the bundle can be staged on an internal HTTPS server and the [`resourceUrl`](/docs/ref/object/application#resourceurl) field updated to point at the internal location, after which the server refreshes from there instead.
+
+The bundle URL of the built-in WebUI and the specific symptom that misconfiguring this requirement produces are documented under the [WebUI overview](/docs/management/webui/overview#outbound-network-requirement).
+
 ## Bundle format
 
 An Application bundle is a `.zip` archive that must contain an `index.html` at its root. When the archive is unpacked, the server rewrites the `<base href="/">` tag in `index.html` to match the mount path the bundle is served from, so the same archive can be mounted at `/admin`, `/account`, or any other prefix without being repackaged. Assets referenced by relative URLs inside the bundle therefore resolve correctly regardless of the mount path.

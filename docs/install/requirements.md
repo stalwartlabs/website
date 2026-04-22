@@ -24,3 +24,13 @@ To estimate CPU requirements for larger or more dynamic environments, consider t
 
 Monitoring real-world server performance after deployment is also advisable, as it allows for fine-tuning and scaling of resources to meet actual demand, rather than estimated usage.
 
+## Outbound network requirements
+
+A few server functions reach out to the public internet over HTTPS at startup or on schedule. Deployments behind a restrictive egress firewall must allow these connections, otherwise the corresponding feature will be unavailable:
+
+- **WebUI and other hosted [Applications](/docs/applications/overview)**: the server downloads the WebUI bundle from `https://github.com/stalwartlabs/webui/releases/latest/` (and any additional Application bundles from their respective [`resourceUrl`](/docs/ref/object/application#resourceurl)). When the first download fails, the `/admin` and `/account` paths return `404 Not Found` because no bundle has been unpacked locally yet. See the WebUI's [Outbound network requirement](/docs/management/webui/overview#outbound-network-requirement) section for the WebUI-specific symptom and fix, and the general [outbound network requirement](/docs/applications/overview#outbound-network-requirement) note for any additional hosted Applications.
+- **ACME (Let's Encrypt)**: TLS certificate issuance contacts the configured ACME directory, by default `https://acme-v02.api.letsencrypt.org/directory`. Without it the server cannot obtain or renew certificates automatically.
+- **Public DNS**: resolving MX records, SPF/DKIM/DMARC records, and similar lookups requires outbound DNS (UDP and TCP on port 53, or DNS-over-HTTPS where configured) to the resolver of the host's choice.
+
+In environments where outbound HTTPS to GitHub is not permitted, the WebUI bundle can be staged on an internal HTTPS server and the [Application](/docs/ref/object/application) record updated to point at that internal `resourceUrl` instead.
+
