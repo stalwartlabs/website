@@ -6,13 +6,7 @@ http://<hostname>:8080/admin
 
 Replace `<hostname>` with the hostname or IP address of the machine running Stalwart. On the machine itself, `http://127.0.0.1:8080/admin` works for local access. Sign in using `admin` as the username and the temporary password retrieved in the previous step; the setup wizard appears automatically.
 
-:::tip Advanced deployments
-
-Deployments that prefer command-line or infrastructure-as-code workflows can skip the wizard entirely and drive the same configuration from the CLI; see [bootstrap mode](/docs/configuration/bootstrap-mode) and [declarative deployments](/docs/configuration/declarative-deployments).
-
-:::
-
-The wizard presents five screens plus a final confirmation. Every field has a sensible default, so most installations only need to enter their hostname and domain and click through the rest.
+The wizard presents five screens plus a final confirmation. Every field has a sensible default, so most installations only need to enter their hostname and domain and click through the rest. Deployments that prefer to skip the wizard entirely and drive the same configuration from the CLI should consult [Non-interactive setup](#non-interactive-setup) under *Additional topics* below.
 
 ### Step 1 of 5: Server identity
 
@@ -59,7 +53,7 @@ Stalwart can source user accounts from its own internal directory or delegate au
 * **Directory type:**
     > Leave set to *Use the Internal Directory* for the simplest installation: accounts are created and managed through the WebUI, and the wizard generates an administrator credential on the final screen. Select an external directory (OIDC, LDAP, or SQL) for single sign-on or for integration with an existing identity system.
 
-The choice here affects the final screen. With the internal directory, a generated administrator credential is printed when the wizard finishes. With an external directory, no credential is generated; the administrator is provisioned after the first sign-in (see [Setup complete](#setup-complete) below).
+The choice here affects the final screen. With the internal directory, a generated administrator credential is printed when the wizard finishes. With an external directory, no credential is generated; the administrator must be promoted after the first sign-in (see [External directory promotion](#external-directory-promotion) below for the procedure).
 
 ### Step 4 of 5: Logging
 
@@ -86,16 +80,9 @@ The DNS records a mail server needs (SPF, DKIM, DMARC, MX, MTA-STS, autoconfig, 
 
 When manual management is kept, Stalwart still generates the full set of records that must be published and makes them available as a ready-to-import zone file.
 
-From the WebUI, open the Domain list (found in the WebUI under <!-- breadcrumb:Domain --><svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><rect width="20" height="14" x="2" y="3" rx="2" /><line x1="8" x2="16" y1="21" y2="21" /><line x1="12" x2="12" y1="17" y2="21" /></svg> Management › <svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" /></svg> Domains › Domains<!-- /breadcrumb:Domain -->), click the three-dot menu next to the relevant domain, and select **View DNS Zone file**.
+From the WebUI, open the Domain list (found in the WebUI under <!-- breadcrumb:Domain --><svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><rect width="20" height="14" x="2" y="3" rx="2" /><line x1="8" x2="16" y1="21" y2="21" /><line x1="12" x2="12" y1="17" y2="21" /></svg> Management › <svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" /></svg> Domains › Domains<!-- /breadcrumb:Domain -->), click the three-dot menu next to the relevant domain, and select **View DNS Zone file**. The returned zone file can be pasted into the DNS provider's control panel or imported as a zone template where the provider supports it. See [Setting up DNS](/docs/install/dns) for a per-record explanation of what each entry does.
 
-From the command line, list the configured domains and read the [`dnsZoneFile`](/docs/ref/object/domain#dnszonefile) field on the desired one:
-
-```bash
-$ stalwart-cli query domain
-$ stalwart-cli get domain <id> --fields dnsZoneFile
-```
-
-The returned zone file can be pasted into the DNS provider's control panel or imported as a zone template where the provider supports it. See [Setting up DNS](/docs/install/dns) for a per-record explanation of what each entry does.
+The same records can also be retrieved from the command line; see [Retrieving DNS records via CLI](#retrieving-dns-records-via-cli) under *Additional topics* below.
 
 ### Setup complete
 
@@ -110,11 +97,5 @@ onMjJfFMO83tQcCX
 
 Write both down. The password is shown only on this screen and cannot be retrieved from the server logs afterwards. The credentials are used to sign in to the WebUI once the server has been restarted (see the platform-specific Restart section below).
 
-**External directory (OIDC / LDAP / SQL).** No administrator credential is generated, because an account from the external directory does not exist locally until it has authenticated at least once. The administrator needs to be promoted manually after the first sign-in using the existing recovery admin credentials. The procedure, carried out after the platform-specific restart described below, is:
-
-1. Keep `STALWART_RECOVERY_ADMIN=<username>:<password>` set in the service environment. The variable is honoured while the server is running normally, so this does not require recovery mode.
-2. Have the account that will become the administrator sign in once through the WebUI. Any successful authentication against the directory provisions the account locally in Stalwart.
-3. Sign in as the recovery administrator in a separate browser session and assign the appropriate administrator role to the newly provisioned account, either through the WebUI or through the CLI.
-4. Sign in as the promoted account to confirm that the assignment took effect.
-5. Remove `STALWART_RECOVERY_ADMIN` from the service environment and restart the server so that the backdoor credential is no longer active.
+**External directory (OIDC / LDAP / SQL).** No administrator credential is generated here, because an account from the external directory does not exist locally until it has authenticated at least once. The administrator must be promoted manually after the first sign-in; see [External directory promotion](#external-directory-promotion) under *Additional topics* below for the procedure.
 

@@ -31,7 +31,7 @@ This object can be configured from the [WebUI](/docs/management/webui/overview) 
 
 ##### `hostname`
 
-> Type: <code>HostName</code> · required
+> Type: <code>String</code> · required
 >
 > Hostname or IP address of the server where the Milter filter is running
 
@@ -180,7 +180,7 @@ curl -X POST https://mail.example.com/api \
                 },
                 "flagsAction": 1000,
                 "flagsProtocol": 1000,
-                "hostname": "mail.example.com",
+                "hostname": "Example",
                 "maxResponseSize": 52428800,
                 "port": 11332,
                 "protocolVersion": "v6",
@@ -221,7 +221,7 @@ curl -X POST https://mail.example.com/api \
           {
             "update": {
               "id1": {
-                "allowInvalidCerts": false
+                "hostname": "updated value"
               }
             }
           },
@@ -315,7 +315,7 @@ stalwart-cli get mta-milter id1
 stalwart-cli create mta-milter \
   --field allowInvalidCerts=false \
   --field 'enable={"else":"true"}' \
-  --field hostname=mail.example.com \
+  --field hostname=Example \
   --field maxResponseSize=52428800 \
   --field tempFailOnError=true \
   --field protocolVersion=v6 \

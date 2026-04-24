@@ -96,7 +96,7 @@ curl -X POST https://mail.example.com/api \
                   },
                   "authUsername": "stalwart",
                   "database": "stalwart",
-                  "host": "mail.example.com",
+                  "host": "Example",
                   "options": "Example",
                   "poolMaxConnections": 10,
                   "poolRecyclingMethod": "fast",
@@ -142,7 +142,7 @@ curl -X POST https://mail.example.com/api \
                   },
                   "authUsername": "stalwart",
                   "database": "stalwart",
-                  "host": "mail.example.com",
+                  "host": "Example",
                   "options": "Example",
                   "poolMaxConnections": 10,
                   "poolRecyclingMethod": "fast",
@@ -242,7 +242,7 @@ stalwart-cli get store-lookup id1
 
 ```sh
 stalwart-cli create store-lookup \
-  --field 'store={"@type":"PostgreSql","allowInvalidCerts":false,"authSecret":{"@type":"None"},"authUsername":"stalwart","database":"stalwart","host":"mail.example.com","options":"Example","poolMaxConnections":10,"poolRecyclingMethod":"fast","port":5432,"readReplicas":[],"timeout":"15s","useTls":false}'
+  --field 'store={"@type":"PostgreSql","allowInvalidCerts":false,"authSecret":{"@type":"None"},"authUsername":"stalwart","database":"stalwart","host":"Example","options":"Example","poolMaxConnections":10,"poolRecyclingMethod":"fast","port":5432,"readReplicas":[],"timeout":"15s","useTls":false}'
 ```
 
 
@@ -336,7 +336,7 @@ PostgreSQL data store.
 
 ##### `host`
 
-> Type: <code>HostName</code> · required
+> Type: <code>String</code> · required
 >
 > Hostname of the database server
 
@@ -387,7 +387,7 @@ PostgreSQL connection settings.
 
 ##### `host`
 
-> Type: <code>HostName</code> · required
+> Type: <code>String</code> · required
 >
 > Hostname of the database server
 
@@ -548,7 +548,7 @@ MySQL data store.
 
 ##### `host`
 
-> Type: <code>HostName</code> · required
+> Type: <code>String</code> · required
 >
 > Hostname of the database server
 
@@ -592,7 +592,7 @@ MySQL connection settings.
 
 ##### `host`
 
-> Type: <code>HostName</code> · required
+> Type: <code>String</code> · required
 >
 > Hostname of the database server
 

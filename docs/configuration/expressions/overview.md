@@ -6,7 +6,7 @@ sidebar_position: 1
 
 Expressions are small conditional programs evaluated at runtime, controlling aspects such as whether a connection is accepted, which authentication mechanisms are offered, or how a message is routed. Several JMAP objects expose fields whose value is an expression; examples include [`saslMechanisms`](/docs/ref/object/mta-stage-auth#saslmechanisms) on [MtaStageAuth](/docs/ref/object/mta-stage-auth), [`route`](/docs/ref/object/mta-route) on [MtaRoute](/docs/ref/object/mta-route), and [`allowedEndpoints`](/docs/ref/object/http#allowedendpoints) on [Http](/docs/ref/object/http). The reference page for each object marks which of its fields are expression-typed.
 
-Expressions evaluate context variables, call functions, and combine values using operators. A result can be a boolean, a string, a number, or an array. Stalwart compiles expressions into optimised bytecode, so they run with minimal overhead.
+Expressions evaluate context variables, call functions, and combine values using operators. A result can be a boolean, a string, a number, or an array. Stalwart compiles expressions into bytecode at configuration time and evaluates them at runtime.
 
 ## Shape of an expression
 
@@ -33,8 +33,8 @@ All three fields (`if`, `then`, `else`) hold string values. Numbers, booleans, a
 An expression is composed of the following elements:
 
 - [Variables](/docs/configuration/variables) carry contextual data supplied by the component evaluating the expression. For instance, `remote_ip`, `url_path`, `rcpt`, or `retry_num` may be available depending on the context.
-- [Functions](/docs/configuration/expressions/functions) manipulate variables and values: string operations (`starts_with`, `contains`), numerical comparisons, regular-expression matching (`matches`), and more.
-- **Values** are booleans (`true`, `false`), strings (for example `'local'`, `'fallback'`), numbers (for example `25`, `1.26`), or arrays that combine the above.
+- [Functions](/docs/configuration/expressions/functions) manipulate variables and values: string operations (`starts_with`, `contains`), regular-expression matching (`matches`), DNS lookups (`dns_query`), directory queries (`is_local_domain`), and more.
+- [Values](/docs/configuration/expressions/values) can be booleans (`true`, `false`), strings (for example `'local'`, `'fallback'`), numbers (for example `25`, `1.26`), or arrays that combine the above.
 - [Operators](/docs/configuration/expressions/operators) combine values using arithmetic, logical, and comparison operations.
 - **Conditional logic** chains `if`/`then`/`else` clauses to select a result.
 
@@ -72,11 +72,34 @@ A multi-condition routing expression that returns different queue targets depend
 {
   "route": {
     "match": [
-      {"if": "is_local_domain('', rcpt_domain)", "then": "'local'"},
+      {"if": "is_local_domain(rcpt_domain)", "then": "'local'"},
       {"if": "retry_num > 1", "then": "'fallback'"}
     ],
     "else": "'mx'"
   }
+}
+```
+
+A DNSBL check that consults Spamhaus Zen for the remote address and returns the matched list category, combining `ip_reverse_name`, string concatenation, and `dns_query`:
+
+```json
+{
+  "tag": {
+    "match": [
+      {"if": "contains(dns_query(ip_reverse_name(remote_ip) + '.zen.spamhaus.org', 'ipv4'), '127.0.0.2')", "then": "'SBL'"},
+      {"if": "contains(dns_query(ip_reverse_name(remote_ip) + '.zen.spamhaus.org', 'ipv4'), '127.0.0.3')", "then": "'CSS'"},
+      {"if": "contains(dns_query(ip_reverse_name(remote_ip) + '.zen.spamhaus.org', 'ipv4'), '127.0.0.4')", "then": "'XBL'"}
+    ],
+    "else": "false"
+  }
+}
+```
+
+A per-sender rate limit that increments an in-memory counter and returns `false` (reject) once the threshold is exceeded. The counter key incorporates the authenticated account, so accounts do not share a budget:
+
+```json
+{
+  "accept": {"else": "counter_incr('', 'rcpt-' + authenticated_as, count(recipients)) <= 500"}
 }
 ```
 

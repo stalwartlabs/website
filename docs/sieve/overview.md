@@ -4,9 +4,11 @@ sidebar_position: 1
 
 # Overview
 
-Sieve is a scripting language used to filter and modify email messages. It provides a flexible way to manage email messages by automatically filtering, sorting, and transforming them based on a wide range of criteria. Rather than relying on a proprietary DSL, Stalwart uses Sieve as its default scripting language because it handles most filtering tasks and is an established [internet standard](https://www.rfc-editor.org/rfc/rfc5228.html).
+Sieve is a scripting language for filtering and modifying email messages. Rather than inventing a proprietary DSL, Stalwart uses Sieve because it is an established [internet standard](https://www.rfc-editor.org/rfc/rfc5228.html) well suited to the range of filtering and transformation tasks encountered in email delivery.
 
-A typical Sieve script consists of one or more rules, each consisting of a test and an action. The test checks a specific attribute of the message, such as the sender's address or the subject line, while the action specifies what to do with the message if it matches the test. This manual does not cover how to write Sieve scripts but tutorials and examples can be found at [http://sieve.info](http://sieve.info).
+A Sieve script consists of one or more rules, each combining a test and an action. The test inspects an attribute of the message, such as the sender's address or the subject line; the action specifies what to do when the test matches. This documentation focuses on how Sieve is integrated into Stalwart (interpreters, variables, [expressions](/docs/sieve/expressions), [function reference](/docs/sieve/reference), examples) rather than on Sieve syntax itself; tutorials covering the language are collected at [sieve.info](http://sieve.info).
+
+Stalwart extends the standard Sieve language with its own [expression syntax](/docs/sieve/expressions) and a [rich set of built-in functions](/docs/sieve/reference) for DNS queries, directory lookups, SQL queries, hashing, image and MIME inspection, and more, all accessible from the `eval`, `let`, and `while` instructions.
 
 The Sieve interpreter included in Stalwart supports the following extensions:
 

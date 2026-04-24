@@ -15,13 +15,7 @@ The `latest` tag tracks the newest release and moves forward as new versions shi
 $ docker pull stalwartlabs/stalwart:v0.16
 ```
 
-Replace `v0.16` with the current stable release if a newer minor version has shipped.
-
-:::tip FoundationDB edition
-
-No pre-built FoundationDB image is published: multiple FoundationDB client versions exist and shipping a single default would break deployments that rely on a different client. To produce a FoundationDB-enabled image, use the `Dockerfile.fdb` file available in the [stalwartlabs/stalwart](https://github.com/stalwartlabs/stalwart) repository as a starting point.
-
-:::
+Replace `v0.16` with the current stable release if a newer minor version has shipped. For installations that use FoundationDB as the main data store, see [FoundationDB](#foundationdb) under *Additional topics* below.
 
 ## Start the container
 
@@ -90,7 +84,7 @@ To avoid relying on a log-extracted temporary password, a fixed credential can b
 
 <SetupWizard />
 
-### Restart the container
+## Restart the container
 
 Once the wizard has been completed, restart the container so that the new configuration takes effect.
 

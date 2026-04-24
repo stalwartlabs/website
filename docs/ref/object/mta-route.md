@@ -63,7 +63,7 @@ Relay Host
 
 ##### `address`
 
-> Type: <code>HostName</code> · required
+> Type: <code>String</code> · required
 >
 > The address of the remote SMTP server, which can be an IP address or a domain name
 

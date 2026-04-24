@@ -1,30 +1,28 @@
-### Continue setup
+## Continue setup
 
-After the restart, the admin WebUI moves from the bootstrap URL at `http://<host>:8080/admin` to its final URL at `https://<hostname>/admin`, where `<hostname>` is the value entered in Step 1 of the wizard. Open that URL in the browser and sign in again to resume configuration: with the internal directory, use the administrator credentials printed on the final wizard screen; with an external directory, follow the promotion procedure described under [Setup complete](#setup-complete) above. Attempting to continue over HTTP on port `8080` after the restart will fail at the sign-in step.
+After the restart, the admin WebUI moves from the bootstrap URL at `http://<host>:8080/admin` to its final URL at `https://<hostname>/admin`, where `<hostname>` is the value entered in Step 1 of the wizard. Open that URL in the browser and sign in again with the administrator credentials printed on the final wizard screen. Attempting to continue over HTTP on port `8080` after the restart will fail at the sign-in step.
 
-The protocol change is deliberate. Once the server hostname is known, Stalwart issues OAuth tokens bound to `https://<hostname>` and refuses to complete sign-in over plain HTTP. During bootstrap, when no hostname had been configured yet, a path-relative issuer was used, which is why plain HTTP worked up to this point.
+:::tip Certificate warnings on first sign-in
 
 When *automatically obtain TLS certificate* was enabled in Step 1 of the wizard, the certificate from Let's Encrypt can take a minute or two to be issued after the restart. While the request is still in flight, the browser may show a warning because the server is presenting a self-signed fallback certificate. Accepting that warning for the initial sign-in is safe; the warning disappears once the ACME certificate has been installed and the page is reloaded. When the certificate option was disabled, the self-signed fallback remains in place until a certificate is uploaded or a reverse proxy terminates TLS in front of the server.
 
-:::tip HTTPS not yet reachable?
+:::
 
-If the configured hostname does not yet resolve in DNS, port `443` is not reachable from the browser, or the deployment cannot present a trusted certificate for any other reason, the server can be restarted in [recovery mode](/docs/configuration/recovery-mode) to keep the WebUI available on HTTP port `8080` with the path-relative issuer. This is intended as a temporary measure while the TLS and DNS side of the deployment is completed; once HTTPS on the configured hostname is reachable, the server should be restarted without the recovery flag to return to normal OAuth operation.
+:::note Special cases
+
+- Deployments using an external directory (OIDC, LDAP, or SQL) must promote the administrator account after first sign-in. See [External directory promotion](#external-directory-promotion) under *Additional topics* below.
+- Deployments behind a reverse proxy should follow the [Reverse proxy](#reverse-proxy) guidance under *Additional topics* below before signing in.
+- If the new HTTPS URL does not load, see [HTTPS not yet reachable](#https-not-yet-reachable) under *Troubleshooting* below.
 
 :::
 
-:::tip Reverse-proxy deployments
-
-When Stalwart sits behind a reverse proxy (NGINX, Traefik, Caddy, HAProxy, or similar), the smoothest path through the wizard and the first sign-in is to **bypass the proxy temporarily**. From a host on the same network, point a browser at `http://<stalwart-host>:8080/admin` directly to complete the wizard, then sign in once at `https://<stalwart-host>/admin` (accepting any self-signed certificate warning) before restoring the proxy configuration. This avoids the class of issues that happen when the proxy's hostname, port, or TLS handling does not yet match what the freshly-configured server publishes in its OAuth and JMAP discovery documents. The full reverse-proxy model, including how the published URLs are composed and the [`STALWART_HTTPS_PORT`](/docs/configuration/environment-variables#public-urls) variable for non-standard public ports, is documented under [Reverse proxy › Overview](/docs/server/reverse-proxy/overview).
-
-:::
-
-### Next steps
+## Next steps
 
 With the internal directory, additional user accounts can be added through the WebUI's Account Manager, or directly by creating [Account](/docs/ref/object/account) objects through the WebUI administration console or the [CLI](/docs/management/cli/overview). See [Individual accounts](/docs/auth/principals/individual) for the full field reference. With an external directory (OIDC, LDAP, or SQL), accounts continue to be provisioned and authenticated through the identity provider; any Stalwart-specific overrides are set on the local Account record that is created on first sign-in.
 
 Diagnostic output is written to the log destination configured in Step 4 of the wizard, and can also be viewed live from the WebUI under Telemetry. 
 
-If something does not behave as expected, consult the [troubleshooting](/docs/management/troubleshoot) guide or the [FAQ](/docs/faq). Further questions can be raised on the [community forum](https://github.com/stalwartlabs/stalwart/discussions).
+If something does not behave as expected, consult [Troubleshooting](#troubleshooting) below. Further questions can be raised on the [community forum](https://github.com/stalwartlabs/stalwart/discussions).
 
 :::tip
 
@@ -32,6 +30,59 @@ Before exposing the server to the public internet, review the [securing your ser
 
 :::
 
-### Setup demonstration
+## Setup demonstration
 
 <video src="/img/setup.mp4" autoPlay loop muted playsInline style={{ maxWidth: '100%', height: 'auto' }} />
+
+## Troubleshooting
+
+### HTTPS not yet reachable
+
+If the configured hostname does not yet resolve in DNS, port `443` is not reachable from the browser, or the deployment cannot present a trusted certificate for any other reason, the server can be restarted in [recovery mode](/docs/configuration/recovery-mode) to keep the WebUI available on HTTP port `8080` with the path-relative issuer used during bootstrap. This is intended as a temporary measure while the TLS and DNS side of the deployment is completed; once HTTPS on the configured hostname is reachable, the server should be restarted without the recovery flag to return to normal OAuth operation.
+
+### Further diagnostics
+
+For issues that go beyond initial setup (email delivery, DMARC, authentication, and so on), consult the general [troubleshooting](/docs/management/troubleshoot) guide or the [FAQ](/docs/faq).
+
+## Additional topics
+
+### Reverse proxy
+
+When Stalwart sits behind a reverse proxy (NGINX, Traefik, Caddy, HAProxy, or similar), the smoothest path through the wizard and the first sign-in is to **bypass the proxy temporarily**. From a host on the same network, point a browser at `http://<stalwart-host>:8080/admin` directly to complete the wizard, then sign in once at `https://<stalwart-host>/admin` (accepting any self-signed certificate warning) before restoring the proxy configuration. This avoids the class of issues that happen when the proxy's hostname, port, or TLS handling does not yet match what the freshly-configured server publishes in its OAuth and JMAP discovery documents. The full reverse-proxy model, including how the published URLs are composed and the [`STALWART_HTTPS_PORT`](/docs/configuration/environment-variables#public-urls) variable for non-standard public ports, is documented under [Reverse proxy › Overview](/docs/server/reverse-proxy/overview).
+
+### External directory promotion
+
+When the wizard is completed with an external directory (OIDC, LDAP, or SQL), no administrator credential is generated on the final screen, because an account from the external directory does not exist locally until it has authenticated at least once. The administrator must be promoted manually after the first sign-in using the existing recovery admin credentials. The procedure, carried out after the platform-specific restart, is:
+
+1. Keep `STALWART_RECOVERY_ADMIN=<username>:<password>` set in the service environment. The variable is honoured while the server is running normally, so this does not require recovery mode.
+2. Have the account that will become the administrator sign in once through the WebUI. Any successful authentication against the directory provisions the account locally in Stalwart.
+3. Sign in as the recovery administrator in a separate browser session and assign the appropriate administrator role to the newly provisioned account, either through the WebUI or through the CLI.
+4. Sign in as the promoted account to confirm that the assignment took effect.
+5. Remove `STALWART_RECOVERY_ADMIN` from the service environment and restart the server so that the backdoor credential is no longer active.
+
+### FoundationDB
+
+A separate build with FoundationDB support is available for installations that use FoundationDB as the main data store. The default build does not include FoundationDB because multiple FoundationDB client versions exist and a single default would break deployments that rely on a different client.
+
+**Linux / macOS.** Run the installation script with the `--fdb` flag:
+
+```bash
+$ sudo sh install.sh --fdb
+```
+
+**Docker.** No pre-built FoundationDB image is published. To produce a FoundationDB-enabled image, use the `Dockerfile.fdb` file available in the [stalwartlabs/stalwart](https://github.com/stalwartlabs/stalwart) repository as a starting point.
+
+### Retrieving DNS records via CLI
+
+When manual DNS management is in effect, the zone file generated by Stalwart can also be fetched from the command line. List the configured domains and read the [`dnsZoneFile`](/docs/ref/object/domain#dnszonefile) field on the desired one:
+
+```bash
+$ stalwart-cli query domain
+$ stalwart-cli get domain <id> --fields dnsZoneFile
+```
+
+The returned zone file can be pasted into the DNS provider's control panel or imported as a zone template where the provider supports it.
+
+### Non-interactive setup
+
+Deployments that prefer command-line or infrastructure-as-code workflows can skip the wizard entirely and drive the same configuration from the CLI; see [bootstrap mode](/docs/configuration/bootstrap-mode) and [declarative deployments](/docs/configuration/declarative-deployments).

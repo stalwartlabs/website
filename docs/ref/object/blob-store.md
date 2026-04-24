@@ -289,7 +289,7 @@ PostgreSQL
 
 ##### `host`
 
-> Type: <code>HostName</code> · required
+> Type: <code>String</code> · required
 >
 > Hostname of the database server
 
@@ -386,7 +386,7 @@ mySQL
 
 ##### `host`
 
-> Type: <code>HostName</code> · required
+> Type: <code>String</code> · required
 >
 > Hostname of the database server
 
@@ -939,7 +939,7 @@ PostgreSQL data store.
 
 ##### `host`
 
-> Type: <code>HostName</code> · required
+> Type: <code>String</code> · required
 >
 > Hostname of the database server
 
@@ -990,7 +990,7 @@ PostgreSQL connection settings.
 
 ##### `host`
 
-> Type: <code>HostName</code> · required
+> Type: <code>String</code> · required
 >
 > Hostname of the database server
 
@@ -1090,7 +1090,7 @@ MySQL data store.
 
 ##### `host`
 
-> Type: <code>HostName</code> · required
+> Type: <code>String</code> · required
 >
 > Hostname of the database server
 
@@ -1134,7 +1134,7 @@ MySQL connection settings.
 
 ##### `host`
 
-> Type: <code>HostName</code> · required
+> Type: <code>String</code> · required
 >
 > Hostname of the database server
 

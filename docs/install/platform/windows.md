@@ -119,7 +119,7 @@ The administrator credentials will match the configured value and no temporary p
 
 <SetupWizard />
 
-### Restart service
+## Restart service
 
 Once the wizard has been completed, restart the Windows service so that the new configuration takes effect. In an **elevated PowerShell** window (the same admin session used during installation), run:
 

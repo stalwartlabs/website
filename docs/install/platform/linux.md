@@ -33,11 +33,7 @@ When the standard FHS paths cannot be used (for example on a host that mounts `/
 $ sudo sh install.sh /opt/stalwart
 ```
 
-The default build includes support for SQLite, PostgreSQL, MySQL, RocksDB, S3, Azure Blob Storage, Redis, and NATS. A separate build with FoundationDB support is available. Add the `--fdb` flag to install it:
-
-```bash
-$ sudo sh install.sh --fdb
-```
+The default build includes support for SQLite, PostgreSQL, MySQL, RocksDB, S3, Azure Blob Storage, Redis, and NATS. For installations that use FoundationDB as the main data store, see [FoundationDB](#foundationdb) under *Additional topics* below.
 
 ## Retrieve the administrator credentials
 
@@ -90,7 +86,7 @@ To avoid relying on a log-extracted temporary password, a fixed credential can b
 
 <SetupWizard />
 
-### Restart service
+## Restart service
 
 Once the wizard has been completed, restart Stalwart so that the new configuration takes effect. The exact command depends on the service manager that the installer wrote a unit for at install time.
 
