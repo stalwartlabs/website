@@ -10,6 +10,8 @@ The good news is that after four years of intensive development, Stalwart has re
 
 We understand that frequent breaking changes in a mission-critical system like email are far from ideal. Therefore, we recommend upgrading **only when necessary**, for example, when a release includes a bug fix or new feature that you specifically need. Otherwise, it may be best to stay on your current version until **v1.0.0** becomes available. This approach will help you avoid “upgrade fatigue” and maintain long-term stability in your deployment.
 
+For more information about upgrades between specific versions see: https://github.com/stalwartlabs/stalwart/tree/main/UPGRADING
+
 ## Understanding Release Compatibility
 
 Stalwart follows **semantic versioning (semver)**, which uses a version number in the format **MAJOR.MINOR.PATCH** (for example, `0.14.3`). This system indicates the nature and impact of each release:
