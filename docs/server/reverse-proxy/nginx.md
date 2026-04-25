@@ -28,30 +28,32 @@ events {
 stream {
     # Proxy SMTP
     server {
-        listen 25 proxy_protocol;
+        listen 25;
         proxy_pass 127.0.0.1:10025;
         proxy_protocol on;
     }
 
     # Proxy IMAPS
     server {
-        listen 993 proxy_protocol;
+        listen 993;
         proxy_pass 127.0.0.1:10993;
         proxy_protocol on;
     }
 
     # Proxy SMTPS
     server {
-        listen 465 proxy_protocol;
+        listen 465;
         proxy_pass 127.0.0.1:10465;
         proxy_protocol on;
     }
 
     # Proxy HTTPS
     server {
-        listen 443 proxy_protocol;
+        listen 443;
         proxy_pass 127.0.0.1:10443;
         proxy_protocol on;
     }
 }
 ```
+
+The `proxy_protocol on` directive emits a Proxy Protocol header toward Stalwart on every forwarded connection. The `proxy_protocol` flag is intentionally absent from each `listen` line: that flag tells NGINX to *expect* an incoming Proxy Protocol header from the client, which mail and HTTP clients do not send. Add it only when another Proxy-Protocol-aware proxy sits in front of NGINX.
