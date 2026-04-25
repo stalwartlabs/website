@@ -34,22 +34,22 @@ Before running the export command, ensure that the **Stalwart server is stopped*
 
 ### Choosing what to export
 
-The export tool supports exporting either the full database or a specific set of [subspaces](/docs/development/database). This behavior is controlled by the `EXPORT_TYPES` environment variable.
+The export tool supports exporting either the full database or a specific set of [subspace](/docs/development/database) families. This behavior is controlled by the `EXPORT_TYPES` environment variable.
 
-- If `EXPORT_TYPES` is set, it must contain a **comma-separated list** of subspace letters (e.g., `j,k,t`) indicating which subspaces to include in the export.
-- If `EXPORT_TYPES` is **unset or empty**, all subspaces are exported by default.
+- If `EXPORT_TYPES` is set, it must contain a **comma-separated list** of family names indicating which families to include in the export. The accepted values are `data`, `registry`, `blob`, `changelog`, `queue`, `report`, `telemetry`, and `tasks`.
+- If `EXPORT_TYPES` is **unset or empty**, all families are exported by default.
 
 This allows for partial exports when only certain types of data (such as blobs or logs) need to be migrated or preserved.
 
 ### Example
 
-The following command will export only the `j` (Blob Reserved), `k` (Blob Links), and `t` (Blobs) subspaces:
+The following command will export only the `blob` family (covering blob metadata and blob content):
 
 ```bash
-$ EXPORT_TYPES="j,k,t" /opt/stalwart/bin/stalwart --config /opt/stalwart/etc/config.json --export ~/stalwart-export
+$ EXPORT_TYPES="blob" /opt/stalwart/bin/stalwart --config /opt/stalwart/etc/config.json --export ~/stalwart-export
 ```
 
-This will create a binary dump in the `~/stalwart-export` directory containing only the selected subspaces.
+This will create a binary dump in the `~/stalwart-export` directory containing only the selected families.
 
 ## Import Procedure
 
