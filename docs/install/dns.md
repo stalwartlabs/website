@@ -42,8 +42,8 @@ Each DKIM record corresponds to a cryptographic key and is referenced by a selec
 The [Sender Policy Framework (SPF)](/docs/mta/authentication/spf) tells receiving servers which hosts are permitted to send mail for a domain. SPF policies are published as TXT records.
 
 ```
-TXT	mail.example.org.	v=spf1 a ra=postmaster -all
-TXT	example.org.	v=spf1 mx ra=postmaster -all
+TXT	mail.example.org.	v=spf1 a -all
+TXT	example.org.	v=spf1 mx -all
 ```
 
 These policies indicate that mail may originate from the host matched by the domain's `A` record (or MX record, for the apex domain), and that messages from any other source should be rejected.
