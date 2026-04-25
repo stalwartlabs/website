@@ -50,14 +50,14 @@ Subaddressing is configured per domain on the [Domain](/docs/ref/object/domain) 
 
 - `Enabled`: standard `+` subaddressing is applied. This is the default.
 - `Disabled`: the `+` separator is not treated as a subaddress marker; the full local part is used for delivery.
-- `Custom`: a custom rule is applied through the `customRule` expression, which receives the RCPT variables and returns the rewritten local address. For example, to strip an alias prefix so that `alias.user@example.org` delivers to `user@example.org`:
+- `Custom`: a custom rule is applied through the `customRule` expression, which receives the recipient local part as `rcpt` and returns the rewritten local part. The domain is preserved by the server and is not part of the value passed in or out. For example, to strip an alias prefix so that `alias.user@example.org` delivers to `user@example.org`:
 
 ```json
 {
   "subAddressing": {
     "@type": "Custom",
     "customRule": {
-      "match": [{"if": "matches('^([^.]+)\\.([^.]+)@(.+)$', rcpt)", "then": "$2 + '@' + $3"}],
+      "match": [{"if": "matches('^([^.]+)\\.([^.]+)$', rcpt)", "then": "$2"}],
       "else": "rcpt"
     }
   }
