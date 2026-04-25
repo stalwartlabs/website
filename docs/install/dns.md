@@ -84,7 +84,7 @@ The record specifies the address at which the domain is willing to receive such 
 SRV records advertise the hostnames and ports that mail clients should use for each protocol.
 
 ```
-SRV	_imap._tcp.example.org.	0 1 110 mail.example.org.
+SRV	_imap._tcp.example.org.	0 1 143 mail.example.org.
 SRV	_imaps._tcp.example.org.	0 1 993 mail.example.org.
 SRV	_submissions._tcp.example.org.	0 1 465 mail.example.org.
 SRV	_submission._tcp.example.org.	0 1 587 mail.example.org.
