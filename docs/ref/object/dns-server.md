@@ -1030,16 +1030,7 @@ curl -X POST https://mail.example.com/api \
                   "@type": "Value",
                   "secret": "Example"
                 },
-                "keyName": "Example",
-                "memberTenantId": "<Tenant id>",
-                "pollingInterval": "15s",
-                "port": 53,
-                "propagationDelay": 1000,
-                "propagationTimeout": "1m",
-                "protocol": "udp",
-                "timeout": "30s",
-                "tsigAlgorithm": "hmac-sha512",
-                "ttl": "5m"
+                "keyName": "Example"
               }
             }
           },
@@ -1069,7 +1060,7 @@ curl -X POST https://mail.example.com/api \
           {
             "update": {
               "id1": {
-                "id": "id1"
+                "keyName": "updated value"
               }
             }
           },
@@ -1161,49 +1152,40 @@ The `x:DnsServer/query` `filter` argument accepts the following conditions (comb
 ### Fetch
 
 ```sh
-stalwart-cli get dns-server id1
+stalwart-cli get DnsServer id1
 ```
 
 
 ### Create
 
 ```sh
-stalwart-cli create dns-server/tsig \
+stalwart-cli create DnsServer/Tsig \
   --field host=192.0.2.1 \
-  --field port=53 \
   --field keyName=Example \
   --field 'key={"@type":"Value","secret":"Example"}' \
-  --field protocol=udp \
-  --field tsigAlgorithm=hmac-sha512 \
-  --field description=Example \
-  --field 'memberTenantId=<Tenant id>' \
-  --field timeout=30s \
-  --field ttl=5m \
-  --field pollingInterval=15s \
-  --field propagationTimeout=1m \
-  --field propagationDelay=1000
+  --field description=Example
 ```
 
 
 ### Query
 
 ```sh
-stalwart-cli query dns-server
-stalwart-cli query dns-server --where memberTenantId=id1
+stalwart-cli query DnsServer
+stalwart-cli query DnsServer --where memberTenantId=id1
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update dns-server id1 --field description='Updated'
+stalwart-cli update DnsServer id1 --field keyName='updated value'
 ```
 
 
 ### Delete
 
 ```sh
-stalwart-cli delete dns-server --ids id1
+stalwart-cli delete DnsServer --ids id1
 ```
 
 

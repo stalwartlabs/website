@@ -116,10 +116,8 @@ curl -X POST https://mail.example.com/api \
           {
             "create": {
               "new1": {
-                "description": "Example",
                 "expiry": {
-                  "@type": "Ttl",
-                  "expire": "3d"
+                  "@type": "Ttl"
                 },
                 "notify": {
                   "@type": "Default"
@@ -249,16 +247,15 @@ The `x:MtaDeliverySchedule/query` `filter` argument accepts the following condit
 ### Fetch
 
 ```sh
-stalwart-cli get mta-delivery-schedule id1
+stalwart-cli get MtaDeliverySchedule id1
 ```
 
 
 ### Create
 
 ```sh
-stalwart-cli create mta-delivery-schedule \
-  --field description=Example \
-  --field 'expiry={"@type":"Ttl","expire":"3d"}' \
+stalwart-cli create MtaDeliverySchedule \
+  --field 'expiry={"@type":"Ttl"}' \
   --field 'notify={"@type":"Default"}' \
   --field 'queueId=<MtaVirtualQueue id>' \
   --field 'retry={"@type":"Default"}'
@@ -268,22 +265,22 @@ stalwart-cli create mta-delivery-schedule \
 ### Query
 
 ```sh
-stalwart-cli query mta-delivery-schedule
-stalwart-cli query mta-delivery-schedule --where name=example
+stalwart-cli query MtaDeliverySchedule
+stalwart-cli query MtaDeliverySchedule --where name=example
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update mta-delivery-schedule id1 --field description='Updated'
+stalwart-cli update MtaDeliverySchedule id1 --field description='updated value'
 ```
 
 
 ### Delete
 
 ```sh
-stalwart-cli delete mta-delivery-schedule --ids id1
+stalwart-cli delete MtaDeliverySchedule --ids id1
 ```
 
 

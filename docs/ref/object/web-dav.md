@@ -147,14 +147,14 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get web-dav
+stalwart-cli get WebDav
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update web-dav --field description='Updated'
+stalwart-cli update WebDav --field enableAssistedDiscovery=true
 ```
 
 

@@ -197,14 +197,14 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get sieve-system-interpreter
+stalwart-cli get SieveSystemInterpreter
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update sieve-system-interpreter --field description='Updated'
+stalwart-cli update SieveSystemInterpreter --field messageIdHostname='updated value'
 ```
 
 

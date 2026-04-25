@@ -174,14 +174,14 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get tls-report-settings
+stalwart-cli get TlsReportSettings
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update tls-report-settings --field description='Updated'
+stalwart-cli update TlsReportSettings --field contactInfo='{"else":"false"}'
 ```
 
 

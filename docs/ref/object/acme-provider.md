@@ -144,11 +144,7 @@ curl -X POST https://mail.example.com/api \
           {
             "create": {
               "new1": {
-                "challengeType": "TlsAlpn01",
-                "contact": [],
-                "maxRetries": 10,
-                "memberTenantId": "<Tenant id>",
-                "renewBefore": "R23"
+                "contact": {}
               }
             }
           },
@@ -271,41 +267,37 @@ The `x:AcmeProvider/query` `filter` argument accepts the following conditions (c
 ### Fetch
 
 ```sh
-stalwart-cli get acme-provider id1
+stalwart-cli get AcmeProvider id1
 ```
 
 
 ### Create
 
 ```sh
-stalwart-cli create acme-provider \
-  --field challengeType=TlsAlpn01 \
-  --field 'contact=[]' \
-  --field renewBefore=R23 \
-  --field maxRetries=10 \
-  --field 'memberTenantId=<Tenant id>'
+stalwart-cli create AcmeProvider \
+  --field 'contact={}'
 ```
 
 
 ### Query
 
 ```sh
-stalwart-cli query acme-provider
-stalwart-cli query acme-provider --where text=example
+stalwart-cli query AcmeProvider
+stalwart-cli query AcmeProvider --where text=example
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update acme-provider id1 --field description='Updated'
+stalwart-cli update AcmeProvider id1 --field challengeType=TlsAlpn01
 ```
 
 
 ### Delete
 
 ```sh
-stalwart-cli delete acme-provider --ids id1
+stalwart-cli delete AcmeProvider --ids id1
 ```
 
 

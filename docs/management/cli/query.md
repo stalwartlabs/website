@@ -4,7 +4,7 @@ sidebar_position: 4
 
 # Searching and listing
 
-The `query` command lists objects of a given type, with optional filters and a choice of columns. Results are paginated automatically and can be emitted as a human-friendly table or as a JSON array.
+The `query` command lists objects of a given type, with optional filters and a choice of columns. Results are paginated automatically and can be emitted as a human-friendly table or as an NDJSON stream.
 
 ## Synopsis
 
@@ -15,7 +15,7 @@ stalwart-cli query <object> [--where key=value]... [--fields a,b,c] [--json]
 * `<object>`: object type name, with or without the `x:` prefix, case-insensitive. Singletons are rejected (use [`get`](./get.md) instead).
 * `--where`: filter clause (repeatable). The supported operator forms are described below.
 * `--fields`: comma-separated list of properties to return. When omitted, the default columns from the object's list (or from any view targeting it) are used, with an `Id` column prepended.
-* `--json`: emit a JSON array (one entry per matching object) instead of the human-friendly table.
+* `--json`: emit one record per line as **NDJSON** (newline-delimited JSON) instead of the human-friendly table. With `--fields`, each record is the object; without `--fields`, each record is just the id string.
 
 ## Default columns
 
@@ -99,17 +99,37 @@ To list which filters an object supports, run [`describe <object>`](./describe.m
 stalwart-cli query domain --fields id,name --json
 ```
 
-```json
-[{"name":"example.org","id":"b"},{"name":"foo.com","id":"c"},{"name":"bar.com","id":"d"}]
+```text
+{"name":"example.org","id":"b"}
+{"name":"foo.com","id":"c"}
+{"name":"bar.com","id":"d"}
 ```
 
-`--json` fetches *every* matching page across all pages and emits a single array. Without `--fields`, the array contains just the ids.
+`--json` emits one record per line as **NDJSON** (newline-delimited JSON). Records are streamed page-by-page as they are fetched, so total memory is bounded regardless of result-set size: even a `query` returning hundreds of thousands of rows runs in constant memory.
 
-The output is compact (no pretty printing). Pipe to `jq` for processing:
+Without `--fields`, each line is a single JSON-encoded id string:
+
+```sh
+stalwart-cli query domain --json
+```
+
+```text
+"b"
+"c"
+"d"
+```
+
+NDJSON pipes naturally into `jq`:
 
 ```sh
 stalwart-cli query account --fields id,name,domainId --json \
-  | jq '.[] | select(.domainId=="b") | .name'
+  | jq -c 'select(.domainId=="b") | .name'
+```
+
+To collect the stream into a single JSON array (for tools that expect one), pipe through `jq -s '.'`:
+
+```sh
+stalwart-cli query domain --fields id,name --json | jq -s '.'
 ```
 
 ## Pagination

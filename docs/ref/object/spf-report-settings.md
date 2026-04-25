@@ -145,14 +145,14 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get spf-report-settings
+stalwart-cli get SpfReportSettings
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update spf-report-settings --field description='Updated'
+stalwart-cli update SpfReportSettings --field fromAddress='{"else":"'\''noreply-spf@'\'' + system('\''domain'\'')"}'
 ```
 
 

@@ -136,14 +136,14 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get mta-outbound-strategy
+stalwart-cli get MtaOutboundStrategy
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update mta-outbound-strategy --field description='Updated'
+stalwart-cli update MtaOutboundStrategy --field connection='{"else":"'\''default'\''"}'
 ```
 
 

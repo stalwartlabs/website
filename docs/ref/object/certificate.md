@@ -248,14 +248,14 @@ The `x:Certificate/query` `filter` argument accepts the following conditions (co
 ### Fetch
 
 ```sh
-stalwart-cli get certificate id1
+stalwart-cli get Certificate id1
 ```
 
 
 ### Create
 
 ```sh
-stalwart-cli create certificate \
+stalwart-cli create Certificate \
   --field 'certificate={"@type":"Text","value":"Example"}' \
   --field 'privateKey={"@type":"Text","secret":"Example"}'
 ```
@@ -264,22 +264,22 @@ stalwart-cli create certificate \
 ### Query
 
 ```sh
-stalwart-cli query certificate
-stalwart-cli query certificate --where text=example
+stalwart-cli query Certificate
+stalwart-cli query Certificate --where text=example
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update certificate id1 --field description='Updated'
+stalwart-cli update Certificate id1 --field certificate='{"@type":"Text","value":"Example"}'
 ```
 
 
 ### Delete
 
 ```sh
-stalwart-cli delete certificate --ids id1
+stalwart-cli delete Certificate --ids id1
 ```
 
 

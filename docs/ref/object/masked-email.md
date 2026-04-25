@@ -154,13 +154,7 @@ curl -X POST https://mail.example.com/api \
           "x:MaskedEmail/set",
           {
             "create": {
-              "new1": {
-                "createdBy": "Example",
-                "description": "Example",
-                "enabled": true,
-                "forDomain": "Example",
-                "url": "Example"
-              }
+              "new1": {}
             }
           },
           "c1"
@@ -281,41 +275,36 @@ The `x:MaskedEmail/query` `filter` argument accepts the following conditions (co
 ### Fetch
 
 ```sh
-stalwart-cli get masked-email id1
+stalwart-cli get MaskedEmail id1
 ```
 
 
 ### Create
 
 ```sh
-stalwart-cli create masked-email \
-  --field enabled=true \
-  --field description=Example \
-  --field forDomain=Example \
-  --field createdBy=Example \
-  --field url=Example
+stalwart-cli create MaskedEmail
 ```
 
 
 ### Query
 
 ```sh
-stalwart-cli query masked-email
-stalwart-cli query masked-email --where accountId=id1
+stalwart-cli query MaskedEmail
+stalwart-cli query MaskedEmail --where accountId=id1
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update masked-email id1 --field description='Updated'
+stalwart-cli update MaskedEmail id1 --field description='updated value'
 ```
 
 
 ### Delete
 
 ```sh
-stalwart-cli delete masked-email --ids id1
+stalwart-cli delete MaskedEmail --ids id1
 ```
 
 

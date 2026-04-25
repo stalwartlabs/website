@@ -119,14 +119,14 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get file-storage
+stalwart-cli get FileStorage
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update file-storage --field description='Updated'
+stalwart-cli update FileStorage --field maxSize=25mb
 ```
 
 

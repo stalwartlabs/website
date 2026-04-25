@@ -129,15 +129,7 @@ curl -X POST https://mail.example.com/api \
           "x:MtaTlsStrategy/set",
           {
             "create": {
-              "new1": {
-                "allowInvalidCerts": false,
-                "dane": "optional",
-                "description": "Example",
-                "mtaSts": "optional",
-                "mtaStsTimeout": "5m",
-                "startTls": "optional",
-                "tlsTimeout": "3m"
-              }
+              "new1": {}
             }
           },
           "c1"
@@ -258,43 +250,36 @@ The `x:MtaTlsStrategy/query` `filter` argument accepts the following conditions 
 ### Fetch
 
 ```sh
-stalwart-cli get mta-tls-strategy id1
+stalwart-cli get MtaTlsStrategy id1
 ```
 
 
 ### Create
 
 ```sh
-stalwart-cli create mta-tls-strategy \
-  --field allowInvalidCerts=false \
-  --field dane=optional \
-  --field description=Example \
-  --field mtaSts=optional \
-  --field startTls=optional \
-  --field mtaStsTimeout=5m \
-  --field tlsTimeout=3m
+stalwart-cli create MtaTlsStrategy
 ```
 
 
 ### Query
 
 ```sh
-stalwart-cli query mta-tls-strategy
-stalwart-cli query mta-tls-strategy --where name=example
+stalwart-cli query MtaTlsStrategy
+stalwart-cli query MtaTlsStrategy --where name=example
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update mta-tls-strategy id1 --field description='Updated'
+stalwart-cli update MtaTlsStrategy id1 --field description='updated value'
 ```
 
 
 ### Delete
 
 ```sh
-stalwart-cli delete mta-tls-strategy --ids id1
+stalwart-cli delete MtaTlsStrategy --ids id1
 ```
 
 

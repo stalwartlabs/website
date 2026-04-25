@@ -94,10 +94,7 @@ curl -X POST https://mail.example.com/api \
           "x:MtaVirtualQueue/set",
           {
             "create": {
-              "new1": {
-                "description": "Example",
-                "threadsPerNode": 25
-              }
+              "new1": {}
             }
           },
           "c1"
@@ -218,38 +215,36 @@ The `x:MtaVirtualQueue/query` `filter` argument accepts the following conditions
 ### Fetch
 
 ```sh
-stalwart-cli get mta-virtual-queue id1
+stalwart-cli get MtaVirtualQueue id1
 ```
 
 
 ### Create
 
 ```sh
-stalwart-cli create mta-virtual-queue \
-  --field description=Example \
-  --field threadsPerNode=25
+stalwart-cli create MtaVirtualQueue
 ```
 
 
 ### Query
 
 ```sh
-stalwart-cli query mta-virtual-queue
-stalwart-cli query mta-virtual-queue --where name=example
+stalwart-cli query MtaVirtualQueue
+stalwart-cli query MtaVirtualQueue --where name=example
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update mta-virtual-queue id1 --field description='Updated'
+stalwart-cli update MtaVirtualQueue id1 --field description='updated value'
 ```
 
 
 ### Delete
 
 ```sh
-stalwart-cli delete mta-virtual-queue --ids id1
+stalwart-cli delete MtaVirtualQueue --ids id1
 ```
 
 

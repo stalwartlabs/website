@@ -112,14 +112,14 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get sharing
+stalwart-cli get Sharing
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update sharing --field description='Updated'
+stalwart-cli update Sharing --field allowDirectoryQueries=false
 ```
 
 

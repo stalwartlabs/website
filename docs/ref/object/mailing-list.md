@@ -123,12 +123,10 @@ curl -X POST https://mail.example.com/api \
           {
             "create": {
               "new1": {
-                "aliases": [],
-                "description": "Example",
+                "aliases": {},
                 "domainId": "<Domain id>",
-                "memberTenantId": "<Tenant id>",
                 "name": "alice",
-                "recipients": []
+                "recipients": {}
               }
             }
           },
@@ -251,42 +249,40 @@ The `x:MailingList/query` `filter` argument accepts the following conditions (co
 ### Fetch
 
 ```sh
-stalwart-cli get mailing-list id1
+stalwart-cli get MailingList id1
 ```
 
 
 ### Create
 
 ```sh
-stalwart-cli create mailing-list \
+stalwart-cli create MailingList \
   --field name=alice \
   --field 'domainId=<Domain id>' \
-  --field description=Example \
-  --field 'aliases=[]' \
-  --field 'memberTenantId=<Tenant id>' \
-  --field 'recipients=[]'
+  --field 'aliases={}' \
+  --field 'recipients={}'
 ```
 
 
 ### Query
 
 ```sh
-stalwart-cli query mailing-list
-stalwart-cli query mailing-list --where text=example
+stalwart-cli query MailingList
+stalwart-cli query MailingList --where text=example
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update mailing-list id1 --field description='Updated'
+stalwart-cli update MailingList id1 --field description='updated value'
 ```
 
 
 ### Delete
 
 ```sh
-stalwart-cli delete mailing-list --ids id1
+stalwart-cli delete MailingList --ids id1
 ```
 
 

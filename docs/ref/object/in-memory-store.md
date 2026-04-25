@@ -239,7 +239,7 @@ curl -X POST https://mail.example.com/api \
           {
             "update": {
               "singleton": {
-                "id": "id1"
+                "description": "updated value"
               }
             }
           },
@@ -264,14 +264,14 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get in-memory-store
+stalwart-cli get InMemoryStore
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update in-memory-store --field description='Updated'
+stalwart-cli update InMemoryStore --field description='updated value'
 ```
 
 

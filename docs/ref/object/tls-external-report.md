@@ -125,18 +125,15 @@ curl -X POST https://mail.example.com/api \
               "new1": {
                 "expiresAt": "2026-01-01T00:00:00Z",
                 "from": "user@example.com",
-                "memberTenantId": "<Tenant id>",
                 "receivedAt": "2026-01-01T00:00:00Z",
                 "report": {
-                  "contactInfo": "Example",
                   "dateRangeEnd": "2026-01-01T00:00:00Z",
                   "dateRangeStart": "2026-01-01T00:00:00Z",
-                  "organizationName": "Example",
-                  "policies": [],
+                  "policies": {},
                   "reportId": "Example"
                 },
                 "subject": "Example",
-                "to": []
+                "to": {}
               }
             }
           },
@@ -250,42 +247,41 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get tls-external-report id1
+stalwart-cli get TlsExternalReport id1
 ```
 
 
 ### Create
 
 ```sh
-stalwart-cli create tls-external-report \
-  --field 'report={"contactInfo":"Example","dateRangeEnd":"2026-01-01T00:00:00Z","dateRangeStart":"2026-01-01T00:00:00Z","organizationName":"Example","policies":[],"reportId":"Example"}' \
+stalwart-cli create TlsExternalReport \
+  --field 'report={"dateRangeEnd":"2026-01-01T00:00:00Z","dateRangeStart":"2026-01-01T00:00:00Z","policies":{},"reportId":"Example"}' \
   --field from=user@example.com \
   --field subject=Example \
-  --field 'to=[]' \
+  --field 'to={}' \
   --field receivedAt=2026-01-01T00:00:00Z \
-  --field expiresAt=2026-01-01T00:00:00Z \
-  --field 'memberTenantId=<Tenant id>'
+  --field expiresAt=2026-01-01T00:00:00Z
 ```
 
 
 ### Query
 
 ```sh
-stalwart-cli query tls-external-report
+stalwart-cli query TlsExternalReport
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update tls-external-report id1 --field description='Updated'
+stalwart-cli update TlsExternalReport id1 --field subject='updated value'
 ```
 
 
 ### Delete
 
 ```sh
-stalwart-cli delete tls-external-report --ids id1
+stalwart-cli delete TlsExternalReport --ids id1
 ```
 
 

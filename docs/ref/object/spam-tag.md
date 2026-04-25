@@ -123,7 +123,6 @@ curl -X POST https://mail.example.com/api \
             "create": {
               "new1": {
                 "@type": "Score",
-                "score": 0,
                 "tag": "Example"
               }
             }
@@ -154,7 +153,7 @@ curl -X POST https://mail.example.com/api \
           {
             "update": {
               "id1": {
-                "id": "id1"
+                "tag": "updated value"
               }
             }
           },
@@ -246,38 +245,37 @@ The `x:SpamTag/query` `filter` argument accepts the following conditions (combin
 ### Fetch
 
 ```sh
-stalwart-cli get spam-tag id1
+stalwart-cli get SpamTag id1
 ```
 
 
 ### Create
 
 ```sh
-stalwart-cli create spam-tag/score \
-  --field tag=Example \
-  --field score=0
+stalwart-cli create SpamTag/Score \
+  --field tag=Example
 ```
 
 
 ### Query
 
 ```sh
-stalwart-cli query spam-tag
-stalwart-cli query spam-tag --where tag=example
+stalwart-cli query SpamTag
+stalwart-cli query SpamTag --where tag=example
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update spam-tag id1 --field description='Updated'
+stalwart-cli update SpamTag id1 --field tag='updated value'
 ```
 
 
 ### Delete
 
 ```sh
-stalwart-cli delete spam-tag --ids id1
+stalwart-cli delete SpamTag --ids id1
 ```
 
 

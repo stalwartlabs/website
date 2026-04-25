@@ -376,7 +376,7 @@ curl -X POST https://mail.example.com/api \
           {
             "update": {
               "singleton": {
-                "id": "id1"
+                "description": "updated value"
               }
             }
           },
@@ -401,14 +401,14 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get coordinator
+stalwart-cli get Coordinator
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update coordinator --field description='Updated'
+stalwart-cli update Coordinator --field description='updated value'
 ```
 
 

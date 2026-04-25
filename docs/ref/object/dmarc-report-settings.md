@@ -219,14 +219,14 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get dmarc-report-settings
+stalwart-cli get DmarcReportSettings
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update dmarc-report-settings --field description='Updated'
+stalwart-cli update DmarcReportSettings --field aggregateContactInfo='{"else":"false"}'
 ```
 
 

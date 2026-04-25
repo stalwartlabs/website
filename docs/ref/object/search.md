@@ -175,14 +175,14 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get search
+stalwart-cli get Search
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update search --field description='Updated'
+stalwart-cli update Search --field indexBatchSize=100
 ```
 
 

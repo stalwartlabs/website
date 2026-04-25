@@ -104,7 +104,6 @@ curl -X POST https://mail.example.com/api \
               "new1": {
                 "hostname": "Example",
                 "lastRenewal": "2026-01-01T00:00:00Z",
-                "nodeId": 1,
                 "status": "active"
               }
             }
@@ -219,15 +218,14 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get cluster-node id1
+stalwart-cli get ClusterNode id1
 ```
 
 
 ### Create
 
 ```sh
-stalwart-cli create cluster-node \
-  --field nodeId=1 \
+stalwart-cli create ClusterNode \
   --field hostname=Example \
   --field lastRenewal=2026-01-01T00:00:00Z \
   --field status=active
@@ -237,21 +235,21 @@ stalwart-cli create cluster-node \
 ### Query
 
 ```sh
-stalwart-cli query cluster-node
+stalwart-cli query ClusterNode
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update cluster-node id1 --field description='Updated'
+stalwart-cli update ClusterNode id1 --field hostname='updated value'
 ```
 
 
 ### Delete
 
 ```sh
-stalwart-cli delete cluster-node --ids id1
+stalwart-cli delete ClusterNode --ids id1
 ```
 
 

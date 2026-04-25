@@ -119,14 +119,14 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get mta-sts
+stalwart-cli get MtaSts
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update mta-sts --field description='Updated'
+stalwart-cli update MtaSts --field maxAge=7d
 ```
 
 

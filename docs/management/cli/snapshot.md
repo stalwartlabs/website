@@ -4,7 +4,7 @@ sidebar_position: 9
 
 # Exporting server state
 
-The `snapshot` command walks the live server and emits a JSON plan in the exact format that [`apply`](./apply.md) consumes. The same file can be used for:
+The `snapshot` command walks the live server and emits an NDJSON plan in the exact format that [`apply`](./apply.md) consumes. The same file can be used for:
 
 * **Configuration backups** (stdout redirected to a versioned artifact, committed to a repository, or stored in a secrets manager).
 * **Cross-environment migration** (snapshot a staging deployment, apply the plan to production).
@@ -26,7 +26,7 @@ stalwart-cli snapshot <OBJECT>...
 
 | Argument / option | Purpose |
 |---|---|
-| `<OBJECT>...` | One or more object type names (positional, required). Names are case-insensitive and the `x:` prefix is optional. Slash forms (`Account/User`) are rejected — for multi-variant types, listing the bare name includes every variant. |
+| `<OBJECT>...` | One or more object type names (positional, required). Names are case-insensitive and the `x:` prefix is optional. Slash forms (`Account/User`) are rejected; for multi-variant types, listing the bare name includes every variant. |
 | `--output <PATH>` | Write the plan to a file. If omitted, the plan is written to stdout. |
 | `--no-destroys` | Skip the teardown prelude at the top of the plan. |
 | `--include-secrets` | Keep secret field values as returned by the server. Default: strip them. |
@@ -44,7 +44,7 @@ stalwart-cli snapshot \
     Tenant Domain DkimSignature AcmeProvider Certificate DnsServer Role \
     Account Directory Credential \
     SystemSettings DataRetention BlobStore InMemoryStore SearchStore \
-    --output plan.json
+    --output plan.ndjson
 ```
 
 Use [`describe`](./describe.md) to discover what types a deployment exposes.
@@ -98,44 +98,37 @@ With the above, a `Domain` whose `acmeProviderId` points to a real ACME provider
 
 ## Output format
 
-The plan is a JSON array identical in shape to what [`apply`](./apply.md) expects:
+The plan is **NDJSON**: one operation per line, no enclosing array. The same format [`apply`](./apply.md) consumes.
 
-```jsonc
-[
-  // Destroy block (unless --no-destroys): one entry per non-singleton type in
-  // the selection, in forward dependency order so apply's reverse pass
-  // executes children-first at restore time. Multi-variant types emit one
-  // destroy per variant with a @type filter so the two destroys can
-  // mutually interleave correctly under reversal.
-  { "@type": "destroy", "object": "Tenant" },
-  { "@type": "destroy", "object": "Domain" },
-  { "@type": "destroy", "object": "Account", "value": { "@type": "Group" } },
-  { "@type": "destroy", "object": "Account", "value": { "@type": "User" } },
+```text
+# Destroy block (unless --no-destroys): one entry per non-singleton parent
+# type in the selection, in forward dependency order so apply's reverse
+# pass executes children-first at restore time. Multi-variant types emit
+# a single destroy for the parent (no per-variant filter); destroying all
+# variants is equivalent to destroying every instance of the type.
+{"@type":"destroy","object":"Tenant"}
+{"@type":"destroy","object":"Domain"}
+{"@type":"destroy","object":"Account"}
 
-  // Create block: one entry per non-singleton shard (one per type,
-  // one per variant for multi-variant types). Client-side ids are the
-  // map keys. Cross-object references use #<prefix>-<server-id>.
-  { "@type": "create", "object": "Tenant",
-    "value": {
-      "tenant-b": { "name": "acme-corp" }
-    }
-  },
-  { "@type": "create", "object": "Domain",
-    "value": {
-      "domain-b": { "name": "example.com", "memberTenantId": "#tenant-b" }
-    }
-  },
+# Create block: one entry per non-singleton shard (one per type, one per
+# variant for multi-variant types). Client-side ids are the map keys.
+# Cross-object references use #<prefix>-<server-id>.
+{"@type":"create","object":"Tenant","value":{"tenant-b":{"name":"acme-corp"}}}
+{"@type":"create","object":"Domain","value":{"domain-b":{"name":"example.com","memberTenantId":"#tenant-b"}}}
 
-  // Singleton updates: one per singleton in the selection.
-  { "@type": "update", "object": "SystemSettings",
-    "value": { "defaultHostname": "mail.example.com", ... }
-  }
-]
+# Singleton updates: one per singleton in the selection.
+{"@type":"update","object":"SystemSettings","value":{"defaultHostname":"mail.example.com"}}
 ```
+
+(The `#` lines above are annotations for clarity; the real output contains only the NDJSON records.)
 
 ### Streaming
 
-The output is written incrementally. Objects are fetched from the server one paginated batch at a time (up to `maxObjectsInGet` per batch, the same value the schema and JMAP session report), transformed, and flushed before the next batch is fetched. Total memory is bounded to one batch regardless of dataset size. A `snapshot` over a type with tens of thousands of rows completes without the plan ever being fully buffered.
+The output is written incrementally. Each parent object type is fetched from the server in paginated batches (up to `maxObjectsInGet` per batch, the same value the JMAP session reports), transformed, and flushed before the next type is processed. Total memory is bounded to one type's worth of objects at a time. A `snapshot` over a type with tens of thousands of rows completes without the plan ever being fully buffered.
+
+### How variants are fetched
+
+For multi-variant types, snapshot does **not** rely on server-side filtering by `@type`, because Stalwart's `query` does not universally support that filter. Instead, it queries each parent type once unfiltered, fetches the full objects, and partitions them by `@type` client-side to assign each one to its variant's create block.
 
 ### What is stripped
 
@@ -156,12 +149,18 @@ Per-type progress is written to stderr so that stdout contains only the plan:
 ```text
 snapshot: 2 creates, 1 singletons
   fetching Tenant...
-    -> 4
+    4 fetched
+    Tenant: 4
   fetching Domain...
-    -> 127
+    127 fetched
+    Domain: 127
   fetching singleton SystemSettings...
 snapshot complete
 ```
+
+For multi-variant parents, the `<count> fetched` line is followed by one
+line per variant showing how the parent was partitioned client-side
+(for example `Account (User): 12` and `Account (Group): 3`).
 
 Pass `--quiet` to silence this output.
 
@@ -184,7 +183,7 @@ stalwart-cli snapshot \
     Tenant Domain Directory DkimSignature AcmeProvider Certificate DnsServer Role \
     Account Credential \
     SystemSettings DataRetention BlobStore InMemoryStore SearchStore \
-    --output "backup-$(date +%Y-%m-%d).json"
+    --output "backup-$(date +%Y-%m-%d).ndjson"
 ```
 
 Commit the resulting artifact to a private repository (redacting any operator-specific comments). Secrets are automatically excluded.
@@ -194,11 +193,11 @@ Commit the resulting artifact to a private repository (redacting any operator-sp
 ```sh
 # On staging
 stalwart-cli --url https://staging.mail.example.com \
-    snapshot Tenant Domain ... --output plan.json
+    snapshot Tenant Domain ... --output plan.ndjson
 
 # On production
 stalwart-cli --url https://prod.mail.example.com \
-    apply --file plan.json
+    apply --file plan.ndjson
 ```
 
 The plan's destroy block wipes the relevant types on production, then recreates them with staging's content. Use [`--dry-run` on `apply`](./apply.md) in the promotion CI step so the diff can be reviewed before taking effect.
@@ -208,13 +207,13 @@ The plan's destroy block wipes the relevant types on production, then recreates 
 To prove a plan genuinely restores:
 
 ```sh
-stalwart-cli snapshot Tenant --output /tmp/s1.json
-stalwart-cli apply --file /tmp/s1.json
-stalwart-cli snapshot Tenant --output /tmp/s2.json
-diff /tmp/s1.json /tmp/s2.json
+stalwart-cli snapshot Tenant --output /tmp/s1.ndjson
+stalwart-cli apply --file /tmp/s1.ndjson
+stalwart-cli snapshot Tenant --output /tmp/s2.ndjson
+diff /tmp/s1.ndjson /tmp/s2.ndjson
 ```
 
-The only legitimate differences between `s1.json` and `s2.json` are the opaque client-ids (new server-assigned ids produce new prefixes). Sort the entries by `name` (or any other stable field) for a cleaner diff.
+NDJSON files diff line-by-line, which makes round-trip validation easy. The only legitimate differences between `s1.ndjson` and `s2.ndjson` are the opaque client-ids (new server-assigned ids produce new prefixes). Sort the records by `name` (or any other stable field) for a cleaner diff.
 
 ## Operational considerations
 
@@ -225,6 +224,6 @@ The only legitimate differences between `s1.json` and `s2.json` are the opaque c
 
 ## See also
 
-* [Declarative bulk operations](./apply.md) — the consumer of the plan file.
-* [Exploring the schema](./describe.md) — to enumerate available types before composing a selection.
-* [Overview](./overview.md) — installation and connection setup.
+* [Declarative bulk operations](./apply.md): the consumer of the plan file.
+* [Exploring the schema](./describe.md): to enumerate available types before composing a selection.
+* [Overview](./overview.md): installation and connection setup.

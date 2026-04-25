@@ -116,12 +116,9 @@ curl -X POST https://mail.example.com/api \
           {
             "create": {
               "new1": {
-                "autoUpdateFrequency": "90d",
                 "description": "Example",
-                "enabled": true,
                 "resourceUrl": "Example",
-                "unpackDirectory": "Example",
-                "urlPrefix": []
+                "urlPrefix": {}
               }
             }
           },
@@ -235,41 +232,38 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get application id1
+stalwart-cli get Application id1
 ```
 
 
 ### Create
 
 ```sh
-stalwart-cli create application \
-  --field enabled=true \
+stalwart-cli create Application \
   --field description=Example \
   --field resourceUrl=Example \
-  --field 'urlPrefix=[]' \
-  --field autoUpdateFrequency=90d \
-  --field unpackDirectory=Example
+  --field 'urlPrefix={}'
 ```
 
 
 ### Query
 
 ```sh
-stalwart-cli query application
+stalwart-cli query Application
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update application id1 --field description='Updated'
+stalwart-cli update Application id1 --field description='updated value'
 ```
 
 
 ### Delete
 
 ```sh
-stalwart-cli delete application --ids id1
+stalwart-cli delete Application --ids id1
 ```
 
 

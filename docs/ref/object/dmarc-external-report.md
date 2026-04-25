@@ -125,30 +125,25 @@ curl -X POST https://mail.example.com/api \
               "new1": {
                 "expiresAt": "2026-01-01T00:00:00Z",
                 "from": "user@example.com",
-                "memberTenantId": "<Tenant id>",
                 "receivedAt": "2026-01-01T00:00:00Z",
                 "report": {
                   "dateRangeBegin": "2026-01-01T00:00:00Z",
                   "dateRangeEnd": "2026-01-01T00:00:00Z",
                   "email": "user@example.com",
-                  "errors": [],
-                  "extensions": [],
-                  "extraContactInfo": "Example",
+                  "errors": {},
+                  "extensions": {},
                   "orgName": "Example",
                   "policyAdkim": "relaxed",
                   "policyAspf": "relaxed",
                   "policyDisposition": "none",
                   "policyDomain": "Example",
-                  "policyFailureReportingOptions": [],
+                  "policyFailureReportingOptions": {},
                   "policySubdomainDisposition": "none",
-                  "policyTestingMode": false,
-                  "policyVersion": "Example",
-                  "records": [],
-                  "reportId": "Example",
-                  "version": 1.0
+                  "records": {},
+                  "reportId": "Example"
                 },
                 "subject": "Example",
-                "to": []
+                "to": {}
               }
             }
           },
@@ -274,43 +269,42 @@ The `x:DmarcExternalReport/query` `filter` argument accepts the following condit
 ### Fetch
 
 ```sh
-stalwart-cli get dmarc-external-report id1
+stalwart-cli get DmarcExternalReport id1
 ```
 
 
 ### Create
 
 ```sh
-stalwart-cli create dmarc-external-report \
-  --field 'report={"dateRangeBegin":"2026-01-01T00:00:00Z","dateRangeEnd":"2026-01-01T00:00:00Z","email":"user@example.com","errors":[],"extensions":[],"extraContactInfo":"Example","orgName":"Example","policyAdkim":"relaxed","policyAspf":"relaxed","policyDisposition":"none","policyDomain":"Example","policyFailureReportingOptions":[],"policySubdomainDisposition":"none","policyTestingMode":false,"policyVersion":"Example","records":[],"reportId":"Example","version":1.0}' \
+stalwart-cli create DmarcExternalReport \
+  --field 'report={"dateRangeBegin":"2026-01-01T00:00:00Z","dateRangeEnd":"2026-01-01T00:00:00Z","email":"user@example.com","errors":{},"extensions":{},"orgName":"Example","policyAdkim":"relaxed","policyAspf":"relaxed","policyDisposition":"none","policyDomain":"Example","policyFailureReportingOptions":{},"policySubdomainDisposition":"none","records":{},"reportId":"Example"}' \
   --field from=user@example.com \
   --field subject=Example \
-  --field 'to=[]' \
+  --field 'to={}' \
   --field receivedAt=2026-01-01T00:00:00Z \
-  --field expiresAt=2026-01-01T00:00:00Z \
-  --field 'memberTenantId=<Tenant id>'
+  --field expiresAt=2026-01-01T00:00:00Z
 ```
 
 
 ### Query
 
 ```sh
-stalwart-cli query dmarc-external-report
-stalwart-cli query dmarc-external-report --where domain=example
+stalwart-cli query DmarcExternalReport
+stalwart-cli query DmarcExternalReport --where domain=example
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update dmarc-external-report id1 --field description='Updated'
+stalwart-cli update DmarcExternalReport id1 --field subject='updated value'
 ```
 
 
 ### Delete
 
 ```sh
-stalwart-cli delete dmarc-external-report --ids id1
+stalwart-cli delete DmarcExternalReport --ids id1
 ```
 
 

@@ -119,14 +119,14 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get task-manager
+stalwart-cli get TaskManager
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update task-manager --field description='Updated'
+stalwart-cli update TaskManager --field maxAttempts=3
 ```
 
 

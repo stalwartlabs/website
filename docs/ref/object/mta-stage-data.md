@@ -212,14 +212,14 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get mta-stage-data
+stalwart-cli get MtaStageData
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update mta-stage-data --field description='Updated'
+stalwart-cli update MtaStageData --field addAuthResultsHeader='{"else":"false","match":[{"if":"local_port == 25","then":"true"}]}'
 ```
 
 

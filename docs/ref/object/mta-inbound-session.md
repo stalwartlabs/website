@@ -127,14 +127,14 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get mta-inbound-session
+stalwart-cli get MtaInboundSession
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update mta-inbound-session --field description='Updated'
+stalwart-cli update MtaInboundSession --field maxDuration='{"else":"10m"}'
 ```
 
 

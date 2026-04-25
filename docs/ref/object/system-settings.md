@@ -161,14 +161,14 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get system-settings
+stalwart-cli get SystemSettings
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update system-settings --field description='Updated'
+stalwart-cli update SystemSettings --field defaultHostname=mail.example.com
 ```
 
 

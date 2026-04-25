@@ -145,14 +145,14 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get dkim-report-settings
+stalwart-cli get DkimReportSettings
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update dkim-report-settings --field description='Updated'
+stalwart-cli update DkimReportSettings --field fromAddress='{"else":"'\''noreply-dkim@'\'' + system('\''domain'\'')"}'
 ```
 
 

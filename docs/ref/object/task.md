@@ -813,7 +813,10 @@ curl -X POST https://mail.example.com/api \
           {
             "update": {
               "id1": {
-                "id": "id1"
+                "status": {
+                  "@type": "Pending",
+                  "due": "2026-01-01T00:00:00Z"
+                }
               }
             }
           },
@@ -907,14 +910,14 @@ The `x:Task/query` `filter` argument accepts the following conditions (combinabl
 ### Fetch
 
 ```sh
-stalwart-cli get task id1
+stalwart-cli get Task id1
 ```
 
 
 ### Create
 
 ```sh
-stalwart-cli create task/index-document \
+stalwart-cli create Task/IndexDocument \
   --field 'status={"@type":"Pending","due":"2026-01-01T00:00:00Z"}'
 ```
 
@@ -922,22 +925,22 @@ stalwart-cli create task/index-document \
 ### Query
 
 ```sh
-stalwart-cli query task
-stalwart-cli query task --where @type=value
+stalwart-cli query Task
+stalwart-cli query Task --where @type=value
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update task id1 --field description='Updated'
+stalwart-cli update Task id1 --field status='{"@type":"Pending","due":"2026-01-01T00:00:00Z"}'
 ```
 
 
 ### Delete
 
 ```sh
-stalwart-cli delete task --ids id1
+stalwart-cli delete Task --ids id1
 ```
 
 

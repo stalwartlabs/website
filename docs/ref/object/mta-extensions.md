@@ -192,14 +192,14 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get mta-extensions
+stalwart-cli get MtaExtensions
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update mta-extensions --field description='Updated'
+stalwart-cli update MtaExtensions --field chunking='{"else":"true"}'
 ```
 
 

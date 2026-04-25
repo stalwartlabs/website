@@ -165,22 +165,14 @@ curl -X POST https://mail.example.com/api \
           {
             "create": {
               "new1": {
-                "allowInvalidCerts": false,
-                "discardAfter": "5m",
-                "enable": true,
-                "events": [],
-                "eventsPolicy": "exclude",
+                "events": {},
                 "httpAuth": {
                   "@type": "Unauthenticated"
                 },
                 "httpHeaders": {},
-                "level": "info",
-                "lossy": false,
                 "signatureKey": {
                   "@type": "None"
                 },
-                "throttle": "1s",
-                "timeout": "30s",
                 "url": "https://example.com"
               }
             }
@@ -295,48 +287,40 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get web-hook id1
+stalwart-cli get WebHook id1
 ```
 
 
 ### Create
 
 ```sh
-stalwart-cli create web-hook \
-  --field allowInvalidCerts=false \
+stalwart-cli create WebHook \
   --field 'signatureKey={"@type":"None"}' \
-  --field throttle=1s \
-  --field timeout=30s \
-  --field discardAfter=5m \
   --field url=https://example.com \
   --field 'httpAuth={"@type":"Unauthenticated"}' \
   --field 'httpHeaders={}' \
-  --field enable=true \
-  --field level=info \
-  --field lossy=false \
-  --field 'events=[]' \
-  --field eventsPolicy=exclude
+  --field 'events={}'
 ```
 
 
 ### Query
 
 ```sh
-stalwart-cli query web-hook
+stalwart-cli query WebHook
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update web-hook id1 --field description='Updated'
+stalwart-cli update WebHook id1 --field allowInvalidCerts=false
 ```
 
 
 ### Delete
 
 ```sh
-stalwart-cli delete web-hook --ids id1
+stalwart-cli delete WebHook --ids id1
 ```
 
 

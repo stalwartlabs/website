@@ -433,7 +433,7 @@ curl -X POST https://mail.example.com/api \
           {
             "update": {
               "singleton": {
-                "id": "id1"
+                "description": "updated value"
               }
             }
           },
@@ -458,14 +458,14 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get search-store
+stalwart-cli get SearchStore
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update search-store --field description='Updated'
+stalwart-cli update SearchStore --field description='updated value'
 ```
 
 

@@ -380,11 +380,8 @@ curl -X POST https://mail.example.com/api \
                 "@type": "Any",
                 "condition": {
                   "else": "Example",
-                  "match": []
-                },
-                "description": "Example",
-                "enable": true,
-                "priority": 500
+                  "match": {}
+                }
               }
             }
           },
@@ -414,7 +411,7 @@ curl -X POST https://mail.example.com/api \
           {
             "update": {
               "id1": {
-                "id": "id1"
+                "description": "updated value"
               }
             }
           },
@@ -506,40 +503,37 @@ The `x:SpamRule/query` `filter` argument accepts the following conditions (combi
 ### Fetch
 
 ```sh
-stalwart-cli get spam-rule id1
+stalwart-cli get SpamRule id1
 ```
 
 
 ### Create
 
 ```sh
-stalwart-cli create spam-rule/any \
-  --field 'condition={"else":"Example","match":[]}' \
-  --field description=Example \
-  --field enable=true \
-  --field priority=500
+stalwart-cli create SpamRule/Any \
+  --field 'condition={"else":"Example","match":{}}'
 ```
 
 
 ### Query
 
 ```sh
-stalwart-cli query spam-rule
-stalwart-cli query spam-rule --where name=example
+stalwart-cli query SpamRule
+stalwart-cli query SpamRule --where name=example
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update spam-rule id1 --field description='Updated'
+stalwart-cli update SpamRule id1 --field description='updated value'
 ```
 
 
 ### Delete
 
 ```sh
-stalwart-cli delete spam-rule --ids id1
+stalwart-cli delete SpamRule --ids id1
 ```
 
 

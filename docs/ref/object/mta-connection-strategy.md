@@ -144,15 +144,7 @@ curl -X POST https://mail.example.com/api \
           {
             "create": {
               "new1": {
-                "connectTimeout": "5m",
-                "dataTimeout": "10m",
-                "description": "Example",
-                "ehloHostname": "mail.example.com",
-                "ehloTimeout": "5m",
-                "greetingTimeout": "5m",
-                "mailFromTimeout": "5m",
-                "rcptToTimeout": "5m",
-                "sourceIps": []
+                "sourceIps": {}
               }
             }
           },
@@ -274,45 +266,37 @@ The `x:MtaConnectionStrategy/query` `filter` argument accepts the following cond
 ### Fetch
 
 ```sh
-stalwart-cli get mta-connection-strategy id1
+stalwart-cli get MtaConnectionStrategy id1
 ```
 
 
 ### Create
 
 ```sh
-stalwart-cli create mta-connection-strategy \
-  --field description=Example \
-  --field ehloHostname=mail.example.com \
-  --field 'sourceIps=[]' \
-  --field connectTimeout=5m \
-  --field dataTimeout=10m \
-  --field ehloTimeout=5m \
-  --field greetingTimeout=5m \
-  --field mailFromTimeout=5m \
-  --field rcptToTimeout=5m
+stalwart-cli create MtaConnectionStrategy \
+  --field 'sourceIps={}'
 ```
 
 
 ### Query
 
 ```sh
-stalwart-cli query mta-connection-strategy
-stalwart-cli query mta-connection-strategy --where name=example
+stalwart-cli query MtaConnectionStrategy
+stalwart-cli query MtaConnectionStrategy --where name=example
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update mta-connection-strategy id1 --field description='Updated'
+stalwart-cli update MtaConnectionStrategy id1 --field description='updated value'
 ```
 
 
 ### Delete
 
 ```sh
-stalwart-cli delete mta-connection-strategy --ids id1
+stalwart-cli delete MtaConnectionStrategy --ids id1
 ```
 
 

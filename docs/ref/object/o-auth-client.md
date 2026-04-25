@@ -138,13 +138,8 @@ curl -X POST https://mail.example.com/api \
             "create": {
               "new1": {
                 "clientId": "Example",
-                "contacts": [],
-                "description": "Example",
-                "expiresAt": "2026-01-01T00:00:00Z",
-                "logo": "Example",
-                "memberTenantId": "<Tenant id>",
-                "redirectUris": [],
-                "secret": "Example"
+                "contacts": {},
+                "redirectUris": {}
               }
             }
           },
@@ -268,44 +263,39 @@ The `x:OAuthClient/query` `filter` argument accepts the following conditions (co
 ### Fetch
 
 ```sh
-stalwart-cli get o-auth-client id1
+stalwart-cli get OAuthClient id1
 ```
 
 
 ### Create
 
 ```sh
-stalwart-cli create o-auth-client \
+stalwart-cli create OAuthClient \
   --field clientId=Example \
-  --field description=Example \
-  --field 'contacts=[]' \
-  --field secret=Example \
-  --field expiresAt=2026-01-01T00:00:00Z \
-  --field 'memberTenantId=<Tenant id>' \
-  --field 'redirectUris=[]' \
-  --field logo=Example
+  --field 'contacts={}' \
+  --field 'redirectUris={}'
 ```
 
 
 ### Query
 
 ```sh
-stalwart-cli query o-auth-client
-stalwart-cli query o-auth-client --where text=example
+stalwart-cli query OAuthClient
+stalwart-cli query OAuthClient --where text=example
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update o-auth-client id1 --field description='Updated'
+stalwart-cli update OAuthClient id1 --field clientId='updated value'
 ```
 
 
 ### Delete
 
 ```sh
-stalwart-cli delete o-auth-client --ids id1
+stalwart-cli delete OAuthClient --ids id1
 ```
 
 

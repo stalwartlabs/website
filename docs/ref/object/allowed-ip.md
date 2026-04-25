@@ -101,10 +101,7 @@ curl -X POST https://mail.example.com/api \
           "x:AllowedIp/set",
           {
             "create": {
-              "new1": {
-                "expiresAt": "2026-01-01T00:00:00Z",
-                "reason": "Example"
-              }
+              "new1": {}
             }
           },
           "c1"
@@ -225,38 +222,36 @@ The `x:AllowedIp/query` `filter` argument accepts the following conditions (comb
 ### Fetch
 
 ```sh
-stalwart-cli get allowed-ip id1
+stalwart-cli get AllowedIp id1
 ```
 
 
 ### Create
 
 ```sh
-stalwart-cli create allowed-ip \
-  --field reason=Example \
-  --field expiresAt=2026-01-01T00:00:00Z
+stalwart-cli create AllowedIp
 ```
 
 
 ### Query
 
 ```sh
-stalwart-cli query allowed-ip
-stalwart-cli query allowed-ip --where address=example
+stalwart-cli query AllowedIp
+stalwart-cli query AllowedIp --where address=example
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update allowed-ip id1 --field description='Updated'
+stalwart-cli update AllowedIp id1 --field reason='updated value'
 ```
 
 
 ### Delete
 
 ```sh
-stalwart-cli delete allowed-ip --ids id1
+stalwart-cli delete AllowedIp --ids id1
 ```
 
 

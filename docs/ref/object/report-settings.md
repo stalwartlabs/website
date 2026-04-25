@@ -103,9 +103,9 @@ curl -X POST https://mail.example.com/api \
           {
             "update": {
               "singleton": {
-                "inboundReportAddresses": [
-                  "postmaster@*"
-                ]
+                "inboundReportAddresses": {
+                  "postmaster@*": true
+                }
               }
             }
           },
@@ -130,14 +130,14 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get report-settings
+stalwart-cli get ReportSettings
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update report-settings --field description='Updated'
+stalwart-cli update ReportSettings --field inboundReportAddresses='{"postmaster@*":true}'
 ```
 
 

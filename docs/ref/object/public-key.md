@@ -117,8 +117,7 @@ curl -X POST https://mail.example.com/api \
             "create": {
               "new1": {
                 "description": "Example",
-                "emailAddresses": [],
-                "expiresAt": "2026-01-01T00:00:00Z",
+                "emailAddresses": {},
                 "key": "Example"
               }
             }
@@ -241,40 +240,39 @@ The `x:PublicKey/query` `filter` argument accepts the following conditions (comb
 ### Fetch
 
 ```sh
-stalwart-cli get public-key id1
+stalwart-cli get PublicKey id1
 ```
 
 
 ### Create
 
 ```sh
-stalwart-cli create public-key \
+stalwart-cli create PublicKey \
   --field key=Example \
   --field description=Example \
-  --field expiresAt=2026-01-01T00:00:00Z \
-  --field 'emailAddresses=[]'
+  --field 'emailAddresses={}'
 ```
 
 
 ### Query
 
 ```sh
-stalwart-cli query public-key
-stalwart-cli query public-key --where accountId=id1
+stalwart-cli query PublicKey
+stalwart-cli query PublicKey --where accountId=id1
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update public-key id1 --field description='Updated'
+stalwart-cli update PublicKey id1 --field key='updated value'
 ```
 
 
 ### Delete
 
 ```sh
-stalwart-cli delete public-key --ids id1
+stalwart-cli delete PublicKey --ids id1
 ```
 
 

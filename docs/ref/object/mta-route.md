@@ -206,11 +206,7 @@ curl -X POST https://mail.example.com/api \
           {
             "create": {
               "new1": {
-                "@type": "Mx",
-                "description": "Example",
-                "ipLookupStrategy": "v4ThenV6",
-                "maxMultihomed": 2,
-                "maxMxHosts": 5
+                "@type": "Mx"
               }
             }
           },
@@ -240,7 +236,7 @@ curl -X POST https://mail.example.com/api \
           {
             "update": {
               "id1": {
-                "id": "id1"
+                "description": "updated value"
               }
             }
           },
@@ -332,40 +328,36 @@ The `x:MtaRoute/query` `filter` argument accepts the following conditions (combi
 ### Fetch
 
 ```sh
-stalwart-cli get mta-route id1
+stalwart-cli get MtaRoute id1
 ```
 
 
 ### Create
 
 ```sh
-stalwart-cli create mta-route/mx \
-  --field ipLookupStrategy=v4ThenV6 \
-  --field maxMultihomed=2 \
-  --field maxMxHosts=5 \
-  --field description=Example
+stalwart-cli create MtaRoute/Mx
 ```
 
 
 ### Query
 
 ```sh
-stalwart-cli query mta-route
-stalwart-cli query mta-route --where name=example
+stalwart-cli query MtaRoute
+stalwart-cli query MtaRoute --where name=example
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update mta-route id1 --field description='Updated'
+stalwart-cli update MtaRoute id1 --field description='updated value'
 ```
 
 
 ### Delete
 
 ```sh
-stalwart-cli delete mta-route --ids id1
+stalwart-cli delete MtaRoute --ids id1
 ```
 
 

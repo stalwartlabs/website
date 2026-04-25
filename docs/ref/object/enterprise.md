@@ -121,14 +121,14 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get enterprise
+stalwart-cli get Enterprise
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update enterprise --field description='Updated'
+stalwart-cli update Enterprise --field apiKey='{"@type":"None"}'
 ```
 
 

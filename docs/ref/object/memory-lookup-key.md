@@ -95,7 +95,6 @@ curl -X POST https://mail.example.com/api \
           {
             "create": {
               "new1": {
-                "isGlobPattern": false,
                 "key": "Example",
                 "namespace": "Example"
               }
@@ -219,39 +218,38 @@ The `x:MemoryLookupKey/query` `filter` argument accepts the following conditions
 ### Fetch
 
 ```sh
-stalwart-cli get memory-lookup-key id1
+stalwart-cli get MemoryLookupKey id1
 ```
 
 
 ### Create
 
 ```sh
-stalwart-cli create memory-lookup-key \
+stalwart-cli create MemoryLookupKey \
   --field namespace=Example \
-  --field key=Example \
-  --field isGlobPattern=false
+  --field key=Example
 ```
 
 
 ### Query
 
 ```sh
-stalwart-cli query memory-lookup-key
-stalwart-cli query memory-lookup-key --where namespace=example
+stalwart-cli query MemoryLookupKey
+stalwart-cli query MemoryLookupKey --where namespace=example
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update memory-lookup-key id1 --field description='Updated'
+stalwart-cli update MemoryLookupKey id1 --field namespace='updated value'
 ```
 
 
 ### Delete
 
 ```sh
-stalwart-cli delete memory-lookup-key --ids id1
+stalwart-cli delete MemoryLookupKey --ids id1
 ```
 
 

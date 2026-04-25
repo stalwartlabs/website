@@ -196,14 +196,14 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get email
+stalwart-cli get Email
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update email --field description='Updated'
+stalwart-cli update Email --field maxAttachmentSize=50000000
 ```
 
 

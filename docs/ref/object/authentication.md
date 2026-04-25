@@ -182,14 +182,14 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get authentication
+stalwart-cli get Authentication
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update authentication --field description='Updated'
+stalwart-cli update Authentication --field directoryId='<Directory id>'
 ```
 
 

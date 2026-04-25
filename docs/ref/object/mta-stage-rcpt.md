@@ -154,14 +154,14 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get mta-stage-rcpt
+stalwart-cli get MtaStageRcpt
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update mta-stage-rcpt --field description='Updated'
+stalwart-cli update MtaStageRcpt --field maxFailures='{"else":"5"}'
 ```
 
 

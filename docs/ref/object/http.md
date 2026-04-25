@@ -152,14 +152,14 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get http
+stalwart-cli get Http
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update http --field description='Updated'
+stalwart-cli update Http --field rateLimitAuthenticated='{"count":1000,"period":"1m"}'
 ```
 
 

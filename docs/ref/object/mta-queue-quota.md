@@ -118,14 +118,11 @@ curl -X POST https://mail.example.com/api \
           {
             "create": {
               "new1": {
-                "enable": true,
-                "key": [],
+                "key": {},
                 "match": {
                   "else": "Example",
-                  "match": []
-                },
-                "messages": 1000,
-                "size": 1000
+                  "match": {}
+                }
               }
             }
           },
@@ -239,40 +236,37 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get mta-queue-quota id1
+stalwart-cli get MtaQueueQuota id1
 ```
 
 
 ### Create
 
 ```sh
-stalwart-cli create mta-queue-quota \
-  --field enable=true \
-  --field 'key=[]' \
-  --field 'match={"else":"Example","match":[]}' \
-  --field messages=1000 \
-  --field size=1000
+stalwart-cli create MtaQueueQuota \
+  --field 'key={}' \
+  --field 'match={"else":"Example","match":{}}'
 ```
 
 
 ### Query
 
 ```sh
-stalwart-cli query mta-queue-quota
+stalwart-cli query MtaQueueQuota
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update mta-queue-quota id1 --field description='Updated'
+stalwart-cli update MtaQueueQuota id1 --field enable=true
 ```
 
 
 ### Delete
 
 ```sh
-stalwart-cli delete mta-queue-quota --ids id1
+stalwart-cli delete MtaQueueQuota --ids id1
 ```
 
 

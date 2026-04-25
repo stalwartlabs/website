@@ -336,7 +336,7 @@ curl -X POST https://mail.example.com/api \
           {
             "update": {
               "singleton": {
-                "id": "id1"
+                "attempts": 2
               }
             }
           },
@@ -361,14 +361,14 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get dns-resolver
+stalwart-cli get DnsResolver
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update dns-resolver --field description='Updated'
+stalwart-cli update DnsResolver --field attempts=2
 ```
 
 

@@ -113,7 +113,7 @@ curl -X POST https://mail.example.com/api \
           {
             "create": {
               "new1": {
-                "events": []
+                "events": {}
               }
             }
           },
@@ -143,7 +143,7 @@ curl -X POST https://mail.example.com/api \
           {
             "update": {
               "id1": {
-                "events": []
+                "events": {}
               }
             }
           },
@@ -235,36 +235,36 @@ The `x:Trace/query` `filter` argument accepts the following conditions (combinab
 ### Fetch
 
 ```sh
-stalwart-cli get trace id1
+stalwart-cli get Trace id1
 ```
 
 
 ### Create
 
 ```sh
-stalwart-cli create trace \
-  --field 'events=[]'
+stalwart-cli create Trace \
+  --field 'events={}'
 ```
 
 
 ### Query
 
 ```sh
-stalwart-cli query trace
+stalwart-cli query Trace
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update trace id1 --field description='Updated'
+stalwart-cli update Trace id1 --field events='{}'
 ```
 
 
 ### Delete
 
 ```sh
-stalwart-cli delete trace --ids id1
+stalwart-cli delete Trace --ids id1
 ```
 
 

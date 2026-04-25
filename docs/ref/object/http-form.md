@@ -182,14 +182,14 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get http-form
+stalwart-cli get HttpForm
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update http-form --field description='Updated'
+stalwart-cli update HttpForm --field defaultFromAddress='updated value'
 ```
 
 

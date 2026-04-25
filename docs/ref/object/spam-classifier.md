@@ -144,12 +144,7 @@ curl -X POST https://mail.example.com/api \
             "update": {
               "singleton": {
                 "model": {
-                  "@type": "FtrlFh",
-                  "featureL2Normalize": true,
-                  "featureLogScale": true,
-                  "parameters": {
-                    "numFeatures": "20"
-                  }
+                  "@type": "FtrlFh"
                 }
               }
             }
@@ -175,14 +170,14 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get spam-classifier
+stalwart-cli get SpamClassifier
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update spam-classifier --field description='Updated'
+stalwart-cli update SpamClassifier --field model='{"@type":"FtrlFh"}'
 ```
 
 

@@ -164,14 +164,14 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get security
+stalwart-cli get Security
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update security --field description='Updated'
+stalwart-cli update Security --field abuseBanRate='{"count":35,"period":"1d"}'
 ```
 
 

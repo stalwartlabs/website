@@ -13,7 +13,7 @@ Initial setup shown the first time Stalwart starts. Configures the server's iden
 
 ##### `serverHostname`
 
-> Type: <code>HostName</code> · required
+> Type: <code>String</code> · required
 >
 > The public hostname this server answers to, for example mail.example.com.
 > Used in SMTP greetings, outgoing message headers, and TLS certificate requests.
@@ -159,7 +159,7 @@ curl -X POST https://mail.example.com/api \
           {
             "update": {
               "singleton": {
-                "defaultDomain": "updated value"
+                "serverHostname": "updated value"
               }
             }
           },
@@ -184,14 +184,14 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get bootstrap
+stalwart-cli get Bootstrap
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update bootstrap --field description='Updated'
+stalwart-cli update Bootstrap --field serverHostname='updated value'
 ```
 
 

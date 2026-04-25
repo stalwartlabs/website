@@ -436,16 +436,8 @@ curl -X POST https://mail.example.com/api \
             "create": {
               "new1": {
                 "@type": "Log",
-                "ansi": true,
-                "enable": true,
-                "events": [],
-                "eventsPolicy": "exclude",
-                "level": "info",
-                "lossy": false,
-                "multiline": false,
-                "path": "Example",
-                "prefix": "stalwart",
-                "rotate": "daily"
+                "events": {},
+                "path": "Example"
               }
             }
           },
@@ -475,7 +467,7 @@ curl -X POST https://mail.example.com/api \
           {
             "update": {
               "id1": {
-                "id": "id1"
+                "path": "updated value"
               }
             }
           },
@@ -559,45 +551,37 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get tracer id1
+stalwart-cli get Tracer id1
 ```
 
 
 ### Create
 
 ```sh
-stalwart-cli create tracer/log \
+stalwart-cli create Tracer/Log \
   --field path=Example \
-  --field prefix=stalwart \
-  --field rotate=daily \
-  --field ansi=true \
-  --field multiline=false \
-  --field enable=true \
-  --field level=info \
-  --field lossy=false \
-  --field 'events=[]' \
-  --field eventsPolicy=exclude
+  --field 'events={}'
 ```
 
 
 ### Query
 
 ```sh
-stalwart-cli query tracer
+stalwart-cli query Tracer
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update tracer id1 --field description='Updated'
+stalwart-cli update Tracer id1 --field path='updated value'
 ```
 
 
 ### Delete
 
 ```sh
-stalwart-cli delete tracer --ids id1
+stalwart-cli delete Tracer --ids id1
 ```
 
 

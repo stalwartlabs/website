@@ -182,14 +182,14 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get oidc-provider
+stalwart-cli get OidcProvider
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update oidc-provider --field description='Updated'
+stalwart-cli update OidcProvider --field authCodeMaxAttempts=3
 ```
 
 

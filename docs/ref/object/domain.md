@@ -186,33 +186,17 @@ curl -X POST https://mail.example.com/api \
           {
             "create": {
               "new1": {
-                "aliases": [],
-                "allowRelaying": false,
-                "catchAllAddress": "user@example.com",
+                "aliases": {},
                 "certificateManagement": {
                   "@type": "Manual"
                 },
-                "description": "Example",
-                "directoryId": "<Directory id>",
                 "dkimManagement": {
-                  "@type": "Automatic",
-                  "algorithms": [
-                    "Dkim1Ed25519Sha256",
-                    "Dkim1RsaSha256"
-                  ],
-                  "deleteAfter": "30d",
-                  "retireAfter": "7d",
-                  "rotateAfter": "90d",
-                  "selectorTemplate": "v{version}-{algorithm}-{date-%Y%m%d}"
+                  "@type": "Automatic"
                 },
                 "dnsManagement": {
                   "@type": "Manual"
                 },
-                "isEnabled": true,
-                "logo": "Example",
-                "memberTenantId": "<Tenant id>",
                 "name": "example.com",
-                "reportAddressUri": "mailto:postmaster",
                 "subAddressing": {
                   "@type": "Enabled"
                 }
@@ -339,50 +323,42 @@ The `x:Domain/query` `filter` argument accepts the following conditions (combina
 ### Fetch
 
 ```sh
-stalwart-cli get domain id1
+stalwart-cli get Domain id1
 ```
 
 
 ### Create
 
 ```sh
-stalwart-cli create domain \
+stalwart-cli create Domain \
   --field name=example.com \
-  --field 'aliases=[]' \
-  --field isEnabled=true \
-  --field description=Example \
-  --field logo=Example \
+  --field 'aliases={}' \
   --field 'certificateManagement={"@type":"Manual"}' \
-  --field 'dkimManagement={"@type":"Automatic","algorithms":["Dkim1Ed25519Sha256","Dkim1RsaSha256"],"deleteAfter":"30d","retireAfter":"7d","rotateAfter":"90d","selectorTemplate":"v{version}-{algorithm}-{date-%Y%m%d}"}' \
+  --field 'dkimManagement={"@type":"Automatic"}' \
   --field 'dnsManagement={"@type":"Manual"}' \
-  --field 'memberTenantId=<Tenant id>' \
-  --field 'directoryId=<Directory id>' \
-  --field catchAllAddress=user@example.com \
-  --field 'subAddressing={"@type":"Enabled"}' \
-  --field allowRelaying=false \
-  --field reportAddressUri=mailto:postmaster
+  --field 'subAddressing={"@type":"Enabled"}'
 ```
 
 
 ### Query
 
 ```sh
-stalwart-cli query domain
-stalwart-cli query domain --where text=example
+stalwart-cli query Domain
+stalwart-cli query Domain --where text=example
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update domain id1 --field description='Updated'
+stalwart-cli update Domain id1 --field description='updated value'
 ```
 
 
 ### Delete
 
 ```sh
-stalwart-cli delete domain --ids id1
+stalwart-cli delete Domain --ids id1
 ```
 
 

@@ -127,14 +127,14 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get dsn-report-settings
+stalwart-cli get DsnReportSettings
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update dsn-report-settings --field description='Updated'
+stalwart-cli update DsnReportSettings --field fromAddress='{"else":"'\''MAILER-DAEMON@'\'' + system('\''domain'\'')"}'
 ```
 
 

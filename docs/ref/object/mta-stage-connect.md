@@ -127,14 +127,14 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get mta-stage-connect
+stalwart-cli get MtaStageConnect
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update mta-stage-connect --field description='Updated'
+stalwart-cli update MtaStageConnect --field smtpGreeting='{"else":"system('\''hostname'\'') + '\'' Stalwart ESMTP at your service'\''"}'
 ```
 
 

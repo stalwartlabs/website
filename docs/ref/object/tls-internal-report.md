@@ -126,15 +126,13 @@ curl -X POST https://mail.example.com/api \
                 "createdAt": "2026-01-01T00:00:00Z",
                 "deliverAt": "2026-01-01T00:00:00Z",
                 "domain": "example.com",
-                "httpRua": [],
-                "mailRua": [],
-                "policyIdentifiers": [],
+                "httpRua": {},
+                "mailRua": {},
+                "policyIdentifiers": {},
                 "report": {
-                  "contactInfo": "Example",
                   "dateRangeEnd": "2026-01-01T00:00:00Z",
                   "dateRangeStart": "2026-01-01T00:00:00Z",
-                  "organizationName": "Example",
-                  "policies": [],
+                  "policies": {},
                   "reportId": "Example"
                 }
               }
@@ -166,7 +164,7 @@ curl -X POST https://mail.example.com/api \
           {
             "update": {
               "id1": {
-                "policyIdentifiers": []
+                "policyIdentifiers": {}
               }
             }
           },
@@ -250,18 +248,18 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get tls-internal-report id1
+stalwart-cli get TlsInternalReport id1
 ```
 
 
 ### Create
 
 ```sh
-stalwart-cli create tls-internal-report \
-  --field 'policyIdentifiers=[]' \
-  --field 'mailRua=[]' \
-  --field 'httpRua=[]' \
-  --field 'report={"contactInfo":"Example","dateRangeEnd":"2026-01-01T00:00:00Z","dateRangeStart":"2026-01-01T00:00:00Z","organizationName":"Example","policies":[],"reportId":"Example"}' \
+stalwart-cli create TlsInternalReport \
+  --field 'policyIdentifiers={}' \
+  --field 'mailRua={}' \
+  --field 'httpRua={}' \
+  --field 'report={"dateRangeEnd":"2026-01-01T00:00:00Z","dateRangeStart":"2026-01-01T00:00:00Z","policies":{},"reportId":"Example"}' \
   --field domain=example.com \
   --field createdAt=2026-01-01T00:00:00Z \
   --field deliverAt=2026-01-01T00:00:00Z
@@ -271,21 +269,21 @@ stalwart-cli create tls-internal-report \
 ### Query
 
 ```sh
-stalwart-cli query tls-internal-report
+stalwart-cli query TlsInternalReport
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update tls-internal-report id1 --field description='Updated'
+stalwart-cli update TlsInternalReport id1 --field policyIdentifiers='{}'
 ```
 
 
 ### Delete
 
 ```sh
-stalwart-cli delete tls-internal-report --ids id1
+stalwart-cli delete TlsInternalReport --ids id1
 ```
 
 

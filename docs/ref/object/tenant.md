@@ -127,7 +127,6 @@ curl -X POST https://mail.example.com/api \
           {
             "create": {
               "new1": {
-                "logo": "Example",
                 "name": "Example",
                 "permissions": {
                   "@type": "Inherit"
@@ -257,16 +256,15 @@ The `x:Tenant/query` `filter` argument accepts the following conditions (combina
 ### Fetch
 
 ```sh
-stalwart-cli get tenant id1
+stalwart-cli get Tenant id1
 ```
 
 
 ### Create
 
 ```sh
-stalwart-cli create tenant \
+stalwart-cli create Tenant \
   --field name=Example \
-  --field logo=Example \
   --field 'roles={"@type":"Default"}' \
   --field 'permissions={"@type":"Inherit"}' \
   --field 'quotas={}'
@@ -276,22 +274,22 @@ stalwart-cli create tenant \
 ### Query
 
 ```sh
-stalwart-cli query tenant
-stalwart-cli query tenant --where text=example
+stalwart-cli query Tenant
+stalwart-cli query Tenant --where text=example
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update tenant id1 --field description='Updated'
+stalwart-cli update Tenant id1 --field name='updated value'
 ```
 
 
 ### Delete
 
 ```sh
-stalwart-cli delete tenant --ids id1
+stalwart-cli delete Tenant --ids id1
 ```
 
 

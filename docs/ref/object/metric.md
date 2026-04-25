@@ -162,8 +162,7 @@ curl -X POST https://mail.example.com/api \
           {
             "create": {
               "new1": {
-                "@type": "Counter",
-                "count": 0
+                "@type": "Counter"
               }
             }
           },
@@ -193,7 +192,7 @@ curl -X POST https://mail.example.com/api \
           {
             "update": {
               "id1": {
-                "id": "id1"
+                "count": 0
               }
             }
           },
@@ -277,36 +276,35 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get metric id1
+stalwart-cli get Metric id1
 ```
 
 
 ### Create
 
 ```sh
-stalwart-cli create metric/counter \
-  --field count=0
+stalwart-cli create Metric/Counter
 ```
 
 
 ### Query
 
 ```sh
-stalwart-cli query metric
+stalwart-cli query Metric
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update metric id1 --field description='Updated'
+stalwart-cli update Metric id1 --field count=0
 ```
 
 
 ### Delete
 
 ```sh
-stalwart-cli delete metric --ids id1
+stalwart-cli delete Metric --ids id1
 ```
 
 

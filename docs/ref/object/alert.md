@@ -108,12 +108,11 @@ curl -X POST https://mail.example.com/api \
               "new1": {
                 "condition": {
                   "else": "Example",
-                  "match": []
+                  "match": {}
                 },
                 "emailAlert": {
                   "@type": "Disabled"
                 },
-                "enable": true,
                 "eventAlert": {
                   "@type": "Disabled"
                 }
@@ -148,7 +147,7 @@ curl -X POST https://mail.example.com/api \
               "id1": {
                 "condition": {
                   "else": "Example",
-                  "match": []
+                  "match": {}
                 }
               }
             }
@@ -233,39 +232,38 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get alert id1
+stalwart-cli get Alert id1
 ```
 
 
 ### Create
 
 ```sh
-stalwart-cli create alert \
-  --field 'condition={"else":"Example","match":[]}' \
+stalwart-cli create Alert \
+  --field 'condition={"else":"Example","match":{}}' \
   --field 'emailAlert={"@type":"Disabled"}' \
-  --field 'eventAlert={"@type":"Disabled"}' \
-  --field enable=true
+  --field 'eventAlert={"@type":"Disabled"}'
 ```
 
 
 ### Query
 
 ```sh
-stalwart-cli query alert
+stalwart-cli query Alert
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update alert id1 --field description='Updated'
+stalwart-cli update Alert id1 --field condition='{"else":"Example","match":{}}'
 ```
 
 
 ### Delete
 
 ```sh
-stalwart-cli delete alert --ids id1
+stalwart-cli delete Alert --ids id1
 ```
 
 

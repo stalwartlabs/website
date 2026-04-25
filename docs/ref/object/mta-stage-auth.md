@@ -147,14 +147,14 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get mta-stage-auth
+stalwart-cli get MtaStageAuth
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update mta-stage-auth --field description='Updated'
+stalwart-cli update MtaStageAuth --field maxFailures='{"else":"3"}'
 ```
 
 

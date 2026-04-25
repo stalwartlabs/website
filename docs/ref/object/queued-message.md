@@ -158,9 +158,6 @@ curl -X POST https://mail.example.com/api \
           {
             "create": {
               "new1": {
-                "envId": "Example",
-                "nextRetry": "2026-01-01T00:00:00Z",
-                "priority": 0,
                 "recipients": {}
               }
             }
@@ -287,40 +284,37 @@ The `x:QueuedMessage/query` `filter` argument accepts the following conditions (
 ### Fetch
 
 ```sh
-stalwart-cli get queued-message id1
+stalwart-cli get QueuedMessage id1
 ```
 
 
 ### Create
 
 ```sh
-stalwart-cli create queued-message \
-  --field nextRetry=2026-01-01T00:00:00Z \
-  --field 'recipients={}' \
-  --field envId=Example \
-  --field priority=0
+stalwart-cli create QueuedMessage \
+  --field 'recipients={}'
 ```
 
 
 ### Query
 
 ```sh
-stalwart-cli query queued-message
-stalwart-cli query queued-message --where text=example
+stalwart-cli query QueuedMessage
+stalwart-cli query QueuedMessage --where text=example
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update queued-message id1 --field description='Updated'
+stalwart-cli update QueuedMessage id1 --field envId='updated value'
 ```
 
 
 ### Delete
 
 ```sh
-stalwart-cli delete queued-message --ids id1
+stalwart-cli delete QueuedMessage --ids id1
 ```
 
 

@@ -292,16 +292,13 @@ curl -X POST https://mail.example.com/api \
             "create": {
               "new1": {
                 "@type": "User",
-                "aliases": [],
-                "credentials": [],
-                "description": "Example",
+                "aliases": {},
+                "credentials": {},
                 "domainId": "<Domain id>",
                 "encryptionAtRest": {
                   "@type": "Disabled"
                 },
-                "locale": "en_US",
-                "memberGroupIds": [],
-                "memberTenantId": "<Tenant id>",
+                "memberGroupIds": {},
                 "name": "alice",
                 "permissions": {
                   "@type": "Inherit"
@@ -309,8 +306,7 @@ curl -X POST https://mail.example.com/api \
                 "quotas": {},
                 "roles": {
                   "@type": "User"
-                },
-                "timeZone": "Africa/Abidjan"
+                }
               }
             }
           },
@@ -340,7 +336,7 @@ curl -X POST https://mail.example.com/api \
           {
             "update": {
               "id1": {
-                "id": "id1"
+                "description": "updated value"
               }
             }
           },
@@ -434,26 +430,22 @@ The `x:Account/query` `filter` argument accepts the following conditions (combin
 ### Fetch
 
 ```sh
-stalwart-cli get account id1
+stalwart-cli get Account id1
 ```
 
 
 ### Create
 
 ```sh
-stalwart-cli create account/user \
+stalwart-cli create Account/User \
   --field name=alice \
   --field 'domainId=<Domain id>' \
-  --field 'credentials=[]' \
-  --field 'memberGroupIds=[]' \
-  --field 'memberTenantId=<Tenant id>' \
+  --field 'credentials={}' \
+  --field 'memberGroupIds={}' \
   --field 'roles={"@type":"User"}' \
   --field 'permissions={"@type":"Inherit"}' \
   --field 'quotas={}' \
-  --field 'aliases=[]' \
-  --field description=Example \
-  --field locale=en_US \
-  --field timeZone=Africa/Abidjan \
+  --field 'aliases={}' \
   --field 'encryptionAtRest={"@type":"Disabled"}'
 ```
 
@@ -461,21 +453,21 @@ stalwart-cli create account/user \
 ### Query
 
 ```sh
-stalwart-cli query account
+stalwart-cli query Account
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update account id1 --field description='Updated'
+stalwart-cli update Account id1 --field description='updated value'
 ```
 
 
 ### Delete
 
 ```sh
-stalwart-cli delete account --ids id1
+stalwart-cli delete Account --ids id1
 ```
 
 

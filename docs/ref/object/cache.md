@@ -280,14 +280,14 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get cache
+stalwart-cli get Cache
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update cache --field description='Updated'
+stalwart-cli update Cache --field accessTokens=10mb
 ```
 
 

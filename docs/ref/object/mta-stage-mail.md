@@ -128,14 +128,14 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get mta-stage-mail
+stalwart-cli get MtaStageMail
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update mta-stage-mail --field description='Updated'
+stalwart-cli update MtaStageMail --field isSenderAllowed='{"else":"!is_empty(authenticated_as) || !key_exists('\''spam-block'\'', sender_domain)","match":[]}'
 ```
 
 

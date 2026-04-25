@@ -126,14 +126,14 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get spam-dnsbl-settings
+stalwart-cli get SpamDnsblSettings
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update spam-dnsbl-settings --field description='Updated'
+stalwart-cli update SpamDnsblSettings --field domainLimit=50
 ```
 
 

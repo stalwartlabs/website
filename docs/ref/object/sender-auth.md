@@ -188,14 +188,14 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get sender-auth
+stalwart-cli get SenderAuth
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update sender-auth --field description='Updated'
+stalwart-cli update SenderAuth --field dkimSignDomain='{"else":"false","match":[{"if":"is_local_domain(sender_domain) && !is_empty(authenticated_as)","then":"sender_domain"}]}'
 ```
 
 

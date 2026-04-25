@@ -154,7 +154,7 @@ curl -X POST https://mail.example.com/api \
           {
             "update": {
               "singleton": {
-                "id": "id1"
+                "description": "updated value"
               }
             }
           },
@@ -179,14 +179,14 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get spam-llm
+stalwart-cli get SpamLlm
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update spam-llm --field description='Updated'
+stalwart-cli update SpamLlm --field description='updated value'
 ```
 
 

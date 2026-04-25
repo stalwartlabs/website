@@ -161,14 +161,14 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get calendar
+stalwart-cli get Calendar
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update calendar --field description='Updated'
+stalwart-cli update Calendar --field defaultDisplayName='updated value'
 ```
 
 

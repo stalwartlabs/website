@@ -126,14 +126,14 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get account-settings
+stalwart-cli get AccountSettings
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update account-settings --field description='Updated'
+stalwart-cli update AccountSettings --field description='updated value'
 ```
 
 

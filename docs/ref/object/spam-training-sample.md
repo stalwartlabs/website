@@ -151,7 +151,7 @@ curl -X POST https://mail.example.com/api \
           {
             "update": {
               "id1": {
-                "id": "id1"
+                "description": "updated value"
               }
             }
           },
@@ -243,36 +243,36 @@ The `x:SpamTrainingSample/query` `filter` argument accepts the following conditi
 ### Fetch
 
 ```sh
-stalwart-cli get spam-training-sample id1
+stalwart-cli get SpamTrainingSample id1
 ```
 
 
 ### Create
 
 ```sh
-stalwart-cli create spam-training-sample
+stalwart-cli create SpamTrainingSample
 ```
 
 
 ### Query
 
 ```sh
-stalwart-cli query spam-training-sample
-stalwart-cli query spam-training-sample --where accountId=id1
+stalwart-cli query SpamTrainingSample
+stalwart-cli query SpamTrainingSample --where accountId=id1
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update spam-training-sample id1 --field description='Updated'
+stalwart-cli update SpamTrainingSample id1 --field description='updated value'
 ```
 
 
 ### Delete
 
 ```sh
-stalwart-cli delete spam-training-sample --ids id1
+stalwart-cli delete SpamTrainingSample --ids id1
 ```
 
 

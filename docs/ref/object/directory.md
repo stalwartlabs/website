@@ -410,47 +410,11 @@ curl -X POST https://mail.example.com/api \
             "create": {
               "new1": {
                 "@type": "Ldap",
-                "allowInvalidCerts": false,
-                "attrClass": [
-                  "objectClass"
-                ],
-                "attrDescription": [
-                  "description"
-                ],
-                "attrEmail": [
-                  "mail"
-                ],
-                "attrEmailAlias": [
-                  "mailAlias"
-                ],
-                "attrMemberOf": [
-                  "memberOf"
-                ],
-                "attrSecret": [
-                  "userPassword"
-                ],
-                "attrSecretChanged": [
-                  "pwdChangeTime"
-                ],
                 "baseDn": "Example",
-                "bindAuthentication": true,
-                "bindDn": "Example",
                 "bindSecret": {
                   "@type": "None"
                 },
-                "description": "Example",
-                "filterLogin": "(&(objectClass=inetOrgPerson)(mail=?))",
-                "filterMailbox": "(|(&(objectClass=inetOrgPerson)(|(mail=?)(mailAlias=?)))(&(objectClass=groupOfNames)(|(mail=?)(mailAlias=?))))",
-                "filterMemberOf": "(&(objectClass=groupOfNames)(member=?))",
-                "groupClass": "groupOfNames",
-                "memberTenantId": "<Tenant id>",
-                "poolMaxConnections": 10,
-                "poolTimeoutCreate": "30s",
-                "poolTimeoutRecycle": "30s",
-                "poolTimeoutWait": "30s",
-                "timeout": "30s",
-                "url": "ldap://localhost:389",
-                "useTls": false
+                "description": "Example"
               }
             }
           },
@@ -480,7 +444,7 @@ curl -X POST https://mail.example.com/api \
           {
             "update": {
               "id1": {
-                "id": "id1"
+                "description": "updated value"
               }
             }
           },
@@ -572,61 +536,39 @@ The `x:Directory/query` `filter` argument accepts the following conditions (comb
 ### Fetch
 
 ```sh
-stalwart-cli get directory id1
+stalwart-cli get Directory id1
 ```
 
 
 ### Create
 
 ```sh
-stalwart-cli create directory/ldap \
+stalwart-cli create Directory/Ldap \
   --field description=Example \
-  --field url=ldap://localhost:389 \
-  --field timeout=30s \
-  --field allowInvalidCerts=false \
-  --field useTls=false \
   --field baseDn=Example \
-  --field bindDn=Example \
-  --field 'bindSecret={"@type":"None"}' \
-  --field bindAuthentication=true \
-  --field filterLogin=(&(objectClass=inetOrgPerson)(mail=?)) \
-  --field filterMailbox=(|(&(objectClass=inetOrgPerson)(|(mail=?)(mailAlias=?)))(&(objectClass=groupOfNames)(|(mail=?)(mailAlias=?)))) \
-  --field filterMemberOf=(&(objectClass=groupOfNames)(member=?)) \
-  --field 'attrClass=["objectClass"]' \
-  --field 'attrDescription=["description"]' \
-  --field 'attrEmail=["mail"]' \
-  --field 'attrEmailAlias=["mailAlias"]' \
-  --field 'attrMemberOf=["memberOf"]' \
-  --field 'attrSecret=["userPassword"]' \
-  --field 'attrSecretChanged=["pwdChangeTime"]' \
-  --field groupClass=groupOfNames \
-  --field poolMaxConnections=10 \
-  --field poolTimeoutCreate=30s \
-  --field poolTimeoutRecycle=30s \
-  --field poolTimeoutWait=30s \
-  --field 'memberTenantId=<Tenant id>'
+  --field 'bindSecret={"@type":"None"}'
 ```
 
 
 ### Query
 
 ```sh
-stalwart-cli query directory
-stalwart-cli query directory --where memberTenantId=id1
+stalwart-cli query Directory
+stalwart-cli query Directory --where memberTenantId=id1
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update directory id1 --field description='Updated'
+stalwart-cli update Directory id1 --field description='updated value'
 ```
 
 
 ### Delete
 
 ```sh
-stalwart-cli delete directory --ids id1
+stalwart-cli delete Directory --ids id1
 ```
 
 

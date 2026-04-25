@@ -116,9 +116,8 @@ curl -X POST https://mail.example.com/api \
           {
             "create": {
               "new1": {
-                "allowedIps": [],
+                "allowedIps": {},
                 "description": "Example",
-                "expiresAt": "2026-01-01T00:00:00Z",
                 "permissions": {
                   "@type": "Inherit"
                 }
@@ -243,40 +242,39 @@ The `x:AppPassword/query` `filter` argument accepts the following conditions (co
 ### Fetch
 
 ```sh
-stalwart-cli get app-password id1
+stalwart-cli get AppPassword id1
 ```
 
 
 ### Create
 
 ```sh
-stalwart-cli create app-password \
+stalwart-cli create AppPassword \
   --field description=Example \
-  --field expiresAt=2026-01-01T00:00:00Z \
   --field 'permissions={"@type":"Inherit"}' \
-  --field 'allowedIps=[]'
+  --field 'allowedIps={}'
 ```
 
 
 ### Query
 
 ```sh
-stalwart-cli query app-password
-stalwart-cli query app-password --where expiresAt=2026-01-01T00:00:00Z
+stalwart-cli query AppPassword
+stalwart-cli query AppPassword --where expiresAt=2026-01-01T00:00:00Z
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update app-password id1 --field description='Updated'
+stalwart-cli update AppPassword id1 --field description='updated value'
 ```
 
 
 ### Delete
 
 ```sh
-stalwart-cli delete app-password --ids id1
+stalwart-cli delete AppPassword --ids id1
 ```
 
 

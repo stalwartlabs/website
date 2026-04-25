@@ -102,7 +102,6 @@ curl -X POST https://mail.example.com/api \
           {
             "create": {
               "new1": {
-                "description": "Example",
                 "listeners": {
                   "@type": "EnableAll"
                 },
@@ -230,15 +229,14 @@ The `x:ClusterRole/query` `filter` argument accepts the following conditions (co
 ### Fetch
 
 ```sh
-stalwart-cli get cluster-role id1
+stalwart-cli get ClusterRole id1
 ```
 
 
 ### Create
 
 ```sh
-stalwart-cli create cluster-role \
-  --field description=Example \
+stalwart-cli create ClusterRole \
   --field 'tasks={"@type":"EnableAll"}' \
   --field 'listeners={"@type":"EnableAll"}'
 ```
@@ -247,22 +245,22 @@ stalwart-cli create cluster-role \
 ### Query
 
 ```sh
-stalwart-cli query cluster-role
-stalwart-cli query cluster-role --where name=example
+stalwart-cli query ClusterRole
+stalwart-cli query ClusterRole --where name=example
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update cluster-role id1 --field description='Updated'
+stalwart-cli update ClusterRole id1 --field description='updated value'
 ```
 
 
 ### Delete
 
 ```sh
-stalwart-cli delete cluster-role --ids id1
+stalwart-cli delete ClusterRole --ids id1
 ```
 
 

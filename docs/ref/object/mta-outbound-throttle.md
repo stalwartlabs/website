@@ -112,15 +112,8 @@ curl -X POST https://mail.example.com/api \
             "create": {
               "new1": {
                 "description": "Example",
-                "enable": true,
-                "key": [],
-                "match": {
-                  "else": "true"
-                },
-                "rate": {
-                  "count": 0,
-                  "period": "0s"
-                }
+                "key": {},
+                "rate": {}
               }
             }
           },
@@ -234,40 +227,38 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get mta-outbound-throttle id1
+stalwart-cli get MtaOutboundThrottle id1
 ```
 
 
 ### Create
 
 ```sh
-stalwart-cli create mta-outbound-throttle \
-  --field enable=true \
+stalwart-cli create MtaOutboundThrottle \
   --field description=Example \
-  --field 'key=[]' \
-  --field 'match={"else":"true"}' \
-  --field 'rate={"count":0,"period":"0s"}'
+  --field 'key={}' \
+  --field 'rate={}'
 ```
 
 
 ### Query
 
 ```sh
-stalwart-cli query mta-outbound-throttle
+stalwart-cli query MtaOutboundThrottle
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update mta-outbound-throttle id1 --field description='Updated'
+stalwart-cli update MtaOutboundThrottle id1 --field description='updated value'
 ```
 
 
 ### Delete
 
 ```sh
-stalwart-cli delete mta-outbound-throttle --ids id1
+stalwart-cli delete MtaOutboundThrottle --ids id1
 ```
 
 

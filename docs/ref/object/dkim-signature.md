@@ -299,28 +299,12 @@ curl -X POST https://mail.example.com/api \
             "create": {
               "new1": {
                 "@type": "Dkim1Ed25519Sha256",
-                "auid": "Example",
-                "canonicalization": "relaxed/relaxed",
                 "domainId": "<Domain id>",
-                "expire": 1000,
-                "headers": [
-                  "From",
-                  "To",
-                  "Date",
-                  "Subject",
-                  "Message-ID"
-                ],
-                "memberTenantId": "<Tenant id>",
-                "nextTransitionAt": "2026-01-01T00:00:00Z",
                 "privateKey": {
                   "@type": "Text",
                   "secret": "Example"
                 },
-                "report": true,
-                "selector": "Example",
-                "stage": "active",
-                "thirdParty": "Example",
-                "thirdPartyHash": "sha256"
+                "selector": "Example"
               }
             }
           },
@@ -350,7 +334,7 @@ curl -X POST https://mail.example.com/api \
           {
             "update": {
               "id1": {
-                "id": "id1"
+                "auid": "updated value"
               }
             }
           },
@@ -443,49 +427,39 @@ The `x:DkimSignature/query` `filter` argument accepts the following conditions (
 ### Fetch
 
 ```sh
-stalwart-cli get dkim-signature id1
+stalwart-cli get DkimSignature id1
 ```
 
 
 ### Create
 
 ```sh
-stalwart-cli create dkim-signature/dkim1-ed25519-sha256 \
-  --field auid=Example \
-  --field canonicalization=relaxed/relaxed \
-  --field expire=1000 \
-  --field 'headers=["From","To","Date","Subject","Message-ID"]' \
+stalwart-cli create DkimSignature/Dkim1Ed25519Sha256 \
   --field 'privateKey={"@type":"Text","secret":"Example"}' \
-  --field report=true \
-  --field thirdParty=Example \
-  --field thirdPartyHash=sha256 \
   --field 'domainId=<Domain id>' \
-  --field 'memberTenantId=<Tenant id>' \
-  --field selector=Example \
-  --field nextTransitionAt=2026-01-01T00:00:00Z \
-  --field stage=active
+  --field selector=Example
 ```
 
 
 ### Query
 
 ```sh
-stalwart-cli query dkim-signature
-stalwart-cli query dkim-signature --where domainId=id1
+stalwart-cli query DkimSignature
+stalwart-cli query DkimSignature --where domainId=id1
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update dkim-signature id1 --field description='Updated'
+stalwart-cli update DkimSignature id1 --field auid='updated value'
 ```
 
 
 ### Delete
 
 ```sh
-stalwart-cli delete dkim-signature --ids id1
+stalwart-cli delete DkimSignature --ids id1
 ```
 
 

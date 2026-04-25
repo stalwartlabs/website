@@ -161,14 +161,14 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get calendar-scheduling
+stalwart-cli get CalendarScheduling
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update calendar-scheduling --field description='Updated'
+stalwart-cli update CalendarScheduling --field enable=true
 ```
 
 

@@ -420,7 +420,7 @@ curl -X POST https://mail.example.com/api \
           {
             "update": {
               "id1": {
-                "id": "id1"
+                "from": "updated value"
               }
             }
           },
@@ -512,14 +512,14 @@ The `x:ArchivedItem/query` `filter` argument accepts the following conditions (c
 ### Fetch
 
 ```sh
-stalwart-cli get archived-item id1
+stalwart-cli get ArchivedItem id1
 ```
 
 
 ### Create
 
 ```sh
-stalwart-cli create archived-item/email \
+stalwart-cli create ArchivedItem/Email \
   --field from=Example \
   --field subject=Example \
   --field receivedAt=2026-01-01T00:00:00Z \
@@ -533,22 +533,22 @@ stalwart-cli create archived-item/email \
 ### Query
 
 ```sh
-stalwart-cli query archived-item
-stalwart-cli query archived-item --where accountId=id1
+stalwart-cli query ArchivedItem
+stalwart-cli query ArchivedItem --where accountId=id1
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update archived-item id1 --field description='Updated'
+stalwart-cli update ArchivedItem id1 --field from='updated value'
 ```
 
 
 ### Delete
 
 ```sh
-stalwart-cli delete archived-item --ids id1
+stalwart-cli delete ArchivedItem --ids id1
 ```
 
 

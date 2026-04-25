@@ -226,14 +226,14 @@ The `x:Log/query` `filter` argument accepts the following conditions (combinable
 ### Fetch
 
 ```sh
-stalwart-cli get log id1
+stalwart-cli get Log id1
 ```
 
 
 ### Create
 
 ```sh
-stalwart-cli create log \
+stalwart-cli create Log \
   --field timestamp=2026-01-01T00:00:00Z \
   --field level=error \
   --field details=Example
@@ -243,22 +243,22 @@ stalwart-cli create log \
 ### Query
 
 ```sh
-stalwart-cli query log
-stalwart-cli query log --where text=example
+stalwart-cli query Log
+stalwart-cli query Log --where text=example
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update log id1 --field description='Updated'
+stalwart-cli update Log id1 --field details='updated value'
 ```
 
 
 ### Delete
 
 ```sh
-stalwart-cli delete log --ids id1
+stalwart-cli delete Log --ids id1
 ```
 
 

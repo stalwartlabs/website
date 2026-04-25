@@ -151,21 +151,9 @@ curl -X POST https://mail.example.com/api \
           {
             "create": {
               "new1": {
-                "enable": true,
                 "format": {
-                  "@type": "Csv",
-                  "indexKey": 0,
-                  "indexValue": 1000,
-                  "separator": ",",
-                  "skipFirst": false
+                  "@type": "Csv"
                 },
-                "isGzipped": false,
-                "maxEntries": 100000,
-                "maxEntrySize": 512,
-                "maxSize": "100mb",
-                "refresh": "12h",
-                "retry": "1h",
-                "timeout": "30s",
                 "url": "https://example.com"
               }
             }
@@ -280,23 +268,15 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get http-lookup id1
+stalwart-cli get HttpLookup id1
 ```
 
 
 ### Create
 
 ```sh
-stalwart-cli create http-lookup \
-  --field enable=true \
-  --field 'format={"@type":"Csv","indexKey":0,"indexValue":1000,"separator":",","skipFirst":false}' \
-  --field isGzipped=false \
-  --field maxEntries=100000 \
-  --field maxEntrySize=512 \
-  --field maxSize=100mb \
-  --field refresh=12h \
-  --field retry=1h \
-  --field timeout=30s \
+stalwart-cli create HttpLookup \
+  --field 'format={"@type":"Csv"}' \
   --field url=https://example.com
 ```
 
@@ -304,21 +284,21 @@ stalwart-cli create http-lookup \
 ### Query
 
 ```sh
-stalwart-cli query http-lookup
+stalwart-cli query HttpLookup
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update http-lookup id1 --field description='Updated'
+stalwart-cli update HttpLookup id1 --field enable=true
 ```
 
 
 ### Delete
 
 ```sh
-stalwart-cli delete http-lookup --ids id1
+stalwart-cli delete HttpLookup --ids id1
 ```
 
 

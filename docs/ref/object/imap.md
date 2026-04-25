@@ -154,14 +154,14 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get imap
+stalwart-cli get Imap
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update imap --field description='Updated'
+stalwart-cli update Imap --field allowPlainTextAuth=false
 ```
 
 

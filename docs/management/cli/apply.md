@@ -4,7 +4,7 @@ sidebar_position: 8
 
 # Declarative bulk operations
 
-The `apply` command takes a JSON file describing a batch of `create`, `update`, and `destroy` operations, and applies them to the server in dependency-aware order. It is intended as the integration surface for infrastructure-as-code tooling (Ansible, Terraform, NixOS, Pulumi, ...) and for one-shot deployments / migrations performed by hand or by CI.
+The `apply` command takes an NDJSON file describing a batch of `create`, `update`, and `destroy` operations, and applies them to the server in dependency-aware order. It is intended as the integration surface for infrastructure-as-code tooling (Ansible, Terraform, NixOS, Pulumi, ...) and for one-shot deployments / migrations performed by hand or by CI.
 
 For interactive use cases see the per-command pages: [Creating objects](./create.md), [Updating objects](./update.md), [Removing objects](./delete.md).
 
@@ -21,8 +21,8 @@ stalwart-cli apply ( --file <path> | --stdin )
 
 | Option | Effect |
 |---|---|
-| `--file <path>` | Read the plan from a JSON file. |
-| `--stdin` | Read the plan from standard input. |
+| `--file <path>` | Read the plan from an NDJSON file. |
+| `--stdin` | Read the plan from standard input (NDJSON). |
 | `--dry-run` | Parse and validate the plan, then print it; no requests are sent. |
 | `--continue-on-error` | Do not abort on the first failed operation; report all errors at the end and exit non-zero. |
 | `--quiet` | Suppress per-operation log lines; print only the final summary. |
@@ -33,7 +33,7 @@ Exactly one of `--file` and `--stdin` must be supplied.
 
 ## How it works
 
-The plan is a JSON array of operations. Each operation is one of three types: `update`, `destroy`, or `create`. The CLI processes the plan in **two passes**:
+The plan is **NDJSON**: one operation per line, no enclosing array. Blank lines are ignored; surrounding whitespace on a line is tolerated. Each operation is one of three types: `update`, `destroy`, or `create`. The CLI processes the plan in **two passes**:
 
 1. **Destroy pass (reverse order).** Every `destroy` operation is executed in **reverse** of its position in the plan. Update and create operations are skipped during this pass. This is what makes dependency-aware teardowns possible: when a plan creates `Domain → Account → DkimSignature` (parents first), the same plan, when teardown is needed, can be applied with destroys in the same order, and the reverse pass will undo them in `DkimSignature → Account → Domain` order, satisfying foreign-key constraints.
 
@@ -85,68 +85,40 @@ For destroys, ids are first collected by paginating the corresponding `query` (a
 
 ## File format
 
-A plan is a JSON array. Each element is an operation object with a discriminator `@type` field and an `object` field. The remaining fields depend on `@type`.
+A plan is **NDJSON**: every non-blank line is a JSON object describing one operation. Each operation has a discriminator `@type` field and an `object` field; the remaining fields depend on `@type`. Lines are processed in file order; blank lines and surrounding whitespace are ignored. There is no enclosing array.
 
 ### Annotated example
 
-```jsonc
-[
-  // ---- Destroy pass: written parents-first, executed children-first ----
-  {
-    "@type": "destroy",
-    "object": "Domain",
-    "value": { "name": "example.com" }      // JMAP filter (any field on the object)
-  },
-  { "@type": "destroy", "object": "Domain", "value": { "name": "example.net" } },
-  { "@type": "destroy", "object": "Account", "value": { "@type": "Group" } },
-  { "@type": "destroy", "object": "DkimSignature" /* no value -> match all */ },
+```text
+# Destroy pass: written parents-first, executed children-first.
+{"@type":"destroy","object":"Domain","value":{"name":"example.com"}}
+{"@type":"destroy","object":"Domain","value":{"name":"example.net"}}
+{"@type":"destroy","object":"Account","value":{"@type":"Group"}}
+{"@type":"destroy","object":"DkimSignature"}
 
-  // ---- Create / update pass: parents-first ----
-  {
-    "@type": "create",
-    "object": "Domain",
-    "value": {
-      "dom-a": { "name": "example.com" },   // user-assigned id "dom-a"
-      "dom-b": { "name": "example.net" }
-    }
-  },
-  {
-    "@type": "create",
-    "object": "Account",
-    "value": {
-      "grp-sales": {
-        "@type": "Group",
-        "name": "sales",
-        "domainId": "#dom-a"                // ref to the domain created above
-      }
-    }
-  },
-  {
-    "@type": "update",
-    "object": "SystemSettings",             // singleton; id may be omitted
-    "value": { "defaultDomainId": "#dom-a" }
-  }
-]
+# Create / update pass: parents-first.
+{"@type":"create","object":"Domain","value":{"dom-a":{"name":"example.com"},"dom-b":{"name":"example.net"}}}
+{"@type":"create","object":"Account","value":{"grp-sales":{"@type":"Group","name":"sales","domainId":"#dom-a"}}}
+{"@type":"update","object":"SystemSettings","value":{"defaultDomainId":"#dom-a"}}
 ```
 
-A complete obfuscated example file is included with these docs at [example-bulk-plan.json](./example-bulk-plan.json).
+(Annotation lines starting with `#` are shown above for clarity; the actual NDJSON parser does **not** accept comments. Every non-blank line must be a JSON object.)
 
-### JSON Schema
+A complete obfuscated example plan is included with these docs at [example-bulk-plan.ndjson](./example-bulk-plan.ndjson).
 
-A machine-readable schema for the plan format:
+### Per-line JSON Schema
+
+A machine-readable schema for **a single line** of the plan format:
 
 ```json
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Stalwart CLI bulk plan",
-  "type": "array",
-  "items": {
-    "oneOf": [
-      { "$ref": "#/$defs/createOp" },
-      { "$ref": "#/$defs/updateOp" },
-      { "$ref": "#/$defs/destroyOp" }
-    ]
-  },
+  "title": "Stalwart CLI bulk plan operation",
+  "oneOf": [
+    { "$ref": "#/$defs/createOp" },
+    { "$ref": "#/$defs/updateOp" },
+    { "$ref": "#/$defs/destroyOp" }
+  ],
   "$defs": {
     "objectName": {
       "type": "string",
@@ -255,6 +227,8 @@ For multi-variant changes (where the entire variant is being switched), pass the
 
 Destroys are *filter-based*, not id-based: the CLI runs a paginated `Object/query` with the supplied filter, then destroys every returned id in batches. To delete a specific known id, use a filter that matches it (e.g. `{"name": "..."}`) or the standalone [`delete`](./delete.md) command.
 
+The set of filterable properties is whatever the server's `Object/query` accepts for the type. Most user-facing properties (`name`, `domainId`, etc.) are universally supported. Filtering on the `@type` discriminator works for some multi-variant types (notably `Account`) but not all. If a destroy fails with `unsupportedFilter: Filter on property @type is not supported or invalid`, drop the `@type` clause and either destroy all variants of the parent (omit `value`) or filter on a regular property.
+
 ## Output
 
 ### Human (default)
@@ -294,7 +268,7 @@ This is the recommended mode for CI pipelines and IaC providers. The plan header
 ### Dry run
 
 ```sh
-stalwart-cli apply --file plan.json --dry-run
+stalwart-cli apply --file plan.ndjson --dry-run
 ```
 
 ```text
@@ -324,13 +298,13 @@ Use `ansible.builtin.template` to render a plan from a Jinja2 template, then `an
   tasks:
     - name: Render plan
       ansible.builtin.template:
-        src: stalwart-plan.json.j2
-        dest: /tmp/stalwart-plan.json
+        src: stalwart-plan.ndjson.j2
+        dest: /tmp/stalwart-plan.ndjson
       register: plan
 
     - name: Apply plan
       ansible.builtin.command: >
-        stalwart-cli apply --file /tmp/stalwart-plan.json --json
+        stalwart-cli apply --file /tmp/stalwart-plan.ndjson --json
       environment:
         STALWART_URL: "{{ stalwart_url }}"
         STALWART_USER: "{{ stalwart_admin_user }}"
@@ -344,23 +318,17 @@ Use `ansible.builtin.template` to render a plan from a Jinja2 template, then `an
         msg: "{{ result.stdout_lines | last | from_json }}"
 ```
 
-`stalwart-plan.json.j2`:
+`stalwart-plan.ndjson.j2` (one JSON object per line, no enclosing array):
 
 ```jinja
-[
 {% for d in domains %}
-  { "@type": "destroy", "object": "Domain", "value": { "name": "{{ d.name }}" } }{{ "," if not loop.last }}
-{% endfor %},
-  {
-    "@type": "create",
-    "object": "Domain",
-    "value": {
-{% for d in domains %}
-      "dom-{{ loop.index }}": { "name": "{{ d.name }}", "description": "{{ d.description }}" }{{ "," if not loop.last }}
+{"@type":"destroy","object":"Domain","value":{"name":"{{ d.name }}"}}
 {% endfor %}
-    }
-  }
-]
+{"@type":"create","object":"Domain","value":{
+{%- for d in domains -%}
+"dom-{{ loop.index }}":{"name":"{{ d.name }}","description":"{{ d.description }}"}{% if not loop.last %},{% endif %}
+{%- endfor -%}
+}}
 ```
 
 Use `--dry-run` in a `check` task for `--check` Ansible runs.
@@ -373,7 +341,7 @@ Two patterns are supported.
 
 ```hcl
 locals {
-  plan = jsonencode([
+  ops = [
     {
       "@type" = "create"
       object  = "Domain"
@@ -390,7 +358,9 @@ locals {
         defaultHostname = var.hostname
       }
     },
-  ])
+  ]
+  # Render as NDJSON: one JSON object per line, no enclosing array.
+  plan = join("\n", [for op in local.ops : jsonencode(op)])
 }
 
 resource "terraform_data" "stalwart_apply" {
@@ -422,7 +392,10 @@ Define a NixOS module that materialises the plan as a derivation and runs it via
 
 let
   cfg = config.services.stalwart-bootstrap;
-  plan = pkgs.writeText "stalwart-plan.json" (builtins.toJSON cfg.plan);
+  # NDJSON: one operation per line, no enclosing array.
+  planText = lib.concatMapStringsSep "\n"
+    (op: builtins.toJSON op) cfg.plan;
+  plan = pkgs.writeText "stalwart-plan.ndjson" planText;
 in
 {
   options.services.stalwart-bootstrap = {
@@ -486,10 +459,13 @@ Pulumi's `Command` resource (from `@pulumi/command`) maps cleanly to `apply`:
 import * as command from "@pulumi/command";
 import { plan } from "./plan";
 
+// `plan` is an array of operation objects; render as NDJSON.
+const planNdjson = plan.map((op) => JSON.stringify(op)).join("\n");
+
 new command.local.Command("stalwart-apply", {
     create:    `stalwart-cli apply --stdin --json`,
-    triggers:  [JSON.stringify(plan)],
-    stdin:     JSON.stringify(plan),
+    triggers:  [planNdjson],
+    stdin:     planNdjson,
     environment: {
         STALWART_URL:      stalwartUrl,
         STALWART_USER:     stalwartUser,
@@ -512,7 +488,7 @@ name: Apply Stalwart plan
 on:
   push:
     branches: [main]
-    paths: ["stalwart/plan.json"]
+    paths: ["stalwart/plan.ndjson"]
 
 jobs:
   apply:
@@ -524,13 +500,13 @@ jobs:
           curl --proto '=https' --tlsv1.2 -LsSf \
             https://github.com/stalwartlabs/cli/releases/latest/download/stalwart-cli-installer.sh | sh
       - name: Plan (dry-run on PRs would go here)
-        run: stalwart-cli apply --file stalwart/plan.json --dry-run
+        run: stalwart-cli apply --file stalwart/plan.ndjson --dry-run
         env:
           STALWART_URL:      ${{ secrets.STALWART_URL }}
           STALWART_USER:     ${{ secrets.STALWART_USER }}
           STALWART_PASSWORD: ${{ secrets.STALWART_PASSWORD }}
       - name: Apply
-        run: stalwart-cli apply --file stalwart/plan.json --json
+        run: stalwart-cli apply --file stalwart/plan.ndjson --json
         env:
           STALWART_URL:      ${{ secrets.STALWART_URL }}
           STALWART_USER:     ${{ secrets.STALWART_USER }}
@@ -546,7 +522,7 @@ apply:
     - apk add --no-cache curl
     - curl --proto '=https' --tlsv1.2 -LsSf https://github.com/stalwartlabs/cli/releases/latest/download/stalwart-cli-installer.sh | sh
   script:
-    - stalwart-cli apply --file stalwart/plan.json --json
+    - stalwart-cli apply --file stalwart/plan.ndjson --json
   variables:
     STALWART_URL: "https://mail.example.com"
   # STALWART_USER and STALWART_PASSWORD come from masked CI variables.

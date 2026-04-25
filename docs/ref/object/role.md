@@ -110,10 +110,9 @@ curl -X POST https://mail.example.com/api \
             "create": {
               "new1": {
                 "description": "Example",
-                "disabledPermissions": [],
-                "enabledPermissions": [],
-                "memberTenantId": "<Tenant id>",
-                "roleIds": []
+                "disabledPermissions": {},
+                "enabledPermissions": {},
+                "roleIds": {}
               }
             }
           },
@@ -236,41 +235,40 @@ The `x:Role/query` `filter` argument accepts the following conditions (combinabl
 ### Fetch
 
 ```sh
-stalwart-cli get role id1
+stalwart-cli get Role id1
 ```
 
 
 ### Create
 
 ```sh
-stalwart-cli create role \
+stalwart-cli create Role \
   --field description=Example \
-  --field 'memberTenantId=<Tenant id>' \
-  --field 'roleIds=[]' \
-  --field 'enabledPermissions=[]' \
-  --field 'disabledPermissions=[]'
+  --field 'roleIds={}' \
+  --field 'enabledPermissions={}' \
+  --field 'disabledPermissions={}'
 ```
 
 
 ### Query
 
 ```sh
-stalwart-cli query role
-stalwart-cli query role --where description=example
+stalwart-cli query Role
+stalwart-cli query Role --where description=example
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update role id1 --field description='Updated'
+stalwart-cli update Role id1 --field description='updated value'
 ```
 
 
 ### Delete
 
 ```sh
-stalwart-cli delete role --ids id1
+stalwart-cli delete Role --ids id1
 ```
 
 

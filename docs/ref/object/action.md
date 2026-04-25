@@ -368,7 +368,7 @@ curl -X POST https://mail.example.com/api \
           {
             "update": {
               "id1": {
-                "id": "id1"
+                "description": "updated value"
               }
             }
           },
@@ -452,35 +452,35 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get action id1
+stalwart-cli get Action id1
 ```
 
 
 ### Create
 
 ```sh
-stalwart-cli create action/reload-settings
+stalwart-cli create Action/ReloadSettings
 ```
 
 
 ### Query
 
 ```sh
-stalwart-cli query action
+stalwart-cli query Action
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update action id1 --field description='Updated'
+stalwart-cli update Action id1 --field description='updated value'
 ```
 
 
 ### Delete
 
 ```sh
-stalwart-cli delete action --ids id1
+stalwart-cli delete Action --ids id1
 ```
 
 

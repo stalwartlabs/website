@@ -196,14 +196,14 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get data-retention
+stalwart-cli get DataRetention
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update data-retention --field description='Updated'
+stalwart-cli update DataRetention --field expungeTrashAfter=30d
 ```
 
 

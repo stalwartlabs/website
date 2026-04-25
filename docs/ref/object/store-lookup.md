@@ -90,20 +90,11 @@ curl -X POST https://mail.example.com/api \
               "new1": {
                 "store": {
                   "@type": "PostgreSql",
-                  "allowInvalidCerts": false,
                   "authSecret": {
                     "@type": "None"
                   },
-                  "authUsername": "stalwart",
-                  "database": "stalwart",
                   "host": "Example",
-                  "options": "Example",
-                  "poolMaxConnections": 10,
-                  "poolRecyclingMethod": "fast",
-                  "port": 5432,
-                  "readReplicas": [],
-                  "timeout": "15s",
-                  "useTls": false
+                  "readReplicas": {}
                 }
               }
             }
@@ -136,20 +127,11 @@ curl -X POST https://mail.example.com/api \
               "id1": {
                 "store": {
                   "@type": "PostgreSql",
-                  "allowInvalidCerts": false,
                   "authSecret": {
                     "@type": "None"
                   },
-                  "authUsername": "stalwart",
-                  "database": "stalwart",
                   "host": "Example",
-                  "options": "Example",
-                  "poolMaxConnections": 10,
-                  "poolRecyclingMethod": "fast",
-                  "port": 5432,
-                  "readReplicas": [],
-                  "timeout": "15s",
-                  "useTls": false
+                  "readReplicas": {}
                 }
               }
             }
@@ -234,36 +216,36 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get store-lookup id1
+stalwart-cli get StoreLookup id1
 ```
 
 
 ### Create
 
 ```sh
-stalwart-cli create store-lookup \
-  --field 'store={"@type":"PostgreSql","allowInvalidCerts":false,"authSecret":{"@type":"None"},"authUsername":"stalwart","database":"stalwart","host":"Example","options":"Example","poolMaxConnections":10,"poolRecyclingMethod":"fast","port":5432,"readReplicas":[],"timeout":"15s","useTls":false}'
+stalwart-cli create StoreLookup \
+  --field 'store={"@type":"PostgreSql","authSecret":{"@type":"None"},"host":"Example","readReplicas":{}}'
 ```
 
 
 ### Query
 
 ```sh
-stalwart-cli query store-lookup
+stalwart-cli query StoreLookup
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update store-lookup id1 --field description='Updated'
+stalwart-cli update StoreLookup id1 --field store='{"@type":"PostgreSql","authSecret":{"@type":"None"},"host":"Example","readReplicas":{}}'
 ```
 
 
 ### Delete
 
 ```sh
-stalwart-cli delete store-lookup --ids id1
+stalwart-cli delete StoreLookup --ids id1
 ```
 
 

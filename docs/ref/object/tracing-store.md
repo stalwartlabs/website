@@ -319,7 +319,7 @@ curl -X POST https://mail.example.com/api \
           {
             "update": {
               "singleton": {
-                "id": "id1"
+                "description": "updated value"
               }
             }
           },
@@ -344,14 +344,14 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get tracing-store
+stalwart-cli get TracingStore
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update tracing-store --field description='Updated'
+stalwart-cli update TracingStore --field description='updated value'
 ```
 
 

@@ -133,14 +133,14 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get mta-stage-ehlo
+stalwart-cli get MtaStageEhlo
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update mta-stage-ehlo --field description='Updated'
+stalwart-cli update MtaStageEhlo --field rejectNonFqdn='{"else":"false","match":[{"if":"local_port == 25","then":"true"}]}'
 ```
 
 

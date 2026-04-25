@@ -128,14 +128,14 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get metrics
+stalwart-cli get Metrics
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update metrics --field description='Updated'
+stalwart-cli update Metrics --field openTelemetry='{"@type":"Disabled"}'
 ```
 
 

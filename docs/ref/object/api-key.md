@@ -116,9 +116,8 @@ curl -X POST https://mail.example.com/api \
           {
             "create": {
               "new1": {
-                "allowedIps": [],
+                "allowedIps": {},
                 "description": "Example",
-                "expiresAt": "2026-01-01T00:00:00Z",
                 "permissions": {
                   "@type": "Inherit"
                 }
@@ -243,40 +242,39 @@ The `x:ApiKey/query` `filter` argument accepts the following conditions (combina
 ### Fetch
 
 ```sh
-stalwart-cli get api-key id1
+stalwart-cli get ApiKey id1
 ```
 
 
 ### Create
 
 ```sh
-stalwart-cli create api-key \
+stalwart-cli create ApiKey \
   --field description=Example \
-  --field expiresAt=2026-01-01T00:00:00Z \
   --field 'permissions={"@type":"Inherit"}' \
-  --field 'allowedIps=[]'
+  --field 'allowedIps={}'
 ```
 
 
 ### Query
 
 ```sh
-stalwart-cli query api-key
-stalwart-cli query api-key --where expiresAt=2026-01-01T00:00:00Z
+stalwart-cli query ApiKey
+stalwart-cli query ApiKey --where expiresAt=2026-01-01T00:00:00Z
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update api-key id1 --field description='Updated'
+stalwart-cli update ApiKey id1 --field description='updated value'
 ```
 
 
 ### Delete
 
 ```sh
-stalwart-cli delete api-key --ids id1
+stalwart-cli delete ApiKey --ids id1
 ```
 
 

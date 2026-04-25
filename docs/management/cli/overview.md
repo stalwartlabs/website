@@ -142,7 +142,9 @@ For [`get`](./get.md), [`query`](./query.md), [`update`](./update.md), and [`del
 
 ## Output formats
 
-Most read commands support `--json` for machine-readable output (compact, single-line). Without `--json`, the CLI renders a human-friendly view driven by the schema's form definitions, with ANSI color when stdout is a TTY.
+Read commands support `--json` for machine-readable output. Each output record is a single compact JSON line. Commands that produce a single record (`get --json`) emit one line. Commands that produce a stream (`query --json`, `apply --json`, `snapshot`) emit **NDJSON** (newline-delimited JSON): one complete record per line, no enclosing array. This format streams (constant memory regardless of result-set size) and pipes naturally into `jq`, `mlr`, `awk`, and similar tools. To consume an NDJSON stream as a single JSON array, pipe through `jq -s '.'`.
+
+Without `--json`, the CLI renders a human-friendly view driven by the schema's form definitions, with ANSI color when stdout is a TTY.
 
 Color is automatically disabled when:
 

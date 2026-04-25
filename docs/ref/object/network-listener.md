@@ -207,24 +207,10 @@ curl -X POST https://mail.example.com/api \
           {
             "create": {
               "new1": {
-                "bind": [],
-                "maxConnections": 8192,
-                "overrideProxyTrustedNetworks": [],
-                "protocol": "smtp",
-                "socketBacklog": 1024,
-                "socketNoDelay": true,
-                "socketReceiveBufferSize": 1000,
-                "socketReuseAddress": true,
-                "socketReusePort": true,
-                "socketSendBufferSize": 1000,
-                "socketTosV4": 1000,
-                "socketTtl": 1000,
-                "tlsDisableCipherSuites": [],
-                "tlsDisableProtocols": [],
-                "tlsIgnoreClientOrder": true,
-                "tlsImplicit": false,
-                "tlsTimeout": "1m",
-                "useTls": true
+                "bind": {},
+                "overrideProxyTrustedNetworks": {},
+                "tlsDisableCipherSuites": {},
+                "tlsDisableProtocols": {}
               }
             }
           },
@@ -254,7 +240,7 @@ curl -X POST https://mail.example.com/api \
           {
             "update": {
               "id1": {
-                "bind": []
+                "bind": {}
               }
             }
           },
@@ -346,54 +332,40 @@ The `x:NetworkListener/query` `filter` argument accepts the following conditions
 ### Fetch
 
 ```sh
-stalwart-cli get network-listener id1
+stalwart-cli get NetworkListener id1
 ```
 
 
 ### Create
 
 ```sh
-stalwart-cli create network-listener \
-  --field 'bind=[]' \
-  --field protocol=smtp \
-  --field 'overrideProxyTrustedNetworks=[]' \
-  --field socketBacklog=1024 \
-  --field socketNoDelay=true \
-  --field socketReceiveBufferSize=1000 \
-  --field socketReuseAddress=true \
-  --field socketReusePort=true \
-  --field socketSendBufferSize=1000 \
-  --field socketTosV4=1000 \
-  --field socketTtl=1000 \
-  --field useTls=true \
-  --field 'tlsDisableCipherSuites=[]' \
-  --field 'tlsDisableProtocols=[]' \
-  --field tlsIgnoreClientOrder=true \
-  --field tlsImplicit=false \
-  --field tlsTimeout=1m \
-  --field maxConnections=8192
+stalwart-cli create NetworkListener \
+  --field 'bind={}' \
+  --field 'overrideProxyTrustedNetworks={}' \
+  --field 'tlsDisableCipherSuites={}' \
+  --field 'tlsDisableProtocols={}'
 ```
 
 
 ### Query
 
 ```sh
-stalwart-cli query network-listener
-stalwart-cli query network-listener --where name=example
+stalwart-cli query NetworkListener
+stalwart-cli query NetworkListener --where name=example
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update network-listener id1 --field description='Updated'
+stalwart-cli update NetworkListener id1 --field bind='{}'
 ```
 
 
 ### Delete
 
 ```sh
-stalwart-cli delete network-listener --ids id1
+stalwart-cli delete NetworkListener --ids id1
 ```
 
 

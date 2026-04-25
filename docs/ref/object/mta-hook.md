@@ -139,20 +139,10 @@ curl -X POST https://mail.example.com/api \
           {
             "create": {
               "new1": {
-                "allowInvalidCerts": false,
-                "enable": {
-                  "else": "true"
-                },
                 "httpAuth": {
                   "@type": "Unauthenticated"
                 },
                 "httpHeaders": {},
-                "maxResponseSize": 52428800,
-                "stages": [
-                  "data"
-                ],
-                "tempFailOnError": true,
-                "timeout": "30s",
                 "url": "https://example.com"
               }
             }
@@ -267,20 +257,14 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get mta-hook id1
+stalwart-cli get MtaHook id1
 ```
 
 
 ### Create
 
 ```sh
-stalwart-cli create mta-hook \
-  --field allowInvalidCerts=false \
-  --field 'enable={"else":"true"}' \
-  --field maxResponseSize=52428800 \
-  --field tempFailOnError=true \
-  --field 'stages=["data"]' \
-  --field timeout=30s \
+stalwart-cli create MtaHook \
   --field url=https://example.com \
   --field 'httpAuth={"@type":"Unauthenticated"}' \
   --field 'httpHeaders={}'
@@ -290,21 +274,21 @@ stalwart-cli create mta-hook \
 ### Query
 
 ```sh
-stalwart-cli query mta-hook
+stalwart-cli query MtaHook
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update mta-hook id1 --field description='Updated'
+stalwart-cli update MtaHook id1 --field allowInvalidCerts=false
 ```
 
 
 ### Delete
 
 ```sh
-stalwart-cli delete mta-hook --ids id1
+stalwart-cli delete MtaHook --ids id1
 ```
 
 

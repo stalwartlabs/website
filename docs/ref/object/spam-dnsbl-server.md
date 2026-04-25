@@ -392,15 +392,13 @@ curl -X POST https://mail.example.com/api \
             "create": {
               "new1": {
                 "@type": "Any",
-                "description": "Example",
-                "enable": true,
                 "tag": {
                   "else": "Example",
-                  "match": []
+                  "match": {}
                 },
                 "zone": {
                   "else": "Example",
-                  "match": []
+                  "match": {}
                 }
               }
             }
@@ -431,7 +429,7 @@ curl -X POST https://mail.example.com/api \
           {
             "update": {
               "id1": {
-                "id": "id1"
+                "description": "updated value"
               }
             }
           },
@@ -523,40 +521,38 @@ The `x:SpamDnsblServer/query` `filter` argument accepts the following conditions
 ### Fetch
 
 ```sh
-stalwart-cli get spam-dnsbl-server id1
+stalwart-cli get SpamDnsblServer id1
 ```
 
 
 ### Create
 
 ```sh
-stalwart-cli create spam-dnsbl-server/any \
-  --field 'tag={"else":"Example","match":[]}' \
-  --field 'zone={"else":"Example","match":[]}' \
-  --field description=Example \
-  --field enable=true
+stalwart-cli create SpamDnsblServer/Any \
+  --field 'tag={"else":"Example","match":{}}' \
+  --field 'zone={"else":"Example","match":{}}'
 ```
 
 
 ### Query
 
 ```sh
-stalwart-cli query spam-dnsbl-server
-stalwart-cli query spam-dnsbl-server --where name=example
+stalwart-cli query SpamDnsblServer
+stalwart-cli query SpamDnsblServer --where name=example
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update spam-dnsbl-server id1 --field description='Updated'
+stalwart-cli update SpamDnsblServer id1 --field description='updated value'
 ```
 
 
 ### Delete
 
 ```sh
-stalwart-cli delete spam-dnsbl-server --ids id1
+stalwart-cli delete SpamDnsblServer --ids id1
 ```
 
 

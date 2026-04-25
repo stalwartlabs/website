@@ -109,10 +109,7 @@ curl -X POST https://mail.example.com/api \
           {
             "create": {
               "new1": {
-                "contentTypes": [],
-                "isArchive": false,
-                "isBad": false,
-                "isNz": false
+                "contentTypes": {}
               }
             }
           },
@@ -234,40 +231,37 @@ The `x:SpamFileExtension/query` `filter` argument accepts the following conditio
 ### Fetch
 
 ```sh
-stalwart-cli get spam-file-extension id1
+stalwart-cli get SpamFileExtension id1
 ```
 
 
 ### Create
 
 ```sh
-stalwart-cli create spam-file-extension \
-  --field isArchive=false \
-  --field isBad=false \
-  --field isNz=false \
-  --field 'contentTypes=[]'
+stalwart-cli create SpamFileExtension \
+  --field 'contentTypes={}'
 ```
 
 
 ### Query
 
 ```sh
-stalwart-cli query spam-file-extension
-stalwart-cli query spam-file-extension --where extension=example
+stalwart-cli query SpamFileExtension
+stalwart-cli query SpamFileExtension --where extension=example
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update spam-file-extension id1 --field description='Updated'
+stalwart-cli update SpamFileExtension id1 --field isArchive=false
 ```
 
 
 ### Delete
 
 ```sh
-stalwart-cli delete spam-file-extension --ids id1
+stalwart-cli delete SpamFileExtension --ids id1
 ```
 
 

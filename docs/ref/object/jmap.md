@@ -294,14 +294,14 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get jmap
+stalwart-cli get Jmap
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update jmap --field description='Updated'
+stalwart-cli update Jmap --field parseLimitEvent=10
 ```
 
 

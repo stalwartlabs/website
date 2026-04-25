@@ -125,39 +125,18 @@ curl -X POST https://mail.example.com/api \
               "new1": {
                 "expiresAt": "2026-01-01T00:00:00Z",
                 "from": "user@example.com",
-                "memberTenantId": "<Tenant id>",
                 "receivedAt": "2026-01-01T00:00:00Z",
                 "report": {
-                  "arrivalDate": "2026-01-01T00:00:00Z",
                   "authFailure": "adsp",
-                  "authenticationResults": [],
+                  "authenticationResults": {},
                   "deliveryResult": "delivered",
-                  "dkimAdspDns": "Example",
-                  "dkimCanonicalizedBody": "Example",
-                  "dkimCanonicalizedHeader": "Example",
-                  "dkimDomain": "Example",
-                  "dkimIdentity": "Example",
-                  "dkimSelector": "Example",
-                  "dkimSelectorDns": "Example",
                   "feedbackType": "abuse",
-                  "headers": "Example",
                   "identityAlignment": "none",
-                  "incidents": 0,
-                  "message": "Example",
-                  "originalEnvelopeId": "Example",
-                  "originalMailFrom": "user@example.com",
-                  "originalRcptTo": "user@example.com",
-                  "reportedDomains": [],
-                  "reportedUris": [],
-                  "reportingMta": "Example",
-                  "sourceIp": "192.0.2.1",
-                  "sourcePort": 1000,
-                  "spfDns": "Example",
-                  "userAgent": "Example",
-                  "version": 1
+                  "reportedDomains": {},
+                  "reportedUris": {}
                 },
                 "subject": "Example",
-                "to": []
+                "to": {}
               }
             }
           },
@@ -271,42 +250,41 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get arf-external-report id1
+stalwart-cli get ArfExternalReport id1
 ```
 
 
 ### Create
 
 ```sh
-stalwart-cli create arf-external-report \
-  --field 'report={"arrivalDate":"2026-01-01T00:00:00Z","authFailure":"adsp","authenticationResults":[],"deliveryResult":"delivered","dkimAdspDns":"Example","dkimCanonicalizedBody":"Example","dkimCanonicalizedHeader":"Example","dkimDomain":"Example","dkimIdentity":"Example","dkimSelector":"Example","dkimSelectorDns":"Example","feedbackType":"abuse","headers":"Example","identityAlignment":"none","incidents":0,"message":"Example","originalEnvelopeId":"Example","originalMailFrom":"user@example.com","originalRcptTo":"user@example.com","reportedDomains":[],"reportedUris":[],"reportingMta":"Example","sourceIp":"192.0.2.1","sourcePort":1000,"spfDns":"Example","userAgent":"Example","version":1}' \
+stalwart-cli create ArfExternalReport \
+  --field 'report={"authFailure":"adsp","authenticationResults":{},"deliveryResult":"delivered","feedbackType":"abuse","identityAlignment":"none","reportedDomains":{},"reportedUris":{}}' \
   --field from=user@example.com \
   --field subject=Example \
-  --field 'to=[]' \
+  --field 'to={}' \
   --field receivedAt=2026-01-01T00:00:00Z \
-  --field expiresAt=2026-01-01T00:00:00Z \
-  --field 'memberTenantId=<Tenant id>'
+  --field expiresAt=2026-01-01T00:00:00Z
 ```
 
 
 ### Query
 
 ```sh
-stalwart-cli query arf-external-report
+stalwart-cli query ArfExternalReport
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update arf-external-report id1 --field description='Updated'
+stalwart-cli update ArfExternalReport id1 --field subject='updated value'
 ```
 
 
 ### Delete
 
 ```sh
-stalwart-cli delete arf-external-report --ids id1
+stalwart-cli delete ArfExternalReport --ids id1
 ```
 
 

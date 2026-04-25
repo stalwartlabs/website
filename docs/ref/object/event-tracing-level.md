@@ -87,9 +87,7 @@ curl -X POST https://mail.example.com/api \
           "x:EventTracingLevel/set",
           {
             "create": {
-              "new1": {
-                "level": "info"
-              }
+              "new1": {}
             }
           },
           "c1"
@@ -202,36 +200,35 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get event-tracing-level id1
+stalwart-cli get EventTracingLevel id1
 ```
 
 
 ### Create
 
 ```sh
-stalwart-cli create event-tracing-level \
-  --field level=info
+stalwart-cli create EventTracingLevel
 ```
 
 
 ### Query
 
 ```sh
-stalwart-cli query event-tracing-level
+stalwart-cli query EventTracingLevel
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update event-tracing-level id1 --field description='Updated'
+stalwart-cli update EventTracingLevel id1 --field level=info
 ```
 
 
 ### Delete
 
 ```sh
-stalwart-cli delete event-tracing-level --ids id1
+stalwart-cli delete EventTracingLevel --ids id1
 ```
 
 

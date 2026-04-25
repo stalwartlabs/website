@@ -90,7 +90,7 @@ Account
   Defines a user or group account for authentication and email access.
 
   Variants:
-    User — User account
+    User: User account
       Fields:
         aliases           list<EmailAlias>  mutable
             List of email aliases for the account
@@ -101,7 +101,7 @@ Account
         domainId          id<Domain>  mutable
             Identifier for the domain this account belongs to.
         ...
-    Group — Group account
+    Group: Group account
       Fields:
         ...
 

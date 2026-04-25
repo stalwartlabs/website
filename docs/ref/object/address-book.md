@@ -133,14 +133,14 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get address-book
+stalwart-cli get AddressBook
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update address-book --field description='Updated'
+stalwart-cli update AddressBook --field defaultDisplayName='updated value'
 ```
 
 

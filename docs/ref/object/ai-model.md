@@ -141,16 +141,12 @@ curl -X POST https://mail.example.com/api \
           {
             "create": {
               "new1": {
-                "allowInvalidCerts": false,
                 "httpAuth": {
                   "@type": "Unauthenticated"
                 },
                 "httpHeaders": {},
                 "model": "Example",
-                "modelType": "Chat",
                 "name": "Example",
-                "temperature": 0.7,
-                "timeout": "2m",
                 "url": "https://example.com"
               }
             }
@@ -265,20 +261,16 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get ai-model id1
+stalwart-cli get AiModel id1
 ```
 
 
 ### Create
 
 ```sh
-stalwart-cli create ai-model \
+stalwart-cli create AiModel \
   --field name=Example \
-  --field allowInvalidCerts=false \
-  --field temperature=0.7 \
   --field model=Example \
-  --field timeout=2m \
-  --field modelType=Chat \
   --field url=https://example.com \
   --field 'httpAuth={"@type":"Unauthenticated"}' \
   --field 'httpHeaders={}'
@@ -288,21 +280,21 @@ stalwart-cli create ai-model \
 ### Query
 
 ```sh
-stalwart-cli query ai-model
+stalwart-cli query AiModel
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update ai-model id1 --field description='Updated'
+stalwart-cli update AiModel id1 --field name='updated value'
 ```
 
 
 ### Delete
 
 ```sh
-stalwart-cli delete ai-model --ids id1
+stalwart-cli delete AiModel --ids id1
 ```
 
 

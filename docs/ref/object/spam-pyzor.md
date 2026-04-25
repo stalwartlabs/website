@@ -147,14 +147,14 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get spam-pyzor
+stalwart-cli get SpamPyzor
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update spam-pyzor --field description='Updated'
+stalwart-cli update SpamPyzor --field host='updated value'
 ```
 
 

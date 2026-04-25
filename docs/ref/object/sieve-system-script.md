@@ -103,8 +103,6 @@ curl -X POST https://mail.example.com/api \
             "create": {
               "new1": {
                 "contents": "Example",
-                "description": "Example",
-                "isActive": false,
                 "name": "Example"
               }
             }
@@ -227,17 +225,15 @@ The `x:SieveSystemScript/query` `filter` argument accepts the following conditio
 ### Fetch
 
 ```sh
-stalwart-cli get sieve-system-script id1
+stalwart-cli get SieveSystemScript id1
 ```
 
 
 ### Create
 
 ```sh
-stalwart-cli create sieve-system-script \
+stalwart-cli create SieveSystemScript \
   --field name=Example \
-  --field description=Example \
-  --field isActive=false \
   --field contents=Example
 ```
 
@@ -245,22 +241,22 @@ stalwart-cli create sieve-system-script \
 ### Query
 
 ```sh
-stalwart-cli query sieve-system-script
-stalwart-cli query sieve-system-script --where name=example
+stalwart-cli query SieveSystemScript
+stalwart-cli query SieveSystemScript --where name=example
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update sieve-system-script id1 --field description='Updated'
+stalwart-cli update SieveSystemScript id1 --field name='updated value'
 ```
 
 
 ### Delete
 
 ```sh
-stalwart-cli delete sieve-system-script --ids id1
+stalwart-cli delete SieveSystemScript --ids id1
 ```
 
 

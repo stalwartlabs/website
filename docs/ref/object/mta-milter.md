@@ -174,24 +174,7 @@ curl -X POST https://mail.example.com/api \
           {
             "create": {
               "new1": {
-                "allowInvalidCerts": false,
-                "enable": {
-                  "else": "true"
-                },
-                "flagsAction": 1000,
-                "flagsProtocol": 1000,
-                "hostname": "Example",
-                "maxResponseSize": 52428800,
-                "port": 11332,
-                "protocolVersion": "v6",
-                "stages": [
-                  "data"
-                ],
-                "tempFailOnError": true,
-                "timeoutCommand": "30s",
-                "timeoutConnect": "30s",
-                "timeoutData": "60s",
-                "useTls": false
+                "hostname": "Example"
               }
             }
           },
@@ -305,49 +288,36 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get mta-milter id1
+stalwart-cli get MtaMilter id1
 ```
 
 
 ### Create
 
 ```sh
-stalwart-cli create mta-milter \
-  --field allowInvalidCerts=false \
-  --field 'enable={"else":"true"}' \
-  --field hostname=Example \
-  --field maxResponseSize=52428800 \
-  --field tempFailOnError=true \
-  --field protocolVersion=v6 \
-  --field port=11332 \
-  --field 'stages=["data"]' \
-  --field timeoutCommand=30s \
-  --field timeoutConnect=30s \
-  --field timeoutData=60s \
-  --field useTls=false \
-  --field flagsAction=1000 \
-  --field flagsProtocol=1000
+stalwart-cli create MtaMilter \
+  --field hostname=Example
 ```
 
 
 ### Query
 
 ```sh
-stalwart-cli query mta-milter
+stalwart-cli query MtaMilter
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update mta-milter id1 --field description='Updated'
+stalwart-cli update MtaMilter id1 --field hostname='updated value'
 ```
 
 
 ### Delete
 
 ```sh
-stalwart-cli delete mta-milter --ids id1
+stalwart-cli delete MtaMilter --ids id1
 ```
 
 

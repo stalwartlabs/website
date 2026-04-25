@@ -101,10 +101,7 @@ curl -X POST https://mail.example.com/api \
           "x:BlockedIp/set",
           {
             "create": {
-              "new1": {
-                "expiresAt": "2026-01-01T00:00:00Z",
-                "reason": "manual"
-              }
+              "new1": {}
             }
           },
           "c1"
@@ -225,38 +222,36 @@ The `x:BlockedIp/query` `filter` argument accepts the following conditions (comb
 ### Fetch
 
 ```sh
-stalwart-cli get blocked-ip id1
+stalwart-cli get BlockedIp id1
 ```
 
 
 ### Create
 
 ```sh
-stalwart-cli create blocked-ip \
-  --field reason=manual \
-  --field expiresAt=2026-01-01T00:00:00Z
+stalwart-cli create BlockedIp
 ```
 
 
 ### Query
 
 ```sh
-stalwart-cli query blocked-ip
-stalwart-cli query blocked-ip --where address=example
+stalwart-cli query BlockedIp
+stalwart-cli query BlockedIp --where address=example
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update blocked-ip id1 --field description='Updated'
+stalwart-cli update BlockedIp id1 --field reason=manual
 ```
 
 
 ### Delete
 
 ```sh
-stalwart-cli delete blocked-ip --ids id1
+stalwart-cli delete BlockedIp --ids id1
 ```
 
 

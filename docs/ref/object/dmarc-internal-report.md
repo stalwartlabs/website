@@ -119,28 +119,23 @@ curl -X POST https://mail.example.com/api \
                 "createdAt": "2026-01-01T00:00:00Z",
                 "deliverAt": "2026-01-01T00:00:00Z",
                 "domain": "example.com",
-                "policyIdentifier": 0,
                 "report": {
                   "dateRangeBegin": "2026-01-01T00:00:00Z",
                   "dateRangeEnd": "2026-01-01T00:00:00Z",
                   "email": "user@example.com",
-                  "errors": [],
-                  "extensions": [],
-                  "extraContactInfo": "Example",
+                  "errors": {},
+                  "extensions": {},
                   "orgName": "Example",
                   "policyAdkim": "relaxed",
                   "policyAspf": "relaxed",
                   "policyDisposition": "none",
                   "policyDomain": "Example",
-                  "policyFailureReportingOptions": [],
+                  "policyFailureReportingOptions": {},
                   "policySubdomainDisposition": "none",
-                  "policyTestingMode": false,
-                  "policyVersion": "Example",
-                  "records": [],
-                  "reportId": "Example",
-                  "version": 1.0
+                  "records": {},
+                  "reportId": "Example"
                 },
-                "rua": []
+                "rua": {}
               }
             }
           },
@@ -170,7 +165,7 @@ curl -X POST https://mail.example.com/api \
           {
             "update": {
               "id1": {
-                "rua": []
+                "rua": {}
               }
             }
           },
@@ -262,17 +257,16 @@ The `x:DmarcInternalReport/query` `filter` argument accepts the following condit
 ### Fetch
 
 ```sh
-stalwart-cli get dmarc-internal-report id1
+stalwart-cli get DmarcInternalReport id1
 ```
 
 
 ### Create
 
 ```sh
-stalwart-cli create dmarc-internal-report \
-  --field 'rua=[]' \
-  --field policyIdentifier=0 \
-  --field 'report={"dateRangeBegin":"2026-01-01T00:00:00Z","dateRangeEnd":"2026-01-01T00:00:00Z","email":"user@example.com","errors":[],"extensions":[],"extraContactInfo":"Example","orgName":"Example","policyAdkim":"relaxed","policyAspf":"relaxed","policyDisposition":"none","policyDomain":"Example","policyFailureReportingOptions":[],"policySubdomainDisposition":"none","policyTestingMode":false,"policyVersion":"Example","records":[],"reportId":"Example","version":1.0}' \
+stalwart-cli create DmarcInternalReport \
+  --field 'rua={}' \
+  --field 'report={"dateRangeBegin":"2026-01-01T00:00:00Z","dateRangeEnd":"2026-01-01T00:00:00Z","email":"user@example.com","errors":{},"extensions":{},"orgName":"Example","policyAdkim":"relaxed","policyAspf":"relaxed","policyDisposition":"none","policyDomain":"Example","policyFailureReportingOptions":{},"policySubdomainDisposition":"none","records":{},"reportId":"Example"}' \
   --field domain=example.com \
   --field createdAt=2026-01-01T00:00:00Z \
   --field deliverAt=2026-01-01T00:00:00Z
@@ -282,22 +276,22 @@ stalwart-cli create dmarc-internal-report \
 ### Query
 
 ```sh
-stalwart-cli query dmarc-internal-report
-stalwart-cli query dmarc-internal-report --where domain=example
+stalwart-cli query DmarcInternalReport
+stalwart-cli query DmarcInternalReport --where domain=example
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update dmarc-internal-report id1 --field description='Updated'
+stalwart-cli update DmarcInternalReport id1 --field rua='{}'
 ```
 
 
 ### Delete
 
 ```sh
-stalwart-cli delete dmarc-internal-report --ids id1
+stalwart-cli delete DmarcInternalReport --ids id1
 ```
 
 

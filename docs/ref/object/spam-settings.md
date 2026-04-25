@@ -154,14 +154,14 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get spam-settings
+stalwart-cli get SpamSettings
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update spam-settings --field description='Updated'
+stalwart-cli update SpamSettings --field trustContacts=true
 ```
 
 

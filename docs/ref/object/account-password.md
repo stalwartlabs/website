@@ -119,14 +119,14 @@ curl -X POST https://mail.example.com/api \
 ### Fetch
 
 ```sh
-stalwart-cli get account-password
+stalwart-cli get AccountPassword
 ```
 
 
 ### Update
 
 ```sh
-stalwart-cli update account-password --field description='Updated'
+stalwart-cli update AccountPassword --field secret='updated value'
 ```
 
 
