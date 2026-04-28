@@ -56,3 +56,26 @@ The smoothest path through this transition for deployments that already have a r
 3. With a permanent administrator created and the WebUI confirmed working, restore the reverse-proxy configuration. From this point on, every browser, mail client, and OIDC relying party reaches Stalwart through the proxy, and the discovery documents already point at the public hostname over HTTPS.
 
 The same approach works for migrations from earlier releases: a proxy in front of a freshly migrated `v0.16` instance is a known source of confusion during the recovery-mode admin step, and bypassing the proxy until the first sign-in succeeds is the most reliable way through it.
+
+## Preserving the client IP
+
+Stalwart's automatic banning, rate limiting, and SPF/DMARC sender authentication all depend on seeing the real client IP. Without that, every request appears to come from the proxy, which can trigger a self-inflicted ban that locks every user out behind the proxy.
+
+There are two standard mechanisms for forwarding the client IP, and they are not interchangeable on a given listener:
+
+- **[Proxy Protocol](/docs/server/reverse-proxy/proxy-protocol)** is a transport-level extension that prepends a small header to the TCP stream. It works for every protocol Stalwart speaks (SMTP, IMAP, POP3, JMAP, HTTP) and carries both the original client IP and the original TLS bit, which is what makes SPF and DMARC checks meaningful end-to-end. Configure the proxy to emit the header and the listener to accept it from the proxy's address.
+- **`X-Forwarded-For`** is an HTTP-only header set by the proxy. It is appropriate for HTTP listeners when the proxy operates in HTTP mode rather than TCP mode. Stalwart picks up this header when the listener is configured to trust forwarded headers from the proxy's IP.
+
+A single listener should be configured for one of these mechanisms; Stalwart cannot decode both on the same connection. The HTTP listener defaults to `X-Forwarded-For` because most reverse proxies emit it natively in HTTP mode; switch to Proxy Protocol when the proxy operates at the TCP layer (for example HAProxy `mode tcp`, or NGINX `stream` blocks).
+
+Whichever mechanism is used, the proxy's address must be marked as a trusted network so that the forwarded IP is honoured rather than treated as the source of a request from the proxy itself. See [Proxy Protocol](/docs/server/reverse-proxy/proxy-protocol) for the per-product configuration and the trusted-network setting.
+
+## When sign-in fails behind a proxy
+
+The most common failure mode is that the proxy terminates HTTPS but talks plain HTTP to Stalwart, and the discovery URLs Stalwart publishes end up pointing at the wrong scheme or port. Three things have to line up:
+
+1. **`defaultHostname`** matches the public-facing hostname the proxy serves. Edit it through *Settings › Network › Services* in the WebUI or with the [CLI](/docs/management/cli/overview).
+2. **[`STALWART_HTTPS_PORT`](/docs/configuration/environment-variables#public-urls)** is set to the public HTTPS port when that port is not `443`. Without it, the discovery documents publish `https://<host>/...` (port `443` implied) and clients are sent to a port the proxy is not listening on.
+3. **The proxy serves on HTTPS to clients.** Browsers refuse OAuth flows over plain HTTP for non-localhost origins.
+
+If those three are correct, the upstream pattern (HTTP to `:8080`, HTTPS to `:443`, or TCP-passthrough) is an implementation detail and any of them produces the same discovery URLs. If sign-in still fails, bypass the proxy temporarily as described in [Initial setup behind a proxy](#initial-setup-behind-a-proxy) above to confirm the server is healthy, then re-introduce the proxy and check each of the three points in turn.

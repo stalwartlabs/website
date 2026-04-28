@@ -116,6 +116,13 @@ S3-compatible
 > Allow invalid TLS certificates when connecting to the S3 service
 
 
+##### `verifyAfterWrite`
+
+> Type: <code>Boolean</code> · default: `true`
+>
+> After each successful write, verify the object is readable on the backend. Defends against the rare case where an S3-compatible backend returns success but does not actually persist the data. Adds one extra request per write.
+
+
 
 ### `@type: "Azure"`
 
@@ -616,6 +623,13 @@ S3-compatible blob store.
 > Type: <code>Boolean</code> · default: `false`
 >
 > Allow invalid TLS certificates when connecting to the S3 service
+
+
+##### `verifyAfterWrite`
+
+> Type: <code>Boolean</code> · default: `true`
+>
+> After each successful write, verify the object is readable on the backend. Defends against the rare case where an S3-compatible backend returns success but does not actually persist the data. Adds one extra request per write.
 
 
 

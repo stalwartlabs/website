@@ -136,3 +136,53 @@ Stalwart tracks the previous spam scores of senders based on their IP address, A
 Yes! Stalwart integrates with collaborative digest-based spam filtering tools like Pyzor to enhance its spam detection capabilities.
 
 
+## Setup & WebUI
+
+### Why does `/admin` return `404 Not Found`?
+
+The WebUI is delivered as a downloadable [Application](/docs/applications/overview) bundle that the server fetches from `https://github.com/stalwartlabs/webui/releases/latest/` on first start, then refreshes on a schedule. When that initial download fails (no outbound HTTPS, GitHub blocked, restrictive proxy), the bundle is never unpacked and every WebUI route returns 404. Verify the host can reach `github.com` and `objects.githubusercontent.com` on TCP/443. For air-gapped deployments, host the bundle on an internal HTTPS server and update the [`resourceUrl`](/docs/ref/object/application#resourceurl) field on the WebUI's [Application](/docs/ref/object/application) record to point at it. After one successful download, subsequent failures are non-fatal: the previously installed bundle keeps serving until the next refresh succeeds.
+
+### Why does the root URL `/` return `404`?
+
+There is no page mounted at the root. The WebUI lives at `/admin`, the per-user portal at `/account`, and the JMAP endpoint at `/jmap`. Configure the reverse proxy or browser bookmark to point at `/admin` directly, or add a redirect from `/`.
+
+### Why is sign-in stuck in a loop or showing a basic-auth dialog?
+
+Almost always one of the following:
+
+- The browser is on `http://` while the configured hostname is announced over `https://`. Open the page over HTTPS, or use `http://<host>:8080/admin` while TLS is being put in place.
+- The browser cached an earlier visit on the wrong scheme. Clear the site's history or use a private window.
+- A reverse proxy is terminating HTTPS but talking HTTP upstream and the discovery URLs end up pointing at the wrong scheme or port. See [Reverse proxy › Overview](/docs/server/reverse-proxy/overview) for the supported patterns and the [`STALWART_HTTPS_PORT`](/docs/configuration/environment-variables#public-urls) variable.
+
+### Can I reach the WebUI by IP address?
+
+The OAuth flow used by the WebUI binds to the configured `defaultHostname` over HTTPS. Loading the WebUI by IP, by container name, or over plain HTTP appears to load the page but fails at the OAuth callback. Use the configured hostname over HTTPS, or sign in at `http://<host>:8080/admin` (which is exempt from the hostname check) until TLS is in place.
+
+### Can application passwords be configured for accounts in an external directory?
+
+Application passwords are stored against the internal directory's account record. When the principal originates in an external directory (LDAP, SQL, OIDC), the secret has to live in the external directory, not in Stalwart. For clients that do not speak SASL OAUTHBEARER (CalDAV / CardDAV in particular), either configure the external directory to accept the application password as a secondary credential, or run a hybrid setup with the internal directory covering app-password use.
+
+### No log files appear under `/var/log/stalwart`. What's wrong?
+
+Three causes, in descending order of frequency:
+
+1. The directory does not exist or is not writable by the service user. On the binary install, `/var/log/stalwart` is created at install time and owned by `stalwart:stalwart`. On Docker, mount a host directory and `chown 2000:2000 <dir>` before starting the container.
+2. The configured tracer points at *Console* (intentional in containers, so logs surface through the orchestrator's log driver). Inspect *Telemetry → Tracers* in the WebUI to confirm the destination.
+3. The tracer's path was misconfigured. Reset by deleting the tracer and recreating it from defaults at *Telemetry → Tracers → New*.
+
+### My reverse proxy's IP keeps getting banned. What do I do?
+
+When the proxy does not forward the real client IP, every request appears to come from the proxy and Stalwart's automatic banning then locks the proxy out, which in turn locks every user out. Either mark the proxy's IP as a trusted network so banning is skipped for requests from that IP and configure the proxy to forward the real client IP via PROXY protocol or `X-Forwarded-For` (then enable the matching reader on the listener), or raise the auto-ban threshold for the HTTP listener. See [Proxy Protocol](/docs/server/reverse-proxy/proxy-protocol) for the recommended pattern.
+
+### What outbound HTTPS does Stalwart need?
+
+A fresh install reaches out to:
+
+- `github.com` and `objects.githubusercontent.com`: for the WebUI bundle on first start and on the periodic refresh, and for the spam-filter rule list and Apple Push Notification (APN) endpoint list, both fetched from the same release storage.
+- `acme-v02.api.letsencrypt.org` (or whichever ACME directory is configured): for TLS certificate issuance.
+- The DNS provider's API: when *automatic DNS management* is enabled.
+- The OIDC provider's well-known and userinfo endpoints: when an OIDC directory is configured.
+
+In restricted-egress environments, allow at minimum the GitHub hosts above; otherwise the WebUI never appears, the spam classifier runs without its fetched rule lists, and APN-based push notifications stop working. See [WebUI overview](/docs/management/webui/overview#outbound-network-requirement) for the full list and for hosting the bundle internally.
+
+

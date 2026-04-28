@@ -1,17 +1,11 @@
 ## Continue setup
 
-After the restart, the admin WebUI moves from the bootstrap URL at `http://<host>:8080/admin` to its final URL at `https://<hostname>/admin`, where `<hostname>` is the value entered in Step 1 of the wizard. Open that URL in the browser and sign in again with the administrator credentials printed on the final wizard screen. Attempting to continue over HTTP on port `8080` after the restart will fail at the sign-in step.
-
-:::tip Certificate warnings on first sign-in
-
-When *automatically obtain TLS certificate* was enabled in Step 1 of the wizard, the certificate from Let's Encrypt can take a minute or two to be issued after the restart. While the request is still in flight, the browser may show a warning because the server is presenting a self-signed fallback certificate. Accepting that warning for the initial sign-in is safe; the warning disappears once the ACME certificate has been installed and the page is reloaded. When the certificate option was disabled, the self-signed fallback remains in place until a certificate is uploaded or a reverse proxy terminates TLS in front of the server.
-
-:::
+After the restart, sign in at `https://<hostname>/admin` with the administrator credentials printed on the final wizard screen, where `<hostname>` is the value entered in Step 1. If TLS or DNS for that hostname is not in place yet, sign in at `http://<host>:8080/admin` instead and switch to the HTTPS URL once the production listener is reachable.
 
 :::note Special cases
 
 - Deployments using an external directory (OIDC, LDAP, or SQL) must promote the administrator account after first sign-in. See [External directory promotion](#external-directory-promotion) under *Additional topics* below.
-- Deployments behind a reverse proxy should follow the [Reverse proxy](#reverse-proxy) guidance under *Additional topics* below before signing in.
+- Deployments behind a reverse proxy should follow the [Reverse proxy](#reverse-proxy) guidance under *Troubleshooting* below before signing in.
 - If the new HTTPS URL does not load, see [HTTPS not yet reachable](#https-not-yet-reachable) under *Troubleshooting* below.
 
 :::
@@ -21,6 +15,8 @@ When *automatically obtain TLS certificate* was enabled in Step 1 of the wizard,
 With the internal directory, additional user accounts can be added through the WebUI's Account Manager, or directly by creating [Account](/docs/ref/object/account) objects through the WebUI administration console or the [CLI](/docs/management/cli/overview). See [Individual accounts](/docs/auth/principals/individual) for the full field reference. With an external directory (OIDC, LDAP, or SQL), accounts continue to be provisioned and authenticated through the identity provider; any Stalwart-specific overrides are set on the local Account record that is created on first sign-in.
 
 Diagnostic output is written to the log destination configured in Step 4 of the wizard, and can also be viewed live from the WebUI under Telemetry. 
+
+Once `https://<hostname>/admin` is reachable and a permanent administrator is in use, disable the HTTP configuration listener so that `http://<host>:8080/admin` no longer accepts sign-ins. Remove the `STALWART_RECOVERY_ADMIN` environment variable, or delete the HTTP listener through the WebUI, then restart the service.
 
 If something does not behave as expected, consult [Troubleshooting](#troubleshooting) below. Further questions can be raised on the [community forum](https://github.com/stalwartlabs/stalwart/discussions).
 
@@ -36,19 +32,25 @@ Before exposing the server to the public internet, review the [securing your ser
 
 ## Troubleshooting
 
+### Certificate warning on first sign-in
+
+When *automatically obtain TLS certificate* was enabled in Step 1 of the wizard, the certificate from Let's Encrypt can take a minute or two to be issued after the restart. While the request is still in flight, the browser may show a warning because the server is presenting a self-signed fallback certificate. Accepting that warning for the initial sign-in is safe; the warning disappears once the ACME certificate has been installed and the page is reloaded. When the certificate option was disabled, the self-signed fallback remains in place until a certificate is uploaded or a reverse proxy terminates TLS in front of the server.
+
 ### HTTPS not yet reachable
 
-If the configured hostname does not yet resolve in DNS, port `443` is not reachable from the browser, or the deployment cannot present a trusted certificate for any other reason, the server can be restarted in [recovery mode](/docs/configuration/recovery-mode) to keep the WebUI available on HTTP port `8080` with the path-relative issuer used during bootstrap. This is intended as a temporary measure while the TLS and DNS side of the deployment is completed; once HTTPS on the configured hostname is reachable, the server should be restarted without the recovery flag to return to normal OAuth operation.
+If the configured hostname does not yet resolve in DNS, port `443` is not reachable from the browser, or the deployment cannot present a trusted certificate for any other reason, sign in at `http://<host>:8080/admin` for as long as `STALWART_RECOVERY_ADMIN` is set in the service environment. Once HTTPS is in place, switch to `https://<hostname>/admin` and disable the HTTP listener as described in [Next steps](#next-steps).
+
+If the HTTP listener has already been disabled and the deployment is locked out (for example because the configured hostname is no longer reachable, the external OIDC provider is down, or the administrator account was deleted), start the server in [recovery mode](/docs/configuration/recovery-mode) (`STALWART_RECOVERY_MODE=1`). Recovery mode re-enables the HTTP listener on port `8080` with the path-relative issuer used during bootstrap and accepts the credentials in `STALWART_RECOVERY_ADMIN`, regardless of the directory state. Restart without the flag once normal sign-in is restored.
+
+### Reverse proxy
+
+When Stalwart sits behind a reverse proxy (NGINX, Traefik, Caddy, HAProxy, or similar) and the wizard or first sign-in does not behave as expected, the smoothest path is to **bypass the proxy temporarily** until a permanent administrator is created. From a host on the same network, point a browser at `http://<stalwart-host>:8080/admin` directly, complete the wizard, sign in once at `https://<stalwart-host>/admin` (accepting any self-signed certificate warning), then restore the proxy configuration. This avoids the class of issues that occur when the proxy's hostname, port, or TLS handling does not yet match what the freshly-configured server publishes in its OAuth and JMAP discovery documents. The full reverse-proxy model (`defaultHostname`, [`STALWART_HTTPS_PORT`](/docs/configuration/environment-variables#public-urls), HTTP vs HTTPS upstream, Proxy Protocol, and per-product configuration for NGINX / Caddy / Traefik / HAProxy) is documented under [Reverse proxy › Overview](/docs/server/reverse-proxy/overview).
 
 ### Further diagnostics
 
 For issues that go beyond initial setup (email delivery, DMARC, authentication, and so on), consult the general [troubleshooting](/docs/management/troubleshoot) guide or the [FAQ](/docs/faq).
 
 ## Additional topics
-
-### Reverse proxy
-
-When Stalwart sits behind a reverse proxy (NGINX, Traefik, Caddy, HAProxy, or similar), the smoothest path through the wizard and the first sign-in is to **bypass the proxy temporarily**. From a host on the same network, point a browser at `http://<stalwart-host>:8080/admin` directly to complete the wizard, then sign in once at `https://<stalwart-host>/admin` (accepting any self-signed certificate warning) before restoring the proxy configuration. This avoids the class of issues that happen when the proxy's hostname, port, or TLS handling does not yet match what the freshly-configured server publishes in its OAuth and JMAP discovery documents. The full reverse-proxy model, including how the published URLs are composed and the [`STALWART_HTTPS_PORT`](/docs/configuration/environment-variables#public-urls) variable for non-standard public ports, is documented under [Reverse proxy › Overview](/docs/server/reverse-proxy/overview).
 
 ### External directory promotion
 

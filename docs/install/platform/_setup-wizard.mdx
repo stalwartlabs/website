@@ -13,7 +13,7 @@ The wizard presents five screens plus a final confirmation. Every field has a se
 Two required fields plus two optional toggles.
 
 * **Server hostname:**
-    > The public hostname this Stalwart server answers to, for example `mail.example.com`. This value appears in SMTP greetings, outgoing message headers, and TLS certificate requests. It must be a valid domain name resolving via public DNS to this server's IP address. For test deployments, use a `.test` domain (e.g. `mail.example.test`) and add it to `/etc/hosts`.
+    > The public hostname this Stalwart server answers to, for example `mail.example.com`. This value appears in SMTP greetings, outgoing message headers, and TLS certificate requests. It must be a valid domain name resolving via public DNS to this server's IP address. For test or internal deployments, Stalwart accepts the RFC 6761 reserved TLDs (`.test`, `.local`, `.localhost`, `.invalid`, `.example`); add the hostname to `/etc/hosts` or to the private DNS zone that serves the deployment.
 
 * **Default email domain:**
     > The primary domain this installation will serve, for example `example.com`. Must be a valid domain name. Additional domains can be added at any time after setup. For test deployments, use a `.test` domain (e.g. `example.test`).
