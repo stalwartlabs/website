@@ -10,19 +10,11 @@ Stalwart operates without modification behind a reverse proxy, and is compatible
 
 ## How discovery URLs are composed
 
-Mail clients, the WebUI, and OIDC relying parties locate Stalwart's endpoints through a small number of discovery documents: the OAuth 2.0 authorization-server metadata (`/.well-known/oauth-authorization-server`), the OpenID Connect configuration (`/.well-known/openid-configuration`), the JMAP session resource (`/.well-known/jmap`), and the WebUI's `/api/discover` response. Every absolute URL published in those documents is built from a single source of truth:
+Mail clients, the WebUI, and OIDC relying parties locate Stalwart's endpoints through a small number of discovery documents: the OAuth 2.0 authorization-server metadata (`/.well-known/oauth-authorization-server`), the OpenID Connect configuration (`/.well-known/openid-configuration`), the JMAP session resource (`/.well-known/jmap`), and the WebUI's `/api/discover` response. Every absolute URL published in those documents is the value of [`STALWART_PUBLIC_URL`](/docs/configuration/environment-variables#public-urls) plus a path. When the variable is unset, the base defaults to `https://<defaultHostname>` on port `443`.
 
-- The **scheme** is always `https`. Stalwart serves these documents over HTTPS only in normal operation; the bootstrap and recovery modes serve path-relative URLs and do not include a scheme at all.
-- The **host** is the value of [`defaultHostname`](/docs/ref/object/system-settings#defaulthostname) on the [SystemSettings](/docs/ref/object/system-settings) singleton, which is the hostname the operator entered in Step 1 of the setup wizard.
-- The **port** is `443`, unless the [`STALWART_HTTPS_PORT`](/docs/configuration/environment-variables#public-urls) environment variable is set, in which case its value is appended to the URL.
+Set `STALWART_PUBLIC_URL` to whatever URL clients type in their browser: `https://mail.example.com`, `https://mail.example.com:8443`, or `https://example.com/mail` for a path-mounted deployment. The published URLs are independent of how the request reached Stalwart, so the proxy is free to talk to the HTTP listener on port `8080`, to the HTTPS listener on port `443`, or to use TCP passthrough; the discovery documents look the same in every case. The proxy does not need to forward `X-Forwarded-Proto` or `X-Forwarded-Host` for OAuth and JMAP discovery to work correctly.
 
-The published URLs are independent of how the request reached Stalwart. Whether the proxy talks to Stalwart on the HTTP listener (port `8080`), on the HTTPS listener (port `443`), with or without Proxy Protocol, the discovery documents contain `https://<defaultHostname>[:STALWART_HTTPS_PORT]/...` in every case. The proxy is free to use whichever upstream pattern fits the deployment best; it does not need to forward `X-Forwarded-Proto` or `X-Forwarded-Host` for OAuth and JMAP discovery to work correctly.
-
-What the proxy **does** need to satisfy is consistency between what its clients see and what the discovery documents publish:
-
-- **The public hostname must match `defaultHostname`.** When the proxy hostname differs (for example the proxy serves `mail.example.com` while the wizard recorded `stalwart.internal`), browsers will be redirected to a host they cannot reach. Update `defaultHostname` through Settings › Network › Services in the WebUI, or with the [CLI](/docs/management/cli/overview), so that it matches the public-facing hostname.
-- **The public HTTPS port must match the value Stalwart publishes.** If the proxy listens on a port other than `443` (for example `8443`), set [`STALWART_HTTPS_PORT`](/docs/configuration/environment-variables#public-urls) to that port and restart the server.
-- **The proxy must serve traffic on HTTPS.** Browsers refuse to complete OAuth flows over plain HTTP for non-localhost origins, and JMAP credentials should never traverse plain HTTP. The proxy is the right place to terminate TLS for clients; how the proxy reaches Stalwart on its side of the hop is an implementation detail.
+The proxy itself does need to actually serve the URL it publishes. Browsers refuse to complete OAuth flows over plain HTTP for non-localhost origins, and JMAP credentials should never traverse plain HTTP, so the proxy must terminate TLS for clients on the public URL above. How the proxy reaches Stalwart on its side of the hop is an implementation detail.
 
 ## Choosing the upstream pattern
 
@@ -72,10 +64,9 @@ Whichever mechanism is used, the proxy's address must be marked as a trusted net
 
 ## When sign-in fails behind a proxy
 
-The most common failure mode is that the proxy terminates HTTPS but talks plain HTTP to Stalwart, and the discovery URLs Stalwart publishes end up pointing at the wrong scheme or port. Three things have to line up:
+The most common failure mode is that the discovery URLs Stalwart publishes do not match the URL clients see in their browser. Two things have to line up:
 
-1. **`defaultHostname`** matches the public-facing hostname the proxy serves. Edit it through *Settings › Network › Services* in the WebUI or with the [CLI](/docs/management/cli/overview).
-2. **[`STALWART_HTTPS_PORT`](/docs/configuration/environment-variables#public-urls)** is set to the public HTTPS port when that port is not `443`. Without it, the discovery documents publish `https://<host>/...` (port `443` implied) and clients are sent to a port the proxy is not listening on.
-3. **The proxy serves on HTTPS to clients.** Browsers refuse OAuth flows over plain HTTP for non-localhost origins.
+1. **[`STALWART_PUBLIC_URL`](/docs/configuration/environment-variables#public-urls)** is set to the URL clients reach the proxy on, including scheme, host, port (if not `443`), and path prefix (if mounted under one). Without it, the discovery documents fall back to `https://<defaultHostname>` on port `443`, which sends clients to a URL the proxy is not serving.
+2. **The proxy serves that URL on HTTPS.** Browsers refuse OAuth flows over plain HTTP for non-localhost origins.
 
-If those three are correct, the upstream pattern (HTTP to `:8080`, HTTPS to `:443`, or TCP-passthrough) is an implementation detail and any of them produces the same discovery URLs. If sign-in still fails, bypass the proxy temporarily as described in [Initial setup behind a proxy](#initial-setup-behind-a-proxy) above to confirm the server is healthy, then re-introduce the proxy and check each of the three points in turn.
+If both are correct, the upstream pattern (HTTP to `:8080`, HTTPS to `:443`, or TCP-passthrough) is an implementation detail and any of them produces the same discovery URLs. If sign-in still fails, fetch `https://<public-url>/.well-known/openid-configuration` directly with `curl` and confirm that every URL in the response uses the public base URL clients see; any mismatch points back to `STALWART_PUBLIC_URL`.

@@ -44,6 +44,12 @@ Publishing every port is not required. Internal deployments that only need, for 
 
 The image runs as an unprivileged `stalwart` user (UID 2000). Docker's default capability set is sufficient for binding ports below 1024 on Linux: the binary carries the `cap_net_bind_service` file capability, so no `--cap-add` or `--privileged` flag is needed. Starting the container with `--cap-drop NET_BIND_SERVICE` causes the binary to fail at exec time.
 
+:::note Reverse proxies and custom ports
+
+When the host port mapping is not `443`, or a reverse proxy fronts the container on a different URL, pass the public-facing URL through `STALWART_PUBLIC_URL` so that discovery documents publish the URL clients actually use. For example: ` -e STALWART_PUBLIC_URL=https://mail.example.com:8443`. The variable accepts a full base URL with scheme, host, optional port, and optional path prefix (e.g. `https://example.com/mail`). It does not change which ports the container itself binds to; those continue to be controlled by `-p` and the [NetworkListener](/docs/ref/object/network-listener) objects. See [Public URLs](/docs/configuration/environment-variables#public-urls) for the full reference.
+
+:::
+
 :::note Bind-mounts and UID 2000
 
 The example above uses named Docker volumes, which are populated with the correct ownership automatically. When bind-mounting host directories instead (for example `-v /srv/stalwart/config:/etc/stalwart`), the host directory must be owned by UID 2000 so the service account can read and write it. Run `chown 2000:2000 /srv/stalwart/config /srv/stalwart/data` on the host before starting the container.

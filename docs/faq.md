@@ -152,7 +152,7 @@ Almost always one of the following:
 
 - The browser is on `http://` while the configured hostname is announced over `https://`. Open the page over HTTPS, or use `http://<host>:8080/admin` while TLS is being put in place.
 - The browser cached an earlier visit on the wrong scheme. Clear the site's history or use a private window.
-- A reverse proxy is terminating HTTPS but talking HTTP upstream and the discovery URLs end up pointing at the wrong scheme or port. See [Reverse proxy › Overview](/docs/server/reverse-proxy/overview) for the supported patterns and the [`STALWART_HTTPS_PORT`](/docs/configuration/environment-variables#public-urls) variable.
+- A reverse proxy is terminating HTTPS but talking HTTP upstream and the discovery URLs end up pointing at the wrong scheme or port. See [Reverse proxy › Overview](/docs/server/reverse-proxy/overview) for the supported patterns and the [`STALWART_PUBLIC_URL`](/docs/configuration/environment-variables#public-urls) variable.
 
 ### Can I reach the WebUI by IP address?
 

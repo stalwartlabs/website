@@ -8,7 +8,7 @@ sidebar_position: 3
 
 Stalwart can sit behind Caddy for HTTP traffic. Caddy handles HTTPS termination and certificate management, then forwards requests to Stalwart.
 
-The example below forwards to Stalwart's HTTPS listener with Proxy Protocol v2, but a plain HTTP-upstream pattern (Caddy forwarding plain HTTP to Stalwart's port `8080`) works equally well and produces the same OAuth, OIDC, and JMAP discovery responses. See [How discovery URLs are composed](/docs/server/reverse-proxy/overview#how-discovery-urls-are-composed) for the model that drives those responses, and the [`STALWART_HTTPS_PORT`](/docs/configuration/environment-variables#public-urls) variable for deployments where Caddy listens on a port other than `443`.
+The example below forwards to Stalwart's HTTPS listener with Proxy Protocol v2, but a plain HTTP-upstream pattern (Caddy forwarding plain HTTP to Stalwart's port `8080`) works equally well and produces the same OAuth, OIDC, and JMAP discovery responses. See [How discovery URLs are composed](/docs/server/reverse-proxy/overview#how-discovery-urls-are-composed) for the model that drives those responses, and set the [`STALWART_PUBLIC_URL`](/docs/configuration/environment-variables#public-urls) variable to the URL clients reach Caddy on whenever it differs from `https://<defaultHostname>` on port `443`.
 
 ## Note on Layer 4 support
 
