@@ -15,7 +15,7 @@ Peer-to-peer coordination removes the need for Kafka or NATS at the cost of a mo
 
 For many environments, especially ones that value deployment simplicity, self-discovery, and low-latency messaging, Stalwart's peer-to-peer coordination over Eclipse Zenoh is a good fit.
 
-:::tip Note
+:::tip[Note]
 
 Peer-to-peer coordination is not included in the default Stalwart binary. To enable it, [build](/docs/development/compile) Stalwart with the `zenoh` feature flag.
 

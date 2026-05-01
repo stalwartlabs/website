@@ -38,7 +38,7 @@ The StoreLookup object is available via the `urn:stalwart:jmap` capability.
 This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.1) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.1), Section 5.1.
 
 
-This method requires the `sysStoreLookupGet` [permission](../permissions.md).
+This method requires the `sysStoreLookupGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -75,7 +75,7 @@ Supports create, update, and destroy operations in a single call.
 
 #### Create
 
-This operation requires the `sysStoreLookupCreate` [permission](../permissions.md).
+This operation requires the `sysStoreLookupCreate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -112,7 +112,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Update
 
-This operation requires the `sysStoreLookupUpdate` [permission](../permissions.md).
+This operation requires the `sysStoreLookupUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -149,7 +149,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Destroy
 
-This operation requires the `sysStoreLookupDestroy` [permission](../permissions.md).
+This operation requires the `sysStoreLookupDestroy` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -182,7 +182,7 @@ curl -X POST https://mail.example.com/api \
 This is a standard [`Foo/query`](https://www.rfc-editor.org/rfc/rfc8620#section-5.5) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.5), Section 5.5.
 
 
-This method requires the `sysStoreLookupQuery` [permission](../permissions.md).
+This method requires the `sysStoreLookupQuery` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -253,7 +253,7 @@ stalwart-cli delete StoreLookup --ids id1
 ## Nested types
 
 
-### LookupStore {#lookupstore}
+### LookupStore
 
 Lookup store backends.
 
@@ -268,7 +268,7 @@ Lookup store backends.
 
 
 
-#### PostgreSqlStore {#postgresqlstore}
+#### PostgreSqlStore
 
 PostgreSQL data store.
 
@@ -361,7 +361,7 @@ PostgreSQL data store.
 
 
 
-##### PostgreSqlSettings {#postgresqlsettings}
+##### PostgreSqlSettings
 
 PostgreSQL connection settings.
 
@@ -412,7 +412,7 @@ PostgreSQL connection settings.
 
 
 
-##### SecretKeyOptional {#secretkeyoptional}
+##### SecretKeyOptional
 
 An optional secret value, or none.
 
@@ -425,7 +425,7 @@ An optional secret value, or none.
 
 
 
-##### SecretKeyValue {#secretkeyvalue}
+##### SecretKeyValue
 
 A secret value provided directly.
 
@@ -441,7 +441,7 @@ A secret value provided directly.
 
 
 
-##### SecretKeyEnvironmentVariable {#secretkeyenvironmentvariable}
+##### SecretKeyEnvironmentVariable
 
 A secret value read from an environment variable.
 
@@ -457,7 +457,7 @@ A secret value read from an environment variable.
 
 
 
-##### SecretKeyFile {#secretkeyfile}
+##### SecretKeyFile
 
 A secret value read from a file.
 
@@ -473,7 +473,7 @@ A secret value read from a file.
 
 
 
-#### MySqlStore {#mysqlstore}
+#### MySqlStore
 
 MySQL data store.
 
@@ -566,7 +566,7 @@ MySQL data store.
 
 
 
-##### MySqlSettings {#mysqlsettings}
+##### MySqlSettings
 
 MySQL connection settings.
 
@@ -610,7 +610,7 @@ MySQL connection settings.
 
 
 
-#### SqliteStore {#sqlitestore}
+#### SqliteStore
 
 SQLite embedded data store.
 
@@ -640,7 +640,7 @@ SQLite embedded data store.
 
 
 
-#### ShardedInMemoryStore {#shardedinmemorystore}
+#### ShardedInMemoryStore
 
 Sharded in-memory store configuration.
 
@@ -656,7 +656,7 @@ Sharded in-memory store configuration.
 
 
 
-##### InMemoryStoreBase {#inmemorystorebase}
+##### InMemoryStoreBase
 
 In-memory store backends.
 
@@ -667,7 +667,7 @@ In-memory store backends.
 
 
 
-##### RedisStore {#redisstore}
+##### RedisStore
 
 Redis/Valkey store.
 
@@ -718,7 +718,7 @@ Redis/Valkey store.
 
 
 
-##### RedisClusterStore {#redisclusterstore}
+##### RedisClusterStore
 
 Redis Cluster store.
 
@@ -821,7 +821,7 @@ Redis Cluster store.
 ## Enums
 
 
-### PostgreSqlRecyclingMethod {#postgresqlrecyclingmethod}
+### PostgreSqlRecyclingMethod
 
 
 
@@ -832,7 +832,7 @@ Redis Cluster store.
 | `clean` | Clean recycling method |
 
 
-### RedisProtocol {#redisprotocol}
+### RedisProtocol
 
 
 

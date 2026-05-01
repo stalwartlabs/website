@@ -9,7 +9,7 @@ Alerts work by monitoring various server metrics and sending a notification when
 
 The condition that triggers an alert is configured using an expression that can combine one or multiple metrics. These expressions allow for complex conditions to be set, ensuring that alerts are only triggered when specific criteria are met. For example, an alert can be configured with an expression like server_memory > 1024 * 1024 * 1024 && queue_count > 5000, which would notify you if the server memory usage exceeds 1 GB while the message queue count surpasses 5,000. This capability to combine metrics into a single alert condition provides precise control over when and how you are notified.
 
-:::tip Enterprise feature
+:::tip[Enterprise feature]
 
 This feature is available exclusively in the [Enterprise Edition](/docs/server/enterprise) of Stalwart and not included in the Community Edition.
 

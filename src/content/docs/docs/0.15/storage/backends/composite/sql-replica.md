@@ -7,7 +7,7 @@ SQL read replicas are a database architecture pattern used to improve performanc
 
 In Stalwart, the SQL read replicas composite store allows administrators to leverage this pattern with any SQL database that supports read replicas, such as PostgreSQL, MySQL, MariaDB, Galera, or AlloyDB. By using SQL read replicas, administrators can enhance the server's performance in read-heavy environments while maintaining reliable data consistency.
 
-:::tip Enterprise feature
+:::tip[Enterprise feature]
 
 This feature is available exclusively in the [Enterprise Edition](/docs/server/enterprise) of Stalwart and not included in the Community Edition.
 

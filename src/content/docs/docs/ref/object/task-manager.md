@@ -47,7 +47,7 @@ This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.
 For singletons, the `ids` argument should be the literal `singleton` (or `null` to return the single instance).
 
 
-This method requires the `sysTaskManagerGet` [permission](../permissions.md).
+This method requires the `sysTaskManagerGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -81,7 +81,7 @@ This is a standard [`Foo/set`](https://www.rfc-editor.org/rfc/rfc8620#section-5.
 For singletons, only the `update` argument with id `singleton` is accepted; `create` and `destroy` arguments are rejected.
 
 
-This method requires the `sysTaskManagerUpdate` [permission](../permissions.md).
+This method requires the `sysTaskManagerUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -134,7 +134,7 @@ stalwart-cli update TaskManager --field maxAttempts=3
 ## Nested types
 
 
-### TaskRetryStrategy {#taskretrystrategy}
+### TaskRetryStrategy
 
 Retry strategy for failed tasks.
 
@@ -145,7 +145,7 @@ Retry strategy for failed tasks.
 
 
 
-#### TaskRetryStrategyBackoff {#taskretrystrategybackoff}
+#### TaskRetryStrategyBackoff
 
 Exponential backoff retry strategy settings.
 
@@ -182,7 +182,7 @@ Exponential backoff retry strategy settings.
 
 
 
-#### TaskRetryStrategyFixed {#taskretrystrategyfixed}
+#### TaskRetryStrategyFixed
 
 Fixed delay retry strategy settings.
 

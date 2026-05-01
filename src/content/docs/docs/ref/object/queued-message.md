@@ -108,7 +108,7 @@ The QueuedMessage object is available via the `urn:stalwart:jmap` capability.
 This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.1) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.1), Section 5.1.
 
 
-This method requires the `sysQueuedMessageGet` [permission](../permissions.md).
+This method requires the `sysQueuedMessageGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -145,7 +145,7 @@ Supports create, update, and destroy operations in a single call.
 
 #### Create
 
-This operation requires the `sysQueuedMessageCreate` [permission](../permissions.md).
+This operation requires the `sysQueuedMessageCreate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -175,7 +175,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Update
 
-This operation requires the `sysQueuedMessageUpdate` [permission](../permissions.md).
+This operation requires the `sysQueuedMessageUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -205,7 +205,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Destroy
 
-This operation requires the `sysQueuedMessageDestroy` [permission](../permissions.md).
+This operation requires the `sysQueuedMessageDestroy` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -238,7 +238,7 @@ curl -X POST https://mail.example.com/api \
 This is a standard [`Foo/query`](https://www.rfc-editor.org/rfc/rfc8620#section-5.5) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.5), Section 5.5.
 
 
-This method requires the `sysQueuedMessageQuery` [permission](../permissions.md).
+This method requires the `sysQueuedMessageQuery` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -322,7 +322,7 @@ stalwart-cli delete QueuedMessage --ids id1
 ## Nested types
 
 
-### QueuedRecipient {#queuedrecipient}
+### QueuedRecipient
 
 Delivery status and scheduling for a message recipient.
 
@@ -394,7 +394,7 @@ Delivery status and scheduling for a message recipient.
 
 
 
-#### QueueExpiry {#queueexpiry}
+#### QueueExpiry
 
 Message expiry strategy for a queued recipient.
 
@@ -405,7 +405,7 @@ Message expiry strategy for a queued recipient.
 
 
 
-##### QueueExpiryTtl {#queueexpiryttl}
+##### QueueExpiryTtl
 
 TTL-based message expiry settings.
 
@@ -421,7 +421,7 @@ TTL-based message expiry settings.
 
 
 
-##### QueueExpiryAttempts {#queueexpiryattempts}
+##### QueueExpiryAttempts
 
 Attempt-based message expiry settings.
 
@@ -437,7 +437,7 @@ Attempt-based message expiry settings.
 
 
 
-#### RecipientStatus {#recipientstatus}
+#### RecipientStatus
 
 Delivery status for a queued message recipient.
 
@@ -450,7 +450,7 @@ Delivery status for a queued message recipient.
 
 
 
-##### ServerResponse {#serverresponse}
+##### ServerResponse
 
 SMTP server response details.
 
@@ -487,7 +487,7 @@ SMTP server response details.
 
 
 
-##### DeliveryError {#deliveryerror}
+##### DeliveryError
 
 Details of a delivery error including the triggering command.
 
@@ -548,7 +548,7 @@ Details of a delivery error including the triggering command.
 ## Enums
 
 
-### DeliveryErrorType {#deliveryerrortype}
+### DeliveryErrorType
 
 
 
@@ -565,7 +565,7 @@ Details of a delivery error including the triggering command.
 | `io` | Network I/O error occurred |
 
 
-### RecipientFlag {#recipientflag}
+### RecipientFlag
 
 
 
@@ -575,7 +575,7 @@ Details of a delivery error including the triggering command.
 | `spamPayload` | Message content was classified as spam |
 
 
-### MessageFlag {#messageflag}
+### MessageFlag
 
 
 

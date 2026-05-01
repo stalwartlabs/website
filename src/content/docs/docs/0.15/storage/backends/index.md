@@ -23,7 +23,7 @@ The following table summarizes the backend options available for each store type
 
 It's important to note that the support for each of these databases is compiled directly into the Stalwart binary. Therefore, to switch to certain backends such as FoundationDB, you'll need to utilize a different binary, corresponding to the desired backend(s).
 
-:::tip Note
+:::tip[Note]
 
 Be aware that a change in storage backend after initial setup implies a requirement for data migration. This means that all user data existing on the initial database backend would need to be transferred to the new backend. This could be a complex and time-consuming process, depending on the amount and type of data involved. Hence, it is advisable to carefully consider the most suitable database backend for your needs right at the start of your setup. 
 

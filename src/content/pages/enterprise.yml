@@ -95,7 +95,7 @@ sections:
       them.
     learnMore:
       - label: Storage and retention reference
-        href: /docs/storage/overview
+        href: /docs/storage/
     visual:
       kind: placeholder
       caption: "Screenshot needed: Archived items list in the WebUI with From / Subject / Received columns."
@@ -193,7 +193,7 @@ sections:
       limits and sieve compilation caches.
     learnMore:
       - label: Storage backends
-        href: /docs/storage/backends/overview
+        href: /docs/storage/backends/
     visual:
       kind: diagram
       id: cluster

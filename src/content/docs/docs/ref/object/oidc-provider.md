@@ -110,7 +110,7 @@ This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.
 For singletons, the `ids` argument should be the literal `singleton` (or `null` to return the single instance).
 
 
-This method requires the `sysOidcProviderGet` [permission](../permissions.md).
+This method requires the `sysOidcProviderGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -144,7 +144,7 @@ This is a standard [`Foo/set`](https://www.rfc-editor.org/rfc/rfc8620#section-5.
 For singletons, only the `update` argument with id `singleton` is accepted; `create` and `destroy` arguments are rejected.
 
 
-This method requires the `sysOidcProviderUpdate` [permission](../permissions.md).
+This method requires the `sysOidcProviderUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -197,7 +197,7 @@ stalwart-cli update OidcProvider --field authCodeMaxAttempts=3
 ## Nested types
 
 
-### SecretKey {#secretkey}
+### SecretKey
 
 A secret value provided directly, from an environment variable, or from a file.
 
@@ -209,7 +209,7 @@ A secret value provided directly, from an environment variable, or from a file.
 
 
 
-#### SecretKeyValue {#secretkeyvalue}
+#### SecretKeyValue
 
 A secret value provided directly.
 
@@ -225,7 +225,7 @@ A secret value provided directly.
 
 
 
-#### SecretKeyEnvironmentVariable {#secretkeyenvironmentvariable}
+#### SecretKeyEnvironmentVariable
 
 A secret value read from an environment variable.
 
@@ -241,7 +241,7 @@ A secret value read from an environment variable.
 
 
 
-#### SecretKeyFile {#secretkeyfile}
+#### SecretKeyFile
 
 A secret value read from a file.
 
@@ -257,7 +257,7 @@ A secret value read from a file.
 
 
 
-### SecretText {#secrettext}
+### SecretText
 
 A secret text value provided directly, from an environment variable, or from a file.
 
@@ -269,7 +269,7 @@ A secret text value provided directly, from an environment variable, or from a f
 
 
 
-#### SecretTextValue {#secrettextvalue}
+#### SecretTextValue
 
 A secret text value provided directly.
 
@@ -288,7 +288,7 @@ A secret text value provided directly.
 ## Enums
 
 
-### JwtSignatureAlgorithm {#jwtsignaturealgorithm}
+### JwtSignatureAlgorithm
 
 
 

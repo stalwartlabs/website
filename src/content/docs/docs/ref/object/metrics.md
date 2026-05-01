@@ -29,7 +29,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `metrics`
 
-> Type: [<code>MetricType</code>](../metrics.md)<code>[]</code>
+> Type: [<code>MetricType</code>](/docs/ref/metrics)<code>[]</code>
 >
 > List of metrics to include or exclude based on filter mode
 
@@ -54,7 +54,7 @@ This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.
 For singletons, the `ids` argument should be the literal `singleton` (or `null` to return the single instance).
 
 
-This method requires the `sysMetricsGet` [permission](../permissions.md).
+This method requires the `sysMetricsGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -88,7 +88,7 @@ This is a standard [`Foo/set`](https://www.rfc-editor.org/rfc/rfc8620#section-5.
 For singletons, only the `update` argument with id `singleton` is accepted; `create` and `destroy` arguments are rejected.
 
 
-This method requires the `sysMetricsUpdate` [permission](../permissions.md).
+This method requires the `sysMetricsUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -143,7 +143,7 @@ stalwart-cli update Metrics --field openTelemetry='{"@type":"Disabled"}'
 ## Nested types
 
 
-### MetricsOtel {#metricsotel}
+### MetricsOtel
 
 OpenTelemetry metrics configuration.
 
@@ -155,7 +155,7 @@ OpenTelemetry metrics configuration.
 
 
 
-#### MetricsOtelHttp {#metricsotelhttp}
+#### MetricsOtelHttp
 
 OpenTelemetry HTTP metrics exporter.
 
@@ -199,7 +199,7 @@ OpenTelemetry HTTP metrics exporter.
 
 
 
-##### HttpAuth {#httpauth}
+##### HttpAuth
 
 Defines the HTTP authentication method to use for HTTP requests.
 
@@ -211,7 +211,7 @@ Defines the HTTP authentication method to use for HTTP requests.
 
 
 
-##### HttpAuthBasic {#httpauthbasic}
+##### HttpAuthBasic
 
 HTTP Basic authentication credentials.
 
@@ -234,7 +234,7 @@ HTTP Basic authentication credentials.
 
 
 
-##### SecretKey {#secretkey}
+##### SecretKey
 
 A secret value provided directly, from an environment variable, or from a file.
 
@@ -246,7 +246,7 @@ A secret value provided directly, from an environment variable, or from a file.
 
 
 
-##### SecretKeyValue {#secretkeyvalue}
+##### SecretKeyValue
 
 A secret value provided directly.
 
@@ -262,7 +262,7 @@ A secret value provided directly.
 
 
 
-##### SecretKeyEnvironmentVariable {#secretkeyenvironmentvariable}
+##### SecretKeyEnvironmentVariable
 
 A secret value read from an environment variable.
 
@@ -278,7 +278,7 @@ A secret value read from an environment variable.
 
 
 
-##### SecretKeyFile {#secretkeyfile}
+##### SecretKeyFile
 
 A secret value read from a file.
 
@@ -294,7 +294,7 @@ A secret value read from a file.
 
 
 
-##### HttpAuthBearer {#httpauthbearer}
+##### HttpAuthBearer
 
 HTTP Bearer token authentication.
 
@@ -310,7 +310,7 @@ HTTP Bearer token authentication.
 
 
 
-#### MetricsOtelGrpc {#metricsotelgrpc}
+#### MetricsOtelGrpc
 
 OpenTelemetry gRPC metrics exporter.
 
@@ -340,7 +340,7 @@ OpenTelemetry gRPC metrics exporter.
 
 
 
-### MetricsPrometheus {#metricsprometheus}
+### MetricsPrometheus
 
 Prometheus metrics endpoint configuration.
 
@@ -351,7 +351,7 @@ Prometheus metrics endpoint configuration.
 
 
 
-#### MetricsPrometheusProperties {#metricsprometheusproperties}
+#### MetricsPrometheusProperties
 
 Prometheus metrics endpoint authentication.
 
@@ -374,7 +374,7 @@ Prometheus metrics endpoint authentication.
 
 
 
-##### SecretKeyOptional {#secretkeyoptional}
+##### SecretKeyOptional
 
 An optional secret value, or none.
 
@@ -390,7 +390,7 @@ An optional secret value, or none.
 ## Enums
 
 
-### EventPolicy {#eventpolicy}
+### EventPolicy
 
 
 

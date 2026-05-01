@@ -23,7 +23,7 @@ Full-text indexing engines such as ElasticSearch or Meilisearch offer the follow
 - **Ranking and Sorting**: They allow for more nuanced control over ranking and sorting of search results. They use a variety of factors (like text relevance, field values, and custom algorithms) to rank the results, giving users more accurate and tailored outputs.
 - **Storage efficient**: They use index structures that are designed and optimized for full-text search, allowing for more efficient use of storage space.
 
-:::tip Encryption and full-text search
+:::tip[Encryption and full-text search]
 
 It is important to note that when [encryption at rest](/docs/encryption/) is enabled, only the message headers will be stored in the full-text index.
 

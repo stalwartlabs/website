@@ -29,7 +29,7 @@ A global quota of 100,000 messages / 10 GB:
 }
 ```
 
-## Groups {#groups}
+## Groups
 
 The [`key`](/docs/ref/object/mta-queue-quota#key) field creates quota groups based on a combination of context variables. Available values are:
 

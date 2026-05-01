@@ -17,7 +17,7 @@ Administrators can enable 2FA on a user account by accessing the Manage Account 
 
 Both users and administrators should ensure that the authenticator app is properly set up and tested to avoid any access issues. Enabling 2FA significantly enhances the security of email accounts, providing robust protection against unauthorized access.
 
-:::tip Note
+:::tip[Note]
 
 Two-factor authentication can only be managed from the self-service portal or the webadmin interface when Stalwart is configured to use the [internal directory](/docs/auth/backend/internal). If the server is set up to use an external directory, such as LDAP or SQL, administrators need to manually add the OTP Auth URL as one of the account secrets to enable 2FA for user accounts.
 

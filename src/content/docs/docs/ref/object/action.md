@@ -288,7 +288,7 @@ The Action object is available via the `urn:stalwart:jmap` capability.
 This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.1) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.1), Section 5.1.
 
 
-This method requires the `sysActionGet` [permission](../permissions.md).
+This method requires the `sysActionGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -325,7 +325,7 @@ Supports create, update, and destroy operations in a single call.
 
 #### Create
 
-This operation requires the `sysActionCreate` [permission](../permissions.md).
+This operation requires the `sysActionCreate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -355,7 +355,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Update
 
-This operation requires the `sysActionUpdate` [permission](../permissions.md).
+This operation requires the `sysActionUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -385,7 +385,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Destroy
 
-This operation requires the `sysActionDestroy` [permission](../permissions.md).
+This operation requires the `sysActionDestroy` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -418,7 +418,7 @@ curl -X POST https://mail.example.com/api \
 This is a standard [`Foo/query`](https://www.rfc-editor.org/rfc/rfc8620#section-5.5) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.5), Section 5.5.
 
 
-This method requires the `sysActionQuery` [permission](../permissions.md).
+This method requires the `sysActionQuery` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -488,7 +488,7 @@ stalwart-cli delete Action --ids id1
 ## Nested types
 
 
-### DmarcTroubleshootAuthResult {#dmarctroubleshootauthresult}
+### DmarcTroubleshootAuthResult
 
 Authentication check result for DMARC troubleshooting.
 
@@ -504,7 +504,7 @@ Authentication check result for DMARC troubleshooting.
 
 
 
-#### DmarcTroubleshootDetails {#dmarctroubleshootdetails}
+#### DmarcTroubleshootDetails
 
 Details for a failed authentication check.
 
@@ -520,7 +520,7 @@ Details for a failed authentication check.
 
 
 
-### SpamClassifyTag {#spamclassifytag}
+### SpamClassifyTag
 
 A tag and score contributing to spam classification.
 
@@ -546,7 +546,7 @@ A tag and score contributing to spam classification.
 ## Enums
 
 
-### DmarcDisposition {#dmarcdisposition}
+### DmarcDisposition
 
 
 
@@ -558,7 +558,7 @@ A tag and score contributing to spam classification.
 | `unspecified` | Disposition not specified |
 
 
-### SpamClassifyParameters {#spamclassifyparameters}
+### SpamClassifyParameters
 
 
 
@@ -570,7 +570,7 @@ A tag and score contributing to spam classification.
 | `smtpUtf8` | UTF-8 message content |
 
 
-### SpamClassifyTagDisposition {#spamclassifytagdisposition}
+### SpamClassifyTagDisposition
 
 
 
@@ -581,7 +581,7 @@ A tag and score contributing to spam classification.
 | `discard` | Discard the message |
 
 
-### SpamClassifyResult {#spamclassifyresult}
+### SpamClassifyResult
 
 
 

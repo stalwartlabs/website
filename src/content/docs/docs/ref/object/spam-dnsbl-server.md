@@ -26,7 +26,7 @@ Any
 >
 > Expression that returns the tag to assign to the message.
 >
-> Available variables: [`SpamIpVariable`](../expression/variable/spam-ip-variable.md).
+> Available variables: [`SpamIpVariable`](/docs/ref/expression/variable/spam-ip-variable).
 
 
 ##### `zone`
@@ -35,7 +35,7 @@ Any
 >
 > Expression that returns the DNS zone to query.
 >
-> Available variables: [`SpamGenericVariable`](../expression/variable/spam-generic-variable.md).
+> Available variables: [`SpamGenericVariable`](/docs/ref/expression/variable/spam-generic-variable).
 
 
 ##### `name`
@@ -71,7 +71,7 @@ URL
 >
 > Expression that returns the tag to assign to the message.
 >
-> Available variables: [`SpamIpVariable`](../expression/variable/spam-ip-variable.md).
+> Available variables: [`SpamIpVariable`](/docs/ref/expression/variable/spam-ip-variable).
 
 
 ##### `zone`
@@ -80,7 +80,7 @@ URL
 >
 > Expression that returns the DNS zone to query.
 >
-> Available variables: [`SpamUrlVariable`](../expression/variable/spam-url-variable.md).
+> Available variables: [`SpamUrlVariable`](/docs/ref/expression/variable/spam-url-variable).
 
 
 ##### `name`
@@ -116,7 +116,7 @@ Domain
 >
 > Expression that returns the tag to assign to the message.
 >
-> Available variables: [`SpamIpVariable`](../expression/variable/spam-ip-variable.md).
+> Available variables: [`SpamIpVariable`](/docs/ref/expression/variable/spam-ip-variable).
 
 
 ##### `zone`
@@ -125,7 +125,7 @@ Domain
 >
 > Expression that returns the DNS zone to query.
 >
-> Available variables: [`SpamGenericVariable`](../expression/variable/spam-generic-variable.md).
+> Available variables: [`SpamGenericVariable`](/docs/ref/expression/variable/spam-generic-variable).
 
 
 ##### `name`
@@ -161,7 +161,7 @@ E-mail
 >
 > Expression that returns the tag to assign to the message.
 >
-> Available variables: [`SpamIpVariable`](../expression/variable/spam-ip-variable.md).
+> Available variables: [`SpamIpVariable`](/docs/ref/expression/variable/spam-ip-variable).
 
 
 ##### `zone`
@@ -170,7 +170,7 @@ E-mail
 >
 > Expression that returns the DNS zone to query.
 >
-> Available variables: [`SpamEmailVariable`](../expression/variable/spam-email-variable.md).
+> Available variables: [`SpamEmailVariable`](/docs/ref/expression/variable/spam-email-variable).
 
 
 ##### `name`
@@ -206,7 +206,7 @@ IP
 >
 > Expression that returns the tag to assign to the message.
 >
-> Available variables: [`SpamIpVariable`](../expression/variable/spam-ip-variable.md).
+> Available variables: [`SpamIpVariable`](/docs/ref/expression/variable/spam-ip-variable).
 
 
 ##### `zone`
@@ -215,7 +215,7 @@ IP
 >
 > Expression that returns the DNS zone to query.
 >
-> Available variables: [`SpamIpVariable`](../expression/variable/spam-ip-variable.md).
+> Available variables: [`SpamIpVariable`](/docs/ref/expression/variable/spam-ip-variable).
 
 
 ##### `name`
@@ -251,7 +251,7 @@ Header
 >
 > Expression that returns the tag to assign to the message.
 >
-> Available variables: [`SpamIpVariable`](../expression/variable/spam-ip-variable.md).
+> Available variables: [`SpamIpVariable`](/docs/ref/expression/variable/spam-ip-variable).
 
 
 ##### `zone`
@@ -260,7 +260,7 @@ Header
 >
 > Expression that returns the DNS zone to query.
 >
-> Available variables: [`SpamHeaderVariable`](../expression/variable/spam-header-variable.md).
+> Available variables: [`SpamHeaderVariable`](/docs/ref/expression/variable/spam-header-variable).
 
 
 ##### `name`
@@ -296,7 +296,7 @@ Body
 >
 > Expression that returns the tag to assign to the message.
 >
-> Available variables: [`SpamIpVariable`](../expression/variable/spam-ip-variable.md).
+> Available variables: [`SpamIpVariable`](/docs/ref/expression/variable/spam-ip-variable).
 
 
 ##### `zone`
@@ -305,7 +305,7 @@ Body
 >
 > Expression that returns the DNS zone to query.
 >
-> Available variables: [`SpamGenericVariable`](../expression/variable/spam-generic-variable.md).
+> Available variables: [`SpamGenericVariable`](/docs/ref/expression/variable/spam-generic-variable).
 
 
 ##### `name`
@@ -341,7 +341,7 @@ The SpamDnsblServer object is available via the `urn:stalwart:jmap` capability.
 This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.1) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.1), Section 5.1.
 
 
-This method requires the `sysSpamDnsblServerGet` [permission](../permissions.md).
+This method requires the `sysSpamDnsblServerGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -378,7 +378,7 @@ Supports create, update, and destroy operations in a single call.
 
 #### Create
 
-This operation requires the `sysSpamDnsblServerCreate` [permission](../permissions.md).
+This operation requires the `sysSpamDnsblServerCreate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -416,7 +416,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Update
 
-This operation requires the `sysSpamDnsblServerUpdate` [permission](../permissions.md).
+This operation requires the `sysSpamDnsblServerUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -446,7 +446,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Destroy
 
-This operation requires the `sysSpamDnsblServerDestroy` [permission](../permissions.md).
+This operation requires the `sysSpamDnsblServerDestroy` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -479,7 +479,7 @@ curl -X POST https://mail.example.com/api \
 This is a standard [`Foo/query`](https://www.rfc-editor.org/rfc/rfc8620#section-5.5) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.5), Section 5.5.
 
 
-This method requires the `sysSpamDnsblServerQuery` [permission](../permissions.md).
+This method requires the `sysSpamDnsblServerQuery` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -560,7 +560,7 @@ stalwart-cli delete SpamDnsblServer --ids id1
 ## Nested types
 
 
-### Expression {#expression}
+### Expression
 
 A conditional expression with match rules and a default value.
 
@@ -583,7 +583,7 @@ A conditional expression with match rules and a default value.
 
 
 
-#### ExpressionMatch {#expressionmatch}
+#### ExpressionMatch
 
 A single condition-result pair in an expression.
 
@@ -610,9 +610,9 @@ A single condition-result pair in an expression.
 
 The following expression contexts are used by fields on this page:
 
-- [`SpamIpVariable`](../expression/variable/spam-ip-variable.md) (Variables)
-- [`SpamGenericVariable`](../expression/variable/spam-generic-variable.md) (Variables)
-- [`SpamUrlVariable`](../expression/variable/spam-url-variable.md) (Variables)
-- [`SpamEmailVariable`](../expression/variable/spam-email-variable.md) (Variables)
-- [`SpamHeaderVariable`](../expression/variable/spam-header-variable.md) (Variables)
+- [`SpamIpVariable`](/docs/ref/expression/variable/spam-ip-variable) (Variables)
+- [`SpamGenericVariable`](/docs/ref/expression/variable/spam-generic-variable) (Variables)
+- [`SpamUrlVariable`](/docs/ref/expression/variable/spam-url-variable) (Variables)
+- [`SpamEmailVariable`](/docs/ref/expression/variable/spam-email-variable) (Variables)
+- [`SpamHeaderVariable`](/docs/ref/expression/variable/spam-header-variable) (Variables)
 

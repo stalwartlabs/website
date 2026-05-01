@@ -19,7 +19,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Maximum number of authentication errors allowed before the session is disconnected
 >
-> Available variables: [`MtaEhloVariable`](../expression/variable/mta-ehlo-variable.md).
+> Available variables: [`MtaEhloVariable`](/docs/ref/expression/variable/mta-ehlo-variable).
 
 
 ##### `waitOnFail`
@@ -28,7 +28,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Time interval to wait after an authentication failure
 >
-> Available variables: [`MtaEhloVariable`](../expression/variable/mta-ehlo-variable.md).
+> Available variables: [`MtaEhloVariable`](/docs/ref/expression/variable/mta-ehlo-variable).
 
 
 ##### `saslMechanisms`
@@ -37,9 +37,9 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > A list of SASL authentication mechanisms offered to clients, or an empty list to disable authentication. Stalwart supports PLAIN, LOGIN, and OAUTHBEARER mechanisms
 >
-> Available variables: [`MtaEhloVariable`](../expression/variable/mta-ehlo-variable.md).
+> Available variables: [`MtaEhloVariable`](/docs/ref/expression/variable/mta-ehlo-variable).
 >
-> Available constants: [`MtaAuthTypeConstant`](../expression/constant/mta-auth-type-constant.md).
+> Available constants: [`MtaAuthTypeConstant`](/docs/ref/expression/constant/mta-auth-type-constant).
 
 
 ##### `mustMatchSender`
@@ -48,7 +48,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Specifies whether the authenticated user or any of their associated e-mail addresses must match the sender of the email message
 >
-> Available variables: [`MtaMailFromVariable`](../expression/variable/mta-mail-from-variable.md).
+> Available variables: [`MtaMailFromVariable`](/docs/ref/expression/variable/mta-mail-from-variable).
 
 
 ##### `require`
@@ -57,7 +57,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Specifies whether authentication is necessary to send email messages
 >
-> Available variables: [`MtaEhloVariable`](../expression/variable/mta-ehlo-variable.md).
+> Available variables: [`MtaEhloVariable`](/docs/ref/expression/variable/mta-ehlo-variable).
 
 
 
@@ -73,7 +73,7 @@ This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.
 For singletons, the `ids` argument should be the literal `singleton` (or `null` to return the single instance).
 
 
-This method requires the `sysMtaStageAuthGet` [permission](../permissions.md).
+This method requires the `sysMtaStageAuthGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -107,7 +107,7 @@ This is a standard [`Foo/set`](https://www.rfc-editor.org/rfc/rfc8620#section-5.
 For singletons, only the `update` argument with id `singleton` is accepted; `create` and `destroy` arguments are rejected.
 
 
-This method requires the `sysMtaStageAuthUpdate` [permission](../permissions.md).
+This method requires the `sysMtaStageAuthUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -162,7 +162,7 @@ stalwart-cli update MtaStageAuth --field maxFailures='{"else":"3"}'
 ## Nested types
 
 
-### Expression {#expression}
+### Expression
 
 A conditional expression with match rules and a default value.
 
@@ -185,7 +185,7 @@ A conditional expression with match rules and a default value.
 
 
 
-#### ExpressionMatch {#expressionmatch}
+#### ExpressionMatch
 
 A single condition-result pair in an expression.
 
@@ -212,7 +212,7 @@ A single condition-result pair in an expression.
 
 The following expression contexts are used by fields on this page:
 
-- [`MtaEhloVariable`](../expression/variable/mta-ehlo-variable.md) (Variables)
-- [`MtaAuthTypeConstant`](../expression/constant/mta-auth-type-constant.md) (Constants)
-- [`MtaMailFromVariable`](../expression/variable/mta-mail-from-variable.md) (Variables)
+- [`MtaEhloVariable`](/docs/ref/expression/variable/mta-ehlo-variable) (Variables)
+- [`MtaAuthTypeConstant`](/docs/ref/expression/constant/mta-auth-type-constant) (Constants)
+- [`MtaMailFromVariable`](/docs/ref/expression/variable/mta-mail-from-variable) (Variables)
 

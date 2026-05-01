@@ -30,7 +30,7 @@ enable = false
 
 Once disabled, Stalwart will no longer process scheduling requests or generate scheduling messages. Events that include attendee information will be stored as standard calendar entries, but no invitations, updates, or replies will be sent or processed. Both iTIP (used internally for scheduling logic) and iMIP (used for email-based scheduling) will be effectively bypassed.
 
-:::tip Tip
+:::tip[Tip]
 
 Calendar Scheduling can also be enabled or disabled on a per-user basis by setting the appropriate [permissions](/docs/auth/authorization/permissions).
 
@@ -129,7 +129,7 @@ expiration = "7d"
 
 Stalwart provides support for **custom branding and templating** in its calendar scheduling features, allowing administrators to tailor the visual appearance and messaging of outbound invitations and RSVP responses. This is particularly useful for organizations that wish to provide a consistent user experience aligned with their brand identity.
 
-:::tip Enterprise feature
+:::tip[Enterprise feature]
 
 This feature is available exclusively in the [Enterprise Edition](/docs/server/enterprise) of Stalwart and not included in the Community Edition.
 

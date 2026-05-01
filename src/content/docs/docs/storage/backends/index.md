@@ -25,7 +25,7 @@ Backend support is compiled into the Stalwart binary. Switching to backends such
 
 Each store (data, blob, search, in-memory) is configured through its own singleton object: [DataStore](/docs/ref/object/data-store), [BlobStore](/docs/ref/object/blob-store), [SearchStore](/docs/ref/object/search-store), and [InMemoryStore](/docs/ref/object/in-memory-store). These objects are multi-variant: changing backend means selecting a different variant on the corresponding object, without restructuring the rest of the configuration.
 
-:::tip Note
+:::tip[Note]
 
 Changing the storage backend after initial setup requires data migration. All existing data on the previous backend must be transferred to the new backend, which can be time-consuming depending on the volume and type of data involved. It is therefore advisable to choose the appropriate backend at the start of the deployment.
 

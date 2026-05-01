@@ -51,7 +51,7 @@ secret = "password"
 
 If **no bind credentials are provided**, the server will attempt to connect and perform operations anonymously. While some LDAP directories allow anonymous access for basic queries, many are configured to require authentication for security reasons. In such cases, failing to provide bind credentials may result in failed authentication attempts or limited visibility into the directory structure.
 
-:::tip Note
+:::tip[Note]
 
 Even if bind authentication is enabled, the server still requires a default bind DN to connect to the LDAP server in order to perform other operations such as retrieving account information or validating e-mail addresses and domains.
 
@@ -89,7 +89,7 @@ secret = "userPassword"
 
 This instructs Stalwart to authenticate users by retrieving the `userPassword` attribute in the user’s LDAP entry and use its value for hash comparison. The attribute must contain the hash in a format supported by Stalwart (such as SSHA, SHA, MD5, etc.).
 
-:::tip Note
+:::tip[Note]
 
 This method is only suitable if the LDAP server allows access to password hashes and exposes them in a supported format. If the directory does not permit this—for example, in many Active Directory environments—bind authentication should be used instead.
 
@@ -124,7 +124,7 @@ The user's **Distinguished Name (DN)** is constructed dynamically using a templa
 
 For example, if the login username is `john.doe@example.com`, `{local}` becomes `john.doe` and `{domain}` becomes `example.com`.
 
-:::tip Note
+:::tip[Note]
 
 Since password hashes are not available in bind authentication, Stalwart cannot detect password changes based on stored credentials in order to invalidate existing OAuth tokens. Therefore, it is essential to configure the `secret-changed` attribute to track password changes. This attribute should contain a value that changes whenever the user's password is updated, such as a timestamp or version hash. This allows Stalwart to recognize when a password has changed, even without access to the hash.
 
@@ -150,7 +150,7 @@ method = "lookup"
 secret-changed = "pwdChangedTime"
 ```
 
-:::tip Note
+:::tip[Note]
 
 Since password hashes are not available in bind authentication, Stalwart cannot detect password changes based on stored credentials in order to invalidate existing OAuth tokens. Therefore, it is essential to configure the `secret-changed` attribute to track password changes. This attribute should contain a value that changes whenever the user's password is updated, such as a timestamp or version hash. This allows Stalwart to recognize when a password has changed, even without access to the hash.
 

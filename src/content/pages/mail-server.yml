@@ -16,7 +16,7 @@ hero:
     not a stack of glued-together daemons.
   ctas:
     - label: Get started
-      href: /docs/install/get-started
+      href: /docs/install/
   meta:
     - Open source
     - Rust-native
@@ -44,7 +44,7 @@ sections:
       - JMAP Quotas (RFC 9425).
     learnMore:
       - label: Read the JMAP overview
-        href: /docs/http/jmap/overview
+        href: /docs/http/jmap/
     visual:
       kind: placeholder
       caption: "Diagram needed: JMAP request/response over HTTP and WebSocket, with push updates and stateful sync."
@@ -130,7 +130,7 @@ sections:
       - Automatic TLSA refresh after each rotation.
     learnMore:
       - label: Read the ACME overview
-        href: /docs/server/tls/acme/overview
+        href: /docs/server/tls/acme/
     visual:
       kind: screenshot
       src: /images/webadmin/delivery-trace.png
@@ -221,4 +221,4 @@ footerCta:
   cta: Run a real mail server.
   ctaSub: Install Stalwart in minutes; pick the storage, search and identity backends that fit your deployment.
   ctaButton: Get started
-  ctaLink: /docs/install/get-started
+  ctaLink: /docs/install/

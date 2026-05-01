@@ -32,7 +32,7 @@ The following table summarizes the supported backends available for each store t
 | Meilisearch        |                    |                    | :white_check_mark: |                    |
 | Redis / Valkey     |                    |                    |                    | :white_check_mark: |
 
-:::tip Note
+:::tip[Note]
 
 Be aware that changing the database backend at a later time will require migrating your data.
 

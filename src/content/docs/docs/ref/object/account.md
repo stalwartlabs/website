@@ -29,7 +29,7 @@ User account
 
 ##### `domainId`
 
-> Type: <code>Id&lt;</code>[<code>Domain</code>](./domain.md)<code>&gt;</code> · required
+> Type: <code>Id&lt;</code>[<code>Domain</code>](/docs/ref/object/domain)<code>&gt;</code> · required
 >
 > Identifier for the domain this account belongs to. This is used to determine the email address of the account, which is formed as name@domain.
 
@@ -57,14 +57,14 @@ User account
 
 ##### `memberGroupIds`
 
-> Type: <code>Id&lt;</code>[<code>Account</code>](./account.md)<code>&gt;[]</code>
+> Type: <code>Id&lt;</code>[<code>Account</code>](/docs/ref/object/account)<code>&gt;[]</code>
 >
 > List of groups that this account is a member of
 
 
 ##### `memberTenantId`
 
-> Type: <code>Id&lt;</code>[<code>Tenant</code>](./tenant.md)<code>&gt;?</code>
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
 >
 > Identifier for the tenant this account belongs to
 
@@ -113,14 +113,14 @@ User account
 
 ##### `locale`
 
-> Type: [<code>Locale</code>](../enum/locale.md) · default: `"en_US"`
+> Type: [<code>Locale</code>](/docs/ref/enum/locale) · default: `"en_US"`
 >
 > Preferred locale for the account
 
 
 ##### `timeZone`
 
-> Type: [<code>TimeZone</code>](../enum/time-zone.md)<code>?</code>
+> Type: [<code>TimeZone</code>](/docs/ref/enum/time-zone)<code>?</code>
 >
 > Preferred time zone for the account
 
@@ -147,7 +147,7 @@ Group account
 
 ##### `domainId`
 
-> Type: <code>Id&lt;</code>[<code>Domain</code>](./domain.md)<code>&gt;</code> · required
+> Type: <code>Id&lt;</code>[<code>Domain</code>](/docs/ref/object/domain)<code>&gt;</code> · required
 >
 > Identifier for the domain this group belongs to. This is used to determine the email address of the group, which is formed as name@domain.
 
@@ -175,7 +175,7 @@ Group account
 
 ##### `memberTenantId`
 
-> Type: <code>Id&lt;</code>[<code>Tenant</code>](./tenant.md)<code>&gt;?</code>
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
 >
 > Identifier for the tenant this group belongs to
 
@@ -217,14 +217,14 @@ Group account
 
 ##### `locale`
 
-> Type: [<code>Locale</code>](../enum/locale.md) · default: `"en_US"`
+> Type: [<code>Locale</code>](/docs/ref/enum/locale) · default: `"en_US"`
 >
 > Preferred locale for the group
 
 
 ##### `timeZone`
 
-> Type: [<code>TimeZone</code>](../enum/time-zone.md)<code>?</code>
+> Type: [<code>TimeZone</code>](/docs/ref/enum/time-zone)<code>?</code>
 >
 > Preferred time zone for the account
 
@@ -241,7 +241,7 @@ The Account object is available via the `urn:stalwart:jmap` capability.
 This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.1) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.1), Section 5.1.
 
 
-This method requires the `sysAccountGet` [permission](../permissions.md).
+This method requires the `sysAccountGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -278,7 +278,7 @@ Supports create, update, and destroy operations in a single call.
 
 #### Create
 
-This operation requires the `sysAccountCreate` [permission](../permissions.md).
+This operation requires the `sysAccountCreate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -323,7 +323,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Update
 
-This operation requires the `sysAccountUpdate` [permission](../permissions.md).
+This operation requires the `sysAccountUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -353,7 +353,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Destroy
 
-This operation requires the `sysAccountDestroy` [permission](../permissions.md).
+This operation requires the `sysAccountDestroy` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -386,7 +386,7 @@ curl -X POST https://mail.example.com/api \
 This is a standard [`Foo/query`](https://www.rfc-editor.org/rfc/rfc8620#section-5.5) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.5), Section 5.5.
 
 
-This method requires the `sysAccountQuery` [permission](../permissions.md).
+This method requires the `sysAccountQuery` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -475,7 +475,7 @@ stalwart-cli delete Account --ids id1
 ## Nested types
 
 
-### Credential {#credential}
+### Credential
 
 Defines an authentication credential for an account.
 
@@ -487,7 +487,7 @@ Defines an authentication credential for an account.
 
 
 
-#### PasswordCredential {#passwordcredential}
+#### PasswordCredential
 
 Password-based authentication credential.
 
@@ -524,7 +524,7 @@ Password-based authentication credential.
 
 
 
-#### SecondaryCredential {#secondarycredential}
+#### SecondaryCredential
 
 App password or API key credential for programmatic access.
 
@@ -575,7 +575,7 @@ App password or API key credential for programmatic access.
 
 
 
-##### CredentialPermissions {#credentialpermissions}
+##### CredentialPermissions
 
 Permission assignment mode for a credential.
 
@@ -587,7 +587,7 @@ Permission assignment mode for a credential.
 
 
 
-##### CredentialPermissionsList {#credentialpermissionslist}
+##### CredentialPermissionsList
 
 List of permissions to assign to a credential.
 
@@ -595,7 +595,7 @@ List of permissions to assign to a credential.
 
 ##### `permissions`
 
-> Type: [<code>Permission</code>](../permissions.md)<code>[]</code>
+> Type: [<code>Permission</code>](/docs/ref/permissions)<code>[]</code>
 >
 > List of permissions to assign.
 
@@ -603,7 +603,7 @@ List of permissions to assign to a credential.
 
 
 
-### UserRoles {#userroles}
+### UserRoles
 
 Role assignment for user accounts.
 
@@ -615,7 +615,7 @@ Role assignment for user accounts.
 
 
 
-#### CustomRoles {#customroles}
+#### CustomRoles
 
 Custom role assignment with specific role references.
 
@@ -623,7 +623,7 @@ Custom role assignment with specific role references.
 
 ##### `roleIds`
 
-> Type: <code>Id&lt;</code>[<code>Role</code>](./role.md)<code>&gt;[]</code>
+> Type: <code>Id&lt;</code>[<code>Role</code>](/docs/ref/object/role)<code>&gt;[]</code>
 >
 > List of roles assigned to this principal.
 
@@ -631,7 +631,7 @@ Custom role assignment with specific role references.
 
 
 
-### Permissions {#permissions}
+### Permissions
 
 Permission assignment mode for accounts, groups, and tenants.
 
@@ -643,7 +643,7 @@ Permission assignment mode for accounts, groups, and tenants.
 
 
 
-#### PermissionsList {#permissionslist}
+#### PermissionsList
 
 Explicit permission grants and denials.
 
@@ -651,14 +651,14 @@ Explicit permission grants and denials.
 
 ##### `enabledPermissions`
 
-> Type: [<code>Permission</code>](../permissions.md)<code>[]</code>
+> Type: [<code>Permission</code>](/docs/ref/permissions)<code>[]</code>
 >
 > List of permissions that are explicitly enabled.
 
 
 ##### `disabledPermissions`
 
-> Type: [<code>Permission</code>](../permissions.md)<code>[]</code>
+> Type: [<code>Permission</code>](/docs/ref/permissions)<code>[]</code>
 >
 > List of permissions that are explicitly disabled, even if they would be inherited through other roles or groups. This takes precedence over enabled permissions.
 
@@ -666,7 +666,7 @@ Explicit permission grants and denials.
 
 
 
-### EmailAlias {#emailalias}
+### EmailAlias
 
 Defines an email alias for an account or mailing list.
 
@@ -688,7 +688,7 @@ Defines an email alias for an account or mailing list.
 
 ##### `domainId`
 
-> Type: <code>Id&lt;</code>[<code>Domain</code>](./domain.md)<code>&gt;</code> · required
+> Type: <code>Id&lt;</code>[<code>Domain</code>](/docs/ref/object/domain)<code>&gt;</code> · required
 >
 > Identifier for the domain of the email alias (the part after the @ symbol).
 
@@ -703,7 +703,7 @@ Defines an email alias for an account or mailing list.
 
 
 
-### EncryptionAtRest {#encryptionatrest}
+### EncryptionAtRest
 
 Encryption-at-rest algorithm selection.
 
@@ -715,7 +715,7 @@ Encryption-at-rest algorithm selection.
 
 
 
-#### EncryptionSettings {#encryptionsettings}
+#### EncryptionSettings
 
 Encryption-at-rest settings for an account.
 
@@ -723,7 +723,7 @@ Encryption-at-rest settings for an account.
 
 ##### `publicKey`
 
-> Type: <code>Id&lt;</code>[<code>PublicKey</code>](./public-key.md)<code>&gt;</code> · required
+> Type: <code>Id&lt;</code>[<code>PublicKey</code>](/docs/ref/object/public-key)<code>&gt;</code> · required
 >
 > Public key used for encrypting emails
 
@@ -745,7 +745,7 @@ Encryption-at-rest settings for an account.
 
 
 
-### Roles {#roles}
+### Roles
 
 Role assignment for groups and tenants.
 
@@ -759,7 +759,7 @@ Role assignment for groups and tenants.
 ## Enums
 
 
-### StorageQuota {#storagequota}
+### StorageQuota
 
 
 

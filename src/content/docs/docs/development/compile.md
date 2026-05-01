@@ -33,7 +33,7 @@ v0.16.0
 $ git checkout tags/v0.16.0
 ```
 
-:::tip Note
+:::tip[Note]
 
 Never compile Stalwart from the `main` branch, as it may contain unstable code. Always use a tagged release.
 
@@ -58,7 +58,7 @@ Or, to compile the FoundationDB backend:
 $ cargo build --release -p stalwart  --no-default-features --features "foundationdb enterprise"
 ```
 
-:::tip Grab a cup of coffee
+:::tip[Grab a cup of coffee]
 
 Rust compile times for large projects like Stalwart can be long, especially with multiple features enabled. Be patient!
 

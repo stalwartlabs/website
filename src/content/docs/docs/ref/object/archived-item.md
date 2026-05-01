@@ -54,7 +54,7 @@ Archived Email message
 
 ##### `accountId`
 
-> Type: <code>Id&lt;</code>[<code>Account</code>](./account.md)<code>&gt;</code> · required
+> Type: <code>Id&lt;</code>[<code>Account</code>](/docs/ref/object/account)<code>&gt;</code> · required
 >
 > The account to which the archived item belongs
 
@@ -109,7 +109,7 @@ Archived File
 
 ##### `accountId`
 
-> Type: <code>Id&lt;</code>[<code>Account</code>](./account.md)<code>&gt;</code> · required
+> Type: <code>Id&lt;</code>[<code>Account</code>](/docs/ref/object/account)<code>&gt;</code> · required
 >
 > The account to which the archived item belongs
 
@@ -171,7 +171,7 @@ Archived Calendar Event
 
 ##### `accountId`
 
-> Type: <code>Id&lt;</code>[<code>Account</code>](./account.md)<code>&gt;</code> · required
+> Type: <code>Id&lt;</code>[<code>Account</code>](/docs/ref/object/account)<code>&gt;</code> · required
 >
 > The account to which the archived item belongs
 
@@ -226,7 +226,7 @@ Archived Contact Card
 
 ##### `accountId`
 
-> Type: <code>Id&lt;</code>[<code>Account</code>](./account.md)<code>&gt;</code> · required
+> Type: <code>Id&lt;</code>[<code>Account</code>](/docs/ref/object/account)<code>&gt;</code> · required
 >
 > The account to which the archived item belongs
 
@@ -288,7 +288,7 @@ Archived Sieve Script
 
 ##### `accountId`
 
-> Type: <code>Id&lt;</code>[<code>Account</code>](./account.md)<code>&gt;</code> · required
+> Type: <code>Id&lt;</code>[<code>Account</code>](/docs/ref/object/account)<code>&gt;</code> · required
 >
 > The account to which the archived item belongs
 
@@ -333,7 +333,7 @@ The ArchivedItem object is available via the `urn:stalwart:jmap` capability.
 This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.1) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.1), Section 5.1.
 
 
-This method requires the `sysArchivedItemGet` [permission](../permissions.md).
+This method requires the `sysArchivedItemGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -370,7 +370,7 @@ Supports create, update, and destroy operations in a single call.
 
 #### Create
 
-This operation requires the `sysArchivedItemCreate` [permission](../permissions.md).
+This operation requires the `sysArchivedItemCreate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -407,7 +407,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Update
 
-This operation requires the `sysArchivedItemUpdate` [permission](../permissions.md).
+This operation requires the `sysArchivedItemUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -437,7 +437,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Destroy
 
-This operation requires the `sysArchivedItemDestroy` [permission](../permissions.md).
+This operation requires the `sysArchivedItemDestroy` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -470,7 +470,7 @@ curl -X POST https://mail.example.com/api \
 This is a standard [`Foo/query`](https://www.rfc-editor.org/rfc/rfc8620#section-5.5) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.5), Section 5.5.
 
 
-This method requires the `sysArchivedItemQuery` [permission](../permissions.md).
+This method requires the `sysArchivedItemQuery` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -556,7 +556,7 @@ stalwart-cli delete ArchivedItem --ids id1
 ## Enums
 
 
-### ArchivedItemStatus {#archiveditemstatus}
+### ArchivedItemStatus
 
 
 

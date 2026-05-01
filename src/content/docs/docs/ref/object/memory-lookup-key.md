@@ -45,7 +45,7 @@ The MemoryLookupKey object is available via the `urn:stalwart:jmap` capability.
 This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.1) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.1), Section 5.1.
 
 
-This method requires the `sysMemoryLookupKeyGet` [permission](../permissions.md).
+This method requires the `sysMemoryLookupKeyGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -82,7 +82,7 @@ Supports create, update, and destroy operations in a single call.
 
 #### Create
 
-This operation requires the `sysMemoryLookupKeyCreate` [permission](../permissions.md).
+This operation requires the `sysMemoryLookupKeyCreate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -113,7 +113,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Update
 
-This operation requires the `sysMemoryLookupKeyUpdate` [permission](../permissions.md).
+This operation requires the `sysMemoryLookupKeyUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -143,7 +143,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Destroy
 
-This operation requires the `sysMemoryLookupKeyDestroy` [permission](../permissions.md).
+This operation requires the `sysMemoryLookupKeyDestroy` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -176,7 +176,7 @@ curl -X POST https://mail.example.com/api \
 This is a standard [`Foo/query`](https://www.rfc-editor.org/rfc/rfc8620#section-5.5) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.5), Section 5.5.
 
 
-This method requires the `sysMemoryLookupKeyQuery` [permission](../permissions.md).
+This method requires the `sysMemoryLookupKeyQuery` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \

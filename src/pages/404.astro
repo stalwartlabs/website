@@ -27,11 +27,11 @@ import Base from "../layouts/Base.astro";
       </div>
 
       <ul class="not-found__links">
-        <li><a href="/docs/install/get-started">Getting started</a></li>
-        <li><a href="/docs/storage/overview">Storage</a></li>
-        <li><a href="/docs/mta/overview">MTA</a></li>
-        <li><a href="/docs/collaboration/overview">Collaboration</a></li>
-        <li><a href="/docs/spamfilter/overview">Spam filter</a></li>
+        <li><a href="/docs/install/">Getting started</a></li>
+        <li><a href="/docs/storage/">Storage</a></li>
+        <li><a href="/docs/mta/">MTA</a></li>
+        <li><a href="/docs/collaboration/">Collaboration</a></li>
+        <li><a href="/docs/spamfilter/">Spam filter</a></li>
         <li><a href="/blog">Blog</a></li>
       </ul>
     </div>
@@ -163,15 +163,21 @@ import Base from "../layouts/Base.astro";
 
     async function loadPagefind() {
       if (pagefind) return pagefind;
+      // Pagefind ships into dist/pagefind/ during `astro build` and isn't
+      // present in `astro dev`. We use `new Function('return import(...)')`
+      // to bypass Vite's static module-graph analysis entirely; otherwise
+      // the dev server fails to resolve the path at compile time.
+      const dynamicImport = new Function(
+        "s",
+        "return import(s)",
+      ) as (s: string) => Promise<unknown>;
       try {
-        // Built into dist/pagefind/ during `astro build`. Not available in dev,
-        // where we render an explanatory placeholder instead.
-        const mod = await import(/* @vite-ignore */ "/pagefind/pagefind.js");
+        const mod = await dynamicImport("/pagefind/pagefind.js");
         pagefind = mod as PagefindAPI;
         return pagefind;
       } catch {
         out!.innerHTML =
-          '<p class="pf-empty">Search index is only available in the built site. Try <code>npm run build && npm run preview</code>.</p>';
+          '<p class="pf-empty">Search is only available after <code>npm run build</code> (Pagefind index is generated during the production build).</p>';
         return null;
       }
     }

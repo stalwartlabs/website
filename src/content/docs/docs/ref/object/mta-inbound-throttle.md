@@ -40,7 +40,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Enable the imposition of concurrency and rate limits only when a specific condition is met
 >
-> Available variables: [`MtaRcptToVariable`](../expression/variable/mta-rcpt-to-variable.md).
+> Available variables: [`MtaRcptToVariable`](/docs/ref/expression/variable/mta-rcpt-to-variable).
 
 
 ##### `rate`
@@ -61,7 +61,7 @@ The MtaInboundThrottle object is available via the `urn:stalwart:jmap` capabilit
 This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.1) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.1), Section 5.1.
 
 
-This method requires the `sysMtaInboundThrottleGet` [permission](../permissions.md).
+This method requires the `sysMtaInboundThrottleGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -98,7 +98,7 @@ Supports create, update, and destroy operations in a single call.
 
 #### Create
 
-This operation requires the `sysMtaInboundThrottleCreate` [permission](../permissions.md).
+This operation requires the `sysMtaInboundThrottleCreate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -129,7 +129,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Update
 
-This operation requires the `sysMtaInboundThrottleUpdate` [permission](../permissions.md).
+This operation requires the `sysMtaInboundThrottleUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -159,7 +159,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Destroy
 
-This operation requires the `sysMtaInboundThrottleDestroy` [permission](../permissions.md).
+This operation requires the `sysMtaInboundThrottleDestroy` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -192,7 +192,7 @@ curl -X POST https://mail.example.com/api \
 This is a standard [`Foo/query`](https://www.rfc-editor.org/rfc/rfc8620#section-5.5) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.5), Section 5.5.
 
 
-This method requires the `sysMtaInboundThrottleQuery` [permission](../permissions.md).
+This method requires the `sysMtaInboundThrottleQuery` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -264,7 +264,7 @@ stalwart-cli delete MtaInboundThrottle --ids id1
 ## Nested types
 
 
-### Expression {#expression}
+### Expression
 
 A conditional expression with match rules and a default value.
 
@@ -287,7 +287,7 @@ A conditional expression with match rules and a default value.
 
 
 
-#### ExpressionMatch {#expressionmatch}
+#### ExpressionMatch
 
 A single condition-result pair in an expression.
 
@@ -310,7 +310,7 @@ A single condition-result pair in an expression.
 
 
 
-### Rate {#rate}
+### Rate
 
 Defines a rate limit as a count over a time period.
 
@@ -336,7 +336,7 @@ Defines a rate limit as a count over a time period.
 ## Enums
 
 
-### MtaInboundThrottleKey {#mtainboundthrottlekey}
+### MtaInboundThrottleKey
 
 
 
@@ -357,5 +357,5 @@ Defines a rate limit as a count over a time period.
 
 The following expression contexts are used by fields on this page:
 
-- [`MtaRcptToVariable`](../expression/variable/mta-rcpt-to-variable.md) (Variables)
+- [`MtaRcptToVariable`](/docs/ref/expression/variable/mta-rcpt-to-variable) (Variables)
 

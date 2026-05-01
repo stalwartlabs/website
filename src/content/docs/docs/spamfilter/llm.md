@@ -7,7 +7,7 @@ The LLM classifier extends Stalwart's spam filtering by using a large language m
 
 The LLM classifier sends a customisable prompt to the AI model, along with the subject and body of the message. The default prompt asks the model to assign one of four categories (Unsolicited, Commercial, Harmful, or Legitimate) and a confidence level (High, Medium, or Low). The returned category and confidence are combined into a tag, which is assigned to the message and contributes to the overall spam score through the [Scores](/docs/spamfilter/settings/scores) configuration. For example, `LLM_UNSOLICITED_HIGH` carries a default score of 3.0, while `LLM_LEGITIMATE_HIGH` carries −3.0.
 
-:::tip Enterprise feature
+:::tip[Enterprise feature]
 
 This feature is available exclusively in the [Enterprise Edition](/docs/server/enterprise) of Stalwart and is not included in the Community Edition.
 

@@ -45,7 +45,7 @@ A throttle with an empty `key` list applies globally. For example, an outbound t
 }
 ```
 
-### Groups {#groups}
+### Groups
 
 The `key` field scopes a limit to specific combinations of context variables. Available keys differ between inbound and outbound throttles.
 

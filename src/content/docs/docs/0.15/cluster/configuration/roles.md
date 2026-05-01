@@ -37,7 +37,7 @@ stores = ["1,2"]
 
 This configuration assigns the role to nodes **1** and **2**, which will handle **all shards** of the task without division.
 
-:::tip Note
+:::tip[Note]
 
 In the special case of **`cluster.roles.push-notifications`**, sharding **must** be used. This ensures that notifications are processed uniquely by each shard to prevent users from receiving duplicate push notifications.
 

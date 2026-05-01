@@ -26,7 +26,7 @@ Any
 >
 > Expression that returns the tag to assign to the message.
 >
-> Available variables: [`SpamGenericVariable`](../expression/variable/spam-generic-variable.md).
+> Available variables: [`SpamGenericVariable`](/docs/ref/expression/variable/spam-generic-variable).
 
 
 ##### `name`
@@ -69,7 +69,7 @@ URL
 >
 > Expression that returns the tag to assign to the message.
 >
-> Available variables: [`SpamUrlVariable`](../expression/variable/spam-url-variable.md).
+> Available variables: [`SpamUrlVariable`](/docs/ref/expression/variable/spam-url-variable).
 
 
 ##### `name`
@@ -112,7 +112,7 @@ Domain
 >
 > Expression that returns the tag to assign to the message.
 >
-> Available variables: [`SpamGenericVariable`](../expression/variable/spam-generic-variable.md).
+> Available variables: [`SpamGenericVariable`](/docs/ref/expression/variable/spam-generic-variable).
 
 
 ##### `name`
@@ -155,7 +155,7 @@ E-mail
 >
 > Expression that returns the tag to assign to the message.
 >
-> Available variables: [`SpamEmailVariable`](../expression/variable/spam-email-variable.md).
+> Available variables: [`SpamEmailVariable`](/docs/ref/expression/variable/spam-email-variable).
 
 
 ##### `name`
@@ -198,7 +198,7 @@ IP
 >
 > Expression that returns the tag to assign to the message.
 >
-> Available variables: [`SpamIpVariable`](../expression/variable/spam-ip-variable.md).
+> Available variables: [`SpamIpVariable`](/docs/ref/expression/variable/spam-ip-variable).
 
 
 ##### `name`
@@ -241,7 +241,7 @@ Header
 >
 > Expression that returns the tag to assign to the message.
 >
-> Available variables: [`SpamHeaderVariable`](../expression/variable/spam-header-variable.md).
+> Available variables: [`SpamHeaderVariable`](/docs/ref/expression/variable/spam-header-variable).
 
 
 ##### `name`
@@ -284,7 +284,7 @@ Body
 >
 > Expression that returns the tag to assign to the message.
 >
-> Available variables: [`SpamGenericVariable`](../expression/variable/spam-generic-variable.md).
+> Available variables: [`SpamGenericVariable`](/docs/ref/expression/variable/spam-generic-variable).
 
 
 ##### `name`
@@ -327,7 +327,7 @@ The SpamRule object is available via the `urn:stalwart:jmap` capability.
 This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.1) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.1), Section 5.1.
 
 
-This method requires the `sysSpamRuleGet` [permission](../permissions.md).
+This method requires the `sysSpamRuleGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -364,7 +364,7 @@ Supports create, update, and destroy operations in a single call.
 
 #### Create
 
-This operation requires the `sysSpamRuleCreate` [permission](../permissions.md).
+This operation requires the `sysSpamRuleCreate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -398,7 +398,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Update
 
-This operation requires the `sysSpamRuleUpdate` [permission](../permissions.md).
+This operation requires the `sysSpamRuleUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -428,7 +428,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Destroy
 
-This operation requires the `sysSpamRuleDestroy` [permission](../permissions.md).
+This operation requires the `sysSpamRuleDestroy` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -461,7 +461,7 @@ curl -X POST https://mail.example.com/api \
 This is a standard [`Foo/query`](https://www.rfc-editor.org/rfc/rfc8620#section-5.5) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.5), Section 5.5.
 
 
-This method requires the `sysSpamRuleQuery` [permission](../permissions.md).
+This method requires the `sysSpamRuleQuery` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -541,7 +541,7 @@ stalwart-cli delete SpamRule --ids id1
 ## Nested types
 
 
-### Expression {#expression}
+### Expression
 
 A conditional expression with match rules and a default value.
 
@@ -564,7 +564,7 @@ A conditional expression with match rules and a default value.
 
 
 
-#### ExpressionMatch {#expressionmatch}
+#### ExpressionMatch
 
 A single condition-result pair in an expression.
 
@@ -591,9 +591,9 @@ A single condition-result pair in an expression.
 
 The following expression contexts are used by fields on this page:
 
-- [`SpamGenericVariable`](../expression/variable/spam-generic-variable.md) (Variables)
-- [`SpamUrlVariable`](../expression/variable/spam-url-variable.md) (Variables)
-- [`SpamEmailVariable`](../expression/variable/spam-email-variable.md) (Variables)
-- [`SpamIpVariable`](../expression/variable/spam-ip-variable.md) (Variables)
-- [`SpamHeaderVariable`](../expression/variable/spam-header-variable.md) (Variables)
+- [`SpamGenericVariable`](/docs/ref/expression/variable/spam-generic-variable) (Variables)
+- [`SpamUrlVariable`](/docs/ref/expression/variable/spam-url-variable) (Variables)
+- [`SpamEmailVariable`](/docs/ref/expression/variable/spam-email-variable) (Variables)
+- [`SpamIpVariable`](/docs/ref/expression/variable/spam-ip-variable) (Variables)
+- [`SpamHeaderVariable`](/docs/ref/expression/variable/spam-header-variable) (Variables)
 

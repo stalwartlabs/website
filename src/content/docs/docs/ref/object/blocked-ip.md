@@ -52,7 +52,7 @@ The BlockedIp object is available via the `urn:stalwart:jmap` capability.
 This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.1) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.1), Section 5.1.
 
 
-This method requires the `sysBlockedIpGet` [permission](../permissions.md).
+This method requires the `sysBlockedIpGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -89,7 +89,7 @@ Supports create, update, and destroy operations in a single call.
 
 #### Create
 
-This operation requires the `sysBlockedIpCreate` [permission](../permissions.md).
+This operation requires the `sysBlockedIpCreate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -117,7 +117,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Update
 
-This operation requires the `sysBlockedIpUpdate` [permission](../permissions.md).
+This operation requires the `sysBlockedIpUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -147,7 +147,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Destroy
 
-This operation requires the `sysBlockedIpDestroy` [permission](../permissions.md).
+This operation requires the `sysBlockedIpDestroy` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -180,7 +180,7 @@ curl -X POST https://mail.example.com/api \
 This is a standard [`Foo/query`](https://www.rfc-editor.org/rfc/rfc8620#section-5.5) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.5), Section 5.5.
 
 
-This method requires the `sysBlockedIpQuery` [permission](../permissions.md).
+This method requires the `sysBlockedIpQuery` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -259,7 +259,7 @@ stalwart-cli delete BlockedIp --ids id1
 ## Enums
 
 
-### BlockReason {#blockreason}
+### BlockReason
 
 
 

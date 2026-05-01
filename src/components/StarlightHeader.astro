@@ -1,9 +1,77 @@
 ---
 import Header from "./Header.astro";
 import ReadingProgress from "./ReadingProgress.astro";
+import ThemeToggle from "./ThemeToggle.astro";
+import Search from "@astrojs/starlight/components/Search.astro";
 ---
-<Header />
+<Header>
+  <Fragment slot="actions">
+    <Search />
+    <ThemeToggle />
+  </Fragment>
+</Header>
 <ReadingProgress />
+
+<style is:global>
+  /* Style Starlight's Search trigger as a wide search-input pill, matching
+     the marketing nav. The dialog itself is portalled to <body> by
+     Starlight, so positioning the trigger has no effect on the open modal. */
+  .site-header .header-end site-search {
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: 320px;
+    display: flex;
+  }
+  .site-header .header-end site-search button[data-open-modal] {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    width: 100%;
+    padding: 0.55rem 0.85rem;
+    border-radius: var(--radius-pill, 999px);
+    border: 1px solid var(--border, var(--sl-color-hairline));
+    background: var(--surface, var(--sl-color-bg-nav));
+    color: var(--text-muted, var(--sl-color-gray-3));
+    font: inherit;
+    font-size: 0.875rem;
+    text-align: start;
+    cursor: pointer;
+    transition:
+      color 120ms ease,
+      border-color 120ms ease;
+  }
+  .site-header .header-end site-search button[data-open-modal]:hover {
+    color: var(--text, var(--sl-color-text));
+    border-color: var(--brand, var(--sl-color-accent));
+  }
+  .site-header .header-end site-search button[data-open-modal] span {
+    flex: 1 1 auto;
+    text-align: start;
+  }
+  .site-header .header-end site-search button[data-open-modal] kbd {
+    border: 1px solid var(--border, var(--sl-color-hairline));
+    border-radius: 4px;
+    padding: 0 4px;
+    font-size: 0.7rem;
+    color: var(--text-dim, var(--sl-color-gray-4));
+    background: transparent;
+    margin-inline-start: auto;
+  }
+  /* On narrow viewports, collapse the input to an icon-only pill. */
+  @media (max-width: 1024px) {
+    .site-header .header-end site-search {
+      flex: 0 0 auto;
+      max-width: none;
+    }
+    .site-header .header-end site-search button[data-open-modal] {
+      width: auto;
+    }
+    .site-header .header-end site-search button[data-open-modal] span,
+    .site-header .header-end site-search button[data-open-modal] kbd {
+      display: none;
+    }
+  }
+</style>
 
 <script>
   import mermaid from "mermaid";

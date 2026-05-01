@@ -67,7 +67,7 @@ Enabled
 
 ##### `modelId`
 
-> Type: <code>Id&lt;</code>[<code>AiModel</code>](./ai-model.md)<code>&gt;</code> · required
+> Type: <code>Id&lt;</code>[<code>AiModel</code>](/docs/ref/object/ai-model)<code>&gt;</code> · required
 >
 > The AI model to use for the LLM classifier
 
@@ -107,7 +107,7 @@ This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.
 For singletons, the `ids` argument should be the literal `singleton` (or `null` to return the single instance).
 
 
-This method requires the `sysSpamLlmGet` [permission](../permissions.md).
+This method requires the `sysSpamLlmGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -141,7 +141,7 @@ This is a standard [`Foo/set`](https://www.rfc-editor.org/rfc/rfc8620#section-5.
 For singletons, only the `update` argument with id `singleton` is accepted; `create` and `destroy` arguments are rejected.
 
 
-This method requires the `sysSpamLlmUpdate` [permission](../permissions.md).
+This method requires the `sysSpamLlmUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \

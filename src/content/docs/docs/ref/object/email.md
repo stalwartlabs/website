@@ -124,7 +124,7 @@ This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.
 For singletons, the `ids` argument should be the literal `singleton` (or `null` to return the single instance).
 
 
-This method requires the `sysEmailGet` [permission](../permissions.md).
+This method requires the `sysEmailGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -158,7 +158,7 @@ This is a standard [`Foo/set`](https://www.rfc-editor.org/rfc/rfc8620#section-5.
 For singletons, only the `update` argument with id `singleton` is accepted; `create` and `destroy` arguments are rejected.
 
 
-This method requires the `sysEmailUpdate` [permission](../permissions.md).
+This method requires the `sysEmailUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -211,7 +211,7 @@ stalwart-cli update Email --field maxAttachmentSize=50000000
 ## Nested types
 
 
-### EmailFolder {#emailfolder}
+### EmailFolder
 
 Defines a default email folder configuration.
 
@@ -251,7 +251,7 @@ Defines a default email folder configuration.
 ## Enums
 
 
-### CompressionAlgo {#compressionalgo}
+### CompressionAlgo
 
 
 
@@ -261,7 +261,7 @@ Defines a default email folder configuration.
 | `none` | None |
 
 
-### SpecialUse {#specialuse}
+### SpecialUse
 
 
 

@@ -77,7 +77,7 @@ The Tenant object is available via the `urn:stalwart:jmap` capability.
 This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.1) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.1), Section 5.1.
 
 
-This method requires the `sysTenantGet` [permission](../permissions.md).
+This method requires the `sysTenantGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -114,7 +114,7 @@ Supports create, update, and destroy operations in a single call.
 
 #### Create
 
-This operation requires the `sysTenantCreate` [permission](../permissions.md).
+This operation requires the `sysTenantCreate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -151,7 +151,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Update
 
-This operation requires the `sysTenantUpdate` [permission](../permissions.md).
+This operation requires the `sysTenantUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -181,7 +181,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Destroy
 
-This operation requires the `sysTenantDestroy` [permission](../permissions.md).
+This operation requires the `sysTenantDestroy` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -214,7 +214,7 @@ curl -X POST https://mail.example.com/api \
 This is a standard [`Foo/query`](https://www.rfc-editor.org/rfc/rfc8620#section-5.5) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.5), Section 5.5.
 
 
-This method requires the `sysTenantQuery` [permission](../permissions.md).
+This method requires the `sysTenantQuery` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -297,7 +297,7 @@ stalwart-cli delete Tenant --ids id1
 ## Nested types
 
 
-### Roles {#roles}
+### Roles
 
 Role assignment for groups and tenants.
 
@@ -308,7 +308,7 @@ Role assignment for groups and tenants.
 
 
 
-#### CustomRoles {#customroles}
+#### CustomRoles
 
 Custom role assignment with specific role references.
 
@@ -316,7 +316,7 @@ Custom role assignment with specific role references.
 
 ##### `roleIds`
 
-> Type: <code>Id&lt;</code>[<code>Role</code>](./role.md)<code>&gt;[]</code>
+> Type: <code>Id&lt;</code>[<code>Role</code>](/docs/ref/object/role)<code>&gt;[]</code>
 >
 > List of roles assigned to this principal.
 
@@ -324,7 +324,7 @@ Custom role assignment with specific role references.
 
 
 
-### Permissions {#permissions}
+### Permissions
 
 Permission assignment mode for accounts, groups, and tenants.
 
@@ -336,7 +336,7 @@ Permission assignment mode for accounts, groups, and tenants.
 
 
 
-#### PermissionsList {#permissionslist}
+#### PermissionsList
 
 Explicit permission grants and denials.
 
@@ -344,14 +344,14 @@ Explicit permission grants and denials.
 
 ##### `enabledPermissions`
 
-> Type: [<code>Permission</code>](../permissions.md)<code>[]</code>
+> Type: [<code>Permission</code>](/docs/ref/permissions)<code>[]</code>
 >
 > List of permissions that are explicitly enabled.
 
 
 ##### `disabledPermissions`
 
-> Type: [<code>Permission</code>](../permissions.md)<code>[]</code>
+> Type: [<code>Permission</code>](/docs/ref/permissions)<code>[]</code>
 >
 > List of permissions that are explicitly disabled, even if they would be inherited through other roles or groups. This takes precedence over enabled permissions.
 
@@ -362,7 +362,7 @@ Explicit permission grants and denials.
 ## Enums
 
 
-### TenantStorageQuota {#tenantstoragequota}
+### TenantStorageQuota
 
 
 

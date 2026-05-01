@@ -9,7 +9,7 @@ With the `llm_prompt` function, you can pass email content, such as the subject 
 
 For example, administrators can use the `llm_prompt` function to analyze incoming emails for specific patterns, classify messages, or detect potential threats, all within the familiar Sieve scripting environment. By combining the flexibility of Sieve with the intelligence of LLMs, Stalwart enables more sophisticated and adaptable email management workflows.
 
-:::tip Enterprise feature
+:::tip[Enterprise feature]
 
 This feature is available exclusively in the [Enterprise Edition](/docs/server/enterprise) of Stalwart and not included in the Community Edition.
 

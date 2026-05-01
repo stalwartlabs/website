@@ -40,7 +40,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Report submitter address or leave empty to use the default hostname
 >
-> Available variables: [`MtaRcptDomainVariable`](../expression/variable/mta-rcpt-domain-variable.md).
+> Available variables: [`MtaRcptDomainVariable`](/docs/ref/expression/variable/mta-rcpt-domain-variable).
 
 
 
@@ -56,7 +56,7 @@ This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.
 For singletons, the `ids` argument should be the literal `singleton` (or `null` to return the single instance).
 
 
-This method requires the `sysReportSettingsGet` [permission](../permissions.md).
+This method requires the `sysReportSettingsGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -90,7 +90,7 @@ This is a standard [`Foo/set`](https://www.rfc-editor.org/rfc/rfc8620#section-5.
 For singletons, only the `update` argument with id `singleton` is accepted; `create` and `destroy` arguments are rejected.
 
 
-This method requires the `sysReportSettingsUpdate` [permission](../permissions.md).
+This method requires the `sysReportSettingsUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -145,7 +145,7 @@ stalwart-cli update ReportSettings --field inboundReportAddresses='{"postmaster@
 ## Nested types
 
 
-### Expression {#expression}
+### Expression
 
 A conditional expression with match rules and a default value.
 
@@ -168,7 +168,7 @@ A conditional expression with match rules and a default value.
 
 
 
-#### ExpressionMatch {#expressionmatch}
+#### ExpressionMatch
 
 A single condition-result pair in an expression.
 
@@ -195,5 +195,5 @@ A single condition-result pair in an expression.
 
 The following expression contexts are used by fields on this page:
 
-- [`MtaRcptDomainVariable`](../expression/variable/mta-rcpt-domain-variable.md) (Variables)
+- [`MtaRcptDomainVariable`](/docs/ref/expression/variable/mta-rcpt-domain-variable) (Variables)
 

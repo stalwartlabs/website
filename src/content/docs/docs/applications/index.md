@@ -45,7 +45,7 @@ An Application bundle is a `.zip` archive that must contain an `index.html` at i
 
 No checksum or signature verification is performed on the downloaded archive. Applications are intended to be installed from trusted sources only; the transport is always HTTPS, but the contents of the bundle are not cryptographically validated against an external manifest.
 
-:::warning
+:::caution
 
 Because no bundle-level signature is checked, only install Applications whose [`resourceUrl`](/docs/ref/object/application#resourceurl) points at a source operated by a trusted publisher. A malicious bundle served from a hostile origin would be unpacked and served just like any other Application.
 

@@ -22,7 +22,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `domainId`
 
-> Type: <code>Id&lt;</code>[<code>Domain</code>](./domain.md)<code>&gt;</code> · required
+> Type: <code>Id&lt;</code>[<code>Domain</code>](/docs/ref/object/domain)<code>&gt;</code> · required
 >
 > Identifier for the domain this mailing list belongs to. This is used to determine the email address of the mailing list, which is formed as name@domain.
 
@@ -50,7 +50,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `memberTenantId`
 
-> Type: <code>Id&lt;</code>[<code>Tenant</code>](./tenant.md)<code>&gt;?</code>
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
 >
 > Identifier for the tenant this mailing list belongs to
 
@@ -73,7 +73,7 @@ The MailingList object is available via the `urn:stalwart:jmap` capability.
 This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.1) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.1), Section 5.1.
 
 
-This method requires the `sysMailingListGet` [permission](../permissions.md).
+This method requires the `sysMailingListGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -110,7 +110,7 @@ Supports create, update, and destroy operations in a single call.
 
 #### Create
 
-This operation requires the `sysMailingListCreate` [permission](../permissions.md).
+This operation requires the `sysMailingListCreate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -143,7 +143,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Update
 
-This operation requires the `sysMailingListUpdate` [permission](../permissions.md).
+This operation requires the `sysMailingListUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -173,7 +173,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Destroy
 
-This operation requires the `sysMailingListDestroy` [permission](../permissions.md).
+This operation requires the `sysMailingListDestroy` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -206,7 +206,7 @@ curl -X POST https://mail.example.com/api \
 This is a standard [`Foo/query`](https://www.rfc-editor.org/rfc/rfc8620#section-5.5) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.5), Section 5.5.
 
 
-This method requires the `sysMailingListQuery` [permission](../permissions.md).
+This method requires the `sysMailingListQuery` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -290,7 +290,7 @@ stalwart-cli delete MailingList --ids id1
 ## Nested types
 
 
-### EmailAlias {#emailalias}
+### EmailAlias
 
 Defines an email alias for an account or mailing list.
 
@@ -312,7 +312,7 @@ Defines an email alias for an account or mailing list.
 
 ##### `domainId`
 
-> Type: <code>Id&lt;</code>[<code>Domain</code>](./domain.md)<code>&gt;</code> · required
+> Type: <code>Id&lt;</code>[<code>Domain</code>](/docs/ref/object/domain)<code>&gt;</code> · required
 >
 > Identifier for the domain of the email alias (the part after the @ symbol).
 

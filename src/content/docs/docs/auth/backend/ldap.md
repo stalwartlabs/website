@@ -57,7 +57,7 @@ For example:
 
 If `bindDn` is left unset, the server attempts anonymous queries. Some directories allow that for basic lookups, but most require an authenticated bind. Without valid credentials, authentication or address validation may fail.
 
-:::tip Note
+:::tip[Note]
 
 Even when users authenticate by binding as themselves, the service-account bind is still required for non-authentication operations such as retrieving account metadata and validating email addresses and domains.
 
@@ -83,7 +83,7 @@ For example:
 }
 ```
 
-:::tip Note
+:::tip[Note]
 
 This mode is only suitable when the LDAP server returns password hashes to the bind account. When the directory does not permit this (for example, in many Active Directory environments), use bind authentication instead.
 

@@ -23,7 +23,7 @@ Scheduled clean-up is not configured per store. It is managed centrally through 
 
 Stalwart Enterprise edition provides a feature that allows recovery of emails deleted by users, even after these emails have been expunged from the Deleted Items or Junk Mail folders. This allows emails to be retrieved within a specified period, giving organisations a data recovery option.
 
-:::tip Enterprise feature
+:::tip[Enterprise feature]
 
 This feature is available exclusively in the [Enterprise Edition](/docs/server/enterprise) of Stalwart and is not included in the Community Edition.
 

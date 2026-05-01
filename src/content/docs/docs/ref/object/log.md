@@ -29,7 +29,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `event`
 
-> Type: [<code>EventType</code>](../events.md) · required
+> Type: [<code>EventType</code>](/docs/ref/events) · required
 >
 > Event type of the log entry
 
@@ -52,7 +52,7 @@ The Log object is available via the `urn:stalwart:jmap` capability.
 This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.1) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.1), Section 5.1.
 
 
-This method requires the `sysLogGet` [permission](../permissions.md).
+This method requires the `sysLogGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -89,7 +89,7 @@ Supports create, update, and destroy operations in a single call.
 
 #### Create
 
-This operation requires the `sysLogCreate` [permission](../permissions.md).
+This operation requires the `sysLogCreate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -121,7 +121,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Update
 
-This operation requires the `sysLogUpdate` [permission](../permissions.md).
+This operation requires the `sysLogUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -151,7 +151,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Destroy
 
-This operation requires the `sysLogDestroy` [permission](../permissions.md).
+This operation requires the `sysLogDestroy` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -184,7 +184,7 @@ curl -X POST https://mail.example.com/api \
 This is a standard [`Foo/query`](https://www.rfc-editor.org/rfc/rfc8620#section-5.5) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.5), Section 5.5.
 
 
-This method requires the `sysLogQuery` [permission](../permissions.md).
+This method requires the `sysLogQuery` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -266,7 +266,7 @@ stalwart-cli delete Log --ids id1
 ## Enums
 
 
-### TracingLevel {#tracinglevel}
+### TracingLevel
 
 
 

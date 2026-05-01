@@ -43,7 +43,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `accountId`
 
-> Type: <code>Id&lt;</code>[<code>Account</code>](./account.md)<code>&gt;?</code> · read-only
+> Type: <code>Id&lt;</code>[<code>Account</code>](/docs/ref/object/account)<code>&gt;?</code> · read-only
 >
 > Identifier of the account associated with this training sample
 
@@ -73,7 +73,7 @@ The SpamTrainingSample object is available via the `urn:stalwart:jmap` capabilit
 This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.1) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.1), Section 5.1.
 
 
-This method requires the `sysSpamTrainingSampleGet` [permission](../permissions.md).
+This method requires the `sysSpamTrainingSampleGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -110,7 +110,7 @@ Supports create, update, and destroy operations in a single call.
 
 #### Create
 
-This operation requires the `sysSpamTrainingSampleCreate` [permission](../permissions.md).
+This operation requires the `sysSpamTrainingSampleCreate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -138,7 +138,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Update
 
-This operation requires the `sysSpamTrainingSampleUpdate` [permission](../permissions.md).
+This operation requires the `sysSpamTrainingSampleUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -168,7 +168,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Destroy
 
-This operation requires the `sysSpamTrainingSampleDestroy` [permission](../permissions.md).
+This operation requires the `sysSpamTrainingSampleDestroy` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -201,7 +201,7 @@ curl -X POST https://mail.example.com/api \
 This is a standard [`Foo/query`](https://www.rfc-editor.org/rfc/rfc8620#section-5.5) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.5), Section 5.5.
 
 
-This method requires the `sysSpamTrainingSampleQuery` [permission](../permissions.md).
+This method requires the `sysSpamTrainingSampleQuery` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \

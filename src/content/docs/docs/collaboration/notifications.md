@@ -62,7 +62,7 @@ The display name used in the From field is set through [`fromName`](/docs/ref/ob
 
 Stalwart supports custom branding and templating for calendar alarm notifications so that the visual appearance and content of email alerts can be aligned with organisational branding.
 
-:::tip Enterprise feature
+:::tip[Enterprise feature]
 
 This feature is available exclusively in the [Enterprise Edition](/docs/server/enterprise) of Stalwart and not included in the Community Edition.
 

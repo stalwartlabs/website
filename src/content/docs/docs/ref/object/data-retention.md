@@ -124,7 +124,7 @@ This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.
 For singletons, the `ids` argument should be the literal `singleton` (or `null` to return the single instance).
 
 
-This method requires the `sysDataRetentionGet` [permission](../permissions.md).
+This method requires the `sysDataRetentionGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -158,7 +158,7 @@ This is a standard [`Foo/set`](https://www.rfc-editor.org/rfc/rfc8620#section-5.
 For singletons, only the `update` argument with id `singleton` is accepted; `create` and `destroy` arguments are rejected.
 
 
-This method requires the `sysDataRetentionUpdate` [permission](../permissions.md).
+This method requires the `sysDataRetentionUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -211,7 +211,7 @@ stalwart-cli update DataRetention --field expungeTrashAfter=30d
 ## Nested types
 
 
-### Cron {#cron}
+### Cron
 
 Defines a recurring schedule.
 
@@ -223,7 +223,7 @@ Defines a recurring schedule.
 
 
 
-#### CronDaily {#crondaily}
+#### CronDaily
 
 A daily recurring schedule at a specific time.
 
@@ -246,7 +246,7 @@ A daily recurring schedule at a specific time.
 
 
 
-#### CronWeekly {#cronweekly}
+#### CronWeekly
 
 A weekly recurring schedule on a specific day and time.
 
@@ -276,7 +276,7 @@ A weekly recurring schedule on a specific day and time.
 
 
 
-#### CronHourly {#cronhourly}
+#### CronHourly
 
 An hourly recurring schedule at a specific minute.
 

@@ -19,7 +19,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Whether to add an Authentication-Results header to the message
 >
-> Available variables: [`MtaRcptToVariable`](../expression/variable/mta-rcpt-to-variable.md).
+> Available variables: [`MtaRcptToVariable`](/docs/ref/expression/variable/mta-rcpt-to-variable).
 
 
 ##### `addDateHeader`
@@ -28,7 +28,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Whether to add a Date header to the message
 >
-> Available variables: [`MtaRcptToVariable`](../expression/variable/mta-rcpt-to-variable.md).
+> Available variables: [`MtaRcptToVariable`](/docs/ref/expression/variable/mta-rcpt-to-variable).
 
 
 ##### `addDeliveredToHeader`
@@ -44,7 +44,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Whether to add a Message-Id header to the message
 >
-> Available variables: [`MtaRcptToVariable`](../expression/variable/mta-rcpt-to-variable.md).
+> Available variables: [`MtaRcptToVariable`](/docs/ref/expression/variable/mta-rcpt-to-variable).
 
 
 ##### `addReceivedHeader`
@@ -53,7 +53,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Whether to add a Received header to the message
 >
-> Available variables: [`MtaRcptToVariable`](../expression/variable/mta-rcpt-to-variable.md).
+> Available variables: [`MtaRcptToVariable`](/docs/ref/expression/variable/mta-rcpt-to-variable).
 
 
 ##### `addReceivedSpfHeader`
@@ -62,7 +62,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Whether to add a Received-SPF header to the message
 >
-> Available variables: [`MtaRcptToVariable`](../expression/variable/mta-rcpt-to-variable.md).
+> Available variables: [`MtaRcptToVariable`](/docs/ref/expression/variable/mta-rcpt-to-variable).
 
 
 ##### `addReturnPathHeader`
@@ -71,7 +71,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Whether to add a Return-Path header to the message
 >
-> Available variables: [`MtaRcptToVariable`](../expression/variable/mta-rcpt-to-variable.md).
+> Available variables: [`MtaRcptToVariable`](/docs/ref/expression/variable/mta-rcpt-to-variable).
 
 
 ##### `maxMessages`
@@ -80,7 +80,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Maximum number of messages that can be submitted per SMTP session
 >
-> Available variables: [`MtaRcptToVariable`](../expression/variable/mta-rcpt-to-variable.md).
+> Available variables: [`MtaRcptToVariable`](/docs/ref/expression/variable/mta-rcpt-to-variable).
 
 
 ##### `maxReceivedHeaders`
@@ -89,7 +89,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Maximum limit on the number of Received headers, which helps to prevent message loops
 >
-> Available variables: [`MtaRcptToVariable`](../expression/variable/mta-rcpt-to-variable.md).
+> Available variables: [`MtaRcptToVariable`](/docs/ref/expression/variable/mta-rcpt-to-variable).
 
 
 ##### `maxMessageSize`
@@ -98,7 +98,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Maximum size of a message in bytes
 >
-> Available variables: [`MtaRcptToVariable`](../expression/variable/mta-rcpt-to-variable.md).
+> Available variables: [`MtaRcptToVariable`](/docs/ref/expression/variable/mta-rcpt-to-variable).
 
 
 ##### `script`
@@ -107,7 +107,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Which Sieve script to run after the client sends a DATA command
 >
-> Available variables: [`MtaRcptToVariable`](../expression/variable/mta-rcpt-to-variable.md).
+> Available variables: [`MtaRcptToVariable`](/docs/ref/expression/variable/mta-rcpt-to-variable).
 
 
 ##### `enableSpamFilter`
@@ -116,7 +116,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Whether to enable the spam filter for incoming messages
 >
-> Available variables: [`MtaRcptToVariable`](../expression/variable/mta-rcpt-to-variable.md).
+> Available variables: [`MtaRcptToVariable`](/docs/ref/expression/variable/mta-rcpt-to-variable).
 
 
 
@@ -132,7 +132,7 @@ This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.
 For singletons, the `ids` argument should be the literal `singleton` (or `null` to return the single instance).
 
 
-This method requires the `sysMtaStageDataGet` [permission](../permissions.md).
+This method requires the `sysMtaStageDataGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -166,7 +166,7 @@ This is a standard [`Foo/set`](https://www.rfc-editor.org/rfc/rfc8620#section-5.
 For singletons, only the `update` argument with id `singleton` is accepted; `create` and `destroy` arguments are rejected.
 
 
-This method requires the `sysMtaStageDataUpdate` [permission](../permissions.md).
+This method requires the `sysMtaStageDataUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -227,7 +227,7 @@ stalwart-cli update MtaStageData --field addAuthResultsHeader='{"else":"false","
 ## Nested types
 
 
-### Expression {#expression}
+### Expression
 
 A conditional expression with match rules and a default value.
 
@@ -250,7 +250,7 @@ A conditional expression with match rules and a default value.
 
 
 
-#### ExpressionMatch {#expressionmatch}
+#### ExpressionMatch
 
 A single condition-result pair in an expression.
 
@@ -277,5 +277,5 @@ A single condition-result pair in an expression.
 
 The following expression contexts are used by fields on this page:
 
-- [`MtaRcptToVariable`](../expression/variable/mta-rcpt-to-variable.md) (Variables)
+- [`MtaRcptToVariable`](/docs/ref/expression/variable/mta-rcpt-to-variable) (Variables)
 

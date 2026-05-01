@@ -7,7 +7,7 @@ Alerts notify administrators when a server metric, or a combination of metrics, 
 
 The trigger is an expression that can reference one or more metrics. Expressions support logical operators, so conditions such as `store_foundationdb_error > 100 || store_s3_error > 100` can be built up directly. Metric identifiers in the expression use underscores in place of dots and hyphens (`security_brute_force_ban` rather than `security.brute-force-ban`) because the expression language restricts variable names to alphanumeric characters and underscores.
 
-:::tip Enterprise feature
+:::tip[Enterprise feature]
 
 This feature is available exclusively in the [Enterprise Edition](/docs/server/enterprise) of Stalwart and is not included in the Community Edition.
 

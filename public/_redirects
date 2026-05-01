@@ -8,8 +8,25 @@
 /docs/category/development               /docs/development/              301
 /docs/category/server-settings           /docs/server/                   301
 
-# Old blog post URL shape (/blog/<slug>) is unchanged; no redirect needed.
+# /docs root and the long-published /docs/install/get-started URL both
+# now point at the renamed install landing page (Welcome to Stalwart).
+/docs                                    /docs/install/                  301
+/docs/install/get-started                /docs/install/                  301
 
-# If we drop the /docs prefix on the bare /docs root, send users to install.
-/docs                                    /docs/install/get-started       301
-/docs/                                   /docs/install/get-started       301
+# Section overview pages were renamed to index.md; redirect old URLs.
+/docs/storage/overview                   /docs/storage/                  301
+/docs/auth/overview                      /docs/auth/                     301
+/docs/encryption/overview                /docs/encryption/               301
+/docs/mta/overview                       /docs/mta/                      301
+/docs/email/overview                     /docs/email/                    301
+/docs/collaboration/overview             /docs/collaboration/            301
+/docs/spamfilter/overview                /docs/spamfilter/               301
+/docs/sieve/overview                     /docs/sieve/                    301
+/docs/cluster/overview                   /docs/cluster/                  301
+/docs/telemetry/overview                 /docs/telemetry/                301
+/docs/management/overview                /docs/management/               301
+/docs/configuration/overview             /docs/configuration/            301
+/docs/server/overview                    /docs/server/                   301
+/docs/development/overview               /docs/development/              301
+
+# Old blog post URL shape (/blog/<slug>) is unchanged; no redirect needed.

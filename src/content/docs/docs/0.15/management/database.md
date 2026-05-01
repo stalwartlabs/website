@@ -22,7 +22,7 @@ It is important to note that the ability to use the database console while the m
 - When the backend is **FoundationDB**, **PostgreSQL**, or **MySQL**, the console can safely operate in parallel with a running Stalwart instance. These backends are designed to handle concurrent access and transactions reliably, allowing administrators to inspect or modify data without interrupting service.
 - However, if the backend is an **embedded database** such as **RocksDB** or **SQLite**, it is necessary to **stop the Stalwart server** before launching the console. These databases do not support safe concurrent access in all scenarios and may become corrupted or locked if accessed by multiple processes simultaneously.
 
-:::tip Note
+:::tip[Note]
 
 Always ensure that proper backups are in place before performing manual operations through the database console, especially when working directly with low-level data structures or making changes in a production environment.
 

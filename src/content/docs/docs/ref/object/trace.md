@@ -63,7 +63,7 @@ The Trace object is available via the `urn:stalwart:jmap` capability.
 This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.1) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.1), Section 5.1.
 
 
-This method requires the `sysTraceGet` [permission](../permissions.md).
+This method requires the `sysTraceGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -100,7 +100,7 @@ Supports create, update, and destroy operations in a single call.
 
 #### Create
 
-This operation requires the `sysTraceCreate` [permission](../permissions.md).
+This operation requires the `sysTraceCreate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -130,7 +130,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Update
 
-This operation requires the `sysTraceUpdate` [permission](../permissions.md).
+This operation requires the `sysTraceUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -160,7 +160,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Destroy
 
-This operation requires the `sysTraceDestroy` [permission](../permissions.md).
+This operation requires the `sysTraceDestroy` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -193,7 +193,7 @@ curl -X POST https://mail.example.com/api \
 This is a standard [`Foo/query`](https://www.rfc-editor.org/rfc/rfc8620#section-5.5) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.5), Section 5.5.
 
 
-This method requires the `sysTraceQuery` [permission](../permissions.md).
+This method requires the `sysTraceQuery` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -272,7 +272,7 @@ stalwart-cli delete Trace --ids id1
 ## Nested types
 
 
-### TraceEvent {#traceevent}
+### TraceEvent
 
 A single event within a delivery trace.
 
@@ -280,7 +280,7 @@ A single event within a delivery trace.
 
 ##### `event`
 
-> Type: [<code>EventType</code>](../events.md) · required
+> Type: [<code>EventType</code>](/docs/ref/events) · required
 >
 > Event type
 
@@ -302,7 +302,7 @@ A single event within a delivery trace.
 
 
 
-#### TraceKeyValue {#tracekeyvalue}
+#### TraceKeyValue
 
 A key-value pair associated with a trace event.
 
@@ -310,7 +310,7 @@ A key-value pair associated with a trace event.
 
 ##### `key`
 
-> Type: [<code>Key</code>](../events.md#keys) · required
+> Type: [<code>Key</code>](/docs/ref/events#keys) · required
 >
 > Key name
 
@@ -325,7 +325,7 @@ A key-value pair associated with a trace event.
 
 
 
-##### TraceValue {#tracevalue}
+##### TraceValue
 
 A typed value in a trace key-value pair.
 
@@ -345,7 +345,7 @@ A typed value in a trace key-value pair.
 
 
 
-##### TraceValueString {#tracevaluestring}
+##### TraceValueString
 
 A string trace value.
 
@@ -361,7 +361,7 @@ A string trace value.
 
 
 
-##### TraceValueUnsignedInt {#tracevalueunsignedint}
+##### TraceValueUnsignedInt
 
 An unsigned integer trace value.
 
@@ -377,7 +377,7 @@ An unsigned integer trace value.
 
 
 
-##### TraceValueInteger {#tracevalueinteger}
+##### TraceValueInteger
 
 An integer trace value.
 
@@ -393,7 +393,7 @@ An integer trace value.
 
 
 
-##### TraceValueBoolean {#tracevalueboolean}
+##### TraceValueBoolean
 
 A boolean trace value.
 
@@ -409,7 +409,7 @@ A boolean trace value.
 
 
 
-##### TraceValueFloat {#tracevaluefloat}
+##### TraceValueFloat
 
 A floating-point trace value.
 
@@ -425,7 +425,7 @@ A floating-point trace value.
 
 
 
-##### TraceValueUTCDateTime {#tracevalueutcdatetime}
+##### TraceValueUTCDateTime
 
 A UTC date-time trace value.
 
@@ -441,7 +441,7 @@ A UTC date-time trace value.
 
 
 
-##### TraceValueDuration {#tracevalueduration}
+##### TraceValueDuration
 
 A duration trace value in seconds.
 
@@ -457,7 +457,7 @@ A duration trace value in seconds.
 
 
 
-##### TraceValueIpAddr {#tracevalueipaddr}
+##### TraceValueIpAddr
 
 An IP address trace value.
 
@@ -473,7 +473,7 @@ An IP address trace value.
 
 
 
-##### TraceValueList {#tracevaluelist}
+##### TraceValueList
 
 A list of trace values.
 
@@ -489,7 +489,7 @@ A list of trace values.
 
 
 
-##### TraceValueEvent {#tracevalueevent}
+##### TraceValueEvent
 
 A nested event trace value.
 
@@ -497,7 +497,7 @@ A nested event trace value.
 
 ##### `event`
 
-> Type: [<code>EventType</code>](../events.md) · required
+> Type: [<code>EventType</code>](/docs/ref/events) · required
 >
 > Event type
 

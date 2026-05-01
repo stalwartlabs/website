@@ -15,7 +15,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `event`
 
-> Type: [<code>EventType</code>](../events.md) · read-only
+> Type: [<code>EventType</code>](/docs/ref/events) · read-only
 >
 > Unique identifier of the event
 
@@ -38,7 +38,7 @@ The EventTracingLevel object is available via the `urn:stalwart:jmap` capability
 This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.1) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.1), Section 5.1.
 
 
-This method requires the `sysEventTracingLevelGet` [permission](../permissions.md).
+This method requires the `sysEventTracingLevelGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -75,7 +75,7 @@ Supports create, update, and destroy operations in a single call.
 
 #### Create
 
-This operation requires the `sysEventTracingLevelCreate` [permission](../permissions.md).
+This operation requires the `sysEventTracingLevelCreate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -103,7 +103,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Update
 
-This operation requires the `sysEventTracingLevelUpdate` [permission](../permissions.md).
+This operation requires the `sysEventTracingLevelUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -133,7 +133,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Destroy
 
-This operation requires the `sysEventTracingLevelDestroy` [permission](../permissions.md).
+This operation requires the `sysEventTracingLevelDestroy` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -166,7 +166,7 @@ curl -X POST https://mail.example.com/api \
 This is a standard [`Foo/query`](https://www.rfc-editor.org/rfc/rfc8620#section-5.5) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.5), Section 5.5.
 
 
-This method requires the `sysEventTracingLevelQuery` [permission](../permissions.md).
+This method requires the `sysEventTracingLevelQuery` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -236,7 +236,7 @@ stalwart-cli delete EventTracingLevel --ids id1
 ## Enums
 
 
-### TracingLevelOpt {#tracinglevelopt}
+### TracingLevelOpt
 
 
 

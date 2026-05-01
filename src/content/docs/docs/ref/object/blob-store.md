@@ -440,7 +440,7 @@ This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.
 For singletons, the `ids` argument should be the literal `singleton` (or `null` to return the single instance).
 
 
-This method requires the `sysBlobStoreGet` [permission](../permissions.md).
+This method requires the `sysBlobStoreGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -474,7 +474,7 @@ This is a standard [`Foo/set`](https://www.rfc-editor.org/rfc/rfc8620#section-5.
 For singletons, only the `update` argument with id `singleton` is accepted; `create` and `destroy` arguments are rejected.
 
 
-This method requires the `sysBlobStoreUpdate` [permission](../permissions.md).
+This method requires the `sysBlobStoreUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -527,7 +527,7 @@ stalwart-cli update BlobStore --field description='updated value'
 ## Nested types
 
 
-### BlobStoreBase {#blobstorebase}
+### BlobStoreBase
 
 Base blob store backends.
 
@@ -542,7 +542,7 @@ Base blob store backends.
 
 
 
-#### S3Store {#s3store}
+#### S3Store
 
 S3-compatible blob store.
 
@@ -635,7 +635,7 @@ S3-compatible blob store.
 
 
 
-##### S3StoreRegion {#s3storeregion}
+##### S3StoreRegion
 
 Predefined S3 regions.
 
@@ -687,7 +687,7 @@ Predefined S3 regions.
 
 
 
-##### S3StoreCustomRegion {#s3storecustomregion}
+##### S3StoreCustomRegion
 
 Custom S3-compatible endpoint.
 
@@ -710,7 +710,7 @@ Custom S3-compatible endpoint.
 
 
 
-##### SecretKeyOptional {#secretkeyoptional}
+##### SecretKeyOptional
 
 An optional secret value, or none.
 
@@ -723,7 +723,7 @@ An optional secret value, or none.
 
 
 
-##### SecretKeyValue {#secretkeyvalue}
+##### SecretKeyValue
 
 A secret value provided directly.
 
@@ -739,7 +739,7 @@ A secret value provided directly.
 
 
 
-##### SecretKeyEnvironmentVariable {#secretkeyenvironmentvariable}
+##### SecretKeyEnvironmentVariable
 
 A secret value read from an environment variable.
 
@@ -755,7 +755,7 @@ A secret value read from an environment variable.
 
 
 
-##### SecretKeyFile {#secretkeyfile}
+##### SecretKeyFile
 
 A secret value read from a file.
 
@@ -771,7 +771,7 @@ A secret value read from a file.
 
 
 
-#### AzureStore {#azurestore}
+#### AzureStore
 
 Azure Blob Storage store.
 
@@ -829,7 +829,7 @@ Azure Blob Storage store.
 
 
 
-#### FileSystemStore {#filesystemstore}
+#### FileSystemStore
 
 Filesystem blob store.
 
@@ -852,7 +852,7 @@ Filesystem blob store.
 
 
 
-#### FoundationDbStore {#foundationdbstore}
+#### FoundationDbStore
 
 FoundationDB data store.
 
@@ -903,7 +903,7 @@ FoundationDB data store.
 
 
 
-#### PostgreSqlStore {#postgresqlstore}
+#### PostgreSqlStore
 
 PostgreSQL data store.
 
@@ -996,7 +996,7 @@ PostgreSQL data store.
 
 
 
-##### PostgreSqlSettings {#postgresqlsettings}
+##### PostgreSqlSettings
 
 PostgreSQL connection settings.
 
@@ -1047,7 +1047,7 @@ PostgreSQL connection settings.
 
 
 
-#### MySqlStore {#mysqlstore}
+#### MySqlStore
 
 MySQL data store.
 
@@ -1140,7 +1140,7 @@ MySQL data store.
 
 
 
-##### MySqlSettings {#mysqlsettings}
+##### MySqlSettings
 
 MySQL connection settings.
 
@@ -1187,7 +1187,7 @@ MySQL connection settings.
 ## Enums
 
 
-### PostgreSqlRecyclingMethod {#postgresqlrecyclingmethod}
+### PostgreSqlRecyclingMethod
 
 
 

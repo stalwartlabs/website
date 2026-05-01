@@ -5,7 +5,7 @@ title: "Sharded In-Memory Store"
 
 Sharding distributes data across multiple backends to improve throughput and balance load. In the sharded in-memory store, each key is hashed and a modulus operation selects one of the configured backends to hold or serve the associated value. Each backend owns a deterministic subset of keys, which avoids hotspots and allows capacity to scale horizontally.
 
-:::tip Enterprise feature
+:::tip[Enterprise feature]
 
 This feature is available exclusively in the [Enterprise Edition](/docs/server/enterprise) of Stalwart and is not included in the Community Edition.
 

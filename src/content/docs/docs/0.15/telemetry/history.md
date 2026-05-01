@@ -9,7 +9,7 @@ By capturing and retaining critical events and metrics, Telemetry History allows
 
 To enhance usability, the Telemetry History feature is fully integrated into the [WebAdmin](/docs/0.15/management/webadmin/) interface under the `Dashboard` and `History` sections. Through this interface, administrators can easily filter and visualize the stored event spans, ensuring that they can quickly locate the information they need. The WebAdmin tool presents the historical data in a clear and organized manner, allowing for efficient analysis and informed decision-making.
 
-:::tip Enterprise feature
+:::tip[Enterprise feature]
 
 This feature is available exclusively in the [Enterprise Edition](/docs/server/enterprise) of Stalwart and not included in the Community Edition.
 

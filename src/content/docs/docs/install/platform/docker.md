@@ -3,6 +3,7 @@ sidebar_position: 3
 title: "Docker"
 ---
 
+
 Stalwart is distributed as a multi-architecture Docker image that bundles the server binary and a minimal Debian runtime, covering JMAP, IMAP, POP3, SMTP, WebDAV, and the management HTTP interface. The image is published to both Docker Hub and GitHub Container Registry.
 
 The `latest` tag tracks the newest release and moves forward as new versions ship. For production deployments, pin to a `v<major>.<minor>` tag such as `v0.16`. The CI publishes this short form in addition to the full `v<major>.<minor>.<patch>` tag and `edge` (latest build from the main branch), so picking the short form keeps deployments on a single minor series and avoids breaking semver changes on upgrade.
@@ -40,13 +41,13 @@ Publishing every port is not required. Internal deployments that only need, for 
 
 The image runs as an unprivileged `stalwart` user (UID 2000). Docker's default capability set is sufficient for binding ports below 1024 on Linux: the binary carries the `cap_net_bind_service` file capability, so no `--cap-add` or `--privileged` flag is needed. Starting the container with `--cap-drop NET_BIND_SERVICE` causes the binary to fail at exec time.
 
-:::note Reverse proxies and custom ports
+:::note[Reverse proxies and custom ports]
 
 When the host port mapping is not `443`, or a reverse proxy fronts the container on a different URL, pass the public-facing URL through `STALWART_PUBLIC_URL` so that discovery documents publish the URL clients actually use. For example: ` -e STALWART_PUBLIC_URL=https://mail.example.com:8443`. The variable accepts a full base URL with scheme, host, optional port, and optional path prefix (e.g. `https://example.com/mail`). It does not change which ports the container itself binds to; those continue to be controlled by `-p` and the [NetworkListener](/docs/ref/object/network-listener) objects. See [Public URLs](/docs/configuration/environment-variables#public-urls) for the full reference.
 
 :::
 
-:::note Bind-mounts and UID 2000
+:::note[Bind-mounts and UID 2000]
 
 The example above uses named Docker volumes, which are populated with the correct ownership automatically. When bind-mounting host directories instead (for example `-v /srv/stalwart/config:/etc/stalwart`), the host directory must be owned by UID 2000 so the service account can read and write it. Run `chown 2000:2000 /srv/stalwart/config /srv/stalwart/data` on the host before starting the container.
 
@@ -84,6 +85,7 @@ To avoid relying on a log-extracted temporary password, a fixed credential can b
 
 ## Open the setup wizard
 
+<!-- include:setup-wizard -->
 With the bootstrap credentials in hand, open a web browser and navigate to:
 
 ```
@@ -112,7 +114,7 @@ Two required fields plus two optional toggles.
 * **Generate email signing keys:** 
     > Leave enabled to have Stalwart generate DKIM signing keys for the default domain. DKIM cryptographically signs outgoing messages and significantly improves the chances that they are accepted by remote servers rather than classified as spam. Disable only when DKIM keys are managed externally.
 
-:::note ACME challenge method
+:::note[ACME challenge method]
 
 When the *automatically obtain TLS certificate* option is enabled and an automatic DNS provider is selected in [Step 5](#step-5-of-5-automatic-dns-management), Stalwart validates certificate requests with the DNS-01 challenge, which does not require any ports to be reachable from the internet. When DNS management is left manual in Step 5, Stalwart falls back to the TLS-ALPN-01 challenge, which Let's Encrypt validates by connecting directly to the server on **TCP port 443**. In that case, before restarting the server after the wizard, make sure that the machine is reachable from the public internet on port 443, that no reverse proxy or load balancer is intercepting the connection, and that the server hostname entered above resolves to this machine in public DNS. See [ACME challenge types](/docs/server/tls/acme/challenges) for the full picture.
 
@@ -152,7 +154,7 @@ The choice here affects the final screen. With the internal directory, a generat
 
 Additional destinations (OpenTelemetry, journald, remote webhooks) can be added after setup through the [Tracer](/docs/ref/object/tracer) object.
 
-:::note Docker
+:::note[Docker]
 
 Docker users should select **Console** here. A file-based logger inside a container writes to an ephemeral filesystem that is lost on every container restart; the Console logger emits structured log lines to standard output, which Docker captures through its log driver.
 
@@ -186,8 +188,7 @@ onMjJfFMO83tQcCX
 Write both down. The password is shown only on this screen and cannot be retrieved from the server logs afterwards. The credentials are used to sign in to the WebUI once the server has been restarted (see the platform-specific Restart section below).
 
 **External directory (OIDC / LDAP / SQL).** No administrator credential is generated here, because an account from the external directory does not exist locally until it has authenticated at least once. The administrator must be promoted manually after the first sign-in; see [External directory promotion](#external-directory-promotion) under *Additional topics* below for the procedure.
-
-
+<!-- /include:setup-wizard -->
 
 ## Restart the container
 
@@ -205,11 +206,12 @@ For deployments managed with Docker Compose, restart only the Stalwart service:
 $ docker compose restart stalwart
 ```
 
+<!-- include:next-steps -->
 ## Continue setup
 
 After the restart, sign in at `https://<hostname>/admin` with the administrator credentials printed on the final wizard screen, where `<hostname>` is the value entered in Step 1. If TLS or DNS for that hostname is not in place yet, sign in at `http://<host>:8080/admin` instead and switch to the HTTPS URL once the production listener is reachable.
 
-:::note Special cases
+:::note[Special cases]
 
 - Deployments using an external directory (OIDC, LDAP, or SQL) must promote the administrator account after first sign-in. See [External directory promotion](#external-directory-promotion) under *Additional topics* below.
 - Deployments behind a reverse proxy should follow the [Reverse proxy](#reverse-proxy) guidance under *Troubleshooting* below before signing in.
@@ -235,7 +237,7 @@ Before exposing the server to the public internet, review the [securing your ser
 
 ## Setup demonstration
 
-<video src="/img/setup.mp4" autoPlay loop muted playsInline style={{ maxWidth: '100%', height: 'auto' }} />
+<video src="/img/setup.mp4" autoplay loop muted playsinline style="max-width: 100%; height: auto"  ></video>
 
 ## Troubleshooting
 
@@ -295,4 +297,4 @@ The returned zone file can be pasted into the DNS provider's control panel or im
 ### Non-interactive setup
 
 Deployments that prefer command-line or infrastructure-as-code workflows can skip the wizard entirely and drive the same configuration from the CLI; see [bootstrap mode](/docs/configuration/bootstrap-mode) and [declarative deployments](/docs/configuration/declarative-deployments).
-
+<!-- /include:next-steps -->

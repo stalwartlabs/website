@@ -19,7 +19,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Contact information to be included in the report
 >
-> Available variables: [`MtaRcptDomainVariable`](../expression/variable/mta-rcpt-domain-variable.md).
+> Available variables: [`MtaRcptDomainVariable`](/docs/ref/expression/variable/mta-rcpt-domain-variable).
 
 
 ##### `aggregateFromAddress`
@@ -28,7 +28,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Email address that will be used in the From header of the DMARC aggregate report email
 >
-> Available variables: [`MtaRcptDomainVariable`](../expression/variable/mta-rcpt-domain-variable.md).
+> Available variables: [`MtaRcptDomainVariable`](/docs/ref/expression/variable/mta-rcpt-domain-variable).
 
 
 ##### `aggregateFromName`
@@ -37,7 +37,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Name that will be used in the From header of the DMARC aggregate report email
 >
-> Available variables: [`MtaRcptDomainVariable`](../expression/variable/mta-rcpt-domain-variable.md).
+> Available variables: [`MtaRcptDomainVariable`](/docs/ref/expression/variable/mta-rcpt-domain-variable).
 
 
 ##### `aggregateMaxReportSize`
@@ -46,7 +46,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Maximum size of the DMARC aggregate report in bytes
 >
-> Available variables: [`MtaRcptDomainVariable`](../expression/variable/mta-rcpt-domain-variable.md).
+> Available variables: [`MtaRcptDomainVariable`](/docs/ref/expression/variable/mta-rcpt-domain-variable).
 
 
 ##### `aggregateOrgName`
@@ -55,18 +55,18 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Name of the organization to be included in the report
 >
-> Available variables: [`MtaRcptDomainVariable`](../expression/variable/mta-rcpt-domain-variable.md).
+> Available variables: [`MtaRcptDomainVariable`](/docs/ref/expression/variable/mta-rcpt-domain-variable).
 
 
 ##### `aggregateSendFrequency`
 
 > Type: [<code>Expression</code>](#expression) · default: `{"else":"daily"}`
 >
-> Frequency at which the DMARC aggregate reports will be sent. The options are hourly, daily, weekly, or never to disable reporting
+> Frequency at which the DMARC aggregate reports will be sent. The options are hourly, daily, weekly, or disable to disable reporting
 >
-> Available variables: [`MtaRcptToVariable`](../expression/variable/mta-rcpt-to-variable.md).
+> Available variables: [`MtaRcptToVariable`](/docs/ref/expression/variable/mta-rcpt-to-variable).
 >
-> Available constants: [`MtaAggregateConstant`](../expression/constant/mta-aggregate-constant.md).
+> Available constants: [`MtaAggregateConstant`](/docs/ref/expression/constant/mta-aggregate-constant).
 
 
 ##### `aggregateDkimSignDomain`
@@ -75,7 +75,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Which domain's DKIM signatures to use when signing the DMARC aggregate report
 >
-> Available variables: [`MtaRcptDomainVariable`](../expression/variable/mta-rcpt-domain-variable.md).
+> Available variables: [`MtaRcptDomainVariable`](/docs/ref/expression/variable/mta-rcpt-domain-variable).
 
 
 ##### `aggregateSubject`
@@ -84,7 +84,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Subject name that will be used in the DMARC aggregate report email
 >
-> Available variables: [`MtaRcptDomainVariable`](../expression/variable/mta-rcpt-domain-variable.md).
+> Available variables: [`MtaRcptDomainVariable`](/docs/ref/expression/variable/mta-rcpt-domain-variable).
 
 
 ##### `failureFromAddress`
@@ -93,7 +93,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Email address that will be used in the From header of the DMARC authentication failure report email
 >
-> Available variables: [`MtaRcptToVariable`](../expression/variable/mta-rcpt-to-variable.md).
+> Available variables: [`MtaRcptToVariable`](/docs/ref/expression/variable/mta-rcpt-to-variable).
 
 
 ##### `failureFromName`
@@ -102,7 +102,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Name that will be used in the From header of the DMARC report email
 >
-> Available variables: [`MtaRcptToVariable`](../expression/variable/mta-rcpt-to-variable.md).
+> Available variables: [`MtaRcptToVariable`](/docs/ref/expression/variable/mta-rcpt-to-variable).
 
 
 ##### `failureSendFrequency`
@@ -111,7 +111,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Rate at which DMARC reports will be sent to a given email address. When this rate is exceeded, no further DMARC failure reports will be sent to that address
 >
-> Available variables: [`MtaRcptToVariable`](../expression/variable/mta-rcpt-to-variable.md).
+> Available variables: [`MtaRcptToVariable`](/docs/ref/expression/variable/mta-rcpt-to-variable).
 
 
 ##### `failureDkimSignDomain`
@@ -120,7 +120,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Which domain's DKIM signatures to use when signing the DMARC authentication failure report
 >
-> Available variables: [`MtaRcptToVariable`](../expression/variable/mta-rcpt-to-variable.md).
+> Available variables: [`MtaRcptToVariable`](/docs/ref/expression/variable/mta-rcpt-to-variable).
 
 
 ##### `failureSubject`
@@ -129,7 +129,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Subject name that will be used in the DMARC authentication failure report email
 >
-> Available variables: [`MtaRcptToVariable`](../expression/variable/mta-rcpt-to-variable.md).
+> Available variables: [`MtaRcptToVariable`](/docs/ref/expression/variable/mta-rcpt-to-variable).
 
 
 
@@ -145,7 +145,7 @@ This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.
 For singletons, the `ids` argument should be the literal `singleton` (or `null` to return the single instance).
 
 
-This method requires the `sysDmarcReportSettingsGet` [permission](../permissions.md).
+This method requires the `sysDmarcReportSettingsGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -179,7 +179,7 @@ This is a standard [`Foo/set`](https://www.rfc-editor.org/rfc/rfc8620#section-5.
 For singletons, only the `update` argument with id `singleton` is accepted; `create` and `destroy` arguments are rejected.
 
 
-This method requires the `sysDmarcReportSettingsUpdate` [permission](../permissions.md).
+This method requires the `sysDmarcReportSettingsUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -234,7 +234,7 @@ stalwart-cli update DmarcReportSettings --field aggregateContactInfo='{"else":"f
 ## Nested types
 
 
-### Expression {#expression}
+### Expression
 
 A conditional expression with match rules and a default value.
 
@@ -257,7 +257,7 @@ A conditional expression with match rules and a default value.
 
 
 
-#### ExpressionMatch {#expressionmatch}
+#### ExpressionMatch
 
 A single condition-result pair in an expression.
 
@@ -284,7 +284,7 @@ A single condition-result pair in an expression.
 
 The following expression contexts are used by fields on this page:
 
-- [`MtaRcptDomainVariable`](../expression/variable/mta-rcpt-domain-variable.md) (Variables)
-- [`MtaAggregateConstant`](../expression/constant/mta-aggregate-constant.md) (Constants)
-- [`MtaRcptToVariable`](../expression/variable/mta-rcpt-to-variable.md) (Variables)
+- [`MtaRcptDomainVariable`](/docs/ref/expression/variable/mta-rcpt-domain-variable) (Variables)
+- [`MtaAggregateConstant`](/docs/ref/expression/constant/mta-aggregate-constant) (Constants)
+- [`MtaRcptToVariable`](/docs/ref/expression/variable/mta-rcpt-to-variable) (Variables)
 

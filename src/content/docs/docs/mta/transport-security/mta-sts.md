@@ -42,7 +42,7 @@ Example:
 }
 ```
 
-:::tip Note
+:::tip[Note]
 
 To automatically publish MTA-STS policies, port 443 (HTTPS) must be open. This port allows Stalwart to serve the policy files via HTTPS so that other mail servers can perform policy checks.
 

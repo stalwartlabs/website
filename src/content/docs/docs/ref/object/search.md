@@ -22,14 +22,14 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `defaultLanguage`
 
-> Type: [<code>Locale</code>](../enum/locale.md) · default: `"en_US"`
+> Type: [<code>Locale</code>](/docs/ref/enum/locale) · default: `"en_US"`
 >
 > Default language to use when language detection is not possible
 
 
 ##### `supportedLanguages`
 
-> Type: [<code>Locale</code>](../enum/locale.md)<code>[]</code> · default: `["en_US"]`
+> Type: [<code>Locale</code>](/docs/ref/enum/locale)<code>[]</code> · default: `["en_US"]`
 >
 > List of languages to enable for full-text search
 
@@ -103,7 +103,7 @@ This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.
 For singletons, the `ids` argument should be the literal `singleton` (or `null` to return the single instance).
 
 
-This method requires the `sysSearchGet` [permission](../permissions.md).
+This method requires the `sysSearchGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -137,7 +137,7 @@ This is a standard [`Foo/set`](https://www.rfc-editor.org/rfc/rfc8620#section-5.
 For singletons, only the `update` argument with id `singleton` is accepted; `create` and `destroy` arguments are rejected.
 
 
-This method requires the `sysSearchUpdate` [permission](../permissions.md).
+This method requires the `sysSearchUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -190,7 +190,7 @@ stalwart-cli update Search --field indexBatchSize=100
 ## Enums
 
 
-### SearchCalendarField {#searchcalendarfield}
+### SearchCalendarField
 
 
 
@@ -205,7 +205,7 @@ stalwart-cli update Search --field indexBatchSize=100
 | `uid` | Event UID |
 
 
-### SearchContactField {#searchcontactfield}
+### SearchContactField
 
 
 
@@ -224,7 +224,7 @@ stalwart-cli update Search --field indexBatchSize=100
 | `uid` | Contact UID |
 
 
-### SearchEmailField {#searchemailfield}
+### SearchEmailField
 
 
 
@@ -244,7 +244,7 @@ stalwart-cli update Search --field indexBatchSize=100
 | `headers` | Email Headers |
 
 
-### SearchTracingField {#searchtracingfield}
+### SearchTracingField
 
 
 

@@ -48,7 +48,7 @@ Or, to read the key from the environment variable `OAUTH_KEY`:
 key = "%{env:OAUTH_KEY}%"
 ```
 
-:::tip Be aware that
+:::tip[Be aware that]
 
 - If the encryption key is changed, all existing OAuth tokens will be **immediately revoked**.
 - On distributed systems, all nodes have to use the **exact same encryption key**. Otherwise,

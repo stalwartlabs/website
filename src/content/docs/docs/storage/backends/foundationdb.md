@@ -5,7 +5,7 @@ title: "FoundationDB"
 
 FoundationDB is a distributed database designed to handle large volumes of data across multiple machines. It combines ACID transactions with the scalability of NoSQL systems, providing high performance, fault tolerance, and straightforward horizontal scaling. It is the recommended backend for distributed deployments of Stalwart.
 
-:::tip Note
+:::tip[Note]
 
 The FoundationDB client library must be installed on the host before Stalwart can connect to a FoundationDB cluster.
 

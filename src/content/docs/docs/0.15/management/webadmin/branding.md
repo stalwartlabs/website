@@ -5,7 +5,7 @@ title: "Branding"
 
 Branding allows system administrators to customize the appearance of the **webadmin interface** by changing the logo displayed to users. This feature provides flexibility to apply custom branding for the entire system, or for specific **tenants** and **domains**, offering a more personalized and professional user experience in multi-tenant environments.
 
-:::tip Enterprise feature
+:::tip[Enterprise feature]
 
 This feature is available exclusively in the [Enterprise Edition](/docs/server/enterprise) of Stalwart and not included in the Community Edition.
 

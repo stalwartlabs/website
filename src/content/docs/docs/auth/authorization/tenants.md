@@ -9,7 +9,7 @@ Each tenant is represented by a [Tenant](/docs/ref/object/tenant) object (found 
 
 Permissions granted within a tenant are bounded by the tenant's own permissions. If a tenant administrator assigns a permission to a principal that is not enabled on the tenant, the grant has no effect. This ensures a tenant cannot exceed the privileges allocated to it at the server level.
 
-:::tip Enterprise feature
+:::tip[Enterprise feature]
 
 This feature is available exclusively in the [Enterprise Edition](/docs/server/enterprise) of Stalwart and is not included in the Community Edition.
 

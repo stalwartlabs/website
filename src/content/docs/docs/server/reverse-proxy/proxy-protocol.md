@@ -15,7 +15,7 @@ Server-wide trusted networks are set through [`proxyTrustedNetworks`](/docs/ref/
 
 The same list can also be set on an individual [NetworkListener](/docs/ref/object/network-listener) through [`overrideProxyTrustedNetworks`](/docs/ref/object/network-listener#overrideproxytrustednetworks). The per-listener value replaces the server-wide list for that listener, so different listeners can trust different proxies.
 
-:::tip Note
+:::tip[Note]
 
 - Configure the Proxy Protocol on both the proxy and Stalwart. A mismatch (only one side sending or accepting the header) will break connections silently or expose the proxy's address instead of the client's.
 - Not every proxy supports the Proxy Protocol; confirm compatibility before wiring it into a production path.

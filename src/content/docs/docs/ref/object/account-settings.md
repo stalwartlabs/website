@@ -22,14 +22,14 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `locale`
 
-> Type: [<code>Locale</code>](../enum/locale.md) · default: `"en_US"`
+> Type: [<code>Locale</code>](/docs/ref/enum/locale) · default: `"en_US"`
 >
 > Preferred locale for the account
 
 
 ##### `timeZone`
 
-> Type: [<code>TimeZone</code>](../enum/time-zone.md)<code>?</code>
+> Type: [<code>TimeZone</code>](/docs/ref/enum/time-zone)<code>?</code>
 >
 > Preferred time zone for the account
 
@@ -54,7 +54,7 @@ This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.
 For singletons, the `ids` argument should be the literal `singleton` (or `null` to return the single instance).
 
 
-This method requires the `sysAccountSettingsGet` [permission](../permissions.md).
+This method requires the `sysAccountSettingsGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -88,7 +88,7 @@ This is a standard [`Foo/set`](https://www.rfc-editor.org/rfc/rfc8620#section-5.
 For singletons, only the `update` argument with id `singleton` is accepted; `create` and `destroy` arguments are rejected.
 
 
-This method requires the `sysAccountSettingsUpdate` [permission](../permissions.md).
+This method requires the `sysAccountSettingsUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -141,7 +141,7 @@ stalwart-cli update AccountSettings --field description='updated value'
 ## Nested types
 
 
-### EncryptionAtRest {#encryptionatrest}
+### EncryptionAtRest
 
 Encryption-at-rest algorithm selection.
 
@@ -153,7 +153,7 @@ Encryption-at-rest algorithm selection.
 
 
 
-#### EncryptionSettings {#encryptionsettings}
+#### EncryptionSettings
 
 Encryption-at-rest settings for an account.
 
@@ -161,7 +161,7 @@ Encryption-at-rest settings for an account.
 
 ##### `publicKey`
 
-> Type: <code>Id&lt;</code>[<code>PublicKey</code>](./public-key.md)<code>&gt;</code> · required
+> Type: <code>Id&lt;</code>[<code>PublicKey</code>](/docs/ref/object/public-key)<code>&gt;</code> · required
 >
 > Public key used for encrypting emails
 

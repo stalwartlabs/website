@@ -98,7 +98,7 @@ sections:
     title: Move in without rebuilding.
     body: >-
       Onboarding includes a migration engagement run by the same team that
-      publishes [stalwart-cli](/docs/management/cli/overview). Source
+      publishes [stalwart-cli](/docs/management/cli/). Source
       systems we cover include Postfix and Dovecot, Cyrus, Zimbra,
       Microsoft Exchange (and self-hosted Microsoft 365), MDaemon,
       hMailServer and Courier; others on request.

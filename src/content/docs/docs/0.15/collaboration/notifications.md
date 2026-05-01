@@ -70,7 +70,7 @@ email = "calendar-notification@myorg.com"
 
 Stalwart provides support for **custom branding and templating** in its calendar alarm notification system, allowing administrators to fully control the visual appearance and content of email alerts generated from calendar alarms. This ensures a consistent and professional experience for users receiving reminders via email and allows for alignment with organizational branding.
 
-:::tip Enterprise feature
+:::tip[Enterprise feature]
 
 This feature is available exclusively in the [Enterprise Edition](/docs/server/enterprise) of Stalwart and not included in the Community Edition.
 

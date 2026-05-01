@@ -29,7 +29,7 @@ TLS is enabled through [`useTls`](/docs/ref/object/data-store#usetls). When enab
 
 In Enterprise deployments, write operations target the primary connection and read operations are distributed across one or more replicas. Replicas are configured through the [`readReplicas`](/docs/ref/object/data-store#readreplicas) field on the same DataStore object, which accepts a list of replica connection settings. Each entry defines a full set of connection parameters ([`host`](/docs/ref/object/data-store#host), [`port`](/docs/ref/object/data-store#port), [`database`](/docs/ref/object/data-store#database), [`authUsername`](/docs/ref/object/data-store#authusername), and [`authSecret`](/docs/ref/object/data-store#authsecret)). The same pattern is available on the [BlobStore](/docs/ref/object/blob-store) and [SearchStore](/docs/ref/object/search-store) objects when their `PostgreSql` variant is selected.
 
-:::tip Enterprise feature
+:::tip[Enterprise feature]
 
 Read replicas are available exclusively in the [Enterprise Edition](/docs/server/enterprise) of Stalwart and are not included in the Community Edition.
 

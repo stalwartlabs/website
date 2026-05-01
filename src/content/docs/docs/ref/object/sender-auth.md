@@ -19,7 +19,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Domain to use for DKIM signing
 >
-> Available variables: [`MtaRcptToVariable`](../expression/variable/mta-rcpt-to-variable.md).
+> Available variables: [`MtaRcptToVariable`](/docs/ref/expression/variable/mta-rcpt-to-variable).
 
 
 ##### `dkimStrict`
@@ -35,9 +35,9 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Whether DKIM verification is strict, relaxed or disabled
 >
-> Available variables: [`MtaRcptToVariable`](../expression/variable/mta-rcpt-to-variable.md).
+> Available variables: [`MtaRcptToVariable`](/docs/ref/expression/variable/mta-rcpt-to-variable).
 >
-> Available constants: [`MtaVerifyConstant`](../expression/constant/mta-verify-constant.md).
+> Available constants: [`MtaVerifyConstant`](/docs/ref/expression/constant/mta-verify-constant).
 
 
 ##### `spfEhloVerify`
@@ -46,9 +46,9 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Whether SPF EHLO verification is strict, relaxed or disabled
 >
-> Available variables: [`MtaConnectionVariable`](../expression/variable/mta-connection-variable.md).
+> Available variables: [`MtaConnectionVariable`](/docs/ref/expression/variable/mta-connection-variable).
 >
-> Available constants: [`MtaVerifyConstant`](../expression/constant/mta-verify-constant.md).
+> Available constants: [`MtaVerifyConstant`](/docs/ref/expression/constant/mta-verify-constant).
 
 
 ##### `spfFromVerify`
@@ -57,9 +57,9 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Whether SPF MAIL FROM verification is strict, relaxed or disabled
 >
-> Available variables: [`MtaConnectionVariable`](../expression/variable/mta-connection-variable.md).
+> Available variables: [`MtaConnectionVariable`](/docs/ref/expression/variable/mta-connection-variable).
 >
-> Available constants: [`MtaVerifyConstant`](../expression/constant/mta-verify-constant.md).
+> Available constants: [`MtaVerifyConstant`](/docs/ref/expression/constant/mta-verify-constant).
 
 
 ##### `arcVerify`
@@ -68,9 +68,9 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Whether ARC verification is strict, relaxed or disabled.
 >
-> Available variables: [`MtaRcptToVariable`](../expression/variable/mta-rcpt-to-variable.md).
+> Available variables: [`MtaRcptToVariable`](/docs/ref/expression/variable/mta-rcpt-to-variable).
 >
-> Available constants: [`MtaVerifyConstant`](../expression/constant/mta-verify-constant.md).
+> Available constants: [`MtaVerifyConstant`](/docs/ref/expression/constant/mta-verify-constant).
 
 
 ##### `dmarcVerify`
@@ -79,9 +79,9 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Whether DMARC verification is strict, relaxed or disabled
 >
-> Available variables: [`MtaRcptToVariable`](../expression/variable/mta-rcpt-to-variable.md).
+> Available variables: [`MtaRcptToVariable`](/docs/ref/expression/variable/mta-rcpt-to-variable).
 >
-> Available constants: [`MtaVerifyConstant`](../expression/constant/mta-verify-constant.md).
+> Available constants: [`MtaVerifyConstant`](/docs/ref/expression/constant/mta-verify-constant).
 
 
 ##### `reverseIpVerify`
@@ -90,9 +90,9 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > How strict to be when verifying the reverse DNS of the client IP
 >
-> Available variables: [`MtaConnectionVariable`](../expression/variable/mta-connection-variable.md).
+> Available variables: [`MtaConnectionVariable`](/docs/ref/expression/variable/mta-connection-variable).
 >
-> Available constants: [`MtaVerifyConstant`](../expression/constant/mta-verify-constant.md).
+> Available constants: [`MtaVerifyConstant`](/docs/ref/expression/constant/mta-verify-constant).
 
 
 
@@ -108,7 +108,7 @@ This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.
 For singletons, the `ids` argument should be the literal `singleton` (or `null` to return the single instance).
 
 
-This method requires the `sysSenderAuthGet` [permission](../permissions.md).
+This method requires the `sysSenderAuthGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -142,7 +142,7 @@ This is a standard [`Foo/set`](https://www.rfc-editor.org/rfc/rfc8620#section-5.
 For singletons, only the `update` argument with id `singleton` is accepted; `create` and `destroy` arguments are rejected.
 
 
-This method requires the `sysSenderAuthUpdate` [permission](../permissions.md).
+This method requires the `sysSenderAuthUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -203,7 +203,7 @@ stalwart-cli update SenderAuth --field dkimSignDomain='{"else":"false","match":[
 ## Nested types
 
 
-### Expression {#expression}
+### Expression
 
 A conditional expression with match rules and a default value.
 
@@ -226,7 +226,7 @@ A conditional expression with match rules and a default value.
 
 
 
-#### ExpressionMatch {#expressionmatch}
+#### ExpressionMatch
 
 A single condition-result pair in an expression.
 
@@ -253,7 +253,7 @@ A single condition-result pair in an expression.
 
 The following expression contexts are used by fields on this page:
 
-- [`MtaRcptToVariable`](../expression/variable/mta-rcpt-to-variable.md) (Variables)
-- [`MtaVerifyConstant`](../expression/constant/mta-verify-constant.md) (Constants)
-- [`MtaConnectionVariable`](../expression/variable/mta-connection-variable.md) (Variables)
+- [`MtaRcptToVariable`](/docs/ref/expression/variable/mta-rcpt-to-variable) (Variables)
+- [`MtaVerifyConstant`](/docs/ref/expression/constant/mta-verify-constant) (Constants)
+- [`MtaConnectionVariable`](/docs/ref/expression/variable/mta-connection-variable) (Variables)
 

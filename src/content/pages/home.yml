@@ -18,7 +18,7 @@ hero:
     administration interface. Written in Rust.
   ctas:
     - label: Get started
-      href: /docs/install/get-started
+      href: /docs/install/
   meta:
     - Open source
     - Rust-native
@@ -206,4 +206,4 @@ footerCta:
   cta: Ready to run a modern mail and collaboration server?
   ctaSub: Install Stalwart in minutes, then keep it running for years.
   ctaButton: Get Stalwart
-  ctaLink: /docs/install/get-started
+  ctaLink: /docs/install/

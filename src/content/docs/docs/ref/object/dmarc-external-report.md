@@ -57,7 +57,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `memberTenantId`
 
-> Type: <code>Id&lt;</code>[<code>Tenant</code>](./tenant.md)<code>&gt;?</code> · [enterprise](/docs/server/enterprise)
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code> · [enterprise](/docs/server/enterprise)
 >
 > Identifier for the tenant this report belongs to
 
@@ -73,7 +73,7 @@ The DmarcExternalReport object is available via the `urn:stalwart:jmap` capabili
 This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.1) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.1), Section 5.1.
 
 
-This method requires the `sysDmarcExternalReportGet` [permission](../permissions.md).
+This method requires the `sysDmarcExternalReportGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -110,7 +110,7 @@ Supports create, update, and destroy operations in a single call.
 
 #### Create
 
-This operation requires the `sysDmarcExternalReportCreate` [permission](../permissions.md).
+This operation requires the `sysDmarcExternalReportCreate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -160,7 +160,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Update
 
-This operation requires the `sysDmarcExternalReportUpdate` [permission](../permissions.md).
+This operation requires the `sysDmarcExternalReportUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -190,7 +190,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Destroy
 
-This operation requires the `sysDmarcExternalReportDestroy` [permission](../permissions.md).
+This operation requires the `sysDmarcExternalReportDestroy` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -223,7 +223,7 @@ curl -X POST https://mail.example.com/api \
 This is a standard [`Foo/query`](https://www.rfc-editor.org/rfc/rfc8620#section-5.5) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.5), Section 5.5.
 
 
-This method requires the `sysDmarcExternalReportQuery` [permission](../permissions.md).
+This method requires the `sysDmarcExternalReportQuery` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -312,7 +312,7 @@ stalwart-cli delete DmarcExternalReport --ids id1
 ## Nested types
 
 
-### DmarcReport {#dmarcreport}
+### DmarcReport
 
 Content of a DMARC aggregate report.
 
@@ -447,7 +447,7 @@ Content of a DMARC aggregate report.
 
 
 
-#### DmarcReportRecord {#dmarcreportrecord}
+#### DmarcReportRecord
 
 An aggregated authentication result record from a single source.
 
@@ -540,7 +540,7 @@ An aggregated authentication result record from a single source.
 
 
 
-##### DmarcPolicyOverrideReason {#dmarcpolicyoverridereason}
+##### DmarcPolicyOverrideReason
 
 Reason for a DMARC policy override.
 
@@ -563,7 +563,7 @@ Reason for a DMARC policy override.
 
 
 
-##### DmarcDkimResult {#dmarcdkimresult}
+##### DmarcDkimResult
 
 DKIM authentication result within a DMARC report record.
 
@@ -600,7 +600,7 @@ DKIM authentication result within a DMARC report record.
 
 
 
-##### DmarcSpfResult {#dmarcspfresult}
+##### DmarcSpfResult
 
 SPF authentication result within a DMARC report record.
 
@@ -637,7 +637,7 @@ SPF authentication result within a DMARC report record.
 
 
 
-##### DmarcExtension {#dmarcextension}
+##### DmarcExtension
 
 A vendor-specific extension in a DMARC report.
 
@@ -663,7 +663,7 @@ A vendor-specific extension in a DMARC report.
 ## Enums
 
 
-### DmarcAlignment {#dmarcalignment}
+### DmarcAlignment
 
 
 
@@ -674,7 +674,7 @@ A vendor-specific extension in a DMARC report.
 | `unspecified` | Alignment mode not specified |
 
 
-### DmarcDisposition {#dmarcdisposition}
+### DmarcDisposition
 
 
 
@@ -686,7 +686,7 @@ A vendor-specific extension in a DMARC report.
 | `unspecified` | Disposition not specified |
 
 
-### FailureReportingOption {#failurereportingoption}
+### FailureReportingOption
 
 
 
@@ -698,7 +698,7 @@ A vendor-specific extension in a DMARC report.
 | `spfFailure` | Generate report if SPF authentication fails |
 
 
-### DmarcActionDisposition {#dmarcactiondisposition}
+### DmarcActionDisposition
 
 
 
@@ -711,7 +711,7 @@ A vendor-specific extension in a DMARC report.
 | `unspecified` | Disposition not specified |
 
 
-### DmarcResult {#dmarcresult}
+### DmarcResult
 
 
 
@@ -722,7 +722,7 @@ A vendor-specific extension in a DMARC report.
 | `unspecified` | Result not specified |
 
 
-### DmarcPolicyOverride {#dmarcpolicyoverride}
+### DmarcPolicyOverride
 
 
 
@@ -736,7 +736,7 @@ A vendor-specific extension in a DMARC report.
 | `Other` | Other reason for override |
 
 
-### DkimAuthResult {#dkimauthresult}
+### DkimAuthResult
 
 
 
@@ -751,7 +751,7 @@ A vendor-specific extension in a DMARC report.
 | `permError` | Permanent error in DKIM record or signature |
 
 
-### SpfDomainScope {#spfdomainscope}
+### SpfDomainScope
 
 
 
@@ -762,7 +762,7 @@ A vendor-specific extension in a DMARC report.
 | `unspecified` | Scope not specified |
 
 
-### SpfAuthResult {#spfauthresult}
+### SpfAuthResult
 
 
 

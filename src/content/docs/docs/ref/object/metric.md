@@ -27,7 +27,7 @@ Counter metric
 
 ##### `metric`
 
-> Type: [<code>MetricType</code>](../metrics.md) · required
+> Type: [<code>MetricType</code>](/docs/ref/metrics) · required
 >
 > Metric event type
 
@@ -54,7 +54,7 @@ Gauge metric
 
 ##### `metric`
 
-> Type: [<code>MetricType</code>](../metrics.md) · required
+> Type: [<code>MetricType</code>](/docs/ref/metrics) · required
 >
 > Metric event type
 
@@ -88,7 +88,7 @@ Histogram metric
 
 ##### `metric`
 
-> Type: [<code>MetricType</code>](../metrics.md) · required
+> Type: [<code>MetricType</code>](/docs/ref/metrics) · required
 >
 > Metric event type
 
@@ -112,7 +112,7 @@ The Metric object is available via the `urn:stalwart:jmap` capability.
 This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.1) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.1), Section 5.1.
 
 
-This method requires the `sysMetricGet` [permission](../permissions.md).
+This method requires the `sysMetricGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -149,7 +149,7 @@ Supports create, update, and destroy operations in a single call.
 
 #### Create
 
-This operation requires the `sysMetricCreate` [permission](../permissions.md).
+This operation requires the `sysMetricCreate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -179,7 +179,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Update
 
-This operation requires the `sysMetricUpdate` [permission](../permissions.md).
+This operation requires the `sysMetricUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -209,7 +209,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Destroy
 
-This operation requires the `sysMetricDestroy` [permission](../permissions.md).
+This operation requires the `sysMetricDestroy` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -242,7 +242,7 @@ curl -X POST https://mail.example.com/api \
 This is a standard [`Foo/query`](https://www.rfc-editor.org/rfc/rfc8620#section-5.5) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.5), Section 5.5.
 
 
-This method requires the `sysMetricQuery` [permission](../permissions.md).
+This method requires the `sysMetricQuery` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \

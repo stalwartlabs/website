@@ -15,7 +15,7 @@ Users can create and remove Application Passwords through the [self-service port
 
 Administrators, on the other hand, have limited control over Application Passwords through the [webadmin](/docs/0.15/management/webadmin/) interface. While administrators can view and remove a user's Application Passwords, they do not have the capability to create new Application Passwords on behalf of users. 
 
-:::tip Note
+:::tip[Note]
 
 Application Passwords can only be managed from the self-service portal or the webadmin interface when Stalwart is configured to use the [internal directory](/docs/auth/backend/internal). If the server is set up to use an external directory, such as LDAP or SQL, administrators need to manually add the App Password secret as one of the account secrets to add a new Application Password for user accounts.
 

@@ -9,7 +9,7 @@ Each tenant in Stalwart is defined as a [principal](/docs/auth/principals/) with
 
 Additionally, any permissions assigned within a tenant are bound by the permissions of the tenant itself. For instance, if a tenant administrator assigns a permission to a user that the tenant itself does not have, this permission is ignored. This ensures that tenant administrators cannot assign more privileges than the tenant is allowed.
 
-:::tip Enterprise feature
+:::tip[Enterprise feature]
 
 This feature is available exclusively in the [Enterprise Edition](/docs/server/enterprise) of Stalwart and not included in the Community Edition.
 

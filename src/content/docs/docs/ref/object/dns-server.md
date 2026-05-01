@@ -71,7 +71,7 @@ RFC2136 (TSIG)
 
 ##### `memberTenantId`
 
-> Type: <code>Id&lt;</code>[<code>Tenant</code>](./tenant.md)<code>&gt;?</code>
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
 >
 > Identifier for the tenant this DNS server belongs to
 
@@ -175,7 +175,7 @@ RFC2136 (SIG0)
 
 ##### `memberTenantId`
 
-> Type: <code>Id&lt;</code>[<code>Tenant</code>](./tenant.md)<code>&gt;?</code>
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
 >
 > Identifier for the tenant this DNS server belongs to
 
@@ -244,7 +244,7 @@ Cloudflare
 
 ##### `memberTenantId`
 
-> Type: <code>Id&lt;</code>[<code>Tenant</code>](./tenant.md)<code>&gt;?</code>
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
 >
 > Identifier for the tenant this DNS server belongs to
 
@@ -306,7 +306,7 @@ DigitalOcean
 
 ##### `memberTenantId`
 
-> Type: <code>Id&lt;</code>[<code>Tenant</code>](./tenant.md)<code>&gt;?</code>
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
 >
 > Identifier for the tenant this DNS server belongs to
 
@@ -368,7 +368,7 @@ DeSEC
 
 ##### `memberTenantId`
 
-> Type: <code>Id&lt;</code>[<code>Tenant</code>](./tenant.md)<code>&gt;?</code>
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
 >
 > Identifier for the tenant this DNS server belongs to
 
@@ -451,7 +451,7 @@ OVH
 
 ##### `memberTenantId`
 
-> Type: <code>Id&lt;</code>[<code>Tenant</code>](./tenant.md)<code>&gt;?</code>
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
 >
 > Identifier for the tenant this DNS server belongs to
 
@@ -513,7 +513,7 @@ BunnyDNS
 
 ##### `memberTenantId`
 
-> Type: <code>Id&lt;</code>[<code>Tenant</code>](./tenant.md)<code>&gt;?</code>
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
 >
 > Identifier for the tenant this DNS server belongs to
 
@@ -589,7 +589,7 @@ Porkbun
 
 ##### `memberTenantId`
 
-> Type: <code>Id&lt;</code>[<code>Tenant</code>](./tenant.md)<code>&gt;?</code>
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
 >
 > Identifier for the tenant this DNS server belongs to
 
@@ -665,7 +665,7 @@ DNSimple
 
 ##### `memberTenantId`
 
-> Type: <code>Id&lt;</code>[<code>Tenant</code>](./tenant.md)<code>&gt;?</code>
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
 >
 > Identifier for the tenant this DNS server belongs to
 
@@ -734,7 +734,7 @@ Spaceship
 
 ##### `memberTenantId`
 
-> Type: <code>Id&lt;</code>[<code>Tenant</code>](./tenant.md)<code>&gt;?</code>
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
 >
 > Identifier for the tenant this DNS server belongs to
 
@@ -831,7 +831,7 @@ AWS Route53
 
 ##### `memberTenantId`
 
-> Type: <code>Id&lt;</code>[<code>Tenant</code>](./tenant.md)<code>&gt;?</code>
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
 >
 > Identifier for the tenant this DNS server belongs to
 
@@ -921,7 +921,7 @@ Google Cloud DNS
 
 ##### `memberTenantId`
 
-> Type: <code>Id&lt;</code>[<code>Tenant</code>](./tenant.md)<code>&gt;?</code>
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
 >
 > Identifier for the tenant this DNS server belongs to
 
@@ -973,7 +973,7 @@ The DnsServer object is available via the `urn:stalwart:jmap` capability.
 This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.1) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.1), Section 5.1.
 
 
-This method requires the `sysDnsServerGet` [permission](../permissions.md).
+This method requires the `sysDnsServerGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -1010,7 +1010,7 @@ Supports create, update, and destroy operations in a single call.
 
 #### Create
 
-This operation requires the `sysDnsServerCreate` [permission](../permissions.md).
+This operation requires the `sysDnsServerCreate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -1047,7 +1047,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Update
 
-This operation requires the `sysDnsServerUpdate` [permission](../permissions.md).
+This operation requires the `sysDnsServerUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -1077,7 +1077,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Destroy
 
-This operation requires the `sysDnsServerDestroy` [permission](../permissions.md).
+This operation requires the `sysDnsServerDestroy` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -1110,7 +1110,7 @@ curl -X POST https://mail.example.com/api \
 This is a standard [`Foo/query`](https://www.rfc-editor.org/rfc/rfc8620#section-5.5) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.5), Section 5.5.
 
 
-This method requires the `sysDnsServerQuery` [permission](../permissions.md).
+This method requires the `sysDnsServerQuery` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -1193,7 +1193,7 @@ stalwart-cli delete DnsServer --ids id1
 ## Nested types
 
 
-### SecretKey {#secretkey}
+### SecretKey
 
 A secret value provided directly, from an environment variable, or from a file.
 
@@ -1205,7 +1205,7 @@ A secret value provided directly, from an environment variable, or from a file.
 
 
 
-#### SecretKeyValue {#secretkeyvalue}
+#### SecretKeyValue
 
 A secret value provided directly.
 
@@ -1221,7 +1221,7 @@ A secret value provided directly.
 
 
 
-#### SecretKeyEnvironmentVariable {#secretkeyenvironmentvariable}
+#### SecretKeyEnvironmentVariable
 
 A secret value read from an environment variable.
 
@@ -1237,7 +1237,7 @@ A secret value read from an environment variable.
 
 
 
-#### SecretKeyFile {#secretkeyfile}
+#### SecretKeyFile
 
 A secret value read from a file.
 
@@ -1253,7 +1253,7 @@ A secret value read from a file.
 
 
 
-### SecretText {#secrettext}
+### SecretText
 
 A secret text value provided directly, from an environment variable, or from a file.
 
@@ -1265,7 +1265,7 @@ A secret text value provided directly, from an environment variable, or from a f
 
 
 
-#### SecretTextValue {#secrettextvalue}
+#### SecretTextValue
 
 A secret text value provided directly.
 
@@ -1281,7 +1281,7 @@ A secret text value provided directly.
 
 
 
-### SecretKeyOptional {#secretkeyoptional}
+### SecretKeyOptional
 
 An optional secret value, or none.
 
@@ -1297,7 +1297,7 @@ An optional secret value, or none.
 ## Enums
 
 
-### IpProtocol {#ipprotocol}
+### IpProtocol
 
 
 
@@ -1307,7 +1307,7 @@ An optional secret value, or none.
 | `tcp` | TCP |
 
 
-### TsigAlgorithm {#tsigalgorithm}
+### TsigAlgorithm
 
 
 
@@ -1325,7 +1325,7 @@ An optional secret value, or none.
 | `hmac-sha512-256` | HMAC-SHA512-256 |
 
 
-### Sig0Algorithm {#sig0algorithm}
+### Sig0Algorithm
 
 
 
@@ -1336,7 +1336,7 @@ An optional secret value, or none.
 | `ed25519` | ED25519 |
 
 
-### OvhEndpoint {#ovhendpoint}
+### OvhEndpoint
 
 
 

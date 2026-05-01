@@ -4,6 +4,7 @@ import starlight from "@astrojs/starlight";
 import starlightBlog from "starlight-blog";
 import starlightLinksValidator from "starlight-links-validator";
 import { visit } from "unist-util-visit";
+import remarkGemoji from "remark-gemoji";
 import { buildDocsSidebar } from "./src/lib/sidebar.mjs";
 
 // Convert ```mermaid fenced code blocks into <pre class="mermaid"> nodes,
@@ -25,6 +26,14 @@ const GTAG_ID = "G-NTKTV3G55G";
 export default defineConfig({
   site: "https://stalw.art",
   trailingSlash: "ignore",
+  // Astro-level redirects: served in dev (`astro dev`) and built into the
+  // static output too, so they work regardless of host. The Cloudflare
+  // _redirects file in public/ mirrors these for SEO/external bookmarks.
+  redirects: {
+    "/docs": "/docs/install/",
+    "/docs/": "/docs/install/",
+    "/docs/install/get-started": "/docs/install/",
+  },
   server: {
     host: "127.0.0.1",
     port: 8787,
@@ -42,16 +51,9 @@ export default defineConfig({
       // doesn't warn on every page that includes Sieve examples.
       langAlias: { sieve: "text" },
     },
-    remarkPlugins: [remarkMermaid],
-  },
-  vite: {
-    build: {
-      rollupOptions: {
-        // Pagefind's runtime is generated into dist/pagefind/ during the build
-        // by Starlight, so it can't be resolved at compile time.
-        external: [/^\/pagefind\/.*/],
-      },
-    },
+    // remarkGemoji renders Docusaurus/GitHub-style :emoji: shortcodes
+    // (e.g. :white_check_mark:) into the actual Unicode glyphs.
+    remarkPlugins: [remarkMermaid, remarkGemoji],
   },
   integrations: [
     sitemap({
@@ -95,11 +97,13 @@ gtag('config', '${GTAG_ID}', { anonymize_ip: true });
       components: {
         Head: "./src/components/StarlightHead.astro",
         Header: "./src/components/StarlightHeader.astro",
-        Sidebar: "./src/components/StarlightSidebar.astro",
-        // Wrap the layout shell so the marketing footer renders full-width
-        // below the docs content, while Starlight's per-page Footer (edit
-        // link, last-updated, prev/next) stays inside the content area.
-        PageFrame: "./src/components/StarlightPageFrame.astro",
+        // Note: we deliberately do NOT override Footer or PageFrame.
+        // Starlight's default per-page Footer (edit on GitHub, last
+        // updated, prev/next pagination) is what readers want at the
+        // bottom of a docs page; the multi-column marketing footer doesn't
+        // make sense inside the docs/blog layout, where the fixed sidebar
+        // and TOC overlay it. The marketing footer is only on the
+        // marketing pages, served by src/layouts/Base.astro.
       },
       pagefind: true,
       disable404Route: true,
@@ -127,16 +131,34 @@ gtag('config', '${GTAG_ID}', { anonymize_ip: true });
         }),
         starlightLinksValidator({
           errorOnRelativeLinks: false,
-          errorOnInvalidHashes: false,
+          // Catch new broken anchors in current docs. Pre-existing broken
+          // anchors in the 0.15 archive (and the cross-version anchor
+          // references it inherited from Docusaurus) are listed in
+          // `exclude` below so the build still passes.
+          errorOnInvalidHashes: true,
           exclude: [
-            // Archived 0.15 snapshot has pre-existing broken cross-links
-            // inherited from the original Docusaurus version; do not block
-            // builds on legacy content.
+            // Archived 0.15 snapshot has pre-existing broken cross-links;
+            // do not block builds on legacy content.
             "/docs/0.15/**",
             // Marketing + legal pages are served by the custom [...slug].astro
             // route and are not visible to the docs link validator.
             "/legal/**",
             "/contact",
+            // Pre-existing broken anchors that point to current docs from
+            // the 0.15 archive. The target pages (without the anchor) are
+            // valid; the headings these anchors reference were renamed or
+            // never existed. Don't block builds on these.
+            "/docs/auth/backend/sql#lookup-queries",
+            "/docs/auth/backend/ldap#lookup-queries",
+            "/docs/mta/authentication/dkim/sign#generating-dkim-keys",
+            "/docs/sieve/#greylisting",
+            "/docs/configuration/#local-and-database-settings",
+            "/docs/development/rfcs#imap4-and-extensions",
+            "/docs/development/rfcs#smtp-and-extensions",
+            "/docs/auth/authorization/administrator#fallback-administrator",
+            "/docs/auth/authorization/administrator#best-practices",
+            "/docs/mta/reports/dmarc#aggregate",
+            "/docs/mta/reports/dmarc#failures",
           ],
         }),
       ],

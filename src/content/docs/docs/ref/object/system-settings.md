@@ -22,14 +22,14 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `defaultDomainId`
 
-> Type: <code>Id&lt;</code>[<code>Domain</code>](./domain.md)<code>&gt;</code> · required
+> Type: <code>Id&lt;</code>[<code>Domain</code>](/docs/ref/object/domain)<code>&gt;</code> · required
 >
 > Default domain to use for authentication and reports.
 
 
 ##### `defaultCertificateId`
 
-> Type: <code>Id&lt;</code>[<code>Certificate</code>](./certificate.md)<code>&gt;?</code>
+> Type: <code>Id&lt;</code>[<code>Certificate</code>](/docs/ref/object/certificate)<code>&gt;?</code>
 >
 > Default TLS certificate to use when no SNI is provided by the client
 
@@ -89,7 +89,7 @@ This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.
 For singletons, the `ids` argument should be the literal `singleton` (or `null` to return the single instance).
 
 
-This method requires the `sysSystemSettingsGet` [permission](../permissions.md).
+This method requires the `sysSystemSettingsGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -123,7 +123,7 @@ This is a standard [`Foo/set`](https://www.rfc-editor.org/rfc/rfc8620#section-5.
 For singletons, only the `update` argument with id `singleton` is accepted; `create` and `destroy` arguments are rejected.
 
 
-This method requires the `sysSystemSettingsUpdate` [permission](../permissions.md).
+This method requires the `sysSystemSettingsUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -176,7 +176,7 @@ stalwart-cli update SystemSettings --field defaultHostname=mail.example.com
 ## Nested types
 
 
-### MailExchanger {#mailexchanger}
+### MailExchanger
 
 Defines a mail exchanger for DNS MX records.
 
@@ -199,7 +199,7 @@ Defines a mail exchanger for DNS MX records.
 
 
 
-### Service {#service}
+### Service
 
 Defines a service endpoint advertised in auto-configuration.
 
@@ -225,7 +225,7 @@ Defines a service endpoint advertised in auto-configuration.
 ## Enums
 
 
-### ServiceProtocol {#serviceprotocol}
+### ServiceProtocol
 
 
 
@@ -241,7 +241,7 @@ Defines a service endpoint advertised in auto-configuration.
 | `managesieve` | ManageSieve |
 
 
-### ProviderInfo {#providerinfo}
+### ProviderInfo
 
 
 

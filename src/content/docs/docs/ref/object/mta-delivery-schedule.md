@@ -43,7 +43,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `queueId`
 
-> Type: <code>Id&lt;</code>[<code>MtaVirtualQueue</code>](./mta-virtual-queue.md)<code>&gt;</code> · required
+> Type: <code>Id&lt;</code>[<code>MtaVirtualQueue</code>](/docs/ref/object/mta-virtual-queue)<code>&gt;</code> · required
 >
 > The name of the virtual queue to use for this schedule
 
@@ -66,7 +66,7 @@ The MtaDeliverySchedule object is available via the `urn:stalwart:jmap` capabili
 This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.1) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.1), Section 5.1.
 
 
-This method requires the `sysMtaDeliveryScheduleGet` [permission](../permissions.md).
+This method requires the `sysMtaDeliveryScheduleGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -103,7 +103,7 @@ Supports create, update, and destroy operations in a single call.
 
 #### Create
 
-This operation requires the `sysMtaDeliveryScheduleCreate` [permission](../permissions.md).
+This operation requires the `sysMtaDeliveryScheduleCreate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -142,7 +142,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Update
 
-This operation requires the `sysMtaDeliveryScheduleUpdate` [permission](../permissions.md).
+This operation requires the `sysMtaDeliveryScheduleUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -172,7 +172,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Destroy
 
-This operation requires the `sysMtaDeliveryScheduleDestroy` [permission](../permissions.md).
+This operation requires the `sysMtaDeliveryScheduleDestroy` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -205,7 +205,7 @@ curl -X POST https://mail.example.com/api \
 This is a standard [`Foo/query`](https://www.rfc-editor.org/rfc/rfc8620#section-5.5) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.5), Section 5.5.
 
 
-This method requires the `sysMtaDeliveryScheduleQuery` [permission](../permissions.md).
+This method requires the `sysMtaDeliveryScheduleQuery` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -288,7 +288,7 @@ stalwart-cli delete MtaDeliverySchedule --ids id1
 ## Nested types
 
 
-### MtaDeliveryExpiration {#mtadeliveryexpiration}
+### MtaDeliveryExpiration
 
 Defines the message expiration policy for undelivered messages.
 
@@ -299,7 +299,7 @@ Defines the message expiration policy for undelivered messages.
 
 
 
-#### MtaDeliveryExpirationTtl {#mtadeliveryexpirationttl}
+#### MtaDeliveryExpirationTtl
 
 Defines a time-to-live based message expiration policy.
 
@@ -315,7 +315,7 @@ Defines a time-to-live based message expiration policy.
 
 
 
-#### MtaDeliveryExpirationAttempts {#mtadeliveryexpirationattempts}
+#### MtaDeliveryExpirationAttempts
 
 Defines a delivery-attempts based message expiration policy.
 
@@ -331,7 +331,7 @@ Defines a delivery-attempts based message expiration policy.
 
 
 
-### MtaDeliveryScheduleIntervalsOrDefault {#mtadeliveryscheduleintervalsordefault}
+### MtaDeliveryScheduleIntervalsOrDefault
 
 Defines whether to use the default delivery schedule intervals or specify custom intervals.
 
@@ -342,7 +342,7 @@ Defines whether to use the default delivery schedule intervals or specify custom
 
 
 
-#### MtaDeliveryScheduleIntervals {#mtadeliveryscheduleintervals}
+#### MtaDeliveryScheduleIntervals
 
 Defines a custom list of delivery retry or notification intervals.
 
@@ -358,7 +358,7 @@ Defines a custom list of delivery retry or notification intervals.
 
 
 
-##### MtaDeliveryScheduleInterval {#mtadeliveryscheduleinterval}
+##### MtaDeliveryScheduleInterval
 
 Defines a single time interval entry used in a delivery schedule.
 

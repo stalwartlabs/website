@@ -19,7 +19,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Email address that will be used in the From header of the SPF authentication failure report email
 >
-> Available variables: [`MtaMailFromVariable`](../expression/variable/mta-mail-from-variable.md).
+> Available variables: [`MtaMailFromVariable`](/docs/ref/expression/variable/mta-mail-from-variable).
 
 
 ##### `fromName`
@@ -28,7 +28,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Name that will be used in the From header of the SPF authentication failure report email
 >
-> Available variables: [`MtaMailFromVariable`](../expression/variable/mta-mail-from-variable.md).
+> Available variables: [`MtaMailFromVariable`](/docs/ref/expression/variable/mta-mail-from-variable).
 
 
 ##### `sendFrequency`
@@ -37,7 +37,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Rate at which SPF reports will be sent to a given email address. When this rate is exceeded, no further SPF failure reports will be sent to that address
 >
-> Available variables: [`MtaMailFromVariable`](../expression/variable/mta-mail-from-variable.md).
+> Available variables: [`MtaMailFromVariable`](/docs/ref/expression/variable/mta-mail-from-variable).
 
 
 ##### `dkimSignDomain`
@@ -46,7 +46,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Which domain's DKIM signatures to use when signing the SPF authentication failure report
 >
-> Available variables: [`MtaMailFromVariable`](../expression/variable/mta-mail-from-variable.md).
+> Available variables: [`MtaMailFromVariable`](/docs/ref/expression/variable/mta-mail-from-variable).
 
 
 ##### `subject`
@@ -55,7 +55,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Subject name that will be used in the SPF authentication failure report email
 >
-> Available variables: [`MtaMailFromVariable`](../expression/variable/mta-mail-from-variable.md).
+> Available variables: [`MtaMailFromVariable`](/docs/ref/expression/variable/mta-mail-from-variable).
 
 
 
@@ -71,7 +71,7 @@ This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.
 For singletons, the `ids` argument should be the literal `singleton` (or `null` to return the single instance).
 
 
-This method requires the `sysSpfReportSettingsGet` [permission](../permissions.md).
+This method requires the `sysSpfReportSettingsGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -105,7 +105,7 @@ This is a standard [`Foo/set`](https://www.rfc-editor.org/rfc/rfc8620#section-5.
 For singletons, only the `update` argument with id `singleton` is accepted; `create` and `destroy` arguments are rejected.
 
 
-This method requires the `sysSpfReportSettingsUpdate` [permission](../permissions.md).
+This method requires the `sysSpfReportSettingsUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -160,7 +160,7 @@ stalwart-cli update SpfReportSettings --field fromAddress='{"else":"'\''noreply-
 ## Nested types
 
 
-### Expression {#expression}
+### Expression
 
 A conditional expression with match rules and a default value.
 
@@ -183,7 +183,7 @@ A conditional expression with match rules and a default value.
 
 
 
-#### ExpressionMatch {#expressionmatch}
+#### ExpressionMatch
 
 A single condition-result pair in an expression.
 
@@ -210,5 +210,5 @@ A single condition-result pair in an expression.
 
 The following expression contexts are used by fields on this page:
 
-- [`MtaMailFromVariable`](../expression/variable/mta-mail-from-variable.md) (Variables)
+- [`MtaMailFromVariable`](/docs/ref/expression/variable/mta-mail-from-variable) (Variables)
 

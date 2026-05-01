@@ -7,7 +7,7 @@ Telemetry history retains selected event spans (for example, incoming messages a
 
 Stored spans and metrics can be retrieved through the JMAP API, which exposes filtering on time range, event type, and other criteria. The same data drives the `Dashboard` and `History` views in the [WebUI](/docs/management/webui/).
 
-:::tip Enterprise feature
+:::tip[Enterprise feature]
 
 This feature is available exclusively in the [Enterprise Edition](/docs/server/enterprise) of Stalwart and is not included in the Community Edition.
 

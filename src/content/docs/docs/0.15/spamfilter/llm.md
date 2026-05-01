@@ -10,7 +10,7 @@ The LLM Classifier operates by sending a prompt, which can be customized, to the
 
 Once the AI model returns its classification and confidence levels, the spam filter converts this information into tags. Each tag is associated with a [customizable score](/docs/spamfilter/settings/scores), which influences the overall spam score of the email. For example, if the AI model identifies an email as Unsolicited with a high confidence level, the spam filter assigns the tag `LLM_UNSOLICITED_HIGH`, which has a default score of 3.0. This indicates a strong likelihood that the email is unsolicited and increases its spam score. On the other hand, if the message is categorized as Legitimate with high confidence, the filter assigns the tag `LLM_LEGITIMATE_HIGH`, which has a default score of -3.0. This lowers the spam score and signals that the message is likely legitimate and should be delivered safely. These tags and their corresponding scores can be fully customized to align with the specific needs and policies of the organization.
 
-:::tip Enterprise feature
+:::tip[Enterprise feature]
 
 This feature is available exclusively in the [Enterprise Edition](/docs/server/enterprise) of Stalwart and not included in the Community Edition.
 

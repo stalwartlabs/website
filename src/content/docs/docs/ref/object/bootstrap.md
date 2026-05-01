@@ -45,7 +45,7 @@ Initial setup shown the first time Stalwart starts. Configures the server's iden
 
 ##### `dataStore`
 
-> Type: [<code>DataStore</code>](./data-store.md) · default: `{"@type":"RocksDb","path":"/var/lib/stalwart/"}`
+> Type: [<code>DataStore</code>](/docs/ref/object/data-store) · default: `{"@type":"RocksDb","path":"/var/lib/stalwart/"}`
 >
 > Where structured data is kept: email metadata, calendars, contacts, mailbox state, and server settings.
 > RocksDB is recommended for single-node installations; PostgreSQL, MySQL, SQLite, and FoundationDB are also supported.
@@ -53,7 +53,7 @@ Initial setup shown the first time Stalwart starts. Configures the server's iden
 
 ##### `blobStore`
 
-> Type: [<code>BlobStore</code>](./blob-store.md) · default: `{"@type":"Default"}`
+> Type: [<code>BlobStore</code>](/docs/ref/object/blob-store) · default: `{"@type":"Default"}`
 >
 > Where the raw content of email messages, attachments, and other large files is stored.
 > Leave as default to reuse the data store, or point to an object storage service such as S3 for larger deployments.
@@ -61,7 +61,7 @@ Initial setup shown the first time Stalwart starts. Configures the server's iden
 
 ##### `searchStore`
 
-> Type: [<code>SearchStore</code>](./search-store.md) · default: `{"@type":"Default"}`
+> Type: [<code>SearchStore</code>](/docs/ref/object/search-store) · default: `{"@type":"Default"}`
 >
 > Where the full-text search index is kept, so users can search across message bodies and attachments.
 > Leave as default to reuse the data store, or point to a dedicated search backend for larger deployments.
@@ -69,7 +69,7 @@ Initial setup shown the first time Stalwart starts. Configures the server's iden
 
 ##### `inMemoryStore`
 
-> Type: [<code>InMemoryStore</code>](./in-memory-store.md) · default: `{"@type":"Default"}`
+> Type: [<code>InMemoryStore</code>](/docs/ref/object/in-memory-store) · default: `{"@type":"Default"}`
 >
 > Where short-lived data lives: session caches, rate-limit counters, and temporary tokens.
 > Leave as default to reuse the data store, or point to Redis for faster lookups and multi-node deployments.
@@ -85,7 +85,7 @@ Initial setup shown the first time Stalwart starts. Configures the server's iden
 
 ##### `tracer`
 
-> Type: [<code>Tracer</code>](./tracer.md) · default: `{"@type":"Log","path":"/var/log/stalwart/"}`
+> Type: [<code>Tracer</code>](/docs/ref/object/tracer) · default: `{"@type":"Log","path":"/var/log/stalwart/"}`
 >
 > Where the server writes log messages, traces, and diagnostic events.
 > Defaults to log files on disk; remote destinations such as OpenTelemetry or webhooks can be added after setup.
@@ -112,7 +112,7 @@ This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.
 For singletons, the `ids` argument should be the literal `singleton` (or `null` to return the single instance).
 
 
-This method requires the `sysBootstrapGet` [permission](../permissions.md).
+This method requires the `sysBootstrapGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -146,7 +146,7 @@ This is a standard [`Foo/set`](https://www.rfc-editor.org/rfc/rfc8620#section-5.
 For singletons, only the `update` argument with id `singleton` is accepted; `create` and `destroy` arguments are rejected.
 
 
-This method requires the `sysBootstrapUpdate` [permission](../permissions.md).
+This method requires the `sysBootstrapUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -199,7 +199,7 @@ stalwart-cli update Bootstrap --field serverHostname='updated value'
 ## Nested types
 
 
-### DirectoryBootstrap {#directorybootstrap}
+### DirectoryBootstrap
 
 External directory service configuration for user authentication and lookup.
 
@@ -212,7 +212,7 @@ External directory service configuration for user authentication and lookup.
 
 
 
-#### LdapDirectory {#ldapdirectory}
+#### LdapDirectory
 
 LDAP directory connection and mapping settings.
 
@@ -388,7 +388,7 @@ LDAP directory connection and mapping settings.
 
 ##### `memberTenantId`
 
-> Type: <code>Id&lt;</code>[<code>Tenant</code>](./tenant.md)<code>&gt;?</code> · [enterprise](/docs/server/enterprise)
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code> · [enterprise](/docs/server/enterprise)
 >
 > Identifier for the tenant this directory belongs to
 
@@ -396,7 +396,7 @@ LDAP directory connection and mapping settings.
 
 
 
-##### SecretKeyOptional {#secretkeyoptional}
+##### SecretKeyOptional
 
 An optional secret value, or none.
 
@@ -409,7 +409,7 @@ An optional secret value, or none.
 
 
 
-##### SecretKeyValue {#secretkeyvalue}
+##### SecretKeyValue
 
 A secret value provided directly.
 
@@ -425,7 +425,7 @@ A secret value provided directly.
 
 
 
-##### SecretKeyEnvironmentVariable {#secretkeyenvironmentvariable}
+##### SecretKeyEnvironmentVariable
 
 A secret value read from an environment variable.
 
@@ -441,7 +441,7 @@ A secret value read from an environment variable.
 
 
 
-##### SecretKeyFile {#secretkeyfile}
+##### SecretKeyFile
 
 A secret value read from a file.
 
@@ -457,7 +457,7 @@ A secret value read from a file.
 
 
 
-#### SqlDirectory {#sqldirectory}
+#### SqlDirectory
 
 SQL database directory settings.
 
@@ -535,7 +535,7 @@ SQL database directory settings.
 
 ##### `memberTenantId`
 
-> Type: <code>Id&lt;</code>[<code>Tenant</code>](./tenant.md)<code>&gt;?</code> · [enterprise](/docs/server/enterprise)
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code> · [enterprise](/docs/server/enterprise)
 >
 > Identifier for the tenant this directory belongs to
 
@@ -543,7 +543,7 @@ SQL database directory settings.
 
 
 
-##### SqlAuthStore {#sqlauthstore}
+##### SqlAuthStore
 
 Defines the SQL database used to store account and group information for SQL directories.
 
@@ -556,7 +556,7 @@ Defines the SQL database used to store account and group information for SQL dir
 
 
 
-##### PostgreSqlStore {#postgresqlstore}
+##### PostgreSqlStore
 
 PostgreSQL data store.
 
@@ -649,7 +649,7 @@ PostgreSQL data store.
 
 
 
-##### PostgreSqlSettings {#postgresqlsettings}
+##### PostgreSqlSettings
 
 PostgreSQL connection settings.
 
@@ -700,7 +700,7 @@ PostgreSQL connection settings.
 
 
 
-##### MySqlStore {#mysqlstore}
+##### MySqlStore
 
 MySQL data store.
 
@@ -793,7 +793,7 @@ MySQL data store.
 
 
 
-##### MySqlSettings {#mysqlsettings}
+##### MySqlSettings
 
 MySQL connection settings.
 
@@ -837,7 +837,7 @@ MySQL connection settings.
 
 
 
-##### SqliteStore {#sqlitestore}
+##### SqliteStore
 
 SQLite embedded data store.
 
@@ -867,7 +867,7 @@ SQLite embedded data store.
 
 
 
-#### OidcDirectory {#oidcdirectory}
+#### OidcDirectory
 
 OpenID Connect directory settings.
 
@@ -931,7 +931,7 @@ OpenID Connect directory settings.
 
 ##### `memberTenantId`
 
-> Type: <code>Id&lt;</code>[<code>Tenant</code>](./tenant.md)<code>&gt;?</code> · [enterprise](/docs/server/enterprise)
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code> · [enterprise](/docs/server/enterprise)
 >
 > Identifier for the tenant this directory belongs to
 
@@ -939,7 +939,7 @@ OpenID Connect directory settings.
 
 
 
-### DnsServerBootstrap {#dnsserverbootstrap}
+### DnsServerBootstrap
 
 Automatic DNS server management.
 
@@ -961,7 +961,7 @@ Automatic DNS server management.
 
 
 
-#### DnsServerTsig {#dnsservertsig}
+#### DnsServerTsig
 
 RFC2136 TSIG DNS server.
 
@@ -1018,7 +1018,7 @@ RFC2136 TSIG DNS server.
 
 ##### `memberTenantId`
 
-> Type: <code>Id&lt;</code>[<code>Tenant</code>](./tenant.md)<code>&gt;?</code>
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
 >
 > Identifier for the tenant this DNS server belongs to
 
@@ -1061,7 +1061,7 @@ RFC2136 TSIG DNS server.
 
 
 
-##### SecretKey {#secretkey}
+##### SecretKey
 
 A secret value provided directly, from an environment variable, or from a file.
 
@@ -1073,7 +1073,7 @@ A secret value provided directly, from an environment variable, or from a file.
 
 
 
-#### DnsServerSig0 {#dnsserversig0}
+#### DnsServerSig0
 
 RFC2136 SIG0 DNS server.
 
@@ -1137,7 +1137,7 @@ RFC2136 SIG0 DNS server.
 
 ##### `memberTenantId`
 
-> Type: <code>Id&lt;</code>[<code>Tenant</code>](./tenant.md)<code>&gt;?</code>
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
 >
 > Identifier for the tenant this DNS server belongs to
 
@@ -1180,7 +1180,7 @@ RFC2136 SIG0 DNS server.
 
 
 
-##### SecretText {#secrettext}
+##### SecretText
 
 A secret text value provided directly, from an environment variable, or from a file.
 
@@ -1192,7 +1192,7 @@ A secret text value provided directly, from an environment variable, or from a f
 
 
 
-##### SecretTextValue {#secrettextvalue}
+##### SecretTextValue
 
 A secret text value provided directly.
 
@@ -1208,7 +1208,7 @@ A secret text value provided directly.
 
 
 
-#### DnsServerCloudflare {#dnsservercloudflare}
+#### DnsServerCloudflare
 
 Cloudflare DNS server.
 
@@ -1237,7 +1237,7 @@ Cloudflare DNS server.
 
 ##### `memberTenantId`
 
-> Type: <code>Id&lt;</code>[<code>Tenant</code>](./tenant.md)<code>&gt;?</code>
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
 >
 > Identifier for the tenant this DNS server belongs to
 
@@ -1280,7 +1280,7 @@ Cloudflare DNS server.
 
 
 
-#### DnsServerCloud {#dnsservercloud}
+#### DnsServerCloud
 
 Cloud DNS server with token authentication.
 
@@ -1302,7 +1302,7 @@ Cloud DNS server with token authentication.
 
 ##### `memberTenantId`
 
-> Type: <code>Id&lt;</code>[<code>Tenant</code>](./tenant.md)<code>&gt;?</code>
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
 >
 > Identifier for the tenant this DNS server belongs to
 
@@ -1345,7 +1345,7 @@ Cloud DNS server with token authentication.
 
 
 
-#### DnsServerOvh {#dnsserverovh}
+#### DnsServerOvh
 
 OVH DNS server.
 
@@ -1388,7 +1388,7 @@ OVH DNS server.
 
 ##### `memberTenantId`
 
-> Type: <code>Id&lt;</code>[<code>Tenant</code>](./tenant.md)<code>&gt;?</code>
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
 >
 > Identifier for the tenant this DNS server belongs to
 
@@ -1431,7 +1431,7 @@ OVH DNS server.
 
 
 
-#### DnsServerPorkbun {#dnsserverporkbun}
+#### DnsServerPorkbun
 
 Porkbun DNS server.
 
@@ -1467,7 +1467,7 @@ Porkbun DNS server.
 
 ##### `memberTenantId`
 
-> Type: <code>Id&lt;</code>[<code>Tenant</code>](./tenant.md)<code>&gt;?</code>
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
 >
 > Identifier for the tenant this DNS server belongs to
 
@@ -1510,7 +1510,7 @@ Porkbun DNS server.
 
 
 
-#### DnsServerDnsimple {#dnsserverdnsimple}
+#### DnsServerDnsimple
 
 DNSimple DNS server.
 
@@ -1546,7 +1546,7 @@ DNSimple DNS server.
 
 ##### `memberTenantId`
 
-> Type: <code>Id&lt;</code>[<code>Tenant</code>](./tenant.md)<code>&gt;?</code>
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
 >
 > Identifier for the tenant this DNS server belongs to
 
@@ -1589,7 +1589,7 @@ DNSimple DNS server.
 
 
 
-#### DnsServerSpaceship {#dnsserverspaceship}
+#### DnsServerSpaceship
 
 Spaceship DNS server.
 
@@ -1618,7 +1618,7 @@ Spaceship DNS server.
 
 ##### `memberTenantId`
 
-> Type: <code>Id&lt;</code>[<code>Tenant</code>](./tenant.md)<code>&gt;?</code>
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
 >
 > Identifier for the tenant this DNS server belongs to
 
@@ -1661,7 +1661,7 @@ Spaceship DNS server.
 
 
 
-#### DnsServerRoute53 {#dnsserverroute53}
+#### DnsServerRoute53
 
 AWS Route53 DNS server.
 
@@ -1718,7 +1718,7 @@ AWS Route53 DNS server.
 
 ##### `memberTenantId`
 
-> Type: <code>Id&lt;</code>[<code>Tenant</code>](./tenant.md)<code>&gt;?</code>
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
 >
 > Identifier for the tenant this DNS server belongs to
 
@@ -1761,7 +1761,7 @@ AWS Route53 DNS server.
 
 
 
-#### DnsServerGoogleCloudDns {#dnsservergoogleclouddns}
+#### DnsServerGoogleCloudDns
 
 Google Cloud DNS server.
 
@@ -1811,7 +1811,7 @@ Google Cloud DNS server.
 
 ##### `memberTenantId`
 
-> Type: <code>Id&lt;</code>[<code>Tenant</code>](./tenant.md)<code>&gt;?</code>
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
 >
 > Identifier for the tenant this DNS server belongs to
 
@@ -1857,7 +1857,7 @@ Google Cloud DNS server.
 ## Enums
 
 
-### PostgreSqlRecyclingMethod {#postgresqlrecyclingmethod}
+### PostgreSqlRecyclingMethod
 
 
 
@@ -1868,7 +1868,7 @@ Google Cloud DNS server.
 | `clean` | Clean recycling method |
 
 
-### IpProtocol {#ipprotocol}
+### IpProtocol
 
 
 
@@ -1878,7 +1878,7 @@ Google Cloud DNS server.
 | `tcp` | TCP |
 
 
-### TsigAlgorithm {#tsigalgorithm}
+### TsigAlgorithm
 
 
 
@@ -1896,7 +1896,7 @@ Google Cloud DNS server.
 | `hmac-sha512-256` | HMAC-SHA512-256 |
 
 
-### Sig0Algorithm {#sig0algorithm}
+### Sig0Algorithm
 
 
 
@@ -1907,7 +1907,7 @@ Google Cloud DNS server.
 | `ed25519` | ED25519 |
 
 
-### OvhEndpoint {#ovhendpoint}
+### OvhEndpoint
 
 
 

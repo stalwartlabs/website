@@ -19,7 +19,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Contact information to be included in the report
 >
-> Available variables: [`MtaQueueHostVariable`](../expression/variable/mta-queue-host-variable.md).
+> Available variables: [`MtaQueueHostVariable`](/docs/ref/expression/variable/mta-queue-host-variable).
 
 
 ##### `fromAddress`
@@ -28,7 +28,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Email address that will be used in the From header of the TLS aggregate report email
 >
-> Available variables: [`MtaQueueHostVariable`](../expression/variable/mta-queue-host-variable.md).
+> Available variables: [`MtaQueueHostVariable`](/docs/ref/expression/variable/mta-queue-host-variable).
 
 
 ##### `fromName`
@@ -37,7 +37,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Name that will be used in the From header of the TLS aggregate report email
 >
-> Available variables: [`MtaQueueHostVariable`](../expression/variable/mta-queue-host-variable.md).
+> Available variables: [`MtaQueueHostVariable`](/docs/ref/expression/variable/mta-queue-host-variable).
 
 
 ##### `maxReportSize`
@@ -46,7 +46,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Maximum size of the TLS aggregate report in bytes
 >
-> Available variables: [`MtaQueueHostVariable`](../expression/variable/mta-queue-host-variable.md).
+> Available variables: [`MtaQueueHostVariable`](/docs/ref/expression/variable/mta-queue-host-variable).
 
 
 ##### `orgName`
@@ -55,18 +55,18 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Name of the organization to be included in the report
 >
-> Available variables: [`MtaQueueHostVariable`](../expression/variable/mta-queue-host-variable.md).
+> Available variables: [`MtaQueueHostVariable`](/docs/ref/expression/variable/mta-queue-host-variable).
 
 
 ##### `sendFrequency`
 
 > Type: [<code>Expression</code>](#expression) · default: `{"else":"daily"}`
 >
-> Frequency at which the TLS aggregate reports will be sent. The options are hourly, daily, weekly, or never to disable reporting
+> Frequency at which the TLS aggregate reports will be sent. The options are hourly, daily, weekly, or disable to disable reporting
 >
-> Available variables: [`MtaQueueHostVariable`](../expression/variable/mta-queue-host-variable.md).
+> Available variables: [`MtaQueueHostVariable`](/docs/ref/expression/variable/mta-queue-host-variable).
 >
-> Available constants: [`MtaAggregateConstant`](../expression/constant/mta-aggregate-constant.md).
+> Available constants: [`MtaAggregateConstant`](/docs/ref/expression/constant/mta-aggregate-constant).
 
 
 ##### `dkimSignDomain`
@@ -75,7 +75,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Which domain's DKIM signatures to use when signing the TLS aggregate report
 >
-> Available variables: [`MtaQueueHostVariable`](../expression/variable/mta-queue-host-variable.md).
+> Available variables: [`MtaQueueHostVariable`](/docs/ref/expression/variable/mta-queue-host-variable).
 
 
 ##### `subject`
@@ -84,7 +84,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Subject name that will be used in the TLS aggregate report email
 >
-> Available variables: [`MtaQueueHostVariable`](../expression/variable/mta-queue-host-variable.md).
+> Available variables: [`MtaQueueHostVariable`](/docs/ref/expression/variable/mta-queue-host-variable).
 
 
 
@@ -100,7 +100,7 @@ This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.
 For singletons, the `ids` argument should be the literal `singleton` (or `null` to return the single instance).
 
 
-This method requires the `sysTlsReportSettingsGet` [permission](../permissions.md).
+This method requires the `sysTlsReportSettingsGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -134,7 +134,7 @@ This is a standard [`Foo/set`](https://www.rfc-editor.org/rfc/rfc8620#section-5.
 For singletons, only the `update` argument with id `singleton` is accepted; `create` and `destroy` arguments are rejected.
 
 
-This method requires the `sysTlsReportSettingsUpdate` [permission](../permissions.md).
+This method requires the `sysTlsReportSettingsUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -189,7 +189,7 @@ stalwart-cli update TlsReportSettings --field contactInfo='{"else":"false"}'
 ## Nested types
 
 
-### Expression {#expression}
+### Expression
 
 A conditional expression with match rules and a default value.
 
@@ -212,7 +212,7 @@ A conditional expression with match rules and a default value.
 
 
 
-#### ExpressionMatch {#expressionmatch}
+#### ExpressionMatch
 
 A single condition-result pair in an expression.
 
@@ -239,6 +239,6 @@ A single condition-result pair in an expression.
 
 The following expression contexts are used by fields on this page:
 
-- [`MtaQueueHostVariable`](../expression/variable/mta-queue-host-variable.md) (Variables)
-- [`MtaAggregateConstant`](../expression/constant/mta-aggregate-constant.md) (Constants)
+- [`MtaQueueHostVariable`](/docs/ref/expression/variable/mta-queue-host-variable) (Variables)
+- [`MtaAggregateConstant`](/docs/ref/expression/constant/mta-aggregate-constant) (Constants)
 

@@ -23,7 +23,7 @@ Scheduling configuration is carried on the [CalendarScheduling](/docs/ref/object
 
 Scheduling can be disabled globally by setting [`enable`](/docs/ref/object/calendar-scheduling#enable) to `false`. With that field disabled, Stalwart no longer processes scheduling requests or generates scheduling messages. Events that include attendee information are stored as standard calendar entries, but no invitations, updates, or replies are sent or processed. Both iTIP and iMIP paths are bypassed.
 
-:::tip Tip
+:::tip[Tip]
 
 Calendar Scheduling can also be enabled or disabled on a per-account basis by setting the appropriate [permissions](/docs/auth/authorization/permissions).
 
@@ -97,7 +97,7 @@ A representative HTTP RSVP configuration:
 
 Stalwart supports custom branding and templating for calendar scheduling so that outbound invitations and RSVP responses can be aligned with organisational branding.
 
-:::tip Enterprise feature
+:::tip[Enterprise feature]
 
 This feature is available exclusively in the [Enterprise Edition](/docs/server/enterprise) of Stalwart and not included in the Community Edition.
 

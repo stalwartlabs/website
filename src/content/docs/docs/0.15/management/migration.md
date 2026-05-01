@@ -11,7 +11,7 @@ To ensure data integrity, Stalwart **must be stopped** before running any import
 
 The utility works by generating a **binary dump** of the entire internal database. When exporting, the current database is serialized into a single file. This dump file can later be imported into a freshly initialized Stalwart instance that is configured to use a different backend. This makes the import/export utility an essential tool for administrators performing system upgrades, migrations, or major infrastructure changes.
 
-:::tip Not a Backup Solution
+:::tip[Not a Backup Solution]
 
 It’s important to understand that the import/export utility is **not a substitute for proper backup procedures**. While it can be used to move data between systems, it is not designed for regular backup and recovery tasks. Users should continue to rely on their database backend’s native tools and best practices for routine backups, replication, and point-in-time recovery.
 

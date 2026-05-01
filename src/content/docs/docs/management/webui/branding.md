@@ -5,7 +5,7 @@ title: "Branding"
 
 Branding allows administrators to customise the appearance of the WebUI by changing the logo displayed to users. Custom branding can be applied to the entire system or scoped to specific tenants and domains, which is useful for multi-tenant deployments.
 
-:::tip Enterprise feature
+:::tip[Enterprise feature]
 
 This feature is available exclusively in the [Enterprise Edition](/docs/server/enterprise) of Stalwart and is not included in the Community Edition.
 

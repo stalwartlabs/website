@@ -5,7 +5,7 @@ title: "Sharded Blob Store"
 
 Sharding distributes data across multiple backends to improve scalability and balance load. In the sharded blob store, each blob's key is hashed and a modulus operation selects one of the configured backends to hold or retrieve it. Each backend therefore owns a deterministic portion of the blob namespace, and reads and writes for a given blob always resolve to the same backend.
 
-:::tip Enterprise feature
+:::tip[Enterprise feature]
 
 This feature is available exclusively in the [Enterprise Edition](/docs/server/enterprise) of Stalwart and is not included in the Community Edition.
 

@@ -25,7 +25,7 @@ env file.
 ════════════════════════════════════════════════════════════
 ```
 
-:::warning
+:::caution
 The password is regenerated on every bootstrap start and is only printed once. It must be captured from the console before it scrolls out of view, or a credential can be pinned in advance through the [`STALWART_RECOVERY_ADMIN`](/docs/configuration/recovery-mode#recovery-administrator) environment variable. When `STALWART_RECOVERY_ADMIN` is set, no temporary password is generated and the provided value is used instead.
 :::
 

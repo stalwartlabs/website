@@ -3,7 +3,7 @@ sidebar_position: 2
 title: "Masked email"
 ---
 
-:::tip Enterprise feature
+:::tip[Enterprise feature]
 
 Masked email is available exclusively in the [Enterprise Edition](/docs/server/enterprise) of Stalwart and is not included in the Community Edition.
 

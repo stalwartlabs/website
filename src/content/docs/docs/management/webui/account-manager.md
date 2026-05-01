@@ -35,7 +35,7 @@ Self-service 2FA management is available only for accounts in the [internal dire
 
 On the Enterprise Edition, end users can create disposable addresses from the Account Manager instead of handing out their real mailbox address. Each mask is a [MaskedEmail](/docs/ref/object/masked-email) object (found in the WebUI under <!-- breadcrumb:MaskedEmail --><svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10" /><circle cx="12" cy="10" r="3" /><path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662" /></svg> Account › <svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M22 15V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h8" /><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" /><path d="M16 19h6" /></svg> Masked Addresses<!-- /breadcrumb:MaskedEmail -->) tied to the signed-in account; incoming mail for the mask delivers into the mailbox, and the mask can be disabled or destroyed without affecting any of the others. See [masked email](/docs/email/management/masked-email) for the address-generation rules, lifecycle, and quota settings.
 
-:::tip Enterprise feature
+:::tip[Enterprise feature]
 
 Masked email is available exclusively in the [Enterprise Edition](/docs/server/enterprise) of Stalwart and is not included in the Community Edition.
 

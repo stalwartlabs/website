@@ -5,7 +5,7 @@ title: "AI Models"
 
 Stalwart can call out to large language models for tasks such as [spam classification](/docs/spamfilter/llm), threat detection, and [message categorization](/docs/sieve/llm). Any endpoint that exposes an OpenAI-compatible chat or text-completion API is supported, whether hosted by a provider such as OpenAI or Anthropic or run locally through a tool such as LocalAI. This choice lets operators balance cost, latency, and privacy according to the deployment.
 
-:::tip Enterprise feature
+:::tip[Enterprise feature]
 
 This feature is available exclusively in the [Enterprise Edition](/docs/server/enterprise) of Stalwart and is not included in the Community Edition.
 

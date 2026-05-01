@@ -16,7 +16,7 @@ hero:
     score.
   ctas:
     - label: Get started
-      href: /docs/install/get-started
+      href: /docs/install/
   meta:
     - Open source
     - LLM module on Enterprise
@@ -47,7 +47,7 @@ sections:
       - Encryption-at-rest privacy setting for training data (v0.15).
     learnMore:
       - label: Read the classifier docs
-        href: /docs/spamfilter/classifier/overview
+        href: /docs/spamfilter/classifier/
     visual:
       kind: placeholder
       caption: "Diagram needed: FTRL-Proximal classifier pipeline (headers/body -> feature hash -> sparse features -> score)."
@@ -229,4 +229,4 @@ footerCta:
   cta: Stop spam at SMTP time.
   ctaSub: Run a built-in classifier, DNSBLs, DMARC and (on Enterprise) LLM analysis without an external filter daemon.
   ctaButton: Get started
-  ctaLink: /docs/install/get-started
+  ctaLink: /docs/install/

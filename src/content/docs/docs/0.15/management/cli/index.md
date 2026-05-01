@@ -99,7 +99,7 @@ For example, to authenticate with ``postmaster@example.org`` and password ``secr
 $ stalwart-cli -u https://jmap.example.org -c postmaster@example.org:secret_pass database purge
 ```
 
-:::tip Note
+:::tip[Note]
 
 Avoid using the ``-c`` argument to provide the administrator credentials as these
 will be recorded in the terminal's history. Instead, type the password at the prompt:

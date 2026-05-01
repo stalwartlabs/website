@@ -30,7 +30,7 @@ sections:
       Connect are supported as first-class authentication mechanisms.
     bullets:
       - "[LDAP and Active Directory](/docs/auth/backend/ldap), including OpenLDAP."
-      - "[OpenID Connect](/docs/auth/openid/overview) providers (Keycloak, Authentik, generic OIDC)."
+      - "[OpenID Connect](/docs/auth/openid/) providers (Keycloak, Authentik, generic OIDC)."
       - OAuth 2.0 identity providers (RFC 8628).
       - SAML identity providers [Enterprise].
       - "[SQL directories](/docs/auth/backend/sql) (PostgreSQL, MySQL, MariaDB, SQLite)."

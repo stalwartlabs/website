@@ -57,7 +57,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `memberTenantId`
 
-> Type: <code>Id&lt;</code>[<code>Tenant</code>](./tenant.md)<code>&gt;?</code>
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
 >
 > Identifier for the tenant this OAuth client belongs to
 
@@ -87,7 +87,7 @@ The OAuthClient object is available via the `urn:stalwart:jmap` capability.
 This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.1) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.1), Section 5.1.
 
 
-This method requires the `sysOAuthClientGet` [permission](../permissions.md).
+This method requires the `sysOAuthClientGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -124,7 +124,7 @@ Supports create, update, and destroy operations in a single call.
 
 #### Create
 
-This operation requires the `sysOAuthClientCreate` [permission](../permissions.md).
+This operation requires the `sysOAuthClientCreate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -156,7 +156,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Update
 
-This operation requires the `sysOAuthClientUpdate` [permission](../permissions.md).
+This operation requires the `sysOAuthClientUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -186,7 +186,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Destroy
 
-This operation requires the `sysOAuthClientDestroy` [permission](../permissions.md).
+This operation requires the `sysOAuthClientDestroy` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -219,7 +219,7 @@ curl -X POST https://mail.example.com/api \
 This is a standard [`Foo/query`](https://www.rfc-editor.org/rfc/rfc8620#section-5.5) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.5), Section 5.5.
 
 
-This method requires the `sysOAuthClientQuery` [permission](../permissions.md).
+This method requires the `sysOAuthClientQuery` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \

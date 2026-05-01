@@ -66,7 +66,7 @@ The Certificate object is available via the `urn:stalwart:jmap` capability.
 This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.1) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.1), Section 5.1.
 
 
-This method requires the `sysCertificateGet` [permission](../permissions.md).
+This method requires the `sysCertificateGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -103,7 +103,7 @@ Supports create, update, and destroy operations in a single call.
 
 #### Create
 
-This operation requires the `sysCertificateCreate` [permission](../permissions.md).
+This operation requires the `sysCertificateCreate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -140,7 +140,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Update
 
-This operation requires the `sysCertificateUpdate` [permission](../permissions.md).
+This operation requires the `sysCertificateUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -173,7 +173,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Destroy
 
-This operation requires the `sysCertificateDestroy` [permission](../permissions.md).
+This operation requires the `sysCertificateDestroy` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -206,7 +206,7 @@ curl -X POST https://mail.example.com/api \
 This is a standard [`Foo/query`](https://www.rfc-editor.org/rfc/rfc8620#section-5.5) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.5), Section 5.5.
 
 
-This method requires the `sysCertificateQuery` [permission](../permissions.md).
+This method requires the `sysCertificateQuery` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -287,7 +287,7 @@ stalwart-cli delete Certificate --ids id1
 ## Nested types
 
 
-### PublicText {#publictext}
+### PublicText
 
 A text value provided directly, from an environment variable, or from a file.
 
@@ -299,7 +299,7 @@ A text value provided directly, from an environment variable, or from a file.
 
 
 
-#### PublicTextValue {#publictextvalue}
+#### PublicTextValue
 
 A text value provided directly.
 
@@ -315,7 +315,7 @@ A text value provided directly.
 
 
 
-#### SecretKeyEnvironmentVariable {#secretkeyenvironmentvariable}
+#### SecretKeyEnvironmentVariable
 
 A secret value read from an environment variable.
 
@@ -331,7 +331,7 @@ A secret value read from an environment variable.
 
 
 
-#### SecretKeyFile {#secretkeyfile}
+#### SecretKeyFile
 
 A secret value read from a file.
 
@@ -347,7 +347,7 @@ A secret value read from a file.
 
 
 
-### SecretText {#secrettext}
+### SecretText
 
 A secret text value provided directly, from an environment variable, or from a file.
 
@@ -359,7 +359,7 @@ A secret text value provided directly, from an environment variable, or from a f
 
 
 
-#### SecretTextValue {#secrettextvalue}
+#### SecretTextValue
 
 A secret text value provided directly.
 

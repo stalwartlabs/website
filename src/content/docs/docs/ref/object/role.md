@@ -22,28 +22,28 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `memberTenantId`
 
-> Type: <code>Id&lt;</code>[<code>Tenant</code>](./tenant.md)<code>&gt;?</code>
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
 >
 > Identifier for the tenant this role belongs to
 
 
 ##### `roleIds`
 
-> Type: <code>Id&lt;</code>[<code>Role</code>](./role.md)<code>&gt;[]</code>
+> Type: <code>Id&lt;</code>[<code>Role</code>](/docs/ref/object/role)<code>&gt;[]</code>
 >
 > List of roles this role extends
 
 
 ##### `enabledPermissions`
 
-> Type: [<code>Permission</code>](../permissions.md)<code>[]</code>
+> Type: [<code>Permission</code>](/docs/ref/permissions)<code>[]</code>
 >
 > List of permissions that are explicitly enabled.
 
 
 ##### `disabledPermissions`
 
-> Type: [<code>Permission</code>](../permissions.md)<code>[]</code>
+> Type: [<code>Permission</code>](/docs/ref/permissions)<code>[]</code>
 >
 > List of permissions that are explicitly disabled, even if they would be inherited through other roles or groups. This takes precedence over enabled permissions.
 
@@ -59,7 +59,7 @@ The Role object is available via the `urn:stalwart:jmap` capability.
 This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.1) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.1), Section 5.1.
 
 
-This method requires the `sysRoleGet` [permission](../permissions.md).
+This method requires the `sysRoleGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -96,7 +96,7 @@ Supports create, update, and destroy operations in a single call.
 
 #### Create
 
-This operation requires the `sysRoleCreate` [permission](../permissions.md).
+This operation requires the `sysRoleCreate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -129,7 +129,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Update
 
-This operation requires the `sysRoleUpdate` [permission](../permissions.md).
+This operation requires the `sysRoleUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -159,7 +159,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Destroy
 
-This operation requires the `sysRoleDestroy` [permission](../permissions.md).
+This operation requires the `sysRoleDestroy` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -192,7 +192,7 @@ curl -X POST https://mail.example.com/api \
 This is a standard [`Foo/query`](https://www.rfc-editor.org/rfc/rfc8620#section-5.5) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.5), Section 5.5.
 
 
-This method requires the `sysRoleQuery` [permission](../permissions.md).
+This method requires the `sysRoleQuery` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \

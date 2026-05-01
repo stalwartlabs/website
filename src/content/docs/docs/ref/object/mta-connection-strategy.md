@@ -94,7 +94,7 @@ The MtaConnectionStrategy object is available via the `urn:stalwart:jmap` capabi
 This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.1) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.1), Section 5.1.
 
 
-This method requires the `sysMtaConnectionStrategyGet` [permission](../permissions.md).
+This method requires the `sysMtaConnectionStrategyGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -131,7 +131,7 @@ Supports create, update, and destroy operations in a single call.
 
 #### Create
 
-This operation requires the `sysMtaConnectionStrategyCreate` [permission](../permissions.md).
+This operation requires the `sysMtaConnectionStrategyCreate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -161,7 +161,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Update
 
-This operation requires the `sysMtaConnectionStrategyUpdate` [permission](../permissions.md).
+This operation requires the `sysMtaConnectionStrategyUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -191,7 +191,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Destroy
 
-This operation requires the `sysMtaConnectionStrategyDestroy` [permission](../permissions.md).
+This operation requires the `sysMtaConnectionStrategyDestroy` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -224,7 +224,7 @@ curl -X POST https://mail.example.com/api \
 This is a standard [`Foo/query`](https://www.rfc-editor.org/rfc/rfc8620#section-5.5) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.5), Section 5.5.
 
 
-This method requires the `sysMtaConnectionStrategyQuery` [permission](../permissions.md).
+This method requires the `sysMtaConnectionStrategyQuery` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -304,7 +304,7 @@ stalwart-cli delete MtaConnectionStrategy --ids id1
 ## Nested types
 
 
-### MtaConnectionIpHost {#mtaconnectioniphost}
+### MtaConnectionIpHost
 
 Defines a source IP address and optional EHLO hostname override for outbound connections.
 

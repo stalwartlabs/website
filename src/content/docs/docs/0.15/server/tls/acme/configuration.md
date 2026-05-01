@@ -15,7 +15,7 @@ Stalwart supports automatic TLS deployment and renewals using the ACME protocol,
 - `eab.hmac-key`: External Account Binding (EAB) HMAC key
 - `default`: If set to `true`, certificate obtained by this ACME provided will be used when the client does not provide an SNI server name.
 
-:::tip Note
+:::tip[Note]
 
 - Regularly check your contact email for any communications from the ACME provider.
 - It's recommended to initially use the staging environment to ensure your configuration works correctly before switching to the live environment to avoid hitting rate limits.

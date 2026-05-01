@@ -39,7 +39,7 @@ Stalwart can automate the publication of MTA-STS policy files for all hosted dom
 - `session.mta-sts.max-age`: The maximum age of the MTA-STS policy in seconds.
 - `session.mta-sts.mx`: Override the list of mail servers that are permitted to receive emails for the domain. If not specified, the hostnames included in all TLS certificates for the domain will be used.
 
-:::tip Note
+:::tip[Note]
 
 To automatically publish MTA-STS policies, it is essential to have port 443 (the standard port for HTTPS traffic) open. This port allows Stalwart to serve the MTA-STS policy files via HTTPS, complying with the protocol's requirements and ensuring that the policies are accessible to other mail servers performing policy checks.
 

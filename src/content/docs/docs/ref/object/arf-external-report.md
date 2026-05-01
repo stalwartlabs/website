@@ -57,7 +57,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `memberTenantId`
 
-> Type: <code>Id&lt;</code>[<code>Tenant</code>](./tenant.md)<code>&gt;?</code> · [enterprise](/docs/server/enterprise)
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code> · [enterprise](/docs/server/enterprise)
 >
 > Identifier for the tenant this report belongs to
 
@@ -73,7 +73,7 @@ The ArfExternalReport object is available via the `urn:stalwart:jmap` capability
 This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.1) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.1), Section 5.1.
 
 
-This method requires the `sysArfExternalReportGet` [permission](../permissions.md).
+This method requires the `sysArfExternalReportGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -110,7 +110,7 @@ Supports create, update, and destroy operations in a single call.
 
 #### Create
 
-This operation requires the `sysArfExternalReportCreate` [permission](../permissions.md).
+This operation requires the `sysArfExternalReportCreate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -153,7 +153,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Update
 
-This operation requires the `sysArfExternalReportUpdate` [permission](../permissions.md).
+This operation requires the `sysArfExternalReportUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -183,7 +183,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Destroy
 
-This operation requires the `sysArfExternalReportDestroy` [permission](../permissions.md).
+This operation requires the `sysArfExternalReportDestroy` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -216,7 +216,7 @@ curl -X POST https://mail.example.com/api \
 This is a standard [`Foo/query`](https://www.rfc-editor.org/rfc/rfc8620#section-5.5) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.5), Section 5.5.
 
 
-This method requires the `sysArfExternalReportQuery` [permission](../permissions.md).
+This method requires the `sysArfExternalReportQuery` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -292,7 +292,7 @@ stalwart-cli delete ArfExternalReport --ids id1
 ## Nested types
 
 
-### ArfFeedbackReport {#arffeedbackreport}
+### ArfFeedbackReport
 
 Parsed content of an ARF feedback report.
 
@@ -493,7 +493,7 @@ Parsed content of an ARF feedback report.
 ## Enums
 
 
-### ArfFeedbackType {#arffeedbacktype}
+### ArfFeedbackType
 
 
 
@@ -507,7 +507,7 @@ Parsed content of an ARF feedback report.
 | `other` | Other feedback type |
 
 
-### ArfAuthFailureType {#arfauthfailuretype}
+### ArfAuthFailureType
 
 
 
@@ -522,7 +522,7 @@ Parsed content of an ARF feedback report.
 | `unspecified` | Authentication failure type not specified |
 
 
-### ArfDeliveryResult {#arfdeliveryresult}
+### ArfDeliveryResult
 
 
 
@@ -536,7 +536,7 @@ Parsed content of an ARF feedback report.
 | `unspecified` | Delivery result not specified |
 
 
-### ArfIdentityAlignment {#arfidentityalignment}
+### ArfIdentityAlignment
 
 
 

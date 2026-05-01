@@ -21,7 +21,7 @@ hero:
       href: https://github.com/stalwartlabs/stalwart
       external: true
     - label: Install Stalwart
-      href: /docs/install/get-started
+      href: /docs/install/
       primary: false
   meta:
     - AGPL-3.0

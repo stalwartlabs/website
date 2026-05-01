@@ -9,7 +9,7 @@ Filters can be applied on the URL to narrow the stream to specific spans, metric
 
 The [WebUI](/docs/management/webui/) is the recommended consumer: its Dashboard formats the live stream and provides controls for filtering and visualising activity.
 
-:::tip Enterprise feature
+:::tip[Enterprise feature]
 
 This feature is available exclusively in the [Enterprise Edition](/docs/server/enterprise) of Stalwart and is not included in the Community Edition.
 

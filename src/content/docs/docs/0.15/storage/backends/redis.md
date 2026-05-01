@@ -5,7 +5,7 @@ title: "Redis"
 
 Redis (Remote Dictionary Server) is an in-memory data structure store, used as a database, cache, and message broker. It supports various data structures such as strings, hashes, lists, sets, and sorted sets with range queries, bitmaps, hyperloglogs, geospatial indexes, and streams. Redis has built-in replication, Lua scripting, LRU eviction, transactions, and different levels of on-disk persistence. It's known for its high performance, flexibility, and a wide array of features.
 
-:::tip Note
+:::tip[Note]
 
 Redis can only be used as a [in-memory store](/docs/storage/in-memory) but not for storing the actual data or blobs (binary large objects) within the mail server system.
 

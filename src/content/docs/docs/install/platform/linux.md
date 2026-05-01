@@ -3,6 +3,7 @@ sidebar_position: 1
 title: "Linux / MacOS"
 ---
 
+
 Stalwart ships with an installation script that downloads the latest release, creates a dedicated service account, installs the binary under the standard Unix paths, writes a service unit, and starts the daemon. Root access on the target machine and outgoing HTTPS connectivity are required for the steps below.
 
 ## Run the installer
@@ -80,6 +81,7 @@ To avoid relying on a log-extracted temporary password, a fixed credential can b
 
 ## Open the setup wizard
 
+<!-- include:setup-wizard -->
 With the bootstrap credentials in hand, open a web browser and navigate to:
 
 ```
@@ -108,7 +110,7 @@ Two required fields plus two optional toggles.
 * **Generate email signing keys:** 
     > Leave enabled to have Stalwart generate DKIM signing keys for the default domain. DKIM cryptographically signs outgoing messages and significantly improves the chances that they are accepted by remote servers rather than classified as spam. Disable only when DKIM keys are managed externally.
 
-:::note ACME challenge method
+:::note[ACME challenge method]
 
 When the *automatically obtain TLS certificate* option is enabled and an automatic DNS provider is selected in [Step 5](#step-5-of-5-automatic-dns-management), Stalwart validates certificate requests with the DNS-01 challenge, which does not require any ports to be reachable from the internet. When DNS management is left manual in Step 5, Stalwart falls back to the TLS-ALPN-01 challenge, which Let's Encrypt validates by connecting directly to the server on **TCP port 443**. In that case, before restarting the server after the wizard, make sure that the machine is reachable from the public internet on port 443, that no reverse proxy or load balancer is intercepting the connection, and that the server hostname entered above resolves to this machine in public DNS. See [ACME challenge types](/docs/server/tls/acme/challenges) for the full picture.
 
@@ -148,7 +150,7 @@ The choice here affects the final screen. With the internal directory, a generat
 
 Additional destinations (OpenTelemetry, journald, remote webhooks) can be added after setup through the [Tracer](/docs/ref/object/tracer) object.
 
-:::note Docker
+:::note[Docker]
 
 Docker users should select **Console** here. A file-based logger inside a container writes to an ephemeral filesystem that is lost on every container restart; the Console logger emits structured log lines to standard output, which Docker captures through its log driver.
 
@@ -182,8 +184,7 @@ onMjJfFMO83tQcCX
 Write both down. The password is shown only on this screen and cannot be retrieved from the server logs afterwards. The credentials are used to sign in to the WebUI once the server has been restarted (see the platform-specific Restart section below).
 
 **External directory (OIDC / LDAP / SQL).** No administrator credential is generated here, because an account from the external directory does not exist locally until it has authenticated at least once. The administrator must be promoted manually after the first sign-in; see [External directory promotion](#external-directory-promotion) under *Additional topics* below for the procedure.
-
-
+<!-- /include:setup-wizard -->
 
 ## Restart service
 
@@ -207,11 +208,12 @@ On **macOS** (launchd):
 $ sudo launchctl kickstart -k system/stalwart.mail
 ```
 
+<!-- include:next-steps -->
 ## Continue setup
 
 After the restart, sign in at `https://<hostname>/admin` with the administrator credentials printed on the final wizard screen, where `<hostname>` is the value entered in Step 1. If TLS or DNS for that hostname is not in place yet, sign in at `http://<host>:8080/admin` instead and switch to the HTTPS URL once the production listener is reachable.
 
-:::note Special cases
+:::note[Special cases]
 
 - Deployments using an external directory (OIDC, LDAP, or SQL) must promote the administrator account after first sign-in. See [External directory promotion](#external-directory-promotion) under *Additional topics* below.
 - Deployments behind a reverse proxy should follow the [Reverse proxy](#reverse-proxy) guidance under *Troubleshooting* below before signing in.
@@ -237,7 +239,7 @@ Before exposing the server to the public internet, review the [securing your ser
 
 ## Setup demonstration
 
-<video src="/img/setup.mp4" autoPlay loop muted playsInline style={{ maxWidth: '100%', height: 'auto' }} />
+<video src="/img/setup.mp4" autoplay loop muted playsinline style="max-width: 100%; height: auto"  ></video>
 
 ## Troubleshooting
 
@@ -297,4 +299,4 @@ The returned zone file can be pasted into the DNS provider's control panel or im
 ### Non-interactive setup
 
 Deployments that prefer command-line or infrastructure-as-code workflows can skip the wizard entirely and drive the same configuration from the CLI; see [bootstrap mode](/docs/configuration/bootstrap-mode) and [declarative deployments](/docs/configuration/declarative-deployments).
-
+<!-- /include:next-steps -->

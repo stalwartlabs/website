@@ -14,7 +14,7 @@ Every event Stalwart can emit is listed below, grouped by subsystem. Each event 
 - a **short description** (used as the label in UI dropdowns and column headings).
 - a **long description** (operational context: when the event fires, what it means, what action might be needed).
 
-Metrics reported alongside events are listed on the [Metrics](./metrics.md) page.
+Metrics reported alongside events are listed on the [Metrics](/docs/ref/metrics) page.
 
 
 ## Acme

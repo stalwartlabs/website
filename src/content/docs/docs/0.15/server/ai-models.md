@@ -9,7 +9,7 @@ Stalwart is designed to be flexible, allowing users to leverage cloud-based AI m
 
 By integrating with these AI models, Stalwart enhances email security, streamlines email management, and improves overall performance, making it a robust solution for modern email environments.
 
-:::tip Enterprise feature
+:::tip[Enterprise feature]
 
 This feature is available exclusively in the [Enterprise Edition](/docs/server/enterprise) of Stalwart and not included in the Community Edition.
 

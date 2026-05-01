@@ -91,7 +91,7 @@ The AiModel object is available via the `urn:stalwart:jmap` capability.
 This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.1) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.1), Section 5.1.
 
 
-This method requires the `sysAiModelGet` [permission](../permissions.md).
+This method requires the `sysAiModelGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -128,7 +128,7 @@ Supports create, update, and destroy operations in a single call.
 
 #### Create
 
-This operation requires the `sysAiModelCreate` [permission](../permissions.md).
+This operation requires the `sysAiModelCreate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -164,7 +164,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Update
 
-This operation requires the `sysAiModelUpdate` [permission](../permissions.md).
+This operation requires the `sysAiModelUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -194,7 +194,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Destroy
 
-This operation requires the `sysAiModelDestroy` [permission](../permissions.md).
+This operation requires the `sysAiModelDestroy` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -227,7 +227,7 @@ curl -X POST https://mail.example.com/api \
 This is a standard [`Foo/query`](https://www.rfc-editor.org/rfc/rfc8620#section-5.5) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.5), Section 5.5.
 
 
-This method requires the `sysAiModelQuery` [permission](../permissions.md).
+This method requires the `sysAiModelQuery` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -302,7 +302,7 @@ stalwart-cli delete AiModel --ids id1
 ## Nested types
 
 
-### HttpAuth {#httpauth}
+### HttpAuth
 
 Defines the HTTP authentication method to use for HTTP requests.
 
@@ -314,7 +314,7 @@ Defines the HTTP authentication method to use for HTTP requests.
 
 
 
-#### HttpAuthBasic {#httpauthbasic}
+#### HttpAuthBasic
 
 HTTP Basic authentication credentials.
 
@@ -337,7 +337,7 @@ HTTP Basic authentication credentials.
 
 
 
-##### SecretKey {#secretkey}
+##### SecretKey
 
 A secret value provided directly, from an environment variable, or from a file.
 
@@ -349,7 +349,7 @@ A secret value provided directly, from an environment variable, or from a file.
 
 
 
-##### SecretKeyValue {#secretkeyvalue}
+##### SecretKeyValue
 
 A secret value provided directly.
 
@@ -365,7 +365,7 @@ A secret value provided directly.
 
 
 
-##### SecretKeyEnvironmentVariable {#secretkeyenvironmentvariable}
+##### SecretKeyEnvironmentVariable
 
 A secret value read from an environment variable.
 
@@ -381,7 +381,7 @@ A secret value read from an environment variable.
 
 
 
-##### SecretKeyFile {#secretkeyfile}
+##### SecretKeyFile
 
 A secret value read from a file.
 
@@ -397,7 +397,7 @@ A secret value read from a file.
 
 
 
-#### HttpAuthBearer {#httpauthbearer}
+#### HttpAuthBearer
 
 HTTP Bearer token authentication.
 
@@ -416,7 +416,7 @@ HTTP Bearer token authentication.
 ## Enums
 
 
-### AiModelType {#aimodeltype}
+### AiModelType
 
 
 

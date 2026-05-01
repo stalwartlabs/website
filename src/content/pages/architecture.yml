@@ -16,7 +16,7 @@ hero:
     peer-to-peer mode or through Kafka, Redpanda, NATS or Redis.
   ctas:
     - label: Read the cluster docs
-      href: /docs/cluster/overview
+      href: /docs/cluster/
   meta:
     - Single binary
     - Pluggable storage
@@ -34,8 +34,8 @@ sections:
       the smallest single-node setup and the largest multi-region cluster.
     bullets:
       - "**Single-node**: one Stalwart process serves every protocol, with a local data store such as RocksDB or SQLite. Suited to small organisations and evaluation deployments."
-      - "**Clustered**: three or more nodes share a distributed data store and coordinate through one of the supported coordination backends. All nodes are stateless from the protocol point of view; any node can serve IMAP, SMTP, JMAP or WebDAV requests. See [cluster overview](/docs/cluster/overview)."
-      - "**Container orchestration**: Stalwart runs on Kubernetes, Apache Mesos and Docker Swarm. The orchestrator handles node lifecycle, health checks and scaling; the cluster coordination layer keeps nodes in sync. See [orchestration overview](/docs/cluster/orchestration/overview)."
+      - "**Clustered**: three or more nodes share a distributed data store and coordinate through one of the supported coordination backends. All nodes are stateless from the protocol point of view; any node can serve IMAP, SMTP, JMAP or WebDAV requests. See [cluster overview](/docs/cluster/)."
+      - "**Container orchestration**: Stalwart runs on Kubernetes, Apache Mesos and Docker Swarm. The orchestrator handles node lifecycle, health checks and scaling; the cluster coordination layer keeps nodes in sync. See [orchestration overview](/docs/cluster/orchestration/)."
       - "**Multi-region**: nodes are split across data centres or regions, paired with a multi-region data store (typically FoundationDB) and geo-replicated blob storage. Global load balancers or DNS-based routing direct traffic regionally."
 
   - kind: list
@@ -69,7 +69,7 @@ sections:
       - "**Redis**: pub/sub coordination, often a fit when Redis is already deployed for ephemeral storage."
     learnMore:
       - label: Coordination overview
-        href: /docs/cluster/coordination/overview
+        href: /docs/cluster/coordination/
     visual:
       kind: diagram
       id: cluster
@@ -151,7 +151,7 @@ sections:
     eyebrow: Operations
     title: Web UI, CLI, and standard observability.
     bullets:
-      - "**Web administration**: account, domain, group and mailing-list management; SMTP queue control; report visualisation; configuration of every server object; log viewer; self-service portal. See [WebUI overview](/docs/management/webui/overview)."
+      - "**Web administration**: account, domain, group and mailing-list management; SMTP queue control; report visualisation; configuration of every server object; log viewer; self-service portal. See [WebUI overview](/docs/management/webui/)."
       - "**Declarative IaC**: `stalwart-cli apply` reconciles a declarative bundle of objects against a running server, and `stalwart-cli snapshot` exports the current configuration to disk. See [apply](/docs/management/cli/apply) and [snapshot](/docs/management/cli/snapshot)."
       - "**Observability**: OpenTelemetry exporter, Prometheus pull endpoint, webhooks, journald, log files. Live tracing and metric streaming over SSE are available in the Enterprise edition."
       - "**Bootstrap and recovery**: bootstrap mode initialises a fresh server with the minimum object set; recovery mode brings up a degraded node for diagnostics."
@@ -169,4 +169,4 @@ footerCta:
   cta: Plan your deployment
   ctaSub: Read the cluster guide for sizing, topology and storage recommendations.
   ctaButton: Cluster overview
-  ctaLink: /docs/cluster/overview
+  ctaLink: /docs/cluster/

@@ -46,7 +46,7 @@ address-book = 500
 
 While these defaults establish baseline constraints across the system, they can be overridden on a per-user basis through either the **WebAdmin interface** or the **REST API**, providing administrators with granular control over individual user capacities. This design ensures a consistent yet flexible quota management model that aligns with the operational policies of diverse deployments.
 
-:::tip Note
+:::tip[Note]
 
 Object quotas are not being enforced yet for the `email`, `mailbox` and `file-node` types. This functionality is planned for version `0.15.0`.
 

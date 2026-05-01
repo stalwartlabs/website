@@ -19,7 +19,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Maximum number of recipient errors before the session is disconnected
 >
-> Available variables: [`MtaMailFromVariable`](../expression/variable/mta-mail-from-variable.md).
+> Available variables: [`MtaMailFromVariable`](/docs/ref/expression/variable/mta-mail-from-variable).
 
 
 ##### `waitOnFail`
@@ -28,7 +28,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Amount of time to wait after a recipient error
 >
-> Available variables: [`MtaMailFromVariable`](../expression/variable/mta-mail-from-variable.md).
+> Available variables: [`MtaMailFromVariable`](/docs/ref/expression/variable/mta-mail-from-variable).
 
 
 ##### `maxRecipients`
@@ -37,7 +37,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Maximum number of recipients per message
 >
-> Available variables: [`MtaMailFromVariable`](../expression/variable/mta-mail-from-variable.md).
+> Available variables: [`MtaMailFromVariable`](/docs/ref/expression/variable/mta-mail-from-variable).
 
 
 ##### `allowRelaying`
@@ -46,7 +46,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Whether to allow relaying for non-local domains
 >
-> Available variables: [`MtaRcptToVariable`](../expression/variable/mta-rcpt-to-variable.md).
+> Available variables: [`MtaRcptToVariable`](/docs/ref/expression/variable/mta-rcpt-to-variable).
 
 
 ##### `rewrite`
@@ -55,7 +55,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Expression to rewrite the recipient address
 >
-> Available variables: [`MtaRcptToVariable`](../expression/variable/mta-rcpt-to-variable.md).
+> Available variables: [`MtaRcptToVariable`](/docs/ref/expression/variable/mta-rcpt-to-variable).
 
 
 ##### `script`
@@ -64,7 +64,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Which Sieve script to run after the client sends a RCPT command
 >
-> Available variables: [`MtaRcptToVariable`](../expression/variable/mta-rcpt-to-variable.md).
+> Available variables: [`MtaRcptToVariable`](/docs/ref/expression/variable/mta-rcpt-to-variable).
 
 
 
@@ -80,7 +80,7 @@ This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.
 For singletons, the `ids` argument should be the literal `singleton` (or `null` to return the single instance).
 
 
-This method requires the `sysMtaStageRcptGet` [permission](../permissions.md).
+This method requires the `sysMtaStageRcptGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -114,7 +114,7 @@ This is a standard [`Foo/set`](https://www.rfc-editor.org/rfc/rfc8620#section-5.
 For singletons, only the `update` argument with id `singleton` is accepted; `create` and `destroy` arguments are rejected.
 
 
-This method requires the `sysMtaStageRcptUpdate` [permission](../permissions.md).
+This method requires the `sysMtaStageRcptUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -169,7 +169,7 @@ stalwart-cli update MtaStageRcpt --field maxFailures='{"else":"5"}'
 ## Nested types
 
 
-### Expression {#expression}
+### Expression
 
 A conditional expression with match rules and a default value.
 
@@ -192,7 +192,7 @@ A conditional expression with match rules and a default value.
 
 
 
-#### ExpressionMatch {#expressionmatch}
+#### ExpressionMatch
 
 A single condition-result pair in an expression.
 
@@ -219,6 +219,6 @@ A single condition-result pair in an expression.
 
 The following expression contexts are used by fields on this page:
 
-- [`MtaMailFromVariable`](../expression/variable/mta-mail-from-variable.md) (Variables)
-- [`MtaRcptToVariable`](../expression/variable/mta-rcpt-to-variable.md) (Variables)
+- [`MtaMailFromVariable`](/docs/ref/expression/variable/mta-mail-from-variable) (Variables)
+- [`MtaRcptToVariable`](/docs/ref/expression/variable/mta-rcpt-to-variable) (Variables)
 

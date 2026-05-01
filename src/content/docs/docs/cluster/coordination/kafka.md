@@ -13,7 +13,7 @@ Using Kafka or Redpanda provides a durable, centralised coordination layer. Mess
 
 Kafka adds infrastructure requirements, but its ability to handle millions of events per second, support long-term message retention, and integrate with a wide ecosystem of tools makes it well-suited to enterprises with complex or high-traffic mail infrastructures.
 
-:::tip Note
+:::tip[Note]
 
 Apache Kafka is not included in the default Stalwart binary. To enable it, [build](/docs/development/compile) Stalwart with the `kafka` feature flag.
 

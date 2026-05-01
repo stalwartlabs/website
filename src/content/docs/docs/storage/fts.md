@@ -26,7 +26,7 @@ External engines offer their own strengths:
 - **Ranking and sorting flexibility**: more control over how results are ordered, combining text relevance with structured fields.
 - **Storage efficiency**: purpose-built index structures designed for full-text search.
 
-:::tip Encryption and full-text search
+:::tip[Encryption and full-text search]
 
 When [encryption at rest](/docs/encryption/) is enabled, only message headers are stored in the full-text index.
 
@@ -60,4 +60,4 @@ The fields indexed per entity are controlled through [`indexEmailFields`](/docs/
 
 ### Default language
 
-When language detection fails (for example, when the text is too short or ambiguous), the server falls back to the language configured in [`defaultLanguage`](/docs/ref/object/search#defaultlanguage) on the Search object. The default is `"en_US"`. Specific languages can be excluded from detection through [`disableLanguages`](/docs/ref/object/search#disablelanguages).
+When language detection fails (for example, when the text is too short or ambiguous), the server falls back to the language configured in [`defaultLanguage`](/docs/ref/object/search#defaultlanguage) on the Search object. The default is `"en_US"`. The set of languages considered by the detector can be restricted through [`supportedLanguages`](/docs/ref/object/search#supportedlanguages).

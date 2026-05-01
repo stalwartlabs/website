@@ -16,7 +16,7 @@ hero:
     the next generation.
   ctas:
     - label: Get started
-      href: /docs/install/get-started
+      href: /docs/install/
   meta:
     - Open source
     - Same identity, quotas, ACLs as mail
@@ -183,4 +183,4 @@ footerCta:
   cta: Run mail and collaboration on one server.
   ctaSub: One identity, one quota, one access model. Calendars, contacts and files included.
   ctaButton: Get started
-  ctaLink: /docs/install/get-started
+  ctaLink: /docs/install/

@@ -52,7 +52,7 @@ The ClusterRole object is available via the `urn:stalwart:jmap` capability.
 This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.1) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.1), Section 5.1.
 
 
-This method requires the `sysClusterRoleGet` [permission](../permissions.md).
+This method requires the `sysClusterRoleGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -89,7 +89,7 @@ Supports create, update, and destroy operations in a single call.
 
 #### Create
 
-This operation requires the `sysClusterRoleCreate` [permission](../permissions.md).
+This operation requires the `sysClusterRoleCreate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -124,7 +124,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Update
 
-This operation requires the `sysClusterRoleUpdate` [permission](../permissions.md).
+This operation requires the `sysClusterRoleUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -154,7 +154,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Destroy
 
-This operation requires the `sysClusterRoleDestroy` [permission](../permissions.md).
+This operation requires the `sysClusterRoleDestroy` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -187,7 +187,7 @@ curl -X POST https://mail.example.com/api \
 This is a standard [`Foo/query`](https://www.rfc-editor.org/rfc/rfc8620#section-5.5) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.5), Section 5.5.
 
 
-This method requires the `sysClusterRoleQuery` [permission](../permissions.md).
+This method requires the `sysClusterRoleQuery` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -268,7 +268,7 @@ stalwart-cli delete ClusterRole --ids id1
 ## Nested types
 
 
-### ClusterTaskGroup {#clustertaskgroup}
+### ClusterTaskGroup
 
 Defines which cluster tasks are enabled for a cluster role.
 
@@ -281,7 +281,7 @@ Defines which cluster tasks are enabled for a cluster role.
 
 
 
-#### ClusterTaskGroupProperties {#clustertaskgroupproperties}
+#### ClusterTaskGroupProperties
 
 Specifies which tasks are enabled or disabled.
 
@@ -297,7 +297,7 @@ Specifies which tasks are enabled or disabled.
 
 
 
-### ClusterListenerGroup {#clusterlistenergroup}
+### ClusterListenerGroup
 
 Defines which network listeners are enabled for a cluster role.
 
@@ -310,7 +310,7 @@ Defines which network listeners are enabled for a cluster role.
 
 
 
-#### ClusterListenerGroupProperties {#clusterlistenergroupproperties}
+#### ClusterListenerGroupProperties
 
 Specifies which listeners are enabled or disabled.
 
@@ -318,7 +318,7 @@ Specifies which listeners are enabled or disabled.
 
 ##### `listenerIds`
 
-> Type: <code>Id&lt;</code>[<code>NetworkListener</code>](./network-listener.md)<code>&gt;[]</code>
+> Type: <code>Id&lt;</code>[<code>NetworkListener</code>](/docs/ref/object/network-listener)<code>&gt;[]</code>
 >
 > List of network listeners to enable or disable for this group
 
@@ -329,7 +329,7 @@ Specifies which listeners are enabled or disabled.
 ## Enums
 
 
-### ClusterTaskType {#clustertasktype}
+### ClusterTaskType
 
 
 

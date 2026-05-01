@@ -15,7 +15,7 @@ There are three types of composite backends supported by Stalwart:
 
 Composite backends are a powerful feature for administrators seeking to scale their infrastructure efficiently. By enabling the distribution of load across multiple backends and ensuring redundancy, Stalwart delivers high performance and resilience for even the most demanding environments.
 
-:::tip Enterprise feature
+:::tip[Enterprise feature]
 
 Composite backends are available exclusively in the [Enterprise Edition](/docs/server/enterprise) of Stalwart and not included in the Community Edition.
 

@@ -85,14 +85,14 @@ DKIM1 - Ed25519 SHA-256
 
 ##### `domainId`
 
-> Type: <code>Id&lt;</code>[<code>Domain</code>](./domain.md)<code>&gt;</code> · required
+> Type: <code>Id&lt;</code>[<code>Domain</code>](/docs/ref/object/domain)<code>&gt;</code> · required
 >
 > Identifier for the domain this DKIM signature is associated with
 
 
 ##### `memberTenantId`
 
-> Type: <code>Id&lt;</code>[<code>Tenant</code>](./tenant.md)<code>&gt;?</code> · [enterprise](/docs/server/enterprise)
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code> · [enterprise](/docs/server/enterprise)
 >
 > Identifier for the tenant this DKIM signature belongs to
 
@@ -196,14 +196,14 @@ DKIM1 - RSA SHA-256
 
 ##### `domainId`
 
-> Type: <code>Id&lt;</code>[<code>Domain</code>](./domain.md)<code>&gt;</code> · required
+> Type: <code>Id&lt;</code>[<code>Domain</code>](/docs/ref/object/domain)<code>&gt;</code> · required
 >
 > Identifier for the domain this DKIM signature is associated with
 
 
 ##### `memberTenantId`
 
-> Type: <code>Id&lt;</code>[<code>Tenant</code>](./tenant.md)<code>&gt;?</code> · [enterprise](/docs/server/enterprise)
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code> · [enterprise](/docs/server/enterprise)
 >
 > Identifier for the tenant this DKIM signature belongs to
 
@@ -248,7 +248,7 @@ The DkimSignature object is available via the `urn:stalwart:jmap` capability.
 This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.1) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.1), Section 5.1.
 
 
-This method requires the `sysDkimSignatureGet` [permission](../permissions.md).
+This method requires the `sysDkimSignatureGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -285,7 +285,7 @@ Supports create, update, and destroy operations in a single call.
 
 #### Create
 
-This operation requires the `sysDkimSignatureCreate` [permission](../permissions.md).
+This operation requires the `sysDkimSignatureCreate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -321,7 +321,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Update
 
-This operation requires the `sysDkimSignatureUpdate` [permission](../permissions.md).
+This operation requires the `sysDkimSignatureUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -351,7 +351,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Destroy
 
-This operation requires the `sysDkimSignatureDestroy` [permission](../permissions.md).
+This operation requires the `sysDkimSignatureDestroy` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -384,7 +384,7 @@ curl -X POST https://mail.example.com/api \
 This is a standard [`Foo/query`](https://www.rfc-editor.org/rfc/rfc8620#section-5.5) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.5), Section 5.5.
 
 
-This method requires the `sysDkimSignatureQuery` [permission](../permissions.md).
+This method requires the `sysDkimSignatureQuery` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -467,7 +467,7 @@ stalwart-cli delete DkimSignature --ids id1
 ## Nested types
 
 
-### SecretText {#secrettext}
+### SecretText
 
 A secret text value provided directly, from an environment variable, or from a file.
 
@@ -479,7 +479,7 @@ A secret text value provided directly, from an environment variable, or from a f
 
 
 
-#### SecretTextValue {#secrettextvalue}
+#### SecretTextValue
 
 A secret text value provided directly.
 
@@ -495,7 +495,7 @@ A secret text value provided directly.
 
 
 
-#### SecretKeyEnvironmentVariable {#secretkeyenvironmentvariable}
+#### SecretKeyEnvironmentVariable
 
 A secret value read from an environment variable.
 
@@ -511,7 +511,7 @@ A secret value read from an environment variable.
 
 
 
-#### SecretKeyFile {#secretkeyfile}
+#### SecretKeyFile
 
 A secret value read from a file.
 
@@ -530,7 +530,7 @@ A secret value read from a file.
 ## Enums
 
 
-### DkimCanonicalization {#dkimcanonicalization}
+### DkimCanonicalization
 
 
 
@@ -542,7 +542,7 @@ A secret value read from a file.
 | `simple/relaxed` | Simple/Relaxed |
 
 
-### DkimHash {#dkimhash}
+### DkimHash
 
 
 
@@ -552,7 +552,7 @@ A secret value read from a file.
 | `sha1` | SHA-1 |
 
 
-### DkimRotationStage {#dkimrotationstage}
+### DkimRotationStage
 
 
 

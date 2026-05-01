@@ -9,7 +9,7 @@ One of the key advantages of the Live Telemetry feature is its flexibility. Admi
 
 For the best experience and ease of use, it is recommended to access this feature through the [WebAdmin](/docs/0.15/management/webadmin/) interface. The WebAdmin tool includes a Dashboard and is optimized to format these live events, presenting the information in a user-friendly manner. With WebAdmin, administrators can effortlessly manage the live stream, apply filters, and visualize the server activity, making it the preferred method for utilizing the Live Tracing & Logging capabilities of Stalwart.
 
-:::tip Enterprise feature
+:::tip[Enterprise feature]
 
 This feature is available exclusively in the [Enterprise Edition](/docs/server/enterprise) of Stalwart and not included in the Community Edition.
 

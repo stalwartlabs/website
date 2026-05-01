@@ -73,7 +73,7 @@ sections:
       - Dry-run mode that produces a per-account report (mailbox count, message count, total size, anomalies) before any data is written.
     learnMore:
       - label: CLI overview
-        href: /docs/management/cli/overview
+        href: /docs/management/cli/
     visual:
       kind: placeholder
       caption: "Diagram needed: source servers (Postfix, Cyrus, Exchange, ...) feeding into stalwart-cli, which writes through JMAP into Stalwart."

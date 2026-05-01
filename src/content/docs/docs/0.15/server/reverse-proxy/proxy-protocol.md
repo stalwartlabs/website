@@ -25,7 +25,7 @@ trusted-networks = ["127.0.0.0/8", "::1", "10.0.0.0/8"]
 
 By defining these trusted networks, Stalwart can accurately identify and accept incoming connections that are relayed through a proxy.
 
-:::tip Note
+:::tip[Note]
 
 - When enabling the Proxy Protocol, ensure that both the proxy and Stalwart are correctly configured to use it. Misconfiguration can lead to connection issues.
 - Not all proxies support the Proxy Protocol. Verify that your chosen proxy solution is compatible before proceeding with the setup.

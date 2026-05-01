@@ -29,7 +29,7 @@ Index document
 
 ##### `accountId`
 
-> Type: <code>Id&lt;</code>[<code>Account</code>](./account.md)<code>&gt;</code> · read-only
+> Type: <code>Id&lt;</code>[<code>Account</code>](/docs/ref/object/account)<code>&gt;</code> · read-only
 >
 > Identifier of the account associated with this task
 
@@ -70,7 +70,7 @@ Unindex document
 
 ##### `accountId`
 
-> Type: <code>Id&lt;</code>[<code>Account</code>](./account.md)<code>&gt;</code> · read-only
+> Type: <code>Id&lt;</code>[<code>Account</code>](/docs/ref/object/account)<code>&gt;</code> · read-only
 >
 > Identifier of the account associated with this task
 
@@ -104,7 +104,7 @@ Index telemetry trace
 
 ##### `traceId`
 
-> Type: <code>Id&lt;</code>[<code>Trace</code>](./trace.md)<code>&gt;</code> · read-only
+> Type: <code>Id&lt;</code>[<code>Trace</code>](/docs/ref/object/trace)<code>&gt;</code> · read-only
 >
 > Identifier of the trace associated with this task
 
@@ -173,7 +173,7 @@ Calendar alarm e-mail
 
 ##### `accountId`
 
-> Type: <code>Id&lt;</code>[<code>Account</code>](./account.md)<code>&gt;</code> · read-only
+> Type: <code>Id&lt;</code>[<code>Account</code>](/docs/ref/object/account)<code>&gt;</code> · read-only
 >
 > Identifier of the account associated with this task
 
@@ -228,7 +228,7 @@ Calendar alarm notification
 
 ##### `accountId`
 
-> Type: <code>Id&lt;</code>[<code>Account</code>](./account.md)<code>&gt;</code> · read-only
+> Type: <code>Id&lt;</code>[<code>Account</code>](/docs/ref/object/account)<code>&gt;</code> · read-only
 >
 > Identifier of the account associated with this task
 
@@ -269,7 +269,7 @@ Calendar iTIP message
 
 ##### `accountId`
 
-> Type: <code>Id&lt;</code>[<code>Account</code>](./account.md)<code>&gt;</code> · read-only
+> Type: <code>Id&lt;</code>[<code>Account</code>](/docs/ref/object/account)<code>&gt;</code> · read-only
 >
 > Identifier of the account associated with this task
 
@@ -303,7 +303,7 @@ Merge email threads
 
 ##### `accountId`
 
-> Type: <code>Id&lt;</code>[<code>Account</code>](./account.md)<code>&gt;</code> · server-set
+> Type: <code>Id&lt;</code>[<code>Account</code>](/docs/ref/object/account)<code>&gt;</code> · server-set
 >
 > Identifier of the account associated with this task
 
@@ -344,7 +344,7 @@ Send DMARC report to remote server
 
 ##### `reportId`
 
-> Type: <code>Id&lt;</code>[<code>DmarcInternalReport</code>](./dmarc-internal-report.md)<code>&gt;</code> · server-set
+> Type: <code>Id&lt;</code>[<code>DmarcInternalReport</code>](/docs/ref/object/dmarc-internal-report)<code>&gt;</code> · server-set
 >
 > Identifier for the DMARC aggregate report associated with this task
 
@@ -371,7 +371,7 @@ Send TLS report to remote server
 
 ##### `reportId`
 
-> Type: <code>Id&lt;</code>[<code>TlsInternalReport</code>](./tls-internal-report.md)<code>&gt;</code> · server-set
+> Type: <code>Id&lt;</code>[<code>TlsInternalReport</code>](/docs/ref/object/tls-internal-report)<code>&gt;</code> · server-set
 >
 > Identifier for the TLS aggregate report associated with this task
 
@@ -426,7 +426,7 @@ Restore archived item
 
 ##### `accountId`
 
-> Type: <code>Id&lt;</code>[<code>Account</code>](./account.md)<code>&gt;</code> · server-set
+> Type: <code>Id&lt;</code>[<code>Account</code>](/docs/ref/object/account)<code>&gt;</code> · server-set
 >
 > Identifier of the account to which the archived item belongs
 
@@ -453,7 +453,7 @@ Destroy account and all associated data
 
 ##### `accountId`
 
-> Type: <code>Id&lt;</code>[<code>Account</code>](./account.md)<code>&gt;</code> · server-set
+> Type: <code>Id&lt;</code>[<code>Account</code>](/docs/ref/object/account)<code>&gt;</code> · server-set
 >
 > Identifier of the account to be destroyed
 
@@ -467,7 +467,7 @@ Destroy account and all associated data
 
 ##### `accountDomainId`
 
-> Type: <code>Id&lt;</code>[<code>Domain</code>](./domain.md)<code>&gt;</code> · required
+> Type: <code>Id&lt;</code>[<code>Domain</code>](/docs/ref/object/domain)<code>&gt;</code> · required
 >
 > Domain identifier of the account to be destroyed, if applicable
 
@@ -501,7 +501,7 @@ Perform account maintenance operations
 
 ##### `accountId`
 
-> Type: <code>Id&lt;</code>[<code>Account</code>](./account.md)<code>&gt;</code> · read-only
+> Type: <code>Id&lt;</code>[<code>Account</code>](/docs/ref/object/account)<code>&gt;</code> · read-only
 >
 > Identifier of the account to be maintained
 
@@ -535,7 +535,7 @@ Perform tenant maintenance operations
 
 ##### `tenantId`
 
-> Type: <code>Id&lt;</code>[<code>Tenant</code>](./tenant.md)<code>&gt;</code> · read-only
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;</code> · read-only
 >
 > Identifier of the tenant to be maintained
 
@@ -630,7 +630,7 @@ Perform ACME certificate renewal for a domain
 
 ##### `domainId`
 
-> Type: <code>Id&lt;</code>[<code>Domain</code>](./domain.md)<code>&gt;</code> · read-only
+> Type: <code>Id&lt;</code>[<code>Domain</code>](/docs/ref/object/domain)<code>&gt;</code> · read-only
 >
 > Identifier of the domain associated with this task
 
@@ -657,7 +657,7 @@ Perform DKIM key rotation for a domain
 
 ##### `domainId`
 
-> Type: <code>Id&lt;</code>[<code>Domain</code>](./domain.md)<code>&gt;</code> · read-only
+> Type: <code>Id&lt;</code>[<code>Domain</code>](/docs/ref/object/domain)<code>&gt;</code> · read-only
 >
 > Identifier of the domain associated with this task
 
@@ -698,7 +698,7 @@ Perform DNS management for a domain
 
 ##### `domainId`
 
-> Type: <code>Id&lt;</code>[<code>Domain</code>](./domain.md)<code>&gt;</code> · read-only
+> Type: <code>Id&lt;</code>[<code>Domain</code>](/docs/ref/object/domain)<code>&gt;</code> · read-only
 >
 > Identifier of the domain associated with this task
 
@@ -729,7 +729,7 @@ The Task object is available via the `urn:stalwart:jmap` capability.
 This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.1) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.1), Section 5.1.
 
 
-This method requires the `sysTaskGet` [permission](../permissions.md).
+This method requires the `sysTaskGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -766,7 +766,7 @@ Supports create, update, and destroy operations in a single call.
 
 #### Create
 
-This operation requires the `sysTaskCreate` [permission](../permissions.md).
+This operation requires the `sysTaskCreate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -800,7 +800,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Update
 
-This operation requires the `sysTaskUpdate` [permission](../permissions.md).
+This operation requires the `sysTaskUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -833,7 +833,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Destroy
 
-This operation requires the `sysTaskDestroy` [permission](../permissions.md).
+This operation requires the `sysTaskDestroy` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -866,7 +866,7 @@ curl -X POST https://mail.example.com/api \
 This is a standard [`Foo/query`](https://www.rfc-editor.org/rfc/rfc8620#section-5.5) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.5), Section 5.5.
 
 
-This method requires the `sysTaskQuery` [permission](../permissions.md).
+This method requires the `sysTaskQuery` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -948,7 +948,7 @@ stalwart-cli delete Task --ids id1
 ## Nested types
 
 
-### TaskStatus {#taskstatus}
+### TaskStatus
 
 Execution status of a background task.
 
@@ -960,7 +960,7 @@ Execution status of a background task.
 
 
 
-#### TaskStatusPending {#taskstatuspending}
+#### TaskStatusPending
 
 Pending task status details.
 
@@ -983,7 +983,7 @@ Pending task status details.
 
 
 
-#### TaskStatusRetry {#taskstatusretry}
+#### TaskStatusRetry
 
 Task retry status details.
 
@@ -1020,7 +1020,7 @@ Task retry status details.
 
 
 
-#### TaskStatusFailed {#taskstatusfailed}
+#### TaskStatusFailed
 
 Failed task status details.
 
@@ -1057,7 +1057,7 @@ Failed task status details.
 
 
 
-### TaskCalendarItipContents {#taskcalendaritipcontents}
+### TaskCalendarItipContents
 
 Contents of an iTIP message to be delivered.
 
@@ -1104,7 +1104,7 @@ Contents of an iTIP message to be delivered.
 ## Enums
 
 
-### IndexDocumentType {#indexdocumenttype}
+### IndexDocumentType
 
 
 
@@ -1116,7 +1116,7 @@ Contents of an iTIP message to be delivered.
 | `file` | File |
 
 
-### ArchivedItemType {#archiveditemtype}
+### ArchivedItemType
 
 
 
@@ -1129,7 +1129,7 @@ Contents of an iTIP message to be delivered.
 | `SieveScript` | Archived Sieve Script |
 
 
-### AccountType {#accounttype}
+### AccountType
 
 
 
@@ -1139,7 +1139,7 @@ Contents of an iTIP message to be delivered.
 | `Group` | Group account |
 
 
-### TaskAccountMaintenanceType {#taskaccountmaintenancetype}
+### TaskAccountMaintenanceType
 
 
 
@@ -1151,7 +1151,7 @@ Contents of an iTIP message to be delivered.
 | `recalculateQuota` | Recalculate storage quota usage for the account |
 
 
-### TaskTenantMaintenanceType {#tasktenantmaintenancetype}
+### TaskTenantMaintenanceType
 
 
 
@@ -1160,7 +1160,7 @@ Contents of an iTIP message to be delivered.
 | `recalculateQuota` | Recalculate storage quota usage for the tenant |
 
 
-### TaskStoreMaintenanceType {#taskstoremaintenancetype}
+### TaskStoreMaintenanceType
 
 
 
@@ -1183,7 +1183,7 @@ Contents of an iTIP message to be delivered.
 | `removeGreylist` | Delete all spam filter grey list entries |
 
 
-### TaskSpamFilterMaintenanceType {#taskspamfiltermaintenancetype}
+### TaskSpamFilterMaintenanceType
 
 
 
@@ -1196,7 +1196,7 @@ Contents of an iTIP message to be delivered.
 | `updateRules` | Download and update the spam filter rules from the configured source |
 
 
-### DnsRecordType {#dnsrecordtype}
+### DnsRecordType
 
 
 

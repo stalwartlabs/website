@@ -57,7 +57,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `memberTenantId`
 
-> Type: <code>Id&lt;</code>[<code>Tenant</code>](./tenant.md)<code>&gt;?</code> · [enterprise](/docs/server/enterprise)
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code> · [enterprise](/docs/server/enterprise)
 >
 > Identifier for the tenant this report belongs to
 
@@ -73,7 +73,7 @@ The TlsExternalReport object is available via the `urn:stalwart:jmap` capability
 This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.1) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.1), Section 5.1.
 
 
-This method requires the `sysTlsExternalReportGet` [permission](../permissions.md).
+This method requires the `sysTlsExternalReportGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -110,7 +110,7 @@ Supports create, update, and destroy operations in a single call.
 
 #### Create
 
-This operation requires the `sysTlsExternalReportCreate` [permission](../permissions.md).
+This operation requires the `sysTlsExternalReportCreate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -150,7 +150,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Update
 
-This operation requires the `sysTlsExternalReportUpdate` [permission](../permissions.md).
+This operation requires the `sysTlsExternalReportUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -180,7 +180,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Destroy
 
-This operation requires the `sysTlsExternalReportDestroy` [permission](../permissions.md).
+This operation requires the `sysTlsExternalReportDestroy` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -213,7 +213,7 @@ curl -X POST https://mail.example.com/api \
 This is a standard [`Foo/query`](https://www.rfc-editor.org/rfc/rfc8620#section-5.5) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.5), Section 5.5.
 
 
-This method requires the `sysTlsExternalReportQuery` [permission](../permissions.md).
+This method requires the `sysTlsExternalReportQuery` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -289,7 +289,7 @@ stalwart-cli delete TlsExternalReport --ids id1
 ## Nested types
 
 
-### TlsReport {#tlsreport}
+### TlsReport
 
 Content of a TLS aggregate report.
 
@@ -340,7 +340,7 @@ Content of a TLS aggregate report.
 
 
 
-#### TlsReportPolicy {#tlsreportpolicy}
+#### TlsReportPolicy
 
 TLS policy evaluation result for a specific domain.
 
@@ -398,7 +398,7 @@ TLS policy evaluation result for a specific domain.
 
 
 
-##### TlsFailureDetails {#tlsfailuredetails}
+##### TlsFailureDetails
 
 Details of a TLS failure encountered during delivery.
 
@@ -466,7 +466,7 @@ Details of a TLS failure encountered during delivery.
 ## Enums
 
 
-### TlsPolicyType {#tlspolicytype}
+### TlsPolicyType
 
 
 
@@ -478,7 +478,7 @@ Details of a TLS failure encountered during delivery.
 | `other` | Other or unrecognized policy type |
 
 
-### TlsResultType {#tlsresulttype}
+### TlsResultType
 
 
 

@@ -7,7 +7,7 @@ FoundationDB is a distributed database designed to handle large volumes of data 
 
 FoundationDB is the recommended backend for distributed setups of Stalwart due to its ability to manage large-scale, distributed data storage and processing needs effectively.
 
-:::tip Note
+:::tip[Note]
 
 Make sure you have the FoundationDB client library installed on your system before using it as a backend for Stalwart. 
 

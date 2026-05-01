@@ -15,7 +15,7 @@ hero:
     out as a dedicated outbound MTA cluster role.
   ctas:
     - label: Get started
-      href: /docs/install/get-started
+      href: /docs/install/
   meta:
     - Open source
     - Distributed queue
@@ -139,7 +139,7 @@ sections:
       - Inbound concurrency and rate limiting.
     learnMore:
       - label: Read message rewriting
-        href: /docs/mta/rewrite/overview
+        href: /docs/mta/rewrite/
     visual:
       kind: placeholder
       caption: "Screenshot needed: Sieve/expression-based rewriting rule editor in the WebUI."
@@ -187,4 +187,4 @@ footerCta:
   cta: Replace your relay tier.
   ctaSub: Run an SMTP cluster that signs, authenticates, reports and survives node failures.
   ctaButton: Get started
-  ctaLink: /docs/install/get-started
+  ctaLink: /docs/install/

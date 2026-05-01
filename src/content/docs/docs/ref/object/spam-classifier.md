@@ -96,7 +96,7 @@ This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.
 For singletons, the `ids` argument should be the literal `singleton` (or `null` to return the single instance).
 
 
-This method requires the `sysSpamClassifierGet` [permission](../permissions.md).
+This method requires the `sysSpamClassifierGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -130,7 +130,7 @@ This is a standard [`Foo/set`](https://www.rfc-editor.org/rfc/rfc8620#section-5.
 For singletons, only the `update` argument with id `singleton` is accepted; `create` and `destroy` arguments are rejected.
 
 
-This method requires the `sysSpamClassifierUpdate` [permission](../permissions.md).
+This method requires the `sysSpamClassifierUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -185,7 +185,7 @@ stalwart-cli update SpamClassifier --field model='{"@type":"FtrlFh"}'
 ## Nested types
 
 
-### SpamClassifierModel {#spamclassifiermodel}
+### SpamClassifierModel
 
 Defines the model used for spam classification.
 
@@ -197,7 +197,7 @@ Defines the model used for spam classification.
 
 
 
-#### SpamClassifierFtrlFh {#spamclassifierftrlfh}
+#### SpamClassifierFtrlFh
 
 Defines a spam classifier model using FTRL-Proximal optimization with feature hashing.
 
@@ -227,7 +227,7 @@ Defines a spam classifier model using FTRL-Proximal optimization with feature ha
 
 
 
-##### FtrlParameters {#ftrlparameters}
+##### FtrlParameters
 
 Hyperparameters for the FTRL-Proximal optimization algorithm.
 
@@ -271,7 +271,7 @@ Hyperparameters for the FTRL-Proximal optimization algorithm.
 
 
 
-#### SpamClassifierFtrlCcfh {#spamclassifierftrlccfh}
+#### SpamClassifierFtrlCcfh
 
 Defines a spam classifier model using FTRL-Proximal optimization with cuckoo feature hashing.
 
@@ -311,7 +311,7 @@ Defines a spam classifier model using FTRL-Proximal optimization with cuckoo fea
 ## Enums
 
 
-### ModelSize {#modelsize}
+### ModelSize
 
 
 

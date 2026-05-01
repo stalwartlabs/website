@@ -16,7 +16,7 @@ An OpenPGP key pair consists of a private key, which must be kept secret, and a 
 
 After generating an OpenPGP key pair, the user can then export their public key. This exported public key is what is used by Stalwart when it encrypts messages destined for that user. It's important to note that the user's private key should never be uploaded to the server or shared with anyone else. It should be stored securely and used only by the intended recipient to decrypt incoming messages.
 
-:::tip Note
+:::tip[Note]
 
 The process of generating an OpenPGP key pair and exporting the public key can vary depending on the specific email client or external tool being used. Users should consult the relevant documentation or help resources for their specific software to ensure the correct steps are followed.
 

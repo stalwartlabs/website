@@ -19,7 +19,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Enables chunking (RFC 1830), an extension that allows large messages to be transferred in chunks which may reduce the load on the network and server.
 >
-> Available variables: [`MtaMailFromVariable`](../expression/variable/mta-mail-from-variable.md).
+> Available variables: [`MtaMailFromVariable`](/docs/ref/expression/variable/mta-mail-from-variable).
 
 
 ##### `deliverBy`
@@ -28,7 +28,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Specifies the maximum delivery time for a message using the DELIVERBY (RFC 2852) extension, which allows the sender to request a specific delivery time for a message
 >
-> Available variables: [`MtaMailFromVariable`](../expression/variable/mta-mail-from-variable.md).
+> Available variables: [`MtaMailFromVariable`](/docs/ref/expression/variable/mta-mail-from-variable).
 
 
 ##### `dsn`
@@ -37,7 +37,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Enables delivery status notifications (RFC 3461), which allows the sender to request a delivery status notification (DSN) from the recipient's mail server
 >
-> Available variables: [`MtaMailFromVariable`](../expression/variable/mta-mail-from-variable.md).
+> Available variables: [`MtaMailFromVariable`](/docs/ref/expression/variable/mta-mail-from-variable).
 
 
 ##### `expn`
@@ -46,7 +46,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Specifies whether to enable the EXPN command, which allows the sender to request the membership of a mailing list. It is recommended to disable this command to prevent spammers from harvesting email addresses
 >
-> Available variables: [`MtaMailFromVariable`](../expression/variable/mta-mail-from-variable.md).
+> Available variables: [`MtaMailFromVariable`](/docs/ref/expression/variable/mta-mail-from-variable).
 
 
 ##### `futureRelease`
@@ -55,7 +55,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Specifies the maximum time that a message can be held for delivery using the FUTURERELEASE (RFC 4865) extension
 >
-> Available variables: [`MtaMailFromVariable`](../expression/variable/mta-mail-from-variable.md).
+> Available variables: [`MtaMailFromVariable`](/docs/ref/expression/variable/mta-mail-from-variable).
 
 
 ##### `mtPriority`
@@ -64,9 +64,9 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Specifies the priority assignment policy to advertise on the MT-PRIORITY (RFC 6710) extension, which allows the sender to specify a priority for a message. Available policies are mixer, stanag4406 and nsep, or false to disable this extension
 >
-> Available variables: [`MtaMailFromVariable`](../expression/variable/mta-mail-from-variable.md).
+> Available variables: [`MtaMailFromVariable`](/docs/ref/expression/variable/mta-mail-from-variable).
 >
-> Available constants: [`MtaPriorityConstant`](../expression/constant/mta-priority-constant.md).
+> Available constants: [`MtaPriorityConstant`](/docs/ref/expression/constant/mta-priority-constant).
 
 
 ##### `noSoliciting`
@@ -75,7 +75,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Specifies the text to include in the NOSOLICITING (RFC 3865) message, which indicates that the server does not accept unsolicited commercial email (UCE or spam)
 >
-> Available variables: [`MtaMailFromVariable`](../expression/variable/mta-mail-from-variable.md).
+> Available variables: [`MtaMailFromVariable`](/docs/ref/expression/variable/mta-mail-from-variable).
 
 
 ##### `pipelining`
@@ -84,7 +84,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Enables SMTP pipelining (RFC 2920), which enables multiple commands to be sent in a single request to speed up communication between the client and server
 >
-> Available variables: [`MtaMailFromVariable`](../expression/variable/mta-mail-from-variable.md).
+> Available variables: [`MtaMailFromVariable`](/docs/ref/expression/variable/mta-mail-from-variable).
 
 
 ##### `requireTls`
@@ -93,7 +93,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Enables require TLS (RFC 8689), an extension that allows clients to require TLS encryption for the SMTP session
 >
-> Available variables: [`MtaMailFromVariable`](../expression/variable/mta-mail-from-variable.md).
+> Available variables: [`MtaMailFromVariable`](/docs/ref/expression/variable/mta-mail-from-variable).
 
 
 ##### `vrfy`
@@ -102,7 +102,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Specifies whether to enable the VRFY command, which allows the sender to verify the existence of a mailbox. It is recommended to disable this command to prevent spammers from harvesting email addresses
 >
-> Available variables: [`MtaMailFromVariable`](../expression/variable/mta-mail-from-variable.md).
+> Available variables: [`MtaMailFromVariable`](/docs/ref/expression/variable/mta-mail-from-variable).
 
 
 
@@ -118,7 +118,7 @@ This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.
 For singletons, the `ids` argument should be the literal `singleton` (or `null` to return the single instance).
 
 
-This method requires the `sysMtaExtensionsGet` [permission](../permissions.md).
+This method requires the `sysMtaExtensionsGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -152,7 +152,7 @@ This is a standard [`Foo/set`](https://www.rfc-editor.org/rfc/rfc8620#section-5.
 For singletons, only the `update` argument with id `singleton` is accepted; `create` and `destroy` arguments are rejected.
 
 
-This method requires the `sysMtaExtensionsUpdate` [permission](../permissions.md).
+This method requires the `sysMtaExtensionsUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -207,7 +207,7 @@ stalwart-cli update MtaExtensions --field chunking='{"else":"true"}'
 ## Nested types
 
 
-### Expression {#expression}
+### Expression
 
 A conditional expression with match rules and a default value.
 
@@ -230,7 +230,7 @@ A conditional expression with match rules and a default value.
 
 
 
-#### ExpressionMatch {#expressionmatch}
+#### ExpressionMatch
 
 A single condition-result pair in an expression.
 
@@ -257,6 +257,6 @@ A single condition-result pair in an expression.
 
 The following expression contexts are used by fields on this page:
 
-- [`MtaMailFromVariable`](../expression/variable/mta-mail-from-variable.md) (Variables)
-- [`MtaPriorityConstant`](../expression/constant/mta-priority-constant.md) (Constants)
+- [`MtaMailFromVariable`](/docs/ref/expression/variable/mta-mail-from-variable) (Variables)
+- [`MtaPriorityConstant`](/docs/ref/expression/constant/mta-priority-constant) (Constants)
 

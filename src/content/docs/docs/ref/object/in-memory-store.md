@@ -192,7 +192,7 @@ This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.
 For singletons, the `ids` argument should be the literal `singleton` (or `null` to return the single instance).
 
 
-This method requires the `sysInMemoryStoreGet` [permission](../permissions.md).
+This method requires the `sysInMemoryStoreGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -226,7 +226,7 @@ This is a standard [`Foo/set`](https://www.rfc-editor.org/rfc/rfc8620#section-5.
 For singletons, only the `update` argument with id `singleton` is accepted; `create` and `destroy` arguments are rejected.
 
 
-This method requires the `sysInMemoryStoreUpdate` [permission](../permissions.md).
+This method requires the `sysInMemoryStoreUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -279,7 +279,7 @@ stalwart-cli update InMemoryStore --field description='updated value'
 ## Nested types
 
 
-### InMemoryStoreBase {#inmemorystorebase}
+### InMemoryStoreBase
 
 In-memory store backends.
 
@@ -290,7 +290,7 @@ In-memory store backends.
 
 
 
-#### RedisStore {#redisstore}
+#### RedisStore
 
 Redis/Valkey store.
 
@@ -341,7 +341,7 @@ Redis/Valkey store.
 
 
 
-#### RedisClusterStore {#redisclusterstore}
+#### RedisClusterStore
 
 Redis Cluster store.
 
@@ -441,7 +441,7 @@ Redis Cluster store.
 
 
 
-##### SecretKeyOptional {#secretkeyoptional}
+##### SecretKeyOptional
 
 An optional secret value, or none.
 
@@ -454,7 +454,7 @@ An optional secret value, or none.
 
 
 
-##### SecretKeyValue {#secretkeyvalue}
+##### SecretKeyValue
 
 A secret value provided directly.
 
@@ -470,7 +470,7 @@ A secret value provided directly.
 
 
 
-##### SecretKeyEnvironmentVariable {#secretkeyenvironmentvariable}
+##### SecretKeyEnvironmentVariable
 
 A secret value read from an environment variable.
 
@@ -486,7 +486,7 @@ A secret value read from an environment variable.
 
 
 
-##### SecretKeyFile {#secretkeyfile}
+##### SecretKeyFile
 
 A secret value read from a file.
 
@@ -505,7 +505,7 @@ A secret value read from a file.
 ## Enums
 
 
-### RedisProtocol {#redisprotocol}
+### RedisProtocol
 
 
 

@@ -17,7 +17,7 @@ Administrators can enable 2FA on a user account by configuring an OTP Auth URL o
 
 Both users and administrators should verify that the authenticator app has been configured correctly and that codes validate successfully before relying on 2FA.
 
-:::tip Note
+:::tip[Note]
 
 Two-factor authentication can only be managed from the WebUI when Stalwart is configured to use the [internal directory](/docs/auth/backend/internal). When the server is configured with an external directory, such as LDAP or SQL, administrators must set the OTP Auth URL as one of the account secrets in the external directory.
 

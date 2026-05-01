@@ -156,7 +156,7 @@ The MtaRoute object is available via the `urn:stalwart:jmap` capability.
 This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.1) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.1), Section 5.1.
 
 
-This method requires the `sysMtaRouteGet` [permission](../permissions.md).
+This method requires the `sysMtaRouteGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -193,7 +193,7 @@ Supports create, update, and destroy operations in a single call.
 
 #### Create
 
-This operation requires the `sysMtaRouteCreate` [permission](../permissions.md).
+This operation requires the `sysMtaRouteCreate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -223,7 +223,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Update
 
-This operation requires the `sysMtaRouteUpdate` [permission](../permissions.md).
+This operation requires the `sysMtaRouteUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -253,7 +253,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Destroy
 
-This operation requires the `sysMtaRouteDestroy` [permission](../permissions.md).
+This operation requires the `sysMtaRouteDestroy` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -286,7 +286,7 @@ curl -X POST https://mail.example.com/api \
 This is a standard [`Foo/query`](https://www.rfc-editor.org/rfc/rfc8620#section-5.5) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.5), Section 5.5.
 
 
-This method requires the `sysMtaRouteQuery` [permission](../permissions.md).
+This method requires the `sysMtaRouteQuery` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -365,7 +365,7 @@ stalwart-cli delete MtaRoute --ids id1
 ## Nested types
 
 
-### SecretKeyOptional {#secretkeyoptional}
+### SecretKeyOptional
 
 An optional secret value, or none.
 
@@ -378,7 +378,7 @@ An optional secret value, or none.
 
 
 
-#### SecretKeyValue {#secretkeyvalue}
+#### SecretKeyValue
 
 A secret value provided directly.
 
@@ -394,7 +394,7 @@ A secret value provided directly.
 
 
 
-#### SecretKeyEnvironmentVariable {#secretkeyenvironmentvariable}
+#### SecretKeyEnvironmentVariable
 
 A secret value read from an environment variable.
 
@@ -410,7 +410,7 @@ A secret value read from an environment variable.
 
 
 
-#### SecretKeyFile {#secretkeyfile}
+#### SecretKeyFile
 
 A secret value read from a file.
 
@@ -429,7 +429,7 @@ A secret value read from a file.
 ## Enums
 
 
-### MtaIpStrategy {#mtaipstrategy}
+### MtaIpStrategy
 
 
 
@@ -441,7 +441,7 @@ A secret value read from a file.
 | `v6Only` | IPv6 Only |
 
 
-### MtaProtocol {#mtaprotocol}
+### MtaProtocol
 
 
 

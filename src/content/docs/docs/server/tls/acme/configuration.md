@@ -17,7 +17,7 @@ An AcmeProvider does not list the domains it covers. Instead, each [Domain](/doc
 
 Default-certificate selection is made on the [SystemSettings](/docs/ref/object/system-settings) singleton through [`defaultCertificateId`](/docs/ref/object/system-settings#defaultcertificateid): whichever Certificate is pointed to there is served to clients that do not send SNI in their ClientHello. The AcmeProvider itself has no "default" flag; a provider becomes the default implicitly by issuing the Certificate selected via [`defaultCertificateId`](/docs/ref/object/system-settings#defaultcertificateid). This setting is optional, since clients negotiating with SNI pick their certificate from the domain records directly.
 
-:::tip Note
+:::tip[Note]
 
 - Regularly check the contact email for messages from the ACME provider.
 - Point a new provider at the staging directory first to verify the configuration; switching to production afterwards avoids consuming the production rate-limit budget on failed runs.

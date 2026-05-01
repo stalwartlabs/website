@@ -34,7 +34,7 @@ frequency = "0 3 *"
 
 Stalwart Enterprise edition provides a powerful feature that allows the recovery of emails deleted by users, even after these emails have been expunged from the Deleted Items or Junk Mail folders. This ensures that crucial emails can be retrieved within a specified period, adding an extra layer of security and data recovery for your organization.
 
-:::tip Enterprise feature
+:::tip[Enterprise feature]
 
 This feature is available exclusively in the [Enterprise Edition](/docs/server/enterprise) of Stalwart and not included in the Community Edition.
 

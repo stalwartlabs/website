@@ -78,7 +78,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `memberTenantId`
 
-> Type: <code>Id&lt;</code>[<code>Tenant</code>](./tenant.md)<code>&gt;?</code> · [enterprise](/docs/server/enterprise)
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code> · [enterprise](/docs/server/enterprise)
 >
 > Identifier for the tenant this ACME provider belongs to
 
@@ -94,7 +94,7 @@ The AcmeProvider object is available via the `urn:stalwart:jmap` capability.
 This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.1) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.1), Section 5.1.
 
 
-This method requires the `sysAcmeProviderGet` [permission](../permissions.md).
+This method requires the `sysAcmeProviderGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -131,7 +131,7 @@ Supports create, update, and destroy operations in a single call.
 
 #### Create
 
-This operation requires the `sysAcmeProviderCreate` [permission](../permissions.md).
+This operation requires the `sysAcmeProviderCreate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -161,7 +161,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Update
 
-This operation requires the `sysAcmeProviderUpdate` [permission](../permissions.md).
+This operation requires the `sysAcmeProviderUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -191,7 +191,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Destroy
 
-This operation requires the `sysAcmeProviderDestroy` [permission](../permissions.md).
+This operation requires the `sysAcmeProviderDestroy` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -224,7 +224,7 @@ curl -X POST https://mail.example.com/api \
 This is a standard [`Foo/query`](https://www.rfc-editor.org/rfc/rfc8620#section-5.5) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.5), Section 5.5.
 
 
-This method requires the `sysAcmeProviderQuery` [permission](../permissions.md).
+This method requires the `sysAcmeProviderQuery` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -305,7 +305,7 @@ stalwart-cli delete AcmeProvider --ids id1
 ## Enums
 
 
-### AcmeChallengeType {#acmechallengetype}
+### AcmeChallengeType
 
 
 
@@ -317,7 +317,7 @@ stalwart-cli delete AcmeProvider --ids id1
 | `Http01` | HTTP-01 |
 
 
-### AcmeRenewBefore {#acmerenewbefore}
+### AcmeRenewBefore
 
 
 

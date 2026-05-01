@@ -128,7 +128,7 @@ contents = '''
 contents = "%{file:/opt/stalwart-smtp/etc/sieve/global-script.sieve}%"
 ```
 
-:::tip Note
+:::tip[Note]
 
 If you use a file macro to load an external script, make sure to add `sieve.untrusted.*` as a [local configuration key](/docs/configuration/#local-and-database-settings) in the configuration file. Otherwise, the file macro will not be expanded.
 

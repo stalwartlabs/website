@@ -19,7 +19,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Expression that returns true when the sender is allowed to send
 >
-> Available variables: [`MtaMailFromVariable`](../expression/variable/mta-mail-from-variable.md).
+> Available variables: [`MtaMailFromVariable`](/docs/ref/expression/variable/mta-mail-from-variable).
 
 
 ##### `rewrite`
@@ -28,7 +28,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Expression to rewrite the sender address
 >
-> Available variables: [`MtaMailFromVariable`](../expression/variable/mta-mail-from-variable.md).
+> Available variables: [`MtaMailFromVariable`](/docs/ref/expression/variable/mta-mail-from-variable).
 
 
 ##### `script`
@@ -37,7 +37,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > Which Sieve script to run after the client sends a MAIL command
 >
-> Available variables: [`MtaMailFromVariable`](../expression/variable/mta-mail-from-variable.md).
+> Available variables: [`MtaMailFromVariable`](/docs/ref/expression/variable/mta-mail-from-variable).
 
 
 
@@ -53,7 +53,7 @@ This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.
 For singletons, the `ids` argument should be the literal `singleton` (or `null` to return the single instance).
 
 
-This method requires the `sysMtaStageMailGet` [permission](../permissions.md).
+This method requires the `sysMtaStageMailGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -87,7 +87,7 @@ This is a standard [`Foo/set`](https://www.rfc-editor.org/rfc/rfc8620#section-5.
 For singletons, only the `update` argument with id `singleton` is accepted; `create` and `destroy` arguments are rejected.
 
 
-This method requires the `sysMtaStageMailUpdate` [permission](../permissions.md).
+This method requires the `sysMtaStageMailUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -143,7 +143,7 @@ stalwart-cli update MtaStageMail --field isSenderAllowed='{"else":"!is_empty(aut
 ## Nested types
 
 
-### Expression {#expression}
+### Expression
 
 A conditional expression with match rules and a default value.
 
@@ -166,7 +166,7 @@ A conditional expression with match rules and a default value.
 
 
 
-#### ExpressionMatch {#expressionmatch}
+#### ExpressionMatch
 
 A single condition-result pair in an expression.
 
@@ -193,5 +193,5 @@ A single condition-result pair in an expression.
 
 The following expression contexts are used by fields on this page:
 
-- [`MtaMailFromVariable`](../expression/variable/mta-mail-from-variable.md) (Variables)
+- [`MtaMailFromVariable`](/docs/ref/expression/variable/mta-mail-from-variable) (Variables)
 

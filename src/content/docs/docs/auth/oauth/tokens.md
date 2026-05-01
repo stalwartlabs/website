@@ -59,7 +59,7 @@ To read the key from an environment variable such as `OAUTH_KEY`:
 }
 ```
 
-:::tip Be aware that
+:::tip[Be aware that]
 
 - Changing the encryption key immediately revokes every existing OAuth token.
 - In clustered deployments, every node must use exactly the same encryption key. Tokens issued on one node are not accepted on another unless the key matches.

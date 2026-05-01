@@ -15,35 +15,35 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `directoryId`
 
-> Type: <code>Id&lt;</code>[<code>Directory</code>](./directory.md)<code>&gt;?</code>
+> Type: <code>Id&lt;</code>[<code>Directory</code>](/docs/ref/object/directory)<code>&gt;?</code>
 >
 > External directory used for authentication, or null to use the internal directory
 
 
 ##### `defaultUserRoleIds`
 
-> Type: <code>Id&lt;</code>[<code>Role</code>](./role.md)<code>&gt;[]</code>
+> Type: <code>Id&lt;</code>[<code>Role</code>](/docs/ref/object/role)<code>&gt;[]</code>
 >
 > Default roles to assign for accounts.
 
 
 ##### `defaultGroupRoleIds`
 
-> Type: <code>Id&lt;</code>[<code>Role</code>](./role.md)<code>&gt;[]</code>
+> Type: <code>Id&lt;</code>[<code>Role</code>](/docs/ref/object/role)<code>&gt;[]</code>
 >
 > Default roles to assign for groups.
 
 
 ##### `defaultTenantRoleIds`
 
-> Type: <code>Id&lt;</code>[<code>Role</code>](./role.md)<code>&gt;[]</code> · [enterprise](/docs/server/enterprise)
+> Type: <code>Id&lt;</code>[<code>Role</code>](/docs/ref/object/role)<code>&gt;[]</code> · [enterprise](/docs/server/enterprise)
 >
 > Default roles to assign for tenants in multi-tenant environments.
 
 
 ##### `defaultAdminRoleIds`
 
-> Type: <code>Id&lt;</code>[<code>Role</code>](./role.md)<code>&gt;[]</code>
+> Type: <code>Id&lt;</code>[<code>Role</code>](/docs/ref/object/role)<code>&gt;[]</code>
 >
 > Default roles to assign for administrators.
 
@@ -110,7 +110,7 @@ This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.
 For singletons, the `ids` argument should be the literal `singleton` (or `null` to return the single instance).
 
 
-This method requires the `sysAuthenticationGet` [permission](../permissions.md).
+This method requires the `sysAuthenticationGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -144,7 +144,7 @@ This is a standard [`Foo/set`](https://www.rfc-editor.org/rfc/rfc8620#section-5.
 For singletons, only the `update` argument with id `singleton` is accepted; `create` and `destroy` arguments are rejected.
 
 
-This method requires the `sysAuthenticationUpdate` [permission](../permissions.md).
+This method requires the `sysAuthenticationUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -197,7 +197,7 @@ stalwart-cli update Authentication --field directoryId='<Directory id>'
 ## Enums
 
 
-### PasswordHashAlgorithm {#passwordhashalgorithm}
+### PasswordHashAlgorithm
 
 
 
@@ -209,7 +209,7 @@ stalwart-cli update Authentication --field directoryId='<Directory id>'
 | `pbkdf2` | Pbkdf2 |
 
 
-### PasswordStrength {#passwordstrength}
+### PasswordStrength
 
 
 

@@ -157,22 +157,33 @@
   --sl-color-hairline-light: var(--border);
 }
 
-/* Starlight wraps its layout in a header with default styles; our custom
-   Header is sticky and provides its own height, so neutralise Starlight's
-   built-in header background/border. */
+/* Starlight wraps the header slot in a fixed `<header class="header">`
+   that defaults to var(--sl-nav-height) (3.5rem) tall and adds padding
+   plus a background. Our marketing Header is 68px tall and provides its
+   own background (blur + brand tokens), so neutralise the wrapper and
+   bump the layout's reserved height to match. Otherwise the Starlight
+   wrapper either clips the marketing header or leaves a visible gap of
+   padding above it through which page content scrolls. */
+:root {
+  --sl-nav-height: 68px;
+}
 header.header {
+  padding: 0;
   background: transparent;
   border-bottom: none;
 }
 
 /* Inline lucide icons used by the schema-generated WebUI breadcrumbs.
-   Render them as small inline glyphs aligned with the surrounding text
-   instead of full-width block-level SVGs. */
+   Render them as small inline glyphs vertically aligned with the
+   surrounding text. `vertical-align: middle` is robust across contexts
+   (paragraphs, list items, bold prose) where text-baseline alignment
+   would land the icon at different heights. */
 .sl-markdown-content .lucide-icon {
   display: inline-block;
   width: 1em;
   height: 1em;
-  vertical-align: -0.15em;
+  vertical-align: middle;
+  margin-block: -0.15em;
   margin-inline: 0.15em;
   color: var(--sl-color-text-accent, var(--brand));
   flex-shrink: 0;

@@ -26,7 +26,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `accountId`
 
-> Type: <code>Id&lt;</code>[<code>Account</code>](./account.md)<code>&gt;</code> · read-only
+> Type: <code>Id&lt;</code>[<code>Account</code>](/docs/ref/object/account)<code>&gt;</code> · read-only
 >
 > Identifier for the account this masked email address belongs to
 
@@ -105,7 +105,7 @@ The MaskedEmail object is available via the `urn:stalwart:jmap` capability.
 This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.1) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.1), Section 5.1.
 
 
-This method requires the `sysMaskedEmailGet` [permission](../permissions.md).
+This method requires the `sysMaskedEmailGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -142,7 +142,7 @@ Supports create, update, and destroy operations in a single call.
 
 #### Create
 
-This operation requires the `sysMaskedEmailCreate` [permission](../permissions.md).
+This operation requires the `sysMaskedEmailCreate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -170,7 +170,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Update
 
-This operation requires the `sysMaskedEmailUpdate` [permission](../permissions.md).
+This operation requires the `sysMaskedEmailUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -200,7 +200,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Destroy
 
-This operation requires the `sysMaskedEmailDestroy` [permission](../permissions.md).
+This operation requires the `sysMaskedEmailDestroy` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -233,7 +233,7 @@ curl -X POST https://mail.example.com/api \
 This is a standard [`Foo/query`](https://www.rfc-editor.org/rfc/rfc8620#section-5.5) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.5), Section 5.5.
 
 
-This method requires the `sysMaskedEmailQuery` [permission](../permissions.md).
+This method requires the `sysMaskedEmailQuery` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \

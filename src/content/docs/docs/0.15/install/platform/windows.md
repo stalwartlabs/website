@@ -53,7 +53,7 @@ Once you have logged in, go to the `Settings` > `Storage` section and configure 
 
 If you would like an external authentication directory such as [LDAP](/docs/auth/backend/ldap) or [SQL](/docs/auth/backend/sql), go to the `Settings` > `Authentication` section and configure your [authentication backend](/docs/install/directory).
 
-:::tip Optional
+:::tip[Optional]
 
 Stalwart comes pre-configured with `RocksDB` as the default backend for all stores. You can skip this step if you are happy with the default configuration.
 

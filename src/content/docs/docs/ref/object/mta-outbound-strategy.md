@@ -19,7 +19,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > An expression that returns the connection strategy to use when delivering messages to remote SMTP servers
 >
-> Available variables: [`MtaQueueHostVariable`](../expression/variable/mta-queue-host-variable.md).
+> Available variables: [`MtaQueueHostVariable`](/docs/ref/expression/variable/mta-queue-host-variable).
 
 
 ##### `route`
@@ -28,7 +28,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > An expression that returns the route name to use when delivering queued messages
 >
-> Available variables: [`MtaQueueRcptVariable`](../expression/variable/mta-queue-rcpt-variable.md).
+> Available variables: [`MtaQueueRcptVariable`](/docs/ref/expression/variable/mta-queue-rcpt-variable).
 
 
 ##### `schedule`
@@ -37,7 +37,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > An expression that returns the scheduling strategy to use when queueing messages
 >
-> Available variables: [`MtaQueueRcptVariable`](../expression/variable/mta-queue-rcpt-variable.md).
+> Available variables: [`MtaQueueRcptVariable`](/docs/ref/expression/variable/mta-queue-rcpt-variable).
 
 
 ##### `tls`
@@ -46,7 +46,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 >
 > An expression that returns the TLS strategy to use when delivering messages to remote SMTP servers
 >
-> Available variables: [`MtaQueueHostVariable`](../expression/variable/mta-queue-host-variable.md).
+> Available variables: [`MtaQueueHostVariable`](/docs/ref/expression/variable/mta-queue-host-variable).
 
 
 
@@ -62,7 +62,7 @@ This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.
 For singletons, the `ids` argument should be the literal `singleton` (or `null` to return the single instance).
 
 
-This method requires the `sysMtaOutboundStrategyGet` [permission](../permissions.md).
+This method requires the `sysMtaOutboundStrategyGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -96,7 +96,7 @@ This is a standard [`Foo/set`](https://www.rfc-editor.org/rfc/rfc8620#section-5.
 For singletons, only the `update` argument with id `singleton` is accepted; `create` and `destroy` arguments are rejected.
 
 
-This method requires the `sysMtaOutboundStrategyUpdate` [permission](../permissions.md).
+This method requires the `sysMtaOutboundStrategyUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -151,7 +151,7 @@ stalwart-cli update MtaOutboundStrategy --field connection='{"else":"'\''default
 ## Nested types
 
 
-### Expression {#expression}
+### Expression
 
 A conditional expression with match rules and a default value.
 
@@ -174,7 +174,7 @@ A conditional expression with match rules and a default value.
 
 
 
-#### ExpressionMatch {#expressionmatch}
+#### ExpressionMatch
 
 A single condition-result pair in an expression.
 
@@ -201,6 +201,6 @@ A single condition-result pair in an expression.
 
 The following expression contexts are used by fields on this page:
 
-- [`MtaQueueHostVariable`](../expression/variable/mta-queue-host-variable.md) (Variables)
-- [`MtaQueueRcptVariable`](../expression/variable/mta-queue-rcpt-variable.md) (Variables)
+- [`MtaQueueHostVariable`](/docs/ref/expression/variable/mta-queue-host-variable) (Variables)
+- [`MtaQueueRcptVariable`](/docs/ref/expression/variable/mta-queue-rcpt-variable) (Variables)
 

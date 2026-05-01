@@ -85,14 +85,14 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `memberTenantId`
 
-> Type: <code>Id&lt;</code>[<code>Tenant</code>](./tenant.md)<code>&gt;?</code> · [enterprise](/docs/server/enterprise)
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code> · [enterprise](/docs/server/enterprise)
 >
 > Identifier for the tenant this domain belongs to
 
 
 ##### `directoryId`
 
-> Type: <code>Id&lt;</code>[<code>Directory</code>](./directory.md)<code>&gt;?</code> · [enterprise](/docs/server/enterprise)
+> Type: <code>Id&lt;</code>[<code>Directory</code>](/docs/ref/object/directory)<code>&gt;?</code> · [enterprise](/docs/server/enterprise)
 >
 > Identifier for the directory where accounts for this domain are stored, or null to use the internal directory
 
@@ -136,7 +136,7 @@ The Domain object is available via the `urn:stalwart:jmap` capability.
 This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.1) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.1), Section 5.1.
 
 
-This method requires the `sysDomainGet` [permission](../permissions.md).
+This method requires the `sysDomainGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -173,7 +173,7 @@ Supports create, update, and destroy operations in a single call.
 
 #### Create
 
-This operation requires the `sysDomainCreate` [permission](../permissions.md).
+This operation requires the `sysDomainCreate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -216,7 +216,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Update
 
-This operation requires the `sysDomainUpdate` [permission](../permissions.md).
+This operation requires the `sysDomainUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -246,7 +246,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Destroy
 
-This operation requires the `sysDomainDestroy` [permission](../permissions.md).
+This operation requires the `sysDomainDestroy` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -279,7 +279,7 @@ curl -X POST https://mail.example.com/api \
 This is a standard [`Foo/query`](https://www.rfc-editor.org/rfc/rfc8620#section-5.5) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.5), Section 5.5.
 
 
-This method requires the `sysDomainQuery` [permission](../permissions.md).
+This method requires the `sysDomainQuery` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -366,7 +366,7 @@ stalwart-cli delete Domain --ids id1
 ## Nested types
 
 
-### CertificateManagement {#certificatemanagement}
+### CertificateManagement
 
 Defines how TLS certificates for the domain are managed.
 
@@ -377,7 +377,7 @@ Defines how TLS certificates for the domain are managed.
 
 
 
-#### CertificateManagementProperties {#certificatemanagementproperties}
+#### CertificateManagementProperties
 
 Automatic TLS certificate management settings using an ACME provider.
 
@@ -385,7 +385,7 @@ Automatic TLS certificate management settings using an ACME provider.
 
 ##### `acmeProviderId`
 
-> Type: <code>Id&lt;</code>[<code>AcmeProvider</code>](./acme-provider.md)<code>&gt;</code> · required
+> Type: <code>Id&lt;</code>[<code>AcmeProvider</code>](/docs/ref/object/acme-provider)<code>&gt;</code> · required
 >
 > Identifier for the ACME provider managing certificates for this domain
 
@@ -403,7 +403,7 @@ Automatic TLS certificate management settings using an ACME provider.
 
 
 
-### DkimManagement {#dkimmanagement}
+### DkimManagement
 
 Defines how DKIM keys for the domain are managed.
 
@@ -414,7 +414,7 @@ Defines how DKIM keys for the domain are managed.
 
 
 
-#### DkimManagementProperties {#dkimmanagementproperties}
+#### DkimManagementProperties
 
 Automatic DKIM key generation and rotation settings.
 
@@ -464,7 +464,7 @@ Automatic DKIM key generation and rotation settings.
 
 
 
-### DnsManagement {#dnsmanagement}
+### DnsManagement
 
 Defines how DNS records for the domain are managed.
 
@@ -475,7 +475,7 @@ Defines how DNS records for the domain are managed.
 
 
 
-#### DnsManagementProperties {#dnsmanagementproperties}
+#### DnsManagementProperties
 
 Automatic DNS record management settings using a DNS provider.
 
@@ -483,7 +483,7 @@ Automatic DNS record management settings using a DNS provider.
 
 ##### `dnsServerId`
 
-> Type: <code>Id&lt;</code>[<code>DnsServer</code>](./dns-server.md)<code>&gt;</code> · required
+> Type: <code>Id&lt;</code>[<code>DnsServer</code>](/docs/ref/object/dns-server)<code>&gt;</code> · required
 >
 > Identifier for the DNS server provider managing DNS records for this domain
 
@@ -505,7 +505,7 @@ Automatic DNS record management settings using a DNS provider.
 
 
 
-### SubAddressing {#subaddressing}
+### SubAddressing
 
 Defines sub-addressing (plus addressing) settings for the domain.
 
@@ -517,7 +517,7 @@ Defines sub-addressing (plus addressing) settings for the domain.
 
 
 
-#### SubAddressingCustom {#subaddressingcustom}
+#### SubAddressingCustom
 
 Custom sub-addressing rules for the domain.
 
@@ -529,13 +529,13 @@ Custom sub-addressing rules for the domain.
 >
 > Expression that defines custom sub-addressing rules for the domain
 >
-> Available variables: [`MtaRcptVariable`](../expression/variable/mta-rcpt-variable.md).
+> Available variables: [`MtaRcptVariable`](/docs/ref/expression/variable/mta-rcpt-variable).
 
 
 
 
 
-##### Expression {#expression}
+##### Expression
 
 A conditional expression with match rules and a default value.
 
@@ -558,7 +558,7 @@ A conditional expression with match rules and a default value.
 
 
 
-##### ExpressionMatch {#expressionmatch}
+##### ExpressionMatch
 
 A single condition-result pair in an expression.
 
@@ -584,7 +584,7 @@ A single condition-result pair in an expression.
 ## Enums
 
 
-### DkimSignatureType {#dkimsignaturetype}
+### DkimSignatureType
 
 
 
@@ -594,7 +594,7 @@ A single condition-result pair in an expression.
 | `Dkim1RsaSha256` | DKIM1 - RSA SHA-256 |
 
 
-### DnsRecordType {#dnsrecordtype}
+### DnsRecordType
 
 
 
@@ -618,5 +618,5 @@ A single condition-result pair in an expression.
 
 The following expression contexts are used by fields on this page:
 
-- [`MtaRcptVariable`](../expression/variable/mta-rcpt-variable.md) (Variables)
+- [`MtaRcptVariable`](/docs/ref/expression/variable/mta-rcpt-variable) (Variables)
 

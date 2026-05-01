@@ -92,7 +92,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `events`
 
-> Type: [<code>EventType</code>](../events.md)<code>[]</code>
+> Type: [<code>EventType</code>](/docs/ref/events)<code>[]</code>
 >
 > List of events to include or exclude based on filter mode
 
@@ -115,7 +115,7 @@ The WebHook object is available via the `urn:stalwart:jmap` capability.
 This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.1) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.1), Section 5.1.
 
 
-This method requires the `sysWebHookGet` [permission](../permissions.md).
+This method requires the `sysWebHookGet` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -152,7 +152,7 @@ Supports create, update, and destroy operations in a single call.
 
 #### Create
 
-This operation requires the `sysWebHookCreate` [permission](../permissions.md).
+This operation requires the `sysWebHookCreate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -190,7 +190,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Update
 
-This operation requires the `sysWebHookUpdate` [permission](../permissions.md).
+This operation requires the `sysWebHookUpdate` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -220,7 +220,7 @@ curl -X POST https://mail.example.com/api \
 
 #### Destroy
 
-This operation requires the `sysWebHookDestroy` [permission](../permissions.md).
+This operation requires the `sysWebHookDestroy` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -253,7 +253,7 @@ curl -X POST https://mail.example.com/api \
 This is a standard [`Foo/query`](https://www.rfc-editor.org/rfc/rfc8620#section-5.5) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.5), Section 5.5.
 
 
-This method requires the `sysWebHookQuery` [permission](../permissions.md).
+This method requires the `sysWebHookQuery` [permission](/docs/ref/permissions).
 
 ```bash
 curl -X POST https://mail.example.com/api \
@@ -328,7 +328,7 @@ stalwart-cli delete WebHook --ids id1
 ## Nested types
 
 
-### SecretKeyOptional {#secretkeyoptional}
+### SecretKeyOptional
 
 An optional secret value, or none.
 
@@ -341,7 +341,7 @@ An optional secret value, or none.
 
 
 
-#### SecretKeyValue {#secretkeyvalue}
+#### SecretKeyValue
 
 A secret value provided directly.
 
@@ -357,7 +357,7 @@ A secret value provided directly.
 
 
 
-#### SecretKeyEnvironmentVariable {#secretkeyenvironmentvariable}
+#### SecretKeyEnvironmentVariable
 
 A secret value read from an environment variable.
 
@@ -373,7 +373,7 @@ A secret value read from an environment variable.
 
 
 
-#### SecretKeyFile {#secretkeyfile}
+#### SecretKeyFile
 
 A secret value read from a file.
 
@@ -389,7 +389,7 @@ A secret value read from a file.
 
 
 
-### HttpAuth {#httpauth}
+### HttpAuth
 
 Defines the HTTP authentication method to use for HTTP requests.
 
@@ -401,7 +401,7 @@ Defines the HTTP authentication method to use for HTTP requests.
 
 
 
-#### HttpAuthBasic {#httpauthbasic}
+#### HttpAuthBasic
 
 HTTP Basic authentication credentials.
 
@@ -424,7 +424,7 @@ HTTP Basic authentication credentials.
 
 
 
-##### SecretKey {#secretkey}
+##### SecretKey
 
 A secret value provided directly, from an environment variable, or from a file.
 
@@ -436,7 +436,7 @@ A secret value provided directly, from an environment variable, or from a file.
 
 
 
-#### HttpAuthBearer {#httpauthbearer}
+#### HttpAuthBearer
 
 HTTP Bearer token authentication.
 
@@ -455,7 +455,7 @@ HTTP Bearer token authentication.
 ## Enums
 
 
-### TracingLevel {#tracinglevel}
+### TracingLevel
 
 
 
@@ -468,7 +468,7 @@ HTTP Bearer token authentication.
 | `trace` | Trace |
 
 
-### EventPolicy {#eventpolicy}
+### EventPolicy
 
 
 

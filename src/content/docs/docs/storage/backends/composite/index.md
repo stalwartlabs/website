@@ -11,7 +11,7 @@ Stalwart supports three composite backends:
 - [Sharded Blob Store](/docs/storage/backends/composite/sharded-blob): distributes large binary objects across multiple blob backends, using the same hash-and-modulus scheme. Each backend holds a portion of the overall blob namespace.
 - [SQL Read Replicas](/docs/storage/backends/composite/sql-replica): directs write operations to a primary SQL database and distributes read operations across one or more replicas, reducing load on the primary and improving throughput for read-heavy workloads.
 
-:::tip Enterprise feature
+:::tip[Enterprise feature]
 
 Composite backends are available exclusively in the [Enterprise Edition](/docs/server/enterprise) of Stalwart and are not included in the Community Edition.
 
