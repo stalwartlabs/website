@@ -1,0 +1,48 @@
+---
+import Header from "./Header.astro";
+import ReadingProgress from "./ReadingProgress.astro";
+---
+<Header />
+<ReadingProgress />
+
+<script>
+  import mermaid from "mermaid";
+
+  function pickTheme(): "default" | "dark" {
+    const t = document.documentElement.dataset.theme;
+    return t === "light" ? "default" : "dark";
+  }
+
+  function render() {
+    mermaid.initialize({ startOnLoad: false, theme: pickTheme() });
+    const targets = document.querySelectorAll<HTMLElement>("pre.mermaid");
+    if (targets.length === 0) return;
+    targets.forEach((el) => {
+      if (!el.dataset.mermaidSource) {
+        el.dataset.mermaidSource = (el.textContent ?? "").trim();
+      }
+    });
+    mermaid.run({ querySelector: "pre.mermaid" });
+  }
+
+  function rerenderAfterSwap() {
+    document.querySelectorAll<HTMLElement>("pre.mermaid").forEach((el) => {
+      const src = el.dataset.mermaidSource ?? (el.textContent ?? "").trim();
+      el.removeAttribute("data-processed");
+      el.innerHTML = src;
+    });
+    render();
+  }
+
+  render();
+  document.addEventListener("astro:after-swap", rerenderAfterSwap);
+
+  const observer = new MutationObserver((mutations) => {
+    for (const m of mutations) {
+      if (m.attributeName === "data-theme") {
+        rerenderAfterSwap();
+      }
+    }
+  });
+  observer.observe(document.documentElement, { attributes: true });
+</script>

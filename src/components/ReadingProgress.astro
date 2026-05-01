@@ -1,0 +1,76 @@
+---
+// Slim reading-progress bar; rendered into Starlight pages but only attaches
+// itself when the URL is a blog post (i.e. /blog/<slug>, not the index, tag
+// pages, or pagination).
+---
+<div class="reading-progress" data-reading-progress aria-hidden="true">
+  <div class="reading-progress__bar" data-reading-progress-bar></div>
+</div>
+
+<style>
+  .reading-progress {
+    position: fixed;
+    inset: 0 0 auto 0;
+    height: 3px;
+    background: transparent;
+    z-index: 80;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 200ms ease;
+  }
+  .reading-progress.is-active {
+    opacity: 1;
+  }
+  .reading-progress__bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--brand) 0%, var(--brand-hi) 100%);
+    transition: width 80ms linear;
+    will-change: width;
+  }
+</style>
+
+<script>
+  const POST_RE = /^\/blog\/[^/]+\/?$/;
+  const EXCLUDE = new Set(["/blog/", "/blog/authors/", "/blog/tags/"]);
+
+  function isBlogPost(): boolean {
+    const path = location.pathname;
+    if (EXCLUDE.has(path) || path.startsWith("/blog/authors/") || path.startsWith("/blog/tags/")) {
+      return false;
+    }
+    if (/^\/blog\/\d+\/?$/.test(path)) return false;
+    return POST_RE.test(path);
+  }
+
+  function setup() {
+    const root = document.querySelector<HTMLElement>("[data-reading-progress]");
+    const bar = document.querySelector<HTMLElement>("[data-reading-progress-bar]");
+    if (!root || !bar) return;
+
+    const active = isBlogPost();
+    root.classList.toggle("is-active", active);
+    if (!active) {
+      bar.style.width = "0%";
+      return;
+    }
+
+    const update = () => {
+      const doc = document.documentElement;
+      const total = doc.scrollHeight - doc.clientHeight;
+      const pct = total > 0 ? Math.min(100, Math.max(0, (doc.scrollTop / total) * 100)) : 0;
+      bar.style.width = pct + "%";
+    };
+    update();
+
+    // Replace listener on each setup() call so view transitions don't double up.
+    if ((window as Window & { __readingProgress?: () => void }).__readingProgress) {
+      window.removeEventListener("scroll", (window as Window & { __readingProgress?: () => void }).__readingProgress!);
+    }
+    (window as Window & { __readingProgress?: () => void }).__readingProgress = update;
+    window.addEventListener("scroll", update, { passive: true });
+  }
+
+  setup();
+  document.addEventListener("astro:after-swap", setup);
+</script>

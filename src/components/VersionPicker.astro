@@ -1,0 +1,152 @@
+---
+// Version picker placed at the top of Starlight's sidebar (via the
+// components.Sidebar override). When a release is cut, add it to `versions`
+// below; the picker auto-detects the active version from the URL.
+const versions = [
+  { slug: "", label: "0.16 (current)", landing: "/docs/install/get-started" },
+  { slug: "0.15", label: "0.15", landing: "/docs/0.15/install/get-started" },
+];
+
+const pathname = Astro.url.pathname;
+const current =
+  versions.find((v) => v.slug && pathname.startsWith(`/docs/${v.slug}/`)) ??
+  versions[0];
+---
+<div class="version-picker" data-version-picker>
+  <span class="version-picker__hint">Version</span>
+  <button
+    class="version-picker__btn"
+    type="button"
+    aria-haspopup="listbox"
+    aria-expanded="false"
+    data-version-trigger
+  >
+    <span class="version-picker__label">{current.label}</span>
+    <svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+  </button>
+  <ul class="version-picker__menu" role="listbox" hidden data-version-menu>
+    {
+      versions.map((v) => (
+        <li role="option" aria-selected={v.slug === current.slug}>
+          <a href={v.landing}>{v.label}</a>
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<style>
+  .version-picker {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 0.4rem 0.85rem;
+    margin-bottom: 0.4rem;
+    border-bottom: 1px solid var(--sl-color-hairline-light, var(--border));
+  }
+  .version-picker__hint {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--sl-color-gray-3, var(--text-dim));
+    font-weight: 600;
+  }
+  .version-picker__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-inline-start: auto;
+    padding: 0.3rem 0.6rem;
+    border-radius: var(--radius-pill, 999px);
+    border: 1px solid var(--sl-color-hairline, var(--border));
+    background: transparent;
+    color: var(--sl-color-text, var(--text));
+    font: inherit;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: border-color var(--t-fast, 120ms) ease;
+  }
+  .version-picker__btn:hover,
+  .version-picker__btn[aria-expanded="true"] {
+    border-color: var(--sl-color-accent, var(--brand));
+  }
+  .version-picker__btn svg {
+    transition: transform var(--t-fast, 120ms) ease;
+  }
+  .version-picker__btn[aria-expanded="true"] svg {
+    transform: rotate(180deg);
+  }
+  .version-picker__menu {
+    position: absolute;
+    top: calc(100% + 4px);
+    right: 0.4rem;
+    min-width: 180px;
+    list-style: none;
+    margin: 0;
+    padding: 0.35rem;
+    background: var(--sl-color-bg-nav, var(--bg-elev));
+    border: 1px solid var(--sl-color-hairline, var(--border));
+    border-radius: 10px;
+    box-shadow: 0 6px 20px -4px rgba(0, 0, 0, 0.35);
+    z-index: 30;
+  }
+  .version-picker__menu[hidden] {
+    display: none;
+  }
+  .version-picker__menu li {
+    list-style: none;
+  }
+  .version-picker__menu li a {
+    display: block;
+    padding: 0.4rem 0.55rem;
+    border-radius: 6px;
+    color: var(--sl-color-text, var(--text));
+    text-decoration: none;
+    font-size: 0.875rem;
+  }
+  .version-picker__menu li a:hover {
+    background: var(--sl-color-gray-6, var(--surface));
+    color: var(--sl-color-accent, var(--brand));
+  }
+  .version-picker__menu li[aria-selected="true"] a {
+    color: var(--sl-color-accent, var(--brand));
+    font-weight: 600;
+  }
+</style>
+
+<script>
+  function wire() {
+    document
+      .querySelectorAll<HTMLElement>("[data-version-picker]")
+      .forEach((root) => {
+        if ((root as HTMLElement & { __wired?: boolean }).__wired) return;
+        (root as HTMLElement & { __wired?: boolean }).__wired = true;
+
+        const btn = root.querySelector<HTMLButtonElement>("[data-version-trigger]");
+        const menu = root.querySelector<HTMLElement>("[data-version-menu]");
+        btn?.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const open = menu?.hidden === false;
+          if (menu) menu.hidden = open;
+          btn.setAttribute("aria-expanded", String(!open));
+        });
+      });
+
+    document.addEventListener("click", (e) => {
+      document
+        .querySelectorAll<HTMLElement>("[data-version-picker]")
+        .forEach((root) => {
+          if (root.contains(e.target as Node)) return;
+          const btn = root.querySelector<HTMLButtonElement>("[data-version-trigger]");
+          const menu = root.querySelector<HTMLElement>("[data-version-menu]");
+          if (menu) menu.hidden = true;
+          btn?.setAttribute("aria-expanded", "false");
+        });
+    });
+  }
+
+  wire();
+  document.addEventListener("astro:after-swap", wire);
+</script>

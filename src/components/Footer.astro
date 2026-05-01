@@ -6,6 +6,7 @@ interface Props {
   ctaSub?: string;
   ctaButton?: string;
   ctaLink?: string;
+  hideCta?: boolean;
 }
 
 const {
@@ -13,6 +14,7 @@ const {
   ctaSub = "Install Stalwart in minutes, then keep it running for years.",
   ctaButton = "Get Stalwart",
   ctaLink = "/docs/install/get-started",
+  hideCta = false,
 } = Astro.props;
 
 const platform = [
@@ -50,20 +52,22 @@ const socials = [
   { href: "https://matrix.to/#/#stalwart:matrix.org", label: "Matrix", path: "M.632.55v22.9H2.28V24H0V0h2.28v.55zm7.043 7.26v1.157h.033c.309-.443.683-.784 1.117-1.024.433-.245.936-.365 1.5-.365.54 0 1.033.107 1.481.314.448.208.785.582 1.02 1.108.254-.374.6-.706 1.034-.992.434-.287.95-.43 1.546-.43.453 0 .872.056 1.26.167.388.11.716.286.993.53.276.245.489.559.646.951.156.392.234.863.234 1.418v5.144H15.6V11.4c0-.302-.012-.586-.039-.853-.025-.266-.059-.5-.103-.7a1.45 1.45 0 0 0-.198-.515 1.04 1.04 0 0 0-.331-.331 1.69 1.69 0 0 0-.493-.166 4.31 4.31 0 0 0-.78-.06c-.453 0-.794.044-1.018.13-.226.087-.402.211-.529.376a1.27 1.27 0 0 0-.262.572 5.22 5.22 0 0 0-.066.886v4.661h-2.21v-4.515c0-.343-.013-.633-.04-.872a2.05 2.05 0 0 0-.106-.582.89.89 0 0 0-.245-.4c-.115-.097-.272-.166-.47-.21a3.4 3.4 0 0 0-.776-.066c-.4 0-.732.06-.992.18-.262.118-.467.288-.616.508-.149.222-.252.49-.31.808-.06.318-.09.679-.09 1.082v4.067H4.733V7.81H7.6zm14.094 17.34V.55h-1.65V0h2.282v24h-2.281v-.55h1.649z" },
 ];
 ---
-<footer class="site-footer">
+<footer class={`site-footer${hideCta ? " site-footer--no-cta" : ""}`}>
   <div class="container">
-    <div class="cta-card">
-      <div class="cta-card__bloom" aria-hidden="true"></div>
-      <div class="cta-card__content">
-        <span class="eyebrow">Get started</span>
-        <h2 class="cta-card__title">{cta}</h2>
-        <p class="cta-card__sub">{ctaSub}</p>
+    {!hideCta && (
+      <div class="cta-card">
+        <div class="cta-card__bloom" aria-hidden="true"></div>
+        <div class="cta-card__content">
+          <span class="eyebrow">Get started</span>
+          <h2 class="cta-card__title">{cta}</h2>
+          <p class="cta-card__sub">{ctaSub}</p>
+        </div>
+        <div class="cta-card__actions">
+          <a class="btn btn-primary btn-arrow" href={ctaLink}>{ctaButton}</a>
+          <a class="btn btn-ghost" href="/pricing">See pricing</a>
+        </div>
       </div>
-      <div class="cta-card__actions">
-        <a class="btn btn-primary btn-arrow" href={ctaLink}>{ctaButton}</a>
-        <a class="btn btn-ghost" href="/pricing">See pricing</a>
-      </div>
-    </div>
+    )}
 
     <div class="footer-grid">
       <div class="footer-brand">
@@ -117,6 +121,11 @@ const socials = [
     padding-bottom: 3rem;
     border-top: 1px solid var(--border);
     background: linear-gradient(to bottom, var(--bg) 0%, var(--bg-elev) 100%);
+  }
+  /* When the CTA card is hidden (docs/blog), neutralise the negative
+     margin-top on .footer-grid that the card normally absorbs. */
+  .site-footer--no-cta .footer-grid {
+    margin-top: 0;
   }
 
   .cta-card {

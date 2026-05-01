@@ -1,0 +1,179 @@
+@import "@fontsource-variable/inter";
+@import "@fontsource-variable/jetbrains-mono";
+@import "./tokens.css";
+
+/* The marketing Header and Footer rely on resets and utility classes
+   defined in the marketing global stylesheet (.btn, .container, list-style:
+   none on ul, button reset, etc). Bring just those primitives in, scoped to
+   the wrappers used by Starlight pages, so docs/blog renders the marketing
+   chrome correctly without overwriting Starlight's own content styles. */
+
+/* --- Resets the marketing Header / Footer depend on --- */
+
+.site-header,
+.site-header *,
+.site-footer,
+.site-footer * {
+  box-sizing: border-box;
+}
+.site-header ul,
+.site-footer ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.site-header button {
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+}
+.site-header a,
+.site-footer a {
+  color: inherit;
+  text-decoration: none;
+}
+.site-header svg,
+.site-footer svg {
+  display: block;
+}
+
+/* --- Layout primitives used by Header/Footer --- */
+
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* --- Eyebrow + buttons (used by the footer CTA card on marketing pages,
+   and by the Header "Get Stalwart" button) --- */
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--fs-eyebrow);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 600;
+  color: var(--brand);
+}
+.eyebrow::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--brand);
+  box-shadow: 0 0 12px var(--brand-glow);
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  border-radius: var(--radius-pill);
+  border: 1px solid transparent;
+  transition:
+    transform var(--t-fast) var(--ease),
+    background var(--t-fast) var(--ease),
+    border-color var(--t-fast) var(--ease),
+    box-shadow var(--t-mid) var(--ease),
+    color var(--t-fast) var(--ease);
+  white-space: nowrap;
+}
+.btn:hover {
+  transform: translateY(-1px);
+}
+.btn-primary {
+  background: var(--brand);
+  color: #fff;
+  border-color: var(--brand);
+  box-shadow:
+    0 8px 24px -8px var(--brand-glow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+.btn-primary:hover {
+  background: var(--brand-hi);
+}
+.btn-ghost {
+  background: transparent;
+  color: var(--text);
+  border-color: var(--border-strong);
+}
+.btn-sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+}
+.link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 500;
+  font-size: 0.9375rem;
+  color: var(--brand);
+}
+.link-arrow::after {
+  content: "→";
+}
+
+/* --- Map Starlight's design tokens to the marketing brand tokens so the
+   docs UI picks up Stalwart's palette and typography without changing
+   the rest of Starlight's chrome. --- */
+
+:root,
+:root[data-theme="dark"],
+:root[data-theme="light"] {
+  --sl-font: var(--font-sans);
+  --sl-font-mono: var(--font-mono);
+  --sl-color-accent: var(--brand);
+  --sl-color-accent-low: var(--brand-soft);
+  --sl-color-accent-high: var(--brand-hi);
+  --sl-color-text-accent: var(--brand);
+}
+:root[data-theme="dark"] {
+  --sl-color-bg: var(--bg);
+  --sl-color-bg-nav: var(--bg-elev);
+  --sl-color-bg-sidebar: var(--bg);
+  --sl-color-text: var(--text);
+  --sl-color-text-invert: var(--bg);
+  --sl-color-hairline: var(--border);
+  --sl-color-hairline-light: var(--border);
+}
+:root[data-theme="light"] {
+  --sl-color-bg: var(--bg);
+  --sl-color-bg-nav: var(--bg-elev);
+  --sl-color-bg-sidebar: var(--bg);
+  --sl-color-text: var(--text);
+  --sl-color-text-invert: var(--bg);
+  --sl-color-hairline: var(--border);
+  --sl-color-hairline-light: var(--border);
+}
+
+/* Starlight wraps its layout in a header with default styles; our custom
+   Header is sticky and provides its own height, so neutralise Starlight's
+   built-in header background/border. */
+header.header {
+  background: transparent;
+  border-bottom: none;
+}
+
+/* Inline lucide icons used by the schema-generated WebUI breadcrumbs.
+   Render them as small inline glyphs aligned with the surrounding text
+   instead of full-width block-level SVGs. */
+.sl-markdown-content .lucide-icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  margin-inline: 0.15em;
+  color: var(--sl-color-text-accent, var(--brand));
+  flex-shrink: 0;
+}

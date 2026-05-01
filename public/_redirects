@@ -1,0 +1,15 @@
+# Cloudflare Pages redirects (https://developers.cloudflare.com/pages/configuration/redirects/)
+# Format: <source> <destination> <status>
+# 301 = permanent (default), 302 = temporary, 200 = rewrite (no client redirect).
+
+# Docusaurus auto-generated category pages -> canonical landing pages.
+/docs/category/installation              /docs/install/                  301
+/docs/category/sender-authentication     /docs/mta/authentication/       301
+/docs/category/development               /docs/development/              301
+/docs/category/server-settings           /docs/server/                   301
+
+# Old blog post URL shape (/blog/<slug>) is unchanged; no redirect needed.
+
+# If we drop the /docs prefix on the bare /docs root, send users to install.
+/docs                                    /docs/install/get-started       301
+/docs/                                   /docs/install/get-started       301

@@ -1,5 +1,8 @@
 import { defineCollection, z } from "astro:content";
 import { glob } from "astro/loaders";
+import { docsLoader } from "@astrojs/starlight/loaders";
+import { docsSchema } from "@astrojs/starlight/schema";
+import { blogSchema } from "starlight-blog/schema";
 
 // ----- Shared primitives -----
 
@@ -269,4 +272,32 @@ const legal = defineCollection({
   }),
 });
 
-export const collections = { pages, legal };
+const docs = defineCollection({
+  // Custom generateId preserves dots in slugs (Astro's default sluggifier
+  // strips them, which would turn /docs/0.15/... into /docs/015/... and
+  // break the URLs preserved from the Docusaurus version of the site).
+  loader: docsLoader({
+    generateId: ({ entry }) => {
+      // Strip extension; index.* renders at its parent directory's URL.
+      let id = entry.replace(/\.mdx?$/, "").replace(/(^|\/)index$/, "");
+      return id
+        .split("/")
+        .map((seg) =>
+          seg
+            .toLowerCase()
+            // Keep dots and dashes (the rest of the project relies on
+            // /docs/0.15/...); collapse anything else to a single dash to
+            // match github-slugger's behaviour for normal segments.
+            .replace(/[^a-z0-9.\-]+/g, "-")
+            .replace(/^-+|-+$/g, ""),
+        )
+        .filter(Boolean)
+        .join("/");
+    },
+  }),
+  schema: docsSchema({
+    extend: (context) => blogSchema(context),
+  }),
+});
+
+export const collections = { pages, legal, docs };

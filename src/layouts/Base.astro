@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import { ClientRouter } from "astro:transitions";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 
@@ -27,6 +28,7 @@ const { title, description, cta, ctaSub, ctaButton, ctaLink } = Astro.props;
     <meta property="og:title" content={title}/>
     <meta property="og:description" content={description}/>
     <meta property="og:type" content="website"/>
+    <ClientRouter />
     <script is:inline>
       // Set theme before paint to avoid flash
       (() => {
