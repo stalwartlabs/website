@@ -1,8 +1,0 @@
-# Stalwart Labs documentation at https://stalw.art/docs
-# AI agents and crawlers are welcome. Please respect Crawl-delay.
-
-User-agent: *
-Allow: /
-Crawl-delay: 1
-
-Sitemap: https://stalw.art/sitemap.xml

@@ -1,0 +1,89 @@
+---
+import { inlineMd, paragraphMd } from "../../lib/md";
+
+interface Props {
+  data: any;
+}
+const { data } = Astro.props;
+---
+<section class={`band ${data.band === "alt" ? "band--alt" : ""}`}>
+  <div class="container container-narrow">
+    {(data.eyebrow || data.title) && (
+      <div class="section-head reveal">
+        {data.eyebrow && <span class="eyebrow">{data.eyebrow}</span>}
+        {data.title && <h2 class="h2" set:html={inlineMd(data.title)}></h2>}
+      </div>
+    )}
+    <ul class="faq reveal">
+      {data.items.map((item: any) => (
+        <li class="faq__item">
+          <details>
+            <summary>
+              <span class="faq__q" set:html={inlineMd(item.question)}></span>
+              <span class="faq__chev" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </span>
+            </summary>
+            <div class="faq__a" set:html={paragraphMd(item.answer)}></div>
+          </details>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .section-head {
+    margin-bottom: clamp(2rem, 3vw, 3rem);
+  }
+  .section-head .h2 {
+    margin-top: 0.75rem;
+  }
+  .faq {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .faq__item details {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    overflow: hidden;
+    transition: border-color var(--t-fast) var(--ease);
+  }
+  .faq__item details[open] {
+    border-color: var(--border-strong);
+  }
+  .faq__item summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.1rem 1.4rem;
+    color: var(--text);
+    font-weight: 500;
+    font-size: 1rem;
+  }
+  .faq__item summary::-webkit-details-marker {
+    display: none;
+  }
+  .faq__chev {
+    color: var(--text-muted);
+    transition: transform var(--t-mid) var(--ease);
+    flex-shrink: 0;
+  }
+  .faq__item details[open] .faq__chev {
+    transform: rotate(180deg);
+  }
+  .faq__a {
+    padding: 0 1.4rem 1.25rem;
+    color: var(--text-muted);
+    font-size: 0.9375rem;
+    line-height: 1.65;
+  }
+  .faq__a :global(p + p) {
+    margin-top: 0.85em;
+  }
+</style>

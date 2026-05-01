@@ -1,0 +1,190 @@
+title: Stalwart MTA | Stalwart Labs
+description: >-
+  Programmable SMTP server with distributed virtual queues, DMARC, DKIM, SPF,
+  ARC verification, DANE, MTA-STS, TLS-RPT, milter and MTA Hooks.
+slug: /mta
+
+hero:
+  eyebrow: SMTP server
+  title: A programmable, distributed SMTP server
+  titleHighlight: distributed SMTP server
+  lead: >-
+    Stalwart's MTA is a full-featured SMTP server with sender authentication,
+    transport-layer security, distributed virtual queues and a programmable
+    filter pipeline. It can run on the same node as the mail store or scale
+    out as a dedicated outbound MTA cluster role.
+  ctas:
+    - label: Get started
+      href: /docs/install/get-started
+  meta:
+    - Open source
+    - Distributed queue
+  visual:
+    kind: screenshot
+    src: /images/webadmin/delivery-trace.png
+    alt: Stalwart delivery trace
+    url: admin.stalw.art / Emails / Delivery tests
+
+sections:
+  - kind: feature
+    eyebrow: Sender and message authentication
+    title: DMARC, DKIM, SPF and ARC, all built in.
+    body: >-
+      Every supported authentication standard is implemented natively, with
+      both verification and reporting paths. ARC verification was kept after
+      the IETF DMARC working group decided to wind down the ARC experiment;
+      ARC sealing on outbound was removed in v0.16, in line with that
+      decision. DKIM signing pairs with the [automated DKIM
+      rotation](/docs/domains/dkim-rotation) feature on the Mail Server side,
+      so signing keys generate, publish and retire themselves.
+    bullets:
+      - DMARC (RFC 7489) verification, alignment checking and aggregate / failure reporting.
+      - DKIM (RFC 6376) signing, verification and failure reporting; Ed25519 and RSA selectors.
+      - SPF (RFC 7208) policy evaluation and failure reporting.
+      - ARC (RFC 8617) verification on inbound; relaxed and strict modes.
+      - Reverse-DNS (iprev) validation.
+      - Automatic ingestion of received DMARC, TLS-RPT and ARF reports.
+    visual:
+      kind: screenshot
+      src: /images/webadmin/dmarc-report.png
+      alt: DMARC report visualisation
+      url: admin.stalw.art / Reports / DMARC
+
+  - kind: feature
+    reverse: true
+    band: alt
+    eyebrow: Transport security
+    title: DANE, MTA-STS, TLS reporting.
+    body: >-
+      Stalwart enforces transport security on outbound delivery through
+      per-strategy TLS policies and reports incoming TLS failures and
+      successes back to senders. TLSA records are kept in sync by the same
+      automated DNS management that handles MX and DKIM, so DANE does not
+      silently break after a certificate rollover.
+    bullets:
+      - DANE (RFC 6698) with `optional`, `require` and `disable` modes per TLS strategy.
+      - MTA-STS (RFC 8461) policy fetching and enforcement.
+      - SMTP TLS Reporting (RFC 8460) delivery and ingestion.
+      - Automatic TLSA refresh with ACME certificate rotation.
+    visual:
+      kind: screenshot
+      src: /images/webadmin/delivery-trace.png
+      alt: TLS handshake trace
+      url: admin.stalw.art / Emails / Delivery tests
+      glow: true
+
+  - kind: feature
+    eyebrow: Distributed virtual queues
+    title: Many queues, one cluster, no local spool.
+    body: >-
+      Outbound delivery uses an unlimited number of virtual queues that
+      share a distributed, fault-tolerant store. Any node in the cluster
+      can pick up a message; if a node fails, deliveries continue on the
+      survivors. Each virtual queue carries its own concurrency, retry
+      policy and quota, so transactional, bulk and report traffic stop
+      interfering with each other.
+    bullets:
+      - Distributed, fault-tolerant queue store; no per-node local spool.
+      - Unlimited virtual queues with per-queue concurrency.
+      - Delayed delivery, priority delivery and per-queue quotas.
+      - Dynamic routing rules and per-domain throttling.
+      - Smart-host and relay routing for upstream submission.
+      - Outbound MTA cluster role (v0.16) for dedicated submission tiers.
+    learnMore:
+      - label: Read the outbound queue docs
+        href: /docs/mta/outbound/queue
+    visual:
+      kind: screenshot
+      src: /images/webadmin/tasks.png
+      alt: Stalwart task queue
+      url: admin.stalw.art / Tasks
+
+  - kind: feature
+    reverse: true
+    band: alt
+    eyebrow: Filter pipeline
+    title: Sieve, milter, MTA Hooks, and a built-in spam filter.
+    body: >-
+      The inbound pipeline runs at every SMTP stage from `connect` through
+      `data`. Sieve scripts execute trusted server-side rules; milter and
+      MTA Hooks plug into existing filtering infrastructure; the built-in
+      [spam filter](/anti-spam) is always available without an extra daemon.
+    bullets:
+      - Sieve (RFC 5228) with every IANA-registered extension.
+      - Milter for Rspamd, ClamAV, SpamAssassin or any sendmail-compatible filter.
+      - "MTA Hooks: HTTP + JSON alternative to milter, with Basic and Bearer auth."
+      - Built-in spam and phishing filter; no external Rspamd required.
+      - "Per-stage invocation: `connect`, `ehlo`, `auth`, `mail`, `rcpt`, `data`."
+    learnMore:
+      - label: Read milter
+        href: /docs/mta/filter/milter
+      - label: Read MTA Hooks
+        href: /docs/mta/filter/mtahooks
+    visual:
+      kind: placeholder
+      caption: "Diagram needed: SMTP stages (connect / ehlo / auth / mail / rcpt / data) with Sieve, milter, MTA Hooks and built-in filter as parallel processors."
+
+  - kind: feature
+    eyebrow: Envelope and message rewriting
+    title: Change the address, the headers, the body, or the attachments.
+    body: >-
+      Stalwart can rewrite envelope addresses, add or remove headers, append
+      disclaimers, and strip attachments before queueing or delivery. Rules
+      are expression-driven, so they can branch on listener, sender,
+      recipient or arbitrary message metadata.
+    bullets:
+      - Address rewriting (sender, recipient, domain).
+      - Header add, modify, remove.
+      - Body modification and attachment policy.
+      - Inbound concurrency and rate limiting.
+    learnMore:
+      - label: Read message rewriting
+        href: /docs/mta/rewrite/overview
+    visual:
+      kind: placeholder
+      caption: "Screenshot needed: Sieve/expression-based rewriting rule editor in the WebUI."
+
+  - kind: feature
+    reverse: true
+    band: alt
+    eyebrow: Web admin
+    title: Queue, reports and live tracing in a browser.
+    body: >-
+      The web admin covers everything an SMTP operator needs: queue
+      management for messages and outbound DMARC and TLS reports,
+      visualisation of received DMARC, TLS-RPT and ARF reports, log search,
+      and live tracing of an in-flight transaction.
+    bullets:
+      - Queue management for messages and outbound reports.
+      - Received DMARC, TLS-RPT and ARF (failure) report visualisation.
+      - Live tracing and message delivery history.
+      - Log viewer with search and filtering.
+    visual:
+      kind: screenshot
+      src: /images/webadmin/dashboard-performance.png
+      alt: Stalwart performance dashboard
+      url: admin.stalw.art / Dashboard
+
+  - kind: feature
+    eyebrow: High availability
+    title: Coordinator-less or coordinator-based.
+    body: >-
+      The cluster runs in two modes. Peer-to-peer coordination uses Zenoh,
+      with no separate coordinator service to operate. Coordinator-based
+      deployments use Apache Kafka, Redpanda, NATS or Redis as the
+      transport. Either mode supports node autodiscovery and partition-
+      tolerant failure detection.
+    bullets:
+      - Peer-to-peer cluster coordination over Zenoh (no coordinator service).
+      - Kafka, Redpanda, NATS or Redis as alternatives for coordinator-based clusters.
+      - Distributed, fault-tolerant SMTP queue.
+      - Outbound MTA cluster role for dedicated submission and relay tiers.
+    visual:
+      kind: diagram
+      id: cluster
+
+footerCta:
+  cta: Replace your relay tier.
+  ctaSub: Run an SMTP cluster that signs, authenticates, reports and survives node failures.
+  ctaButton: Get started
+  ctaLink: /docs/install/get-started

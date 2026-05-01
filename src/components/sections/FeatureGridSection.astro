@@ -1,0 +1,59 @@
+---
+import FeatureCard from "../FeatureCard.astro";
+import { inlineMd, paragraphMd } from "../../lib/md";
+
+interface Props {
+  data: any;
+}
+const { data } = Astro.props;
+---
+<section class={`band ${data.band === "alt" ? "band--alt" : ""}`}>
+  <div class="container">
+    {(data.eyebrow || data.title || data.body) && (
+      <div class="section-head section-head--center reveal">
+        {data.eyebrow && <span class="eyebrow">{data.eyebrow}</span>}
+        {data.title && <h2 class="h2" set:html={inlineMd(data.title)}></h2>}
+        {data.body && <div class="lead lead--center" set:html={paragraphMd(data.body)}></div>}
+      </div>
+    )}
+    <div class="feature-grid reveal">
+      {data.items.map((item: any) => (
+        <FeatureCard href={item.href} title={item.title}>
+          <Fragment set:html={inlineMd(item.body)} />
+        </FeatureCard>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .section-head--center {
+    text-align: center;
+    max-width: 720px;
+    margin-inline: auto;
+    margin-bottom: clamp(2.5rem, 4vw, 3.5rem);
+  }
+  .section-head--center .h2 {
+    margin-top: 1rem;
+  }
+  .lead--center {
+    margin-top: 1.25rem;
+    margin-inline: auto;
+    color: var(--text-muted);
+    font-size: 1.0625rem;
+  }
+  .lead--center :global(p + p) {
+    margin-top: 0.85em;
+  }
+  .feature-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  @media (min-width: 600px) {
+    .feature-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 1024px) {
+    .feature-grid { grid-template-columns: repeat(4, 1fr); }
+  }
+</style>

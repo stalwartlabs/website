@@ -1,0 +1,497 @@
+---
+import Logo from "./Logo.astro";
+import ThemeToggle from "./ThemeToggle.astro";
+
+const platformLinks = [
+  { href: "/mail-server", label: "Mail Server" },
+  { href: "/collaboration", label: "Collaboration" },
+  { href: "/mta", label: "MTA" },
+  { href: "/anti-spam", label: "Anti-spam" },
+  { href: "/architecture", label: "Architecture" },
+  { href: "/integrations", label: "Integrations" },
+];
+const editionLinks = [
+  { href: "/enterprise", label: "Enterprise" },
+  { href: "/open-source", label: "Community" },
+  { href: "/compare", label: "Compare" },
+  { href: "/pricing", label: "Pricing" },
+  { href: "https://license.stalw.art/trial", label: "Evaluate", external: true },
+];
+const solutionLinks = [
+  { href: "/managed-email", label: "Managed e-mail" },
+  { href: "/migration", label: "Migration" },
+];
+const docsInstall = [
+  { href: "/docs/install/platform/linux", label: "Linux" },
+  { href: "/docs/install/platform/macos", label: "macOS" },
+  { href: "/docs/install/platform/windows", label: "Windows" },
+  { href: "/docs/install/platform/docker", label: "Docker" },
+];
+const docsOverview = [
+  { href: "/docs/install/get-started", label: "Get started" },
+  { href: "/docs/configuration/overview", label: "Configuration" },
+  { href: "/docs/management/overview", label: "Management" },
+  { href: "/docs/category/development", label: "Development" },
+  { href: "/docs/faq", label: "FAQ" },
+];
+const docsSettings = [
+  { href: "/docs/category/server-settings", label: "Server" },
+  { href: "/docs/storage/overview", label: "Storage" },
+  { href: "/docs/auth/overview", label: "Access Control" },
+  { href: "/docs/encryption/overview", label: "Encryption" },
+  { href: "/docs/mta/overview", label: "MTA" },
+  { href: "/docs/email/overview", label: "Email Store" },
+  { href: "/docs/collaboration/overview", label: "Collaboration" },
+  { href: "/docs/spamfilter/overview", label: "Spam & Phishing" },
+  { href: "/docs/sieve/overview", label: "Sieve" },
+  { href: "/docs/cluster/overview", label: "Clustering" },
+  { href: "/docs/telemetry/overview", label: "Telemetry" },
+];
+const supportLinks = [
+  { href: "https://support.stalw.art", label: "Support portal", external: true },
+  { href: "/support", label: "Overview" },
+];
+const companyLinks = [
+  { href: "/about", label: "About" },
+  { href: "/blog", label: "Blog" },
+  { href: "/contact", label: "Contact" },
+  { href: "/legal", label: "Legal" },
+];
+
+const socials = [
+  { href: "https://github.com/stalwartlabs/stalwart", label: "GitHub", icon: "github" },
+  { href: "https://twitter.com/stalwartlabs/", label: "Twitter", icon: "twitter" },
+  { href: "https://mastodon.social/@stalwartlabs", label: "Mastodon", icon: "mastodon" },
+  { href: "https://discord.com/servers/stalwart-923615863037390889", label: "Discord", icon: "discord" },
+  { href: "https://www.reddit.com/r/stalwartlabs", label: "Reddit", icon: "reddit" },
+  { href: "https://matrix.to/#/#stalwart:matrix.org", label: "Matrix", icon: "matrix" },
+];
+---
+<header class="site-header" data-site-header>
+  <div class="container site-header__inner">
+    <Logo />
+
+    <nav class="nav-primary" aria-label="Primary">
+      <ul class="nav-list">
+        <li class="nav-item has-menu">
+          <button class="nav-trigger" aria-haspopup="true" aria-expanded="false">Platform <span class="caret" aria-hidden="true">▾</span></button>
+          <div class="nav-panel">
+            <div class="nav-panel__inner">
+              <div class="nav-col">
+                <span class="nav-col__title">Platform</span>
+                <ul>
+                  {platformLinks.map(l => <li><a href={l.href}>{l.label}</a></li>)}
+                </ul>
+              </div>
+              <div class="nav-col">
+                <span class="nav-col__title">Solutions</span>
+                <ul>
+                  {solutionLinks.map(l => <li><a href={l.href}>{l.label}</a></li>)}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </li>
+
+        <li class="nav-item has-menu">
+          <button class="nav-trigger" aria-haspopup="true" aria-expanded="false">Editions <span class="caret" aria-hidden="true">▾</span></button>
+          <div class="nav-panel nav-panel--narrow">
+            <div class="nav-panel__inner">
+              <div class="nav-col">
+                <span class="nav-col__title">Editions</span>
+                <ul>
+                  {editionLinks.map(l => (
+                    <li><a href={l.href} {...(l.external ? { target: "_blank", rel: "noopener" } : {})}>{l.label}</a></li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </li>
+
+        <li class="nav-item has-menu">
+          <button class="nav-trigger" aria-haspopup="true" aria-expanded="false">Documentation <span class="caret" aria-hidden="true">▾</span></button>
+          <div class="nav-panel nav-panel--mega">
+            <div class="nav-panel__inner nav-panel__inner--mega">
+              <div class="nav-col">
+                <span class="nav-col__title">Install</span>
+                <ul>
+                  {docsInstall.map(l => <li><a href={l.href}>{l.label}</a></li>)}
+                </ul>
+              </div>
+              <div class="nav-col">
+                <span class="nav-col__title">Overview</span>
+                <ul>
+                  {docsOverview.map(l => <li><a href={l.href}>{l.label}</a></li>)}
+                </ul>
+              </div>
+              <div class="nav-col">
+                <span class="nav-col__title">Settings</span>
+                <ul>
+                  {docsSettings.map(l => <li><a href={l.href}>{l.label}</a></li>)}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </li>
+
+        <li class="nav-item has-menu">
+          <button class="nav-trigger" aria-haspopup="true" aria-expanded="false">Support <span class="caret" aria-hidden="true">▾</span></button>
+          <div class="nav-panel nav-panel--single">
+            <div class="nav-panel__inner nav-panel__inner--single">
+              <div class="nav-col">
+                <span class="nav-col__title">Support</span>
+                <ul>
+                  {supportLinks.map(l => (
+                    <li><a href={l.href} {...(l.external ? { target: "_blank", rel: "noopener" } : {})}>{l.label}</a></li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </li>
+
+        <li class="nav-item has-menu">
+          <button class="nav-trigger" aria-haspopup="true" aria-expanded="false">Company <span class="caret" aria-hidden="true">▾</span></button>
+          <div class="nav-panel nav-panel--single">
+            <div class="nav-panel__inner nav-panel__inner--single">
+              <div class="nav-col">
+                <span class="nav-col__title">Company</span>
+                <ul>
+                  {companyLinks.map(l => <li><a href={l.href}>{l.label}</a></li>)}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="header-end">
+      <a class="icon-link header-social" href="https://github.com/stalwartlabs/stalwart" target="_blank" rel="noopener" aria-label="Stalwart on GitHub">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 .5C5.7.5.7 5.5.7 11.8c0 5 3.2 9.2 7.7 10.7.6.1.8-.2.8-.6v-2c-3.1.7-3.8-1.3-3.8-1.3-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 1.7 2.7 1.2 3.4.9.1-.7.4-1.2.7-1.5-2.5-.3-5.1-1.2-5.1-5.5 0-1.2.4-2.2 1.2-3-.1-.3-.5-1.5.1-3.1 0 0 .9-.3 3.1 1.2.9-.3 1.9-.4 2.9-.4s2 .1 2.9.4c2.2-1.5 3.1-1.2 3.1-1.2.6 1.6.2 2.8.1 3.1.7.8 1.2 1.8 1.2 3 0 4.3-2.6 5.2-5.1 5.5.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.5-1.5 7.7-5.7 7.7-10.7C23.3 5.5 18.3.5 12 .5z"/>
+        </svg>
+      </a>
+      <ThemeToggle />
+      <a class="btn btn-primary btn-sm" href="/docs/install/get-started">Get Stalwart</a>
+      <button class="hamburger" aria-label="Open menu" data-hamburger>
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="mobile-drawer" data-mobile-drawer hidden>
+    <div class="mobile-drawer__inner">
+      <div class="mobile-drawer__top">
+        <span class="mobile-drawer__title">Stalwart</span>
+        <button class="icon-link" data-mobile-close aria-label="Close menu">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="mobile-drawer__cols">
+        <details open>
+          <summary>Platform</summary>
+          <ul>{platformLinks.map(l => <li><a href={l.href}>{l.label}</a></li>)}</ul>
+        </details>
+        <details>
+          <summary>Editions</summary>
+          <ul>{editionLinks.map(l => <li><a href={l.href}>{l.label}</a></li>)}</ul>
+        </details>
+        <details>
+          <summary>Solutions</summary>
+          <ul>{solutionLinks.map(l => <li><a href={l.href}>{l.label}</a></li>)}</ul>
+        </details>
+        <details>
+          <summary>Documentation</summary>
+          <ul>{[...docsOverview, ...docsInstall].map(l => <li><a href={l.href}>{l.label}</a></li>)}</ul>
+        </details>
+        <details>
+          <summary>Company</summary>
+          <ul>{companyLinks.map(l => <li><a href={l.href}>{l.label}</a></li>)}</ul>
+        </details>
+      </div>
+      <div class="mobile-drawer__foot">
+        <a class="link-arrow" href="mailto:hello@stalw.art">hello@stalw.art</a>
+        <ul class="socials">
+          {socials.map(s => <li><a href={s.href} target="_blank" rel="noopener" aria-label={s.label}>{s.label}</a></li>)}
+        </ul>
+      </div>
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    backdrop-filter: saturate(160%) blur(14px);
+    -webkit-backdrop-filter: saturate(160%) blur(14px);
+    background: color-mix(in oklab, var(--bg) 78%, transparent);
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--t-mid) var(--ease), background var(--t-mid) var(--ease);
+  }
+  .site-header.is-scrolled {
+    border-bottom-color: var(--border);
+    background: color-mix(in oklab, var(--bg) 92%, transparent);
+  }
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    height: 68px;
+  }
+  .nav-primary {
+    display: none;
+    flex: 1;
+  }
+  @media (min-width: 1024px) {
+    .nav-primary {
+      display: block;
+      margin-inline: 2rem;
+    }
+  }
+  .nav-list {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  .nav-item {
+    position: relative;
+  }
+  .nav-trigger,
+  .nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.5rem 0.85rem;
+    border-radius: var(--radius-pill);
+    color: var(--text-muted);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    transition: color var(--t-fast) var(--ease), background var(--t-fast) var(--ease);
+  }
+  .nav-trigger:hover,
+  .nav-link:hover,
+  .nav-item:hover .nav-trigger {
+    color: var(--text);
+    background: var(--surface);
+  }
+  .caret {
+    font-size: 0.7em;
+    opacity: 0.7;
+    transition: transform var(--t-fast) var(--ease);
+  }
+  .nav-item:hover .caret {
+    transform: rotate(180deg);
+  }
+  .nav-panel {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translate(-50%, 8px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--t-mid) var(--ease), transform var(--t-mid) var(--ease);
+    padding-top: 10px;
+    z-index: 60;
+  }
+  .nav-item:hover .nav-panel,
+  .nav-item:focus-within .nav-panel {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, 0);
+  }
+  .nav-panel__inner {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem;
+    box-shadow: var(--shadow-2);
+    display: grid;
+    grid-template-columns: repeat(2, minmax(180px, 1fr));
+    gap: 1.5rem 2rem;
+    min-width: 420px;
+  }
+  .nav-panel--narrow .nav-panel__inner {
+    grid-template-columns: repeat(2, minmax(160px, 1fr));
+    min-width: 360px;
+  }
+  .nav-panel--single .nav-panel__inner--single {
+    grid-template-columns: minmax(200px, 1fr);
+    min-width: 220px;
+  }
+  .nav-panel--mega .nav-panel__inner--mega {
+    grid-template-columns: repeat(3, minmax(180px, 1fr));
+    min-width: 640px;
+  }
+  .nav-col__title {
+    display: block;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--text-dim);
+    margin-bottom: 0.6rem;
+    font-weight: 600;
+  }
+  .nav-col ul li a {
+    display: block;
+    padding: 0.4rem 0.5rem;
+    margin-inline: -0.5rem;
+    border-radius: 8px;
+    font-size: 0.9375rem;
+    color: var(--text);
+    transition: background var(--t-fast) var(--ease), color var(--t-fast) var(--ease);
+  }
+  .nav-col ul li a:hover {
+    background: var(--surface);
+    color: var(--brand);
+  }
+
+  .header-end {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .icon-link {
+    width: 36px;
+    height: 36px;
+    display: inline-grid;
+    place-items: center;
+    border-radius: var(--radius-pill);
+    color: var(--text-muted);
+    transition: color var(--t-fast) var(--ease), background var(--t-fast) var(--ease);
+  }
+  .icon-link:hover {
+    color: var(--text);
+    background: var(--surface);
+  }
+  .header-social {
+    display: none;
+  }
+  @media (min-width: 600px) {
+    .header-social {
+      display: inline-grid;
+    }
+  }
+  .btn-sm {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+  }
+
+  .hamburger {
+    width: 36px;
+    height: 36px;
+    display: inline-grid;
+    place-items: center;
+    gap: 4px;
+    color: var(--text);
+    border-radius: var(--radius-pill);
+  }
+  .hamburger span {
+    display: block;
+    width: 18px;
+    height: 1.5px;
+    background: currentColor;
+    border-radius: 2px;
+  }
+  @media (min-width: 1024px) {
+    .hamburger {
+      display: none;
+    }
+  }
+
+  .mobile-drawer {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: var(--bg);
+    overflow-y: auto;
+  }
+  .mobile-drawer[hidden] {
+    display: none;
+  }
+  .mobile-drawer__inner {
+    padding: 1.25rem var(--gutter) 3rem;
+  }
+  .mobile-drawer__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+  }
+  .mobile-drawer__title {
+    font-size: 1.0625rem;
+    font-weight: 700;
+  }
+  .mobile-drawer__cols details {
+    border-bottom: 1px solid var(--border);
+  }
+  .mobile-drawer__cols summary {
+    padding: 1rem 0;
+    cursor: pointer;
+    font-weight: 600;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .mobile-drawer__cols summary::after {
+    content: "+";
+    font-size: 1.25rem;
+    color: var(--text-muted);
+  }
+  .mobile-drawer__cols details[open] summary::after {
+    content: "−";
+  }
+  .mobile-drawer__cols ul {
+    padding-bottom: 0.75rem;
+  }
+  .mobile-drawer__cols ul li a {
+    display: block;
+    padding: 0.5rem 0;
+    color: var(--text-muted);
+  }
+  .mobile-drawer__foot {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  .socials {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+  .socials a {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+  }
+</style>
+
+<script is:inline>
+  (() => {
+    const header = document.querySelector("[data-site-header]");
+    const onScroll = () => {
+      if (!header) return;
+      header.classList.toggle("is-scrolled", window.scrollY > 8);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    const drawer = document.querySelector("[data-mobile-drawer]");
+    const toggleDrawer = (open) => {
+      if (!drawer) return;
+      drawer.hidden = !open;
+      document.body.style.overflow = open ? "hidden" : "";
+    };
+    document.addEventListener("click", (e) => {
+      const t = e.target instanceof Element ? e.target : null;
+      if (!t) return;
+      if (t.closest("[data-hamburger]")) toggleDrawer(true);
+      if (t.closest("[data-mobile-close]")) toggleDrawer(false);
+    });
+  })();
+</script>

@@ -1,0 +1,155 @@
+title: Community Edition | Stalwart Labs
+description: >-
+  The full Stalwart mail and collaboration server under AGPL-3.0.
+  Production-ready, memory-safe Rust, security-audited, with a sponsor path
+  to Enterprise.
+slug: /open-source
+
+hero:
+  eyebrow: Community edition
+  title: The full server, under AGPL-3.0.
+  titleHighlight: AGPL-3.0
+  lead: >-
+    Stalwart's Community Edition is the full mail and collaboration server,
+    released under AGPL-3.0 and used in production. JMAP, IMAP4rev1/4rev2,
+    POP3, SMTP, CalDAV, CardDAV and WebDAV are all in the open-source build,
+    alongside the spam-filtering pipeline, clustering and the web admin.
+    Sponsoring the project at $5 per month sends you an Enterprise key
+    automatically.
+  ctas:
+    - label: Get the source
+      href: https://github.com/stalwartlabs/stalwart
+      external: true
+    - label: Install Stalwart
+      href: /docs/install/get-started
+      primary: false
+  meta:
+    - AGPL-3.0
+    - Memory-safe Rust
+    - Security audited
+
+sections:
+  - kind: feature
+    eyebrow: AGPL-3.0, production use
+    title: Free software, designed to be deployed.
+    body: >-
+      Stalwart is dual-licensed under the GNU Affero General Public License
+      v3.0 and the Stalwart Enterprise License v1. The Community Edition
+      under AGPL-3.0 is the build most operators run: it is the same source
+      tree that powers production deployments at hosting providers,
+      universities and self-hosters, with no time bombs, feature gates that
+      nag, or "open core" stubs. The AGPL-3.0 obligations apply only when
+      modified versions of the server are themselves redistributed or
+      offered as a network service; running an unmodified Stalwart, or
+      using it internally, does not trigger any source-disclosure
+      requirement.
+
+      Operators that prefer not to comply with AGPL-3.0 in their own
+      modifications can purchase the proprietary SELv1 license through the
+      Enterprise Edition.
+    learnMore:
+      - label: Compare editions
+        href: /compare
+    visual:
+      kind: placeholder
+      caption: "Diagram needed: AGPL-3.0 obligations summary (when source disclosure is required vs. not)."
+
+  - kind: feature
+    reverse: true
+    band: alt
+    eyebrow: Protocol and feature parity with Enterprise
+    title: Same standards stack, same core feature set.
+    body: >-
+      The Community Edition implements the full protocol surface of the
+      product across email, collaboration, anti-spam and operations. What
+      the Enterprise Edition adds is operational tooling on top of this
+      stack, not protocol coverage: multi-tenancy and per-domain directory
+      backends, branding, account archiving and un-deletion, live telemetry
+      streaming, metric alerts, AI-assisted spam classification, masked
+      email, read replicas and sharded storage.
+    bullets:
+      - "**Email**: JMAP, IMAP4rev2, IMAP4rev1, ManageSieve, POP3, SMTP with built-in DMARC, DKIM, SPF and ARC verification."
+      - "**Collaboration**: CalDAV with scheduling, CardDAV with legacy vCard, WebDAV, ACLs, plus matching JMAP."
+      - "**Anti-spam**: FTRL-Proximal classifier, phishing protection, sender reputation, greylisting, DNSBL, Pyzor, milter and MTA Hooks."
+      - "**Operations**: clustering, pluggable storage, full-text search, encryption at rest, ACME, automated DNS and DKIM rotation, OAuth/OIDC/LDAP/SQL auth."
+    learnMore:
+      - label: Edition comparison
+        href: /compare
+
+  - kind: feature
+    eyebrow: Memory-safe Rust, security audited
+    title: Written in Rust; reviewed by an external auditor.
+    body: >-
+      Stalwart is written in Rust, which means whole categories of
+      vulnerability common in C-based mail servers (use-after-free, buffer
+      overruns, type confusion in protocol parsers) are eliminated at
+      compile time rather than caught after a CVE. The codebase has been
+      through an external security audit; the public report is on the blog.
+    learnMore:
+      - label: Read the security audit
+        href: /blog/security-audit
+
+  - kind: feature
+    reverse: true
+    band: alt
+    eyebrow: Sponsor and get an Enterprise key
+    title: Pay what works for you, get an Enterprise license back.
+    body: >-
+      Stalwart Labs runs a sponsor programme on Open Collective that
+      doubles as a low-friction Enterprise route for individuals and small
+      operators.
+    bullets:
+      - "**$5 per month** sponsors automatically receive an Enterprise Edition key."
+      - "**$30 per month** sponsors additionally receive Premium Support."
+      - The license is issued automatically and renews while the sponsorship is active.
+    learnMore:
+      - label: Become a sponsor
+        href: https://opencollective.com/stalwart
+        external: true
+      - label: See Enterprise pricing
+        href: /pricing
+
+  - kind: feature
+    eyebrow: Community channels
+    title: Where to ask for help, file bugs and follow development.
+    body: >-
+      Issues, pull requests and design discussion live on GitHub at
+      `stalwartlabs/stalwart` (the repository was renamed from
+      `stalwartlabs/mail-server`). User support, configuration advice and
+      operator-to-operator discussion happen on the support portal at
+      `support.stalw.art`, where Community-edition users can sign up for
+      free. Discord, Reddit and Mastodon are useful for following the
+      project and informal conversation, but they are not support channels.
+    learnMore:
+      - label: GitHub repository
+        href: https://github.com/stalwartlabs/stalwart
+        external: true
+      - label: Support portal
+        href: https://support.stalw.art
+        external: true
+
+  - kind: prose
+    band: alt
+    eyebrow: Funding
+    title: Built with public-interest funding.
+    body: >-
+      Part of Stalwart's development was funded by NLnet through two grants:
+
+      **NGI0 Entrust Fund**, established by NLnet with financial support
+      from the European Commission's Next Generation Internet programme,
+      under DG Communications Networks, Content and Technology, grant
+      agreement No 101069594.
+
+      **NGI Zero Core**, established by NLnet with financial support from
+      the European Commission's programme, under DG Communications
+      Networks, Content and Technology, grant agreement No 101092990.
+
+      Public funding has helped Stalwart ship features that benefit the
+      whole open-source ecosystem (the JMAP collaboration stack and the
+      spam-filter rewrite among them) and stay free for self-hosters.
+
+footerCta:
+  cta: Help keep Stalwart free and open
+  ctaSub: Sponsor at $5 per month and receive an Enterprise key in return.
+  ctaButton: Become a sponsor
+  ctaLink: https://opencollective.com/stalwart

@@ -1,0 +1,171 @@
+---
+import { inlineMd, paragraphMd } from "../../lib/md";
+
+interface Props {
+  data: any;
+}
+const { data } = Astro.props;
+---
+<section class={`band ${data.band === "alt" ? "band--alt" : ""}`} id="contact-form">
+  <div class="container container-narrow">
+    {(data.eyebrow || data.title) && (
+      <div class="section-head reveal">
+        {data.eyebrow && <span class="eyebrow">{data.eyebrow}</span>}
+        {data.title && <h2 class="h2" set:html={inlineMd(data.title)}></h2>}
+        {data.body && <div class="cf__body" set:html={paragraphMd(data.body)}></div>}
+      </div>
+    )}
+    <form class="cf reveal" method="post" action={data.action} novalidate data-contact-form>
+      <input type="hidden" name="subject" value="Stalwart Inquiry" />
+
+      <div class="cf__grid">
+        <div class="cf__field">
+          <label for="cf-name" class="cf__label">Full name <span aria-hidden="true">*</span></label>
+          <input id="cf-name" name="name" type="text" placeholder="Jane Doe" required class="cf__input" />
+          <span class="cf__feedback cf__feedback--error">Please enter your full name.</span>
+        </div>
+
+        <div class="cf__field">
+          <label for="cf-email" class="cf__label">Email <span aria-hidden="true">*</span></label>
+          <input id="cf-email" name="email" type="email" placeholder="jane.doe@example.com" required class="cf__input" />
+          <span class="cf__feedback cf__feedback--error">Please provide a valid email address.</span>
+        </div>
+
+        <div class="cf__field">
+          <label for="cf-topic" class="cf__label">Topic <span aria-hidden="true">*</span></label>
+          <select id="cf-topic" name="topic" required class="cf__select">
+            <option value="" selected disabled>Select a topic</option>
+            {data.topics.map((t: string) => <option value={t}>{t}</option>)}
+          </select>
+          <span class="cf__feedback cf__feedback--error">Please select a topic.</span>
+        </div>
+
+        <div class="cf__field">
+          <label for="cf-mailboxes" class="cf__label">Number of mailboxes <span aria-hidden="true">*</span></label>
+          <select id="cf-mailboxes" name="mailboxes" required class="cf__select">
+            <option value="" selected disabled>Select a range</option>
+            {data.mailboxRanges.map((r: string) => <option value={r}>{r}</option>)}
+          </select>
+          <span class="cf__feedback cf__feedback--error">Please pick a range.</span>
+        </div>
+
+        <div class="cf__field cf__field--full">
+          <label for="cf-message" class="cf__label">Message <span aria-hidden="true">*</span></label>
+          <textarea id="cf-message" name="message" rows="6" placeholder="Tell us a bit about your situation" required class="cf__textarea"></textarea>
+          <span class="cf__feedback cf__feedback--error">Please enter your message.</span>
+        </div>
+      </div>
+
+      <div class="cf__footer">
+        <p class="cf__hint"><span aria-hidden="true">*</span> Required fields.</p>
+        <button type="submit" class="btn btn-primary btn-arrow">{data.submitLabel}</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<script is:inline>
+  (() => {
+    const form = document.querySelector("[data-contact-form]");
+    if (!form) return;
+    form.addEventListener("submit", (e) => {
+      // Trigger native validation. Add a class so styled feedback shows.
+      if (!form.checkValidity()) {
+        e.preventDefault();
+        form.classList.add("cf--validated");
+      }
+    });
+  })();
+</script>
+
+<style>
+  .section-head {
+    margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
+  }
+  .section-head .h2 {
+    margin-top: 0.75rem;
+  }
+  .cf__body {
+    margin-top: 1rem;
+    color: var(--text-muted);
+  }
+  .cf {
+    padding: clamp(1.5rem, 3vw, 2.5rem);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+  .cf__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+  @media (min-width: 720px) {
+    .cf__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .cf__field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .cf__field--full {
+    grid-column: 1 / -1;
+  }
+  .cf__label {
+    font-size: 0.8125rem;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+  .cf__label span[aria-hidden] {
+    color: var(--brand);
+  }
+  .cf__input,
+  .cf__select,
+  .cf__textarea {
+    padding: 0.7rem 0.95rem;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text);
+    font-size: 0.9375rem;
+    transition: border-color var(--t-fast) var(--ease);
+  }
+  .cf__input:focus,
+  .cf__select:focus,
+  .cf__textarea:focus {
+    outline: none;
+    border-color: var(--brand);
+  }
+  .cf__textarea {
+    resize: vertical;
+    min-height: 140px;
+  }
+  .cf__feedback {
+    font-size: 0.8125rem;
+    color: var(--brand);
+    display: none;
+  }
+  .cf--validated :is(.cf__input, .cf__select, .cf__textarea):invalid {
+    border-color: var(--brand);
+  }
+  .cf--validated :is(.cf__input, .cf__select, .cf__textarea):invalid + .cf__feedback {
+    display: block;
+  }
+  .cf__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
+  }
+  .cf__hint {
+    color: var(--text-dim);
+    font-size: 0.8125rem;
+  }
+  .cf__hint span[aria-hidden] {
+    color: var(--brand);
+  }
+</style>

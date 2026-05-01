@@ -1,0 +1,237 @@
+---
+import Base from "./Base.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  lastUpdated?: string;
+  navIndex: { slug: string; title: string; current: boolean }[];
+}
+
+const { title, description, lastUpdated, navIndex } = Astro.props;
+---
+<Base title={title} description={description}>
+  <section class="lf">
+    <div class="container lf__layout">
+      <aside class="lf__nav">
+        <a class="lf__back" href="/legal">
+          <span aria-hidden="true">←</span> All legal pages
+        </a>
+        <nav aria-label="Legal sections">
+          <ul class="lf__nav-list">
+            {navIndex.map((entry) => (
+              <li>
+                <a
+                  href={`/legal/${entry.slug}`}
+                  class={`lf__nav-link ${entry.current ? "is-current" : ""}`}
+                >{entry.title}</a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </aside>
+      <article class="lf__article">
+        <header class="lf__header">
+          <h1 class="lf__title">{title}</h1>
+          {lastUpdated && (
+            <p class="lf__meta">Last updated {lastUpdated}</p>
+          )}
+        </header>
+        <div class="lf__body prose-body">
+          <slot />
+        </div>
+      </article>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .lf {
+    padding-top: clamp(2rem, 4vw, 3.5rem);
+  }
+  .lf__layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  @media (min-width: 900px) {
+    .lf__layout {
+      grid-template-columns: 220px 1fr;
+      gap: 4rem;
+      align-items: flex-start;
+    }
+  }
+  .lf__nav {
+    position: sticky;
+    top: 84px;
+    align-self: flex-start;
+  }
+  .lf__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    margin-bottom: 1.5rem;
+    transition: color var(--t-fast) var(--ease);
+  }
+  .lf__back:hover {
+    color: var(--text);
+  }
+  .lf__nav-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+  .lf__nav-link {
+    display: block;
+    padding: 0.5rem 0.85rem;
+    margin-inline: -0.85rem;
+    border-radius: 8px;
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    line-height: 1.3;
+    transition: color var(--t-fast) var(--ease), background var(--t-fast) var(--ease);
+  }
+  .lf__nav-link:hover {
+    color: var(--text);
+    background: var(--surface);
+  }
+  .lf__nav-link.is-current {
+    color: var(--brand);
+    background: var(--brand-soft);
+    font-weight: 500;
+  }
+
+  .lf__article {
+    max-width: 760px;
+    width: 100%;
+  }
+  .lf__title {
+    font-size: clamp(2rem, 3vw + 0.5rem, 3rem);
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    font-weight: 600;
+  }
+  .lf__meta {
+    margin-top: 0.5rem;
+    color: var(--text-dim);
+    font-size: 0.875rem;
+  }
+  .lf__header {
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .prose-body {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--text);
+  }
+  .prose-body :global(p) {
+    margin: 1em 0;
+    color: var(--text-muted);
+  }
+  .prose-body :global(strong) {
+    color: var(--text);
+  }
+  .prose-body :global(h2) {
+    margin-top: 2.75em;
+    margin-bottom: 0.75em;
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    color: var(--text);
+  }
+  .prose-body :global(h3) {
+    margin-top: 2em;
+    margin-bottom: 0.6em;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .prose-body :global(h4) {
+    margin-top: 1.6em;
+    margin-bottom: 0.5em;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .prose-body :global(h5),
+  .prose-body :global(h6) {
+    margin-top: 1.4em;
+    margin-bottom: 0.5em;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--text);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .prose-body :global(ul),
+  .prose-body :global(ol) {
+    margin: 1em 0 1em 1.5rem;
+    padding: 0;
+    list-style: revert;
+    color: var(--text-muted);
+  }
+  .prose-body :global(ul) {
+    list-style-type: disc;
+  }
+  .prose-body :global(ol) {
+    list-style-type: decimal;
+  }
+  .prose-body :global(li) {
+    margin: 0.4em 0;
+    padding-left: 0.25em;
+  }
+  .prose-body :global(a) {
+    color: var(--brand);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    text-decoration-thickness: 1px;
+    text-decoration-color: var(--brand-soft);
+    transition: text-decoration-color var(--t-fast) var(--ease);
+  }
+  .prose-body :global(a:hover) {
+    text-decoration-color: var(--brand);
+  }
+  .prose-body :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5em 0;
+    font-size: 0.9375rem;
+  }
+  .prose-body :global(th),
+  .prose-body :global(td) {
+    text-align: left;
+    padding: 0.6rem 0.9rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .prose-body :global(thead th) {
+    background: var(--surface-2);
+    font-weight: 600;
+  }
+  .prose-body :global(blockquote) {
+    margin: 1.25em 0;
+    padding-left: 1rem;
+    border-left: 3px solid var(--border-strong);
+    color: var(--text-muted);
+    font-style: italic;
+  }
+  .prose-body :global(hr) {
+    margin: 2.5em 0;
+    border: 0;
+    border-top: 1px solid var(--border);
+  }
+  .prose-body :global(code) {
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    padding: 0.05em 0.4em;
+    border-radius: 5px;
+    color: var(--text);
+  }
+</style>

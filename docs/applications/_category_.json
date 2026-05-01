@@ -1,8 +1,0 @@
-{
-    "label": "Applications",
-    "position": 17,
-    "link": {
-        "type": "generated-index",
-        "description": "Hosted single-page applications (SPAs) served from Stalwart"
-    }
-}

@@ -1,0 +1,156 @@
+title: Pricing | Stalwart Labs
+description: >-
+  Per-mailbox pricing for the Stalwart Enterprise edition, with tiered
+  annual rates from 25 to 10 million-plus mailboxes.
+slug: /pricing
+
+hero:
+  eyebrow: Pricing
+  title: Per-mailbox pricing for the Enterprise edition.
+  titleHighlight: Per-mailbox pricing
+  lead: >-
+    Stalwart Enterprise is sold as a per-mailbox subscription with tiered,
+    progressive pricing: each portion of the mailbox count is billed at
+    the rate for its tier rather than at a single flat rate. Only active
+    mailboxes are counted, and every plan includes unlimited domains,
+    tenants, groups, lists and aliases. The Community edition stays free
+    under AGPL-3.0.
+  ctas:
+    - label: Buy now
+      href: https://license.stalw.art/buy
+      external: true
+    - label: Start a 30-day trial
+      href: https://license.stalw.art/trial
+      external: true
+      primary: false
+    - label: Contact sales
+      href: /contact
+      primary: false
+
+sections:
+  - kind: pricing-tiers
+    eyebrow: Tier rates
+    title: Each tier billed at its own rate.
+    body: >-
+      The total bill for a given deployment combines the rates across the
+      tiers it spans. A 600-mailbox deployment, for example, is charged
+      the rate for 25-499 on the first 499 mailboxes and the rate for
+      500-999 on the remainder.
+    showTableBelow: 100000
+    quoteCta:
+      label: Obtain quote
+      href: /contact
+    tiers:
+      - { lower: 25,         upper: 499,        eur: 2.00, usd: 2.40 }
+      - { lower: 500,        upper: 999,        eur: 1.70, usd: 2.04 }
+      - { lower: 1000,       upper: 4999,       eur: 1.45, usd: 1.74 }
+      - { lower: 5000,       upper: 10000,      eur: 1.23, usd: 1.48 }
+      - { lower: 10000,      upper: 49999,      eur: 1.04, usd: 1.25 }
+      - { lower: 50000,      upper: 99999,      eur: 0.89, usd: 1.09 }
+      - { lower: 100000,     upper: 499999,     eur: 0.75, usd: 0.90 }
+      - { lower: 500000,     upper: 999999,     eur: 0.64, usd: 0.78 }
+      - { lower: 1000000,    upper: 9999999,    eur: 0.54, usd: 0.65 }
+      - { lower: 10000000,   upper: null,       eur: 0.46, usd: 0.55 }
+
+  - kind: calculator
+    band: alt
+    eyebrow: Calculate
+    title: Estimate your annual cost.
+    body: >-
+      Drag the slider or type a mailbox count. The total uses the same
+      tiered rates above. Premium Support is included at 150 mailboxes
+      and above.
+    premiumSupportThreshold: 150
+
+  - kind: prose
+    eyebrow: How licensing works
+    title: Per-mailbox subscription, annual or monthly.
+    body: >-
+      Two billing cycles are available: **annual**, with a discount applied
+      for paying yearly, and **monthly**, for organisations that prefer a
+      shorter commitment.
+
+      Only active mailboxes count toward the total. Inactive accounts,
+      system accounts and shared resources are not billed. Every plan
+      includes unlimited domains, tenants, groups, mailing lists and
+      aliases at no extra cost.
+
+  - kind: list
+    band: alt
+    title: How a license is issued.
+    body: >-
+      License keys are issued instantly to credit-card buyers. After
+      purchase at the [Stalwart Labs licensing portal](https://license.stalw.art/buy),
+      the key is available immediately and activates Enterprise features
+      as soon as it is installed on the server. A 30-day Enterprise trial
+      is available at the [trial portal](https://license.stalw.art/trial),
+      with full access to Enterprise features for evaluation. The trial
+      reverts to Community at the end of the period without any data loss.
+    bullets:
+      - "**Anchored to a hostname domain**, not to an individual server. A key for `*.example.org` covers an unlimited number of servers under that domain."
+      - "**Unlimited client domains**: the domain restriction applies only to server hostnames, not to the domains your users send and receive mail under."
+      - "**Cancellation reverts to Community.** Enterprise-only features are disabled, but no data is lost and service continues without interruption."
+
+  - kind: prose
+    eyebrow: Premium Support
+    title: Included at 150 mailboxes and above.
+    body: >-
+      Premium Support is included with Enterprise subscriptions of 150
+      mailboxes or more. It covers priority response, named contacts,
+      expedited bug fixing, and influence on the product roadmap.
+      Subscriptions below 150 mailboxes still receive priority bug fixing
+      and access to the Enterprise-only feature set, without Premium
+      Support response times.
+
+      On-demand options for Premium Support customers include a dedicated
+      Support Engineer, a custom SLA, and lawful interception. The full
+      response-time matrix and the list of on-demand services live on the
+      [Support page](/support).
+
+  - kind: prose
+    band: alt
+    eyebrow: Community edition
+    title: Free for production use under AGPL-3.0.
+    body: >-
+      The Community edition is published under [AGPL-3.0](https://www.gnu.org/licenses/agpl-3.0)
+      and is free for production use. It has the same protocols and core
+      features as Enterprise; the Enterprise edition adds operational
+      features such as multi-tenancy, alerts, AI-driven spam filtering,
+      account archiving, read replicas and sharded blob storage. See the
+      [comparison table](/compare) for a feature-by-feature breakdown.
+
+      Community users can support development by [sponsoring the project](https://opencollective.com/stalwart).
+      Sponsors at $5 per month or more automatically receive an Enterprise
+      license key. Sponsors at $30 per month or more also get Premium
+      Support. Sponsorship is the simplest path to an Enterprise key for
+      individual operators and small teams that want to back the project
+      directly.
+
+  - kind: faq
+    eyebrow: Frequently asked
+    title: Pricing FAQ.
+    items:
+      - question: Are mailboxes counted on a peak or average basis?
+        answer: >-
+          Active mailbox count, measured at billing. System mailboxes,
+          shared resources and disabled accounts are not counted.
+      - question: Can I move the license to a different server?
+        answer: >-
+          Yes, as long as the server hostname falls under the licensed
+          domain (for example, anywhere under `*.example.org`).
+      - question: Do I need a separate license for each region or data centre?
+        answer: >-
+          No. One key covers every server under the licensed hostname
+          domain, regardless of where it runs.
+      - question: What happens if my mailbox count exceeds my plan mid-cycle?
+        answer: >-
+          The next renewal is sized to the new count. Mid-cycle, the
+          server keeps operating without restriction.
+      - question: Is there a discount for non-profits or educational institutions?
+        answer: Yes. Contact sales for the current terms.
+
+footerCta:
+  cta: Ready to deploy Stalwart Enterprise?
+  ctaSub: Buy a license now, start a 30-day trial, or talk to sales for custom requirements.
+  ctaButton: Buy now
+  ctaLink: https://license.stalw.art/buy

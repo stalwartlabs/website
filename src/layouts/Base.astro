@@ -1,0 +1,79 @@
+---
+import "../styles/global.css";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  cta?: string;
+  ctaSub?: string;
+  ctaButton?: string;
+  ctaLink?: string;
+}
+
+const { title, description, cta, ctaSub, ctaButton, ctaLink } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>{title}</title>
+    <meta name="description" content={description}/>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+    <meta name="theme-color" content="#08080b" media="(prefers-color-scheme: dark)"/>
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)"/>
+    <meta property="og:title" content={title}/>
+    <meta property="og:description" content={description}/>
+    <meta property="og:type" content="website"/>
+    <script is:inline>
+      // Set theme before paint to avoid flash
+      (() => {
+        const stored = localStorage.getItem("stalwart-theme");
+        const initial = stored || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+        document.documentElement.setAttribute("data-theme", initial);
+      })();
+    </script>
+  </head>
+  <body>
+    <a href="#main" class="skip-link">Skip to content</a>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer cta={cta} ctaSub={ctaSub} ctaButton={ctaButton} ctaLink={ctaLink} />
+    <script is:inline>
+      // Reveal-on-scroll
+      (() => {
+        if (!("IntersectionObserver" in window)) {
+          document.querySelectorAll(".reveal").forEach(el => el.classList.add("is-visible"));
+          return;
+        }
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              io.unobserve(entry.target);
+            }
+          });
+        }, { rootMargin: "0px 0px -8% 0px", threshold: 0.05 });
+        document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+      })();
+    </script>
+    <style is:global>
+      .skip-link {
+        position: absolute;
+        top: -100px;
+        left: 0;
+        padding: 0.75rem 1rem;
+        background: var(--brand);
+        color: #fff;
+        z-index: 1000;
+      }
+      .skip-link:focus {
+        top: 0;
+      }
+    </style>
+  </body>
+</html>

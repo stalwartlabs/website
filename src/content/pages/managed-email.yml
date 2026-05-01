@@ -1,0 +1,162 @@
+title: Managed Email | Stalwart Labs
+description: >-
+  Stalwart-hosted mail and collaboration, run for you as a clustered service
+  with high availability, included migration help, and tiered support.
+slug: /managed-email
+
+hero:
+  banner:
+    tone: info
+    label: Available 2027
+    body: >-
+      Stalwart Managed Email is a hosted, fully-operated edition of the
+      Stalwart server. We are taking expressions of interest now; the
+      service goes live in 2027.
+  eyebrow: Managed service
+  title: Run Stalwart without running Stalwart
+  titleHighlight: without running Stalwart
+  lead: >-
+    We host, cluster and operate the same mail and collaboration server we
+    ship to self-hosters (JMAP, IMAP, POP3, SMTP, CalDAV, CardDAV, WebDAV)
+    on infrastructure we maintain, with included migration help and
+    contractual support.
+  ctas:
+    - label: Register interest
+      href: /contact
+
+sections:
+  - kind: prose
+    eyebrow: What you get
+    title: A managed Stalwart deployment, sized to your mailbox count.
+    body: >-
+      Each tenant runs on a Stalwart cluster operated by Stalwart Labs.
+      Provisioning, upgrades, certificate renewal, backups, monitoring and
+      incident response are handled by us. You keep full administrative
+      control over accounts, domains, mail rules, calendars and contacts
+      through the standard Stalwart web admin and CLI.
+
+      The deployment uses the same code path that runs in self-hosted
+      production. There is no forked feature set; new releases land here
+      on the same cadence as the open-source and Enterprise editions.
+
+  - kind: list
+    band: alt
+    eyebrow: Mailbox tiers
+    title: Plans scale with mailbox count.
+    body: >-
+      Tiers are organised by mailbox count and storage allotment. Pricing
+      follows the same per-mailbox bands published on the [pricing page](/pricing)
+      for the Enterprise edition, with hosting and operations bundled in.
+      Custom tiers, including high-density hosting providers and multi-
+      tenant deployments, are quoted on request. Every plan includes:
+    bullets:
+      - JMAP, IMAP4rev2, POP3 and SMTP submission for clients.
+      - CalDAV, CardDAV and WebDAV (plus the JMAP equivalents).
+      - ManageSieve and Sieve scripting.
+      - The full anti-spam pipeline, including the statistical classifier, DNSBLs, Pyzor and phishing protection.
+      - Autoconfig and Autodiscover so end-user clients set themselves up.
+      - Web admin, account self-service portal and CLI access.
+
+  - kind: prose
+    eyebrow: Regions
+    title: Hosted in the region you choose.
+    body: >-
+      We are launching in multiple regions across Europe and North America.
+      Specific data-centre locations and providers will be announced ahead
+      of general availability. Customers select the region at sign-up; data
+      residency stays in the chosen region for the lifetime of the account.
+
+      If you have a specific compliance constraint (for example a
+      particular member-state location or a sovereign-cloud provider),
+      tell us at the interest stage and we will factor it into the launch
+      plan.
+
+  - kind: feature
+    band: alt
+    eyebrow: Architecture
+    title: A clustered service with high availability built in.
+    body: >-
+      Each customer runs on a Stalwart cluster sized to its tier. There
+      are no single points of failure inside a tenant; node loss is handled
+      by the cluster without operator intervention.
+    bullets:
+      - Pluggable storage with replicated message and metadata stores.
+      - Sharded blob storage for attachments, calendar objects and files.
+      - Cluster coordination over peer-to-peer (Zenoh) or a managed message bus, with read replicas for hot paths.
+      - ACME-managed TLS for mail, submission and HTTP listeners, with automatic renewal.
+      - DANE, MTA-STS and SMTP TLS reporting on outbound delivery.
+      - Outbound MTA cluster role for queue scaling and delayed-delivery isolation.
+    learnMore:
+      - label: Read the architecture
+        href: /architecture
+    visual:
+      kind: diagram
+      id: cluster
+
+  - kind: prose
+    eyebrow: Migration
+    title: Move in without rebuilding.
+    body: >-
+      Onboarding includes a migration engagement run by the same team that
+      publishes [stalwart-cli](/docs/management/cli/overview). Source
+      systems we cover include Postfix and Dovecot, Cyrus, Zimbra,
+      Microsoft Exchange (and self-hosted Microsoft 365), MDaemon,
+      hMailServer and Courier; others on request.
+
+      Mailboxes, folders, flags, calendars, address books and shared
+      resources are carried over. We schedule a low-traffic cutover window
+      per domain and run a co-existence period if you need both systems
+      live at once.
+
+      Full details, including timelines and tooling, are on the
+      [migration page](/migration).
+
+  - kind: list
+    band: alt
+    eyebrow: Support tiers
+    title: Pick the level of operations involvement you need.
+    bullets:
+      - "**Standard.** Business-hours response on operational issues. Access to the customer portal, ticketing, and the same release notes and security advisories sent to Enterprise self-hosters."
+      - "**Enterprise standard.** Priority response, named technical contact, scheduled review calls, and signed SLAs covering availability and recovery objectives."
+      - "**Enterprise on-demand.** Dedicated Support Engineer, custom SLAs (including 24x7 with paged response), lawful-interception assistance where applicable. Subject to the same 150-mailbox minimum used for self-hosted Premium Support."
+    learnMore:
+      - label: Full tier breakdown
+        href: /support
+
+  - kind: prose
+    eyebrow: SLAs
+    title: Contracted, not aspirational.
+    body: >-
+      Standard tiers include a service-credit-backed availability SLA on
+      the mail and collaboration endpoints, plus targets for support
+      response by severity. Enterprise tiers add per-incident recovery
+      time and recovery point objectives negotiated at contract signing.
+      Specific numeric targets are published with the commercial terms
+      when the service launches.
+
+  - kind: list
+    band: alt
+    eyebrow: Trust and compliance
+    title: Where your data lives and how it is protected.
+    bullets:
+      - "**Data location.** Mail content, calendars, contacts and files stay in the region selected at sign-up. We publish the list of sub-processors and notify customers of changes in advance."
+      - "**Encryption at rest.** Storage volumes and blob backends are encrypted at rest. Per-mailbox S/MIME and OpenPGP encryption-at-rest is available for sensitive mailboxes."
+      - "**Encryption in transit.** TLS on every public listener; DANE, MTA-STS and TLS-RPT enforced on outbound. ACME-managed certificates with automatic renewal."
+      - "**Independent security audit.** Stalwart has been independently audited; the report is published in the [security audit blog post](/blog/security-audit). The managed service runs the audited codebase."
+      - "**DPA and GDPR.** A Data Processing Addendum is available before contract signing. Stalwart Labs acts as processor for customer mailbox content; the sub-processor list is part of the legal pack."
+
+  - kind: prose
+    eyebrow: Pricing
+    title: Per-mailbox, with hosting and operations bundled.
+    body: >-
+      Managed Email follows the per-mailbox bands published on the
+      [pricing page](/pricing). Hosting, storage, bandwidth, support at
+      the contracted tier and migration assistance are included in the
+      per-mailbox figure. Optional add-ons (custom SLAs, lawful
+      interception, dedicated engineering time) are quoted separately.
+
+footerCta:
+  cta: Get on the early-access list
+  ctaSub: Stalwart Managed Email goes live in 2027. Tell us about your deployment and we will keep you posted.
+  ctaButton: Register interest
+  ctaLink: /contact

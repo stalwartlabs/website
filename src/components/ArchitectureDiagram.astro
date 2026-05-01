@@ -1,0 +1,231 @@
+---
+// Hand-authored layered architecture diagram for the /architecture page.
+// Rows: Ingress -> Listeners -> Pipeline -> Storage -> Outbound.
+// Cluster coordination shown as a vertical bar tying all rows together.
+---
+<div class="arch">
+  <svg viewBox="0 0 720 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Stalwart architecture diagram">
+    <defs>
+      <linearGradient id="arch-row" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="var(--surface)" stop-opacity="1"/>
+        <stop offset="100%" stop-color="var(--surface-2)" stop-opacity="1"/>
+      </linearGradient>
+      <linearGradient id="arch-flow" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="var(--brand)" stop-opacity="0.5"/>
+        <stop offset="100%" stop-color="var(--brand)" stop-opacity="0.1"/>
+      </linearGradient>
+      <radialGradient id="arch-glow" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="var(--brand)" stop-opacity="0.25"/>
+        <stop offset="100%" stop-color="var(--brand)" stop-opacity="0"/>
+      </radialGradient>
+      <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+        <path d="M0 0 L10 5 L0 10 z" fill="var(--brand)" opacity="0.7"/>
+      </marker>
+    </defs>
+
+    <!-- Vertical flow lines -->
+    <g stroke="url(#arch-flow)" stroke-width="1.5" fill="none" marker-end="url(#arrow)">
+      <line x1="180" y1="74" x2="180" y2="110"/>
+      <line x1="360" y1="74" x2="360" y2="110"/>
+      <line x1="540" y1="74" x2="540" y2="110"/>
+      <line x1="180" y1="174" x2="180" y2="210"/>
+      <line x1="360" y1="174" x2="360" y2="210"/>
+      <line x1="540" y1="174" x2="540" y2="210"/>
+      <line x1="360" y1="274" x2="360" y2="310"/>
+      <line x1="360" y1="374" x2="540" y2="408"/>
+      <line x1="540" y1="408" x2="660" y2="408"/>
+    </g>
+
+    <!-- Row: Ingress -->
+    <g class="arch__row">
+      <rect x="40" y="30" width="640" height="44" rx="10" fill="url(#arch-row)" stroke="var(--border)"/>
+      <text x="60" y="58" class="arch__label">Ingress</text>
+      <text x="180" y="58" class="arch__node" text-anchor="middle">Load balancer</text>
+      <text x="360" y="58" class="arch__node" text-anchor="middle">DNS</text>
+      <text x="540" y="58" class="arch__node" text-anchor="middle">PROXY protocol</text>
+    </g>
+
+    <!-- Row: Listeners -->
+    <g class="arch__row">
+      <rect x="40" y="110" width="640" height="64" rx="10" fill="url(#arch-row)" stroke="var(--border)"/>
+      <text x="60" y="146" class="arch__label">Listeners</text>
+      <g class="arch__pill" transform="translate(140 142)">
+        <rect x="-32" y="-14" width="64" height="28" rx="14"/>
+        <text>SMTP</text>
+      </g>
+      <g class="arch__pill" transform="translate(218 142)">
+        <rect x="-32" y="-14" width="64" height="28" rx="14"/>
+        <text>IMAP</text>
+      </g>
+      <g class="arch__pill" transform="translate(296 142)">
+        <rect x="-32" y="-14" width="64" height="28" rx="14"/>
+        <text>JMAP</text>
+      </g>
+      <g class="arch__pill" transform="translate(374 142)">
+        <rect x="-32" y="-14" width="64" height="28" rx="14"/>
+        <text>POP3</text>
+      </g>
+      <g class="arch__pill" transform="translate(458 142)">
+        <rect x="-40" y="-14" width="80" height="28" rx="14"/>
+        <text>CalDAV</text>
+      </g>
+      <g class="arch__pill" transform="translate(548 142)">
+        <rect x="-40" y="-14" width="80" height="28" rx="14"/>
+        <text>CardDAV</text>
+      </g>
+      <g class="arch__pill" transform="translate(636 142)">
+        <rect x="-36" y="-14" width="72" height="28" rx="14"/>
+        <text>WebDAV</text>
+      </g>
+    </g>
+
+    <!-- Row: Pipeline -->
+    <g class="arch__row">
+      <rect x="40" y="210" width="640" height="64" rx="10" fill="url(#arch-row)" stroke="var(--border)"/>
+      <text x="60" y="246" class="arch__label">Pipeline</text>
+      <g class="arch__pill arch__pill--brand" transform="translate(180 242)">
+        <rect x="-58" y="-14" width="116" height="28" rx="14"/>
+        <text>Authentication</text>
+      </g>
+      <g class="arch__pill arch__pill--brand" transform="translate(316 242)">
+        <rect x="-44" y="-14" width="88" height="28" rx="14"/>
+        <text>Sieve</text>
+      </g>
+      <g class="arch__pill arch__pill--brand" transform="translate(420 242)">
+        <rect x="-44" y="-14" width="88" height="28" rx="14"/>
+        <text>Anti-spam</text>
+      </g>
+      <g class="arch__pill arch__pill--brand" transform="translate(540 242)">
+        <rect x="-44" y="-14" width="88" height="28" rx="14"/>
+        <text>DKIM/SPF</text>
+      </g>
+      <g class="arch__pill arch__pill--brand" transform="translate(636 242)">
+        <rect x="-36" y="-14" width="72" height="28" rx="14"/>
+        <text>DMARC</text>
+      </g>
+    </g>
+
+    <!-- Row: Storage -->
+    <g class="arch__row">
+      <rect x="40" y="310" width="640" height="64" rx="10" fill="url(#arch-row)" stroke="var(--border)"/>
+      <text x="60" y="346" class="arch__label">Storage</text>
+      <g class="arch__pill" transform="translate(180 342)">
+        <rect x="-44" y="-14" width="88" height="28" rx="14"/>
+        <text>Data store</text>
+      </g>
+      <g class="arch__pill" transform="translate(300 342)">
+        <rect x="-40" y="-14" width="80" height="28" rx="14"/>
+        <text>Blob store</text>
+      </g>
+      <g class="arch__pill" transform="translate(420 342)">
+        <rect x="-44" y="-14" width="88" height="28" rx="14"/>
+        <text>Search store</text>
+      </g>
+      <g class="arch__pill" transform="translate(560 342)">
+        <rect x="-58" y="-14" width="116" height="28" rx="14"/>
+        <text>In-memory store</text>
+      </g>
+    </g>
+
+    <!-- Row: Outbound -->
+    <g class="arch__row">
+      <rect x="40" y="400" width="540" height="40" rx="10" fill="url(#arch-row)" stroke="var(--border)"/>
+      <text x="60" y="424" class="arch__label">Outbound</text>
+      <g class="arch__pill" transform="translate(220 420)">
+        <rect x="-58" y="-14" width="116" height="28" rx="14"/>
+        <text>Distributed queue</text>
+      </g>
+      <g class="arch__pill" transform="translate(420 420)">
+        <rect x="-58" y="-14" width="116" height="28" rx="14"/>
+        <text>Outbound MTA</text>
+      </g>
+      <g class="arch__pill arch__pill--external" transform="translate(660 420)">
+        <rect x="-44" y="-14" width="88" height="28" rx="14"/>
+        <text>Remote MTAs</text>
+      </g>
+    </g>
+
+    <!-- Coordination column -->
+    <g>
+      <rect x="600" y="30" width="80" height="350" rx="10" fill="none" stroke="var(--brand)" stroke-dasharray="3 3" opacity="0.55"/>
+      <text x="640" y="22" class="arch__coord-title" text-anchor="middle">Coordination</text>
+      <g class="arch__pill arch__pill--brand" transform="translate(640 70)">
+        <rect x="-32" y="-12" width="64" height="24" rx="12"/>
+        <text>Zenoh</text>
+      </g>
+      <g class="arch__pill arch__pill--brand" transform="translate(640 110)">
+        <rect x="-32" y="-12" width="64" height="24" rx="12"/>
+        <text>Kafka</text>
+      </g>
+      <g class="arch__pill arch__pill--brand" transform="translate(640 150)">
+        <rect x="-32" y="-12" width="64" height="24" rx="12"/>
+        <text>NATS</text>
+      </g>
+      <g class="arch__pill arch__pill--brand" transform="translate(640 190)">
+        <rect x="-32" y="-12" width="64" height="24" rx="12"/>
+        <text>Redis</text>
+      </g>
+    </g>
+  </svg>
+</div>
+
+<style>
+  .arch {
+    width: 100%;
+    aspect-ratio: 720 / 460;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: clamp(0.5rem, 1.5vw, 1rem);
+    box-shadow: var(--shadow-1);
+  }
+  .arch svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+  .arch__label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    fill: var(--text-dim);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .arch__node {
+    fill: var(--text);
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .arch__pill rect {
+    fill: var(--surface-2);
+    stroke: var(--border-strong);
+    stroke-width: 1;
+  }
+  .arch__pill text {
+    fill: var(--text);
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 500;
+    text-anchor: middle;
+    dominant-baseline: middle;
+  }
+  .arch__pill--brand rect {
+    fill: var(--brand-soft);
+    stroke: var(--brand);
+  }
+  .arch__pill--brand text {
+    fill: var(--brand);
+  }
+  .arch__pill--external rect {
+    fill: transparent;
+    stroke-dasharray: 3 3;
+  }
+  .arch__coord-title {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    fill: var(--brand);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+</style>

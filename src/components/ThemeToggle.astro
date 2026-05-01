@@ -1,0 +1,70 @@
+---
+---
+<button class="theme-toggle" aria-label="Toggle color theme" data-theme-toggle>
+  <svg class="icon icon-sun" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <circle cx="12" cy="12" r="4"/>
+    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+  </svg>
+  <svg class="icon icon-moon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+  </svg>
+</button>
+
+<style>
+  .theme-toggle {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-pill);
+    display: inline-grid;
+    place-items: center;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    background: var(--surface);
+    transition: color var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease), background var(--t-fast) var(--ease);
+    position: relative;
+  }
+  .theme-toggle:hover {
+    color: var(--text);
+    border-color: var(--border-strong);
+  }
+  .icon {
+    position: absolute;
+    transition: opacity var(--t-mid) var(--ease), transform var(--t-mid) var(--ease);
+  }
+  :global([data-theme="dark"]) .icon-sun,
+  :global(:root:not([data-theme="light"])) .icon-sun {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+  }
+  :global([data-theme="dark"]) .icon-moon,
+  :global(:root:not([data-theme="light"])) .icon-moon {
+    opacity: 0;
+    transform: rotate(-30deg) scale(0.8);
+  }
+  :global([data-theme="light"]) .icon-sun {
+    opacity: 0;
+    transform: rotate(30deg) scale(0.8);
+  }
+  :global([data-theme="light"]) .icon-moon {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+  }
+</style>
+
+<script is:inline>
+  (() => {
+    const KEY = "stalwart-theme";
+    const root = document.documentElement;
+    const stored = localStorage.getItem(KEY);
+    const initial = stored || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+    root.setAttribute("data-theme", initial);
+
+    document.addEventListener("click", (e) => {
+      const target = e.target instanceof Element ? e.target.closest("[data-theme-toggle]") : null;
+      if (!target) return;
+      const next = root.getAttribute("data-theme") === "light" ? "dark" : "light";
+      root.setAttribute("data-theme", next);
+      localStorage.setItem(KEY, next);
+    });
+  })();
+</script>

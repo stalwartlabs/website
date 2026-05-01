@@ -1,0 +1,120 @@
+title: Migration | Stalwart Labs
+description: >-
+  Move from Postfix and Dovecot, Cyrus, Zimbra, Exchange, Microsoft 365,
+  MDaemon, hMailServer or Courier to Stalwart, with CLI tooling and a
+  planned cutover.
+slug: /migration
+
+hero:
+  banner:
+    tone: info
+    label: Available 2027
+    body: >-
+      Stalwart Migration is the team-led service that moves your existing
+      mail, calendars, contacts and files onto Stalwart. We are taking
+      expressions of interest now; the service goes live in 2027.
+  eyebrow: Migration service
+  title: A planned migration, run by the people who write Stalwart.
+  titleHighlight: by the people who write Stalwart
+  lead: >-
+    Mailboxes, folder structure, flags, calendars, address books and
+    shared resources are carried across; cutover happens in a window you
+    control, with optional co-existence.
+  ctas:
+    - label: Register interest
+      href: /contact
+
+sections:
+  - kind: list
+    eyebrow: What we move
+    title: Source systems we support out of the box.
+    body: >-
+      The migration tooling reads from the protocols and on-disk formats
+      of the major existing servers.
+    bullets:
+      - "**Postfix and Dovecot.** Maildir and mdbox stores, Sieve scripts, virtual user databases (passwd, LDAP, SQL)."
+      - "**Cyrus IMAP.** Mailboxes (including shared and public folders), seen/flag state, sieve scripts, ACLs."
+      - "**Zimbra Collaboration.** Mail, calendars, contacts, briefcase folders, distribution lists, shared folders."
+      - "**Microsoft Exchange (on-prem) and self-hosted Microsoft 365.** Mailboxes, calendars, contacts; public folders where applicable."
+      - "**MDaemon.** Mailboxes, address books, calendars, mailing lists."
+      - "**hMailServer.** Mailboxes, domain settings, aliases."
+      - "**Courier.** Maildir stores, calendaring where present."
+      - "**Generic IMAP / CalDAV / CardDAV / WebDAV.** Anything else that speaks the standard protocols can be migrated read-side without vendor-specific tooling."
+
+  - kind: prose
+    band: alt
+    title: What carries over, and what does not.
+    body: >-
+      Carried over per source: messages with full headers and flags,
+      folder hierarchy, sieve filters where the format permits, calendars
+      and events (including recurrences), address books, shared and
+      delegated resources, and server-side rules where the source exposes
+      them.
+
+      Not migrated automatically: vendor-specific automation that has no
+      Stalwart equivalent (we flag these in the assessment phase and
+      propose replacements), and end-user client configuration (handled
+      instead by Stalwart's [autoconfig and autodiscover](/docs/server/autoconfig)).
+
+  - kind: feature
+    eyebrow: Tooling
+    title: Driven from `stalwart-cli`.
+    body: >-
+      The migration is performed by `stalwart-cli`, the same CLI used to
+      operate Stalwart in production. For larger migrations, the tooling
+      runs on a dedicated migration host inside the customer's network or
+      on the Stalwart Managed Email side, depending on whether the
+      destination is self-hosted or hosted by us.
+    bullets:
+      - Reads source mailboxes over IMAP, CalDAV, CardDAV, WebDAV or directly from on-disk formats where supported.
+      - Writes into Stalwart through JMAP and the management API; preserves UIDs, flags and timestamps where the protocols allow.
+      - "Resumable: a partial run can be re-driven without re-importing existing messages."
+      - Parallel per-mailbox; the throughput target on a typical migration is bound by the source server, not Stalwart.
+      - Dry-run mode that produces a per-account report (mailbox count, message count, total size, anomalies) before any data is written.
+    learnMore:
+      - label: CLI overview
+        href: /docs/management/cli/overview
+    visual:
+      kind: placeholder
+      caption: "Diagram needed: source servers (Postfix, Cyrus, Exchange, ...) feeding into stalwart-cli, which writes through JMAP into Stalwart."
+
+  - kind: list
+    band: alt
+    eyebrow: How a migration runs
+    title: Typical phases and timeline.
+    bullets:
+      - "**Assessment.** A short engagement: we inventory the source server, sample a few accounts, and produce a sizing and risk document."
+      - "**Pilot.** A small set of pilot accounts (often the IT team) is migrated in parallel with the existing system."
+      - "**Bulk migration.** The remaining accounts are migrated in waves, each wave running while the source server stays authoritative."
+      - "**Final delta and cutover.** A short maintenance window flips MX, autoconfig and SRV records to Stalwart."
+      - "**Decommission.** Source server is kept read-only for an agreed retention period, then retired."
+      - "Indicative timeline: up to 1,000 mailboxes, 2-4 weeks; 1,000-10,000, 4-10 weeks; above 10,000, scoped per engagement."
+
+  - kind: list
+    eyebrow: Cutover and co-existence
+    title: Switch in one window, or live in both worlds for a while.
+    body: >-
+      For most customers, a single cutover window is the simplest path:
+      bulk and delta passes complete, MX and autoconfig flip, and the
+      source server stops accepting new mail. When a single window is not
+      viable, we run co-existence:
+    bullets:
+      - "**Split-domain routing.** Some users are answered by Stalwart, others by the source server, with a routing layer keeping mail flowing to whichever is authoritative for each address."
+      - "**Forwarding co-existence.** The source server forwards a copy of all incoming mail to Stalwart while users finish moving; address books and calendars stay in sync via standard CalDAV/CardDAV."
+      - "**Read-only legacy.** After cutover, the source server is left in read-only mode so users can pull historical data on demand, while all new traffic flows through Stalwart."
+
+  - kind: prose
+    band: alt
+    eyebrow: Self-hosted or managed destination
+    title: The tooling is the same; the destination is your choice.
+    body: >-
+      You can migrate onto your own self-hosted Stalwart deployment
+      (Community or Enterprise edition) or onto [Stalwart Managed Email](/managed-email).
+      The CLI, the assessment, the pilot and the cutover process are
+      identical; the difference is who runs the destination cluster.
+
+footerCta:
+  cta: Plan your move to Stalwart
+  ctaSub: Stalwart Migration goes live in 2027. Send us details about your current setup and we will follow up with a scoped plan.
+  ctaButton: Register interest
+  ctaLink: /contact

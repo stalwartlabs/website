@@ -1,0 +1,44 @@
+---
+import BrowserFrame from "./BrowserFrame.astro";
+import PlaceholderVisual from "./PlaceholderVisual.astro";
+import CodeFrame from "./CodeFrame.astro";
+import { diagrams } from "../lib/diagrams";
+
+interface Props {
+  visual: any;
+}
+const { visual } = Astro.props;
+const Diagram = visual?.kind === "diagram" ? diagrams[visual.id] : null;
+---
+{visual.kind === "screenshot" && (
+  visual.frame === false ? (
+    <img src={visual.src} alt={visual.alt} loading="lazy" decoding="async" class="visual-image"/>
+  ) : (
+    <BrowserFrame
+      src={visual.src}
+      alt={visual.alt}
+      url={visual.url}
+      glow={visual.glow}
+      tilt={visual.tilt}
+    />
+  )
+)}
+{visual.kind === "diagram" && Diagram && <Diagram />}
+{visual.kind === "diagram" && !Diagram && (
+  <PlaceholderVisual caption={`Diagram '${visual.id}' is not registered yet`} />
+)}
+{visual.kind === "placeholder" && (
+  <PlaceholderVisual caption={visual.caption} aspect={visual.aspect} />
+)}
+{visual.kind === "code" && (
+  <CodeFrame code={visual.body} lang={visual.lang} filename={visual.filename} prompt={visual.prompt} />
+)}
+
+<style>
+  .visual-image {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+  }
+</style>

@@ -1,0 +1,72 @@
+---
+import { inlineMd, paragraphMd } from "../../lib/md";
+
+interface Props {
+  data: any;
+}
+const { data } = Astro.props;
+---
+<section class={`band ${data.band === "alt" ? "band--alt" : ""}`}>
+  <div class="container container-narrow">
+    <div class="reveal">
+      {data.eyebrow && <span class="eyebrow">{data.eyebrow}</span>}
+      <h2 class="h2 list-section__title" set:html={inlineMd(data.title)}></h2>
+      {data.body && <div class="list-section__body" set:html={paragraphMd(data.body)}></div>}
+      <ul class="list-section__items">
+        {data.bullets.map((item: string) => (
+          <li set:html={inlineMd(item)}></li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .list-section__title {
+    margin-top: 1rem;
+  }
+  .list-section__body {
+    margin-top: 1.25rem;
+    color: var(--text-muted);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+  }
+  .list-section__items {
+    margin-top: 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.625rem 2rem;
+  }
+  @media (min-width: 720px) {
+    .list-section__items {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  .list-section__items li {
+    position: relative;
+    padding-left: 1.25rem;
+    color: var(--text);
+    font-size: 0.9375rem;
+    line-height: 1.55;
+  }
+  .list-section__items li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.65rem;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--brand);
+    box-shadow: 0 0 8px var(--brand-glow);
+  }
+  .list-section__items li :global(a) {
+    color: inherit;
+    border-bottom: 1px dashed var(--border-strong);
+    transition: color var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease);
+  }
+  .list-section__items li :global(a:hover) {
+    color: var(--brand);
+    border-color: var(--brand);
+  }
+</style>

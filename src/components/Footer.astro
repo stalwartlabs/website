@@ -1,0 +1,258 @@
+---
+import Logo from "./Logo.astro";
+
+interface Props {
+  cta?: string;
+  ctaSub?: string;
+  ctaButton?: string;
+  ctaLink?: string;
+}
+
+const {
+  cta = "Ready to run a modern mail and collaboration server?",
+  ctaSub = "Install Stalwart in minutes, then keep it running for years.",
+  ctaButton = "Get Stalwart",
+  ctaLink = "/docs/install/get-started",
+} = Astro.props;
+
+const platform = [
+  { href: "/mail-server", label: "Mail Server" },
+  { href: "/collaboration", label: "Collaboration" },
+  { href: "/mta", label: "MTA" },
+  { href: "/anti-spam", label: "Anti-spam" },
+  { href: "/architecture", label: "Architecture" },
+  { href: "/integrations", label: "Integrations" },
+];
+const editions = [
+  { href: "/enterprise", label: "Enterprise" },
+  { href: "/open-source", label: "Community" },
+  { href: "/compare", label: "Compare" },
+  { href: "/pricing", label: "Pricing" },
+];
+const solutions = [
+  { href: "/managed-email", label: "Managed e-mail" },
+  { href: "/migration", label: "Migration" },
+];
+const company = [
+  { href: "/about", label: "About" },
+  { href: "/blog", label: "Blog" },
+  { href: "/support", label: "Support" },
+  { href: "/contact", label: "Contact" },
+  { href: "/legal", label: "Legal" },
+];
+
+const socials = [
+  { href: "https://github.com/stalwartlabs/stalwart", label: "GitHub", path: "M12 .5C5.7.5.7 5.5.7 11.8c0 5 3.2 9.2 7.7 10.7.6.1.8-.2.8-.6v-2c-3.1.7-3.8-1.3-3.8-1.3-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 1.7 2.7 1.2 3.4.9.1-.7.4-1.2.7-1.5-2.5-.3-5.1-1.2-5.1-5.5 0-1.2.4-2.2 1.2-3-.1-.3-.5-1.5.1-3.1 0 0 .9-.3 3.1 1.2.9-.3 1.9-.4 2.9-.4s2 .1 2.9.4c2.2-1.5 3.1-1.2 3.1-1.2.6 1.6.2 2.8.1 3.1.7.8 1.2 1.8 1.2 3 0 4.3-2.6 5.2-5.1 5.5.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.5-1.5 7.7-5.7 7.7-10.7C23.3 5.5 18.3.5 12 .5z" },
+  { href: "https://twitter.com/stalwartlabs/", label: "Twitter", path: "M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.16 17.52h1.833L7.084 4.126H5.117z" },
+  { href: "https://mastodon.social/@stalwartlabs", label: "Mastodon", path: "M21.58 13.913c-.29 1.469-2.592 3.121-5.238 3.428-1.379.16-2.737.307-4.185.241-2.366-.107-4.234-.55-4.234-.55 0 .224.014.439.042.64.305 2.265 2.31 2.4 4.21 2.461 1.917.061 3.624-.45 3.624-.45l.079 1.671s-1.342.703-3.733.834c-1.318.07-2.955-.034-4.862-.526C3.143 20.583.43 17.866.013 14.514c-.13-.99-.196-2.046-.213-3.108C-.2 7.12 1.32 3.86 4.116 2.7 7.04 1.49 12.42 1.5 12.42 1.5h.012s5.378-.01 8.302 1.2c2.797 1.16 4.317 4.42 4.317 8.706 0 1.062-.066 2.118-.197 3.108-.05.394-.49 4.401-.49 4.401" },
+  { href: "https://discord.com/servers/stalwart-923615863037390889", label: "Discord", path: "M20.317 4.37a19.79 19.79 0 0 0-4.885-1.515.07.07 0 0 0-.074.035c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.075-.035 19.74 19.74 0 0 0-4.886 1.515.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.91 19.91 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.331c-1.183 0-2.157-1.085-2.157-2.42 0-1.333.956-2.418 2.157-2.418 1.21 0 2.176 1.094 2.157 2.418 0 1.336-.956 2.42-2.157 2.42zm7.975 0c-1.183 0-2.157-1.085-2.157-2.42 0-1.333.955-2.418 2.157-2.418 1.21 0 2.176 1.094 2.157 2.418 0 1.336-.946 2.42-2.157 2.42z" },
+  { href: "https://www.reddit.com/r/stalwartlabs", label: "Reddit", path: "M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.337-1.01 1.605a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z" },
+  { href: "https://matrix.to/#/#stalwart:matrix.org", label: "Matrix", path: "M.632.55v22.9H2.28V24H0V0h2.28v.55zm7.043 7.26v1.157h.033c.309-.443.683-.784 1.117-1.024.433-.245.936-.365 1.5-.365.54 0 1.033.107 1.481.314.448.208.785.582 1.02 1.108.254-.374.6-.706 1.034-.992.434-.287.95-.43 1.546-.43.453 0 .872.056 1.26.167.388.11.716.286.993.53.276.245.489.559.646.951.156.392.234.863.234 1.418v5.144H15.6V11.4c0-.302-.012-.586-.039-.853-.025-.266-.059-.5-.103-.7a1.45 1.45 0 0 0-.198-.515 1.04 1.04 0 0 0-.331-.331 1.69 1.69 0 0 0-.493-.166 4.31 4.31 0 0 0-.78-.06c-.453 0-.794.044-1.018.13-.226.087-.402.211-.529.376a1.27 1.27 0 0 0-.262.572 5.22 5.22 0 0 0-.066.886v4.661h-2.21v-4.515c0-.343-.013-.633-.04-.872a2.05 2.05 0 0 0-.106-.582.89.89 0 0 0-.245-.4c-.115-.097-.272-.166-.47-.21a3.4 3.4 0 0 0-.776-.066c-.4 0-.732.06-.992.18-.262.118-.467.288-.616.508-.149.222-.252.49-.31.808-.06.318-.09.679-.09 1.082v4.067H4.733V7.81H7.6zm14.094 17.34V.55h-1.65V0h2.282v24h-2.281v-.55h1.649z" },
+];
+---
+<footer class="site-footer">
+  <div class="container">
+    <div class="cta-card">
+      <div class="cta-card__bloom" aria-hidden="true"></div>
+      <div class="cta-card__content">
+        <span class="eyebrow">Get started</span>
+        <h2 class="cta-card__title">{cta}</h2>
+        <p class="cta-card__sub">{ctaSub}</p>
+      </div>
+      <div class="cta-card__actions">
+        <a class="btn btn-primary btn-arrow" href={ctaLink}>{ctaButton}</a>
+        <a class="btn btn-ghost" href="/pricing">See pricing</a>
+      </div>
+    </div>
+
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <Logo />
+        <address class="footer-address">
+          128 City Road<br/>
+          London, UK
+        </address>
+        <a class="link-arrow" href="mailto:hello@stalw.art">hello@stalw.art</a>
+        <ul class="footer-socials">
+          {socials.map(s => (
+            <li>
+              <a href={s.href} target="_blank" rel="noopener" aria-label={s.label}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d={s.path}/>
+                </svg>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <span class="footer-col__title">Platform</span>
+        <ul>{platform.map(l => <li><a href={l.href}>{l.label}</a></li>)}</ul>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col__title">Editions</span>
+        <ul>{editions.map(l => <li><a href={l.href}>{l.label}</a></li>)}</ul>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col__title">Solutions</span>
+        <ul>{solutions.map(l => <li><a href={l.href}>{l.label}</a></li>)}</ul>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col__title">Company</span>
+        <ul>{company.map(l => <li><a href={l.href}>{l.label}</a></li>)}</ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© {new Date().getFullYear()} Stalwart Labs LLC. All rights reserved.</span>
+      <a href="/legal">Legal</a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-top: var(--section-y);
+    padding-bottom: 3rem;
+    border-top: 1px solid var(--border);
+    background: linear-gradient(to bottom, var(--bg) 0%, var(--bg-elev) 100%);
+  }
+
+  .cta-card {
+    position: relative;
+    overflow: hidden;
+    margin-top: -7rem;
+    padding: clamp(2.5rem, 5vw, 4rem);
+    border-radius: var(--radius-lg);
+    background: linear-gradient(135deg, var(--surface) 0%, var(--surface-2) 100%);
+    border: 1px solid var(--border);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: var(--shadow-2);
+    isolation: isolate;
+  }
+  .cta-card__bloom {
+    position: absolute;
+    inset: -50%;
+    background: radial-gradient(circle at 80% 30%, var(--brand-glow) 0%, transparent 45%);
+    z-index: -1;
+    pointer-events: none;
+  }
+  .cta-card__content {
+    flex: 1 1 460px;
+  }
+  .cta-card__title {
+    font-size: clamp(1.5rem, 2.4vw + 0.6rem, 2.25rem);
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+    margin-top: 0.75rem;
+    max-width: 22ch;
+  }
+  .cta-card__sub {
+    margin-top: 0.75rem;
+    color: var(--text-muted);
+    max-width: 50ch;
+  }
+  .cta-card__actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .footer-grid {
+    margin-top: 4rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem 2rem;
+  }
+  @media (min-width: 720px) {
+    .footer-grid {
+      grid-template-columns: 1.4fr repeat(4, 1fr);
+    }
+  }
+  .footer-brand {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+    max-width: 320px;
+  }
+  @media (min-width: 720px) {
+    .footer-brand {
+      grid-column: auto;
+    }
+  }
+  .footer-address {
+    color: var(--text-muted);
+    font-style: normal;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+  }
+  .footer-socials {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+  .footer-socials li a {
+    width: 32px;
+    height: 32px;
+    display: inline-grid;
+    place-items: center;
+    border-radius: var(--radius-pill);
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    transition: color var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease), background var(--t-fast) var(--ease);
+  }
+  .footer-socials li a:hover {
+    color: var(--brand);
+    border-color: var(--brand);
+    background: var(--brand-soft);
+  }
+
+  .footer-col__title {
+    display: block;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--text-dim);
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  .footer-col ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .footer-col ul li a {
+    color: var(--text-muted);
+    font-size: 0.9375rem;
+    transition: color var(--t-fast) var(--ease);
+  }
+  .footer-col ul li a:hover {
+    color: var(--text);
+  }
+
+  .footer-bottom {
+    margin-top: 3.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--text-dim);
+    font-size: 0.875rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .footer-bottom a {
+    color: var(--text-muted);
+  }
+  .footer-bottom a:hover {
+    color: var(--text);
+  }
+</style>

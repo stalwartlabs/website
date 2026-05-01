@@ -1,0 +1,30 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../layouts/Base.astro";
+import HeroBlock from "../components/HeroBlock.astro";
+import SectionRenderer from "../components/SectionRenderer.astro";
+
+export async function getStaticPaths() {
+  const all = await getCollection("pages");
+  return all
+    .filter((p) => p.data.layout !== "long-form")
+    .map((page) => ({
+      params: { slug: page.data.slug === "/" ? undefined : page.data.slug.replace(/^\//, "") },
+      props: { page },
+    }));
+}
+
+const { page } = Astro.props;
+const data = page.data;
+---
+<Base
+  title={data.title}
+  description={data.description}
+  cta={data.footerCta?.cta}
+  ctaSub={data.footerCta?.ctaSub}
+  ctaButton={data.footerCta?.ctaButton}
+  ctaLink={data.footerCta?.ctaLink}
+>
+  {data.hero && <HeroBlock hero={data.hero} />}
+  <SectionRenderer sections={data.sections} />
+</Base>

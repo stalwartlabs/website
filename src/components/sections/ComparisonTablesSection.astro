@@ -1,0 +1,166 @@
+---
+import { inlineMd, paragraphMd } from "../../lib/md";
+
+interface Props {
+  data: any;
+}
+const { data } = Astro.props;
+
+function renderCell(cell: string) {
+  if (cell === "yes") {
+    return { kind: "yes", html: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>' };
+  }
+  if (cell === "-" || cell === "—") {
+    return { kind: "no", html: "—" };
+  }
+  return { kind: "text", html: inlineMd(cell) };
+}
+---
+<section class={`band ${data.band === "alt" ? "band--alt" : ""}`}>
+  <div class="container">
+    {(data.eyebrow || data.title) && (
+      <div class="section-head section-head--center reveal">
+        {data.eyebrow && <span class="eyebrow">{data.eyebrow}</span>}
+        {data.title && <h2 class="h2" set:html={inlineMd(data.title)}></h2>}
+        {data.body && <div class="cmp__body" set:html={paragraphMd(data.body)}></div>}
+        {data.legend && <p class="cmp__legend" set:html={inlineMd(data.legend)}></p>}
+      </div>
+    )}
+    <div class="cmp__groups reveal">
+      {data.groups.map((group: any) => (
+        <div class="cmp__group">
+          <h3 class="cmp__group-title">{group.title}</h3>
+          <div class="cmp__table-wrap">
+            <table class="cmp__table">
+              <thead>
+                <tr>
+                  <th class="cmp__feature-col">Feature</th>
+                  <th class="cmp__col">{data.columns[0]}</th>
+                  <th class="cmp__col">{data.columns[1]}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {group.rows.map((row: any) => {
+                  const cellA = renderCell(row[1]);
+                  const cellB = renderCell(row[2]);
+                  return (
+                    <tr>
+                      <td set:html={inlineMd(row[0])}></td>
+                      <td class={`cmp__cell cmp__cell--${cellA.kind}`} set:html={cellA.html}></td>
+                      <td class={`cmp__cell cmp__cell--${cellB.kind}`} set:html={cellB.html}></td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      ))}
+    </div>
+    {data.ctas?.length > 0 && (
+      <div class="cmp__ctas reveal">
+        {data.ctas.map((cta: any) => (
+          <a
+            href={cta.href}
+            class={`btn ${cta.primary === false ? "btn-ghost" : "btn-primary btn-arrow"}`}
+            {...(cta.external ? { target: "_blank", rel: "noopener" } : {})}
+          >{cta.label}</a>
+        ))}
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  .section-head--center {
+    text-align: center;
+    max-width: 720px;
+    margin-inline: auto;
+    margin-bottom: clamp(2rem, 3.5vw, 3rem);
+  }
+  .section-head--center .h2 {
+    margin-top: 0.75rem;
+  }
+  .cmp__body {
+    margin-top: 1rem;
+    color: var(--text-muted);
+  }
+  .cmp__legend {
+    margin-top: 1rem;
+    color: var(--text-dim);
+    font-size: 0.875rem;
+  }
+  .cmp__groups {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+  .cmp__group-title {
+    font-size: 1.0625rem;
+    font-weight: 600;
+    margin-bottom: 0.875rem;
+    color: var(--text);
+  }
+  .cmp__table-wrap {
+    overflow-x: auto;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .cmp__table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9375rem;
+  }
+  .cmp__table thead th {
+    text-align: left;
+    padding: 0.85rem 1rem;
+    background: var(--surface-2);
+    color: var(--text-muted);
+    font-weight: 500;
+    font-size: 0.8125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    border-bottom: 1px solid var(--border);
+  }
+  .cmp__col {
+    text-align: center !important;
+    width: 18%;
+  }
+  .cmp__feature-col {
+    min-width: 280px;
+  }
+  .cmp__table tbody td {
+    padding: 0.75rem 1rem;
+    border-top: 1px solid var(--border);
+    color: var(--text);
+    line-height: 1.45;
+  }
+  .cmp__table tbody tr:first-child td {
+    border-top: none;
+  }
+  .cmp__cell {
+    text-align: center;
+  }
+  .cmp__cell--yes {
+    color: var(--brand);
+  }
+  .cmp__cell--no {
+    color: var(--text-dim);
+  }
+  .cmp__cell--text {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+  }
+  .cmp__cell svg {
+    margin-inline: auto;
+    display: block;
+  }
+  .cmp__ctas {
+    margin-top: 2.5rem;
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+</style>

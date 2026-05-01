@@ -1,0 +1,69 @@
+title: About | Stalwart Labs
+description: >-
+  Stalwart Labs builds Stalwart, the open-source mail and collaboration
+  server. Read about the company and how to get in touch.
+slug: /about
+
+hero:
+  eyebrow: About Stalwart Labs
+  title: The company behind Stalwart.
+  titleHighlight: behind Stalwart
+  lead: >-
+    The company behind Stalwart, the open-source mail and collaboration
+    server.
+  ctas:
+    - label: Contact us
+      href: /contact
+
+sections:
+  - kind: prose
+    eyebrow: About the company
+    title: Why Stalwart exists.
+    body: >-
+      Stalwart Labs builds Stalwart: a mail and collaboration server with
+      first-class support for JMAP, IMAP, POP3, SMTP, CalDAV, CardDAV and
+      WebDAV, written in Rust.
+
+      Stalwart Labs was founded in July 2019. Work on the Stalwart server
+      began in November 2021, and the first public release shipped in
+      September 2022. The product is younger than the team behind it: the
+      founder spent more than three decades building email and enterprise
+      software before starting the company, and the design choices in
+      Stalwart reflect that.
+
+      The company was started in response to a slow-moving server market.
+      Most mail-server stacks in production in the 2020s still combine
+      three or four separate components, each with its own configuration
+      language and operational quirks. Stalwart was designed as a single
+      binary that covers the mail and collaboration protocols end to end,
+      with a configuration model that an administrator can read in one
+      sitting.
+
+      Stalwart Labs is incorporated in the United States with a registered
+      office in the United Kingdom, and the team works remotely across
+      both sides of the Atlantic. The product is dual-licensed (AGPL-3.0
+      for the Community edition; a commercial licence for Enterprise) and
+      is used by hosting providers, businesses and individuals who run
+      their own mail.
+
+  - kind: addresses
+    band: alt
+    eyebrow: Get in touch
+    title: Have questions? We are a message away.
+    items:
+      - label: US Address
+        lines:
+          - 1309 Coffeen Avenue Ste. 1200
+          - "Sheridan, WY 82801"
+      - label: UK Address
+        lines:
+          - 128 City Road
+          - "London, EC1V 2NX"
+      - label: Email
+        email: hello@stalw.art
+
+footerCta:
+  cta: Want to learn more
+  ctaSub: Reach out with any question about Stalwart Labs or the Stalwart server.
+  ctaButton: Contact us
+  ctaLink: /contact

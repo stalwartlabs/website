@@ -1,0 +1,288 @@
+title: Compare editions | Stalwart Labs
+description: >-
+  Side-by-side comparison of the Community and Enterprise editions of the
+  Stalwart mail and collaboration server.
+slug: /compare
+
+hero:
+  eyebrow: Compare editions
+  title: Same code, two licenses.
+  titleHighlight: Same code
+  lead: >-
+    Stalwart ships in two editions that share the same code base: Community
+    (AGPL-3.0, free) and Enterprise (commercial license, from EUR 2 per
+    mailbox per year). Both editions implement the same protocols and core
+    features. The Enterprise edition adds operational features for larger
+    or multi-tenant deployments.
+  ctas:
+    - label: See pricing
+      href: /pricing
+    - label: Buy now
+      href: https://license.stalw.art/buy
+      external: true
+      primary: false
+    - label: Start a 30-day trial
+      href: https://license.stalw.art/trial
+      external: true
+      primary: false
+
+sections:
+  - kind: comparison-tables
+    eyebrow: Features
+    title: Feature comparison.
+    body: >-
+      The table below covers what is in v0.16. For licensing terms,
+      billing options and the trial, see the FAQ at the bottom of the
+      page.
+    legend: >-
+      "yes" means the feature is included; "—" means it is not included;
+      "Limited" and "On demand" appear verbatim where they apply.
+    columns:
+      - Community (Free)
+      - Enterprise
+    groups:
+      - title: Message store
+        rows:
+          - ["JMAP for Mail (RFC 8621)", "yes", "yes"]
+          - ["JMAP for Sieve (draft-ietf-jmap-sieve-22)", "yes", "yes"]
+          - ["JMAP WebSocket (RFC 8887)", "yes", "yes"]
+          - ["JMAP Blob Management (RFC 9404)", "yes", "yes"]
+          - ["JMAP Quotas (RFC 9425)", "yes", "yes"]
+          - ["JMAP Sharing (RFC 9670)", "yes", "yes"]
+          - ["IMAP4rev1 (RFC 3501)", "yes", "yes"]
+          - ["IMAP4rev2 (RFC 9051)", "yes", "yes"]
+          - ["IMAP QUOTA Extension (RFC 9208)", "yes", "yes"]
+          - ["ManageSieve (RFC 5804)", "yes", "yes"]
+          - ["POP3 (RFC 1939), STLS (RFC 2595), SASL (RFC 5034)", "yes", "yes"]
+          - ["Sub-addressing and catch-all", "yes", "yes"]
+          - ["Email aliases and mailing lists", "yes", "yes"]
+          - ["Email alias descriptions and disable flag", "yes", "yes"]
+          - ["Domain aliases (v0.16)", "yes", "yes"]
+          - ["Disk quotas per user and per tenant", "yes", "yes"]
+          - ["Auto-configuration and Autodiscover (Thunderbird Autoconfig, MS Autodiscover V2, IETF UA Autoconfig draft)", "yes", "yes"]
+          - ["Masked email addresses (privacy aliases)", "-", "yes"]
+      - title: MTA
+        rows:
+          - ["SMTP server with programmable rules", "yes", "yes"]
+          - ["Distributed virtual queues (delayed and priority delivery, quotas, routing rules, throttling)", "yes", "yes"]
+          - ["Smart-host and relay routing", "yes", "yes"]
+          - ["Rate and concurrency limiting", "yes", "yes"]
+          - ["Envelope rewriting and message modification", "yes", "yes"]
+          - ["Milter integration", "yes", "yes"]
+          - ["MTA Hooks (HTTP filter alternative)", "yes", "yes"]
+          - ["Outbound MTA cluster role (v0.16)", "yes", "yes"]
+      - title: Sender authentication and transport security
+        rows:
+          - ["DKIM (RFC 6376)", "yes", "yes"]
+          - ["SPF (RFC 7208)", "yes", "yes"]
+          - ["DMARC (RFC 7489)", "yes", "yes"]
+          - ["ARC (RFC 8617), inbound verification only", "yes", "yes"]
+          - ["DANE (RFC 6698)", "yes", "yes"]
+          - ["MTA-STS (RFC 8461)", "yes", "yes"]
+          - ["SMTP TLS Reporting (RFC 8460)", "yes", "yes"]
+          - ["Automated DKIM key generation and rotation", "yes", "yes"]
+          - ["Automated DNS management", "yes", "yes"]
+          - ["ACME (RFC 8555) challenges (TLS-ALPN-01, DNS-01, HTTP-01, DNS-PERSIST-01, EAB)", "yes", "yes"]
+          - ["Automatic TLSA record refresh on certificate renewal", "yes", "yes"]
+      - title: Anti-spam and anti-phishing
+        rows:
+          - ["Spam filtering rules", "yes", "yes"]
+          - ["Statistical classifier (FTRL-Proximal, automatic training, address-book signal)", "yes", "yes"]
+          - ["Encryption-at-rest for spam training data", "yes", "yes"]
+          - ["DNSBL (IP, domain, hash)", "yes", "yes"]
+          - ["Pyzor collaborative digest filtering", "yes", "yes"]
+          - ["Phishing protection (homograph URL attacks, sender spoofing)", "yes", "yes"]
+          - ["Trusted reply tracking", "yes", "yes"]
+          - ["Sender reputation (IP, ASN, domain, address)", "yes", "yes"]
+          - ["Greylisting", "yes", "yes"]
+          - ["Spam traps", "yes", "yes"]
+          - ["ASN and GeoIP blocking, auto-banning", "yes", "yes"]
+          - ["AI / LLM spam classifier", "-", "yes"]
+      - title: Collaboration
+        rows:
+          - ["CalDAV (RFC 4791)", "yes", "yes"]
+          - ["CalDAV Scheduling (RFC 6638)", "yes", "yes"]
+          - ["iMIP email notifications", "yes", "yes"]
+          - ["Free/busy lookup", "yes", "yes"]
+          - ["Recurrence expansion (RRULE)", "yes", "yes"]
+          - ["Calendar event email notifications via VALARM", "yes", "yes"]
+          - ["CardDAV (RFC 6352) with vCard 2.1/3.0", "yes", "yes"]
+          - ["WebDAV (RFC 4918)", "yes", "yes"]
+          - ["WebDAV ACL (RFC 3744)", "yes", "yes"]
+          - ["JMAP for Calendars (draft-ietf-jmap-calendars)", "yes", "yes"]
+          - ["JMAP for Contacts (RFC 9610)", "yes", "yes"]
+          - ["JMAP for File Storage (draft-ietf-jmap-filenode)", "yes", "yes"]
+          - ["Auto-configuration for CalDAV, CardDAV, WebDAV", "yes", "yes"]
+          - ["Calendar localized invite templates and scheduling locales", "yes", "yes"]
+          - ["Branded scheduling and notification emails", "-", "yes"]
+      - title: Sieve and scripting
+        rows:
+          - ["Sieve scripting with all IANA-registered extensions", "yes", "yes"]
+          - ["ManageSieve (RFC 5804)", "yes", "yes"]
+          - ["JMAP for Sieve Scripts", "yes", "yes"]
+          - ["Sieve script deactivation without deletion (v0.16)", "yes", "yes"]
+          - ["MTA Hooks for Sieve-style upstream filters", "yes", "yes"]
+          - ["AI / LLM Sieve scripting (`llm_prompt`)", "-", "yes"]
+      - title: Storage backends
+        rows:
+          - ["RocksDB", "yes", "yes"]
+          - ["FoundationDB", "yes", "yes"]
+          - ["PostgreSQL / AlloyDB", "yes", "yes"]
+          - ["MySQL / MariaDB", "yes", "yes"]
+          - ["SQLite", "yes", "yes"]
+          - ["S3-compatible blob storage", "yes", "yes"]
+          - ["Azure Blob Storage", "yes", "yes"]
+          - ["Filesystem blob storage", "yes", "yes"]
+          - ["Redis (in-memory store)", "yes", "yes"]
+          - ["Read replicas", "-", "yes"]
+          - ["Sharded blob storage", "-", "yes"]
+          - ["Sharded in-memory data stores", "-", "yes"]
+      - title: Full-text search
+        rows:
+          - ["FTS backends (Internal, Meilisearch, ElasticSearch, OpenSearch, PostgreSQL, MySQL)", "yes", "yes"]
+          - ["Tokenisation and stemming for 17 languages", "yes", "yes"]
+      - title: Authentication
+        rows:
+          - ["Internal directory", "yes", "yes"]
+          - ["LDAP / Active Directory", "yes", "yes"]
+          - ["SQL directory", "yes", "yes"]
+          - ["OAuth 2.0 (RFC 6749, RFC 8628 device flow, RFC 7636 PKCE)", "yes", "yes"]
+          - ["OpenID Connect", "yes", "yes"]
+          - ["Two-factor authentication (TOTP)", "yes", "yes"]
+          - ["App passwords with labels, IP restrictions and expiration (v0.16)", "yes", "yes"]
+          - ["API keys with labels, IP restrictions and expiration (v0.16)", "yes", "yes"]
+          - ["Per-domain directory backends", "-", "yes"]
+      - title: Security and encryption
+        rows:
+          - ["Encryption at rest (S/MIME, OpenPGP)", "yes", "yes"]
+          - ["Self-service portal for password reset and encryption key management", "yes", "yes"]
+          - ["Roles, permissions and ACLs", "yes", "yes"]
+          - ["Password strength enforcement (zxcvbn) and rotation policies (v0.16)", "yes", "yes"]
+          - ["IP restrictions on accounts, app passwords and API keys (v0.16)", "yes", "yes"]
+          - ["Auto-banning with comments and configurable expiration", "yes", "yes"]
+          - ["Rate limiting", "yes", "yes"]
+          - ["Memory-safe (Rust)", "yes", "yes"]
+          - ["Independent security audit", "yes", "yes"]
+      - title: Cluster and HA
+        rows:
+          - ["Cluster coordination (Zenoh peer-to-peer, Kafka, Redpanda, NATS, Redis)", "yes", "yes"]
+          - ["Automatic node ID generation and management", "yes", "yes"]
+          - ["Outbound MTA cluster role (v0.16)", "yes", "yes"]
+          - ["Fault tolerance and high availability", "yes", "yes"]
+          - ["PROXY protocol", "yes", "yes"]
+          - ["Kubernetes, Apache Mesos, Docker Swarm", "yes", "yes"]
+      - title: Observability and administration
+        rows:
+          - ["Logging and tracing (OpenTelemetry, journald, files, console)", "yes", "yes"]
+          - ["Metrics (OpenTelemetry, Prometheus)", "Limited", "yes"]
+          - ["Webhooks", "yes", "yes"]
+          - ["Web admin (rewritten in v0.16)", "yes", "yes"]
+          - ["Report visualization (DMARC, TLS-RPT, ARF)", "yes", "yes"]
+          - ["Declarative IaC via `stalwart-cli apply` and `snapshot`", "yes", "yes"]
+          - ["Live telemetry streaming (SSE)", "-", "yes"]
+          - ["Message delivery history", "-", "yes"]
+          - ["Dashboard with real-time statistics", "-", "yes"]
+          - ["Metric alerts (email and webhook)", "-", "yes"]
+      - title: Enterprise-only
+        rows:
+          - ["Multi-tenancy with per-tenant quotas and isolation", "-", "yes"]
+          - ["Per-domain directory backends", "-", "yes"]
+          - ["Branding and customisation", "-", "yes"]
+          - ["Multi-tenant branding", "-", "yes"]
+          - ["Account archiving and un-deletion", "-", "yes"]
+          - ["Restore deleted emails with metadata", "-", "yes"]
+          - ["AI / LLM spam classifier", "-", "yes"]
+          - ["AI / LLM Sieve scripting", "-", "yes"]
+          - ["Read replicas, sharded blob and in-memory stores", "-", "yes"]
+      - title: Support
+        rows:
+          - ["Community support (support.stalw.art, free tier)", "yes", "yes"]
+          - ["Premium Support (minimum 150 mailboxes)", "-", "yes"]
+          - ["Dedicated Support Engineer", "-", "On demand"]
+          - ["Custom SLA", "-", "On demand"]
+          - ["Lawful interception", "-", "On demand"]
+    ctas:
+      - label: See pricing
+        href: /pricing
+      - label: Start a 30-day trial
+        href: https://license.stalw.art/trial
+        external: true
+        primary: false
+
+  - kind: faq
+    band: alt
+    eyebrow: Licensing FAQ
+    title: Common licensing questions.
+    items:
+      - question: What changed in v0.16?
+        answer: >-
+          v0.16 introduced several breaking changes. The REST `/api`
+          management endpoints were removed (management goes through the
+          JMAP API at `/jmap` now). Configuration moved from TOML files to
+          configuration objects stored inside JMAP, edited through the Web
+          admin, the CLI (`stalwart-cli apply` and `snapshot`), or directly
+          via JMAP. Outbound ARC sealing was removed (inbound verification
+          unchanged). The GitHub repository was renamed from
+          `stalwartlabs/mail-server` to `stalwartlabs/stalwart`. The
+          `smtp`, `imap` and `memory` directory backends were removed; use
+          internal, LDAP or SQL backends instead. Full upgrade notes are
+          in `UPGRADING/v0_16.md` in the repository.
+      - question: Why is feature X not open source?
+        answer: >-
+          Sustaining full-time development of a mail and collaboration
+          server requires funding that sponsorship alone has not covered.
+          The Enterprise edition exists to fund that work. Revenue from
+          Enterprise subscriptions pays the developers, who continue to
+          maintain and extend the Community edition under AGPL-3.0. The
+          Community edition already includes more functionality than most
+          paid alternatives. If you want to support more features moving
+          to AGPL, [become a sponsor](https://opencollective.com/stalwart).
+      - question: Can I trust that all open-source features will remain free?
+        answer: >-
+          Yes. Stalwart is licensed under AGPL-3.0 and we will not move
+          existing open-source features behind a paywall. The Enterprise
+          edition only adds new features on top of the Community edition;
+          nothing that ships under AGPL will be reclassified.
+      - question: What does the Enterprise license include?
+        answer: >-
+          Operational features for larger and multi-tenant deployments:
+          multi-tenancy with per-domain directory backends, multi-tenant
+          branding, account archiving and un-deletion, the AI / LLM spam
+          classifier, AI-assisted Sieve scripting, read replicas, sharded
+          blob and in-memory stores, live telemetry, message delivery
+          history, dashboards, and metric alerts. A full per-feature
+          breakdown is in the table above and on the [Enterprise edition](/enterprise) page.
+          Premium Support is available to Enterprise customers with **150
+          or more mailboxes**.
+      - question: How does the Enterprise licensing work?
+        answer: >-
+          Enterprise licensing is sold per mailbox as a subscription,
+          billed annually or monthly. Pricing is tiered: the per-mailbox
+          cost decreases as the mailbox count rises. Annual billing
+          receives a discount over monthly. The full table is on the
+          [pricing page](/pricing). After purchase you receive a license
+          key that activates the Enterprise features. Keys are issued to
+          a **server domain name** and can be used on an unlimited number
+          of servers under that domain.
+      - question: How can I upgrade to Enterprise?
+        answer: >-
+          Visit the [Stalwart Labs Licensing Portal](https://license.stalw.art/buy).
+          Credit-card purchases are issued instantly; the key activates
+          the Enterprise features as soon as it is installed.
+      - question: Can I try Enterprise before I buy?
+        answer: >-
+          Yes. A 30-day trial license with full access to all Enterprise
+          features is available at [license.stalw.art/trial](https://license.stalw.art/trial).
+      - question: What happens if I cancel my Enterprise subscription?
+        answer: >-
+          The server reverts to the Community edition. Enterprise-only
+          features stop, but no data is lost: mailboxes, calendars,
+          contacts, file storage and configuration remain intact, and
+          standard email and collaboration service continues without
+          interruption.
+
+footerCta:
+  cta: Ready to evaluate Enterprise?
+  ctaSub: Start a 30-day trial with full access to every Enterprise feature, or talk to us about your deployment.
+  ctaButton: Start a 30-day trial
+  ctaLink: https://license.stalw.art/trial

@@ -1,0 +1,30 @@
+---
+import { getCollection, render } from "astro:content";
+import LongForm from "../../layouts/LongForm.astro";
+
+export async function getStaticPaths() {
+  const all = await getCollection("legal");
+  const sorted = [...all].sort((a, b) => a.data.order - b.data.order);
+  return sorted.map((entry) => ({
+    params: { slug: entry.id.replace(/\.md$/, "") },
+    props: { entry, sorted },
+  }));
+}
+
+const { entry, sorted } = Astro.props;
+const { Content } = await render(entry);
+
+const navIndex = sorted.map((e: any) => ({
+  slug: e.id.replace(/\.md$/, ""),
+  title: e.data.title,
+  current: e.id === entry.id,
+}));
+---
+<LongForm
+  title={entry.data.title}
+  description={entry.data.description}
+  lastUpdated={entry.data.lastUpdated}
+  navIndex={navIndex}
+>
+  <Content />
+</LongForm>

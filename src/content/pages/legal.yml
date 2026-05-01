@@ -1,0 +1,42 @@
+title: Legal & Compliance | Stalwart Labs
+description: Review our terms of service, privacy practices, and legal commitments.
+slug: /legal
+
+hero:
+  eyebrow: Legal
+  title: Legal & Compliance
+  lead: Review our terms of service, privacy practices, and legal commitments.
+
+sections:
+  - kind: feature-grid
+    items:
+      - title: Terms and Conditions
+        body: The legal terms governing access to and use of the Stalwart website and Services.
+        href: /legal/terms
+      - title: Privacy Policy
+        body: How we access, collect, store, use, and share your personal information.
+        href: /legal/privacy
+      - title: Cookies Policy
+        body: What cookies we use, the data they hold, and how to refuse them.
+        href: /legal/cookies
+      - title: Refund Policy
+        body: Order cancellation rights and refund process for Stalwart subscriptions.
+        href: /legal/refunds
+      - title: Copyrights
+        body: Trademark and copyright notices for Stalwart Labs Ltd.
+        href: /legal/copyrights
+      - title: Data Processing Addendum (DPA)
+        body: Data-processing terms for Enterprise customers and Managed Email subscribers.
+        href: /legal/dpa
+      - title: Sub-processor list
+        body: Sub-processors engaged by Stalwart Labs Ltd to deliver paid services.
+        href: /legal/subprocessors
+      - title: Acceptable Use Policy (AUP)
+        body: Conduct expected of customers and users of the Services.
+        href: /legal/aup
+
+footerCta:
+  cta: Need a specific legal document?
+  ctaSub: Reach out and we will send the latest version directly.
+  ctaButton: Contact us
+  ctaLink: /contact

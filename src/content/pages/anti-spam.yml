@@ -1,0 +1,232 @@
+title: Anti-spam and Phishing Protection | Stalwart Labs
+description: >-
+  Built-in spam filter with FTRL-Proximal classifier, DNSBL, DMARC, phishing
+  detection, ASN reputation, auto-banning and optional LLM analysis.
+slug: /anti-spam
+
+hero:
+  eyebrow: Anti-spam & phishing
+  title: Spam and phishing protection that ships with the server
+  titleHighlight: ships with the server
+  lead: >-
+    Stalwart's spam filter is part of the server, not an external daemon.
+    It runs at SMTP time, learns from user feedback, and combines a
+    statistical classifier, DNS blocklists, DMARC alignment, phishing
+    heuristics, sender reputation and (on Enterprise) LLM analysis into one
+    score.
+  ctas:
+    - label: Get started
+      href: /docs/install/get-started
+  meta:
+    - Open source
+    - LLM module on Enterprise
+  visual:
+    kind: screenshot
+    src: /images/webadmin/dashboard-security.png
+    alt: Stalwart security dashboard
+    url: admin.stalw.art / Dashboard / Security
+
+sections:
+  - kind: feature
+    eyebrow: Statistical classifier
+    title: FTRL-Proximal, written in Rust, trained continuously.
+    body: >-
+      The classifier is a linear logistic-regression model trained online
+      with the FTRL-Proximal optimiser. Sparse, high-dimensional features
+      (millions of distinct signals from headers, body and metadata) are
+      mapped into a fixed parameter space through feature hashing, with
+      cuckoo hashing available for deployments above roughly 100,000
+      actively-training users. The model adapts as users mark messages as
+      spam or ham, and a ham-on-address-book signal pre-classifies known
+      correspondents.
+    bullets:
+      - FTRL-Proximal linear classifier with L1 / L2 regularisation.
+      - Standard feature hashing or cuckoo feature hashing for large deployments.
+      - Continuous online training from user feedback.
+      - "Address-book signal: senders in a recipient's contacts are weighted toward ham."
+      - Encryption-at-rest privacy setting for training data (v0.15).
+    learnMore:
+      - label: Read the classifier docs
+        href: /docs/spamfilter/classifier/overview
+    visual:
+      kind: placeholder
+      caption: "Diagram needed: FTRL-Proximal classifier pipeline (headers/body -> feature hash -> sparse features -> score)."
+
+  - kind: feature
+    reverse: true
+    band: alt
+    eyebrow: LLM-driven analysis [Enterprise]
+    title: AI in the spam filter and in Sieve scripts.
+    body: >-
+      The Enterprise edition adds an LLM module to the spam classifier and
+      an `llm_prompt` function to the Sieve language. Any OpenAI-compatible
+      chat or text-completion endpoint works: hosted (OpenAI, Anthropic),
+      self-hosted (Llama via LocalAI, vLLM), or anything else that speaks
+      the same API. Trusted Sieve scripts call the LLM at SMTP data time;
+      users with the right permission can call it from their own scripts
+      too.
+    bullets:
+      - LLM module for the spam classifier [Enterprise].
+      - "`llm_prompt` Sieve function for custom analysis [Enterprise]."
+      - OpenAI, Anthropic, or self-hosted endpoints.
+      - Bearer / Basic / unauthenticated HTTP, custom headers, configurable timeout.
+    learnMore:
+      - label: Read the LLM Sieve docs
+        href: /docs/sieve/llm
+    visual:
+      kind: placeholder
+      caption: "Screenshot needed: AI Model configuration in the WebUI (provider, endpoint, auth)."
+
+  - kind: feature
+    eyebrow: DNSBL and Pyzor
+    title: Block lists for IPs, domains, URLs and content hashes.
+    body: >-
+      Stalwart queries DNSBLs and DNSWLs for the connecting IP and every
+      IP in the `Received` chain, for domains and URLs lifted from the
+      message body, and for content hashes. Pyzor handles collaborative
+      digest filtering against the global Pyzor network. Each lookup is
+      configured as a small object with its own zone expression and tag,
+      so providers can be added and tuned without recompiling the server.
+    bullets:
+      - IP address checks against the connecting host and the `Received` chain.
+      - Domain, URL and hash-based blocklists.
+      - Pyzor digest-based collaborative filtering.
+      - Per-source `enable`, `zone` and `tag` expressions.
+    learnMore:
+      - label: Read DNSBL
+        href: /docs/spamfilter/dnsbl
+    visual:
+      kind: placeholder
+      caption: "Screenshot needed: DNSBL provider list in the WebUI with zone/tag fields."
+
+  - kind: feature
+    reverse: true
+    band: alt
+    eyebrow: DMARC, SPF, DKIM, ARC
+    title: Authentication signals feed the score.
+    body: >-
+      DMARC alignment, SPF policy evaluation, DKIM signature checks and
+      ARC chain verification all run at message time and produce tags
+      (`DKIM_REJECT`, `DMARC_POLICY_ALLOW`, and so on) that contribute to
+      the global spam score. ARC sealing was removed in v0.16; verification
+      on inbound is still supported.
+    bullets:
+      - DMARC (RFC 7489) alignment checking and reporting.
+      - "SPF (RFC 7208), DKIM (RFC 6376), ARC (RFC 8617, verification only)."
+      - Tag-based scoring system shared with the classifier and the DNSBL checks.
+    learnMore:
+      - label: Read DMARC analysis
+        href: /docs/spamfilter/dmarc
+    visual:
+      kind: screenshot
+      src: /images/webadmin/dmarc-report.png
+      alt: DMARC report
+      url: admin.stalw.art / Reports / DMARC
+
+  - kind: feature
+    eyebrow: Phishing protection
+    title: Homograph URLs, sender spoofing, lookalike domains.
+    body: >-
+      Phishing checks look at message structure, not just keywords:
+      visually-confusable Unicode characters in URLs, mismatches between
+      display name and From address, sender domains that imitate the
+      recipient's own domain, and other established techniques. Trusted-
+      reply tracking recognises genuine reply threads to a previously-sent
+      message and weights them toward ham.
+    bullets:
+      - Homograph URL detection.
+      - Sender spoofing and lookalike-domain detection.
+      - Trusted-reply tracking on outgoing messages.
+    visual:
+      kind: placeholder
+      caption: "Diagram needed: phishing-detection axes (homograph URL, sender spoof, lookalike domain) feeding score."
+
+  - kind: feature
+    reverse: true
+    band: alt
+    eyebrow: Sender reputation
+    title: IP, ASN, domain and address.
+    body: >-
+      Reputation is tracked across four axes simultaneously: source IP,
+      the ASN that owns it, the sending domain, and the individual sender
+      address. Each axis contributes a learned score that updates as the
+      deployment processes more mail. ASN data comes from Team Cymru DNS
+      or downloadable CSV mirrors; GeoIP is loaded the same way and is
+      included in the `Received` header for later auditing.
+    bullets:
+      - Per-IP, per-ASN, per-domain and per-email reputation scoring.
+      - ASN and GeoIP data from CSV resources or Team Cymru DNS.
+      - Greylisting for unknown senders.
+      - Spam traps that auto-train the classifier on what they catch.
+    learnMore:
+      - label: Read ASN and GeoIP
+        href: /docs/server/asn
+    visual:
+      kind: screenshot
+      src: /images/webadmin/dashboard-security.png
+      alt: Reputation and threats dashboard
+      url: admin.stalw.art / Dashboard / Security
+      glow: true
+
+  - kind: feature
+    eyebrow: ASN and country blocking
+    title: Block by network or geography.
+    body: >-
+      Connections from specific ASNs or countries can be blocked outright,
+      or fed into the spam filter as a strong negative signal. The same
+      data feeds reputation scoring, so a network that consistently sends
+      spam pays a reputation penalty in addition to any hard block.
+    bullets:
+      - ASN-based blocking and reputation.
+      - Country-based blocking and reputation.
+      - Auto-banning by IP for failed authentication, abuse, loitering and scanning.
+    visual:
+      kind: placeholder
+      caption: "Screenshot needed: ASN/Country block-list editor in the WebUI."
+
+  - kind: feature
+    reverse: true
+    band: alt
+    eyebrow: Auto-banning
+    title: A built-in fail2ban with categories.
+    body: >-
+      The auto-ban system tracks four independent categories of abuse and
+      bans the source IP when any one passes its threshold. Authentication
+      tracking keys on both the source and the login name, so distributed
+      brute-force attempts against a single account are caught even when
+      the attacker rotates IPs. Bans are stored as objects with explicit
+      reason and expiry; manual entries from the web admin or CLI live in
+      the same table.
+    bullets:
+      - Auth failures (default 100 / day across JMAP, IMAP, SMTP, ManageSieve).
+      - SMTP relay and recipient-probing abuse (default 35 / day).
+      - Loitering connections (default 150 / day).
+      - "Port and exploit-URL scanning (default 30 / day, plus an immediate-ban path glob)."
+    learnMore:
+      - label: Read auto-banning
+        href: /docs/server/auto-ban
+    visual:
+      kind: placeholder
+      caption: "Screenshot needed: Auto-ban list with reason, expiry and category filter."
+
+  - kind: feature
+    eyebrow: Upstream filters
+    title: Plug into Rspamd, SpamAssassin, ClamAV.
+    body: >-
+      For deployments that already run a content-filtering stack, the
+      built-in filter sits next to it. Milter handles Rspamd, SpamAssassin
+      and ClamAV without changes; MTA Hooks expose the same lifecycle over
+      HTTP + JSON for filters that prefer a web protocol.
+    bullets:
+      - Milter (Sendmail-compatible) for Rspamd, SpamAssassin, ClamAV.
+      - MTA Hooks (HTTP + JSON) for custom HTTP filters.
+      - "Per-stage invocation: `connect`, `ehlo`, `auth`, `mail`, `rcpt`, `data`."
+    visual:
+      kind: placeholder
+      caption: "Diagram needed: Stalwart filter chain with optional milter/MTA Hook bridge to Rspamd/SpamAssassin."
+
+footerCta:
+  cta: Stop spam at SMTP time.
+  ctaSub: Run a built-in classifier, DNSBLs, DMARC and (on Enterprise) LLM analysis without an external filter daemon.
+  ctaButton: Get started
+  ctaLink: /docs/install/get-started

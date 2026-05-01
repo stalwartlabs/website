@@ -1,0 +1,217 @@
+title: Integrations | Stalwart Labs
+description: >-
+  Authentication, storage, search, coordination, DNS, anti-spam, observability,
+  orchestration and AI providers Stalwart integrates with.
+slug: /integrations
+
+hero:
+  eyebrow: Integrations
+  title: Stalwart connects to the systems you already run.
+  titleHighlight: systems you already run
+  lead: >-
+    The lists below cover the directory backends, storage engines, search
+    engines, cluster-coordination backends, DNS providers, anti-spam
+    upstreams, observability targets, orchestrators, mail and calendar
+    clients, and AI providers that the server supports out of the box.
+    Items marked [Enterprise] are available with the Enterprise edition;
+    everything else is in the Community edition under AGPL-3.0.
+  ctas:
+    - label: See the comparison table
+      href: /compare
+
+sections:
+  - kind: list
+    eyebrow: Authentication and identity
+    title: Built-in directory or your own IdP.
+    body: >-
+      User authentication and authorization can be handled by Stalwart's
+      built-in directory or delegated to an external identity provider.
+      OAuth 2.0 (RFC 8628 device flow and authorization code) and OpenID
+      Connect are supported as first-class authentication mechanisms.
+    bullets:
+      - "[LDAP and Active Directory](/docs/auth/backend/ldap), including OpenLDAP."
+      - "[OpenID Connect](/docs/auth/openid/overview) providers (Keycloak, Authentik, generic OIDC)."
+      - OAuth 2.0 identity providers (RFC 8628).
+      - SAML identity providers [Enterprise].
+      - "[SQL directories](/docs/auth/backend/sql) (PostgreSQL, MySQL, MariaDB, SQLite)."
+      - "[Built-in directory](/docs/auth/backend/internal) for self-managed deployments."
+
+  - kind: list
+    band: alt
+    eyebrow: Storage backends
+    title: Pick the data store that fits the scale.
+    body: >-
+      The data store keeps structured metadata such as mailboxes, message
+      metadata, ACLs, calendars and contacts. Each backend has different
+      scaling characteristics.
+    bullets:
+      - "[RocksDB](/docs/storage/backends/rocksdb), embedded key-value store for single-node deployments."
+      - "[FoundationDB](/docs/storage/backends/foundationdb), recommended for large distributed clusters."
+      - "[PostgreSQL and AlloyDB](/docs/storage/backends/postgresql)."
+      - "[MySQL and MariaDB](/docs/storage/backends/mysql) (including Galera)."
+      - "[SQLite](/docs/storage/backends/sqlite) for evaluation and very small deployments."
+
+  - kind: list
+    eyebrow: Blob storage
+    title: Where the message bodies and attachments live.
+    body: >-
+      The blob store holds message bodies, attachments, Sieve scripts and
+      WebDAV files. Stalwart supports the S3 API, Azure Blob and the local
+      filesystem.
+    bullets:
+      - Amazon S3, MinIO, GarageHQ, Google Cloud Storage and any other S3-compatible object store.
+      - "[Azure Blob Storage](/docs/storage/backends/azure)."
+      - "[Filesystem](/docs/storage/backends/filesystem)."
+      - Sharded blob storage across multiple endpoints [Enterprise].
+
+  - kind: list
+    band: alt
+    eyebrow: Full-text search
+    title: Internal engine or a dedicated service.
+    body: >-
+      Full-text search can run inside Stalwart or be delegated to a
+      dedicated engine. The internal engine indexes 17 languages with
+      bloom filters; dedicated engines absorb the indexing load when the
+      data store is busy.
+    bullets:
+      - Internal full-text engine.
+      - "[Meilisearch](/docs/storage/backends/meilisearch)."
+      - "[Elasticsearch](/docs/storage/backends/elasticsearch)."
+      - OpenSearch.
+      - PostgreSQL.
+      - MySQL / MariaDB.
+
+  - kind: list
+    eyebrow: Cluster coordination
+    title: Coordinator-less or one of four backends.
+    body: >-
+      Coordination synchronises state across cluster nodes (mailbox events,
+      blocked IPs, certificate renewals, push notifications). Stalwart can
+      run coordinator-less with peer-to-peer Zenoh or use one of four
+      message backends.
+    bullets:
+      - "Peer-to-peer over Eclipse [Zenoh](/docs/cluster/coordination/peer-to-peer), with no external coordinator."
+      - Apache Kafka.
+      - Redpanda (Kafka-compatible).
+      - NATS.
+      - Redis.
+
+  - kind: list
+    band: alt
+    eyebrow: DNS providers
+    title: Automated DNS for every supported registrar.
+    body: >-
+      When automated DNS management is enabled on a Domain object, Stalwart
+      publishes and refreshes MX, SPF, DKIM, DMARC, SRV, CAA, TLSA, MTA-STS,
+      TLS-RPT, autoconfig and autodiscover records against a configured
+      DNS provider.
+    bullets:
+      - Cloudflare.
+      - AWS Route 53.
+      - Google Cloud DNS.
+      - Bunny DNS.
+      - Porkbun.
+      - DNSimple.
+      - Spaceship.
+      - deSEC.
+      - OVH.
+      - DigitalOcean.
+      - "RFC 2136 dynamic updates with TSIG or SIG(0) for self-hosted authoritative servers (BIND-compatible)."
+
+  - kind: list
+    eyebrow: Anti-spam upstreams
+    title: Built-in filter, plus the upstreams you already run.
+    body: >-
+      Stalwart's built-in spam filter (statistical classifier, DNSBL,
+      phishing protection, sender reputation, greylisting and spam traps)
+      can be combined with external anti-spam systems through Milter or
+      MTA Hooks.
+    bullets:
+      - SpamAssassin via Milter.
+      - RSPAMD via Milter or MTA Hooks.
+      - Pyzor for collaborative digest-based spam detection.
+      - DNSBL providers (Spamhaus, SURBL, URIBL, and any RBL or hashlist that speaks DNS).
+
+  - kind: list
+    band: alt
+    eyebrow: Observability
+    title: Metrics, logs, traces, webhooks.
+    body: >-
+      Telemetry covers metrics, logs, traces and event-driven webhooks.
+      Stalwart can ship data to OpenTelemetry collectors, expose a
+      Prometheus endpoint, and post webhooks to any HTTP endpoint.
+    bullets:
+      - OpenTelemetry exporter for traces, metrics and logs.
+      - "[Prometheus](/docs/telemetry/metrics/prometheus) pull endpoint."
+      - "[Webhooks](/docs/telemetry/webhooks) for event-driven automation."
+      - journald.
+      - Log files.
+      - Console output.
+      - "[Live telemetry](/docs/telemetry/live) over Server-Sent Events [Enterprise]."
+      - "Email and webhook [alerts](/docs/telemetry/alerts) [Enterprise]."
+
+  - kind: list
+    eyebrow: Orchestration
+    title: Stalwart runs on the major orchestrators.
+    body: >-
+      The orchestrator manages node lifecycle and scaling; the cluster
+      coordination layer keeps nodes in sync.
+    bullets:
+      - "[Kubernetes](/docs/cluster/orchestration/kubernetes)."
+      - "[Apache Mesos](/docs/cluster/orchestration/apache-mesos)."
+      - "[Docker Swarm](/docs/cluster/orchestration/docker-swarm)."
+      - Plain Docker.
+
+  - kind: list
+    band: alt
+    eyebrow: Mail clients
+    title: Anything that speaks IMAP, POP3, JMAP or ManageSieve.
+    body: >-
+      Stalwart speaks every standard mail protocol, so any RFC-compliant
+      client works. Automatic account configuration is supported through
+      the IETF UA Autoconfig draft and Microsoft Autodiscover V2.
+    bullets:
+      - Any IMAP4rev1 (RFC 3501) or IMAP4rev2 (RFC 9051) client.
+      - Any JMAP for Mail (RFC 8621) client.
+      - Any POP3 (RFC 1939) client.
+      - Any ManageSieve (RFC 5804) client.
+      - Apple Mail.
+      - Mozilla Thunderbird (Autoconfig).
+      - Microsoft Outlook (Autodiscover V2).
+      - Mobile clients on iOS and Android via autoconfig.
+
+  - kind: list
+    eyebrow: Calendar and contact clients
+    title: CalDAV, CardDAV, WebDAV, and the JMAP equivalents.
+    body: >-
+      CalDAV (RFC 4791), CalDAV Scheduling (RFC 6638), CardDAV (RFC 6352,
+      including legacy vCard 2.1 and 3.0) and WebDAV (RFC 4918) are all
+      supported, alongside the JMAP equivalents. Autoconfig and assisted
+      resource discovery work for CalDAV, CardDAV and WebDAV.
+    bullets:
+      - Apple Calendar and Apple Contacts.
+      - Mozilla Thunderbird (TbSync, calendar add-ons).
+      - GNOME Evolution.
+      - KDE Kontact.
+      - Mobile CalDAV / CardDAV clients on iOS and Android.
+      - "JMAP for Calendars, Contacts and File Storage clients."
+
+  - kind: list
+    band: alt
+    eyebrow: AI providers
+    title: LLMs in the spam filter and in Sieve scripts.
+    body: >-
+      The Enterprise edition adds an LLM-driven spam classifier and an
+      `llm_prompt` action available to Sieve scripts for content analysis.
+      The LLM endpoint is configurable; hosted providers and self-hosted
+      models are both supported.
+    bullets:
+      - OpenAI [Enterprise].
+      - Anthropic [Enterprise].
+      - Self-hosted LLM endpoints, including any OpenAI-compatible API [Enterprise].
+
+footerCta:
+  cta: Confirm Stalwart fits your stack
+  ctaSub: Compare editions feature by feature, or talk to us about a specific integration.
+  ctaButton: Compare editions
+  ctaLink: /compare

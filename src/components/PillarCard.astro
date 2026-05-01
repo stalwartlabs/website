@@ -1,0 +1,122 @@
+---
+interface Props {
+  href: string;
+  title: string;
+  icon: "mail" | "users" | "shield" | "cpu";
+}
+const { href, title, icon } = Astro.props;
+---
+<a href={href} class="pillar reveal">
+  <span class="pillar__icon" aria-hidden="true">
+    {icon === "mail" && (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/>
+        <path d="m3 7 9 6 9-6"/>
+      </svg>
+    )}
+    {icon === "users" && (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+        <circle cx="9" cy="7" r="4"/>
+        <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+      </svg>
+    )}
+    {icon === "shield" && (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        <path d="m9 12 2 2 4-4"/>
+      </svg>
+    )}
+    {icon === "cpu" && (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="4" y="4" width="16" height="16" rx="2"/>
+        <rect x="9" y="9" width="6" height="6" rx="1"/>
+        <path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 15h3M1 9h3M1 15h3"/>
+      </svg>
+    )}
+  </span>
+  <h3 class="pillar__title"><slot name="title" />{title}</h3>
+  <p class="pillar__body"><slot /></p>
+  <span class="pillar__more">Learn more <span aria-hidden="true">→</span></span>
+</a>
+
+<style>
+  .pillar {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+    padding: 1.75rem;
+    border-radius: var(--radius);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    transition:
+      transform var(--t-mid) var(--ease),
+      border-color var(--t-mid) var(--ease),
+      background var(--t-mid) var(--ease),
+      box-shadow var(--t-mid) var(--ease);
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .pillar::after {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(160deg, var(--brand) 0%, transparent 50%);
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity var(--t-mid) var(--ease);
+    pointer-events: none;
+    z-index: 1;
+  }
+  .pillar:hover {
+    transform: translateY(-3px);
+    border-color: transparent;
+    box-shadow: var(--shadow-1);
+  }
+  .pillar:hover::after {
+    opacity: 1;
+  }
+  .pillar__icon {
+    width: 44px;
+    height: 44px;
+    display: inline-grid;
+    place-items: center;
+    border-radius: 12px;
+    background: var(--brand-soft);
+    color: var(--brand);
+    border: 1px solid var(--brand-soft);
+  }
+  .pillar__title {
+    font-size: 1.125rem;
+    font-weight: 600;
+  }
+  .pillar__body {
+    color: var(--text-muted);
+    font-size: 0.9375rem;
+    line-height: 1.55;
+  }
+  .pillar__more {
+    margin-top: auto;
+    color: var(--brand);
+    font-size: 0.875rem;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    transition: gap var(--t-fast) var(--ease);
+  }
+  .pillar:hover .pillar__more {
+    gap: 0.6rem;
+  }
+</style>

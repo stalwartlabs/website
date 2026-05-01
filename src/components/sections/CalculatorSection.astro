@@ -1,0 +1,304 @@
+---
+import { inlineMd, paragraphMd } from "../../lib/md";
+
+interface Props {
+  data: any;
+  // The full tier table is read from a sibling pricing-tiers section,
+  // OR provided here. We pass the same shape.
+  tiers?: any[];
+}
+const { data, tiers = [] } = Astro.props;
+const tierJson = JSON.stringify(tiers);
+const threshold = data.premiumSupportThreshold ?? 150;
+---
+<section class={`band ${data.band === "alt" ? "band--alt" : ""}`}>
+  <div class="container container-narrow">
+    {(data.eyebrow || data.title) && (
+      <div class="section-head reveal">
+        {data.eyebrow && <span class="eyebrow">{data.eyebrow}</span>}
+        {data.title && <h2 class="h2" set:html={inlineMd(data.title)}></h2>}
+        {data.body && <div class="calc__body" set:html={paragraphMd(data.body)}></div>}
+      </div>
+    )}
+    <div
+      class="calc reveal"
+      data-calculator
+      data-tiers={tierJson}
+      data-premium-threshold={String(threshold)}
+    >
+      <div class="calc__row">
+        <label class="calc__label" for="calc-mailboxes">Number of mailboxes</label>
+        <div class="calc__input-wrap">
+          <input
+            id="calc-mailboxes"
+            type="number"
+            min="1"
+            max="100000000"
+            step="1"
+            value="500"
+            inputmode="numeric"
+            class="calc__input"
+            data-calc-input
+          />
+          <input
+            type="range"
+            min="25"
+            max="100000"
+            step="25"
+            value="500"
+            class="calc__slider"
+            data-calc-slider
+            aria-label="Mailbox count slider"
+          />
+        </div>
+      </div>
+
+      <div class="calc__results">
+        <div class="calc__price">
+          <span class="calc__price-label">Annual total</span>
+          <div class="calc__price-values">
+            <span class="calc__price-eur" data-calc-eur>EUR 0</span>
+            <span class="calc__price-usd" data-calc-usd>USD 0</span>
+          </div>
+          <span class="calc__price-monthly" data-calc-monthly>around EUR 0 / month</span>
+        </div>
+        <div class="calc__premium" data-calc-premium>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          <span data-calc-premium-text>Premium Support included</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  (() => {
+    const root = document.querySelector("[data-calculator]");
+    if (!root) return;
+    const tiers = JSON.parse(root.getAttribute("data-tiers") || "[]");
+    const premiumThreshold = parseInt(root.getAttribute("data-premium-threshold") || "150", 10);
+    if (!tiers.length) return;
+
+    const input = root.querySelector("[data-calc-input]");
+    const slider = root.querySelector("[data-calc-slider]");
+    const eurEl = root.querySelector("[data-calc-eur]");
+    const usdEl = root.querySelector("[data-calc-usd]");
+    const monthlyEl = root.querySelector("[data-calc-monthly]");
+    const premiumEl = root.querySelector("[data-calc-premium]");
+    const premiumText = root.querySelector("[data-calc-premium-text]");
+
+    function compute(count) {
+      let totalEur = 0;
+      let totalUsd = 0;
+      let remaining = count;
+      for (const tier of tiers) {
+        if (remaining <= 0) break;
+        const upper = tier.upper === null ? Infinity : tier.upper;
+        const lower = tier.lower;
+        if (count < lower) continue;
+        const start = Math.max(count - remaining, lower - 1) + 1;
+        const end = Math.min(count, upper);
+        const inTier = Math.max(0, end - Math.max(lower, count - remaining + 1) + 1);
+        // Simpler: count - prevSum
+        const prevUpper = tier === tiers[0] ? 0 : tiers[tiers.indexOf(tier) - 1].upper;
+        const tierSize = Math.max(0, Math.min(count, upper) - Math.max(0, prevUpper));
+        totalEur += tierSize * tier.eur;
+        totalUsd += tierSize * tier.usd;
+      }
+      return { eur: totalEur, usd: totalUsd };
+    }
+
+    function fmtMoney(amount, currency) {
+      // Round half up to two decimals.
+      const rounded = Math.round(amount * 100) / 100;
+      return `${currency} ${rounded.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    }
+
+    function update(rawValue) {
+      const count = Math.max(1, Math.floor(Number(rawValue) || 0));
+      const { eur, usd } = compute(count);
+      eurEl.textContent = fmtMoney(eur, "EUR");
+      usdEl.textContent = fmtMoney(usd, "USD");
+      monthlyEl.textContent = `around ${fmtMoney(eur / 12, "EUR")} / month`;
+
+      if (count >= premiumThreshold) {
+        premiumEl.classList.remove("calc__premium--off");
+        premiumText.textContent = "Premium Support included";
+      } else {
+        premiumEl.classList.add("calc__premium--off");
+        const need = premiumThreshold - count;
+        premiumText.textContent = `${need.toLocaleString("en-US")} more mailbox${need === 1 ? "" : "es"} for Premium Support`;
+      }
+    }
+
+    input.addEventListener("input", (e) => {
+      const v = Math.max(1, Math.floor(Number(e.target.value) || 0));
+      if (v <= Number(slider.max)) slider.value = String(v);
+      update(v);
+    });
+    slider.addEventListener("input", (e) => {
+      input.value = e.target.value;
+      update(e.target.value);
+    });
+
+    update(input.value);
+  })();
+</script>
+
+<style>
+  .section-head {
+    margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+  }
+  .section-head .h2 {
+    margin-top: 0.75rem;
+  }
+  .calc__body {
+    margin-top: 1rem;
+    color: var(--text-muted);
+  }
+
+  .calc {
+    padding: clamp(1.5rem, 3vw, 2.25rem);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+  @media (min-width: 720px) {
+    .calc {
+      grid-template-columns: 1.1fr 1fr;
+      align-items: center;
+    }
+  }
+
+  .calc__label {
+    display: block;
+    font-size: 0.8125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+  }
+  .calc__input-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+  .calc__input {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text);
+    transition: border-color var(--t-fast) var(--ease);
+    -moz-appearance: textfield;
+  }
+  .calc__input:focus {
+    outline: none;
+    border-color: var(--brand);
+  }
+  .calc__input::-webkit-outer-spin-button,
+  .calc__input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  .calc__slider {
+    width: 100%;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 6px;
+    border-radius: 999px;
+    background: var(--surface-2);
+    outline: none;
+  }
+  .calc__slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--brand);
+    cursor: pointer;
+    box-shadow: 0 0 12px var(--brand-glow);
+  }
+  .calc__slider::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border: none;
+    border-radius: 50%;
+    background: var(--brand);
+    cursor: pointer;
+    box-shadow: 0 0 12px var(--brand-glow);
+  }
+
+  .calc__results {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-left: 0;
+  }
+  @media (min-width: 720px) {
+    .calc__results {
+      padding-left: 2rem;
+      border-left: 1px solid var(--border);
+    }
+  }
+  .calc__price-label {
+    font-size: 0.8125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+  .calc__price-values {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem 1rem;
+    margin-top: 0.4rem;
+  }
+  .calc__price-eur {
+    font-size: 2rem;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    background: linear-gradient(135deg, var(--brand) 0%, var(--brand-hi) 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+  .calc__price-usd {
+    color: var(--text-muted);
+    font-size: 1rem;
+    font-weight: 500;
+  }
+  .calc__price-monthly {
+    color: var(--text-dim);
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+  }
+  .calc__premium {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--brand);
+    font-size: 0.875rem;
+    font-weight: 500;
+    padding: 0.6rem 0.85rem;
+    background: var(--brand-soft);
+    border-radius: var(--radius-sm);
+    align-self: flex-start;
+  }
+  .calc__premium--off {
+    color: var(--text-muted);
+    background: var(--surface-2);
+  }
+  .calc__premium--off svg {
+    display: none;
+  }
+</style>

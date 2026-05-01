@@ -1,0 +1,186 @@
+title: Stalwart Collaboration Server | Stalwart Labs
+description: >-
+  Calendars, contacts and file storage over CalDAV, CardDAV, WebDAV and JMAP,
+  with scheduling, sharing and email notifications built in.
+slug: /collaboration
+
+hero:
+  eyebrow: Collaboration
+  title: A collaboration server, not a bolt-on
+  titleHighlight: not a bolt-on
+  lead: >-
+    Calendars, contacts and file storage live in the same Stalwart instance
+    as email, sharing one identity layer, one quota system, one access-control
+    model and one set of backups. CalDAV, CardDAV and WebDAV cover existing
+    clients; the JMAP for Calendars, Contacts and File Storage drafts cover
+    the next generation.
+  ctas:
+    - label: Get started
+      href: /docs/install/get-started
+  meta:
+    - Open source
+    - Same identity, quotas, ACLs as mail
+  visual:
+    kind: screenshot
+    src: /images/webadmin/calendar-edit.png
+    alt: Stalwart calendar settings
+    url: admin.stalw.art / Calendars
+
+sections:
+  - kind: feature
+    eyebrow: Calendars
+    title: CalDAV today, JMAP tomorrow.
+    body: >-
+      Calendar data is exposed over CalDAV (RFC 4791) for desktop and mobile
+      clients, and over JMAP for Calendars (draft-ietf-jmap-calendars) for
+      the JSON-native clients that are starting to ship. Recurring events
+      are pre-expanded against the configured RRULE limit, so server-side
+      queries stay fast even for long-running rules. Calendar discovery is
+      automatic at `/.well-known/caldav`.
+    bullets:
+      - CalDAV (RFC 4791) and CalDAV Scheduling (RFC 6638).
+      - JMAP for Calendars (draft-ietf-jmap-calendars).
+      - Pre-expanded recurrence with configurable limits.
+      - Per-account and per-tenant calendar caps.
+      - Group and shared calendars.
+    learnMore:
+      - label: Read the Calendar docs
+        href: /docs/collaboration/calendar
+    visual:
+      kind: screenshot
+      src: /images/webadmin/calendar-edit.png
+      alt: Calendar configuration
+      url: admin.stalw.art / Calendars
+
+  - kind: feature
+    reverse: true
+    band: alt
+    eyebrow: Scheduling
+    title: Invitations that work for both worlds.
+    body: >-
+      Scheduling glues iTIP (RFC 5546) to two delivery paths: server-side
+      CalDAV Scheduling (RFC 6638) for attendees on the same Stalwart
+      deployment, and iMIP (RFC 6047) email delivery for everyone else.
+      Free/busy lookups complete the picture, and attendee scheduling on
+      Enterprise extends the model across federated calendar peers.
+    bullets:
+      - iTIP exchange of REQUEST, REPLY, CANCEL and update messages.
+      - iMIP fallback for attendees that do not speak CalDAV.
+      - Attendee scheduling and free/busy lookup [Enterprise].
+      - Inbox auto-expunge and configurable recipient limits.
+    learnMore:
+      - label: Read Scheduling
+        href: /docs/collaboration/scheduling
+    visual:
+      kind: placeholder
+      caption: "Diagram needed: iTIP/iMIP scheduling flow showing internal CalDAV peers vs external email recipients."
+
+  - kind: feature
+    eyebrow: Contacts
+    title: Address books that sync everywhere.
+    body: >-
+      Contacts are exposed over CardDAV (RFC 6352) including the legacy
+      vCard 2.1 and 3.0 formats that older clients still emit, and over
+      JMAP for Contacts (RFC 9610) using the JSContact data model. The same
+      address book entries drive features elsewhere in the server: senders
+      that appear in a recipient's address book are treated as known
+      correspondents by the spam filter and the calendar scheduler.
+    bullets:
+      - CardDAV (RFC 6352) with vCard 2.1, 3.0 and 4.0.
+      - JMAP for Contacts (RFC 9610) with JSContact.
+      - Personal, group and shared address books.
+      - Address-book signal feeds back into spam scoring and scheduling.
+    learnMore:
+      - label: Read the Contacts docs
+        href: /docs/collaboration/contact
+    visual:
+      kind: placeholder
+      caption: "Screenshot needed: CardDAV address-book view in the WebUI."
+
+  - kind: feature
+    reverse: true
+    band: alt
+    eyebrow: File storage
+    title: One protocol per client.
+    body: >-
+      Files are served over WebDAV (RFC 4918) at `/dav/file/<account>` for
+      any standard file manager, and over JMAP for File Storage
+      (draft-ietf-jmap-filenode) for clients that prefer the JSON model.
+      Storage shares the same quota system as email, so a tenant or account
+      that fills up its mailbox quota cannot bypass the cap by uploading
+      files instead.
+    bullets:
+      - WebDAV (RFC 4918) for desktop and mobile file managers.
+      - JMAP for File Storage (draft-ietf-jmap-filenode).
+      - Unified quota with email storage.
+      - Personal, group and shared file spaces.
+    learnMore:
+      - label: Read File Storage
+        href: /docs/collaboration/file-storage
+    visual:
+      kind: placeholder
+      caption: "Screenshot needed: WebDAV file storage view in the WebUI."
+
+  - kind: feature
+    eyebrow: Sharing
+    title: Granular ACLs on every resource.
+    body: >-
+      Calendars, address books and file collections share one access-control
+      model. WebDAV ACL (RFC 3744) covers the legacy clients; JMAP Sharing
+      (RFC 9670) covers the JMAP clients. Permissions are read, write and
+      manage; principals are users, groups, tenants or anonymous.
+    bullets:
+      - WebDAV ACL (RFC 3744).
+      - JMAP Sharing (RFC 9670).
+      - Read, write and manage permissions per principal.
+      - Group and tenant principals.
+    visual:
+      kind: placeholder
+      caption: "Screenshot needed: Sharing/ACL editor in the WebUI."
+
+  - kind: feature
+    reverse: true
+    band: alt
+    eyebrow: Notifications
+    title: Email reminders even when clients drop them.
+    body: >-
+      Stalwart implements iCalendar `VALARM` with `ACTION:EMAIL` directly.
+      When a client (Apple Calendar, for example) strips the email-action
+      alarm before sending it to the server, an `@email` marker in the
+      alarm summary or description tells Stalwart to deliver the alert
+      anyway. Per-account interval limits and external-recipient policies
+      keep the feature from being abused.
+    bullets:
+      - iCalendar `VALARM` with `ACTION:EMAIL`.
+      - "`@email` marker for clients that strip the email action."
+      - Per-account minimum trigger interval (default 1 hour).
+      - External-recipient policy on or off per deployment.
+    learnMore:
+      - label: Read Notifications
+        href: /docs/collaboration/notifications
+    visual:
+      kind: placeholder
+      caption: "Diagram needed: VALARM/ACTION:EMAIL fallback path with @email marker."
+
+  - kind: list
+    eyebrow: Discovery and clients
+    title: Apple, Thunderbird, GNOME, KDE, mobile.
+    body: >-
+      Stalwart serves CalDAV at `/.well-known/caldav` and CardDAV at
+      `/.well-known/carddav`, and ships PACC, Mozilla Autoconfig and
+      Microsoft Autodiscover documents that point clients at the right
+      endpoints. Assisted resource discovery (added in v0.13) and
+      CalDAV/CardDAV/WebDAV autoconfig (added in v0.14) cover the cases
+      where a client cannot guess the path on its own.
+    bullets:
+      - Apple Mail, Calendar and Contacts.
+      - Thunderbird (Lightning, TbSync).
+      - GNOME Evolution, KDE Kontact / Akonadi.
+      - iOS, Android and other mobile CalDAV / CardDAV clients.
+      - Any JMAP client following the published drafts.
+
+footerCta:
+  cta: Run mail and collaboration on one server.
+  ctaSub: One identity, one quota, one access model. Calendars, contacts and files included.
+  ctaButton: Get started
+  ctaLink: /docs/install/get-started

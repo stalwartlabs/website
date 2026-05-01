@@ -1,0 +1,67 @@
+---
+import { inlineMd, paragraphMd } from "../../lib/md";
+
+interface Props {
+  data: any;
+}
+const { data } = Astro.props;
+---
+<section class={`band ${data.band === "alt" ? "band--alt" : ""}`}>
+  <div class="container">
+    <div class="callout reveal">
+      <div class="callout__bloom" aria-hidden="true"></div>
+      <div class="callout__text">
+        <h2 class="h2 callout__title" set:html={inlineMd(data.title)}></h2>
+        {data.body && <div class="callout__body" set:html={paragraphMd(data.body)}></div>}
+      </div>
+      <div class="callout__actions">
+        {data.ctas.map((cta: any) => (
+          <a
+            href={cta.href}
+            class={`btn ${cta.primary === false ? "btn-ghost" : "btn-primary btn-arrow"}`}
+            {...(cta.external ? { target: "_blank", rel: "noopener" } : {})}
+          >{cta.label}</a>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .callout {
+    position: relative;
+    overflow: hidden;
+    padding: clamp(2.25rem, 4vw, 3.25rem);
+    border-radius: var(--radius-lg);
+    background: linear-gradient(135deg, var(--surface) 0%, var(--surface-2) 100%);
+    border: 1px solid var(--border);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    align-items: center;
+    justify-content: space-between;
+    isolation: isolate;
+  }
+  .callout__bloom {
+    position: absolute;
+    inset: -50%;
+    background: radial-gradient(circle at 80% 30%, var(--brand-glow) 0%, transparent 45%);
+    z-index: -1;
+    pointer-events: none;
+  }
+  .callout__text {
+    flex: 1 1 460px;
+  }
+  .callout__title {
+    line-height: 1.2;
+  }
+  .callout__body {
+    margin-top: 0.75rem;
+    color: var(--text-muted);
+  }
+  .callout__actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+</style>

@@ -1,0 +1,89 @@
+---
+import { Code } from "astro:components";
+
+interface Props {
+  code: string;
+  lang?: string;
+  filename?: string;
+  prompt?: string;
+}
+const { code, lang = "json", filename, prompt } = Astro.props;
+---
+<div class="code-frame">
+  <div class="code-frame__chrome">
+    <div class="code-frame__dots" aria-hidden="true">
+      <span></span><span></span><span></span>
+    </div>
+    {filename && <span class="code-frame__file">{filename}</span>}
+    {prompt && <span class="code-frame__prompt">{prompt}</span>}
+    <span class="code-frame__spacer"></span>
+  </div>
+  <div class="code-frame__body">
+    <Code code={code} lang={lang as any} theme="github-dark-default" />
+  </div>
+</div>
+
+<style is:global>
+  .code-frame .astro-code {
+    background: transparent !important;
+    padding: 1.25rem 1.5rem !important;
+    margin: 0 !important;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    line-height: 1.65;
+    overflow-x: auto;
+  }
+  .code-frame .astro-code code {
+    font-family: inherit;
+    counter-reset: line;
+  }
+</style>
+
+<style>
+  .code-frame {
+    position: relative;
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--code-bg);
+    border: 1px solid #1f1f28;
+    box-shadow: var(--frame-shadow);
+  }
+  .code-frame__chrome {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    height: 38px;
+    padding: 0 0.875rem;
+    background: linear-gradient(to bottom, #15151c 0%, #0d0d12 100%);
+    border-bottom: 1px solid #1f1f28;
+  }
+  .code-frame__dots {
+    display: flex;
+    gap: 6px;
+  }
+  .code-frame__dots span {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+  }
+  .code-frame__dots span:nth-child(1) { background: #ff5f57; }
+  .code-frame__dots span:nth-child(2) { background: #febc2e; }
+  .code-frame__dots span:nth-child(3) { background: #28c840; }
+  .code-frame__file,
+  .code-frame__prompt {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: #8c8c95;
+  }
+  .code-frame__file {
+    background: rgba(255, 255, 255, 0.04);
+    padding: 0.2rem 0.6rem;
+    border-radius: 6px;
+  }
+  .code-frame__spacer {
+    margin-left: auto;
+  }
+  .code-frame__body {
+    background: var(--code-bg);
+  }
+</style>
