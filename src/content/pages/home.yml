@@ -8,15 +8,15 @@ slug: /
 hero:
   eyebrow: All-in-one mail & collaboration server
   title: |
-    Modern email and collaboration,
-    in one server
-  titleHighlight: one server
+    Mail and collaboration,
+    reinvented
+  titleHighlight: reinvented
   lead: >-
-    Stalwart runs email, calendars, contacts and file storage from a
-    single server, with spam and phishing protection built in. One process
-    to install, one configuration to maintain, one place to administer.
-    Every standard protocol your clients already speak (JMAP, IMAP, POP3,
-    SMTP, CalDAV, CardDAV and WebDAV) supported natively.
+    One server for your email, calendars, contacts and shared files,
+    with spam and phishing protection built in. One install, one
+    configuration to maintain, one place to administer. Every standard
+    protocol your clients already speak (JMAP, IMAP, POP3, SMTP, CalDAV,
+    CardDAV and WebDAV) supported natively.
   ctas:
     - label: Get started
       href: /docs/install/
@@ -32,14 +32,14 @@ hero:
 sections:
   - kind: pillar-grid
     eyebrow: Stalwart at a glance
-    title: Four pillars, one server.
+    title: What used to take five servers, now takes one.
     items:
       - icon: mail
         title: Email
         body: >-
-          Mailboxes that work with every client your users already have.
-          Modern JMAP for new apps, full IMAP and POP3 for everything else,
-          and SMTP for delivery.
+          Compatible with every email client your users already have.
+          Modern JMAP for new apps, full IMAP and POP3 for everything
+          else, and SMTP for delivery.
         href: /mail-server
       - icon: users
         title: Collaboration
@@ -66,12 +66,15 @@ sections:
 
   - kind: feature-grid
     eyebrow: All-in-one solution
-    title: Replace the legacy stack with **a single binary**.
+    title: Replace the legacy stack with **one platform**.
     body: >-
-      Stalwart replaces the traditional Postfix, Dovecot, ClamAV, Roundcube,
-      SOGo and DAVical stack with one process. Fewer services to deploy,
-      one configuration to learn, one place to look when something needs
-      attention, and a smaller attack surface.
+      Running mail used to mean stitching together half a dozen separate
+      components (an MTA, a message store, a spam filter, a calendar
+      server, a contacts server, a file server) each with its own
+      configuration quirks. Stalwart collapses all of that into one
+      platform: fewer services to deploy, one configuration to learn,
+      one place to look when something needs attention, and a smaller
+      attack surface.
     items:
       - title: JMAP & IMAP
         body: >-
@@ -101,12 +104,11 @@ sections:
     title: Email security from the wire to the mailbox.
     body: >-
       Security is a default in Stalwart, not an add-on. Mail in transit
-      between servers stays encrypted and verified through the current
-      IETF standards (DANE, MTA-STS, TLS reporting); TLS certificates
-      renew themselves over ACME so nothing breaks at expiry; and
-      mailboxes at rest can be encrypted with the user's own S/MIME
-      certificate or OpenPGP key, so even an operator with disk access
-      cannot read them.
+      between servers stays encrypted and verified end to end, with
+      DANE, MTA-STS and TLS reporting; TLS certificates renew themselves
+      over ACME so nothing breaks at expiry; and mailboxes at rest can
+      be encrypted with the user's own S/MIME certificate or OpenPGP
+      key, so even an operator with disk access cannot read them.
     bullets:
       - Encryption at rest with S/MIME or OpenPGP.
       - Strong transport security through DANE, MTA-STS, and TLS reporting.
@@ -129,16 +131,16 @@ sections:
     title: A server that adapts to your environment.
     body: >-
       From a single-node setup to a multi-tenant hosting platform,
-      Stalwart fits the storage, search, identity and DNS infrastructure
-      you already run, instead of asking you to replace it. Mix and match
-      the backends below to match the deployment you have, not the one a
-      vendor would prefer.
+      Stalwart fits the storage, search, external directory and DNS
+      infrastructure you already run, instead of asking you to replace
+      it. Mix and match the backends below to match the deployment you
+      have, not the one a vendor would prefer.
     bullets:
       - "Pluggable storage: RocksDB, FoundationDB, PostgreSQL, MySQL, SQLite, S3, Azure Blob, Redis."
       - Full-text search in 17 languages, internal or via Meilisearch, ElasticSearch, OpenSearch, PostgreSQL.
       - LDAP, OIDC, SQL, or built-in auth, with 2FA, app passwords, and API keys.
       - Automated DNS management on Cloudflare, Route53, Google Cloud DNS, and more.
-      - Sieve scripting plus Stalwart's expression languages.
+      - Sieve scripting plus Stalwart's expression language.
       - Web administration plus a CLI.
     visual:
       kind: screenshot
@@ -156,11 +158,11 @@ sections:
       backup covers all of it; one audit log records all of it.
     bullets:
       - Calendar event scheduling with attendee invitations and free/busy lookup.
-      - Contact management with CardDAV and JMAP for Contacts, including legacy vCard 2.1/3.0.
+      - Contact management with CardDAV and JMAP for Contacts.
       - File storage and secure sharing over WebDAV and JMAP for File Storage.
       - iMIP email notifications for invitations and updates.
       - Fine-grained sharing through WebDAV ACL and JMAP Sharing.
-      - Auto-discovery for Apple, Thunderbird, GNOME, KDE, and mobile clients.
+      - Auto-discovery for desktop and mobile clients.
     visual:
       kind: screenshot
       src: /images/webadmin/calendar-edit.png
@@ -173,15 +175,15 @@ sections:
     eyebrow: Spam & phishing filter
     title: Defence built in, not bolted on.
     body: >-
-      The spam and phishing filter ships inside the same binary as the
-      SMTP server, so unwanted mail is scored and rejected before it
-      reaches the mailbox, with no extra daemon to deploy. Reports,
+      The spam and phishing filter ships inside the same product as
+      the SMTP server, so unwanted mail is scored and rejected before
+      it reaches the mailbox, with no extra daemon to deploy. Reports,
       trusted-reply tracking and sender reputation live in the same admin
       surface as the rest of the server, so an operator never has to chase
       a problem across two products.
     bullets:
-      - Built-in DMARC, DKIM, SPF and ARC verification for sender authentication.
-      - Statistical classifier (FTRL-Proximal with feature hashing) with automatic training.
+      - Built-in DMARC, DKIM and SPF for sender authentication.
+      - Statistical classifier with automatic training.
       - Optional LLM-driven message analysis.
       - DNSBL checking of IP addresses, domains, URLs, and hashes.
       - Phishing protection against homograph URL attacks, sender spoofing, and other techniques.
@@ -197,13 +199,13 @@ sections:
 
   - kind: feature
     eyebrow: Built to scale
-    title: Add a node, get more capacity.
+    title: Built to scale to millions of mailboxes.
     body: >-
       Stalwart was designed for clustering from day one, not retrofitted.
-      Storage, the SMTP queue, the in-memory cache and the full-text
-      index can all be distributed across nodes; any node can serve any
-      protocol. Capacity grows by adding nodes; nothing in the design
-      forces a single bottleneck.
+      Any node can serve any protocol, no external coordinator is
+      required, and capacity grows by adding nodes, so the same product
+      that handles a small organisation today handles a hosting platform
+      tomorrow.
     bullets:
       - High availability, load balancing and fault tolerance.
       - Kubernetes, Apache Mesos, and Docker Swarm orchestration.
@@ -216,7 +218,7 @@ sections:
       id: cluster
 
 footerCta:
-  cta: Ready to run a modern mail and collaboration server?
+  cta: Run your own mail server today.
   ctaSub: Install Stalwart in minutes, then keep it running for years.
   ctaButton: Get Stalwart
   ctaLink: /docs/install/

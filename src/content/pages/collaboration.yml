@@ -6,20 +6,20 @@ slug: /collaboration
 
 hero:
   eyebrow: Collaboration
-  title: A collaboration server, not a bolt-on
-  titleHighlight: not a bolt-on
+  title: Collaboration, included with your mail
+  titleHighlight: included with your mail
   lead: >-
     Calendars, contacts and shared files live in the same Stalwart
-    instance as the email, sharing one sign-in, one set of disk quotas,
-    one sharing model and one backup. CalDAV, CardDAV and WebDAV cover
-    every existing client; the modern JMAP equivalents are there too,
-    for the apps that already use them.
+    server as your mail, with the same accounts, the same disk quotas,
+    the same sharing model and the same backups. Every standard
+    collaboration protocol is supported, so any client your team
+    already runs keeps working without an add-on.
   ctas:
     - label: Get started
       href: /docs/install/
   meta:
-    - Open source
-    - Same identity, quotas, ACLs as mail
+    - Calendars, contacts, files
+    - DAV and JMAP
   visual:
     kind: screenshot
     src: /images/webadmin/calendar-edit.png
@@ -29,18 +29,20 @@ hero:
 sections:
   - kind: feature
     eyebrow: Calendars
-    title: Calendars that sync where your users already work.
+    title: Calendars on every device.
     body: >-
-      Calendars in Stalwart show up in the apps your users already have.
-      CalDAV covers Apple Calendar, Outlook, Thunderbird and every mobile
-      client in the field; JMAP for Calendars covers the next generation
-      of JSON-native apps that are starting to ship.
+      Calendars in Stalwart show up in the apps your team already uses.
+      CalDAV covers Apple Calendar, Outlook, Thunderbird and every
+      mobile calendar app in the field; JMAP for Calendars covers
+      modern clients. Personal, group and shared calendars all behave
+      the same way; per-account and per-tenant caps stop a single team
+      from filling up a shared deployment.
     bullets:
-      - CalDAV (RFC 4791) and CalDAV Scheduling (RFC 6638).
-      - JMAP for Calendars.
-      - Pre-expanded recurrence with configurable limits.
+      - CalDAV with scheduling for desktop and mobile clients.
+      - JMAP for Calendars for modern clients.
+      - Personal, group and shared calendars.
       - Per-account and per-tenant calendar caps.
-      - Group and shared calendars.
+      - Free/busy lookups for scheduling.
     learnMore:
       - label: Read the Calendar docs
         href: /docs/collaboration/calendar
@@ -54,20 +56,20 @@ sections:
     reverse: true
     band: alt
     eyebrow: Scheduling
-    title: Invitations that arrive everywhere they need to.
+    title: Seamless scheduling for teams and individuals.
     body: >-
-      An invitation should reach an attendee whether or not they are on
-      the same server. Stalwart delivers invitations server-side
-      (CalDAV Scheduling) for attendees on the same deployment, and as
-      iMIP email for everyone else, so neither side has to know how the
-      other receives mail. Free/busy lookups round out the picture; on
-      Enterprise, attendee scheduling extends across federated calendar
-      peers.
+      Plan events, manage recurring meetings, set reminders and
+      coordinate with attendees, all from inside the same product that
+      runs your mail. Invitations reach colleagues on the same server
+      and external recipients alike, free/busy lookups make it easy to
+      find a time that works for everyone, and reply tracking keeps
+      replies visible to organisers.
     bullets:
-      - iTIP exchange of REQUEST, REPLY, CANCEL and update messages.
-      - iMIP fallback for attendees that do not speak CalDAV.
-      - Attendee scheduling and free/busy lookup [Enterprise].
-      - Inbox auto-expunge and configurable recipient limits.
+      - Invitations and replies for events on any client.
+      - Email fallback for attendees outside the deployment.
+      - Free/busy availability for scheduling.
+      - Federated attendee scheduling for cross-server events.
+      - Configurable recipient limits to prevent abuse.
     learnMore:
       - label: Read Scheduling
         href: /docs/collaboration/scheduling
@@ -77,17 +79,18 @@ sections:
 
   - kind: feature
     eyebrow: Contacts
-    title: Address books that sync everywhere.
+    title: Manage, share and sync your contacts.
     body: >-
-      Contacts are exposed over CardDAV and over JMAP for
-      Contacts using the modern JSContact model. The same address-book
+      Contacts are exposed over CardDAV for established clients and
+      over JMAP for Contacts for modern ones, so an address book stays
+      in step across every device a user opens. The same address-book
       entries pay off elsewhere in the server: a sender already in a
       recipient's contacts is treated as a known correspondent by the
       spam filter and the calendar scheduler, which removes a common
       source of false positives.
     bullets:
-      - CardDAV (RFC 6352) with vCard 2.1, 3.0 and 4.0.
-      - JMAP for Contacts (RFC 9610) with JSContact.
+      - CardDAV for legacy clients.
+      - JMAP for Contacts for modern clients.
       - Personal, group and shared address books.
       - Address-book signal feeds back into spam scoring and scheduling.
     learnMore:
@@ -105,13 +108,13 @@ sections:
     body: >-
       Shared files live in the same server as the mail, so there is no
       second product to operate or pay for. Stalwart serves files over
-      WebDAV for any standard file manager, and
-      over JMAP for File Storage for clients that prefer the JSON model.
-      The same disk quota that caps a mailbox caps its files, so a user
-      cannot bypass the cap by uploading files instead of mail.
+      WebDAV for any standard file manager, and over JMAP for File
+      Storage for modern clients. The same disk quota that caps a
+      mailbox caps its files, so a user cannot bypass the cap by
+      uploading files instead of mail.
     bullets:
-      - WebDAV (RFC 4918) for desktop and mobile file managers.
-      - JMAP for File Storage (draft-ietf-jmap-filenode).
+      - WebDAV for desktop and mobile file managers.
+      - JMAP for File Storage for modern clients.
       - Unified quota with email storage.
       - Personal, group and shared file spaces.
     learnMore:
@@ -123,19 +126,18 @@ sections:
 
   - kind: feature
     eyebrow: Sharing
-    title: Share what you want, with who you want.
+    title: Granular control over calendars, contacts and files.
     body: >-
-      Calendars, address books and file collections all share the same
-      sharing model, so a user only learns one set of permissions to
+      Sharing works the same way across calendars, address books and
+      file collections, so a user only learns one set of permissions to
       cover the lot. Read, write and manage rights can be granted to
-      individual users, to groups, to whole tenants, or to anonymous
-      links. WebDAV ACL covers the legacy clients; JMAP Sharing covers
-      the JMAP ones.
+      individual users or to groups  with the standard sharing protocols 
+      on both the legacy and modern client sides.
     bullets:
-      - WebDAV ACL (RFC 3744).
-      - JMAP Sharing (RFC 9670).
+      - Share calendars, address books and file spaces.
       - Read, write and manage permissions per principal.
-      - Group and tenant principals.
+      - User and group sharing.
+      - Standard sharing protocols on both DAV and JMAP clients.
     visual:
       kind: placeholder
       caption: "Screenshot needed: Sharing/ACL editor in the WebUI."
@@ -144,20 +146,18 @@ sections:
     reverse: true
     band: alt
     eyebrow: Notifications
-    title: Reminders that still arrive when the client drops them.
+    title: Real-time event reminders by email.
     body: >-
       A meeting reminder is only useful if it actually fires. Stalwart
-      sends iCalendar email-action alarms (`VALARM` with `ACTION:EMAIL`)
-      from the server, and falls back gracefully when a client (Apple
-      Calendar, for example) strips that alarm before saving the event:
-      an `@email` marker in the alarm summary or description tells
-      Stalwart to deliver the alert anyway. Per-account interval limits
-      and external-recipient policies keep the feature from being abused.
+      delivers email-action reminders directly from the server, so
+      organisers and attendees get notified even when their calendar
+      app is closed or their phone is offline. Reasonable defaults
+      prevent floods of reminders, and external-recipient policy is
+      configurable per deployment.
     bullets:
-      - iCalendar `VALARM` with `ACTION:EMAIL`.
-      - "`@email` marker for clients that strip the email action."
-      - Per-account minimum trigger interval (default 1 hour).
-      - External-recipient policy on or off per deployment.
+      - Server-side email reminders for events.
+      - Sensible per-account interval limits.
+      - External-recipient policy configurable per deployment.
     learnMore:
       - label: Read Notifications
         href: /docs/collaboration/notifications
@@ -167,24 +167,21 @@ sections:
 
   - kind: list
     eyebrow: Discovery and clients
-    title: Works with Apple, Thunderbird, GNOME, KDE and mobile.
+    title: Works with every standard mail and calendar client.
     body: >-
-      Pointing a client at a Stalwart server is enough; the right paths
-      are advertised at `/.well-known/caldav` and `/.well-known/carddav`,
-      and PACC, Mozilla Autoconfig and Microsoft Autodiscover documents
-      point clients at the right endpoints. Assisted resource discovery
-      (added in v0.13) and CalDAV/CardDAV/WebDAV autoconfig (added in
-      v0.14) cover the cases where a client cannot guess the path on its
-      own.
+      Stalwart supports automatic discovery and configuration, so users
+      can point any standard CalDAV, CardDAV, WebDAV or JMAP client at
+      the server and get to work without manual setup. No vendor
+      lock-in, no proprietary client required.
     bullets:
       - Apple Mail, Calendar and Contacts.
-      - Thunderbird (Lightning, TbSync).
-      - GNOME Evolution, KDE Kontact / Akonadi.
-      - iOS, Android and other mobile CalDAV / CardDAV clients.
-      - Any JMAP client following the published drafts.
+      - Mozilla Thunderbird.
+      - GNOME Evolution and KDE Kontact.
+      - iOS, Android and any standards-compliant mobile client.
+      - Any JMAP-compliant calendar, contacts or file-storage client.
 
 footerCta:
-  cta: Run mail and collaboration on one server.
+  cta: Mail and collaboration, in the same product.
   ctaSub: One identity, one quota, one access model. Calendars, contacts and files included.
   ctaButton: Get started
   ctaLink: /docs/install/

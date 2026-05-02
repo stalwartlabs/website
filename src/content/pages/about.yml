@@ -1,7 +1,8 @@
 title: About | Stalwart Labs
 description: >-
   Stalwart Labs builds Stalwart, the open-source mail and collaboration
-  server. Read about the company and how to get in touch.
+  server used by governments, universities, hosting providers and
+  enterprises worldwide.
 slug: /about
 
 hero:
@@ -9,47 +10,79 @@ hero:
   title: The company behind Stalwart.
   titleHighlight: behind Stalwart
   lead: >-
-    The company behind Stalwart, the open-source mail and collaboration
-    server.
+    Stalwart Labs builds Stalwart, the open-source mail and
+    collaboration server used by governments, universities, hosting
+    providers, email service providers and enterprises of all sizes
+    around the world.
   ctas:
     - label: Contact us
       href: /contact
 
 sections:
   - kind: prose
-    eyebrow: About the company
-    title: Why Stalwart exists.
+    eyebrow: What we build
+    title: A modern mail and collaboration server.
     body: >-
-      Stalwart Labs builds Stalwart: a mail and collaboration server with
-      first-class support for JMAP, IMAP, POP3, SMTP, CalDAV, CardDAV and
-      WebDAV, written in Rust.
+      Stalwart is a single product that covers the mail and
+      collaboration protocols end to end (JMAP, IMAP, POP3, SMTP,
+      CalDAV, CardDAV and WebDAV), with a built-in spam and phishing
+      filter and a configuration model that an administrator can read
+      in one sitting. It is dual-licensed: a free [Community edition](/open-source)
+      under AGPL-3.0 and a commercial [Enterprise edition](/enterprise)
+      that adds operational features for larger and multi-tenant
+      deployments.
 
-      Stalwart Labs was founded in July 2019. Work on the Stalwart server
-      began in November 2021, and the first public release shipped in
-      September 2022. The product is younger than the team behind it: the
-      founder spent more than three decades building email and enterprise
-      software before starting the company, and the design choices in
-      Stalwart reflect that.
+  - kind: prose
+    band: alt
+    eyebrow: What we're building toward
+    title: Replacing the legacy mail stack with one product.
+    body: >-
+      Most mail-server stacks in production still combine
+      three or four separate components, each with its own
+      configuration language and operational quirks. We started
+      Stalwart Labs in response to that slow-moving market: rather
+      than gluing together yet another stack, we set out to build the
+      mail and collaboration server we wished existed, with security
+      as a default and clustering designed in from the start.
 
-      The company was started in response to a slow-moving server market.
-      Most mail-server stacks in production in the 2020s still combine
-      three or four separate components, each with its own configuration
-      language and operational quirks. Stalwart was designed as a single
-      binary that covers the mail and collaboration protocols end to end,
-      with a configuration model that an administrator can read in one
-      sitting.
+      Our goal is to make running modern email reliable, secure and
+      affordable, whether the operator is a single sysadmin or a
+      hosting platform with millions of mailboxes.
 
-      Stalwart Labs is incorporated in the United States with a registered
-      office in the United Kingdom, and the team works remotely across
-      both sides of the Atlantic. The product is dual-licensed (AGPL-3.0
-      for the Community edition; a commercial licence for Enterprise) and
-      is used by hosting providers, businesses and individuals who run
-      their own mail.
+  - kind: prose
+    eyebrow: Track record
+    title: Young product, broad adoption.
+    body: >-
+      Stalwart Labs was founded in July 2019. Work on the Stalwart
+      server began in September 2021, and the first public release
+      shipped in September 2022. Stalwart is the **most-starred mail
+      server project on GitHub**, with tens of thousands of stars,
+      tens of thousands of production servers running worldwide, and
+      millions of licenses issued to date. The product is younger
+      than the team behind it: the founder spent more than three
+      decades building email and enterprise software before starting
+      the company, and the design choices in Stalwart reflect that.
+
+      Stalwart is used by governments, universities, hosting
+      providers, email service providers and enterprises of all
+      sizes; **references are available on request**.
+
+  - kind: prose
+    band: alt
+    eyebrow: The team
+    title: A distributed team behind a global product.
+    body: >-
+      Stalwart Labs is incorporated in both the United States and the
+      United Kingdom. The team works remotely, distributed across
+      multiple time zones, so support and development cover the hours
+      our customers operate in. The combined experience behind the
+      product spans email, security, large-scale storage and
+      compliance, accumulated across decades of building enterprise
+      software.
 
   - kind: addresses
-    band: alt
     eyebrow: Get in touch
-    title: Have questions? We are a message away.
+    title: Where to find us.
     items:
       - label: US Address
         lines:
@@ -63,7 +96,7 @@ sections:
         email: hello@stalw.art
 
 footerCta:
-  cta: Want to learn more
+  cta: Want to learn more?
   ctaSub: Reach out with any question about Stalwart Labs or the Stalwart server.
   ctaButton: Contact us
   ctaLink: /contact

@@ -9,8 +9,7 @@ hero:
     tone: info
     label: Available 2027
     body: >-
-      Stalwart Managed Email is a hosted, fully-operated edition of the
-      Stalwart server. We are taking expressions of interest now; the
+      We are taking expressions of interest now; the
       service goes live in 2027.
   eyebrow: Managed service
   title: Run Stalwart without running Stalwart
@@ -97,8 +96,7 @@ sections:
     eyebrow: Migration
     title: Move in without rebuilding.
     body: >-
-      Onboarding includes a migration engagement run by the same team that
-      publishes [stalwart-cli](/docs/management/cli/). Source
+      Onboarding includes a migration engagement run by our team. Source
       systems we cover include Postfix and Dovecot, Cyrus, Zimbra,
       Microsoft Exchange (and self-hosted Microsoft 365), MDaemon,
       hMailServer and Courier; others on request.

@@ -217,8 +217,9 @@ const contactFormSection = z.object({
   body: z.string().optional(),
   band: z.enum(["default", "alt"]).default("default"),
   action: z.string(),
-  topics: z.array(z.string()),
-  mailboxRanges: z.array(z.string()),
+  topics: z.array(z.union([z.string(), z.object({ label: z.string(), value: z.string().optional() })])),
+  mailboxRanges: z.array(z.union([z.string(), z.object({ label: z.string(), value: z.string().optional() })])),
+  supportRedirectTopic: z.string().optional(),
   submitLabel: z.string().default("Send message"),
 });
 

@@ -6,21 +6,21 @@ slug: /anti-spam
 
 hero:
   eyebrow: Anti-spam & phishing
-  title: Spam and phishing protection that ships with the server
-  titleHighlight: ships with the server
+  title: Stop spam before it reaches the mailbox
+  titleHighlight: before it reaches the mailbox
   lead: >-
-    Stalwart's spam and phishing filter ships inside the server, not as
-    an extra daemon to install and tune. It runs at SMTP time, so
-    unwanted mail is stopped before it reaches the mailbox; it learns
-    from user feedback; and it combines a statistical classifier, public
-    blocklists, sender authentication, phishing heuristics, sender
+    Stalwart's spam and phishing filter is part of the server, not an
+    extra daemon to install and tune. It runs at SMTP time, so unwanted
+    mail is stopped before it reaches a mailbox; it learns from user
+    feedback; and it combines a statistical classifier, public
+    blocklists, phishing heuristics, sender
     reputation and AI analysis into a single score.
   ctas:
     - label: Get started
       href: /docs/install/
   meta:
-    - Open source
-    - LLM module
+    - Self-learning
+    - AI-powered
   visual:
     kind: screenshot
     src: /images/webadmin/dashboard-security.png
@@ -67,7 +67,6 @@ sections:
       - LLM module for the spam classifier.
       - "Sieve functions for AI analysis."
       - OpenAI, Anthropic, or self-hosted endpoints.
-      - Bearer / Basic / unauthenticated HTTP, custom headers, configurable timeout.
     learnMore:
       - label: Read the LLM Sieve docs
         href: /docs/sieve/llm
@@ -77,18 +76,19 @@ sections:
 
   - kind: feature
     eyebrow: DNSBL and Pyzor
-    title: Public reputation lists, used as evidence not as verdict.
+    title: Boosted spam detection with collaborative filtering.
     body: >-
-      Public blocklists catch a large slice of automated spam before
-      anything else has to look at the message. Stalwart queries DNS-based
-      blocklists for the connecting IP as well as domains and URLs lifted from the message body;
-      Pyzor adds collaborative digest filtering against
-      a global network. 
+      Public blocklists and collaborative filtering catch a large slice
+      of automated spam before anything else has to look at the
+      message. Stalwart queries DNS-based blocklists for the connecting
+      IP, and for the domains and URLs lifted from the message body, so
+      even subtle threats are detected. Pyzor adds collaborative
+      digest-based filtering against a global network of contributors,
+      so spam patterns identified anywhere quickly inform your filter.
     bullets:
-      - IP address checks.
-      - Domain, URL and hash-based blocklists.
+      - IP, domain, URL and content-hash blocklists.
       - Pyzor digest-based collaborative filtering.
-      - Per-source expressions.
+      - Tunable per-source thresholds and weights.
     learnMore:
       - label: Read DNSBL
         href: /docs/spamfilter/dnsbl
@@ -104,14 +104,14 @@ sections:
     body: >-
       Most phishing forges the From address. Stalwart runs DMARC
       alignment, SPF policy evaluation, DKIM signature checks and ARC
-      chain verification on every inbound message, and feeds the result
-      into the same score as the rest of the filter, so a message
-      pretending to come from your bank, your CEO or a customer rarely
-      lands in an inbox.
+      chain verification on every inbound message, and feeds the
+      result into the same score as the rest of the filter, so a
+      message pretending to come from your bank, your CEO or a
+      customer rarely lands in an inbox.
     bullets:
-      - DMARC (RFC 7489) alignment checking and reporting.
-      - "SPF (RFC 7208), DKIM (RFC 6376), ARC (verification only)."
-      - Tag-based scoring system.
+      - DMARC alignment checking and reporting.
+      - SPF, DKIM and ARC verification on inbound mail.
+      - Tag-based scoring shared with the classifier and blocklists.
     learnMore:
       - label: Read DMARC analysis
         href: /docs/spamfilter/dmarc
@@ -123,16 +123,16 @@ sections:
 
   - kind: feature
     eyebrow: Phishing protection
-    title: Catch the tricks attackers actually use.
+    title: Phishing detection, beyond keywords.
     body: >-
-      Phishing rarely relies on the words in the body; it relies on the
-      structure around them. Stalwart looks for the techniques attackers
-      really use: visually-confusable Unicode characters in URLs,
-      mismatches between the display name and the From address, sender
-      domains that imitate the recipient's own domain, and similar
-      patterns. Trusted-reply tracking recognises genuine reply threads
-      to a message your user previously sent, so a real reply is not
-      treated with suspicion.
+      Phishing rarely relies on the words in the body; it relies on
+      the structure around them. Stalwart spots the techniques
+      attackers actually use, including visually-confusable Unicode
+      characters in URLs, mismatches between the display name and the
+      From address, and sender domains that imitate the recipient's
+      own domain. Trusted-reply tracking recognises genuine reply
+      threads to a message your user previously sent, so a real reply
+      is not treated with suspicion.
     bullets:
       - Homograph URL detection.
       - Sender spoofing and lookalike-domain detection.
@@ -145,17 +145,18 @@ sections:
     reverse: true
     band: alt
     eyebrow: Sender reputation
-    title: Senders earn (or lose) trust over time.
+    title: Reputation built from your own traffic.
     body: >-
-      A sender's reputation should reflect how they have actually
-      behaved in your traffic, not just what a public list says. Stalwart
-      tracks reputation across four axes at once: the source IP, the
-      network (ASN) it belongs to, the sending domain, and the
-      individual sender address. Each axis contributes a learned score
-      that updates with every message processed.
+      A sender's reputation should reflect how they have behaved in
+      your traffic, not just what a public list says. Stalwart tracks
+      reputation across four axes at once: the source IP, the network
+      (ASN) it belongs to, the sending domain, and the individual
+      sender address. Each axis contributes a learned score that
+      updates with every message processed, so spam scoring becomes
+      more accurate the longer the deployment runs.
     bullets:
       - Per-IP, per-ASN, per-domain and per-email reputation scoring.
-      - ASN and GeoIP data from CSV resources or Team Cymru DNS.
+      - ASN and GeoIP enrichment for headers and reporting.
       - Greylisting for unknown senders.
       - Spam traps that auto-train the classifier on what they catch.
     learnMore:
@@ -172,9 +173,9 @@ sections:
     eyebrow: ASN and country blocking
     title: Cut off the networks that send most of the abuse.
     body: >-
-      A small number of networks and countries account for most abusive
+      A small number of networks account for most abusive
       traffic in any given deployment. Connections from specific networks
-      (ASNs) or countries can be blocked outright, or fed into the spam
+      (ASNs) or entire countries can be blocked outright, or fed into the spam
       filter as a strong negative signal. The same data feeds reputation
       scoring, so a network that consistently sends spam pays a
       reputation penalty in addition to any hard block.
@@ -219,13 +220,13 @@ sections:
     body: >-
       If your team already runs a content-filtering stack and wants to
       keep it, the built-in filter sits next to it instead of replacing
-      it. Milter handles Rspamd, SpamAssassin and ClamAV without changes;
-      MTA Hooks expose the same lifecycle over HTTP and JSON for filters
-      that prefer a web protocol.
+      it. Milter handles Rspamd, SpamAssassin and ClamAV without
+      changes; MTA Hooks expose the same lifecycle over HTTP and JSON
+      for filters that prefer a web protocol.
     bullets:
-      - Milter (Sendmail-compatible) for Rspamd, SpamAssassin, ClamAV.
-      - MTA Hooks (HTTP + JSON) for custom HTTP filters.
-      - "Per-stage invocation: `connect`, `ehlo`, `auth`, `mail`, `rcpt`, `data`."
+      - Milter for Rspamd, SpamAssassin, ClamAV and any sendmail-compatible filter.
+      - MTA Hooks for HTTP + JSON filters.
+      - Per-stage invocation across every SMTP phase.
     visual:
       kind: placeholder
       caption: "Diagram needed: Stalwart filter chain with optional milter/MTA Hook bridge to Rspamd/SpamAssassin."

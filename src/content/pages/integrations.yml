@@ -9,14 +9,14 @@ hero:
   title: Stalwart connects to the systems you already run.
   titleHighlight: systems you already run
   lead: >-
-    The lists below cover the directory backends, storage engines, search
-    engines, cluster-coordination backends, DNS providers, anti-spam
-    upstreams, observability targets, orchestrators, mail and calendar
-    clients, and AI providers that the server supports out of the box.
-    Items marked [Enterprise] are available with the Enterprise edition;
-    everything else is in the Community edition under AGPL-3.0.
+    Stalwart fits into the infrastructure your team already operates,
+    so adopting it is a configuration choice, not a migration. Plug in
+    your existing identity provider, storage, search engine, DNS
+    provider, observability stack and content-filtering tools, then
+    point any standards-compliant mail or calendar client at the
+    server.
   ctas:
-    - label: See the comparison table
+    - label: Compare editions
       href: /compare
 
 sections:
@@ -26,13 +26,12 @@ sections:
     body: >-
       User authentication and authorization can be handled by Stalwart's
       built-in directory or delegated to an external identity provider.
-      OAuth 2.0 (RFC 8628 device flow and authorization code) and OpenID
+      OAuth 2.0 (device flow and authorization code) and OpenID
       Connect are supported as first-class authentication mechanisms.
     bullets:
       - "[LDAP and Active Directory](/docs/auth/backend/ldap), including OpenLDAP."
       - "[OpenID Connect](/docs/auth/openid/) providers (Keycloak, Authentik, generic OIDC)."
-      - OAuth 2.0 identity providers (RFC 8628).
-      - SAML identity providers [Enterprise].
+      - OAuth 2.0 identity providers.
       - "[SQL directories](/docs/auth/backend/sql) (PostgreSQL, MySQL, MariaDB, SQLite)."
       - "[Built-in directory](/docs/auth/backend/internal) for self-managed deployments."
 
@@ -53,26 +52,26 @@ sections:
 
   - kind: list
     eyebrow: Blob storage
-    title: Where the message bodies and attachments live.
+    title: Object storage for messages, attachments and shared files.
     body: >-
-      The blob store holds message bodies, attachments, Sieve scripts and
-      WebDAV files. Stalwart supports the S3 API, Azure Blob and the local
-      filesystem.
+      The blob store holds message bodies, attachments, Sieve scripts
+      and WebDAV files. Stalwart supports the S3 API, Azure Blob and
+      the local filesystem.
     bullets:
       - Amazon S3, MinIO, GarageHQ, Google Cloud Storage and any other S3-compatible object store.
       - "[Azure Blob Storage](/docs/storage/backends/azure)."
       - "[Filesystem](/docs/storage/backends/filesystem)."
-      - Sharded blob storage across multiple endpoints [Enterprise].
+      - Sharded blob storage across multiple endpoints.
 
   - kind: list
     band: alt
     eyebrow: Full-text search
-    title: Internal engine or a dedicated service.
+    title: Search built in, or delegated to a dedicated engine.
     body: >-
       Full-text search can run inside Stalwart or be delegated to a
-      dedicated engine. The internal engine indexes 17 languages with
-      bloom filters; dedicated engines absorb the indexing load when the
-      data store is busy.
+      dedicated search engine. The internal engine indexes 17 languages
+      with bloom filters; dedicated engines absorb the indexing load
+      when the data store is busy.
     bullets:
       - Internal full-text engine.
       - "[Meilisearch](/docs/storage/backends/meilisearch)."
@@ -99,33 +98,27 @@ sections:
   - kind: list
     band: alt
     eyebrow: DNS providers
-    title: Automated DNS for every supported registrar.
+    title: Automated DNS publishing on every major provider.
     body: >-
-      When automated DNS management is enabled on a Domain object, Stalwart
-      publishes and refreshes MX, SPF, DKIM, DMARC, SRV, CAA, TLSA, MTA-STS,
-      TLS-RPT, autoconfig and autodiscover records against a configured
-      DNS provider.
+      With automated DNS management enabled, Stalwart publishes and
+      refreshes MX, SPF, DKIM, DMARC, SRV, CAA, TLSA, MTA-STS, TLS-RPT,
+      autoconfig and autodiscover records directly against a configured
+      DNS provider. The most popular providers are supported out of
+      the box, and self-hosted authoritative servers can be driven via
+      RFC 2136 dynamic updates.
     bullets:
-      - Cloudflare.
-      - AWS Route 53.
-      - Google Cloud DNS.
-      - Bunny DNS.
-      - Porkbun.
-      - DNSimple.
-      - Spaceship.
-      - deSEC.
-      - OVH.
-      - DigitalOcean.
-      - "RFC 2136 dynamic updates with TSIG or SIG(0) for self-hosted authoritative servers (BIND-compatible)."
+      - Cloudflare, AWS Route 53, Google Cloud DNS and Azure DNS.
+      - DigitalOcean, OVH, Bunny DNS, Porkbun, DNSimple, Spaceship, deSEC and more.
+      - RFC 2136 dynamic updates with TSIG or SIG(0) for self-hosted authoritative servers (BIND-compatible).
 
   - kind: list
-    eyebrow: Anti-spam upstreams
-    title: Built-in filter, plus the upstreams you already run.
+    eyebrow: Spam filtering
+    title: Built-in spam filtering, plus the tools you already run.
     body: >-
       Stalwart's built-in spam filter (statistical classifier, DNSBL,
-      phishing protection, sender reputation, greylisting and spam traps)
-      can be combined with external anti-spam systems through Milter or
-      MTA Hooks.
+      phishing protection, sender reputation, greylisting and spam
+      traps) can be combined with external anti-spam systems through
+      Milter or MTA Hooks.
     bullets:
       - SpamAssassin via Milter.
       - RSPAMD via Milter or MTA Hooks.
@@ -147,8 +140,8 @@ sections:
       - journald.
       - Log files.
       - Console output.
-      - "[Live telemetry](/docs/telemetry/live) over Server-Sent Events [Enterprise]."
-      - "Email and webhook [alerts](/docs/telemetry/alerts) [Enterprise]."
+      - "[Live telemetry](/docs/telemetry/live) over Server-Sent Events."
+      - "Email and webhook [alerts](/docs/telemetry/alerts)."
 
   - kind: list
     eyebrow: Orchestration
@@ -165,29 +158,29 @@ sections:
   - kind: list
     band: alt
     eyebrow: Mail clients
-    title: Anything that speaks IMAP, POP3, JMAP or ManageSieve.
+    title: Anything that speaks JMAP, IMAP or POP3.
     body: >-
       Stalwart speaks every standard mail protocol, so any RFC-compliant
       client works. Automatic account configuration is supported through
-      the IETF UA Autoconfig draft and Microsoft Autodiscover V2.
+      the IETF UA Autoconfig and Microsoft Autodiscover V2.
     bullets:
-      - Any IMAP4rev1 (RFC 3501) or IMAP4rev2 (RFC 9051) client.
-      - Any JMAP for Mail (RFC 8621) client.
-      - Any POP3 (RFC 1939) client.
-      - Any ManageSieve (RFC 5804) client.
+      - Any JMAP for Mail client.
+      - Any IMAP4rev1 or IMAP4rev2 client.
+      - Any POP3 client.
+      - Any ManageSieve client.
       - Apple Mail.
-      - Mozilla Thunderbird (Autoconfig).
-      - Microsoft Outlook (Autodiscover V2).
+      - Mozilla Thunderbird.
+      - Microsoft Outlook.
       - Mobile clients on iOS and Android via autoconfig.
 
   - kind: list
     eyebrow: Calendar and contact clients
     title: CalDAV, CardDAV, WebDAV, and the JMAP equivalents.
     body: >-
-      CalDAV (RFC 4791), CalDAV Scheduling (RFC 6638), CardDAV (RFC 6352,
-      including legacy vCard 2.1 and 3.0) and WebDAV (RFC 4918) are all
-      supported, alongside the JMAP equivalents. Autoconfig and assisted
-      resource discovery work for CalDAV, CardDAV and WebDAV.
+      CalDAV with scheduling, CardDAV 
+      and WebDAV are all supported, alongside the JMAP
+      equivalents. Autoconfig and assisted resource discovery work for
+      CalDAV, CardDAV and WebDAV.
     bullets:
       - Apple Calendar and Apple Contacts.
       - Mozilla Thunderbird (TbSync, calendar add-ons).
@@ -201,17 +194,17 @@ sections:
     eyebrow: AI providers
     title: LLMs in the spam filter and in Sieve scripts.
     body: >-
-      The Enterprise edition adds an LLM-driven spam classifier and an
-      `llm_prompt` action available to Sieve scripts for content analysis.
+      LLM-driven spam classifier and an
+      AI-powered Sieve scripting for content analysis.
       The LLM endpoint is configurable; hosted providers and self-hosted
       models are both supported.
     bullets:
-      - OpenAI [Enterprise].
-      - Anthropic [Enterprise].
-      - Self-hosted LLM endpoints, including any OpenAI-compatible API [Enterprise].
+      - OpenAI.
+      - Anthropic.
+      - Self-hosted LLM endpoints, including any OpenAI-compatible API.
 
 footerCta:
-  cta: Confirm Stalwart fits your stack
+  cta: See how Stalwart fits your stack.
   ctaSub: Compare editions feature by feature, or talk to us about a specific integration.
   ctaButton: Compare editions
   ctaLink: /compare

@@ -15,65 +15,212 @@ const { data } = Astro.props;
         {data.body && <div class="cf__body" set:html={paragraphMd(data.body)}></div>}
       </div>
     )}
-    <form class="cf reveal" method="post" action={data.action} novalidate data-contact-form>
-      <input type="hidden" name="subject" value="Stalwart Inquiry" />
 
-      <div class="cf__grid">
-        <div class="cf__field">
-          <label for="cf-name" class="cf__label">Full name <span aria-hidden="true">*</span></label>
-          <input id="cf-name" name="name" type="text" placeholder="Jane Doe" required class="cf__input" />
-          <span class="cf__feedback cf__feedback--error">Please enter your full name.</span>
+    <div class="cf__shell reveal" data-cf-shell>
+      <form class="cf" method="post" action={data.action} novalidate data-contact-form data-cf-support-topic={data.supportRedirectTopic ?? ""}>
+        <div class="cf__honeypot" aria-hidden="true">
+          <label for="cf-subject">Subject</label>
+          <input id="cf-subject" type="text" name="subject" value="" placeholder="Stalwart Inquiry" tabindex="-1" autocomplete="off" />
         </div>
 
-        <div class="cf__field">
-          <label for="cf-email" class="cf__label">Email <span aria-hidden="true">*</span></label>
-          <input id="cf-email" name="email" type="email" placeholder="jane.doe@example.com" required class="cf__input" />
-          <span class="cf__feedback cf__feedback--error">Please provide a valid email address.</span>
+        <div class="cf__grid">
+          <div class="cf__field">
+            <label for="cf-name" class="cf__label">Full name <span aria-hidden="true">*</span></label>
+            <input id="cf-name" name="name" type="text" placeholder="Jane Doe" required class="cf__input" />
+            <span class="cf__feedback cf__feedback--error">Please enter your full name.</span>
+          </div>
+
+          <div class="cf__field">
+            <label for="cf-email" class="cf__label">Email <span aria-hidden="true">*</span></label>
+            <input id="cf-email" name="email" type="email" placeholder="jane.doe@example.com" required class="cf__input" />
+            <span class="cf__feedback cf__feedback--error">Please provide a valid email address.</span>
+          </div>
+
+          <div class="cf__field">
+            <label for="cf-topic" class="cf__label">Topic <span aria-hidden="true">*</span></label>
+            <select id="cf-topic" name="topic" required class="cf__select" data-cf-topic>
+              <option value="" selected disabled>Select a topic</option>
+              {data.topics.map((t: any) => {
+                const label = typeof t === "string" ? t : t.label;
+                const value = typeof t === "string" ? t : (t.value ?? t.label);
+                return <option value={value}>{label}</option>;
+              })}
+            </select>
+            <span class="cf__feedback cf__feedback--error">Please select a topic.</span>
+          </div>
+
+          <div class="cf__field">
+            <label for="cf-mailboxes" class="cf__label">Number of mailboxes <span aria-hidden="true">*</span></label>
+            <select id="cf-mailboxes" name="mailboxes" required class="cf__select">
+              <option value="" selected disabled>Select a range</option>
+              {data.mailboxRanges.map((r: any) => {
+                const label = typeof r === "string" ? r : r.label;
+                const value = typeof r === "string" ? r : (r.value ?? r.label);
+                return <option value={value}>{label}</option>;
+              })}
+            </select>
+            <span class="cf__feedback cf__feedback--error">Please pick a range.</span>
+          </div>
+
+          <div class="cf__field cf__field--full">
+            <label for="cf-message" class="cf__label">Message <span aria-hidden="true">*</span></label>
+            <textarea id="cf-message" name="message" rows="6" placeholder="Tell us a bit about your situation" required class="cf__textarea"></textarea>
+            <span class="cf__feedback cf__feedback--error">Please enter your message.</span>
+          </div>
+
+          <div class="cf__field cf__field--full cf__error" data-cf-error hidden>
+            <p data-cf-error-text>Something went wrong. Please try again.</p>
+          </div>
         </div>
 
-        <div class="cf__field">
-          <label for="cf-topic" class="cf__label">Topic <span aria-hidden="true">*</span></label>
-          <select id="cf-topic" name="topic" required class="cf__select">
-            <option value="" selected disabled>Select a topic</option>
-            {data.topics.map((t: string) => <option value={t}>{t}</option>)}
-          </select>
-          <span class="cf__feedback cf__feedback--error">Please select a topic.</span>
+        <div class="cf__footer">
+          <p class="cf__hint"><span aria-hidden="true">*</span> Required fields.</p>
+          <button type="submit" class="btn btn-primary btn-arrow" data-cf-submit>{data.submitLabel}</button>
         </div>
+      </form>
 
-        <div class="cf__field">
-          <label for="cf-mailboxes" class="cf__label">Number of mailboxes <span aria-hidden="true">*</span></label>
-          <select id="cf-mailboxes" name="mailboxes" required class="cf__select">
-            <option value="" selected disabled>Select a range</option>
-            {data.mailboxRanges.map((r: string) => <option value={r}>{r}</option>)}
-          </select>
-          <span class="cf__feedback cf__feedback--error">Please pick a range.</span>
+      <div class="cf__success" data-cf-success hidden>
+        <div class="cf__success-icon" aria-hidden="true">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
         </div>
-
-        <div class="cf__field cf__field--full">
-          <label for="cf-message" class="cf__label">Message <span aria-hidden="true">*</span></label>
-          <textarea id="cf-message" name="message" rows="6" placeholder="Tell us a bit about your situation" required class="cf__textarea"></textarea>
-          <span class="cf__feedback cf__feedback--error">Please enter your message.</span>
-        </div>
+        <h3 class="cf__success-title">Message sent.</h3>
+        <p class="cf__success-body">Thanks for getting in touch. We will reply by email as soon as we can.</p>
       </div>
-
-      <div class="cf__footer">
-        <p class="cf__hint"><span aria-hidden="true">*</span> Required fields.</p>
-        <button type="submit" class="btn btn-primary btn-arrow">{data.submitLabel}</button>
-      </div>
-    </form>
+    </div>
   </div>
+
+  {data.supportRedirectTopic && (
+    <div class="cf__modal" data-cf-modal hidden role="dialog" aria-modal="true" aria-labelledby="cf-modal-title">
+      <div class="cf__modal-backdrop" data-cf-modal-dismiss></div>
+      <div class="cf__modal-card">
+        <h3 id="cf-modal-title" class="cf__modal-title">Use the support portal</h3>
+        <p class="cf__modal-body">
+          This contact form is for sales and partnership enquiries only.
+          For technical questions, configuration help and bug reports,
+          please open a ticket on the Stalwart support portal.
+        </p>
+        <div class="cf__modal-actions">
+          <a class="btn btn-primary btn-arrow" href="https://support.stalw.art" target="_blank" rel="noopener">Open the support portal</a>
+          <button type="button" class="btn btn-ghost" data-cf-modal-dismiss>Choose another topic</button>
+        </div>
+      </div>
+    </div>
+  )}
 </section>
 
 <script is:inline>
   (() => {
-    const form = document.querySelector("[data-contact-form]");
-    if (!form) return;
-    form.addEventListener("submit", (e) => {
-      // Trigger native validation. Add a class so styled feedback shows.
-      if (!form.checkValidity()) {
-        e.preventDefault();
-        form.classList.add("cf--validated");
+    const forms = document.querySelectorAll("[data-contact-form]");
+    forms.forEach((form) => {
+      const shell = form.closest("[data-cf-shell]");
+      const supportTopic = form.dataset.cfSupportTopic || "";
+      const topic = form.querySelector("[data-cf-topic]");
+      const submitBtn = form.querySelector("[data-cf-submit]");
+      const errorBox = form.querySelector("[data-cf-error]");
+      const errorText = form.querySelector("[data-cf-error-text]");
+      const successBox = shell ? shell.querySelector("[data-cf-success]") : null;
+      const modal = document.querySelector("[data-cf-modal]");
+      const dismissEls = modal ? modal.querySelectorAll("[data-cf-modal-dismiss]") : [];
+
+      function showModal() {
+        if (!modal) return;
+        modal.hidden = false;
+        document.body.style.overflow = "hidden";
       }
+      function hideModal(resetTopic) {
+        if (!modal) return;
+        modal.hidden = true;
+        document.body.style.overflow = "";
+        if (resetTopic && topic) {
+          topic.value = "";
+        }
+      }
+      dismissEls.forEach((el) => el.addEventListener("click", () => hideModal(true)));
+      document.addEventListener("keydown", (e) => {
+        if (modal && !modal.hidden && e.key === "Escape") hideModal(true);
+      });
+
+      if (topic) {
+        topic.addEventListener("change", () => {
+          if (supportTopic && topic.value === supportTopic) {
+            showModal();
+          }
+        });
+      }
+
+      function showError(message) {
+        if (!errorBox) return;
+        if (errorText && message) errorText.textContent = message;
+        errorBox.hidden = false;
+      }
+      function hideError() {
+        if (errorBox) errorBox.hidden = true;
+      }
+      function setSubmitting(busy) {
+        if (submitBtn) submitBtn.disabled = busy;
+      }
+      function showSuccess() {
+        if (form && successBox) {
+          form.hidden = true;
+          successBox.hidden = false;
+        }
+      }
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        hideError();
+
+        if (supportTopic && topic && topic.value === supportTopic) {
+          showModal();
+          return;
+        }
+        if (!form.checkValidity()) {
+          form.classList.add("cf--validated");
+          return;
+        }
+
+        setSubmitting(true);
+        try {
+          const body = new FormData(form);
+          const res = await fetch(form.action, {
+            method: form.method || "post",
+            body,
+            headers: { Accept: "application/json" },
+          });
+
+          let payload = null;
+          try {
+            payload = await res.json();
+          } catch (_) {
+            payload = null;
+          }
+
+          // App-level response: { data: { success, details } } at HTTP 200.
+          if (res.ok && payload && payload.data) {
+            if (payload.data.success === true) {
+              showSuccess();
+              return;
+            }
+            const message = payload.data.details || "Please check your details and try again.";
+            showError(message);
+            setSubmitting(false);
+            return;
+          }
+
+          // Protocol-level error (RFC 7807 problem+json) or other non-2xx.
+          const detail =
+            (payload && (payload.detail || payload.title)) ||
+            res.statusText ||
+            "";
+          showError(detail
+            ? detail
+            : "We could not send your message. Please try again or email us directly at hello@stalw.art.");
+          setSubmitting(false);
+        } catch (err) {
+          showError("We could not reach the server. Check your connection and try again, or email us at hello@stalw.art.");
+          setSubmitting(false);
+        }
+      });
     });
   })();
 </script>
@@ -88,6 +235,9 @@ const { data } = Astro.props;
   .cf__body {
     margin-top: 1rem;
     color: var(--text-muted);
+  }
+  .cf__shell {
+    position: relative;
   }
   .cf {
     padding: clamp(1.5rem, 3vw, 2.5rem);
@@ -167,5 +317,95 @@ const { data } = Astro.props;
   }
   .cf__hint span[aria-hidden] {
     color: var(--brand);
+  }
+  .cf__error {
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--brand);
+    border-radius: var(--radius-sm);
+    background: var(--bg-elev);
+    color: var(--brand);
+    font-size: 0.9375rem;
+  }
+  .cf__error p {
+    margin: 0;
+  }
+  .cf__honeypot {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+  .cf__success {
+    padding: clamp(2rem, 4vw, 3rem);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    text-align: center;
+  }
+  .cf__success-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--brand) 16%, transparent);
+    color: var(--brand);
+    margin-bottom: 1rem;
+  }
+  .cf__success-title {
+    margin: 0 0 0.5rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .cf__success-body {
+    margin: 0;
+    color: var(--text-muted);
+  }
+
+  .cf__modal {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+  .cf__modal[hidden] {
+    display: none;
+  }
+  .cf__modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(8, 8, 11, 0.6);
+    backdrop-filter: blur(2px);
+  }
+  .cf__modal-card {
+    position: relative;
+    max-width: 520px;
+    width: 100%;
+    padding: clamp(1.5rem, 3vw, 2rem);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+  }
+  .cf__modal-title {
+    margin: 0 0 0.75rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .cf__modal-body {
+    margin: 0 0 1.25rem;
+    color: var(--text-muted);
+  }
+  .cf__modal-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
   }
 </style>

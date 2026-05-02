@@ -209,18 +209,6 @@ automatically. Update `_redirects` whenever a doc URL moves.
   curated machine-readable index for AI agents is `public/llms.txt`; keep it
   in sync when adding or renaming top-level doc sections.
 
-## Legacy artefacts
-
-- `.old/`: the previous Docusaurus tree, including the EJS marketing-page
-  builder (`build.js`, `html/*.ejs`). Gitignored. The user will delete it
-  when ready.
-- `.scripts/`: one-shot Docusaurus -> Astro migration / cleanup scripts
-  (`migrate-docs.mjs`, `extract-titles.mjs`, `fix-links.mjs`,
-  `strip-blog-slug.mjs`, `promote-overview.mjs`, `fix-docusaurus-md.mjs`,
-  `fix-mdx-comments.mjs`, `backfill-meta.mjs`, `count-schema.py`). Kept
-  for reference; do
-  not re-run on the live tree.
-
 ## House style for documentation prose
 
 These rules apply to **technical documentation only**: anything under

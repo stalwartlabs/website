@@ -10,8 +10,7 @@ hero:
     tone: info
     label: Available 2027
     body: >-
-      Stalwart Migration is the team-led service that moves your existing
-      mail, calendars, contacts and files onto Stalwart. We are taking
+     We are taking
       expressions of interest now; the service goes live in 2027.
   eyebrow: Migration service
   title: A planned migration, run by the people who write Stalwart.
@@ -58,25 +57,23 @@ sections:
 
   - kind: feature
     eyebrow: Tooling
-    title: Driven from `stalwart-cli`.
+    title: Built for the way real migrations actually run.
     body: >-
-      The migration is performed by `stalwart-cli`, the same CLI used to
-      operate Stalwart in production. For larger migrations, the tooling
-      runs on a dedicated migration host inside the customer's network or
-      on the Stalwart Managed Email side, depending on whether the
-      destination is self-hosted or hosted by us.
+      The migration tooling is the same one our team uses on customer
+      engagements, so what you see in a pilot is what runs at scale. It
+      handles bulk loads, delta passes and dry runs without touching the
+      production system more than necessary, and it preserves the
+      details that matter to end users (folder structure, flags,
+      timestamps, recurring events).
     bullets:
       - Reads source mailboxes over IMAP, CalDAV, CardDAV, WebDAV or directly from on-disk formats where supported.
-      - Writes into Stalwart through JMAP and the management API; preserves UIDs, flags and timestamps where the protocols allow.
+      - Writes into Stalwart through JMAP; preserves message identifiers, flags and timestamps where the protocols allow.
       - "Resumable: a partial run can be re-driven without re-importing existing messages."
       - Parallel per-mailbox; the throughput target on a typical migration is bound by the source server, not Stalwart.
       - Dry-run mode that produces a per-account report (mailbox count, message count, total size, anomalies) before any data is written.
-    learnMore:
-      - label: CLI overview
-        href: /docs/management/cli/
     visual:
       kind: placeholder
-      caption: "Diagram needed: source servers (Postfix, Cyrus, Exchange, ...) feeding into stalwart-cli, which writes through JMAP into Stalwart."
+      caption: "Diagram needed: source servers (Postfix, Cyrus, Exchange, ...) feeding into the migration tooling, which writes through JMAP into Stalwart."
 
   - kind: list
     band: alt
@@ -106,12 +103,12 @@ sections:
   - kind: prose
     band: alt
     eyebrow: Self-hosted or managed destination
-    title: The tooling is the same; the destination is your choice.
+    title: The migration is the same; the destination is your choice.
     body: >-
       You can migrate onto your own self-hosted Stalwart deployment
       (Community or Enterprise edition) or onto [Stalwart Managed Email](/managed-email).
-      The CLI, the assessment, the pilot and the cutover process are
-      identical; the difference is who runs the destination cluster.
+      The assessment, pilot and cutover process are identical; the only
+      difference is who runs the destination cluster.
 
 footerCta:
   cta: Plan your move to Stalwart

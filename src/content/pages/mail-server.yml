@@ -12,15 +12,15 @@ hero:
     Stalwart speaks every standard mail protocol your users' clients
     already use, so no one in your fleet gets left behind. JMAP for new
     apps, IMAP for everything else, POP3 for the long tail. Storage,
-    search, identity and TLS automation are part of the same server, so
-    what you install is one mail server, not a stack of services to glue
-    together.
+    search, external directory and automated DNS are part of the same
+    server, so what you install is one mail server, not a stack of
+    services to glue together.
   ctas:
     - label: Get started
       href: /docs/install/
   meta:
-    - Open source
-    - Rust-native
+    - Modern
+    - Scalable
   visual:
     kind: screenshot
     src: /images/webadmin/dashboard-performance.png
@@ -30,14 +30,14 @@ hero:
 sections:
   - kind: feature
     eyebrow: JMAP
-    title: Live sync across phone, laptop and web.
+    title: First-class JMAP support.
     body: >-
-      JMAP is the modern successor to IMAP. Clients see new mail the
-      moment it arrives, stay in step across every device the user opens,
-      and skip the slow rescans that older protocols force after a long
-      offline period. Stalwart implements the full mail surface, including
-      the live WebSocket transport and the supporting extensions clients
-      depend on.
+      JMAP is the modern replacement for IMAP, designed around JSON over
+      HTTP instead of the old line-based wire protocol. New mail appears
+      the moment it arrives, every device stays in step, and the
+      protocol is efficient enough to feel native to a mobile or web
+      app. Stalwart supports every JMAP extension, so any compliant
+      client gets the full feature set.
     bullets:
       - JMAP for Mail.
       - JMAP for Sieve Scripts.
@@ -58,34 +58,34 @@ sections:
     title: No client left behind.
     body: >-
       Stalwart ships full IMAP4rev2 with IMAP4rev1 fallback, plus a POP3
-      server for older devices, so an existing fleet keeps working without
-      forcing a client migration. Big mailboxes stay in sync without
-      rescans, per-account quotas show up in the client, and users can
-      edit their own server-side filters through any ManageSieve client.
+      server for older devices, so an existing fleet keeps working
+      without forcing a client migration. Per-account quotas show up
+      directly in the client, and users can edit their own server-side
+      filters through any ManageSieve client.
     bullets:
-      - IMAP4rev2 (RFC 9051) and IMAP4rev1 (RFC 3501).
-      - IMAP QUOTA Extension (RFC 9208) and dozens of supported extensions.
-      - ManageSieve (RFC 5804).
-      - "POP3 (RFC 1939) with STLS (RFC 2595), SASL (RFC 5034) and the RFC 2449 extension set."
+      - IMAP4rev2 and IMAP4rev1 with dozens of supported extensions.
+      - IMAP QUOTA reporting per account.
+      - ManageSieve for user-managed server-side filters.
+      - POP3 with STLS and SASL for older devices.
     visual:
       kind: placeholder
       caption: "Screenshot needed: IMAP/POP3 listener configuration in the WebUI."
 
   - kind: feature
     eyebrow: Automated DNS
-    title: DNS that updates itself.
+    title: Hands-off DNS for every mail domain.
     body: >-
       DNS is the most common reason a mail deployment breaks, and the
       hardest one for a generalist administrator to debug. Stalwart can
-      publish and maintain a domain's records directly against a managed zone, so the manual
-      copy-and-paste step that breaks the most deployments goes away.
-      Records reconcile on save, propagation is checked before a key is
-      activated, and DNS-01 ACME challenges run through the same
-      automation.
+      publish and maintain a domain's records directly against a managed
+      zone, so the manual copy-and-paste step that breaks the most
+      deployments goes away. Records reconcile on save, propagation is
+      checked before a key is activated, and ACME DNS challenges run
+      through the same automation.
     bullets:
-      - RFC 2136 dynamic update with TSIG or SIG(0).
-      - Cloudflare, Route 53, Google Cloud DNS, DigitalOcean, OVH.
-      - Many other DNS providers supported.
+      - Direct integration with Cloudflare, Route 53, Google Cloud DNS, DigitalOcean, OVH and others.
+      - Dynamic DNS updates with TSIG or SIG(0) for self-hosted authoritative servers.
+      - Automatic publication of MX, SPF, DKIM, DMARC, TLSA and autoconfig records.
     learnMore:
       - label: Read DNS records
         href: /docs/domains/dns-records
@@ -99,13 +99,13 @@ sections:
     reverse: true
     band: alt
     eyebrow: Automated DKIM rotation
-    title: A signing key that takes care of itself.
+    title: DKIM keys, rotated on a schedule.
     body: >-
       Rotating DKIM signing keys on a schedule is recommended practice
       and easy to forget under operational pressure. Stalwart owns the
-      full lifecycle: new keys are generated on schedule,
-      published in DNS, activated only after propagation is
-      observed, then retired and deleted on configurable timers.
+      full lifecycle: new keys are generated on schedule, published in
+      DNS, activated only after propagation is observed, then retired
+      and deleted on configurable timers.
     bullets:
       - Per-domain rotation cadence.
       - Selector templating with date and version variables.
@@ -127,8 +127,8 @@ sections:
       records are refreshed alongside the new certificate so DANE keeps
       validating without a second tool in the loop.
     bullets:
-      - "TLS-ALPN-01, DNS-01, HTTP-01 and DNS-PERSIST-01 challenges."
-      - External Account Binding (EAB) for CAs that require it.
+      - Every supported ACME challenge type.
+      - External Account Binding for CAs that require it.
       - On-demand renewal triggered after a DNS update.
       - Automatic TLSA refresh after each rotation.
     learnMore:
@@ -146,17 +146,17 @@ sections:
     eyebrow: Autoconfig and Autodiscover
     title: Clients configure themselves.
     body: >-
-      Helpdesk tickets that begin "I can't get my email set up" disappear
-      when a client can fetch its own settings from the server. Pointing
-      a mail client at a Stalwart server returns IMAP, POP, SMTP, CalDAV
-      and CardDAV settings without the user typing a host name. The
-      modern UA Autoconfig discovery is served
-      alongside the legacy Mozilla Autoconfig and Microsoft Autodiscover
-      v1 and v2 formats, so old and new clients are both covered.
+      Helpdesk tickets that begin "I can't get my email set up"
+      disappear when a client can fetch its own settings from the
+      server. Pointing a mail client at a Stalwart server returns IMAP,
+      POP, SMTP, CalDAV and CardDAV settings without the user typing a
+      host name. The modern UA Autoconfig discovery is served alongside
+      the legacy Mozilla Autoconfig and Microsoft Autodiscover v1 and
+      v2 formats, so old and new clients are both covered.
     bullets:
-      - "Automatic Configuration of Email, Calendar, and Contact Server Settings (PACC)"
-      - Legacy Mozilla Autoconfig.
-      - Microsoft Autodiscover v1 and v2.
+      - Modern UA Autoconfig discovery.
+      - Mozilla Autoconfig for older Thunderbird-based clients.
+      - Microsoft Autodiscover v1 and v2 for Outlook and Exchange clients.
     learnMore:
       - label: Read Autoconfig
         href: /docs/server/autoconfig
@@ -166,15 +166,16 @@ sections:
 
   - kind: feature
     eyebrow: Multi-tenancy and quotas
-    title: Many organisations, one server, with hard limits.
+    title: Multi-tenant from the ground up.
     body: >-
-      Hosting many organisations on one server stays safe because
-      accounts, domains and tenants are isolated from the ground up.
-      Disk quotas are enforced per user and per tenant; aliases and
-      catch-all addresses can be enabled, disabled or annotated; a whole
-      domain can be redirected onto another without touching the
-      mailboxes underneath.
+      Stalwart was built for multi-tenancy from the start, so hosting
+      many organisations on the same deployment stays safe by design.
+      Accounts, domains and tenants are fully isolated; disk quotas are
+      enforced per user and per tenant; aliases and catch-all addresses
+      can be enabled, disabled or annotated; and a whole domain can be
+      redirected onto another without touching the mailboxes underneath.
     bullets:
+      - Multi-tenant by design, with per-tenant administrators and quotas.
       - Domain aliases (one domain pointing at another).
       - Email aliases with descriptions; the alias mechanism can be disabled per account.
       - Plus-addressing, sub-addressing, catch-all and mailing-list expansion.
@@ -217,8 +218,8 @@ sections:
     bullets:
       - Real-time dashboards and live tracing.
       - Account, domain, group, list and Sieve management.
-      - Queue and report visualisation (DMARC, TLS-RPT, ARF).
-      - Configuration of every server object via JMAP under the hood.
+      - Queue and report visualisation for DMARC, TLS-RPT and ARF.
+      - Configuration of every server object from a single web admin.
     visual:
       kind: screenshot
       src: /images/webadmin/dashboard-performance.png
@@ -226,7 +227,7 @@ sections:
       url: admin.stalw.art / Dashboard
 
 footerCta:
-  cta: Run a real mail server.
-  ctaSub: Install Stalwart in minutes; pick the storage, search and identity backends that fit your deployment.
+  cta: A modern mail server, ready in minutes.
+  ctaSub: Install Stalwart in minutes; pick the storage, search and external directory backends that fit your deployment.
   ctaButton: Get started
   ctaLink: /docs/install/

@@ -32,6 +32,11 @@ function renderCell(cell: string) {
           <h3 class="cmp__group-title">{group.title}</h3>
           <div class="cmp__table-wrap">
             <table class="cmp__table">
+              <colgroup>
+                <col class="cmp__feature-colgroup" />
+                <col class="cmp__value-colgroup" />
+                <col class="cmp__value-colgroup" />
+              </colgroup>
               <thead>
                 <tr>
                   <th class="cmp__feature-col">Feature</th>
@@ -111,6 +116,13 @@ function renderCell(cell: string) {
     width: 100%;
     border-collapse: collapse;
     font-size: 0.9375rem;
+    table-layout: fixed;
+  }
+  .cmp__feature-colgroup {
+    width: auto;
+  }
+  .cmp__value-colgroup {
+    width: 18%;
   }
   .cmp__table thead th {
     text-align: left;
@@ -152,9 +164,9 @@ function renderCell(cell: string) {
     color: var(--text-muted);
     font-size: 0.875rem;
   }
-  .cmp__cell svg {
-    margin-inline: auto;
-    display: block;
+  .cmp__cell :global(svg) {
+    display: inline-block;
+    vertical-align: middle;
   }
   .cmp__ctas {
     margin-top: 2.5rem;

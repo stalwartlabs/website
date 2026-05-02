@@ -1,28 +1,25 @@
 title: Architecture | Stalwart Labs
 description: >-
-  How Stalwart deploys: data flow, deployment models, cluster coordination,
-  storage tiers, full-text search, sizing and operations.
+  How Stalwart deploys: deployment models, storage, search, high availability
+  and security.
 slug: /architecture
 
 hero:
   eyebrow: Architecture
-  title: One binary, many topologies.
-  titleHighlight: many topologies
+  title: Deploy how you want, scale when you need
+  titleHighlight: scale when you need
   lead: >-
-    One Stalwart binary serves every mail and collaboration protocol your
-    clients need (SMTP, IMAP, JMAP, POP3, ManageSieve, CalDAV, CardDAV,
-    WebDAV) on configurable listeners, and stores state in the storage
-    backends you already run. The same binary scales from a single node
-    to a regional cluster; nodes coordinate either peer-to-peer or
-    through Kafka, Redpanda, NATS or Redis, depending on what your team
-    already operates.
+    Stalwart serves every mail and collaboration protocol your clients
+    need (SMTP, IMAP, JMAP, POP3, ManageSieve, CalDAV, CardDAV, WebDAV)
+    and stores data in the storage backends
+    you already run. The same product scales from a single node to a
+    multi-region cluster, with no external coordinator required.
   ctas:
     - label: Read the cluster docs
       href: /docs/cluster/
   meta:
-    - Single binary
     - Pluggable storage
-    - Optional coordinator
+    - Cluster-ready
   visual:
     kind: diagram
     id: architecture
@@ -30,48 +27,34 @@ hero:
 sections:
   - kind: list
     eyebrow: Deployment models
-    title: One binary, four shapes.
+    title: Sized to your business, from one node to many.
     body: >-
-      Stalwart adapts to the size of the deployment. The same binary runs
-      the smallest single-node setup and the largest multi-region cluster.
+      Stalwart adapts to the size of the deployment. The same product
+      runs the smallest single-node setup and the largest multi-region
+      cluster, so what you start with does not limit what you can grow
+      into.
     bullets:
-      - "**Single-node**: one Stalwart process serves every protocol, with a local data store such as RocksDB or SQLite. Suited to small organisations and evaluation deployments."
-      - "**Clustered**: three or more nodes share a distributed data store and coordinate through one of the supported coordination backends. All nodes are stateless from the protocol point of view; any node can serve IMAP, SMTP, JMAP or WebDAV requests. See [cluster overview](/docs/cluster/)."
-      - "**Container orchestration**: Stalwart runs on Kubernetes, Apache Mesos and Docker Swarm. The orchestrator handles node lifecycle, health checks and scaling; the cluster coordination layer keeps nodes in sync. See [orchestration overview](/docs/cluster/orchestration/)."
-      - "**Multi-region**: nodes are split across data centres or regions, paired with a multi-region data store (typically FoundationDB) and geo-replicated blob storage. Global load balancers or DNS-based routing direct traffic regionally."
-
-  - kind: list
-    band: alt
-    eyebrow: Cluster topology
-    title: Within a cluster, listeners can be split per role.
-    body: >-
-      Listener assignment per node is controlled through the `ClusterRole`
-      object. Several patterns are common.
-    bullets:
-      - "**Unified**: every node serves every protocol. Simplest to operate; suits small to mid-sized clusters."
-      - "**Service-specific**: nodes are dedicated to SMTP, IMAP, JMAP or WebDAV. Useful when workloads need different network policies or scaling profiles."
-      - "**Weighted by traffic**: protocol allocation reflects observed usage."
-      - "**Protocol pairing**: complementary protocols are grouped (IMAP with JMAP for mail clients, inbound and outbound SMTP together)."
-      - "**Geographically distributed**: regional clusters with a global data store. Improves latency and contains regional outages."
+      - "**Single-node**: one Stalwart process serves every protocol on a single server, suited to small organisations and evaluation deployments."
+      - "**Clustered**: three or more nodes share a distributed data store; any node can serve any protocol, and listener allocation per node can be tuned for unified, service-specific or geographically distributed setups. See [cluster overview](/docs/cluster/)."
+      - "**Container orchestration**: Stalwart runs on Kubernetes, Apache Mesos and Docker Swarm; the orchestrator handles node lifecycle and scaling. See [orchestration overview](/docs/cluster/orchestration/)."
+      - "**Multi-region**: nodes split across data centres or regions, paired with a multi-region data store and geo-replicated blob storage; global load balancers or DNS-based routing direct traffic regionally."
 
   - kind: feature
-    eyebrow: Cluster coordination
-    title: Coordinate the way your team already coordinates.
+    band: alt
+    eyebrow: High availability
+    title: Seamless scalability for millions of mailboxes.
     body: >-
-      Some teams already run Kafka or NATS and want a new product to use
-      it; some teams would rather not run a coordinator service at all.
-      Coordination is how nodes share state changes (mailbox updates,
-      blocked IPs, certificate renewals, push notifications) so the
-      cluster behaves as a single system, and Stalwart supports both a
-      coordinator-less mode and four coordinator-based options. All
-      backends use the same internal topic name (`stwt.agora`), so the
-      choice is transparent to the rest of the system and reversible
-      later.
+      Stalwart was engineered to scale from the start, paired with
+      modern storage backends like FoundationDB. Capacity grows by
+      adding nodes, and high availability comes from the design itself,
+      not from external proxies. Any node can take over for any other,
+      so a node failure never strands a user or a queued message.
     bullets:
-      - "**Peer-to-peer (Eclipse Zenoh)**: nodes discover each other and exchange events directly, with no external coordinator."
-      - "**Apache Kafka or Redpanda**: durable, high-throughput event streaming for very large clusters."
-      - "**NATS**: lightweight publish/subscribe messaging with low overhead."
-      - "**Redis**: pub/sub coordination, often a fit when Redis is already deployed for ephemeral storage."
+      - Load balancing and fault tolerance built into the cluster.
+      - Node autodiscovery for streamlined network expansion.
+      - Network partition-tolerant failure detection.
+      - Simplified architecture without external coordinators or proxies.
+      - Optional message-bus integration (Apache Kafka, Redpanda, NATS, Redis) for teams that already run one.
     learnMore:
       - label: Coordination overview
         href: /docs/cluster/coordination/
@@ -81,100 +64,58 @@ sections:
 
   - kind: list
     reverse: true
-    band: alt
     eyebrow: Storage tier
     title: Pick the storage that fits the deployment.
     body: >-
       Stalwart separates persistent state into four roles and lets you
       pick a backend for each, so you can match what the team already
-      runs (or already knows how to back up) instead of being told which
-      database to deploy.
+      runs (or already knows how to back up) instead of being told
+      which database to deploy.
     bullets:
-      - "**Data store**: structured metadata. RocksDB (embedded), [FoundationDB](/docs/storage/backends/foundationdb), [PostgreSQL or AlloyDB](/docs/storage/backends/postgresql), [MySQL or MariaDB](/docs/storage/backends/mysql), [SQLite](/docs/storage/backends/sqlite)."
-      - "**Blob store**: message bodies, attachments, Sieve scripts, WebDAV files. S3-compatible, Azure Blob, or filesystem."
-      - "**Search store**: full-text indexes for message content and headers."
-      - "**In-memory store**: ephemeral state such as rate-limit counters and session data. Redis, Valkey, or the primary data store."
-      - "Enterprise adds read replicas, sharded blob storage and sharded in-memory stores."
+      - "**Data store** for structured metadata: RocksDB, [FoundationDB](/docs/storage/backends/foundationdb), [PostgreSQL or AlloyDB](/docs/storage/backends/postgresql), [MySQL or MariaDB](/docs/storage/backends/mysql), [SQLite](/docs/storage/backends/sqlite)."
+      - "**Blob store** for message bodies, attachments, Sieve scripts and WebDAV files: S3-compatible, Azure Blob, or filesystem."
+      - "**Search store** for full-text indexes across message content and headers."
+      - "**In-memory store** for ephemeral state such as rate-limit counters and session data: Redis, Valkey, or the primary data store."
 
   - kind: feature
+    band: alt
     eyebrow: Full-text search
     title: Search that grows with the deployment.
     body: >-
       Full-text search can run inside Stalwart or be delegated to a
-      dedicated engine. The internal engine uses bloom filters; it is
-      fast to deploy and supports 17 languages, and is the right choice
-      for small and medium deployments where adding another service is
-      not worth it. For larger workloads, a dedicated engine takes the
-      indexing load off the data store.
+      dedicated engine. The internal engine indexes 17 languages and
+      requires no extra service, which is the right fit for small and
+      medium deployments. For larger workloads, a dedicated engine
+      takes the indexing load off the data store.
     bullets:
       - "**Internal**: bloom-filter index built into Stalwart, no extra service required."
       - "**Meilisearch**: lightweight, fast indexing with minimal configuration."
       - "**Elasticsearch / OpenSearch**: distributed search at scale."
-      - "**PostgreSQL / MySQL**: re-use a relational backend already in the stack."
+      - "**PostgreSQL / MySQL**: reuse a relational backend already in the stack."
     learnMore:
       - label: Read full-text search
         href: /docs/storage/fts
-    visual:
-      kind: placeholder
-      caption: "Diagram needed: search-store routing showing internal engine vs. external search backends."
-
-  - kind: prose
-    band: alt
-    eyebrow: Outbound MTA cluster role
-    title: Dedicated nodes for outbound throughput.
-    body: >-
-      Stalwart 0.16 introduced a dedicated outbound MTA cluster role.
-      Nodes assigned to this role process the distributed outbound queue
-      independently of the user-facing protocol nodes. The queue is
-      partitioned across these nodes, so adding outbound nodes increases
-      delivery throughput without changing the SMTP, IMAP or JMAP topology.
-      Delayed delivery, priority delivery, per-tenant quotas, routing rules
-      and throttling apply consistently across the cluster.
-
-      This pattern matters in two situations. **High-volume outbound**:
-      when bulk mailers, transactional traffic or large customer migrations
-      push the queue beyond what the regular cluster handles, dedicated
-      MTA nodes absorb the spike without affecting interactive protocol
-      latency. **Network segmentation**: outbound MTA nodes can be placed
-      on a separate network zone or with different egress IPs, useful for
-      IP reputation management.
 
   - kind: list
-    eyebrow: Sizing
-    title: Plan one node per 5,000 to 10,000 active users.
-    body: >-
-      A single Stalwart node typically handles 10,000 to 50,000 active
-      mailboxes, depending on usage intensity, concurrent connections and
-      backend performance. For high availability, start with three nodes
-      and use odd cluster sizes (3, 5, 7) to support quorum-based decisions.
-    bullets:
-      - "**Small** (fewer than 50,000 users): 2 to 3 nodes."
-      - "**Medium** (50,000 to 100,000 users): 3 to 5 nodes."
-      - "**Large** (100,000 or more users): 5 or more nodes, often with dedicated roles per protocol."
-      - Scale out when any resource (CPU, memory, disk I/O, inter-node bandwidth) consistently exceeds 70 to 80 percent utilisation.
-      - Nodes can be added without downtime, so the cluster grows alongside the organisation.
-
-  - kind: list
-    band: alt
     eyebrow: Operations
-    title: Web UI, CLI, and standard observability.
+    title: Web admin, CLI and standard observability.
     bullets:
-      - "**Web administration**: account, domain, group and mailing-list management; SMTP queue control; report visualisation; configuration of every server object; log viewer; self-service portal. See [WebUI overview](/docs/management/webui/)."
-      - "**Declarative IaC**: `stalwart-cli apply` reconciles a declarative bundle of objects against a running server, and `stalwart-cli snapshot` exports the current configuration to disk. See [apply](/docs/management/cli/apply) and [snapshot](/docs/management/cli/snapshot)."
-      - "**Observability**: OpenTelemetry exporter, Prometheus pull endpoint, webhooks, journald, log files. Live tracing and metric streaming over SSE are available in the Enterprise edition."
-      - "**Bootstrap and recovery**: bootstrap mode initialises a fresh server with the minimum object set; recovery mode brings up a degraded node for diagnostics."
+      - "**Web administration** for accounts, domains, groups, mailing lists, queue control, report visualisation, log viewer and a self-service portal. See [WebUI overview](/docs/management/webui/)."
+      - "**Declarative configuration** through a CLI that reconciles a declarative bundle of objects against a running server, with snapshots back to disk. See [apply](/docs/management/cli/apply) and [snapshot](/docs/management/cli/snapshot)."
+      - "**Observability** with OpenTelemetry, a Prometheus endpoint, webhooks, journald and log files; live tracing and metric streaming for real-time monitoring."
 
   - kind: list
+    band: alt
     eyebrow: Security
     title: Security applies to every component, not just the perimeter.
     bullets:
       - "**Encryption at rest**: per-mailbox encryption with S/MIME or OpenPGP."
-      - "**Transport security**: ACME (TLS-ALPN-01, DNS-01, HTTP-01, DNS-PERSIST-01, External Account Binding), DANE, MTA-STS and TLS reporting."
-      - "**Network defence**: rate limiting, automated banning, ASN and GeoIP-based blocking, ACLs, IP restrictions on accounts."
+      - "**Transport security**: ACME, DANE, MTA-STS and TLS reporting."
+      - "**Network defence**: rate limiting, automated banning, ASN and GeoIP blocking, ACLs and per-account IP restrictions."
       - "**Memory safety**: the server is written in Rust. The codebase has been independently security-audited; the report is published in the [Stalwart blog](/blog/security-audit)."
 
 footerCta:
   cta: Plan your deployment
-  ctaSub: Read the cluster guide for sizing, topology and storage recommendations.
+  ctaSub: Read the cluster guide for topology, storage and operations recommendations.
   ctaButton: Cluster overview
   ctaLink: /docs/cluster/

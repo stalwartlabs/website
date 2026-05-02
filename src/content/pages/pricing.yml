@@ -6,15 +6,14 @@ slug: /pricing
 
 hero:
   eyebrow: Pricing
-  title: Per-mailbox pricing for the Enterprise edition.
-  titleHighlight: Per-mailbox pricing
+  title: More features than the alternatives, for less.
+  titleHighlight: for less
   lead: >-
-    Stalwart Enterprise is sold as a per-mailbox subscription with tiered,
-    progressive pricing: each portion of the mailbox count is billed at
-    the rate for its tier rather than at a single flat rate. Only active
-    mailboxes are counted, and every plan includes unlimited domains,
-    tenants, groups, lists and aliases. The Community edition stays free
-    under AGPL-3.0.
+    Stalwart Enterprise gives you a complete mail and collaboration
+    platform for a per-mailbox rate that drops as you grow. Every license
+    includes unlimited domains, tenants, mailing lists and
+    aliases at no extra cost, and the same license can be installed on
+    an unlimited number of servers.
   ctas:
     - label: Buy now
       href: https://license.stalw.art/buy
@@ -70,22 +69,20 @@ sections:
       for paying yearly, and **monthly**, for organisations that prefer a
       shorter commitment.
 
-      Only active mailboxes count toward the total. Inactive accounts,
-      system accounts and shared resources are not billed. Every plan
-      includes unlimited domains, tenants, groups, mailing lists and
+      Only user and group mailboxes count toward the total. Mailing 
+      lists and aliases are not billed. Every plan
+      includes unlimited domains, tenants, mailing lists and
       aliases at no extra cost.
 
   - kind: list
     band: alt
     title: How a license is issued.
     body: >-
-      License keys are issued instantly to credit-card buyers. After
-      purchase at the [Stalwart Labs licensing portal](https://license.stalw.art/buy),
+      After purchase at the [Stalwart Labs licensing portal](https://license.stalw.art/buy),
       the key is available immediately and activates Enterprise features
       as soon as it is installed on the server. A 30-day Enterprise trial
       is available at the [trial portal](https://license.stalw.art/trial),
-      with full access to Enterprise features for evaluation. The trial
-      reverts to Community at the end of the period without any data loss.
+      with full access to Enterprise features for evaluation.
     bullets:
       - "**Anchored to a hostname domain**, not to an individual server. A key for `*.example.org` covers an unlimited number of servers under that domain."
       - "**Unlimited client domains**: the domain restriction applies only to server hostnames, not to the domains your users send and receive mail under."
@@ -93,38 +90,20 @@ sections:
 
   - kind: prose
     eyebrow: Premium Support
-    title: Included at 150 mailboxes and above.
+    title: Premium Support is included from 150 mailboxes.
     body: >-
-      Premium Support is included with Enterprise subscriptions of 150
-      mailboxes or more. It covers priority response, named contacts,
-      expedited bug fixing, and influence on the product roadmap.
-      Subscriptions below 150 mailboxes still receive priority bug fixing
-      and access to the Enterprise-only feature set, without Premium
-      Support response times.
+      Enterprise subscriptions of 150 mailboxes or more include
+      Premium Support: priority response, 
+      expedited bug fixing and influence on the product roadmap.
+      Smaller Enterprise subscriptions (below 150 mailboxes) get the
+      Enterprise feature set only; for help and questions, those
+      customers rely on the same community support channels as
+      Community-edition users.
 
-      On-demand options for Premium Support customers include a dedicated
-      Support Engineer, a custom SLA, and lawful interception. The full
-      response-time matrix and the list of on-demand services live on the
-      [Support page](/support).
-
-  - kind: prose
-    band: alt
-    eyebrow: Community edition
-    title: Free for production use under AGPL-3.0.
-    body: >-
-      The Community edition is published under [AGPL-3.0](https://www.gnu.org/licenses/agpl-3.0)
-      and is free for production use. It has the same protocols and core
-      features as Enterprise; the Enterprise edition adds operational
-      features such as multi-tenancy, alerts, AI-driven spam filtering,
-      account archiving, read replicas and sharded blob storage. See the
-      [comparison table](/compare) for a feature-by-feature breakdown.
-
-      Community users can support development by [sponsoring the project](https://opencollective.com/stalwart).
-      Sponsors at $5 per month or more automatically receive an Enterprise
-      license key. Sponsors at $30 per month or more also get Premium
-      Support. Sponsorship is the simplest path to an Enterprise key for
-      individual operators and small teams that want to back the project
-      directly.
+      On-demand options for Premium Support customers include a
+      dedicated Support Engineer, a custom SLA and lawful
+      interception. The full response-time matrix and the list of
+      on-demand services live on the [Support page](/support).
 
   - kind: faq
     eyebrow: Frequently asked
@@ -132,8 +111,8 @@ sections:
     items:
       - question: Are mailboxes counted on a peak or average basis?
         answer: >-
-          Active mailbox count, measured at billing. System mailboxes,
-          shared resources and disabled accounts are not counted.
+          Mailbox count is measured at billing. Only user and group
+          mailboxes are counted; mailing lists and aliases are not.
       - question: Can I move the license to a different server?
         answer: >-
           Yes, as long as the server hostname falls under the licensed
@@ -144,10 +123,32 @@ sections:
           domain, regardless of where it runs.
       - question: What happens if my mailbox count exceeds my plan mid-cycle?
         answer: >-
-          The next renewal is sized to the new count. Mid-cycle, the
-          server keeps operating without restriction.
-      - question: Is there a discount for non-profits or educational institutions?
-        answer: Yes. Contact sales for the current terms.
+          Existing mailboxes keep working without restriction; the
+          server simply stops creating new mailboxes once your licensed
+          count is reached. To unblock new mailboxes, buy additional
+          licenses at [license.stalw.art](https://license.stalw.art)
+          and apply them to the running server: there is no downtime
+          and the system generates a prorated invoice for the
+          remaining period.
+      - question: Can I purchase additional mailboxes mid-cycle?
+        answer: >-
+          Yes. Buy more mailbox licenses at
+          [license.stalw.art](https://license.stalw.art) at any time
+          during your billing period, then apply the new key to the
+          running server: it takes effect without a restart, and the
+          system charges only for the prorated remainder of the cycle.
+      - question: Can I switch between monthly and annual billing?
+        answer: >-
+          Yes, in either direction. The change is applied at
+          [license.stalw.art](https://license.stalw.art) and takes
+          effect without downtime; the system reconciles the change
+          with a prorated invoice for the rest of the period.
+      - question: What happens if I cancel my Enterprise subscription?
+        answer: >-
+          The server reverts to the Community edition automatically.
+          Enterprise-only features are disabled, but no data is lost
+          and standard email and collaboration service continues
+          without interruption.
 
 footerCta:
   cta: Ready to deploy Stalwart Enterprise?

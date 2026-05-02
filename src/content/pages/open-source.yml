@@ -7,15 +7,10 @@ slug: /open-source
 
 hero:
   eyebrow: Community edition
-  title: The full server, under AGPL-3.0.
-  titleHighlight: AGPL-3.0
+  title: The same server you can buy, free under AGPL-3.0
+  titleHighlight: free under AGPL-3.0
   lead: >-
-    Stalwart's Community Edition is the full mail and collaboration server,
-    released under AGPL-3.0 and used in production. JMAP, IMAP4rev1/4rev2,
-    POP3, SMTP, CalDAV, CardDAV and WebDAV are all in the open-source build,
-    alongside the spam-filtering pipeline, clustering and the web admin.
-    Sponsoring the project at $5 per month sends you an Enterprise key
-    automatically.
+    Stalwart's Community Edition is free under AGPL-3.0.
   ctas:
     - label: Get the source
       href: https://github.com/stalwartlabs/stalwart
@@ -25,107 +20,85 @@ hero:
       primary: false
   meta:
     - AGPL-3.0
-    - Memory-safe Rust
     - Security audited
 
 sections:
   - kind: feature
-    eyebrow: AGPL-3.0, production use
-    title: Free software, designed to be deployed.
+    eyebrow: Take control of your email
+    title: Your data, on your infrastructure.
     body: >-
-      Stalwart is dual-licensed under the GNU Affero General Public License
-      v3.0 and the Stalwart Enterprise License v1. The Community Edition
-      under AGPL-3.0 is the build most operators run: it is the same source
-      tree that powers production deployments at hosting providers,
-      universities and self-hosters, with no time bombs, feature gates that
-      nag, or "open core" stubs. The AGPL-3.0 obligations apply only when
-      modified versions of the server are themselves redistributed or
-      offered as a network service; running an unmodified Stalwart, or
-      using it internally, does not trigger any source-disclosure
-      requirement.
-
-      Operators that prefer not to comply with AGPL-3.0 in their own
-      modifications can purchase the proprietary SELv1 license through the
-      Enterprise Edition.
+      Running your own mail server means your messages live on
+      hardware you control, under policies you set, with no third
+      party indexing the contents for ads or training data. Stalwart
+      gives you the full server to run anywhere you can run a Linux
+      host, with the same flexibility you would get from a hosted
+      provider and none of the lock-in.
+    bullets:
+      - Full ownership of mailboxes, calendars, contacts and files.
+      - No vendor lock-in; standard protocols on every interface.
+      - Customise, extend or audit the source to your own standards.
     learnMore:
-      - label: Compare editions
-        href: /compare
-    visual:
-      kind: placeholder
-      caption: "Diagram needed: AGPL-3.0 obligations summary (when source disclosure is required vs. not)."
+      - label: Read the install guide
+        href: /docs/install/
 
   - kind: feature
     reverse: true
     band: alt
-    eyebrow: Protocol and feature parity with Enterprise
-    title: Same standards stack, same core feature set.
+    eyebrow: Transparency and trust
+    title: Auditable code, reviewed by the community.
     body: >-
-      The Community Edition implements the full protocol surface of the
-      product across email, collaboration, anti-spam and operations. What
-      the Enterprise Edition adds is operational tooling on top of this
-      stack, not protocol coverage: multi-tenancy and per-domain directory
-      backends, branding, account archiving and un-deletion, live telemetry
-      streaming, metric alerts, AI-assisted spam classification, masked
-      email, read replicas and sharded storage.
-    bullets:
-      - "**Email**: JMAP, IMAP4rev2, IMAP4rev1, ManageSieve, POP3, SMTP with built-in DMARC, DKIM, SPF and ARC verification."
-      - "**Collaboration**: CalDAV with scheduling, CardDAV with legacy vCard, WebDAV, ACLs, plus matching JMAP."
-      - "**Anti-spam**: FTRL-Proximal classifier, phishing protection, sender reputation, greylisting, DNSBL, Pyzor, milter and MTA Hooks."
-      - "**Operations**: clustering, pluggable storage, full-text search, encryption at rest, ACME, automated DNS and DKIM rotation, OAuth/OIDC/LDAP/SQL auth."
-    learnMore:
-      - label: Edition comparison
-        href: /compare
-
-  - kind: feature
-    eyebrow: Memory-safe Rust, security audited
-    title: Written in Rust; reviewed by an external auditor.
-    body: >-
-      Stalwart is written in Rust, which means whole categories of
-      vulnerability common in C-based mail servers (use-after-free, buffer
-      overruns, type confusion in protocol parsers) are eliminated at
-      compile time rather than caught after a CVE. The codebase has been
-      through an external security audit; the public report is on the blog.
+      Open source means anyone can read the code, file an issue or
+      contribute a fix. Stalwart is written in Rust, which removes
+      whole categories of vulnerability common in older mail servers
+      (use-after-free, buffer overruns, type confusion in protocol
+      parsers) at compile time. The codebase has been through an
+      independent security audit and the public report is on the blog.
     learnMore:
       - label: Read the security audit
         href: /blog/security-audit
-
-  - kind: feature
-    reverse: true
-    band: alt
-    eyebrow: Sponsor and get an Enterprise key
-    title: Pay what works for you, get an Enterprise license back.
-    body: >-
-      Stalwart Labs runs a sponsor programme on Open Collective that
-      doubles as a low-friction Enterprise route for individuals and small
-      operators.
-    bullets:
-      - "**$5 per month** sponsors automatically receive an Enterprise Edition key."
-      - "**$30 per month** sponsors additionally receive Premium Support."
-      - The license is issued automatically and renews while the sponsorship is active.
-    learnMore:
-      - label: Become a sponsor
-        href: https://opencollective.com/stalwart
-        external: true
-      - label: See Enterprise pricing
-        href: /pricing
-
-  - kind: feature
-    eyebrow: Community channels
-    title: Where to ask for help, file bugs and follow development.
-    body: >-
-      Issues, pull requests and design discussion live on GitHub at
-      `stalwartlabs/stalwart` (the repository was renamed from
-      `stalwartlabs/mail-server`). User support, configuration advice and
-      operator-to-operator discussion happen on the support portal at
-      `support.stalw.art`, where Community-edition users can sign up for
-      free. Discord, Reddit and Mastodon are useful for following the
-      project and informal conversation, but they are not support channels.
-    learnMore:
-      - label: GitHub repository
+      - label: Browse the source on GitHub
         href: https://github.com/stalwartlabs/stalwart
         external: true
+
+  - kind: feature
+    eyebrow: AGPL-3.0
+    title: Free software, designed to be deployed.
+    body: >-
+      Stalwart is dual-licensed under the GNU Affero General Public
+      License v3.0 and the Stalwart Enterprise License v1.
+      The AGPL-3.0 obligations apply only when modified versions
+      of the server are themselves redistributed or offered as a
+      network service; running unmodified Stalwart, or using it
+      internally, does not trigger any source-disclosure requirement.
+      Operators that prefer not to comply with AGPL-3.0 on their own
+      modifications can purchase the proprietary SELv1 license through
+      the Enterprise Edition.
+    learnMore:
+      - label: Compare editions
+        href: /compare
+
+  - kind: feature
+    eyebrow: Community support
+    title: Free support from the community.
+    body: >-
+      Community users get a free account on the support portal at
+      [support.stalw.art](https://support.stalw.art), where questions
+      and bug reports are answered by the wider Stalwart community.
+      For real-time discussion, the project also has active Reddit,
+      Discord and Matrix communities that operators and contributors
+      use day to day.
+    learnMore:
       - label: Support portal
         href: https://support.stalw.art
+        external: true
+      - label: Reddit
+        href: https://www.reddit.com/r/stalwartlabs
+        external: true
+      - label: Discord
+        href: https://discord.com/servers/stalwart-923615863037390889
+        external: true
+      - label: Matrix
+        href: https://matrix.to/#/#stalwart:matrix.org
         external: true
 
   - kind: prose
@@ -133,20 +106,16 @@ sections:
     eyebrow: Funding
     title: Built with public-interest funding.
     body: >-
-      Part of Stalwart's development was funded by NLnet through two grants:
-
-      **NGI0 Entrust Fund**, established by NLnet with financial support
-      from the European Commission's Next Generation Internet programme,
-      under DG Communications Networks, Content and Technology, grant
-      agreement No 101069594.
-
-      **NGI Zero Core**, established by NLnet with financial support from
-      the European Commission's programme, under DG Communications
-      Networks, Content and Technology, grant agreement No 101092990.
-
-      Public funding has helped Stalwart ship features that benefit the
-      whole open-source ecosystem (the JMAP collaboration stack and the
-      spam-filter rewrite among them) and stay free for self-hosters.
+      Part of Stalwart's development has been funded by NLnet through
+      two grants. **NGI0 Entrust Fund** was established by NLnet with
+      financial support from the European Commission's Next Generation
+      Internet programme, under DG Communications Networks, Content
+      and Technology, grant agreement No 101069594. **NGI Zero Core**
+      was established by NLnet with financial support from the
+      European Commission's programme, under the same DG, grant
+      agreement No 101092990. Public funding has helped Stalwart ship
+      features that benefit the whole open-source ecosystem and stay
+      free for self-hosters.
 
 footerCta:
   cta: Help keep Stalwart free and open

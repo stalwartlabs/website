@@ -6,13 +6,15 @@ slug: /support
 
 hero:
   eyebrow: Support
-  title: One portal, three tiers.
-  titleHighlight: three tiers
+  title: Help when you need it.
+  titleHighlight: need it
   lead: >-
-    Stalwart support runs through a single portal at
-    [support.stalw.art](https://support.stalw.art). Community users,
-    Enterprise customers and Premium operators all open tickets in the
-    same place; the tier is determined by the account, not by the channel.
+    All Stalwart support runs through a single portal at
+    [support.stalw.art](https://support.stalw.art), where any user can
+    file a bug, suggest a new feature or get help from the community.
+    Enterprise customers with Premium Support also have access to a
+    private area on the same portal for opening tickets directly with
+    Stalwart Labs.
   ctas:
     - label: Open the support portal
       href: https://support.stalw.art
@@ -42,64 +44,53 @@ sections:
   - kind: feature
     reverse: true
     band: alt
-    eyebrow: Enterprise Support
-    title: Contracted support for Enterprise customers.
-    body: >-
-      Enterprise licence-holders use the same portal at
-      [support.stalw.art](https://support.stalw.art); their tickets are
-      routed to the Enterprise queue automatically. Enterprise support is
-      included with every Enterprise licence; no separate purchase is
-      required.
-    bullets:
-      - Priority response on tickets, with severity levels.
-      - A named technical contact at Stalwart Labs.
-      - Access to security advisories ahead of public disclosure where relevant.
-      - Direct escalation path to the engineers who write Stalwart.
-      - Tickets tracked against the SLA terms in your contract.
-
-  - kind: feature
     eyebrow: Premium Support
-    title: On-demand options for high-volume operators.
+    title: Priority Support for Enterprise customers, from 150 mailboxes.
     body: >-
-      Premium Support adds capacity on top of the Enterprise standard tier.
-      It is intended for hosting providers, MSPs and large in-house
-      operators where downtime has a measurable cost. The minimum entry
-      point is **150 mailboxes**. Premium Support is quoted per engagement.
+      Premium Support is included at no extra cost with every
+      Enterprise subscription of 150 mailboxes or more. Once activated,
+      a **Priority Support** button appears on
+      [support.stalw.art](https://support.stalw.art), giving the
+      customer access to a private area where tickets are opened
+      directly with Stalwart Labs. Each ticket carries an SLA counter,
+      so the response window against the contracted terms is visible
+      to both sides at all times.
     bullets:
-      - "**Dedicated Support Engineer.** A named engineer who knows your deployment, attends review calls and handles your incidents end to end."
-      - "**Custom SLA.** Negotiated response and resolution targets per severity, including 24x7 coverage with paged response where required."
-      - "**Lawful interception assistance.** Help operating the lawful-interception features under court-issued orders, where applicable."
-    learnMore:
-      - label: Contact sales
-        href: /contact
+      - Priority response on tickets, with severity levels and a per-ticket SLA counter.
+      - A named technical contact at Stalwart Labs.
+      - Direct escalation path to the engineers who write Stalwart.
+      - Access to security advisories ahead of public disclosure where relevant.
+      - Optional add-ons (purchased separately) include a dedicated Support Engineer, a custom SLA and lawful-interception assistance.
 
   - kind: comparison-tables
     band: alt
-    eyebrow: Tier comparison
-    title: What each level of support covers.
+    eyebrow: What's covered
+    title: Community Support and Premium Support, side by side.
     columns:
       - Community
-      - Enterprise standard
+      - Enterprise (Premium)
     legend: >-
-      Numbers and exact SLA terms are confirmed at contract signing.
-      Anything you see in public threads is best-effort; anything in your
-      contract is what governs. Enterprise on-demand adds a custom SLA
-      with paged escalation, a Dedicated Support Engineer and (where
-      applicable) lawful-interception assistance.
+      Premium Support is included with Enterprise subscriptions of
+      150 mailboxes or more. Numbers and exact SLA terms are confirmed
+      at contract signing.
     groups:
       - title: Coverage
         rows:
           - ["Where", "support.stalw.art", "support.stalw.art"]
-          - ["Response time", "Best effort", "Business hours, by severity"]
-          - ["Eligibility", "All users", "All Enterprise customers"]
-          - ["Named contact", "—", "yes"]
+          - ["Eligibility", "All users", "150 mailboxes or more"]
+          - ["Response time", "Best effort", "Contracted, with per-ticket SLA counter"]
+          - ["Named technical contact", "-", "yes"]
           - ["Bug triage", "Public issue tracker", "Prioritised, ticketed"]
           - ["Security advisories", "Public release notes", "Advance notice where relevant"]
-          - ["SLA", "—", "yes"]
-          - ["Lawful interception assistance", "—", "On demand"]
+          - ["Direct escalation to Stalwart engineers", "-", "yes"]
+      - title: Optional add-ons (purchased separately)
+        rows:
+          - ["Dedicated Support Engineer", "-", "On demand"]
+          - ["Custom SLA", "-", "On demand"]
+          - ["Lawful-interception assistance", "-", "On demand"]
 
 footerCta:
-  cta: Need a support plan
+  cta: Find the right support tier for your deployment.
   ctaSub: Tell us about your deployment and we will recommend the right tier.
   ctaButton: Talk to sales
   ctaLink: /contact
