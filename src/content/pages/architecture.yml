@@ -21,8 +21,8 @@ hero:
     - Pluggable storage
     - Cluster-ready
   visual:
-    kind: diagram
-    id: architecture
+    kind: placeholder
+    caption: "Diagram needed: layered Stalwart architecture (ingress listeners on top, core protocol handlers in the middle, pluggable storage / search / directory / DNS / blob backends underneath)."
 
 sections:
   - kind: list
@@ -59,8 +59,8 @@ sections:
       - label: Coordination overview
         href: /docs/cluster/coordination/
     visual:
-      kind: diagram
-      id: cluster
+      kind: placeholder
+      caption: "Diagram needed: cluster topology (multiple Stalwart nodes serving every protocol over a shared distributed data + blob store, no external coordinator)."
 
   - kind: list
     reverse: true

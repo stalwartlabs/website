@@ -24,9 +24,9 @@ hero:
     - Rust-native
   visual:
     kind: screenshot
-    src: /images/webadmin/dashboard-performance.png
-    alt: Stalwart admin dashboard showing live performance metrics
-    url: admin.stalw.art
+    src: /images/webadmin/dashboard-delivery.png
+    alt: Stalwart admin dashboard showing user, domain and message counters with a 24-hour message volume chart
+    url: admin.stalw.art / Dashboard / Overview
 
 sections:
   - kind: pillar-grid
@@ -117,11 +117,8 @@ sections:
       - Memory-safe implementation in Rust.
       - Independently security-audited.
     visual:
-      kind: screenshot
-      src: /images/webadmin/delivery-trace.png
-      alt: Stalwart delivery trace showing MTA-STS, TLSA, and DANE checks
-      url: admin.stalw.art / Emails / Delivery tests
-      glow: true
+      kind: placeholder
+      caption: "Diagram needed: encryption-at-rest, transport (DANE/MTA-STS/TLS-RPT) and ACME stack as one stack image."
 
   - kind: feature
     reverse: true
@@ -143,9 +140,9 @@ sections:
       - Web administration plus a CLI.
     visual:
       kind: screenshot
-      src: /images/webadmin/network-settings.png
-      alt: Stalwart network settings panel
-      url: admin.stalw.art / Settings / Network
+      src: /images/webadmin/dashboard-storage.png
+      alt: Stalwart storage dashboard showing data store and blob store latency
+      url: admin.stalw.art / Dashboard / Storage
 
   - kind: feature
     eyebrow: Unified collaboration
@@ -163,10 +160,8 @@ sections:
       - Fine-grained sharing through WebDAV ACL and JMAP Sharing.
       - Auto-discovery for desktop and mobile clients.
     visual:
-      kind: screenshot
-      src: /images/webadmin/calendar-edit.png
-      alt: Stalwart calendar settings
-      url: admin.stalw.art / Calendars
+      kind: placeholder
+      caption: "Screenshot needed: calendar + contacts + files split view, or representative collaboration screenshot beyond the calendar form already used on the collaboration page hero."
 
   - kind: feature
     reverse: true
@@ -191,10 +186,9 @@ sections:
       - Milter and HTTP-based MTA Hooks for SpamAssassin, RSPAMD, and external scanners.
     visual:
       kind: screenshot
-      src: /images/webadmin/dashboard-security.png
-      alt: Stalwart security dashboard showing threats blocked, IPs banned, and authentication failures
+      src: /images/webadmin/dashboard-security-home.png
+      alt: Stalwart security dashboard showing spam and phishing filter status
       url: admin.stalw.art / Dashboard / Security
-      glow: true
 
   - kind: feature
     eyebrow: Built to scale
@@ -213,8 +207,8 @@ sections:
       - Peer-to-peer cluster coordination using Zenoh; no external coordinator required.
       - Optional coordinator-based clustering with Apache Kafka, Redpanda, NATS, or Redis.
     visual:
-      kind: diagram
-      id: cluster
+      kind: placeholder
+      caption: "Diagram needed: cluster topology (multiple Stalwart nodes serving every protocol over a shared distributed data + blob store, no external coordinator)."
 
 footerCta:
   cta: Run your own mail server today.

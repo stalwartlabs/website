@@ -47,10 +47,8 @@ sections:
       - label: Read the Calendar docs
         href: /docs/collaboration/calendar
     visual:
-      kind: screenshot
-      src: /images/webadmin/calendar-edit.png
-      alt: Calendar configuration
-      url: admin.stalw.art / Calendars
+      kind: placeholder
+      caption: "Screenshot needed: calendars list with sharing badges, or an event editor with attendees and recurrence (something more visual than the per-calendar settings form already used as the page hero)."
 
   - kind: feature
     reverse: true
@@ -139,9 +137,11 @@ sections:
       - User and group sharing.
       - Standard sharing protocols on both DAV and JMAP clients.
     visual:
-      kind: placeholder
-      caption: "Screenshot needed: Sharing/ACL editor in the WebUI."
-
+      kind: screenshot
+      src: /images/webadmin/calendar-share.png
+      alt: Stalwart calendar sharing settings
+      url: admin.stalw.art / Calendars
+  
   - kind: feature
     reverse: true
     band: alt

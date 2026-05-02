@@ -89,8 +89,8 @@ sections:
       - label: Read the architecture
         href: /architecture
     visual:
-      kind: diagram
-      id: cluster
+      kind: placeholder
+      caption: "Diagram needed: managed Stalwart cluster (multiple nodes per tenant, replicated data + sharded blob, dedicated outbound MTA role, ACME-managed TLS)."
 
   - kind: prose
     eyebrow: Migration

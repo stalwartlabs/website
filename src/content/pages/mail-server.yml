@@ -23,9 +23,9 @@ hero:
     - Scalable
   visual:
     kind: screenshot
-    src: /images/webadmin/dashboard-performance.png
-    alt: Stalwart admin dashboard showing live performance metrics
-    url: admin.stalw.art
+    src: /images/webadmin/dashboard-connections.png
+    alt: Stalwart network dashboard showing per-protocol active and total connection counters and an SMTP connections chart
+    url: admin.stalw.art / Dashboard / Network
 
 sections:
   - kind: feature
@@ -90,10 +90,8 @@ sections:
       - label: Read DNS records
         href: /docs/domains/dns-records
     visual:
-      kind: screenshot
-      src: /images/webadmin/network-settings.png
-      alt: Stalwart network settings panel
-      url: admin.stalw.art / Settings / Network
+      kind: placeholder
+      caption: "Screenshot needed: DNS provider list with per-domain MX/SPF/DKIM/DMARC/TLSA records and 'managed' badges."
 
   - kind: feature
     reverse: true
@@ -114,8 +112,10 @@ sections:
       - label: Read DKIM rotation
         href: /docs/domains/dkim-rotation
     visual:
-      kind: placeholder
-      caption: "Screenshot needed: DKIM rotation timeline in the WebUI showing scheduled, published, and retired keys."
+      kind: screenshot
+      src: /images/webadmin/tasks-scheduled.png
+      alt: Stalwart scheduled tasks list showing pending DKIM key rotations, ACME certificate renewals and outbound DMARC and TLS reports
+      url: admin.stalw.art / Tasks / Scheduled
 
   - kind: feature
     eyebrow: ACME and TLS
@@ -135,10 +135,8 @@ sections:
       - label: Read the ACME overview
         href: /docs/server/tls/acme/
     visual:
-      kind: screenshot
-      src: /images/webadmin/delivery-trace.png
-      alt: Stalwart delivery trace
-      url: admin.stalw.art / Emails / Delivery tests
+      kind: placeholder
+      caption: "Screenshot needed: ACME certificate list with renewal countdown, or TLS configuration pane with EAB."
 
   - kind: feature
     reverse: true
@@ -182,8 +180,8 @@ sections:
       - Disk quotas per user and per tenant.
     visual:
       kind: screenshot
-      src: /images/webadmin/edit-user.png
-      alt: Stalwart user account configuration
+      src: /images/webadmin/accounts-list.png
+      alt: Stalwart accounts directory listing user accounts with email, full name and creation date
       url: admin.stalw.art / Directory / Accounts
 
   - kind: feature
@@ -222,9 +220,9 @@ sections:
       - Configuration of every server object from a single web admin.
     visual:
       kind: screenshot
-      src: /images/webadmin/dashboard-performance.png
-      alt: Stalwart admin dashboard
-      url: admin.stalw.art / Dashboard
+      src: /images/webadmin/network-settings.png
+      alt: Stalwart network settings
+      url: admin.stalw.art / Settings / Network
 
 footerCta:
   cta: A modern mail server, ready in minutes.

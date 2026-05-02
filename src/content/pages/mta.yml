@@ -23,9 +23,9 @@ hero:
     - Distributed
   visual:
     kind: screenshot
-    src: /images/webadmin/delivery-trace.png
-    alt: Stalwart delivery trace
-    url: admin.stalw.art / Emails / Delivery tests
+    src: /images/webadmin/dashboard-delivery.png
+    alt: Stalwart delivery dashboard showing messages sent (DSNs, messages, reports) and delivery time over the last 24 hours
+    url: admin.stalw.art / Dashboard / Delivery
 
 sections:
   - kind: feature
@@ -48,9 +48,9 @@ sections:
       - Automatic ingestion of received DMARC, TLS-RPT and ARF reports.
     visual:
       kind: screenshot
-      src: /images/webadmin/dmarc-report.png
-      alt: DMARC report visualisation
-      url: admin.stalw.art / Reports / DMARC
+      src: /images/webadmin/dmarc-report-detail.png
+      alt: Stalwart DMARC report detail with policy domain, alignment, disposition and per-source records
+      url: admin.stalw.art / Reports / Inbox / DMARC
 
   - kind: feature
     reverse: true
@@ -72,8 +72,8 @@ sections:
       - Automatic TLSA refresh with ACME certificate rotation.
     visual:
       kind: screenshot
-      src: /images/webadmin/delivery-trace.png
-      alt: TLS handshake trace
+      src: /images/webadmin/delivery-test-trace.png
+      alt: Stalwart delivery test trace showing MX, MTA-STS, TLS-RPT, TLSA, DANE, IP, TCP and STARTTLS stages with timings
       url: admin.stalw.art / Emails / Delivery tests
       glow: true
 
@@ -99,9 +99,9 @@ sections:
         href: /docs/mta/outbound/queue
     visual:
       kind: screenshot
-      src: /images/webadmin/tasks.png
-      alt: Stalwart task queue
-      url: admin.stalw.art / Tasks
+      src: /images/webadmin/queue-delivery-detail.png
+      alt: Stalwart outbound delivery detail showing the queue ID, attempts, MX lookup, MTA-STS check and per-stage timings for a single message
+      url: admin.stalw.art / Emails / Queued / History
 
   - kind: feature
     reverse: true
@@ -171,9 +171,9 @@ sections:
       - Log viewer with search and filtering.
     visual:
       kind: screenshot
-      src: /images/webadmin/dashboard-performance.png
-      alt: Stalwart performance dashboard
-      url: admin.stalw.art / Dashboard
+      src: /images/webadmin/live-tracing.png
+      alt: Stalwart live tracing
+      url: admin.stalw.art / Observability / Live Tracing
 
   - kind: feature
     eyebrow: High availability
@@ -193,8 +193,8 @@ sections:
       - Network partition-tolerant failure detection.
       - Dedicated outbound nodes for high-volume delivery tiers.
     visual:
-      kind: diagram
-      id: cluster
+      kind: placeholder
+      caption: "Diagram needed: distributed SMTP queue spanning multiple Stalwart nodes; any node can take over delivery for any message; dedicated outbound nodes optional."
 
 footerCta:
   cta: A modern SMTP server, ready for production.

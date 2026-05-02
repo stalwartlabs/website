@@ -29,8 +29,8 @@ hero:
   visual:
     kind: screenshot
     src: /images/webadmin/dashboard-performance.png
-    alt: Stalwart performance dashboard
-    url: admin.stalw.art / Dashboard
+    alt: Stalwart performance dashboard with ingestion time, indexing time, DNS lookup time and server memory, plus an ingest pipeline chart
+    url: admin.stalw.art / Dashboard / Performance
 
 sections:
   - kind: feature
@@ -53,10 +53,8 @@ sections:
       - label: Multi-tenancy reference
         href: /docs/auth/authorization/tenants
     visual:
-      kind: screenshot
-      src: /images/webadmin/edit-user.png
-      alt: Tenant configuration in the WebUI
-      url: admin.stalw.art / Directory / Tenants
+      kind: placeholder
+      caption: "Screenshot needed: tenants list with per-tenant disk and principal quota bars and the directory backend column."
 
   - kind: feature
     reverse: true
@@ -126,9 +124,9 @@ sections:
         href: /docs/telemetry/alerts
     visual:
       kind: screenshot
-      src: /images/webadmin/dashboard-performance.png
-      alt: Live performance dashboard
-      url: admin.stalw.art / Dashboard / Performance
+      src: /images/webadmin/live-tracing.png
+      alt: Stalwart live tracing pane streaming SMTP connection and command events as they happen
+      url: admin.stalw.art / Observability / Live Tracing
       glow: true
 
   - kind: feature
@@ -177,8 +175,10 @@ sections:
       - label: Masked email reference
         href: /docs/email/management/masked-email
     visual:
-      kind: placeholder
-      caption: "Screenshot needed: Masked-email manager in the Account Manager portal."
+      kind: screenshot
+      src: /images/webadmin/masked-email.png
+      alt: Stalwart Account Manager masked email page listing disposable addresses with description and enabled toggle
+      url: account.stalw.art / Credentials / Masked Addresses
 
   - kind: feature
     eyebrow: Read replicas and sharded storage
@@ -196,8 +196,8 @@ sections:
       - label: Storage backends
         href: /docs/storage/backends/
     visual:
-      kind: diagram
-      id: cluster
+      kind: placeholder
+      caption: "Diagram needed: primary data store + read replicas + sharded blob storage + sharded in-memory shards, with read traffic routed to replicas."
 
   - kind: list
     band: alt

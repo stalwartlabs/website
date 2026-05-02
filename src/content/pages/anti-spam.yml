@@ -24,7 +24,7 @@ hero:
   visual:
     kind: screenshot
     src: /images/webadmin/dashboard-security.png
-    alt: Stalwart security dashboard
+    alt: Stalwart security dashboard with fail-to-ban categories (auth, blocked, brute, loiter) and inbound report warnings
     url: admin.stalw.art / Dashboard / Security
 
 sections:
@@ -117,9 +117,9 @@ sections:
         href: /docs/spamfilter/dmarc
     visual:
       kind: screenshot
-      src: /images/webadmin/dmarc-report.png
-      alt: DMARC report
-      url: admin.stalw.art / Reports / DMARC
+      src: /images/webadmin/dmarc-reports-list.png
+      alt: Stalwart inbound DMARC reports list with sender, subject and received timestamp columns
+      url: admin.stalw.art / Reports / Inbox / DMARC
 
   - kind: feature
     eyebrow: Phishing protection
@@ -163,11 +163,8 @@ sections:
       - label: Read ASN and GeoIP
         href: /docs/server/asn
     visual:
-      kind: screenshot
-      src: /images/webadmin/dashboard-security.png
-      alt: Reputation and threats dashboard
-      url: admin.stalw.art / Dashboard / Security
-      glow: true
+      kind: placeholder
+      caption: "Screenshot needed: per-IP/ASN/domain/email reputation table, or greylist status with timers."
 
   - kind: feature
     eyebrow: ASN and country blocking
