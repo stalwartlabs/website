@@ -31,7 +31,7 @@ sections:
     eyebrow: Features
     title: Feature comparison.
     body: >-
-      The table below covers what is in v0.16. For licensing terms,
+      For licensing terms,
       billing options and the trial, see the FAQ at the bottom of the
       page.
     legend: >-
@@ -57,7 +57,7 @@ sections:
           - ["Sub-addressing and catch-all", "yes", "yes"]
           - ["Email aliases and mailing lists", "yes", "yes"]
           - ["Email alias descriptions and disable flag", "yes", "yes"]
-          - ["Domain aliases (v0.16)", "yes", "yes"]
+          - ["Domain aliases", "yes", "yes"]
           - ["Disk quotas per user and per tenant", "yes", "yes"]
           - ["Auto-configuration and Autodiscover (Thunderbird Autoconfig, MS Autodiscover V2, IETF UA Autoconfig draft)", "yes", "yes"]
           - ["Masked email addresses (privacy aliases)", "-", "yes"]
@@ -70,7 +70,7 @@ sections:
           - ["Envelope rewriting and message modification", "yes", "yes"]
           - ["Milter integration", "yes", "yes"]
           - ["MTA Hooks (HTTP filter alternative)", "yes", "yes"]
-          - ["Outbound MTA cluster role (v0.16)", "yes", "yes"]
+          - ["Outbound MTA cluster role", "yes", "yes"]
       - title: Sender authentication and transport security
         rows:
           - ["DKIM (RFC 6376)", "yes", "yes"]
@@ -120,7 +120,7 @@ sections:
           - ["Sieve scripting with all IANA-registered extensions", "yes", "yes"]
           - ["ManageSieve (RFC 5804)", "yes", "yes"]
           - ["JMAP for Sieve Scripts", "yes", "yes"]
-          - ["Sieve script deactivation without deletion (v0.16)", "yes", "yes"]
+          - ["Sieve script deactivation without deletion", "yes", "yes"]
           - ["MTA Hooks for Sieve-style upstream filters", "yes", "yes"]
           - ["AI / LLM Sieve scripting (`llm_prompt`)", "-", "yes"]
       - title: Storage backends
@@ -149,16 +149,16 @@ sections:
           - ["OAuth 2.0 (RFC 6749, RFC 8628 device flow, RFC 7636 PKCE)", "yes", "yes"]
           - ["OpenID Connect", "yes", "yes"]
           - ["Two-factor authentication (TOTP)", "yes", "yes"]
-          - ["App passwords with labels, IP restrictions and expiration (v0.16)", "yes", "yes"]
-          - ["API keys with labels, IP restrictions and expiration (v0.16)", "yes", "yes"]
+          - ["App passwords with labels, IP restrictions and expiration", "yes", "yes"]
+          - ["API keys with labels, IP restrictions and expiration", "yes", "yes"]
           - ["Per-domain directory backends", "-", "yes"]
       - title: Security and encryption
         rows:
           - ["Encryption at rest (S/MIME, OpenPGP)", "yes", "yes"]
           - ["Self-service portal for password reset and encryption key management", "yes", "yes"]
           - ["Roles, permissions and ACLs", "yes", "yes"]
-          - ["Password strength enforcement (zxcvbn) and rotation policies (v0.16)", "yes", "yes"]
-          - ["IP restrictions on accounts, app passwords and API keys (v0.16)", "yes", "yes"]
+          - ["Password strength enforcement (zxcvbn) and rotation policies", "yes", "yes"]
+          - ["IP restrictions on accounts, app passwords and API keys", "yes", "yes"]
           - ["Auto-banning with comments and configurable expiration", "yes", "yes"]
           - ["Rate limiting", "yes", "yes"]
           - ["Memory-safe (Rust)", "yes", "yes"]
@@ -167,7 +167,7 @@ sections:
         rows:
           - ["Cluster coordination (Zenoh peer-to-peer, Kafka, Redpanda, NATS, Redis)", "yes", "yes"]
           - ["Automatic node ID generation and management", "yes", "yes"]
-          - ["Outbound MTA cluster role (v0.16)", "yes", "yes"]
+          - ["Outbound MTA cluster role", "yes", "yes"]
           - ["Fault tolerance and high availability", "yes", "yes"]
           - ["PROXY protocol", "yes", "yes"]
           - ["Kubernetes, Apache Mesos, Docker Swarm", "yes", "yes"]
@@ -176,7 +176,7 @@ sections:
           - ["Logging and tracing (OpenTelemetry, journald, files, console)", "yes", "yes"]
           - ["Metrics (OpenTelemetry, Prometheus)", "Limited", "yes"]
           - ["Webhooks", "yes", "yes"]
-          - ["Web admin (rewritten in v0.16)", "yes", "yes"]
+          - ["Web admin", "yes", "yes"]
           - ["Report visualization (DMARC, TLS-RPT, ARF)", "yes", "yes"]
           - ["Declarative IaC via `stalwart-cli apply` and `snapshot`", "yes", "yes"]
           - ["Live telemetry streaming (SSE)", "-", "yes"]
@@ -214,19 +214,6 @@ sections:
     eyebrow: Licensing FAQ
     title: Common licensing questions.
     items:
-      - question: What changed in v0.16?
-        answer: >-
-          v0.16 introduced several breaking changes. The REST `/api`
-          management endpoints were removed (management goes through the
-          JMAP API at `/jmap` now). Configuration moved from TOML files to
-          configuration objects stored inside JMAP, edited through the Web
-          admin, the CLI (`stalwart-cli apply` and `snapshot`), or directly
-          via JMAP. Outbound ARC sealing was removed (inbound verification
-          unchanged). The GitHub repository was renamed from
-          `stalwartlabs/mail-server` to `stalwartlabs/stalwart`. The
-          `smtp`, `imap` and `memory` directory backends were removed; use
-          internal, LDAP or SQL backends instead. Full upgrade notes are
-          in `UPGRADING/v0_16.md` in the repository.
       - question: Why is feature X not open source?
         answer: >-
           Sustaining full-time development of a mail and collaboration

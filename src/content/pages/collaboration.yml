@@ -9,11 +9,11 @@ hero:
   title: A collaboration server, not a bolt-on
   titleHighlight: not a bolt-on
   lead: >-
-    Calendars, contacts and file storage live in the same Stalwart instance
-    as email, sharing one identity layer, one quota system, one access-control
-    model and one set of backups. CalDAV, CardDAV and WebDAV cover existing
-    clients; the JMAP for Calendars, Contacts and File Storage drafts cover
-    the next generation.
+    Calendars, contacts and shared files live in the same Stalwart
+    instance as the email, sharing one sign-in, one set of disk quotas,
+    one sharing model and one backup. CalDAV, CardDAV and WebDAV cover
+    every existing client; the modern JMAP equivalents are there too,
+    for the apps that already use them.
   ctas:
     - label: Get started
       href: /docs/install/
@@ -29,17 +29,15 @@ hero:
 sections:
   - kind: feature
     eyebrow: Calendars
-    title: CalDAV today, JMAP tomorrow.
+    title: Calendars that sync where your users already work.
     body: >-
-      Calendar data is exposed over CalDAV (RFC 4791) for desktop and mobile
-      clients, and over JMAP for Calendars (draft-ietf-jmap-calendars) for
-      the JSON-native clients that are starting to ship. Recurring events
-      are pre-expanded against the configured RRULE limit, so server-side
-      queries stay fast even for long-running rules. Calendar discovery is
-      automatic at `/.well-known/caldav`.
+      Calendars in Stalwart show up in the apps your users already have.
+      CalDAV covers Apple Calendar, Outlook, Thunderbird and every mobile
+      client in the field; JMAP for Calendars covers the next generation
+      of JSON-native apps that are starting to ship.
     bullets:
       - CalDAV (RFC 4791) and CalDAV Scheduling (RFC 6638).
-      - JMAP for Calendars (draft-ietf-jmap-calendars).
+      - JMAP for Calendars.
       - Pre-expanded recurrence with configurable limits.
       - Per-account and per-tenant calendar caps.
       - Group and shared calendars.
@@ -56,13 +54,15 @@ sections:
     reverse: true
     band: alt
     eyebrow: Scheduling
-    title: Invitations that work for both worlds.
+    title: Invitations that arrive everywhere they need to.
     body: >-
-      Scheduling glues iTIP (RFC 5546) to two delivery paths: server-side
-      CalDAV Scheduling (RFC 6638) for attendees on the same Stalwart
-      deployment, and iMIP (RFC 6047) email delivery for everyone else.
-      Free/busy lookups complete the picture, and attendee scheduling on
-      Enterprise extends the model across federated calendar peers.
+      An invitation should reach an attendee whether or not they are on
+      the same server. Stalwart delivers invitations server-side
+      (CalDAV Scheduling) for attendees on the same deployment, and as
+      iMIP email for everyone else, so neither side has to know how the
+      other receives mail. Free/busy lookups round out the picture; on
+      Enterprise, attendee scheduling extends across federated calendar
+      peers.
     bullets:
       - iTIP exchange of REQUEST, REPLY, CANCEL and update messages.
       - iMIP fallback for attendees that do not speak CalDAV.
@@ -79,12 +79,12 @@ sections:
     eyebrow: Contacts
     title: Address books that sync everywhere.
     body: >-
-      Contacts are exposed over CardDAV (RFC 6352) including the legacy
-      vCard 2.1 and 3.0 formats that older clients still emit, and over
-      JMAP for Contacts (RFC 9610) using the JSContact data model. The same
-      address book entries drive features elsewhere in the server: senders
-      that appear in a recipient's address book are treated as known
-      correspondents by the spam filter and the calendar scheduler.
+      Contacts are exposed over CardDAV and over JMAP for
+      Contacts using the modern JSContact model. The same address-book
+      entries pay off elsewhere in the server: a sender already in a
+      recipient's contacts is treated as a known correspondent by the
+      spam filter and the calendar scheduler, which removes a common
+      source of false positives.
     bullets:
       - CardDAV (RFC 6352) with vCard 2.1, 3.0 and 4.0.
       - JMAP for Contacts (RFC 9610) with JSContact.
@@ -101,14 +101,14 @@ sections:
     reverse: true
     band: alt
     eyebrow: File storage
-    title: One protocol per client.
+    title: Shared files alongside the mail.
     body: >-
-      Files are served over WebDAV (RFC 4918) at `/dav/file/<account>` for
-      any standard file manager, and over JMAP for File Storage
-      (draft-ietf-jmap-filenode) for clients that prefer the JSON model.
-      Storage shares the same quota system as email, so a tenant or account
-      that fills up its mailbox quota cannot bypass the cap by uploading
-      files instead.
+      Shared files live in the same server as the mail, so there is no
+      second product to operate or pay for. Stalwart serves files over
+      WebDAV for any standard file manager, and
+      over JMAP for File Storage for clients that prefer the JSON model.
+      The same disk quota that caps a mailbox caps its files, so a user
+      cannot bypass the cap by uploading files instead of mail.
     bullets:
       - WebDAV (RFC 4918) for desktop and mobile file managers.
       - JMAP for File Storage (draft-ietf-jmap-filenode).
@@ -123,12 +123,14 @@ sections:
 
   - kind: feature
     eyebrow: Sharing
-    title: Granular ACLs on every resource.
+    title: Share what you want, with who you want.
     body: >-
-      Calendars, address books and file collections share one access-control
-      model. WebDAV ACL (RFC 3744) covers the legacy clients; JMAP Sharing
-      (RFC 9670) covers the JMAP clients. Permissions are read, write and
-      manage; principals are users, groups, tenants or anonymous.
+      Calendars, address books and file collections all share the same
+      sharing model, so a user only learns one set of permissions to
+      cover the lot. Read, write and manage rights can be granted to
+      individual users, to groups, to whole tenants, or to anonymous
+      links. WebDAV ACL covers the legacy clients; JMAP Sharing covers
+      the JMAP ones.
     bullets:
       - WebDAV ACL (RFC 3744).
       - JMAP Sharing (RFC 9670).
@@ -142,14 +144,15 @@ sections:
     reverse: true
     band: alt
     eyebrow: Notifications
-    title: Email reminders even when clients drop them.
+    title: Reminders that still arrive when the client drops them.
     body: >-
-      Stalwart implements iCalendar `VALARM` with `ACTION:EMAIL` directly.
-      When a client (Apple Calendar, for example) strips the email-action
-      alarm before sending it to the server, an `@email` marker in the
-      alarm summary or description tells Stalwart to deliver the alert
-      anyway. Per-account interval limits and external-recipient policies
-      keep the feature from being abused.
+      A meeting reminder is only useful if it actually fires. Stalwart
+      sends iCalendar email-action alarms (`VALARM` with `ACTION:EMAIL`)
+      from the server, and falls back gracefully when a client (Apple
+      Calendar, for example) strips that alarm before saving the event:
+      an `@email` marker in the alarm summary or description tells
+      Stalwart to deliver the alert anyway. Per-account interval limits
+      and external-recipient policies keep the feature from being abused.
     bullets:
       - iCalendar `VALARM` with `ACTION:EMAIL`.
       - "`@email` marker for clients that strip the email action."
@@ -164,14 +167,15 @@ sections:
 
   - kind: list
     eyebrow: Discovery and clients
-    title: Apple, Thunderbird, GNOME, KDE, mobile.
+    title: Works with Apple, Thunderbird, GNOME, KDE and mobile.
     body: >-
-      Stalwart serves CalDAV at `/.well-known/caldav` and CardDAV at
-      `/.well-known/carddav`, and ships PACC, Mozilla Autoconfig and
-      Microsoft Autodiscover documents that point clients at the right
-      endpoints. Assisted resource discovery (added in v0.13) and
-      CalDAV/CardDAV/WebDAV autoconfig (added in v0.14) cover the cases
-      where a client cannot guess the path on its own.
+      Pointing a client at a Stalwart server is enough; the right paths
+      are advertised at `/.well-known/caldav` and `/.well-known/carddav`,
+      and PACC, Mozilla Autoconfig and Microsoft Autodiscover documents
+      point clients at the right endpoints. Assisted resource discovery
+      (added in v0.13) and CalDAV/CardDAV/WebDAV autoconfig (added in
+      v0.14) cover the cases where a client cannot guess the path on its
+      own.
     bullets:
       - Apple Mail, Calendar and Contacts.
       - Thunderbird (Lightning, TbSync).

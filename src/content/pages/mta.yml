@@ -6,13 +6,15 @@ slug: /mta
 
 hero:
   eyebrow: SMTP server
-  title: A programmable, distributed SMTP server
-  titleHighlight: distributed SMTP server
+  title: A programmable, distributed MTA
+  titleHighlight: distributed MTA
   lead: >-
-    Stalwart's MTA is a full-featured SMTP server with sender authentication,
-    transport-layer security, distributed virtual queues and a programmable
-    filter pipeline. It can run on the same node as the mail store or scale
-    out as a dedicated outbound MTA cluster role.
+    Stalwart's MTA delivers your outbound mail and accepts the inbound
+    traffic for it, with sender authentication, transport-layer
+    security, a queue that survives node failure and a programmable
+    filter pipeline, all in the same binary as the rest of the server.
+    Run it next to the mail store on a small deployment, or pull it out
+    into a dedicated outbound tier when the volume grows.
   ctas:
     - label: Get started
       href: /docs/install/
@@ -28,15 +30,15 @@ hero:
 sections:
   - kind: feature
     eyebrow: Sender and message authentication
-    title: DMARC, DKIM, SPF and ARC, all built in.
+    title: Prove the mail you send is really yours.
     body: >-
-      Every supported authentication standard is implemented natively, with
-      both verification and reporting paths. ARC verification was kept after
-      the IETF DMARC working group decided to wind down the ARC experiment;
-      ARC sealing on outbound was removed in v0.16, in line with that
-      decision. DKIM signing pairs with the [automated DKIM
-      rotation](/docs/domains/dkim-rotation) feature on the Mail Server side,
-      so signing keys generate, publish and retire themselves.
+      Sender authentication is what stops a stranger from emailing your
+      customers as you, and what stops a forged message from your bank
+      from reaching your inbox. Stalwart implements every supported
+      standard natively, with both verification and reporting paths.
+      DKIM signing pairs with the [automated DKIM
+      rotation](/docs/domains/dkim-rotation) on the Mail Server side, so
+      signing keys generate, publish and retire themselves.
     bullets:
       - DMARC (RFC 7489) verification, alignment checking and aggregate / failure reporting.
       - DKIM (RFC 6376) signing, verification and failure reporting; Ed25519 and RSA selectors.
@@ -54,13 +56,16 @@ sections:
     reverse: true
     band: alt
     eyebrow: Transport security
-    title: DANE, MTA-STS, TLS reporting.
+    title: Encryption that doesn't fall back silently.
     body: >-
-      Stalwart enforces transport security on outbound delivery through
-      per-strategy TLS policies and reports incoming TLS failures and
-      successes back to senders. TLSA records are kept in sync by the same
-      automated DNS management that handles MX and DKIM, so DANE does not
-      silently break after a certificate rollover.
+      Mail in transit between servers should always be encrypted, and the
+      standards that enforce that (DANE, MTA-STS) should make it visible
+      when something tries to downgrade. Stalwart enforces transport
+      security on outbound delivery through per-strategy TLS policies,
+      reports incoming TLS failures and successes back to senders, and
+      keeps TLSA records in sync with the automated DNS management that
+      handles MX and DKIM, so DANE does not silently break after a
+      certificate rollover.
     bullets:
       - DANE (RFC 6698) with `optional`, `require` and `disable` modes per TLS strategy.
       - MTA-STS (RFC 8461) policy fetching and enforcement.
@@ -75,21 +80,23 @@ sections:
 
   - kind: feature
     eyebrow: Distributed virtual queues
-    title: Many queues, one cluster, no local spool.
+    title: A queue that survives node failure.
     body: >-
-      Outbound delivery uses an unlimited number of virtual queues that
-      share a distributed, fault-tolerant store. Any node in the cluster
-      can pick up a message; if a node fails, deliveries continue on the
-      survivors. Each virtual queue carries its own concurrency, retry
-      policy and quota, so transactional, bulk and report traffic stop
-      interfering with each other.
+      An outbound queue stuck on a single node loses mail when that node
+      dies; an outbound queue with one big channel lets a bulk burst
+      block transactional traffic. Stalwart avoids both problems. The
+      outbound queue lives in a distributed, fault-tolerant store, so any
+      node in the cluster can pick up a message and a node failure does
+      not strand its messages. Each virtual queue carries its own
+      concurrency, retry policy and quota, so transactional, bulk and
+      report traffic do not interfere with each other.
     bullets:
       - Distributed, fault-tolerant queue store; no per-node local spool.
       - Unlimited virtual queues with per-queue concurrency.
       - Delayed delivery, priority delivery and per-queue quotas.
       - Dynamic routing rules and per-domain throttling.
       - Smart-host and relay routing for upstream submission.
-      - Outbound MTA cluster role (v0.16) for dedicated submission tiers.
+      - Outbound MTA cluster role for dedicated submission tiers.
     learnMore:
       - label: Read the outbound queue docs
         href: /docs/mta/outbound/queue
@@ -103,12 +110,15 @@ sections:
     reverse: true
     band: alt
     eyebrow: Filter pipeline
-    title: Sieve, milter, MTA Hooks, and a built-in spam filter.
+    title: Filter, scan and rewrite at every SMTP stage.
     body: >-
-      The inbound pipeline runs at every SMTP stage from `connect` through
-      `data`. Sieve scripts execute trusted server-side rules; milter and
+      Inbound mail can be filtered at every SMTP stage from `connect`
+      through `data`, so abusive traffic is rejected as early as
+      possible and legitimate traffic only pays for the checks it
+      actually needs. Sieve scripts cover server-side rules; milter and
       MTA Hooks plug into existing filtering infrastructure; the built-in
-      [spam filter](/anti-spam) is always available without an extra daemon.
+      [spam filter](/anti-spam) is always available without an extra
+      daemon to install.
     bullets:
       - Sieve (RFC 5228) with every IANA-registered extension.
       - Milter for Rspamd, ClamAV, SpamAssassin or any sendmail-compatible filter.
@@ -126,12 +136,14 @@ sections:
 
   - kind: feature
     eyebrow: Envelope and message rewriting
-    title: Change the address, the headers, the body, or the attachments.
+    title: Change the address, the headers, the body or the attachments.
     body: >-
-      Stalwart can rewrite envelope addresses, add or remove headers, append
-      disclaimers, and strip attachments before queueing or delivery. Rules
-      are expression-driven, so they can branch on listener, sender,
-      recipient or arbitrary message metadata.
+      Compliance disclaimers, address normalisation and attachment policy
+      should be enforced by the server, not asked of every user. Stalwart
+      can rewrite envelope addresses, add or remove headers, append
+      disclaimers and strip attachments before queueing or delivery, with
+      rules that branch on listener, sender, recipient or any other
+      message metadata.
     bullets:
       - Address rewriting (sender, recipient, domain).
       - Header add, modify, remove.
@@ -150,10 +162,11 @@ sections:
     eyebrow: Web admin
     title: Queue, reports and live tracing in a browser.
     body: >-
-      The web admin covers everything an SMTP operator needs: queue
-      management for messages and outbound DMARC and TLS reports,
-      visualisation of received DMARC, TLS-RPT and ARF reports, log search,
-      and live tracing of an in-flight transaction.
+      An SMTP operator should not need a terminal to do day-to-day work.
+      The web admin covers queue management for messages and outbound
+      DMARC and TLS reports, visualisation of received DMARC, TLS-RPT
+      and ARF reports, log search and live tracing of an in-flight
+      transaction.
     bullets:
       - Queue management for messages and outbound reports.
       - Received DMARC, TLS-RPT and ARF (failure) report visualisation.
@@ -167,13 +180,15 @@ sections:
 
   - kind: feature
     eyebrow: High availability
-    title: Coordinator-less or coordinator-based.
+    title: Cluster the way you want, with or without a coordinator.
     body: >-
-      The cluster runs in two modes. Peer-to-peer coordination uses Zenoh,
-      with no separate coordinator service to operate. Coordinator-based
-      deployments use Apache Kafka, Redpanda, NATS or Redis as the
-      transport. Either mode supports node autodiscovery and partition-
-      tolerant failure detection.
+      Some teams already run Kafka or NATS and want to use it; some
+      teams would rather not run a coordinator service at all. Stalwart
+      handles both. Peer-to-peer coordination uses Eclipse Zenoh, with
+      no separate service to operate. Coordinator-based deployments use
+      Apache Kafka, Redpanda, NATS or Redis as the transport. Either
+      mode supports node autodiscovery and partition-tolerant failure
+      detection.
     bullets:
       - Peer-to-peer cluster coordination over Zenoh (no coordinator service).
       - Kafka, Redpanda, NATS or Redis as alternatives for coordinator-based clusters.

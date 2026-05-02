@@ -223,6 +223,12 @@ automatically. Update `_redirects` whenever a doc URL moves.
 
 ## House style for documentation prose
 
+These rules apply to **technical documentation only**: anything under
+`src/content/docs/docs/**` and `src/content/docs/blog/**`. The marketing
+pages under `src/content/pages/**` are addressed to buyers and decision
+makers and follow a different register; see "House style for marketing
+pages" below. The em-dash ban is repo-wide and applies to both.
+
 - **No em dashes** (`-`). Replace with comma, semicolon, colon, parentheses,
   or split into two sentences depending on context.
 - **Avoid marketing/AI-speak**: words like *robust*, *seamless(ly)*,
@@ -235,6 +241,42 @@ automatically. Update `_redirects` whenever a doc URL moves.
 - Don't add filler like "By leveraging X, administrators can..." - describe
   the mechanism directly.
 - Keep RFC and spec references precise; verify when in doubt.
+
+## House style for marketing pages
+
+Applies to `src/content/pages/**` only. The audience is decision makers
+(IT directors, hosting-business owners, CIOs, MSP leadership), not
+operators reading a manual. The buyer typically arrives with a technical
+evaluator, so the page has to land the value for the buyer and the proof
+for the evaluator at the same time.
+
+- **Lead with the outcome, then the mechanism.** Hero leads, section
+  titles and the first sentence of every body should answer "why should I
+  care" in plain language. Mechanism (algorithm names, RFC numbers,
+  protocol stack) comes next, ideally as evidence in bullets.
+- **Acronyms are allowed and often necessary** (JMAP, IMAP, SMTP, CalDAV,
+  CardDAV, WebDAV, SPF, DKIM, DMARC, MTA, ACME, DANE, OIDC, ACL).
+  Introduce them with their role the first time they appear on a page;
+  use the acronym alone thereafter.
+- **RFC numbers belong in bullets, not titles.** They are the proof layer
+  the technical evaluator scans for. Keep them precise; do not move them
+  out of bullets just to soften the page.
+- **The marketing-language ban above does NOT apply here.** Words like
+  *flexible*, *reliable*, *fast*, *one place*, *fewer moving parts*,
+  *built in*, *out of the box* are appropriate when they describe a real
+  property of the product. Avoid only the puffery that says nothing:
+  *unparalleled*, *world-class*, *cutting-edge*, *lightning-fast*,
+  *effortlessly*, *unlock*, *empower*, *harness*, *delve*, *revolutionary*,
+  *game-changing*, *next-generation*. Concrete claims beat superlatives
+  even on a marketing page.
+- **Section titles should read as short benefit statements.** A buyer
+  scanning the page should derive the value of the section from the
+  title alone. Replace mechanism-as-title (e.g. "FTRL-Proximal, trained
+  continuously") with benefit-as-title (e.g. "A spam filter that learns
+  from your users").
+- **Match the existing register on each page.** Some pages use "you"
+  freely; others stay in third person. Do not switch register
+  mid-rewrite.
 
 ## Things to verify before recommending a setting or path
 

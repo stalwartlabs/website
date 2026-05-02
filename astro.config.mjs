@@ -21,17 +21,17 @@ function remarkMermaid() {
   };
 }
 
-const GTAG_ID = "G-NTKTV3G55G";
-
 export default defineConfig({
   site: "https://stalw.art",
   trailingSlash: "ignore",
   // Astro-level redirects: served in dev (`astro dev`) and built into the
   // static output too, so they work regardless of host. The Cloudflare
   // _redirects file in public/ mirrors these for SEO/external bookmarks.
+  // With `trailingSlash: "ignore"` Astro normalises `/docs` and `/docs/`
+  // to the same route — declaring both forms triggers a router collision
+  // warning, so we list the canonical (no trailing slash) form only.
   redirects: {
     "/docs": "/docs/install/",
-    "/docs/": "/docs/install/",
     "/docs/install/get-started": "/docs/install/",
   },
   server: {
@@ -57,7 +57,15 @@ export default defineConfig({
   },
   integrations: [
     sitemap({
-      filter: (page) => !page.includes("/tags/"),
+      // Exclude:
+      //  - Starlight tag pages (`/tags/*`)
+      //  - blog pagination + tag/author listings (low quality / duplicate)
+      //  - the entire 0.15 archive (current line is canonical; archive
+      //    pages also ship with `<meta name="robots" content="noindex">`)
+      filter: (page) =>
+        !/\/tags\//.test(page) &&
+        !/\/blog\/(?:\d+|tags|authors)\//.test(page) &&
+        !/\/docs\/0\.15\//.test(page),
     }),
     starlight({
       title: "Stalwart",
@@ -71,25 +79,10 @@ export default defineConfig({
         baseUrl: "https://github.com/stalwartlabs/website/edit/main/",
       },
       head: [
-        {
-          tag: "script",
-          attrs: {
-            async: true,
-            src: `https://www.googletagmanager.com/gtag/js?id=${GTAG_ID}`,
-          },
-        },
-        {
-          tag: "script",
-          content: `
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', '${GTAG_ID}', { anonymize_ip: true });
-          `.trim(),
-        },
-        // og:image is injected per-page by StarlightHead.astro: blog posts
-        // get their generated /og/blog/<slug>.png; everything else gets the
-        // shared stalwart-social-card.jpg.
+        // GA4, og:image, twitter:image, RSS link, font preload, JSON-LD,
+        // canonical, etc. all live in StarlightHead.astro now so Starlight
+        // and marketing pages share one source of truth (Base.astro mirrors
+        // the same set for marketing routes that don't go through Starlight).
       ],
       social: [
         { icon: "github", label: "GitHub", href: "https://github.com/stalwartlabs" },

@@ -74,17 +74,28 @@ import Search from "@astrojs/starlight/components/Search.astro";
 </style>
 
 <script>
-  import mermaid from "mermaid";
+  // Mermaid is ~600KB plus several MB of optional chunks (Wardley,
+  // Cytoscape, KaTeX). Only ~4 of ~900 docs pages use it, so we keep the
+  // import dynamic and gated on the presence of a `<pre class="mermaid">`
+  // node — every other Starlight page pays zero JS for it.
+  let mermaidPromise: Promise<typeof import("mermaid").default> | null = null;
+  function loadMermaid() {
+    if (!mermaidPromise) {
+      mermaidPromise = import("mermaid").then((m) => m.default);
+    }
+    return mermaidPromise;
+  }
 
   function pickTheme(): "default" | "dark" {
     const t = document.documentElement.dataset.theme;
     return t === "light" ? "default" : "dark";
   }
 
-  function render() {
-    mermaid.initialize({ startOnLoad: false, theme: pickTheme() });
+  async function render() {
     const targets = document.querySelectorAll<HTMLElement>("pre.mermaid");
     if (targets.length === 0) return;
+    const mermaid = await loadMermaid();
+    mermaid.initialize({ startOnLoad: false, theme: pickTheme() });
     targets.forEach((el) => {
       if (!el.dataset.mermaidSource) {
         el.dataset.mermaidSource = (el.textContent ?? "").trim();
@@ -93,13 +104,13 @@ import Search from "@astrojs/starlight/components/Search.astro";
     mermaid.run({ querySelector: "pre.mermaid" });
   }
 
-  function rerenderAfterSwap() {
+  async function rerenderAfterSwap() {
     document.querySelectorAll<HTMLElement>("pre.mermaid").forEach((el) => {
       const src = el.dataset.mermaidSource ?? (el.textContent ?? "").trim();
       el.removeAttribute("data-processed");
       el.innerHTML = src;
     });
-    render();
+    await render();
   }
 
   render();

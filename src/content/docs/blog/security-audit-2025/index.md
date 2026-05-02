@@ -1,5 +1,6 @@
 ---
 title: "Security at the Core: Stalwart completes Second Security Audit"
+description: "At Stalwart Labs, security is at the heart of everything we build. As part of our ongoing commitment to delivering a trustworthy email and collaboration server, we recently completed our second..."
 authors: [mdecimus]
 tags: [security, audit, penetration, test]
 excerpt: |

@@ -1,5 +1,6 @@
 ---
 title: "Stalwart Mail Server passes Security Audit"
+description: "We are thrilled to announce that Stalwart Mail Server has undergone a comprehensive security audit conducted by Radically Open Security. As a part of their assessment, a crystal-box penetration test..."
 authors: [mdecimus]
 tags: [security, audit, penetration, test]
 excerpt: "We are thrilled to announce that **Stalwart Mail Server** has undergone a comprehensive security audit conducted by **Radically Open Security**. As a part of their assessment, a crystal-box penetration test was performed to ensure the robustness and security of the mail server."

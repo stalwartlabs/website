@@ -6,14 +6,15 @@ slug: /mail-server
 
 hero:
   eyebrow: Mail server
-  title: Mail server fluent in JMAP, IMAP and POP3
-  titleHighlight: JMAP, IMAP and POP3
+  title: Mail server fluent in every protocol
+  titleHighlight: every protocol
   lead: >-
-    Stalwart speaks every modern mail protocol natively: JMAP for clients
-    that want JSON over HTTP, IMAP4rev2 and IMAP4rev1 for everything else,
-    and POP3 for the long tail. Storage, search, authentication and TLS
-    automation are built in, so a working server is a small set of objects,
-    not a stack of glued-together daemons.
+    Stalwart speaks every standard mail protocol your users' clients
+    already use, so no one in your fleet gets left behind. JMAP for new
+    apps, IMAP for everything else, POP3 for the long tail. Storage,
+    search, identity and TLS automation are part of the same server, so
+    what you install is one mail server, not a stack of services to glue
+    together.
   ctas:
     - label: Get started
       href: /docs/install/
@@ -29,19 +30,20 @@ hero:
 sections:
   - kind: feature
     eyebrow: JMAP
-    title: JMAP for Mail, end to end.
+    title: Live sync across phone, laptop and web.
     body: >-
-      JMAP (JSON Meta Application Protocol) is the modern successor to IMAP:
-      stateful synchronisation, push updates, and JSON over HTTP instead of
-      a custom wire protocol. Stalwart implements the full mail surface,
-      including the WebSocket transport for live push and the supporting
-      extensions clients depend on.
+      JMAP is the modern successor to IMAP. Clients see new mail the
+      moment it arrives, stay in step across every device the user opens,
+      and skip the slow rescans that older protocols force after a long
+      offline period. Stalwart implements the full mail surface, including
+      the live WebSocket transport and the supporting extensions clients
+      depend on.
     bullets:
-      - JMAP for Mail (RFC 8621).
-      - JMAP for Sieve Scripts (draft-ietf-jmap-sieve-22).
-      - JMAP over WebSocket (RFC 8887).
-      - JMAP Blob Management (RFC 9404).
-      - JMAP Quotas (RFC 9425).
+      - JMAP for Mail.
+      - JMAP for Sieve Scripts.
+      - JMAP over WebSocket.
+      - JMAP Blob Management.
+      - JMAP Quotas.
     learnMore:
       - label: Read the JMAP overview
         href: /docs/http/jmap/
@@ -53,13 +55,13 @@ sections:
     reverse: true
     band: alt
     eyebrow: IMAP and POP3
-    title: Compatibility with every IMAP and POP3 client in the wild.
+    title: No client left behind.
     body: >-
-      Stalwart ships an IMAP4rev2 server with full IMAP4rev1 compatibility,
-      plus a POP3 server for legacy clients and devices. CONDSTORE and QRESYNC
-      keep large mailboxes in sync without rescans; the QUOTA extension
-      exposes per-account limits to clients; ManageSieve gives users a
-      standard way to upload and edit Sieve filters.
+      Stalwart ships full IMAP4rev2 with IMAP4rev1 fallback, plus a POP3
+      server for older devices, so an existing fleet keeps working without
+      forcing a client migration. Big mailboxes stay in sync without
+      rescans, per-account quotas show up in the client, and users can
+      edit their own server-side filters through any ManageSieve client.
     bullets:
       - IMAP4rev2 (RFC 9051) and IMAP4rev1 (RFC 3501).
       - IMAP QUOTA Extension (RFC 9208) and dozens of supported extensions.
@@ -71,18 +73,19 @@ sections:
 
   - kind: feature
     eyebrow: Automated DNS
-    title: Hands-off DNS for every mail domain.
+    title: DNS that updates itself.
     body: >-
-      Stalwart can publish and maintain a domain's MX, TXT, CNAME, SRV, CAA
-      and TLSA records directly against a managed zone, removing the manual
-      copy-and-paste step that breaks more deployments than any other.
-      Records are reconciled on save, propagation is polled before a key is
-      activated, and DNS-01 ACME challenges are coordinated with the same
+      DNS is the most common reason a mail deployment breaks, and the
+      hardest one for a generalist administrator to debug. Stalwart can
+      publish and maintain a domain's records directly against a managed zone, so the manual
+      copy-and-paste step that breaks the most deployments goes away.
+      Records reconcile on save, propagation is checked before a key is
+      activated, and DNS-01 ACME challenges run through the same
       automation.
     bullets:
-      - Cloudflare, Route 53, Google Cloud DNS, Bunny, Porkbun.
-      - DNSimple, Spaceship, deSEC, OVH, DigitalOcean.
-      - RFC 2136 dynamic update with SIG(0).
+      - RFC 2136 dynamic update with TSIG or SIG(0).
+      - Cloudflare, Route 53, Google Cloud DNS, DigitalOcean, OVH.
+      - Many other DNS providers supported.
     learnMore:
       - label: Read DNS records
         href: /docs/domains/dns-records
@@ -96,16 +99,15 @@ sections:
     reverse: true
     band: alt
     eyebrow: Automated DKIM rotation
-    title: Generate, publish, cut over, retire.
+    title: A signing key that takes care of itself.
     body: >-
-      Periodic DKIM rotation is a recommended operational practice, and
-      Stalwart owns the full lifecycle. New keys are generated on schedule
-      (default 90 days), published in DNS, activated only after propagation
-      is observed, then retired and deleted on configurable timers. Both
-      Ed25519 and RSA selectors are provisioned by default, so verifiers
-      that do not yet support Ed25519 still find an RSA key.
+      Rotating DKIM signing keys on a schedule is recommended practice
+      and easy to forget under operational pressure. Stalwart owns the
+      full lifecycle: new keys are generated on schedule,
+      published in DNS, activated only after propagation is
+      observed, then retired and deleted on configurable timers.
     bullets:
-      - Per-domain rotation cadence with `rotateAfter`, `retireAfter`, `deleteAfter`.
+      - Per-domain rotation cadence.
       - Selector templating with date and version variables.
       - Emergency rotation on demand for suspected key compromise.
     learnMore:
@@ -119,10 +121,11 @@ sections:
     eyebrow: ACME and TLS
     title: Certificates that renew themselves.
     body: >-
-      Stalwart implements ACME directly. Renewals run well before expiry,
-      every supported challenge type is available, and TLSA records are
-      refreshed alongside the new certificate so DANE keeps validating
-      without a second tool in the loop.
+      Expired TLS certificates are a routine cause of avoidable outages.
+      Stalwart implements ACME directly so renewals run well before
+      expiry, every supported challenge type is available, and TLSA
+      records are refreshed alongside the new certificate so DANE keeps
+      validating without a second tool in the loop.
     bullets:
       - "TLS-ALPN-01, DNS-01, HTTP-01 and DNS-PERSIST-01 challenges."
       - External Account Binding (EAB) for CAs that require it.
@@ -143,14 +146,15 @@ sections:
     eyebrow: Autoconfig and Autodiscover
     title: Clients configure themselves.
     body: >-
-      Pointing a client at a Stalwart server returns IMAP, POP, SMTP
-      submission, CalDAV and CardDAV settings without the user typing a host
-      name. PACC (the IETF UA Autoconfig draft) is the modern, single-document
-      discovery format; the legacy Mozilla Autoconfig and Microsoft
-      Autodiscover (v1 and v2) formats are served alongside it for older
-      clients.
+      Helpdesk tickets that begin "I can't get my email set up" disappear
+      when a client can fetch its own settings from the server. Pointing
+      a mail client at a Stalwart server returns IMAP, POP, SMTP, CalDAV
+      and CardDAV settings without the user typing a host name. The
+      modern UA Autoconfig discovery is served
+      alongside the legacy Mozilla Autoconfig and Microsoft Autodiscover
+      v1 and v2 formats, so old and new clients are both covered.
     bullets:
-      - "PACC (`/.well-known/user-agent-configuration`, draft-ietf-mailmaint-pacc-02)."
+      - "Automatic Configuration of Email, Calendar, and Contact Server Settings (PACC)"
       - Legacy Mozilla Autoconfig.
       - Microsoft Autodiscover v1 and v2.
     learnMore:
@@ -162,12 +166,14 @@ sections:
 
   - kind: feature
     eyebrow: Multi-tenancy and quotas
-    title: One server, many domains, hard limits.
+    title: Many organisations, one server, with hard limits.
     body: >-
-      Stalwart isolates accounts, domains and tenants from the ground up.
-      Disk quotas apply per user and per tenant; aliases and catch-all
-      addresses can be enabled, disabled or annotated; whole domains can be
-      aliased onto another.
+      Hosting many organisations on one server stays safe because
+      accounts, domains and tenants are isolated from the ground up.
+      Disk quotas are enforced per user and per tenant; aliases and
+      catch-all addresses can be enabled, disabled or annotated; a whole
+      domain can be redirected onto another without touching the
+      mailboxes underneath.
     bullets:
       - Domain aliases (one domain pointing at another).
       - Email aliases with descriptions; the alias mechanism can be disabled per account.
@@ -183,12 +189,13 @@ sections:
     reverse: true
     band: alt
     eyebrow: Sieve scripting
-    title: Filter, route, and rewrite without leaving the server.
+    title: Filter, route and rewrite without leaving the server.
     body: >-
-      Stalwart includes a full Sieve interpreter with every registered
-      extension. Scripts run sandboxed; users manage their own filters
-      through ManageSieve or JMAP for Sieve Scripts; administrators run
-      trusted scripts at SMTP stages with elevated permissions.
+      Mail rules belong on the server, where they apply to every device
+      a user opens. Stalwart includes a full Sieve interpreter with every
+      registered extension. User scripts run sandboxed and are managed
+      through any standard ManageSieve client or JMAP; administrators
+      run trusted scripts at SMTP stages with elevated permissions.
     bullets:
       - Every IANA-registered Sieve extension.
       - ManageSieve and JMAP for Sieve Scripts management.
@@ -201,11 +208,12 @@ sections:
     eyebrow: Web admin
     title: Manage everything from a browser.
     body: >-
-      The web admin is a single-page application that covers account, domain,
-      group and mailing-list management; SMTP queue and report visualisation;
-      configuration of every server object; a log viewer with search and
-      filtering; and a self-service portal for password reset and
-      encryption-at-rest key management.
+      Day-to-day administration happens in a browser, not in a config
+      file or an SSH session. Account, domain, group and mailing-list
+      management; SMTP queue and report visualisation; configuration of
+      every server object; a log viewer with search; and a self-service
+      portal for password reset and encryption-at-rest key management,
+      all in one console.
     bullets:
       - Real-time dashboards and live tracing.
       - Account, domain, group, list and Sieve management.

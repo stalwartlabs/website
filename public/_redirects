@@ -29,4 +29,9 @@
 /docs/server/overview                    /docs/server/                   301
 /docs/development/overview               /docs/development/              301
 
+# Wildcard fallback: any nested `/docs/.../overview` path now lives at
+# `/docs/.../`. Cloudflare splat matching keeps anchors and query strings.
+/docs/*/overview                         /docs/:splat/                   301
+/docs/*/overview/                        /docs/:splat/                   301
+
 # Old blog post URL shape (/blog/<slug>) is unchanged; no redirect needed.

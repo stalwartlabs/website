@@ -8,7 +8,7 @@ Crawl-delay: 1
 
 # Frequently misbehaving paths to avoid hammering.
 Disallow: /tags/
-Disallow: /authors/
+Disallow: /blog/authors/
 
 # AI / LLM crawlers: explicitly permitted, same rules as everyone else.
 User-agent: GPTBot

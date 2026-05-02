@@ -16,6 +16,50 @@ export async function getStaticPaths() {
 
 const { page } = Astro.props;
 const data = page.data;
+
+// Extra structured data on the homepage: Organization (publisher) and
+// WebSite (with a SearchAction so engines surface our search box).
+const SITE = Astro.site?.toString().replace(/\/$/, "") ?? "https://stalw.art";
+const isHome = data.slug === "/";
+const jsonLd = isHome
+  ? [
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        name: "Stalwart Labs",
+        legalName: "Stalwart Labs LLC",
+        url: SITE,
+        logo: `${SITE}/favicon.svg`,
+        sameAs: [
+          "https://github.com/stalwartlabs",
+          "https://twitter.com/stalwartlabs",
+          "https://mastodon.social/@stalwartlabs",
+          "https://www.reddit.com/r/stalwartlabs",
+        ],
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: "128 City Road",
+          addressLocality: "London",
+          addressCountry: "GB",
+        },
+        email: "hello@stalw.art",
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        name: "Stalwart",
+        url: SITE,
+        potentialAction: {
+          "@type": "SearchAction",
+          target: {
+            "@type": "EntryPoint",
+            urlTemplate: `${SITE}/?q={search_term_string}`,
+          },
+          "query-input": "required name=search_term_string",
+        },
+      },
+    ]
+  : undefined;
 ---
 <Base
   title={data.title}
@@ -24,6 +68,7 @@ const data = page.data;
   ctaSub={data.footerCta?.ctaSub}
   ctaButton={data.footerCta?.ctaButton}
   ctaLink={data.footerCta?.ctaLink}
+  jsonLd={jsonLd}
 >
   {data.hero && <HeroBlock hero={data.hero} />}
   <SectionRenderer sections={data.sections} />
