@@ -266,6 +266,144 @@ for the evaluator at the same time.
   freely; others stay in third person. Do not switch register
   mid-rewrite.
 
+## Marketing visuals (screenshots, diagrams, code blocks)
+
+Marketing pages reference visuals from YAML by **kind**, never as raw HTML.
+The `visual` field in the schema is a discriminated union of four kinds, all
+rendered through [src/components/VisualBlock.astro](src/components/VisualBlock.astro):
+
+| `kind` | Renders via | Use for |
+|---|---|---|
+| `screenshot` | [`BrowserFrame`](src/components/BrowserFrame.astro) (macOS chrome with traffic-light dots and URL pill), or a plain `<img>` if `frame: false` | Real WebUI screenshots and product imagery |
+| `diagram` | The Astro component registered under that `id` in [src/lib/diagrams.ts](src/lib/diagrams.ts) | Architecture / flow / topology diagrams (hand-authored SVG) |
+| `placeholder` | [`PlaceholderVisual`](src/components/PlaceholderVisual.astro) (dashed-border tile with a "needed" caption) | Stubs while the real screenshot or diagram is pending |
+| `code` | [`CodeFrame`](src/components/CodeFrame.astro) (terminal-style chrome) | CLI invocations, Stalwart expression-language snippets |
+
+The valid set of kinds and their fields are validated by Zod at build time in
+[src/content.config.ts](src/content.config.ts); a typo in YAML fails the
+build with a precise error.
+
+### Adding a new screenshot
+
+1. Capture from the **dark theme** of the WebUI at roughly **1280×800** (the
+   default `BrowserFrame` width × height). Cropping the macOS window chrome
+   off the host capture is recommended; the component supplies its own.
+2. Drop the PNG into [public/images/webadmin/](public/images/webadmin/)
+   with a kebab-case, content-describing filename
+   (`network-settings.png`, `delivery-trace.png`, not `screen-3.png`).
+3. Reference it from YAML:
+
+   ```yaml
+   visual:
+     kind: screenshot
+     src: /images/webadmin/network-settings.png       # absolute, public-rooted
+     alt: Stalwart network settings panel             # required, descriptive
+     url: admin.stalw.art / Settings / Network        # appears in the URL pill
+     glow: true                                       # optional, soft red+purple bloom
+     tilt: true                                       # optional, slight 3D tilt
+     frame: false                                     # optional, render bare <img> instead
+   ```
+
+   Defaults: `glow: false`, `tilt: false`, `frame: true`. `url` defaults to
+   `admin.stalw.art`. Use `glow: true` only on the most striking
+   screenshots (1-2 per page) to keep the effect from feeling cheap. `tilt`
+   reads well in heroes and section openers; avoid in tight side-by-side
+   splits where it competes with the type.
+
+### Adding a new diagram
+
+Diagrams are **hand-authored SVG inside an Astro component**, not raw SVG
+in YAML. This keeps animations, theming via CSS variables, and reuse clean.
+
+1. Create the component in `src/components/`. Existing examples to model:
+   [`ClusterDiagram.astro`](src/components/ClusterDiagram.astro) (P2P mesh
+   with pulsing nodes) and
+   [`ArchitectureDiagram.astro`](src/components/ArchitectureDiagram.astro)
+   (layered ingress → listeners → pipeline → storage → outbound).
+2. Use the design tokens from [src/styles/tokens.css](src/styles/tokens.css):
+   `var(--brand)`, `var(--brand-soft)`, `var(--border)`, `var(--surface)`,
+   `var(--text)`, `var(--text-muted)`. **Never hard-code colours**: the
+   theme toggle flips `--text` between modes, so an SVG that uses
+   `currentColor` or token variables themes itself for free.
+3. Sizing pattern: `viewBox` defines the coordinate space; the component
+   stretches to its container with `aspect-ratio` on the wrapper. Don't set
+   pixel widths in the SVG.
+4. Register the component in [src/lib/diagrams.ts](src/lib/diagrams.ts):
+
+   ```ts
+   import MtaPipelineDiagram from "../components/MtaPipelineDiagram.astro";
+
+   export const diagrams: Record<string, any> = {
+     cluster: ClusterDiagram,
+     architecture: ArchitectureDiagram,
+     "mta-pipeline": MtaPipelineDiagram,   // new entry
+   };
+   ```
+
+5. Reference from YAML by id:
+
+   ```yaml
+   visual:
+     kind: diagram
+     id: mta-pipeline
+   ```
+
+   An unregistered id renders as a placeholder with a "Diagram 'X' is not
+   registered yet" caption rather than failing the build, so a stale
+   reference is loud but not blocking.
+
+### Placeholder visuals
+
+When prose calls for a visual but the real asset isn't ready, use a
+placeholder. It renders a dashed-border tile with a clear "this is
+pending" tag and a one-line caption naming what's needed:
+
+```yaml
+visual:
+  kind: placeholder
+  caption: "Diagram needed: anti-spam scoring pipeline (headers/body -> feature hash -> FTRL classifier -> score)."
+  aspect: "16 / 10"   # optional; default is "16 / 10"
+```
+
+Caption style: lead with `Screenshot needed:` or `Diagram needed:` so a
+future agent grepping for `placeholder` can sort the work into capture vs.
+draw. Keep it specific enough to act on without re-reading the page
+(name the WebUI panel for screenshots, name the entities and arrows for
+diagrams).
+
+### Code blocks (CLI, expressions)
+
+Per the project house style, **avoid showing raw JSON / API payloads on
+marketing pages**. Use code blocks only for content the docs already show
+this way: CLI invocations (`stalwart-cli apply`, `stalwart-cli snapshot`),
+Stalwart expression language, and similar:
+
+```yaml
+visual:
+  kind: code
+  lang: bash                          # any Shiki language id
+  filename: deploy.sh                 # optional, shown in chrome tab
+  body: |
+    stalwart-cli apply --file plan.ndjson --dry-run
+    stalwart-cli snapshot --output current.ndjson
+```
+
+The frame mimics a macOS terminal (traffic-light dots, optional filename
+pill). Highlighting is via Shiki with the `github-dark-default` theme.
+
+### When to use which
+
+- **Real screenshot** beats every other option when the section is about
+  something the operator actually does in the WebUI. Lead the page with
+  one; the home page hero is the canonical example.
+- **Diagram** when the section explains a concept that has no UI surface
+  (clustering, scheduling flow, anti-spam scoring stages).
+- **Placeholder** for everything else, with a clear caption so the
+  follow-up work is obvious.
+- **Code** sparingly, only where the prose already discusses a CLI or
+  expression. A page full of code blocks reads like documentation, not
+  marketing.
+
 ## Things to verify before recommending a setting or path
 
 - The Stalwart server source itself is **not** in this repo. If tempted to

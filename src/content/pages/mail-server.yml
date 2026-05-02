@@ -11,7 +11,7 @@ hero:
   lead: >-
     Stalwart speaks every standard mail protocol your users' clients
     already use, so no one in your fleet gets left behind. JMAP for new
-    apps, IMAP for everything else, POP3 for the long tail. Storage,
+    apps, IMAP for everything else. Storage,
     search, external directory and automated DNS are part of the same
     server, so what you install is one mail server, not a stack of
     services to glue together.

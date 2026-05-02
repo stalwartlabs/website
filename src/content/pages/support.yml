@@ -34,8 +34,7 @@ sections:
 
       Stalwart also has a presence on Discord, Reddit and Matrix. Those
       venues are for general discussion only; they are not support
-      channels and questions posted there may not be answered. If you
-      need a tracked answer, open a ticket in the portal.
+      channels and questions posted there may not be answered.
     learnMore:
       - label: Open the support portal
         href: https://support.stalw.art
@@ -49,15 +48,12 @@ sections:
     body: >-
       Premium Support is included at no extra cost with every
       Enterprise subscription of 150 mailboxes or more. Once activated,
-      a **Priority Support** button appears on
-      [support.stalw.art](https://support.stalw.art), giving the
-      customer access to a private area where tickets are opened
+      customers have access to a private area where tickets are opened
       directly with Stalwart Labs. Each ticket carries an SLA counter,
       so the response window against the contracted terms is visible
       to both sides at all times.
     bullets:
       - Priority response on tickets, with severity levels and a per-ticket SLA counter.
-      - A named technical contact at Stalwart Labs.
       - Direct escalation path to the engineers who write Stalwart.
       - Access to security advisories ahead of public disclosure where relevant.
       - Optional add-ons (purchased separately) include a dedicated Support Engineer, a custom SLA and lawful-interception assistance.
@@ -79,7 +75,6 @@ sections:
           - ["Where", "support.stalw.art", "support.stalw.art"]
           - ["Eligibility", "All users", "150 mailboxes or more"]
           - ["Response time", "Best effort", "Contracted, with per-ticket SLA counter"]
-          - ["Named technical contact", "-", "yes"]
           - ["Bug triage", "Public issue tracker", "Prioritised, ticketed"]
           - ["Security advisories", "Public release notes", "Advance notice where relevant"]
           - ["Direct escalation to Stalwart engineers", "-", "yes"]

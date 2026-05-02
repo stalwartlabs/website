@@ -13,8 +13,7 @@ hero:
   titleHighlight: reinvented
   lead: >-
     One server for your email, calendars, contacts and shared files,
-    with spam and phishing protection built in. One install, one
-    configuration to maintain, one place to administer. Every standard
+    with spam and phishing protection built in. Every standard
     protocol your clients already speak (JMAP, IMAP, POP3, SMTP, CalDAV,
     CardDAV and WebDAV) supported natively.
   ctas:
