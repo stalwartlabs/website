@@ -1,7 +1,7 @@
 ---
 title: Sub-processor list
 description: Sub-processors engaged by Stalwart Labs Ltd to deliver paid services.
-order: 7
+order: 9
 ---
 
 Stalwart Labs Ltd engages the following sub-processors to support the delivery of paid services. The list is provided for transparency and is updated when sub-processors are added, removed, or replaced.

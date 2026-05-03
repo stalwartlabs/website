@@ -1,7 +1,7 @@
 ---
-title: Data Processing Addendum (DPA)
+title: Data Processing Addendum
 description: Stalwart Labs Ltd's data-processing terms for Enterprise customers and Managed Email subscribers.
-order: 6
+order: 8
 ---
 
 A Data Processing Addendum (DPA) is available on request to Enterprise customers and to customers of the forthcoming Managed Email service (planned launch in 2027) where Stalwart Labs Ltd processes personal data of EU or UK data subjects on the customer's behalf.

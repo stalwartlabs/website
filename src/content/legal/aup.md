@@ -1,7 +1,7 @@
 ---
-title: Acceptable Use Policy (AUP)
+title: Acceptable Use Policy
 description: Conduct expected of customers and users of the Services.
-order: 8
+order: 10
 ---
 
 This Acceptable Use Policy summarises the conduct expected of customers and users of the Services. It is contractually enforced through the [Terms and Conditions](/legal/terms) (in particular sections 10 and 16).

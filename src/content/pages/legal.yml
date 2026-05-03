@@ -10,6 +10,12 @@ hero:
 sections:
   - kind: feature-grid
     items:
+      - title: License Agreement (World)
+        body: Stalwart Enterprise License 2.0 (SELv2) Agreement.
+        href: /legal/license-world
+      - title: License Agreement (Europe)
+        body: Stalwart Enterprise License 2.0 (SELv2) Agreement.
+        href: /legal/license-europe
       - title: Terms and Conditions
         body: The legal terms governing access to and use of the Stalwart website and Services.
         href: /legal/terms
@@ -34,6 +40,9 @@ sections:
       - title: Acceptable Use Policy (AUP)
         body: Conduct expected of customers and users of the Services.
         href: /legal/aup
+      - title: Reseller Agreement
+        body: Software Reseller Agreement
+        href: /legal/reseller
 
 footerCta:
   cta: Have a legal or compliance question?

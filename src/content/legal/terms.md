@@ -1,7 +1,7 @@
 ---
 title: Terms and Conditions
 description: Stalwart Labs Ltd terms of service governing access to and use of the Stalwart website and Services.
-order: 1
+order: 3
 lastUpdated: May 29, 2025
 ---
 

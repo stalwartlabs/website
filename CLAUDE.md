@@ -151,9 +151,16 @@ group, no config change needed.
 - **Raw `<video>` tags must include `</video>`**: HTML's video element
   is NOT void, so `<video ... />` is treated as an unclosed tag and
   swallows every following sibling as fallback content. Always close it.
-- TOML is the standard configuration language shown in code blocks; Shiki
-  highlighting is enabled for it by default. The `sieve` language is
-  aliased to `text` since Shiki doesn't bundle it.
+- **Stalwart does not use TOML.** Configuration lives in JMAP-style
+  objects (DataStore, BlobStore, NetworkListener, AcmeProvider, AiModel,
+  Domain, DkimSignature, Security, SpamClassifier, SpamDnsblServer,
+  MtaMilter, MtaHook, etc.) edited through the WebUI or applied via the
+  CLI as an NDJSON bundle (see `docs/management/cli/example-bulk-plan.ndjson`
+  for the canonical shape). Object fields are camelCase. Variant objects
+  carry a `@type` discriminator. When a code block needs to show
+  configuration, show it as JSON (the object body or a JMAP `Foo/set`
+  call), not TOML. The `sieve` language is aliased to `text` since
+  Shiki doesn't bundle it.
 - Mermaid diagrams use ` ```mermaid ` code fences.
 - Emoji shortcodes (e.g. `:white_check_mark:`, `:warning:`) render via
   `remark-gemoji` and become real Unicode glyphs.

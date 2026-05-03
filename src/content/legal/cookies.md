@@ -1,7 +1,7 @@
 ---
 title: Cookies Policy
 description: What cookies are and how Stalwart Labs uses them.
-order: 3
+order: 5
 lastUpdated: May 29, 2025
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Copyrights
 description: Trademark and copyright notices for Stalwart Labs.
-order: 5
+order: 7
 ---
 
 The name **'Stalwart'** is a registered trademark of **Stalwart Labs Ltd** in the European Union and the United Kingdom. It is also a registered trademark of **Stalwart Labs LLC** in the United States and other jurisdictions.

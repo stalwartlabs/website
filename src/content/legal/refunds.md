@@ -1,7 +1,7 @@
 ---
 title: Refund Policy
 description: Order cancellation and refund terms for Stalwart subscriptions.
-order: 4
+order: 6
 lastUpdated: May 30, 2025
 ---
 

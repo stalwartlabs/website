@@ -1,7 +1,7 @@
 ---
 title: Privacy Policy
 description: How Stalwart Labs Ltd accesses, collects, stores, uses, and shares your personal information.
-order: 2
+order: 4
 lastUpdated: May 29, 2025
 ---
 
