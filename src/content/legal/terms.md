@@ -2,20 +2,20 @@
 title: Terms and Conditions
 description: Stalwart Labs Ltd terms of service governing access to and use of the Stalwart website and Services.
 order: 3
-lastUpdated: May 29, 2025
+lastUpdated: May 3, 2026
 ---
 
-We are Stalwart Labs Ltd ('Company', 'we', 'us', or 'our'), a company registered in England at 128 City Road, London EC1V 2NX. Our VAT number is 12124087.
+We are Stalwart Labs Ltd ('Company', 'we', 'us', or 'our'), a company registered in England and Wales at 128 City Road, London EC1V 2NX, United Kingdom.
 
-We operate the website [https://stalw.art](https://stalw.art) (the 'Site'), as well as any other related products and services that refer or link to these legal terms (the 'Legal Terms') (collectively, the 'Services').
+We operate the website [https://stalw.art](https://stalw.art) (the 'Site'), the Licensing Portal at **license.stalw.art**, and the Support Portal at **support.stalw.art** (which provides a public community forum and a private priority-support area for eligible subscribers), as well as any other related products and services that refer or link to these legal terms (the 'Legal Terms') (collectively, the 'Services').
 
 Stalwart is a mail and collaboration server.
 
-You can contact us by email at sales@stalw.art or by mail to 128 City Road, London EC1V 2NX, England.
+You can contact us by email at hello@stalw.art (general enquiries and sales), privacy@stalw.art (privacy and data-subject requests), abuse@stalw.art (reports of abuse of the Services), or security@stalw.art (security vulnerability reports), or by post to 128 City Road, London EC1V 2NX, United Kingdom.
 
 These Legal Terms constitute a legally binding agreement made between you, whether personally or on behalf of an entity ('you'), and Stalwart Labs Ltd, concerning your access to and use of the Services. You agree that by accessing the Services, you have read, understood, and agreed to be bound by all of these Legal Terms. IF YOU DO NOT AGREE WITH ALL OF THESE LEGAL TERMS, THEN YOU ARE EXPRESSLY PROHIBITED FROM USING THE SERVICES AND YOU MUST DISCONTINUE USE IMMEDIATELY.
 
-We will provide you with prior notice of any scheduled changes to the Services you are using. The modified Legal Terms will become effective upon posting or notifying you by sales@stalw.art, as stated in the email message. By continuing to use the Services after the effective date of any changes, you agree to be bound by the modified terms.
+We will provide you with prior notice of any scheduled changes to the Services you are using. The modified Legal Terms will become effective upon posting on the Site or by direct notification to the email address associated with your account. By continuing to use the Services after the effective date of any changes, you agree to be bound by the modified terms.
 
 The Services are intended for users who are at least 18 years old. Persons under the age of 18 are not permitted to use or register for the Services.
 
@@ -43,7 +43,7 @@ Subject to your compliance with these Legal Terms, including the 'Prohibited Act
 
 Except as set out in this section or elsewhere in our Legal Terms, no part of the Services and no Content or Marks may be copied, reproduced, aggregated, republished, uploaded, posted, publicly displayed, encoded, translated, transmitted, distributed, sold, licensed, or otherwise exploited for any commercial purpose whatsoever, without our express prior written permission.
 
-If you wish to make any use of the Services, Content, or Marks other than as set out in this section or elsewhere in our Legal Terms, please address your request to: sales@stalw.art. If we ever grant you the permission to post, reproduce, or publicly display any part of our Services or Content, you must identify us as the owners or licensors of the Services, Content, or Marks and ensure that any copyright or proprietary notice appears or is visible on posting, reproducing, or displaying our Content.
+If you wish to make any use of the Services, Content, or Marks other than as set out in this section or elsewhere in our Legal Terms, please address your request to: hello@stalw.art. If we ever grant you the permission to post, reproduce, or publicly display any part of our Services or Content, you must identify us as the owners or licensors of the Services, Content, or Marks and ensure that any copyright or proprietary notice appears or is visible on posting, reproducing, or displaying our Content.
 
 We reserve all rights not expressly granted to you in and to the Services, Content, and Marks.
 
@@ -79,9 +79,9 @@ We accept the following forms of payment:
 - Discover
 - Bank transfer
 
-You agree to provide current, complete, and accurate purchase and account information for all purchases made via the Services. You further agree to promptly update account and payment information, including email address, payment method, and payment card expiration date, so that we can complete your transactions and contact you as needed. Sales tax will be added to the price of purchases as deemed required by us. We may change prices at any time. All payments shall be in Euros.
+You agree to provide current, complete, and accurate purchase and account information for all purchases made via the Services. You further agree to promptly update account and payment information, including email address, payment method, and payment card expiration date, so that we can complete your transactions and contact you as needed. Value Added Tax (VAT) and any other applicable taxes will be added to the price of purchases as required by law. We may change prices at any time. All payments shall be in Euros.
 
-You agree to pay all charges at the prices then in effect for your purchases and any applicable shipping fees, and you authorise us to charge your chosen payment provider for any such amounts upon placing your order. We reserve the right to correct any errors or mistakes in pricing, even if we have already requested or received payment.
+You agree to pay all charges at the prices then in effect for your purchases, and you authorise us to charge your chosen payment provider for any such amounts upon placing your order. We reserve the right to correct any errors or mistakes in pricing, even if we have already requested or received payment.
 
 We reserve the right to refuse any order placed through the Services. We may, in our sole discretion, limit or cancel quantities purchased per person, per household, or per order. These restrictions may include orders placed by or under the same customer account, the same payment method, and/or orders that use the same billing or shipping address.
 
@@ -97,7 +97,7 @@ We offer a 30-day free trial to new users who register with the Services. The ac
 
 ### Cancellation
 
-You can cancel your subscription at any time by logging into your account. Your cancellation will take effect at the end of the current paid term. If you have any questions or are unsatisfied with our Services, please email us at sales@stalw.art.
+You can cancel your subscription at any time by logging into your account. Your cancellation will take effect at the end of the current paid term. If you have any questions or are unsatisfied with our Services, please email us at hello@stalw.art.
 
 ### Fee changes
 
@@ -134,22 +134,33 @@ As a user of the Services, you agree not to:
 - Attempt to bypass any measures of the Services designed to prevent or restrict access to the Services, or any portion of the Services.
 - Copy or adapt the Services' software, including but not limited to Flash, PHP, HTML, JavaScript, or other code.
 - Except as permitted by applicable law, decipher, decompile, disassemble, or reverse engineer any of the software comprising or in any way making up a part of the Services.
-- Use a buying agent or purchasing agent to make purchases on the Services.
 - Make any unauthorised use of the Services, including collecting usernames and/or email addresses of users by electronic or other means for the purpose of sending unsolicited email, or creating user accounts by automated means or under false pretences.
 - Use the Services as part of any effort to compete with us or otherwise use the Services and/or the Content for any revenue-generating endeavour or commercial enterprise.
 - Use the Services to advertise or offer to sell goods and services.
 
 ## 11. User Generated Contributions
 
-The Services do not currently offer users the ability to submit or post content. We may provide you with the opportunity to create, submit, post, display, transmit, perform, publish, distribute, or broadcast content and materials to us or on the Services, including but not limited to text, writings, video, audio, photographs, graphics, comments, suggestions, or personal information or other material (collectively, 'Contributions'). When you create or make available any Contributions, you represent and warrant that the creation, distribution, transmission, public display, or performance, and the accessing, downloading, or copying of your Contributions do not and will not infringe the proprietary rights of any third party, that you have all necessary rights and permissions, and that your Contributions are not false, misleading, harassing, libellous, or otherwise objectionable.
+The Support Portal at **support.stalw.art** allows registered users to post questions, replies, suggestions, comments, code samples, configuration snippets, and other content (collectively, 'Contributions'). Contributions posted in the public area of the Support Portal are visible to anyone on the internet and may be indexed by search engines. Contributions submitted through the private priority-support ticket area are visible only to you and to authorised Stalwart Labs Ltd staff.
+
+When you make any Contribution, you represent and warrant that:
+
+- you have all necessary rights and permissions to make the Contribution and to grant the licence in Section 12;
+- the Contribution does not infringe any third party's intellectual property, privacy, publicity, contractual, or other rights;
+- the Contribution does not contain personal data of any other identifiable person who has not consented to its publication;
+- the Contribution does not contain credentials, private keys, security tokens, or other secrets, or any confidential information of your employer or any third party; and
+- the Contribution is not unlawful, false, misleading, harassing, defamatory, obscene, threatening, or otherwise objectionable, and does not violate the [Acceptable Use Policy](/legal/aup).
+
+You are solely responsible for your Contributions. We may, in our sole discretion and without prior notice, edit, refuse to publish, suspend, redact, or delete any Contribution that we believe in good faith violates these Legal Terms, the Acceptable Use Policy, or applicable law, or that we receive a valid notice and takedown request about under our [Notice and Takedown Procedure](/legal/copyrights). We are under no obligation to monitor Contributions, but we reserve the right to do so.
+
+You may delete an individual Contribution at any time using the in-product controls. You may also delete your Support Portal account at any time from your account settings; on account deletion, your profile is removed and your prior Contributions in the public forum are pseudonymised by default (your display name is replaced and your email is removed) so that the technical information remains useful to the community. You may request full deletion of any individual Contribution, or of all your Contributions, by emailing **privacy@stalw.art**, subject to the limits set out in our [Privacy Policy](/legal/privacy) and to any legal-hold obligations.
 
 ## 12. Contribution Licence
 
-You and Services agree that we may access, store, process, and use any information and personal data that you provide following the terms of the Privacy Policy and your choices (including settings).
+You retain ownership of any intellectual property rights in your Contributions. By making a Contribution, you grant Stalwart Labs Ltd a worldwide, non-exclusive, royalty-free, sublicensable, and transferable licence to host, store, reproduce, display, distribute, modify (for example, to translate, format, or excerpt), adapt, and otherwise use the Contribution for the purpose of operating, providing, promoting, and improving the Services, including by displaying public Contributions on the Support Portal and indexing them in search engines.
 
-By submitting suggestions or other feedback regarding the Services, you agree that we can use and share such feedback for any purpose without compensation to you.
+For clarity, where you submit suggestions, feedback, bug reports, or other ideas about the Services or about the Stalwart Mail and Collaboration Server itself, you agree that we may use, implement, and incorporate such feedback into our products and documentation without obligation, attribution, or compensation to you.
 
-We do not assert any ownership over your Contributions. You retain full ownership of all of your Contributions and any intellectual property rights or other proprietary rights associated with your Contributions.
+We may access, store, process, and use any personal data that you provide in accordance with our [Privacy Policy](/legal/privacy).
 
 ## 13. Third-Party Websites and Content
 
@@ -161,7 +172,7 @@ We reserve the right, but not the obligation, to: (1) monitor the Services for v
 
 ## 15. Privacy Policy
 
-We care about data privacy and security. Please review our [Privacy Policy](/legal/privacy). By using the Services, you agree to be bound by our Privacy Policy, which is incorporated into these Legal Terms. The Services are hosted in the United Kingdom. If you access the Services from any other region of the world with laws or other requirements governing personal data collection, use, or disclosure that differ from applicable laws in the United Kingdom, then through your continued use of the Services, you are transferring your data to the United Kingdom.
+We care about data privacy and security. Please review our [Privacy Policy](/legal/privacy). By using the Services, you agree to be bound by our Privacy Policy, which is incorporated into these Legal Terms. The Licensing Portal and the Support Portal are operated from infrastructure in the United Kingdom. The Site (including documentation and the blog) is served from a global content delivery network. Where personal data is transferred outside the United Kingdom or the European Economic Area (for example, to our payment processor in the United States), we put appropriate safeguards in place under Chapter V of the UK GDPR and the EU GDPR; see Section 5 of the [Privacy Policy](/legal/privacy) for details. If you access the Services from a region whose laws differ from those of the United Kingdom, then through your continued use of the Services, you accept the transfer of your data to the United Kingdom.
 
 ## 16. Term and Termination
 
@@ -187,7 +198,7 @@ To expedite resolution and control the cost of any dispute, controversy, or clai
 
 ### Binding arbitration
 
-Any dispute arising from the relationships between the Parties to these Legal Terms shall be determined by one arbitrator who will be chosen in accordance with the Arbitration and Internal Rules of the European Court of Arbitration being part of the European Centre of Arbitration having its seat in Strasbourg. The seat of arbitration shall be London, England. The language of the proceedings shall be English. Applicable rules of substantive law shall be the law of England.
+Any dispute arising out of or in connection with these Legal Terms, including any question regarding their existence, validity, or termination, shall be referred to and finally resolved by binding arbitration under the Rules of the London Court of International Arbitration ('LCIA'), which Rules are deemed to be incorporated by reference into this Section. The number of arbitrators shall be one. The seat, or legal place, of arbitration shall be London, England. The language of the arbitral proceedings shall be English. The governing law of these Legal Terms shall be the substantive law of England and Wales.
 
 ### Restrictions
 
@@ -211,7 +222,7 @@ IN NO EVENT WILL WE OR OUR DIRECTORS, EMPLOYEES, OR AGENTS BE LIABLE TO YOU OR A
 
 ## 23. Indemnification
 
-You agree to defend, indemnify, and hold us harmless, including our subsidiaries, affiliates, and all of our respective officers, agents, partners, and employees, from and against any loss, damage, liability, claim, or demand, including reasonable attorneys' fees and expenses, made by any third party due to or arising out of: (1) use of the Services; (2) breach of these Legal Terms; (3) any breach of your representations and warranties set forth in these Legal Terms; (4) your violation of the rights of a third party, including but not limited to intellectual property rights; or (5) any overt harmful act toward any other user of the Services.
+You agree to defend, indemnify, and hold us harmless, including our subsidiaries, affiliates, and all of our respective officers, agents, partners, and employees, from and against any loss, damage, liability, claim, or demand, including reasonable legal fees and expenses, made by any third party due to or arising out of: (1) use of the Services; (2) breach of these Legal Terms; (3) any breach of your representations and warranties set forth in these Legal Terms; (4) your violation of the rights of a third party, including but not limited to intellectual property rights; or (5) any overt harmful act toward any other user of the Services.
 
 ## 24. User Data
 
@@ -236,5 +247,9 @@ In order to resolve a complaint regarding the Services or to receive further inf
 **Stalwart Labs Ltd**
 **128 City Road**
 **London EC1V 2NX**
-**England**
-**sales@stalw.art**
+**United Kingdom**
+
+- General enquiries and sales: **hello@stalw.art**
+- Privacy and data-subject requests: **privacy@stalw.art**
+- Reports of abuse of the Services: **abuse@stalw.art**
+- Security vulnerability reports: **security@stalw.art** (see [Vulnerability Disclosure Policy](/legal/security))

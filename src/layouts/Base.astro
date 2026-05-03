@@ -32,7 +32,6 @@ const {
   jsonLd,
 } = Astro.props;
 
-const GTAG_ID = "G-NTKTV3G55G";
 const SITE = Astro.site?.toString().replace(/\/$/, "") ?? "https://stalw.art";
 const canonical = new URL(Astro.url.pathname, SITE).toString();
 const ogImageAbs = ogImage.startsWith("http") ? ogImage : `${SITE}${ogImage}`;
@@ -80,13 +79,6 @@ const ldBlocks = jsonLd
     {ldBlocks.map((data) => (
       <script type="application/ld+json" set:html={JSON.stringify(data)}/>
     ))}
-    <script async src={`https://www.googletagmanager.com/gtag/js?id=${GTAG_ID}`}></script>
-    <script is:inline define:vars={{ GTAG_ID }}>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', GTAG_ID);
-    </script>
     <script is:inline>
       // Set theme before paint to avoid flash
       (() => {

@@ -2,7 +2,6 @@
 import Default from "@astrojs/starlight/components/Head.astro";
 import interLatinUrl from "@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url";
 
-const GTAG_ID = "G-NTKTV3G55G";
 const SITE = Astro.site?.toString().replace(/\/$/, "") ?? "https://stalw.art";
 const { pathname } = Astro.url;
 
@@ -133,10 +132,3 @@ if (pathname === "/docs/faq" || pathname === "/docs/faq/") {
 {ldBlocks.map((data) => (
   <script type="application/ld+json" set:html={JSON.stringify(data)}/>
 ))}
-<script async src={`https://www.googletagmanager.com/gtag/js?id=${GTAG_ID}`}></script>
-<script is:inline define:vars={{ GTAG_ID }}>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', GTAG_ID);
-</script>

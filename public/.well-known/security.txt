@@ -1,0 +1,11 @@
+# Stalwart Labs vulnerability disclosure
+# Full policy: https://stalw.art/legal/security
+# Refresh this file before the Expires date below (RFC 9116).
+
+Contact: mailto:security@stalw.art
+Contact: https://github.com/stalwartlabs/stalwart/security/advisories/new
+Expires: 2027-05-03T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://stalw.art/.well-known/security.txt
+Policy: https://stalw.art/legal/security
+Acknowledgments: https://github.com/stalwartlabs/stalwart/security/advisories

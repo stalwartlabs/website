@@ -1,9 +1,13 @@
 ---
-title: Software Reseller Agreement
-description: Software Reseller Agreement
+title: Reseller Agreement (World)
+description: Software Reseller Agreement for resellers contracting with Stalwart Labs LLC (rest of world).
 order: 11
+lastUpdated: May 3, 2026
 ---
 
+This Reseller Agreement is the form executed by resellers contracting with **Stalwart Labs LLC** (United States). Resellers established in the United Kingdom, the European Union, the European Economic Area, or Switzerland should instead execute the [Reseller Agreement (Europe)](/legal/reseller-europe), which is governed by the laws of England and Wales and is contracted with Stalwart Labs Ltd.
+
+---
 
 This Software Reseller Agreement ("Agreement") is made and entered into on this \_\_\_ day of \_\_\_\_\_\_\_\_\_\_, 20\_\_\_ (the "Effective Date"), by and between:
 
@@ -23,7 +27,7 @@ Stalwart and Reseller may collectively be referred to as the "Parties" and indiv
 
 1.2. "End Customer" refers to any third party to whom Reseller sells or provisions a subscription to the Products.
 
-1.3. "Master License Agreement" refers to the Stalwart Enterprise License v2.0 (SELv2) Agreement, available at: https://github.com/stalwartlabs/legal/blob/main/LICENSE_AGREEMENT.md, as may be updated from time to time by Stalwart in accordance with its terms.
+1.3. "Master License Agreement" refers to the Stalwart Enterprise License v2.0 (SELv2) Agreement applicable to End Customers contracting with Stalwart Labs LLC, available at https://stalw.art/legal/license-world, as may be updated from time to time by Stalwart in accordance with its terms. Where Reseller's End Customer is established in the United Kingdom, the European Union, the European Economic Area, or Switzerland, the applicable Master License Agreement shall be the SELv2 Agreement (Europe) issued by Stalwart Labs Ltd, available at https://stalw.art/legal/license-europe.
 
 1.4. "Tier-1 Support" means front-line support consisting of answering End Customer questions about software usage, troubleshooting common issues, handling requests not clearly addressed in the documentation, investigating possible bugs, and performing diagnostic analysis before escalation to Stalwart.
 
@@ -119,19 +123,21 @@ Stalwart and Reseller may collectively be referred to as the "Parties" and indiv
 
 ## 8. DATA PROTECTION
 
-8.1. To the extent that either Party processes personal data in connection with this Agreement, such processing shall be conducted in accordance with all applicable data protection laws, including but not limited to the General Data Protection Regulation (GDPR) where applicable and the California Consumer Privacy Act (CCPA) where applicable.
+8.1. To the extent that either Party processes personal data in connection with this Agreement, such processing shall be conducted in accordance with all applicable data protection laws, including but not limited to the California Consumer Privacy Act and California Privacy Rights Act (collectively, "CCPA/CPRA"), the comprehensive consumer privacy laws of other U.S. states (including Colorado, Connecticut, Texas, Utah, Virginia, and others as applicable), and, where the personal data of UK or EU data subjects is processed, the UK General Data Protection Regulation and the EU General Data Protection Regulation (Regulation (EU) 2016/679).
 
-8.2. Reseller is responsible for ensuring that its End Customers are informed about the data processing practices associated with the Products, including directing them to Stalwart's Privacy Policy.
+8.2. Reseller shall ensure that its End Customers are clearly informed about the data processing practices associated with the Products, including by directing them to Stalwart's Privacy Policy at https://stalw.art/legal/privacy and to the applicable Master License Agreement.
 
-8.3. Where required by applicable data protection law, the Parties shall enter into a separate Data Processing Agreement ("DPA") governing any personal data processed in connection with this Agreement.
+8.3. Where required by applicable data protection law, the Parties shall enter into a separate Data Processing Agreement ("DPA") governing any personal data processed in connection with this Agreement. Reseller shall not transfer personal data of an End Customer to Stalwart, or onward to any third party, except as necessary to fulfil this Agreement and the Master License Agreement, and only in compliance with applicable cross-border transfer requirements.
+
+8.4. Each Party shall implement and maintain administrative, technical, and physical safeguards appropriate to the sensitivity of the personal data processed in connection with this Agreement, and shall notify the other Party of any confirmed security incident affecting such data without undue delay and in any event within seventy-two (72) hours of becoming aware of the incident.
 
 ## 9. EXPORT COMPLIANCE AND ANTI-CORRUPTION
 
-9.1. Each Party shall comply with all applicable export control and sanctions laws, including without limitation the U.S. Export Administration Regulations (EAR) and the regulations administered by the U.S. Department of the Treasury's Office of Foreign Assets Control (OFAC).
+9.1. Each Party shall comply with all applicable export control and sanctions laws, including without limitation the U.S. Export Administration Regulations (EAR) administered by the U.S. Department of Commerce, the regulations administered by the U.S. Department of the Treasury's Office of Foreign Assets Control (OFAC), and the corresponding regimes of any other jurisdiction in which Reseller operates.
 
-9.2. Reseller represents and warrants that it will not sell, export, re-export, or transfer the Products to any country, territory, entity, or individual subject to applicable sanctions or export restrictions without the required governmental authorizations.
+9.2. Reseller represents and warrants that it will not sell, export, re-export, or transfer the Products, directly or indirectly, to (a) any country, region, or territory subject to comprehensive U.S. sanctions (currently including Cuba, Iran, North Korea, Syria, and the Crimea, Donetsk, and Luhansk regions of Ukraine), (b) any person or entity listed on the Specially Designated Nationals and Blocked Persons List, the Entity List, the Denied Persons List, or any other applicable restricted-party list, or (c) any end use prohibited by applicable export control law (including without limitation any nuclear, chemical, biological, or missile end use), in each case without the required governmental authorizations.
 
-9.3. Reseller shall screen all End Customers against applicable restricted party lists prior to fulfilling orders and shall maintain records of such screening.
+9.3. Reseller shall screen all End Customers against applicable restricted party lists prior to fulfilling orders and shall maintain records of such screening for the longer of (a) the duration of the End Customer's subscription and (b) five (5) years from the date of screening.
 
 9.4. Each Party represents and warrants that it has not and will not, in connection with this Agreement, directly or indirectly offer, pay, promise to pay, or authorize the payment of any money or anything of value to any government official, political party, or candidate for political office for the purpose of influencing any act or decision, or securing any improper advantage. Each Party shall comply with all applicable anti-corruption and anti-bribery laws, including without limitation the U.S. Foreign Corrupt Practices Act (FCPA) and the UK Bribery Act 2010.
 
@@ -195,7 +201,7 @@ Stalwart and Reseller may collectively be referred to as the "Parties" and indiv
 
 14.4. **Independent Contractors:** The Parties are independent contractors. Nothing in this Agreement shall be construed to create a partnership, joint venture, employer-employee relationship, or agency relationship between the Parties. Neither Party has the authority to bind the other or to assume or create any obligation on behalf of the other.
 
-14.5. **Notices:** All notices required or permitted under this Agreement shall be in writing and shall be deemed effectively given: (a) upon personal delivery; (b) upon confirmed transmission by email; or (c) one (1) business day after deposit with a nationally recognized overnight courier service. Notices to Stalwart shall be sent to the address set forth in the preamble of this Agreement and to hello@stalw.art. Notices to Reseller shall be sent to the address set forth in the preamble of this Agreement.
+14.5. **Notices:** All notices required or permitted under this Agreement shall be in writing and shall be deemed effectively given: (a) upon personal delivery; (b) upon confirmed transmission by email; or (c) one (1) business day after deposit with a nationally recognized overnight courier service. Notices to Stalwart shall be sent to the address set forth in the preamble of this Agreement and to hello@stalw.art (with a copy to legal@stalw.art for legal-process notices). Notices to Reseller shall be sent to the address set forth in the preamble of this Agreement.
 
 14.6. **Severability:** If any provision of this Agreement is held to be unenforceable or invalid, such provision shall be reformed to the minimum extent necessary to make it enforceable, and the remaining provisions shall remain in full force and effect.
 

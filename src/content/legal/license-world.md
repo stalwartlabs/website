@@ -2,11 +2,12 @@
 title: License Agreement (World)
 description: Stalwart Enterprise License 2.0 (SELv2) Agreement (World).
 order: 1
+lastUpdated: May 3, 2026
 ---
 
 # Stalwart Enterprise License 2.0 (SELv2) Agreement
 
-*Last Update: March 29, 2026*
+*Last Update: May 3, 2026*
 
 PLEASE CAREFULLY READ THIS STALWART ENTERPRISE LICENSE AGREEMENT ("AGREEMENT"). THIS AGREEMENT CONSTITUTES A LEGALLY BINDING AGREEMENT BETWEEN YOU AND STALWART LABS LLC AND GOVERNS YOUR USE OF THE SOFTWARE (DEFINED BELOW). IF YOU DO NOT AGREE WITH THIS AGREEMENT, YOU MAY NOT USE THE SOFTWARE. IF YOU ARE USING THE SOFTWARE ON BEHALF OF A LEGAL ENTITY, YOU REPRESENT AND WARRANT THAT YOU HAVE AUTHORITY TO AGREE TO THIS AGREEMENT ON BEHALF OF SUCH ENTITY. IF YOU DO NOT HAVE SUCH AUTHORITY, DO NOT USE THE SOFTWARE IN ANY MANNER.
 
@@ -172,7 +173,7 @@ This Agreement is entered into by and between Stalwart Labs LLC and you, or the 
 
 16.1. All notices required or permitted under this Agreement shall be in writing and shall be deemed effectively given: (a) upon personal delivery; (b) upon confirmed transmission by email; or (c) one (1) business day after deposit with a nationally recognized overnight courier service.
 
-16.2. Notices to Licensor shall be sent to the address and email set forth in Section 21 (Contact Information) of this Agreement. Notices to Licensee shall be sent to the email address provided during Subscription registration or as subsequently updated by Licensee in writing.
+16.2. Notices to Licensor shall be sent to the address and email set forth in Section 24 (Contact Information) of this Agreement. Notices to Licensee shall be sent to the email address provided during Subscription registration or as subsequently updated by Licensee in writing.
 
 ## 17. ASSIGNMENT
 

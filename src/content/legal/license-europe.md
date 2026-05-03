@@ -2,15 +2,16 @@
 title: License Agreement (Europe)
 description: Stalwart Enterprise License 2.0 (SELv2) Agreement (Europe).
 order: 2
+lastUpdated: May 3, 2026
 ---
 
 # Stalwart Enterprise License 2.0 (SELv2) Agreement
 
-*Last Update: March 29, 2026*
+*Last Update: May 3, 2026*
 
-PLEASE CAREFULLY READ THIS STALWART ENTERPRISE LICENSE AGREEMENT ("AGREEMENT"). THIS AGREEMENT CONSTITUTES A LEGALLY BINDING AGREEMENT BETWEEN YOU AND STALWART LABS LLC AND GOVERNS YOUR USE OF THE SOFTWARE (DEFINED BELOW). IF YOU DO NOT AGREE WITH THIS AGREEMENT, YOU MAY NOT USE THE SOFTWARE. IF YOU ARE USING THE SOFTWARE ON BEHALF OF A LEGAL ENTITY, YOU REPRESENT AND WARRANT THAT YOU HAVE AUTHORITY TO AGREE TO THIS AGREEMENT ON BEHALF OF SUCH ENTITY. IF YOU DO NOT HAVE SUCH AUTHORITY, DO NOT USE THE SOFTWARE IN ANY MANNER.
+PLEASE CAREFULLY READ THIS STALWART ENTERPRISE LICENSE AGREEMENT ("AGREEMENT"). THIS AGREEMENT CONSTITUTES A LEGALLY BINDING AGREEMENT BETWEEN YOU AND STALWART LABS LTD AND GOVERNS YOUR USE OF THE SOFTWARE (DEFINED BELOW). IF YOU DO NOT AGREE WITH THIS AGREEMENT, YOU MAY NOT USE THE SOFTWARE. IF YOU ARE USING THE SOFTWARE ON BEHALF OF A LEGAL ENTITY, YOU REPRESENT AND WARRANT THAT YOU HAVE AUTHORITY TO AGREE TO THIS AGREEMENT ON BEHALF OF SUCH ENTITY. IF YOU DO NOT HAVE SUCH AUTHORITY, DO NOT USE THE SOFTWARE IN ANY MANNER.
 
-This Agreement is entered into by and between Stalwart Labs LLC and you, or the legal entity on behalf of whom you are acting.
+This Agreement is entered into by and between Stalwart Labs Ltd and you, or the legal entity on behalf of whom you are acting.
 
 ---
 
@@ -20,7 +21,7 @@ This Agreement is entered into by and between Stalwart Labs LLC and you, or the 
 
 1.2. "Subscription" refers to the paid access to the Software provided by Licensor to Licensee, billed on a monthly or annual basis.
 
-1.3. "Licensor" refers to Stalwart Labs LLC, the entity providing the Software.
+1.3. "Licensor" refers to Stalwart Labs Ltd, a company incorporated in England and Wales, the entity providing the Software.
 
 1.4. "Licensee" refers to the individual or entity installing, accessing, or using the Software with a valid Subscription.
 
@@ -124,7 +125,7 @@ This Agreement is entered into by and between Stalwart Labs LLC and you, or the 
 
 ## 11. INDEMNIFICATION
 
-11.1. Licensee agrees to indemnify, defend, and hold harmless Licensor, its officers, directors, employees, agents, licensors, suppliers, and any third-party information providers from and against all claims, losses, expenses, damages, and costs, including reasonable attorneys' fees, resulting from any violation of this Agreement or any activity related to Licensee's use or misuse of the Software (including negligent or wrongful conduct).
+11.1. Licensee agrees to indemnify, defend, and hold harmless Licensor, its officers, directors, employees, agents, licensors, suppliers, and any third-party information providers from and against all claims, losses, expenses, damages, and costs, including reasonable legal fees, resulting from any violation of this Agreement or any activity related to Licensee's use or misuse of the Software (including negligent or wrongful conduct).
 
 11.2. Licensor agrees to indemnify, defend, and hold harmless Licensee from and against any third-party claim that the Software, as provided by Licensor, infringes or misappropriates any patent, copyright, trademark, or trade secret of a third party, provided that Licensee: (a) gives Licensor prompt written notice of such claim; (b) grants Licensor sole control of the defense and settlement of such claim; and (c) provides reasonable cooperation at Licensor's expense.
 
@@ -136,7 +137,7 @@ This Agreement is entered into by and between Stalwart Labs LLC and you, or the 
 
 12.1. The Software is self-hosted by Licensee, and Licensee retains sole responsibility for all data stored and processed within its deployment of the Software, including any personal data of its users or tenants.
 
-12.2. To the extent that Licensor processes any personal data on behalf of Licensee (for example, in connection with support services or license management), such processing shall be conducted in accordance with applicable data protection laws, including but not limited to the General Data Protection Regulation (GDPR) where applicable, the California Consumer Privacy Act (CCPA) where applicable, and any other relevant data protection legislation.
+12.2. To the extent that Licensor processes any personal data on behalf of Licensee (for example, in connection with support services or license management), such processing shall be conducted in accordance with applicable data protection laws, including the UK General Data Protection Regulation and the Data Protection Act 2018, the EU General Data Protection Regulation (Regulation (EU) 2016/679), and any other relevant data protection legislation.
 
 12.3. Where required by applicable data protection law, the parties shall enter into a separate Data Processing Agreement ("DPA") that sets forth the terms and conditions governing Licensor's processing of personal data on behalf of Licensee.
 
@@ -146,33 +147,33 @@ This Agreement is entered into by and between Stalwart Labs LLC and you, or the 
 
 ## 13. EXPORT COMPLIANCE
 
-13.1. The Software may be subject to export control and sanctions laws of the United States and other jurisdictions. Licensee agrees to comply with all applicable export control laws, including without limitation the U.S. Export Administration Regulations (EAR) and the regulations administered by the U.S. Department of the Treasury's Office of Foreign Assets Control (OFAC).
+13.1. The Software may be subject to export control and sanctions laws of the United Kingdom, the European Union, and other jurisdictions. Licensee agrees to comply with all applicable export control and sanctions laws, including without limitation the UK Export Control Order 2008, the Sanctions and Anti-Money Laundering Act 2018 and regulations made thereunder (as administered by the Office of Financial Sanctions Implementation (OFSI) of HM Treasury and by the Export Control Joint Unit), and Regulation (EU) 2021/821 of the European Parliament and of the Council (the EU Dual-Use Regulation), together with the EU consolidated list of persons, groups, and entities subject to financial sanctions.
 
-13.2. Licensee represents and warrants that: (a) Licensee is not located in, organized under the laws of, or a resident of any country or territory subject to comprehensive U.S. sanctions (currently including Cuba, Iran, North Korea, Syria, and the Crimea, Donetsk, and Luhansk regions of Ukraine); (b) Licensee is not listed on any U.S. government restricted party list; and (c) Licensee will not export, re-export, or transfer the Software to any prohibited destination, entity, or individual without the required governmental authorizations.
+13.2. Licensee represents and warrants that: (a) Licensee is not located in, organised under the laws of, or a resident of any country or territory subject to comprehensive UK or EU sanctions; (b) Licensee is not listed on the UK Sanctions List, the EU consolidated list of designated persons, or any equivalent restricted party list of a competent authority in a jurisdiction in which Licensee operates; and (c) Licensee will not export, re-export, or transfer the Software to any prohibited destination, entity, or individual without the required governmental authorisations.
 
 ## 14. ANTI-CORRUPTION
 
 14.1. Each party represents and warrants that it has not and will not, in connection with this Agreement, directly or indirectly offer, pay, promise to pay, or authorize the payment of any money or anything of value to any government official, political party, or candidate for political office for the purpose of influencing any act or decision, or securing any improper advantage.
 
-14.2. Each party shall comply with all applicable anti-corruption and anti-bribery laws, including without limitation the U.S. Foreign Corrupt Practices Act (FCPA) and the UK Bribery Act 2010.
+14.2. Each party shall comply with all applicable anti-corruption and anti-bribery laws, including without limitation the UK Bribery Act 2010.
 
 ## 15. GOVERNING LAW AND DISPUTE RESOLUTION
 
-15.1. This Agreement shall be governed by and construed under the laws of the State of Wyoming, United States of America, without regard to its conflict of laws principles.
+15.1. This Agreement shall be governed by and construed in accordance with the laws of England and Wales, without regard to its conflict of laws principles. The United Nations Convention on Contracts for the International Sale of Goods shall not apply.
 
 15.2. Any dispute, controversy, or claim arising out of or relating to this Agreement, or the breach, termination, or invalidity thereof, shall first be attempted to be resolved through good faith negotiation between the parties for a period of thirty (30) days following written notice of the dispute.
 
-15.3. If the dispute is not resolved through negotiation within the thirty (30) day period, it shall be finally resolved by binding arbitration administered by the American Arbitration Association ("AAA") in accordance with its Commercial Arbitration Rules. The arbitration shall be conducted in Sheridan, Wyoming, before a single arbitrator. The language of the arbitration shall be English.
+15.3. If the dispute is not resolved through negotiation within the thirty (30) day period, it shall be referred to and finally resolved by binding arbitration under the Rules of the London Court of International Arbitration ("LCIA"), which Rules are deemed to be incorporated by reference into this Section. The number of arbitrators shall be one. The seat, or legal place, of arbitration shall be London, England. The language to be used in the arbitral proceedings shall be English.
 
-15.4. The arbitrator's award shall be final and binding and may be entered as a judgment in any court of competent jurisdiction. Each party shall bear its own costs and attorneys' fees in connection with the arbitration, unless the arbitrator determines otherwise.
+15.4. The arbitrator's award shall be final and binding and may be entered as a judgment in any court of competent jurisdiction. Each party shall bear its own costs and legal fees in connection with the arbitration, unless the arbitrator determines otherwise.
 
 15.5. Notwithstanding the foregoing, either party may seek injunctive or other equitable relief in any court of competent jurisdiction to protect its intellectual property rights or Confidential Information without first submitting to arbitration.
 
 ## 16. NOTICES
 
-16.1. All notices required or permitted under this Agreement shall be in writing and shall be deemed effectively given: (a) upon personal delivery; (b) upon confirmed transmission by email; or (c) one (1) business day after deposit with a nationally recognized overnight courier service.
+16.1. All notices required or permitted under this Agreement shall be in writing and shall be deemed effectively given: (a) upon personal delivery; (b) upon confirmed transmission by email; or (c) one (1) business day after deposit with an internationally recognised overnight courier service.
 
-16.2. Notices to Licensor shall be sent to the address and email set forth in Section 21 (Contact Information) of this Agreement. Notices to Licensee shall be sent to the email address provided during Subscription registration or as subsequently updated by Licensee in writing.
+16.2. Notices to Licensor shall be sent to the address and email set forth in Section 24 (Contact Information) of this Agreement. Notices to Licensee shall be sent to the email address provided during Subscription registration or as subsequently updated by Licensee in writing.
 
 ## 17. ASSIGNMENT
 
@@ -210,10 +211,10 @@ By downloading, installing, or using the Software, even without explicitly click
 
 ## 24. CONTACT INFORMATION
 
-If you have any questions about this Agreement, please contact Stalwart Labs LLC at:
+If you have any questions about this Agreement, please contact Stalwart Labs Ltd at:
 
-Stalwart Labs LLC
-1309 Coffeen Avenue STE 1200
-Sheridan, Wyoming 82801
-USA
+Stalwart Labs Ltd
+128 City Road
+London EC1V 2NX
+United Kingdom
 hello@stalw.art

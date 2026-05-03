@@ -1,47 +1,68 @@
 ---
 title: Cookies Policy
-description: What cookies are and how Stalwart Labs uses them.
+description: What cookies are, which cookies the Stalwart Labs websites set, and how to control them.
 order: 5
-lastUpdated: May 29, 2025
+lastUpdated: May 3, 2026
 ---
 
-This Cookies Policy explains what cookies are and how we use them. You should read this policy so you can understand what type of cookies we use, what information we collect using cookies and how that information is used.
+This Cookies Policy explains what cookies are and which cookies are set by the websites operated by Stalwart Labs Ltd. It complements our [Privacy Policy](/legal/privacy).
 
-Cookies do not typically contain any information that personally identifies a user, but personal information that we store about you may be linked to the information stored in and obtained from cookies. For further information on how we use, store and keep your personal data secure, see our [Privacy Policy](/legal/privacy).
-
-We do not store sensitive personal information, such as mailing addresses or account passwords, in the cookies we use.
+We do not use Google Analytics, and we do not load any third-party analytics, advertising, or social-media tracking scripts on stalw.art, license.stalw.art, or support.stalw.art.
 
 ## Definitions
 
-- **Company** ('the Company', 'we', 'us', 'our') refers to Stalwart Labs Ltd, 128 City Road, London EC1V 2NX.
-- **Cookies** are small files placed on your computer, mobile device or any other device by a website, containing details of your browsing history on that website among its many uses.
-- **Website** refers to Stalwart Labs, accessible from [stalw.art](https://stalw.art).
-- **You** means the individual accessing or using the Website, or a company or any legal entity on behalf of which such individual is accessing or using the Website.
+- **Company** ('the Company', 'we', 'us', 'our') refers to Stalwart Labs Ltd, 128 City Road, London EC1V 2NX, United Kingdom.
+- **Cookies** are small files placed on your device by a website. They typically contain a short string used to identify a session, store a preference, or remember a setting between visits.
+- **First-party cookies** are set by the domain you are visiting (for example, a cookie set by `support.stalw.art` while you are on `support.stalw.art`).
+- **Third-party cookies** are set by a domain other than the one you are visiting (for example, a cookie set by an advertising network embedded in a page). **The Stalwart Labs websites do not set any third-party cookies.**
+- **Websites** refers, collectively, to:
+  - **stalw.art** — the marketing site, documentation, and blog;
+  - **license.stalw.art** — the Licensing Portal, where you create an account, purchase a Stalwart Enterprise License subscription, and manage your invoices;
+  - **support.stalw.art** — the Support Portal, the public community forum and the private priority support area.
+- **You** means the individual accessing or using the Websites, or a company or other legal entity on behalf of which such individual is accessing or using the Websites.
 
-## The use of cookies
+## Cookies we set
 
-### Type of cookies we use
+All cookies described below are **first-party** cookies set by Stalwart Labs Ltd. They are **strictly necessary** for the operation of the Websites under Regulation 6(4) of the UK Privacy and Electronic Communications (EC Directive) Regulations 2003 (PECR) and Article 5(3) of the EU ePrivacy Directive, which means that no prior consent is required for them under UK or EU law.
 
-Cookies can be 'persistent' or 'session' cookies. Persistent cookies remain on your personal computer or mobile device when you go offline, while session cookies are deleted as soon as you close your web browser. We use both session and persistent cookies for the purposes set out below.
+### stalw.art (marketing, documentation, blog)
 
-**Necessary / essential cookies.** Type: session cookies. Administered by us. These cookies are essential to provide you with services available through the Website and to enable you to use some of its features. They help to authenticate users and prevent fraudulent use of user accounts. Without these cookies, the services you have asked for cannot be provided, and we only use these cookies to provide you with those services.
+| Cookie | Purpose | Type | Lifetime |
+| --- | --- | --- | --- |
+| `stalwart-theme` | Stores your light/dark theme preference so the site does not flash the wrong theme on the next page load. Set in `localStorage`, not as an HTTP cookie, but listed here for completeness. | First-party, functional | Persistent (until you clear it) |
 
-**Functionality cookies.** Type: persistent cookies. Administered by us. These cookies allow us to remember choices you make when you use the Website, such as remembering your login details or language preference. The purpose of these cookies is to provide you with a more personal experience and to avoid having to re-enter your preferences every time you use the Website.
+The marketing site, documentation, and blog do not set any HTTP cookies and do not load any third-party tracker.
 
-### Your choices regarding cookies
+### license.stalw.art (Licensing Portal)
 
-If you prefer to avoid the use of cookies on the Website, first you must disable the use of cookies in your browser and then delete the cookies saved in your browser associated with this website. You may use this option for preventing the use of cookies at any time.
+The Licensing Portal sets a small number of strictly necessary first-party cookies to keep you signed in and to protect against cross-site request forgery while you manage your account. These are session cookies (cleared when you close your browser) or short-lived persistent cookies, set with the `Secure`, `HttpOnly`, and `SameSite=Lax` (or `SameSite=Strict`) attributes as appropriate.
 
-If you do not accept our cookies, you may experience some inconvenience in your use of the Website and some features may not function properly.
+### support.stalw.art (Support Portal)
 
-If you'd like to delete cookies or instruct your web browser to delete or refuse cookies, please visit the help pages of your web browser:
+The Support Portal sets a small number of strictly necessary first-party cookies to:
+
+- keep you signed in to your account on the public forum and on the private priority support area;
+- protect against cross-site request forgery on form submissions and ticket actions;
+- remember your in-portal preferences (for example, sort order or theme) where you have chosen to set them.
+
+These are session cookies (cleared when you close your browser) or short-lived persistent cookies, set with the `Secure`, `HttpOnly`, and `SameSite=Lax` (or `SameSite=Strict`) attributes as appropriate. The Support Portal does not load third-party trackers.
+
+## Your choices regarding cookies
+
+Because all the cookies we set are strictly necessary, the Websites do not display a cookie banner. If you reject or block these cookies in your browser, the marketing site and documentation will continue to work, but you will not be able to remain signed in to the Licensing Portal or the Support Portal.
+
+If you would like to delete cookies or instruct your web browser to delete or refuse cookies, please visit the help pages of your browser:
 
 - Chrome: [https://support.google.com/accounts/answer/32050](https://support.google.com/accounts/answer/32050)
-- Internet Explorer: [http://support.microsoft.com/kb/278835](http://support.microsoft.com/kb/278835)
+- Microsoft Edge: [https://support.microsoft.com/microsoft-edge/delete-cookies-in-microsoft-edge-63947406-40ac-c3b8-57b9-2a946a29ae09](https://support.microsoft.com/microsoft-edge/delete-cookies-in-microsoft-edge-63947406-40ac-c3b8-57b9-2a946a29ae09)
 - Firefox: [https://support.mozilla.org/en-US/kb/delete-cookies-remove-info-websites-stored](https://support.mozilla.org/en-US/kb/delete-cookies-remove-info-websites-stored)
 - Safari: [https://support.apple.com/guide/safari/manage-cookies-and-website-data-sfri11471/mac](https://support.apple.com/guide/safari/manage-cookies-and-website-data-sfri11471/mac)
-- For any other web browser, please visit your web browser's official web pages.
+- For any other web browser, please visit your web browser's official help pages.
 
-### Contact us
+## Changes to this policy
 
-If you have any questions about this Cookies Policy, you can contact us by email at **hello@stalw.art**.
+If we ever introduce non-essential cookies or any third-party tracking technology, we will update this policy and present a consent mechanism before any such cookie is set, in accordance with PECR and the EU ePrivacy Directive.
+
+## Contact us
+
+If you have any questions about this Cookies Policy, you can contact us by email at **privacy@stalw.art**.

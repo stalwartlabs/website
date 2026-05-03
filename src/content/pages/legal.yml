@@ -10,12 +10,6 @@ hero:
 sections:
   - kind: feature-grid
     items:
-      - title: License Agreement (World)
-        body: Stalwart Enterprise License 2.0 (SELv2) Agreement.
-        href: /legal/license-world
-      - title: License Agreement (Europe)
-        body: Stalwart Enterprise License 2.0 (SELv2) Agreement.
-        href: /legal/license-europe
       - title: Terms and Conditions
         body: The legal terms governing access to and use of the Stalwart website and Services.
         href: /legal/terms
@@ -23,26 +17,38 @@ sections:
         body: How we access, collect, store, use, and share your personal information.
         href: /legal/privacy
       - title: Cookies Policy
-        body: What cookies we use, the data they hold, and how to refuse them.
+        body: What cookies we set on the Stalwart Labs websites and how to control them.
         href: /legal/cookies
+      - title: Acceptable Use Policy (AUP)
+        body: Conduct expected of customers and users of the Services, including the Support Portal.
+        href: /legal/aup
       - title: Refund Policy
         body: Order cancellation rights and refund process for Stalwart subscriptions.
         href: /legal/refunds
-      - title: Copyrights
-        body: Trademark and copyright notices for Stalwart Labs Ltd.
+      - title: Copyrights and Trademarks
+        body: Trademark and copyright notices, and the Notice and Takedown Procedure for IP complaints.
         href: /legal/copyrights
+      - title: Vulnerability Disclosure Policy
+        body: How to report security vulnerabilities, our response commitments, and the safe harbour for good-faith research.
+        href: /legal/security
       - title: Data Processing Addendum (DPA)
         body: Data-processing terms for Enterprise customers and Managed Email subscribers.
         href: /legal/dpa
       - title: Sub-processor list
         body: Sub-processors engaged by Stalwart Labs Ltd to deliver paid services.
         href: /legal/subprocessors
-      - title: Acceptable Use Policy (AUP)
-        body: Conduct expected of customers and users of the Services.
-        href: /legal/aup
-      - title: Reseller Agreement
-        body: Software Reseller Agreement
-        href: /legal/reseller
+      - title: License Agreement (World)
+        body: Stalwart Enterprise License 2.0 (SELv2) Agreement (Stalwart Labs LLC, rest of world).
+        href: /legal/license-world
+      - title: License Agreement (Europe)
+        body: Stalwart Enterprise License 2.0 (SELv2) Agreement (Stalwart Labs Ltd, UK / EU / EEA / Switzerland).
+        href: /legal/license-europe
+      - title: Reseller Agreement (World)
+        body: Software Reseller Agreement for resellers contracting with Stalwart Labs LLC.
+        href: /legal/reseller-world
+      - title: Reseller Agreement (Europe)
+        body: Software Reseller Agreement for resellers contracting with Stalwart Labs Ltd in UK / EU / EEA / Switzerland.
+        href: /legal/reseller-europe
 
 footerCta:
   cta: Have a legal or compliance question?
