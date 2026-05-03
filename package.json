@@ -12,6 +12,7 @@
     "build": "astro build",
     "preview": "astro preview --host 127.0.0.1 --port 8787",
     "check:includes": "node ./scripts/expand-includes.mjs --check",
+    "pdfs": "node ./scripts/generate-legal-pdfs.mjs",
     "astro": "astro"
   },
   "dependencies": {
@@ -31,5 +32,9 @@
   },
   "engines": {
     "node": ">=20.0"
+  },
+  "devDependencies": {
+    "pdf-lib": "^1.17.1",
+    "puppeteer": "^24.42.0"
   }
 }

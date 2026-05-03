@@ -25,6 +25,7 @@ const navIndex = sorted.map((e: any) => ({
   description={entry.data.description}
   lastUpdated={entry.data.lastUpdated}
   navIndex={navIndex}
+  pdfHref={`/legal/${entry.id.replace(/\.md$/, "")}.pdf`}
 >
   <Content />
 </LongForm>

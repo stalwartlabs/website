@@ -5,6 +5,8 @@ order: 12
 lastUpdated: May 3, 2026
 ---
 
+# Software Reseller Agreement
+
 This Reseller Agreement is the form executed by resellers established in the United Kingdom, the European Union, the European Economic Area, or Switzerland, contracting with **Stalwart Labs Ltd** (United Kingdom). Resellers established elsewhere should instead execute the [Reseller Agreement (World)](/legal/reseller-world), which is governed by the laws of the State of Wyoming and is contracted with Stalwart Labs LLC.
 
 ---
@@ -47,7 +49,7 @@ Stalwart and Reseller may collectively be referred to as the "Parties" and indiv
 
 ## 3. PRODUCT LICENCE AND END CUSTOMER TERMS
 
-3.1. The Products are licensed by Stalwart on an annual subscription basis. The current pricing is published at: https://license.stalw.art/buy. Stalwart reserves the right to update pricing at any time; however, pricing changes will not apply to active subscriptions already purchased by Reseller until their renewal date.
+3.1. The Products are licensed by Stalwart on an annual subscription basis. The current pricing is published at: https://stalw.art/pricing. Stalwart reserves the right to update pricing at any time; however, pricing changes will not apply to active subscriptions already purchased by Reseller until their renewal date.
 
 3.2. Reseller shall ensure that each End Customer accepts the Master License Agreement prior to or upon delivery of the Products. Reseller shall not deliver License Keys, grant access to the Products, or provision any End Customer account until the End Customer has agreed to the Master License Agreement. Reseller is responsible for maintaining records evidencing each End Customer's acceptance.
 
@@ -226,13 +228,19 @@ IN WITNESS WHEREOF, the Parties have executed this Agreement as of the Effective
 **Stalwart Labs Ltd**
 
 By: \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
-Name:
-Title:
-Date:
+
+Name: \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+
+Title: \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+
+Date: \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
 
 **\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_** *(Reseller)*
 
 By: \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
-Name:
-Title:
-Date:
+
+Name: \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+
+Title: \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+
+Date: \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_

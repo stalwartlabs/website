@@ -5,10 +5,11 @@ interface Props {
   title: string;
   description: string;
   lastUpdated?: string;
+  pdfHref?: string;
   navIndex: { slug: string; title: string; current: boolean }[];
 }
 
-const { title, description, lastUpdated, navIndex } = Astro.props;
+const { title, description, lastUpdated, pdfHref, navIndex } = Astro.props;
 ---
 <Base title={title} description={description}>
   <section class="lf">
@@ -33,9 +34,20 @@ const { title, description, lastUpdated, navIndex } = Astro.props;
       <article class="lf__article">
         <header class="lf__header">
           <h1 class="lf__title">{title}</h1>
-          {lastUpdated && (
-            <p class="lf__meta">Last updated {lastUpdated}</p>
-          )}
+          <div class="lf__meta-row">
+            {lastUpdated && (
+              <p class="lf__meta">Last updated {lastUpdated}</p>
+            )}
+            {pdfHref && (
+              <a class="lf__pdf" href={pdfHref} download>
+                <svg aria-hidden="true" viewBox="0 0 16 16" width="14" height="14" fill="currentColor">
+                  <path d="M8 1a.5.5 0 0 1 .5.5v8.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 1 1 .708-.708L7.5 10.293V1.5A.5.5 0 0 1 8 1Z"/>
+                  <path d="M3 13.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5Z"/>
+                </svg>
+                Download PDF
+              </a>
+            )}
+          </div>
         </header>
         <div class="lf__body prose-body">
           <slot />
@@ -113,10 +125,33 @@ const { title, description, lastUpdated, navIndex } = Astro.props;
     letter-spacing: -0.025em;
     font-weight: 600;
   }
-  .lf__meta {
+  .lf__meta-row {
     margin-top: 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 1.25rem;
+  }
+  .lf__meta {
+    margin: 0;
     color: var(--text-dim);
     font-size: 0.875rem;
+  }
+  .lf__pdf {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    padding: 0.25rem 0.65rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    transition: color var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease), background var(--t-fast) var(--ease);
+  }
+  .lf__pdf:hover {
+    color: var(--text);
+    border-color: var(--border-strong);
+    background: var(--surface);
   }
   .lf__header {
     margin-bottom: 2.5rem;
