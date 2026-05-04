@@ -21,8 +21,8 @@ hero:
     - Pluggable storage
     - Cluster-ready
   visual:
-    kind: placeholder
-    caption: "Diagram needed: layered Stalwart architecture (ingress listeners on top, core protocol handlers in the middle, pluggable storage / search / directory / DNS / blob backends underneath)."
+    kind: diagram
+    id: cluster
 
 sections:
   - kind: list
@@ -39,7 +39,7 @@ sections:
       - "**Container orchestration**: Stalwart runs on Kubernetes, Apache Mesos and Docker Swarm; the orchestrator handles node lifecycle and scaling. See [orchestration overview](/docs/cluster/orchestration/)."
       - "**Multi-region**: nodes split across data centres or regions, paired with a multi-region data store and geo-replicated blob storage; global load balancers or DNS-based routing direct traffic regionally."
 
-  - kind: feature
+  - kind: list
     band: alt
     eyebrow: High availability
     title: Seamless scalability for millions of mailboxes.
@@ -55,12 +55,6 @@ sections:
       - Network partition-tolerant failure detection.
       - Simplified architecture without external coordinators or proxies.
       - Optional message-bus integration (Apache Kafka, Redpanda, NATS, Redis) for teams that already run one.
-    learnMore:
-      - label: Coordination overview
-        href: /docs/cluster/coordination/
-    visual:
-      kind: placeholder
-      caption: "Diagram needed: cluster topology (multiple Stalwart nodes serving every protocol over a shared distributed data + blob store, no external coordinator)."
 
   - kind: list
     reverse: true

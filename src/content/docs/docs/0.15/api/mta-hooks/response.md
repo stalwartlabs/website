@@ -110,7 +110,7 @@ Below is an example of a response object:
         },
         {
             "type": "deleteRecipient",
-            "value": "jane@foobar.com"
+            "value": "jane@foobar.org"
         },
         {
             "type": "replaceContents",

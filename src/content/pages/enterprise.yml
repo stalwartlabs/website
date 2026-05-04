@@ -53,8 +53,8 @@ sections:
       - label: Multi-tenancy reference
         href: /docs/auth/authorization/tenants
     visual:
-      kind: placeholder
-      caption: "Screenshot needed: tenants list with per-tenant disk and principal quota bars and the directory backend column."
+      kind: diagram
+      id: tenants-list
 
   - kind: feature
     reverse: true
@@ -73,8 +73,8 @@ sections:
       - label: Branding reference
         href: /docs/management/webui/branding
     visual:
-      kind: placeholder
-      caption: "Screenshot needed: Two side-by-side WebUI views with different tenant logos and accent colours."
+      kind: diagram
+      id: branding
 
   - kind: feature
     eyebrow: Account archiving and un-deletion
@@ -97,8 +97,10 @@ sections:
       - label: Storage and retention reference
         href: /docs/storage/
     visual:
-      kind: placeholder
-      caption: "Screenshot needed: Archived items list in the WebUI with From / Subject / Received columns."
+      kind: screenshot
+      src: /images/webadmin/undelete.png
+      alt: Stalwart undelete interface
+      url: admin.stalw.art / Account / Archived Items
 
   - kind: feature
     reverse: true
@@ -151,8 +153,8 @@ sections:
       - label: AI model configuration
         href: /docs/server/ai-models
     visual:
-      kind: placeholder
-      caption: "Screenshot needed: AI Model object configured with a hosted endpoint, used in a Sieve script."
+      kind: diagram
+      id: ai-byom
 
   - kind: feature
     reverse: true
@@ -178,7 +180,7 @@ sections:
       kind: screenshot
       src: /images/webadmin/masked-email.png
       alt: Stalwart Account Manager masked email page listing disposable addresses with description and enabled toggle
-      url: account.stalw.art / Credentials / Masked Addresses
+      url: account.stalw.art / Masked Addresses
 
   - kind: feature
     eyebrow: Read replicas and sharded storage
@@ -196,8 +198,8 @@ sections:
       - label: Storage backends
         href: /docs/storage/backends/
     visual:
-      kind: placeholder
-      caption: "Diagram needed: primary data store + read replicas + sharded blob storage + sharded in-memory shards, with read traffic routed to replicas."
+      kind: diagram
+      id: read-replicas
 
   - kind: list
     band: alt

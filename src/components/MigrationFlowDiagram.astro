@@ -1,0 +1,213 @@
+---
+// Source -> tool -> JMAP -> Stalwart. Left column lists the source servers
+// with the protocol Stalwart reads each by; middle column is the migration
+// CLI; right is the destination cluster.
+---
+<div class="mig">
+  <svg viewBox="0 0 720 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Migration tooling flow">
+    <defs>
+      <linearGradient id="mig-flow" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="var(--brand)" stop-opacity="0.55"/>
+        <stop offset="100%" stop-color="var(--brand)" stop-opacity="0.15"/>
+      </linearGradient>
+      <marker id="mig-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0 0 L10 5 L0 10 z" fill="var(--brand)" opacity="0.85"/>
+      </marker>
+    </defs>
+
+    <!-- Sources column -->
+    <g class="mig__src" transform="translate(140 110)">
+      <rect x="-90" y="-22" width="180" height="44" rx="8"/>
+      <text class="mig__src-name" x="-78" y="-3">Postfix + Dovecot</text>
+      <text class="mig__src-proto" x="-78" y="14">on-disk + IMAP</text>
+    </g>
+    <g class="mig__src" transform="translate(140 162)">
+      <rect x="-90" y="-22" width="180" height="44" rx="8"/>
+      <text class="mig__src-name" x="-78" y="-3">Cyrus IMAP</text>
+      <text class="mig__src-proto" x="-78" y="14">on-disk + IMAP</text>
+    </g>
+    <g class="mig__src" transform="translate(140 214)">
+      <rect x="-90" y="-22" width="180" height="44" rx="8"/>
+      <text class="mig__src-name" x="-78" y="-3">Microsoft Exchange</text>
+      <text class="mig__src-proto" x="-78" y="14">EWS / Graph</text>
+    </g>
+    <g class="mig__src" transform="translate(140 266)">
+      <rect x="-90" y="-22" width="180" height="44" rx="8"/>
+      <text class="mig__src-name" x="-78" y="-3">Zimbra</text>
+      <text class="mig__src-proto" x="-78" y="14">IMAP + CalDAV + CardDAV</text>
+    </g>
+    <g class="mig__src" transform="translate(140 318)">
+      <rect x="-90" y="-22" width="180" height="44" rx="8"/>
+      <text class="mig__src-name" x="-78" y="-3">MDaemon · hMailServer</text>
+      <text class="mig__src-proto" x="-78" y="14">IMAP + native</text>
+    </g>
+    <g class="mig__src" transform="translate(140 370)">
+      <rect x="-90" y="-22" width="180" height="44" rx="8"/>
+      <text class="mig__src-name" x="-78" y="-3">Generic IMAP / DAV</text>
+      <text class="mig__src-proto" x="-78" y="14">protocol-only</text>
+    </g>
+
+    <!-- Tool in the middle -->
+    <g class="mig__tool" transform="translate(360 240)">
+      <rect x="-80" y="-90" width="160" height="180" rx="14"/>
+      <text class="mig__tool-name" y="-58">stalwart-cli migrate</text>
+      <g class="mig__phase" transform="translate(0 -28)">
+        <rect x="-58" y="-12" width="116" height="24" rx="12"/>
+        <text>dry run</text>
+      </g>
+      <g class="mig__phase" transform="translate(0 4)">
+        <rect x="-58" y="-12" width="116" height="24" rx="12"/>
+        <text>bulk</text>
+      </g>
+      <g class="mig__phase" transform="translate(0 36)">
+        <rect x="-58" y="-12" width="116" height="24" rx="12"/>
+        <text>delta</text>
+      </g>
+      <g class="mig__phase mig__phase--brand" transform="translate(0 68)">
+        <rect x="-58" y="-12" width="116" height="24" rx="12"/>
+        <text>cutover</text>
+      </g>
+    </g>
+
+    <!-- Destination on the right -->
+    <g class="mig__dst" transform="translate(580 240)">
+      <rect x="-90" y="-90" width="180" height="180" rx="14"/>
+      <text class="mig__dst-name" y="-58">Stalwart</text>
+      <text class="mig__dst-sub" y="-38">cluster</text>
+      <g transform="translate(0 0)">
+        <circle r="22" fill="var(--brand-soft)" stroke="var(--brand)" stroke-width="1.5"/>
+        <text class="mig__dst-pill">JMAP</text>
+      </g>
+      <text class="mig__dst-rec" y="50">mailboxes · folders · flags</text>
+      <text class="mig__dst-rec" y="66">calendars · contacts · ACLs</text>
+    </g>
+
+    <!-- Edges sources -> tool -->
+    <g fill="none" stroke="url(#mig-flow)" stroke-width="1.5" stroke-dasharray="4 4" marker-end="url(#mig-arrow)">
+      <line x1="230" y1="110" x2="280" y2="200"/>
+      <line x1="230" y1="162" x2="280" y2="220"/>
+      <line x1="230" y1="214" x2="280" y2="240"/>
+      <line x1="230" y1="266" x2="280" y2="260"/>
+      <line x1="230" y1="318" x2="280" y2="280"/>
+      <line x1="230" y1="370" x2="280" y2="300"/>
+    </g>
+
+    <!-- Edge tool -> stalwart -->
+    <line class="mig__write" x1="442" y1="240" x2="486" y2="240" stroke="var(--brand)" stroke-width="2" marker-end="url(#mig-arrow)"/>
+    <text class="mig__edge-label" x="464" y="232" text-anchor="middle">write</text>
+
+    <text x="40" y="40" class="mig__title">Source → tool → JMAP → Stalwart</text>
+  </svg>
+</div>
+
+<style>
+  .mig {
+    width: 100%;
+    aspect-ratio: 720 / 460;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: clamp(0.5rem, 1.5vw, 1rem);
+    box-shadow: var(--shadow-1);
+  }
+  .mig svg { width: 100%; height: 100%; overflow: visible; }
+  .mig__title {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    fill: var(--text-dim);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .mig__src rect {
+    fill: var(--surface);
+    stroke: var(--border-strong);
+    stroke-width: 1;
+  }
+  .mig__src-name {
+    fill: var(--text);
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .mig__src-proto {
+    fill: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.04em;
+  }
+
+  .mig__tool rect {
+    fill: var(--brand-soft);
+    stroke: var(--brand);
+    stroke-width: 1.25;
+  }
+  .mig__tool-name {
+    fill: var(--brand);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    text-anchor: middle;
+    dominant-baseline: middle;
+  }
+  .mig__phase rect {
+    fill: var(--surface);
+    stroke: var(--border-strong);
+  }
+  .mig__phase text {
+    fill: var(--text);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-anchor: middle;
+    dominant-baseline: middle;
+    letter-spacing: 0.04em;
+  }
+  .mig__phase--brand rect {
+    fill: var(--brand);
+    stroke: var(--brand);
+  }
+  .mig__phase--brand text { fill: #fff; font-weight: 600; }
+
+  .mig__dst rect {
+    fill: var(--surface-2);
+    stroke: var(--border-strong);
+    stroke-width: 1;
+  }
+  .mig__dst-name {
+    fill: var(--text);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 700;
+    text-anchor: middle;
+  }
+  .mig__dst-sub {
+    fill: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-anchor: middle;
+    letter-spacing: 0.04em;
+  }
+  .mig__dst-pill {
+    fill: var(--brand);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    text-anchor: middle;
+    dominant-baseline: middle;
+  }
+  .mig__dst-rec {
+    fill: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    text-anchor: middle;
+    letter-spacing: 0.04em;
+  }
+
+  .mig__edge-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    fill: var(--brand);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+</style>

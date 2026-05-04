@@ -1,0 +1,168 @@
+---
+// Decision diagram for the LLM-driven branch of the spam classifier.
+// Messages enter the classifier; high-confidence verdicts exit straight to
+// inbox / reject; uncertain verdicts branch to the LLM endpoint, whose
+// answer feeds back into the score and on to the outcome lanes.
+---
+<div class="llm">
+  <svg viewBox="0 0 720 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="LLM-assisted spam decision flow">
+    <defs>
+      <linearGradient id="llm-flow" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="var(--brand)" stop-opacity="0.55"/>
+        <stop offset="100%" stop-color="var(--brand)" stop-opacity="0.15"/>
+      </linearGradient>
+      <marker id="llm-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0 0 L10 5 L0 10 z" fill="var(--brand)" opacity="0.85"/>
+      </marker>
+    </defs>
+
+    <!-- Inbound: Message -->
+    <g class="llm__node" transform="translate(80 230)">
+      <rect x="-50" y="-26" width="100" height="52" rx="10"/>
+      <text class="llm__node-name">Message</text>
+      <text class="llm__node-sub" y="14">inbound</text>
+    </g>
+
+    <!-- Classifier -->
+    <g class="llm__node llm__node--brand" transform="translate(260 230)">
+      <rect x="-66" y="-30" width="132" height="60" rx="10"/>
+      <text class="llm__node-name">Classifier</text>
+      <text class="llm__node-sub" y="14">FTRL + features</text>
+    </g>
+
+    <!-- LLM endpoint (top branch) -->
+    <g class="llm__node llm__node--brand" transform="translate(500 110)">
+      <rect x="-110" y="-34" width="220" height="68" rx="10"/>
+      <text class="llm__node-name">LLM endpoint</text>
+      <text class="llm__node-sub" y="14">OpenAI · Anthropic · vLLM · LocalAI</text>
+    </g>
+
+    <!-- Outcome lanes (right) -->
+    <g class="llm__lane llm__lane--inbox" transform="translate(620 200)">
+      <rect x="-60" y="-22" width="120" height="44" rx="22"/>
+      <text>Inbox</text>
+    </g>
+    <g class="llm__lane llm__lane--quarantine" transform="translate(620 260)">
+      <rect x="-60" y="-22" width="120" height="44" rx="22"/>
+      <text>Quarantine</text>
+    </g>
+    <g class="llm__lane llm__lane--reject" transform="translate(620 320)">
+      <rect x="-60" y="-22" width="120" height="44" rx="22"/>
+      <text>Reject</text>
+    </g>
+
+    <!-- Edges -->
+    <g fill="none" stroke="url(#llm-flow)" stroke-width="2" marker-end="url(#llm-arrow)">
+      <!-- inbound -> classifier -->
+      <line x1="130" y1="230" x2="190" y2="230"/>
+      <!-- classifier -> high-confidence: directly to inbox / reject -->
+      <path d="M 326 220 C 420 200, 520 200, 560 200"/>
+      <path d="M 326 240 C 420 280, 520 320, 560 320"/>
+      <!-- classifier -> uncertain branch (up to LLM) -->
+      <path class="llm__uncertain" d="M 290 200 C 320 140, 380 110, 414 110"/>
+      <!-- LLM -> back into classifier (verdict returned) -->
+      <path class="llm__feedback" d="M 500 144 C 470 200, 360 220, 326 230"/>
+      <!-- LLM -> quarantine (when LLM flags suspicious) -->
+      <path d="M 586 130 C 620 160, 620 220, 580 260"/>
+    </g>
+
+    <!-- Labels on edges -->
+    <text class="llm__edge-label" x="320" y="146" text-anchor="middle">score within ±1.0</text>
+    <text class="llm__edge-label llm__edge-label--brand" x="466" y="186" text-anchor="middle">verdict</text>
+    <text class="llm__edge-label" x="450" y="218">high spam</text>
+    <text class="llm__edge-label" x="450" y="282">high ham</text>
+
+    <text x="40" y="40" class="llm__title">Spam decision flow</text>
+  </svg>
+</div>
+
+<style>
+  .llm {
+    width: 100%;
+    aspect-ratio: 720 / 460;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: clamp(0.5rem, 1.5vw, 1rem);
+    box-shadow: var(--shadow-1);
+  }
+  .llm svg { width: 100%; height: 100%; overflow: visible; }
+
+  .llm__title {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    fill: var(--text-dim);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .llm__caption {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    fill: var(--text-muted);
+  }
+
+  .llm__node rect {
+    fill: var(--surface-2);
+    stroke: var(--border-strong);
+    stroke-width: 1;
+  }
+  .llm__node-name {
+    fill: var(--text);
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 600;
+    text-anchor: middle;
+    dominant-baseline: middle;
+  }
+  .llm__node-sub {
+    fill: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    text-anchor: middle;
+    dominant-baseline: middle;
+    letter-spacing: 0.04em;
+  }
+  .llm__node--brand rect {
+    fill: var(--brand-soft);
+    stroke: var(--brand);
+  }
+  .llm__node--brand .llm__node-name { fill: var(--brand); }
+
+  .llm__lane rect {
+    fill: var(--surface);
+    stroke: var(--border-strong);
+    stroke-width: 1;
+  }
+  .llm__lane text {
+    fill: var(--text);
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 600;
+    text-anchor: middle;
+    dominant-baseline: middle;
+  }
+  .llm__lane--inbox rect      { stroke: #2dba6c; }
+  .llm__lane--inbox text      { fill: #2dba6c; }
+  .llm__lane--quarantine rect { stroke: #d6a72c; }
+  .llm__lane--quarantine text { fill: #d6a72c; }
+  .llm__lane--reject rect     { stroke: var(--brand); }
+  .llm__lane--reject text     { fill: var(--brand); }
+
+  .llm__uncertain {
+    stroke: var(--brand);
+    stroke-opacity: 0.85;
+    stroke-dasharray: 5 4;
+  }
+  .llm__feedback {
+    stroke: var(--brand);
+    stroke-opacity: 0.7;
+    stroke-dasharray: 3 4;
+  }
+  .llm__edge-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    fill: var(--text-muted);
+    letter-spacing: 0.04em;
+  }
+  .llm__edge-label--brand { fill: var(--brand); }
+</style>

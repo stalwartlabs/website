@@ -47,8 +47,8 @@ sections:
       - label: Read the Calendar docs
         href: /docs/collaboration/calendar
     visual:
-      kind: placeholder
-      caption: "Screenshot needed: calendars list with sharing badges, or an event editor with attendees and recurrence (something more visual than the per-calendar settings form already used as the page hero)."
+      kind: diagram
+      id: calendar-grid
 
   - kind: feature
     reverse: true
@@ -72,8 +72,8 @@ sections:
       - label: Read Scheduling
         href: /docs/collaboration/scheduling
     visual:
-      kind: placeholder
-      caption: "Diagram needed: iTIP/iMIP scheduling flow showing internal CalDAV peers vs external email recipients."
+      kind: diagram
+      id: itip-imip
 
   - kind: feature
     eyebrow: Contacts
@@ -95,8 +95,8 @@ sections:
       - label: Read the Contacts docs
         href: /docs/collaboration/contact
     visual:
-      kind: placeholder
-      caption: "Screenshot needed: CardDAV address-book view in the WebUI."
+      kind: diagram
+      id: contacts-sync
 
   - kind: feature
     reverse: true
@@ -119,8 +119,8 @@ sections:
       - label: Read File Storage
         href: /docs/collaboration/file-storage
     visual:
-      kind: placeholder
-      caption: "Screenshot needed: WebDAV file storage view in the WebUI."
+      kind: diagram
+      id: file-browser
 
   - kind: feature
     eyebrow: Sharing
@@ -162,8 +162,8 @@ sections:
       - label: Read Notifications
         href: /docs/collaboration/notifications
     visual:
-      kind: placeholder
-      caption: "Diagram needed: VALARM/ACTION:EMAIL fallback path with @email marker."
+      kind: diagram
+      id: valarm-email
 
   - kind: list
     eyebrow: Discovery and clients

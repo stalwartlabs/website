@@ -1,0 +1,188 @@
+---
+// SMTP filter pipeline. Six horizontal stages with four parallel processor
+// rows running across the bottom; markers light up where each processor fires.
+---
+<div class="pipe">
+  <svg viewBox="0 0 720 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Stalwart SMTP filter pipeline">
+    <defs>
+      <linearGradient id="pipe-flow" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="var(--brand)" stop-opacity="0.55"/>
+        <stop offset="100%" stop-color="var(--brand)" stop-opacity="0.15"/>
+      </linearGradient>
+      <marker id="pipe-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0 0 L10 5 L0 10 z" fill="var(--brand)" opacity="0.8"/>
+      </marker>
+    </defs>
+
+    <!-- Spine line -->
+    <line x1="200" y1="80" x2="680" y2="80" stroke="url(#pipe-flow)" stroke-width="2" marker-end="url(#pipe-arrow)"/>
+
+    <!-- Stage chips (six SMTP stages) -->
+    <g class="pipe__stages">
+      <g class="pipe__stage" transform="translate(248 80)">
+        <circle r="22"/>
+        <text class="pipe__stage-name" y="2">connect</text>
+      </g>
+      <g class="pipe__stage" transform="translate(332 80)">
+        <circle r="22"/>
+        <text class="pipe__stage-name" y="2">EHLO</text>
+      </g>
+      <g class="pipe__stage" transform="translate(416 80)">
+        <circle r="22"/>
+        <text class="pipe__stage-name" y="2">AUTH</text>
+      </g>
+      <g class="pipe__stage" transform="translate(500 80)">
+        <circle r="22"/>
+        <text class="pipe__stage-name" y="2">MAIL</text>
+      </g>
+      <g class="pipe__stage" transform="translate(584 80)">
+        <circle r="22"/>
+        <text class="pipe__stage-name" y="2">RCPT</text>
+      </g>
+      <g class="pipe__stage cipe__stage--end" transform="translate(660 80)">
+        <circle r="22"/>
+        <text class="pipe__stage-name" y="2">DATA</text>
+      </g>
+    </g>
+
+    <!-- Processor rails (4 rows) -->
+    <g class="pipe__rails">
+      <text x="190" y="170" class="pipe__rail-label" text-anchor="end">built-in filter</text>
+      <text x="190" y="240" class="pipe__rail-label" text-anchor="end">Sieve</text>
+      <text x="190" y="310" class="pipe__rail-label" text-anchor="end">Milter</text>
+      <text x="190" y="380" class="pipe__rail-label" text-anchor="end">MTA Hooks</text>
+
+      <line x1="220" y1="170" x2="680" y2="170"/>
+      <line x1="220" y1="240" x2="680" y2="240"/>
+      <line x1="220" y1="310" x2="680" y2="310"/>
+      <line x1="220" y1="380" x2="680" y2="380"/>
+    </g>
+
+    <!-- Hook markers: which processor fires at which stage -->
+    <g class="pipe__hooks">
+      <!-- built-in filter: connect, MAIL, RCPT, DATA -->
+      <circle class="pipe__hook pipe__hook--on" cx="248" cy="170" r="6"/>
+      <circle class="pipe__hook" cx="332" cy="170" r="6"/>
+      <circle class="pipe__hook" cx="416" cy="170" r="6"/>
+      <circle class="pipe__hook pipe__hook--on" cx="500" cy="170" r="6"/>
+      <circle class="pipe__hook pipe__hook--on" cx="584" cy="170" r="6"/>
+      <circle class="pipe__hook pipe__hook--on pipe__hook--strong" cx="660" cy="170" r="6"/>
+
+      <!-- Sieve: AUTH, MAIL, RCPT, DATA -->
+      <circle class="pipe__hook" cx="248" cy="240" r="6"/>
+      <circle class="pipe__hook" cx="332" cy="240" r="6"/>
+      <circle class="pipe__hook pipe__hook--on" cx="416" cy="240" r="6"/>
+      <circle class="pipe__hook pipe__hook--on" cx="500" cy="240" r="6"/>
+      <circle class="pipe__hook pipe__hook--on" cx="584" cy="240" r="6"/>
+      <circle class="pipe__hook pipe__hook--on pipe__hook--strong" cx="660" cy="240" r="6"/>
+
+      <!-- Milter: connect, MAIL, RCPT, DATA -->
+      <circle class="pipe__hook pipe__hook--on" cx="248" cy="310" r="6"/>
+      <circle class="pipe__hook" cx="332" cy="310" r="6"/>
+      <circle class="pipe__hook" cx="416" cy="310" r="6"/>
+      <circle class="pipe__hook pipe__hook--on" cx="500" cy="310" r="6"/>
+      <circle class="pipe__hook pipe__hook--on" cx="584" cy="310" r="6"/>
+      <circle class="pipe__hook pipe__hook--on pipe__hook--strong" cx="660" cy="310" r="6"/>
+
+      <!-- MTA Hooks: any stage; light most common ones -->
+      <circle class="pipe__hook pipe__hook--on" cx="248" cy="380" r="6"/>
+      <circle class="pipe__hook pipe__hook--on" cx="332" cy="380" r="6"/>
+      <circle class="pipe__hook pipe__hook--on" cx="416" cy="380" r="6"/>
+      <circle class="pipe__hook pipe__hook--on" cx="500" cy="380" r="6"/>
+      <circle class="pipe__hook pipe__hook--on" cx="584" cy="380" r="6"/>
+      <circle class="pipe__hook pipe__hook--on pipe__hook--strong" cx="660" cy="380" r="6"/>
+    </g>
+
+    <!-- Vertical guide lines from stage to rails (subtle) -->
+    <g class="pipe__guides" stroke="var(--border)" stroke-width="1" stroke-dasharray="2 4" opacity="0.5">
+      <line x1="248" y1="105" x2="248" y2="395"/>
+      <line x1="332" y1="105" x2="332" y2="395"/>
+      <line x1="416" y1="105" x2="416" y2="395"/>
+      <line x1="500" y1="105" x2="500" y2="395"/>
+      <line x1="584" y1="105" x2="584" y2="395"/>
+      <line x1="660" y1="105" x2="660" y2="395"/>
+    </g>
+
+    <text x="40" y="40" class="pipe__title">SMTP stages</text>
+  </svg>
+</div>
+
+<style>
+  .pipe {
+    width: 100%;
+    aspect-ratio: 720 / 460;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: clamp(0.5rem, 1.5vw, 1rem);
+    box-shadow: var(--shadow-1);
+  }
+  .pipe svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  .pipe__title {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    fill: var(--text-dim);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .pipe__caption {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    fill: var(--text-muted);
+  }
+
+  .pipe__stage circle {
+    fill: var(--surface);
+    stroke: var(--border-strong);
+    stroke-width: 1.5;
+  }
+  .pipe__stage-name {
+    fill: var(--text);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    text-anchor: middle;
+    dominant-baseline: middle;
+    letter-spacing: 0.04em;
+  }
+  .cipe__stage--end circle {
+    fill: var(--brand-soft);
+    stroke: var(--brand);
+  }
+  .cipe__stage--end .pipe__stage-name {
+    fill: var(--brand);
+    font-weight: 600;
+  }
+
+  .pipe__rails line {
+    stroke: var(--border);
+    stroke-width: 1;
+    stroke-dasharray: 4 4;
+  }
+  .pipe__rail-label {
+    font-family: var(--font-sans);
+    font-size: 12px;
+    fill: var(--text-muted);
+    font-weight: 500;
+  }
+
+  .pipe__hook {
+    fill: var(--surface-3);
+    stroke: var(--border);
+    stroke-width: 1;
+  }
+  .pipe__hook--on {
+    fill: var(--brand);
+    stroke: var(--brand);
+    fill-opacity: 0.6;
+  }
+  .pipe__hook--strong {
+    fill: var(--brand);
+    fill-opacity: 1;
+    filter: drop-shadow(0 0 6px var(--brand-glow));
+  }
+</style>

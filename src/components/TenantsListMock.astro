@@ -1,0 +1,187 @@
+---
+// Tenants list mock: three rows showing per-tenant disk and principal
+// quota bars and a directory-backend pill (LDAP / OIDC / internal).
+---
+<div class="ten">
+  <svg viewBox="0 0 720 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Per-tenant quotas and identity backends">
+    <text x="40" y="40" class="ten__title">Many organisations on the same deployment</text>
+
+    <!-- Outer card -->
+    <rect x="40" y="64" width="640" height="356" rx="14" fill="var(--surface)" stroke="var(--border-strong)"/>
+
+    <!-- Header row -->
+    <g transform="translate(40 80)">
+      <rect x="0" y="0" width="640" height="36" rx="0" fill="var(--surface-2)"/>
+      <text class="ten__col-head" x="20"  y="20">Tenant</text>
+      <text class="ten__col-head" x="180" y="20">Disk quota</text>
+      <text class="ten__col-head" x="370" y="20">Principals</text>
+      <text class="ten__col-head" x="540" y="20">IdP</text>
+    </g>
+
+    <!-- Tenant 1: Acme -->
+    <g class="ten__row" transform="translate(40 132)">
+      <rect x="0" y="0" width="640" height="84"/>
+      <g transform="translate(20 24)">
+        <circle r="14" fill="var(--brand-soft)" stroke="var(--brand)" stroke-width="1.25"/>
+        <text class="ten__avatar">A</text>
+      </g>
+      <text class="ten__name"   x="48" y="22">Acme Corp</text>
+      <text class="ten__domain" x="48" y="40">acme.com · 3 domains</text>
+
+      <g transform="translate(180 50)">
+        <rect class="ten__bar-bg" x="0" y="0" width="160" height="10" rx="5"/>
+        <rect class="ten__bar"    x="0" y="0" width="98" height="10" rx="5"/>
+        <text class="ten__bar-label" x="0"  y="28">61% · 122 GB / 200 GB</text>
+      </g>
+      <g transform="translate(370 50)">
+        <rect class="ten__bar-bg" x="0" y="0" width="140" height="10" rx="5"/>
+        <rect class="ten__bar"    x="0" y="0" width="84" height="10" rx="5"/>
+        <text class="ten__bar-label" x="0" y="28">300 / 500 users</text>
+      </g>
+      <g class="ten__pill ten__pill--ldap" transform="translate(580 36)">
+        <rect x="-44" y="-12" width="88" height="24" rx="12"/>
+        <text>LDAP</text>
+      </g>
+    </g>
+
+    <!-- Tenant 2: Foobar -->
+    <g class="ten__row ten__row--alt" transform="translate(40 220)">
+      <rect x="0" y="0" width="640" height="84"/>
+      <g transform="translate(20 24)">
+        <circle r="14" fill="rgba(45, 186, 108, 0.18)" stroke="#2dba6c" stroke-width="1.25"/>
+        <text class="ten__avatar" style="fill: #2dba6c">G</text>
+      </g>
+      <text class="ten__name"   x="48" y="22">Foobar Industries</text>
+      <text class="ten__domain" x="48" y="40">foobar.org · 1 domain</text>
+
+      <g transform="translate(180 50)">
+        <rect class="ten__bar-bg" x="0" y="0" width="160" height="10" rx="5"/>
+        <rect class="ten__bar"    x="0" y="0" width="38" height="10" rx="5"/>
+        <text class="ten__bar-label" x="0" y="28">24% · 47 GB / 200 GB</text>
+      </g>
+      <g transform="translate(370 50)">
+        <rect class="ten__bar-bg" x="0" y="0" width="140" height="10" rx="5"/>
+        <rect class="ten__bar"    x="0" y="0" width="50" height="10" rx="5"/>
+        <text class="ten__bar-label" x="0" y="28">120 / 350 users</text>
+      </g>
+      <g class="ten__pill ten__pill--oidc" transform="translate(580 36)">
+        <rect x="-44" y="-12" width="88" height="24" rx="12"/>
+        <text>OIDC</text>
+      </g>
+    </g>
+
+    <!-- Tenant 3: Initech -->
+    <g class="ten__row" transform="translate(40 308)">
+      <rect x="0" y="0" width="640" height="84"/>
+      <g transform="translate(20 24)">
+        <circle r="14" fill="rgba(214, 167, 44, 0.2)" stroke="#d6a72c" stroke-width="1.25"/>
+        <text class="ten__avatar" style="fill: #d6a72c">I</text>
+      </g>
+      <text class="ten__name"   x="48" y="22">Initech Software</text>
+      <text class="ten__domain" x="48" y="40">initech.io · 2 domains</text>
+
+      <g transform="translate(180 50)">
+        <rect class="ten__bar-bg" x="0" y="0" width="160" height="10" rx="5"/>
+        <rect class="ten__bar ten__bar--warn"    x="0" y="0" width="142" height="10" rx="5"/>
+        <text class="ten__bar-label" x="0" y="28">89% · 89 GB / 100 GB</text>
+      </g>
+      <g transform="translate(370 50)">
+        <rect class="ten__bar-bg" x="0" y="0" width="140" height="10" rx="5"/>
+        <rect class="ten__bar"    x="0" y="0" width="62" height="10" rx="5"/>
+        <text class="ten__bar-label" x="0" y="28">88 / 200 users</text>
+      </g>
+      <g class="ten__pill" transform="translate(580 36)">
+        <rect x="-44" y="-12" width="88" height="24" rx="12"/>
+        <text>internal</text>
+      </g>
+    </g>
+  </svg>
+</div>
+
+<style>
+  .ten {
+    width: 100%;
+    aspect-ratio: 720 / 460;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: clamp(0.5rem, 1.5vw, 1rem);
+    box-shadow: var(--shadow-1);
+  }
+  .ten svg { width: 100%; height: 100%; overflow: visible; }
+  .ten__title {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    fill: var(--text-dim);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .ten__col-head {
+    fill: var(--text-dim);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    dominant-baseline: middle;
+  }
+  .ten__row rect { fill: var(--surface); stroke: var(--border); stroke-width: 1; }
+  .ten__row--alt rect { fill: var(--surface-2); }
+
+  .ten__avatar {
+    fill: var(--brand);
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 700;
+    text-anchor: middle;
+    dominant-baseline: middle;
+  }
+  .ten__name {
+    fill: var(--text);
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 600;
+    dominant-baseline: middle;
+  }
+  .ten__domain {
+    fill: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    dominant-baseline: middle;
+    letter-spacing: 0.04em;
+  }
+
+  .ten__bar-bg {
+    fill: rgba(255, 255, 255, 0.06);
+    stroke: none;
+  }
+  .ten__bar {
+    fill: var(--brand);
+    stroke: none;
+  }
+  .ten__bar--warn { fill: #d6a72c; }
+  .ten__bar-label {
+    fill: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    dominant-baseline: middle;
+    letter-spacing: 0.04em;
+  }
+
+  .ten__pill rect {
+    fill: var(--surface-2);
+    stroke: var(--border-strong);
+    stroke-width: 1;
+  }
+  .ten__pill text {
+    fill: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-anchor: middle;
+    dominant-baseline: middle;
+    letter-spacing: 0.04em;
+  }
+  .ten__pill--ldap rect { fill: var(--brand-soft); stroke: var(--brand); }
+  .ten__pill--ldap text { fill: var(--brand); font-weight: 600; }
+  .ten__pill--oidc rect { fill: rgba(45, 186, 108, 0.18); stroke: #2dba6c; }
+  .ten__pill--oidc text { fill: #2dba6c; font-weight: 600; }
+</style>

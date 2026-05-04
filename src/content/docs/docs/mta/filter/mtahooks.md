@@ -149,13 +149,13 @@ Below is an example of a request object received by the MTA hooks API:
         },
         "to": [
             {
-                "address": "bill@foobar.com",
+                "address": "bill@foobar.org",
                 "parameters": {
-                    "orcpt": "rfc822; b@foobar.com"
+                    "orcpt": "rfc822; b@foobar.org"
                 }
             },
             {
-                "address": "jane@foobar.com",
+                "address": "jane@foobar.org",
                 "parameters": null
             }
         ]
@@ -168,7 +168,7 @@ Below is an example of a request object received by the MTA hooks API:
             ],
             [
                 "To",
-                "Bill <bill@foobar.com>, Jane <jane@foobar.com>"
+                "Bill <bill@foobar.org>, Jane <jane@foobar.org>"
             ],
             [
                 "Subject",
@@ -178,7 +178,7 @@ Below is an example of a request object received by the MTA hooks API:
         "serverHeaders": [
             [
                 "Received",
-                "from mail.example.com (mail.example.com [192.168.1.1]) by mail.foobar.com (Stalwart) with ESMTPS id 1234567890"
+                "from mail.example.com (mail.example.com [192.168.1.1]) by mail.foobar.org (Stalwart) with ESMTPS id 1234567890"
             ]
         ],
         "contents": "Hello, World!\r\n",
@@ -296,7 +296,7 @@ Below is an example of a response object:
         },
         {
             "type": "deleteRecipient",
-            "value": "jane@foobar.com"
+            "value": "jane@foobar.org"
         },
         {
             "type": "replaceContents",

@@ -1,0 +1,151 @@
+---
+// "Bring your own model" provider strip flowing into a single Stalwart
+// endpoint badge, with two outflows (classifier auto-call, Sieve operator
+// call).
+---
+<div class="byom">
+  <svg viewBox="0 0 720 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bring your own AI model">
+    <defs>
+      <linearGradient id="byom-flow" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="var(--brand)" stop-opacity="0.55"/>
+        <stop offset="100%" stop-color="var(--brand)" stop-opacity="0.15"/>
+      </linearGradient>
+      <marker id="byom-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0 0 L10 5 L0 10 z" fill="var(--brand)" opacity="0.85"/>
+      </marker>
+    </defs>
+
+    <!-- Provider row (top) -->
+    <g class="byom__provider" transform="translate(120 100)">
+      <rect x="-72" y="-26" width="144" height="52" rx="10"/>
+      <text class="byom__name" y="-3">OpenAI</text>
+      <text class="byom__sub"  y="13">api.openai.com/v1</text>
+    </g>
+    <g class="byom__provider" transform="translate(290 100)">
+      <rect x="-72" y="-26" width="144" height="52" rx="10"/>
+      <text class="byom__name" y="-3">Anthropic</text>
+      <text class="byom__sub"  y="13">OpenAI-compat shim</text>
+    </g>
+    <g class="byom__provider" transform="translate(460 100)">
+      <rect x="-72" y="-26" width="144" height="52" rx="10"/>
+      <text class="byom__name" y="-3">vLLM / LocalAI</text>
+      <text class="byom__sub"  y="13">self-hosted Llama</text>
+    </g>
+    <g class="byom__provider" transform="translate(630 100)">
+      <rect x="-72" y="-26" width="144" height="52" rx="10"/>
+      <text class="byom__name" y="-3">Any OpenAI-compat</text>
+      <text class="byom__sub"  y="13">/v1/chat/completions</text>
+    </g>
+
+    <!-- Endpoint badge (middle) -->
+    <g transform="translate(360 230)">
+      <rect class="byom__endpoint" x="-150" y="-32" width="300" height="64" rx="12"/>
+      <text class="byom__endpoint-name" y="-6">AiModel endpoint</text>
+      <text class="byom__endpoint-sub"  y="14">one shape, any backend</text>
+    </g>
+
+    <!-- Top fan-in -->
+    <g fill="none" stroke="url(#byom-flow)" stroke-width="1.5" stroke-dasharray="4 4" marker-end="url(#byom-arrow)">
+      <line x1="120" y1="126" x2="290" y2="200"/>
+      <line x1="290" y1="126" x2="340" y2="200"/>
+      <line x1="460" y1="126" x2="380" y2="200"/>
+      <line x1="630" y1="126" x2="430" y2="200"/>
+    </g>
+
+    <!-- Two consumers (bottom) -->
+    <g class="byom__consumer" transform="translate(220 370)">
+      <rect x="-110" y="-28" width="220" height="56" rx="10"/>
+      <text class="byom__name" y="-6">Spam classifier</text>
+      <text class="byom__sub"  y="12">auto-call on uncertain messages</text>
+    </g>
+    <g class="byom__consumer byom__consumer--brand" transform="translate(500 370)">
+      <rect x="-110" y="-28" width="220" height="56" rx="10"/>
+      <text class="byom__name" y="-6">Sieve scripts</text>
+      <text class="byom__sub"  y="12">operator-defined ai.classify(...)</text>
+    </g>
+
+    <!-- Endpoint -> consumers -->
+    <g fill="none" stroke="var(--brand)" stroke-width="1.5" stroke-opacity="0.7" marker-end="url(#byom-arrow)">
+      <path d="M 290 262 C 250 300, 230 320, 220 342"/>
+      <path d="M 430 262 C 470 300, 490 320, 500 342"/>
+    </g>
+
+    <text x="40" y="40" class="byom__title">Bring your own model · use it everywhere</text>
+  </svg>
+</div>
+
+<style>
+  .byom {
+    width: 100%;
+    aspect-ratio: 720 / 460;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: clamp(0.5rem, 1.5vw, 1rem);
+    box-shadow: var(--shadow-1);
+  }
+  .byom svg { width: 100%; height: 100%; overflow: visible; }
+
+  .byom__title {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    fill: var(--text-dim);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .byom__caption {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    fill: var(--text-muted);
+  }
+
+  .byom__provider rect, .byom__consumer rect {
+    fill: var(--surface-2);
+    stroke: var(--border-strong);
+    stroke-width: 1;
+  }
+  .byom__consumer--brand rect {
+    fill: var(--brand-soft);
+    stroke: var(--brand);
+  }
+
+  .byom__name {
+    fill: var(--text);
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 600;
+    text-anchor: middle;
+    dominant-baseline: middle;
+  }
+  .byom__sub {
+    fill: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    text-anchor: middle;
+    dominant-baseline: middle;
+    letter-spacing: 0.04em;
+  }
+
+  .byom__endpoint {
+    fill: var(--brand-soft);
+    stroke: var(--brand);
+    stroke-width: 1.5;
+  }
+  .byom__endpoint-name {
+    fill: var(--brand);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 700;
+    text-anchor: middle;
+    dominant-baseline: middle;
+  }
+  .byom__endpoint-sub {
+    fill: var(--brand);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-anchor: middle;
+    dominant-baseline: middle;
+    letter-spacing: 0.04em;
+    opacity: 0.85;
+  }
+</style>

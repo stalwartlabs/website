@@ -72,8 +72,8 @@ sections:
       - Parallel per-mailbox; the throughput target on a typical migration is bound by the source server, not Stalwart.
       - Dry-run mode that produces a per-account report (mailbox count, message count, total size, anomalies) before any data is written.
     visual:
-      kind: placeholder
-      caption: "Diagram needed: source servers (Postfix, Cyrus, Exchange, ...) feeding into the migration tooling, which writes through JMAP into Stalwart."
+      kind: diagram
+      id: migration
 
   - kind: list
     band: alt

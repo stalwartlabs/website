@@ -1,0 +1,250 @@
+---
+// File-browser mock: left rail with a folder tree, main pane with file
+// rows, unified mail+files quota bar at the bottom.
+---
+<div class="fb">
+  <svg viewBox="0 0 720 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="File browser with unified mail and files quota">
+    <text x="40" y="40" class="fb__title">Files alongside the mail</text>
+
+    <!-- Outer card -->
+    <rect x="40" y="64" width="640" height="356" rx="14" fill="var(--surface)" stroke="var(--border-strong)"/>
+
+    <!-- Left rail with folder tree -->
+    <rect x="40" y="64" width="180" height="356" rx="14" fill="var(--surface-2)"/>
+    <line x1="220" y1="64" x2="220" y2="420" stroke="var(--border)" stroke-width="1"/>
+
+    <g class="fb__nav" transform="translate(56 92)">
+      <text x="0" y="0" class="fb__nav-section">MAIL</text>
+      <g transform="translate(0 18)" class="fb__nav-item">
+        <text x="14" y="14">Inbox</text>
+        <text x="148" y="14" class="fb__nav-count">128</text>
+      </g>
+      <g transform="translate(0 38)" class="fb__nav-item">
+        <text x="14" y="14">Sent</text>
+      </g>
+      <g transform="translate(0 58)" class="fb__nav-item">
+        <text x="14" y="14">Archive</text>
+      </g>
+
+      <text x="0" y="100" class="fb__nav-section">FILES</text>
+      <g transform="translate(0 118)" class="fb__nav-item fb__nav-item--active">
+        <rect x="-8" y="-2" width="160" height="22" rx="6"/>
+        <text x="14" y="14">My files</text>
+      </g>
+      <g transform="translate(0 138)" class="fb__nav-item">
+        <text x="14" y="14">Shared with me</text>
+      </g>
+      <g transform="translate(0 158)" class="fb__nav-item">
+        <text x="14" y="14">Recents</text>
+      </g>
+
+      <text x="0" y="200" class="fb__nav-section">CALENDARS</text>
+      <g transform="translate(0 218)" class="fb__nav-item">
+        <text x="14" y="14">Personal</text>
+      </g>
+      <g transform="translate(0 238)" class="fb__nav-item">
+        <text x="14" y="14">Team</text>
+      </g>
+    </g>
+
+    <!-- Main pane: breadcrumb + file rows -->
+    <g transform="translate(240 84)">
+      <text class="fb__crumb" x="0" y="14">My files / Reports / 2026-Q1</text>
+    </g>
+
+    <!-- Column headers -->
+    <g transform="translate(240 120)">
+      <text class="fb__col-head" x="0"   y="0">Name</text>
+      <text class="fb__col-head" x="240" y="0">Size</text>
+      <text class="fb__col-head" x="320" y="0">Modified</text>
+    </g>
+    <line x1="240" y1="130" x2="660" y2="130" stroke="var(--border)" stroke-width="1"/>
+
+    <!-- File rows -->
+    <g class="fb__rows">
+      <g transform="translate(240 144)">
+        <text class="fb__icon" x="0" y="14">📁</text>
+        <text class="fb__name" x="22" y="14">Background</text>
+        <text class="fb__size" x="240" y="14">--</text>
+        <text class="fb__mod"  x="320" y="14">2 Mar 2026</text>
+      </g>
+      <g transform="translate(240 172)">
+        <text class="fb__icon" x="0" y="14">📄</text>
+        <text class="fb__name" x="22" y="14">Q1-Summary.pdf</text>
+        <text class="fb__size" x="240" y="14">183 KB</text>
+        <text class="fb__mod"  x="320" y="14">8 Mar 2026</text>
+        <g class="fb__shared-badge" transform="translate(168 7)"><rect x="-22" y="-9" width="44" height="18" rx="9"/><text>shared</text></g>
+      </g>
+      <g transform="translate(240 200)">
+        <text class="fb__icon" x="0" y="14">📊</text>
+        <text class="fb__name" x="22" y="14">Forecast.xlsx</text>
+        <text class="fb__size" x="240" y="14">412 KB</text>
+        <text class="fb__mod"  x="320" y="14">12 Mar 2026</text>
+      </g>
+      <g transform="translate(240 228)">
+        <text class="fb__icon" x="0" y="14">🖼</text>
+        <text class="fb__name" x="22" y="14">team-photo.jpg</text>
+        <text class="fb__size" x="240" y="14">2.1 MB</text>
+        <text class="fb__mod"  x="320" y="14">17 Mar 2026</text>
+      </g>
+      <g transform="translate(240 256)">
+        <text class="fb__icon" x="0" y="14">📑</text>
+        <text class="fb__name" x="22" y="14">customer-stories.docx</text>
+        <text class="fb__size" x="240" y="14">86 KB</text>
+        <text class="fb__mod"  x="320" y="14">22 Mar 2026</text>
+      </g>
+    </g>
+
+    <!-- Quota bar at bottom of card -->
+    <g transform="translate(240 350)">
+      <text class="fb__quota-label" x="0" y="0">Storage used</text>
+      <text class="fb__quota-value" x="420" y="0" text-anchor="end">2.1 GB of 5.0 GB</text>
+      <g transform="translate(0 12)">
+        <rect x="0" y="0" width="420" height="14" rx="7" fill="var(--surface-2)" stroke="var(--border)"/>
+        <!-- Mail segment (1.6 GB) -->
+        <rect x="0" y="0" width="134" height="14" rx="7" class="fb__quota-mail"/>
+        <!-- Files segment (0.5 GB) -->
+        <rect x="134" y="0" width="42" height="14" class="fb__quota-files"/>
+      </g>
+      <g transform="translate(0 38)">
+        <g class="fb__quota-key fb__quota-key--mail" transform="translate(0 0)">
+          <rect x="0" y="-7" width="14" height="14" rx="3"/>
+          <text x="20" y="4">Mail 1.6 GB</text>
+        </g>
+        <g class="fb__quota-key fb__quota-key--files" transform="translate(124 0)">
+          <rect x="0" y="-7" width="14" height="14" rx="3"/>
+          <text x="20" y="4">Files 0.5 GB</text>
+        </g>
+        <text class="fb__quota-key-text" x="280" y="4">one quota for both</text>
+      </g>
+    </g>
+  </svg>
+</div>
+
+<style>
+  .fb {
+    width: 100%;
+    aspect-ratio: 720 / 460;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: clamp(0.5rem, 1.5vw, 1rem);
+    box-shadow: var(--shadow-1);
+  }
+  .fb svg { width: 100%; height: 100%; overflow: visible; }
+  .fb__title {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    fill: var(--text-dim);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .fb__nav-section {
+    fill: var(--text-dim);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.08em;
+  }
+  .fb__nav-item text {
+    fill: var(--text-muted);
+    font-family: var(--font-sans);
+    font-size: 11px;
+    dominant-baseline: middle;
+  }
+  .fb__nav-count {
+    fill: var(--text-dim) !important;
+    font-family: var(--font-mono) !important;
+    font-size: 10px !important;
+    text-anchor: end;
+  }
+  .fb__nav-item--active rect {
+    fill: var(--brand-soft);
+    stroke: var(--brand);
+    stroke-opacity: 0.45;
+    stroke-width: 1;
+  }
+  .fb__nav-item--active text {
+    fill: var(--brand);
+    font-weight: 600;
+  }
+
+  .fb__crumb {
+    fill: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    dominant-baseline: middle;
+  }
+  .fb__col-head {
+    fill: var(--text-dim);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    dominant-baseline: middle;
+  }
+
+  .fb__icon {
+    font-size: 14px;
+    dominant-baseline: middle;
+  }
+  .fb__name {
+    fill: var(--text);
+    font-family: var(--font-sans);
+    font-size: 12px;
+    dominant-baseline: middle;
+    font-weight: 500;
+  }
+  .fb__size, .fb__mod {
+    fill: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    dominant-baseline: middle;
+  }
+  .fb__shared-badge rect {
+    fill: rgba(45, 186, 108, 0.2);
+    stroke: #2dba6c;
+    stroke-width: 1;
+  }
+  .fb__shared-badge text {
+    fill: #2dba6c;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    text-anchor: middle;
+    dominant-baseline: middle;
+  }
+
+  .fb__quota-label {
+    fill: var(--text-dim);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    dominant-baseline: middle;
+  }
+  .fb__quota-value {
+    fill: var(--text);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    dominant-baseline: middle;
+  }
+  .fb__quota-mail { fill: var(--brand); }
+  .fb__quota-files { fill: #2dba6c; }
+  .fb__quota-key rect { stroke: none; }
+  .fb__quota-key--mail rect  { fill: var(--brand); }
+  .fb__quota-key--files rect { fill: #2dba6c; }
+  .fb__quota-key text {
+    fill: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    dominant-baseline: middle;
+  }
+  .fb__quota-key-text {
+    fill: var(--text-dim);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    dominant-baseline: middle;
+    letter-spacing: 0.04em;
+  }
+</style>

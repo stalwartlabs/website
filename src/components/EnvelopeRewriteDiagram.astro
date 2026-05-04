@@ -1,0 +1,195 @@
+---
+// Before/after envelope. Left card shows the inbound message; arrow through
+// a Stalwart filter pill; right card shows the rewritten envelope with
+// header added, address normalised, attachment stripped.
+---
+<div class="env">
+  <svg viewBox="0 0 720 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Envelope rewriting before and after">
+    <defs>
+      <marker id="env-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0 0 L10 5 L0 10 z" fill="var(--brand)"/>
+      </marker>
+    </defs>
+
+    <!-- Left envelope -->
+    <g transform="translate(180 230)">
+      <rect class="env__card" x="-130" y="-110" width="260" height="220" rx="14"/>
+      <text class="env__card-title" x="-118" y="-86">BEFORE</text>
+      <line x1="-118" y1="-78" x2="118" y2="-78" stroke="var(--border)"/>
+      <g class="env__field" transform="translate(-118 -56)">
+        <text class="env__field-key">From:</text>
+        <text class="env__field-val" x="60">alice@old.example.com</text>
+      </g>
+      <g class="env__field" transform="translate(-118 -32)">
+        <text class="env__field-key">To:</text>
+        <text class="env__field-val" x="60">customer@partner.com</text>
+      </g>
+      <g class="env__field" transform="translate(-118 -8)">
+        <text class="env__field-key">Subject:</text>
+        <text class="env__field-val" x="60">Quarterly invoice</text>
+      </g>
+      <g class="env__field" transform="translate(-118 16)">
+        <text class="env__field-key">Headers:</text>
+        <text class="env__field-val" x="60">(no disclaimer)</text>
+      </g>
+      <g class="env__attachment" transform="translate(0 60)">
+        <rect x="-100" y="-22" width="200" height="44" rx="8"/>
+        <text class="env__attach-name">📎 invoice.exe</text>
+        <text class="env__attach-sub" y="14">application/x-msdownload · 1.2 MB</text>
+      </g>
+    </g>
+
+    <!-- Filter pill -->
+    <g transform="translate(360 230)">
+      <rect x="-36" y="-18" width="72" height="36" rx="18" fill="var(--brand-soft)" stroke="var(--brand)" stroke-width="1.25"/>
+      <text class="env__filter">filter</text>
+    </g>
+
+    <!-- Arrows -->
+    <g fill="none" stroke="var(--brand)" stroke-width="1.75" stroke-opacity="0.7" marker-end="url(#env-arrow)">
+      <line x1="310" y1="230" x2="320" y2="230"/>
+      <line x1="400" y1="230" x2="408" y2="230"/>
+    </g>
+
+    <!-- Right envelope -->
+    <g transform="translate(540 230)">
+      <rect class="env__card env__card--after" x="-130" y="-110" width="260" height="220" rx="14"/>
+      <text class="env__card-title env__card-title--after" x="-118" y="-86">AFTER</text>
+      <line x1="-118" y1="-78" x2="118" y2="-78" stroke="var(--brand)" stroke-opacity="0.4"/>
+      <g class="env__field" transform="translate(-118 -56)">
+        <text class="env__field-key">From:</text>
+        <text class="env__field-val env__field-val--changed" x="60">alice@new.example.com</text>
+      </g>
+      <g class="env__field" transform="translate(-118 -32)">
+        <text class="env__field-key">To:</text>
+        <text class="env__field-val" x="60">customer@partner.com</text>
+      </g>
+      <g class="env__field" transform="translate(-118 -8)">
+        <text class="env__field-key">Subject:</text>
+        <text class="env__field-val" x="60">Quarterly invoice</text>
+      </g>
+      <g class="env__field" transform="translate(-118 16)">
+        <text class="env__field-key">Headers:</text>
+        <g class="env__chip" transform="translate(60 -2)">
+          <rect x="0" y="-9" width="116" height="18" rx="9"/>
+          <text x="58" y="0">+ X-Disclaimer</text>
+        </g>
+      </g>
+      <g class="env__attachment env__attachment--stripped" transform="translate(0 60)">
+        <rect x="-100" y="-22" width="200" height="44" rx="8"/>
+        <text class="env__attach-name" y="-6">📎 invoice.exe</text>
+        <text class="env__attach-sub" y="14">stripped (executable)</text>
+        <line x1="-44" y1="-7" x2="44" y2="-7" stroke="var(--brand)" stroke-width="1.5"/>
+      </g>
+    </g>
+
+    <text x="40" y="40" class="env__title">Envelope rewriting</text>
+  </svg>
+</div>
+
+<style>
+  .env {
+    width: 100%;
+    aspect-ratio: 720 / 460;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: clamp(0.5rem, 1.5vw, 1rem);
+    box-shadow: var(--shadow-1);
+  }
+  .env svg { width: 100%; height: 100%; overflow: visible; }
+
+  .env__title {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    fill: var(--text-dim);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .env__caption {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    fill: var(--text-muted);
+  }
+
+  .env__card {
+    fill: var(--surface);
+    stroke: var(--border-strong);
+    stroke-width: 1;
+  }
+  .env__card--after {
+    fill: var(--surface-2);
+    stroke: var(--brand);
+    stroke-opacity: 0.55;
+  }
+  .env__card-title {
+    fill: var(--text-dim);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .env__card-title--after { fill: var(--brand); }
+  .env__field-key {
+    fill: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 10px;
+  }
+  .env__field-val {
+    fill: var(--text);
+    font-family: var(--font-mono);
+    font-size: 10px;
+  }
+  .env__field-val--changed {
+    fill: var(--brand);
+    font-weight: 600;
+  }
+  .env__chip rect {
+    fill: var(--brand-soft);
+    stroke: var(--brand);
+  }
+  .env__chip text {
+    fill: var(--brand);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    text-anchor: middle;
+    dominant-baseline: middle;
+  }
+  .env__attachment rect {
+    fill: var(--surface-2);
+    stroke: var(--border);
+  }
+  .env__attach-name {
+    fill: var(--text);
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 500;
+    text-anchor: middle;
+    dominant-baseline: middle;
+  }
+  .env__attach-sub {
+    fill: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    text-anchor: middle;
+    dominant-baseline: middle;
+  }
+  .env__attachment--stripped rect {
+    stroke: var(--brand);
+    stroke-opacity: 0.45;
+  }
+  .env__attachment--stripped .env__attach-name {
+    fill: var(--text-dim);
+    text-decoration: line-through;
+  }
+  .env__attachment--stripped .env__attach-sub { fill: var(--brand); }
+
+  .env__filter {
+    fill: var(--brand);
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 600;
+    text-anchor: middle;
+    dominant-baseline: middle;
+  }
+</style>

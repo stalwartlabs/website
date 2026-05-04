@@ -1,0 +1,170 @@
+---
+// Contacts multi-device sync. One contact card in the centre, four device
+// frames around it (laptop, iPhone, Android, web), each connected via
+// CardDAV / JMAP for Contacts.
+---
+<div class="con">
+  <svg viewBox="0 0 720 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Contacts synchronised across devices">
+    <defs>
+      <linearGradient id="con-flow" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="var(--brand)" stop-opacity="0.55"/>
+        <stop offset="100%" stop-color="var(--brand)" stop-opacity="0.15"/>
+      </linearGradient>
+    </defs>
+
+    <!-- Center: contact card -->
+    <g transform="translate(360 230)">
+      <rect class="con__card" x="-120" y="-80" width="240" height="160" rx="14"/>
+      <circle class="con__avatar" cx="-60" cy="-32" r="22"/>
+      <text class="con__avatar-init" x="-60" y="-26" text-anchor="middle">A</text>
+      <text class="con__name" x="-30" y="-38">Alice Example</text>
+      <text class="con__org"  x="-30" y="-20">Example Corp · Engineering</text>
+      <line x1="-100" y1="0" x2="100" y2="0" stroke="var(--border)"/>
+      <text class="con__row" x="-100" y="22">alice@example.com</text>
+      <text class="con__row" x="-100" y="42">+1 555 0101</text>
+      <g class="con__chip" transform="translate(-78 60)">
+        <rect x="-22" y="-9" width="44" height="18" rx="9"/>
+        <text>vCard 4</text>
+      </g>
+      <g class="con__chip" transform="translate(-22 60)">
+        <rect x="-32" y="-9" width="64" height="18" rx="9"/>
+        <text>CardDAV</text>
+      </g>
+      <g class="con__chip con__chip--brand" transform="translate(56 60)">
+        <rect x="-32" y="-9" width="64" height="18" rx="9"/>
+        <text>JMAP</text>
+      </g>
+    </g>
+
+    <!-- Four device frames -->
+    <g class="con__device" transform="translate(140 110)">
+      <rect x="-44" y="-32" width="88" height="64" rx="6"/>
+      <text class="con__device-label" y="56">Laptop</text>
+      <text class="con__device-proto" y="72">CardDAV</text>
+    </g>
+    <g class="con__device" transform="translate(580 110)">
+      <rect x="-22" y="-36" width="44" height="72" rx="8"/>
+      <text class="con__device-label" y="60">iPhone</text>
+      <text class="con__device-proto" y="76">CardDAV</text>
+    </g>
+    <g class="con__device" transform="translate(140 350)">
+      <rect x="-22" y="-36" width="44" height="72" rx="8"/>
+      <text class="con__device-label" y="60">Android</text>
+      <text class="con__device-proto" y="76">CardDAV</text>
+    </g>
+    <g class="con__device" transform="translate(580 350)">
+      <rect x="-44" y="-32" width="88" height="64" rx="6"/>
+      <text class="con__device-label" y="56">Web app</text>
+      <text class="con__device-proto" y="72">JMAP for Contacts</text>
+    </g>
+
+    <!-- Connecting lines -->
+    <g class="con__lines" stroke="url(#con-flow)" stroke-width="1.5" stroke-dasharray="4 4" fill="none">
+      <line x1="184" y1="120" x2="240" y2="190"/>
+      <line x1="556" y1="120" x2="488" y2="190"/>
+      <line x1="184" y1="340" x2="240" y2="280"/>
+      <line x1="556" y1="340" x2="488" y2="280"/>
+    </g>
+
+    <text x="40" y="40" class="con__title">One source of truth, every device</text>
+  </svg>
+</div>
+
+<style>
+  .con {
+    width: 100%;
+    aspect-ratio: 720 / 460;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: clamp(0.5rem, 1.5vw, 1rem);
+    box-shadow: var(--shadow-1);
+  }
+  .con svg { width: 100%; height: 100%; overflow: visible; }
+
+  .con__title {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    fill: var(--text-dim);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .con__caption {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    fill: var(--text-muted);
+  }
+
+  .con__card {
+    fill: var(--surface);
+    stroke: var(--brand);
+    stroke-width: 1.25;
+    stroke-opacity: 0.55;
+  }
+  .con__avatar {
+    fill: var(--brand-soft);
+    stroke: var(--brand);
+    stroke-width: 1.25;
+  }
+  .con__avatar-init {
+    fill: var(--brand);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    font-weight: 700;
+    dominant-baseline: middle;
+  }
+  .con__name {
+    fill: var(--text);
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .con__org {
+    fill: var(--text-muted);
+    font-family: var(--font-sans);
+    font-size: 10px;
+  }
+  .con__row {
+    fill: var(--text);
+    font-family: var(--font-mono);
+    font-size: 11px;
+  }
+  .con__chip rect {
+    fill: var(--surface-2);
+    stroke: var(--border-strong);
+    stroke-width: 1;
+  }
+  .con__chip text {
+    fill: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    text-anchor: middle;
+    dominant-baseline: middle;
+    letter-spacing: 0.04em;
+  }
+  .con__chip--brand rect {
+    fill: var(--brand-soft);
+    stroke: var(--brand);
+  }
+  .con__chip--brand text { fill: var(--brand); }
+
+  .con__device rect {
+    fill: var(--surface-2);
+    stroke: var(--border-strong);
+    stroke-width: 1.5;
+  }
+  .con__device-label {
+    fill: var(--text);
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 600;
+    text-anchor: middle;
+  }
+  .con__device-proto {
+    fill: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    text-anchor: middle;
+    letter-spacing: 0.04em;
+  }
+</style>

@@ -48,8 +48,8 @@ sections:
       - label: Read the classifier docs
         href: /docs/spamfilter/classifier/
     visual:
-      kind: placeholder
-      caption: "Diagram needed: FTRL-Proximal classifier pipeline (headers/body -> feature hash -> sparse features -> score)."
+      kind: diagram
+      id: classifier
 
   - kind: feature
     reverse: true
@@ -71,8 +71,8 @@ sections:
       - label: Read the LLM Sieve docs
         href: /docs/sieve/llm
     visual:
-      kind: placeholder
-      caption: "Screenshot needed: AI Model configuration in the WebUI (provider, endpoint, auth)."
+      kind: diagram
+      id: llm-decision
 
   - kind: feature
     eyebrow: DNSBL and Pyzor
@@ -93,8 +93,8 @@ sections:
       - label: Read DNSBL
         href: /docs/spamfilter/dnsbl
     visual:
-      kind: placeholder
-      caption: "Screenshot needed: DNSBL provider list in the WebUI with zone/tag fields."
+      kind: diagram
+      id: dnsbl-fan-in
 
   - kind: feature
     reverse: true
@@ -138,8 +138,8 @@ sections:
       - Sender spoofing and lookalike-domain detection.
       - Trusted-reply tracking on outgoing messages.
     visual:
-      kind: placeholder
-      caption: "Diagram needed: phishing-detection axes (homograph URL, sender spoof, lookalike domain) feeding score."
+      kind: diagram
+      id: phishing-axes
 
   - kind: feature
     reverse: true
@@ -163,29 +163,11 @@ sections:
       - label: Read ASN and GeoIP
         href: /docs/server/asn
     visual:
-      kind: placeholder
-      caption: "Screenshot needed: per-IP/ASN/domain/email reputation table, or greylist status with timers."
+      kind: diagram
+      id: sender-reputation
 
   - kind: feature
-    eyebrow: ASN and country blocking
-    title: Cut off the networks that send most of the abuse.
-    body: >-
-      A small number of networks account for most abusive
-      traffic in any given deployment. Connections from specific networks
-      (ASNs) or entire countries can be blocked outright, or fed into the spam
-      filter as a strong negative signal. The same data feeds reputation
-      scoring, so a network that consistently sends spam pays a
-      reputation penalty in addition to any hard block.
-    bullets:
-      - ASN-based blocking and reputation.
-      - Country-based blocking and reputation.
-      - Auto-banning by IP for failed authentication, abuse, loitering and scanning.
-    visual:
-      kind: placeholder
-      caption: "Screenshot needed: ASN/Country block-list editor in the WebUI."
-
-  - kind: feature
-    reverse: true
+    reverse: false
     band: alt
     eyebrow: Auto-banning
     title: Brute-force and probing attacks blocked automatically.
@@ -208,10 +190,11 @@ sections:
       - label: Read auto-banning
         href: /docs/server/auto-ban
     visual:
-      kind: placeholder
-      caption: "Screenshot needed: Auto-ban list with reason, expiry and category filter."
+      kind: diagram
+      id: auto-ban-gauges
 
   - kind: feature
+    reverse: true
     eyebrow: Upstream filters
     title: Bring your existing Rspamd, SpamAssassin or ClamAV.
     body: >-
@@ -225,8 +208,8 @@ sections:
       - MTA Hooks for HTTP + JSON filters.
       - Per-stage invocation across every SMTP phase.
     visual:
-      kind: placeholder
-      caption: "Diagram needed: Stalwart filter chain with optional milter/MTA Hook bridge to Rspamd/SpamAssassin."
+      kind: diagram
+      id: smtp-pipeline
 
 footerCta:
   cta: Stop spam at SMTP time.

@@ -1,0 +1,170 @@
+---
+// Certificate lifecycle ring: issued -> 60d -> 30d (renewal triggered) ->
+// renewed -> TLSA refreshed -> back to issued. Marks where Stalwart acts
+// without operator intervention.
+---
+<div class="acme">
+  <svg viewBox="0 0 720 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ACME certificate lifecycle">
+    <defs>
+      <radialGradient id="acme-glow" cx="50%" cy="50%" r="60%">
+        <stop offset="0%" stop-color="var(--brand)" stop-opacity="0.18"/>
+        <stop offset="100%" stop-color="var(--brand)" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+
+    <rect x="0" y="0" width="720" height="460" fill="url(#acme-glow)"/>
+
+    <!-- Center label -->
+    <g transform="translate(360 230)">
+      <circle r="80" fill="var(--surface)" stroke="var(--brand)" stroke-opacity="0.45" stroke-dasharray="4 4"/>
+      <text class="acme__center-title" y="-4">Stalwart</text>
+      <text class="acme__center-sub" y="14">handles every step</text>
+    </g>
+
+    <!-- Ring -->
+    <circle cx="360" cy="230" r="160" fill="none" stroke="var(--brand)" stroke-opacity="0.2" stroke-width="2" stroke-dasharray="6 8"/>
+
+    <!-- Step 1: issued (top) -->
+    <g class="acme__step acme__step--brand" transform="translate(360 70)">
+      <circle r="30"/>
+      <text class="acme__step-num" y="-4">1</text>
+      <text class="acme__step-label" y="44">Cert issued</text>
+      <text class="acme__step-sub" y="58">Let's Encrypt / ZeroSSL / ...</text>
+    </g>
+
+    <!-- Step 2: countdown -->
+    <g class="acme__step" transform="translate(516 158)">
+      <circle r="28"/>
+      <text class="acme__step-num" y="-4">2</text>
+      <text class="acme__step-label" y="42">60 days...</text>
+      <text class="acme__step-sub" y="56">cert in service</text>
+    </g>
+
+    <!-- Step 3: renewal triggered -->
+    <g class="acme__step acme__step--brand" transform="translate(516 302)">
+      <circle r="30"/>
+      <text class="acme__step-num" y="-4">3</text>
+      <text class="acme__step-label" y="44">30 days left</text>
+      <text class="acme__step-sub" y="58">renewal triggered</text>
+    </g>
+
+    <!-- Step 4: renewed -->
+    <g class="acme__step acme__step--brand" transform="translate(360 390)">
+      <circle r="30"/>
+      <text class="acme__step-num" y="-4">4</text>
+      <text class="acme__step-label" y="44">Renewed</text>
+      <text class="acme__step-sub" y="58">no manual step</text>
+    </g>
+
+    <!-- Step 5: TLSA refresh -->
+    <g class="acme__step acme__step--brand" transform="translate(204 302)">
+      <circle r="30"/>
+      <text class="acme__step-num" y="-4">5</text>
+      <text class="acme__step-label" y="44">TLSA refresh</text>
+      <text class="acme__step-sub" y="58">DANE keeps validating</text>
+    </g>
+
+    <!-- Step 6: served -->
+    <g class="acme__step" transform="translate(204 158)">
+      <circle r="28"/>
+      <text class="acme__step-num" y="-4">6</text>
+      <text class="acme__step-label" y="42">Served</text>
+      <text class="acme__step-sub" y="56">loop continues</text>
+    </g>
+
+    <!-- Arrow flowing around -->
+    <g class="acme__arrows" fill="none" stroke="var(--brand)" stroke-width="1.5" stroke-opacity="0.7">
+      <path d="M 397 92 A 160 160 0 0 1 514 130" marker-end="url(#acme-arrow)"/>
+      <path d="M 530 188 A 160 160 0 0 1 530 272" marker-end="url(#acme-arrow)"/>
+      <path d="M 514 332 A 160 160 0 0 1 397 368" marker-end="url(#acme-arrow)"/>
+      <path d="M 322 368 A 160 160 0 0 1 206 332" marker-end="url(#acme-arrow)"/>
+      <path d="M 192 272 A 160 160 0 0 1 192 188" marker-end="url(#acme-arrow)"/>
+      <path d="M 206 130 A 160 160 0 0 1 322 92" marker-end="url(#acme-arrow)"/>
+    </g>
+
+    <defs>
+      <marker id="acme-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0 0 L10 5 L0 10 z" fill="var(--brand)"/>
+      </marker>
+    </defs>
+
+    <text x="40" y="40" class="acme__title">Certificate lifecycle, owned by Stalwart</text>
+  </svg>
+</div>
+
+<style>
+  .acme {
+    width: 100%;
+    aspect-ratio: 720 / 460;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: clamp(0.5rem, 1.5vw, 1rem);
+    box-shadow: var(--shadow-1);
+  }
+  .acme svg { width: 100%; height: 100%; overflow: visible; }
+
+  .acme__title {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    fill: var(--text-dim);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .acme__caption {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    fill: var(--text-muted);
+  }
+  .acme__center-title {
+    fill: var(--text);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    font-weight: 700;
+    text-anchor: middle;
+    dominant-baseline: middle;
+  }
+  .acme__center-sub {
+    fill: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-anchor: middle;
+    dominant-baseline: middle;
+  }
+
+  .acme__step circle {
+    fill: var(--surface-2);
+    stroke: var(--border-strong);
+    stroke-width: 1.5;
+  }
+  .acme__step-num {
+    fill: var(--text);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    font-weight: 700;
+    text-anchor: middle;
+    dominant-baseline: middle;
+  }
+  .acme__step-label {
+    fill: var(--text);
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 600;
+    text-anchor: middle;
+  }
+  .acme__step-sub {
+    fill: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    text-anchor: middle;
+    letter-spacing: 0.02em;
+  }
+  .acme__step--brand circle {
+    fill: var(--brand-soft);
+    stroke: var(--brand);
+  }
+  .acme__step--brand .acme__step-num,
+  .acme__step--brand .acme__step-label {
+    fill: var(--brand);
+  }
+</style>

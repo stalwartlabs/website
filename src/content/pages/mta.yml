@@ -128,8 +128,8 @@ sections:
       - label: Read MTA Hooks
         href: /docs/mta/filter/mtahooks
     visual:
-      kind: placeholder
-      caption: "Diagram needed: SMTP stages (connect / ehlo / auth / mail / rcpt / data) with Sieve, milter, MTA Hooks and built-in filter as parallel processors."
+      kind: diagram
+      id: smtp-pipeline
 
   - kind: feature
     eyebrow: Envelope and message rewriting
@@ -150,8 +150,8 @@ sections:
       - label: Read message rewriting
         href: /docs/mta/rewrite/
     visual:
-      kind: placeholder
-      caption: "Screenshot needed: Sieve/expression-based rewriting rule editor in the WebUI."
+      kind: diagram
+      id: envelope-rewrite
 
   - kind: feature
     reverse: true
@@ -193,8 +193,8 @@ sections:
       - Network partition-tolerant failure detection.
       - Dedicated outbound nodes for high-volume delivery tiers.
     visual:
-      kind: placeholder
-      caption: "Diagram needed: distributed SMTP queue spanning multiple Stalwart nodes; any node can take over delivery for any message; dedicated outbound nodes optional."
+      kind: diagram
+      id: cluster
 
 footerCta:
   cta: A modern SMTP server, ready for production.

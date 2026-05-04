@@ -1,0 +1,179 @@
+---
+// Read replicas + sharded blob/in-memory storage. Primary on the left,
+// read replicas to the right with read-traffic arrows; underneath a
+// sharded blob row and a sharded in-memory row.
+---
+<div class="rr">
+  <svg viewBox="0 0 720 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Read replicas and sharded storage">
+    <defs>
+      <marker id="rr-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0 0 L10 5 L0 10 z" fill="var(--brand)" opacity="0.85"/>
+      </marker>
+      <marker id="rr-arrow-r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0 0 L10 5 L0 10 z" fill="#2dba6c"/>
+      </marker>
+    </defs>
+
+    <!-- Stalwart node (top center) -->
+    <g class="rr__app" transform="translate(360 90)">
+      <rect x="-120" y="-30" width="240" height="60" rx="10"/>
+      <text class="rr__app-name">Stalwart node</text>
+      <text class="rr__app-sub" y="14">routes reads vs writes</text>
+    </g>
+
+    <!-- Primary store (middle left) -->
+    <g class="rr__db rr__db--primary" transform="translate(180 220)">
+      <rect x="-70" y="-30" width="140" height="60" rx="10"/>
+      <text class="rr__db-name">Primary data store</text>
+      <text class="rr__db-sub" y="14">writes</text>
+    </g>
+
+    <!-- Two replicas (middle right) -->
+    <g class="rr__db" transform="translate(440 200)">
+      <rect x="-60" y="-26" width="120" height="52" rx="10"/>
+      <text class="rr__db-name">Read replica</text>
+    </g>
+    <g class="rr__db" transform="translate(580 240)">
+      <rect x="-60" y="-26" width="120" height="52" rx="10"/>
+      <text class="rr__db-name">Read replica</text>
+    </g>
+
+    <!-- Replication arrow primary -> replicas -->
+    <g fill="none" stroke="var(--brand)" stroke-width="1.5" stroke-opacity="0.65">
+      <path d="M 250 210 C 320 200, 360 195, 380 198" marker-end="url(#rr-arrow)"/>
+      <path d="M 250 230 C 360 240, 480 240, 520 240" marker-end="url(#rr-arrow)"/>
+    </g>
+    <text class="rr__edge-label" x="280" y="190">replicate</text>
+
+    <!-- Routing arrows -->
+    <g fill="none" stroke-width="1.5">
+      <line stroke="var(--brand)" stroke-opacity="0.85" x1="320" y1="120" x2="220" y2="190" marker-end="url(#rr-arrow)"/>
+      <line stroke="#2dba6c" x1="400" y1="120" x2="440" y2="174" marker-end="url(#rr-arrow-r)"/>
+      <line stroke="#2dba6c" x1="420" y1="120" x2="572" y2="214" marker-end="url(#rr-arrow-r)"/>
+    </g>
+    <text class="rr__edge-label" x="240" y="160">writes</text>
+    <text class="rr__edge-label rr__edge-label--good" x="445" y="160">reads</text>
+
+    <!-- Bottom: sharded blob -->
+    <g transform="translate(60 350)">
+      <text class="rr__row-label" x="0" y="-12">Sharded blob storage</text>
+      <g class="rr__shard"><rect x="0"   y="0" width="100" height="44" rx="8"/><text x="50" y="22">shard 1</text><text x="50" y="38" class="rr__shard-sub">S3</text></g>
+      <g class="rr__shard"><rect x="120" y="0" width="100" height="44" rx="8"/><text x="170" y="22">shard 2</text><text x="170" y="38" class="rr__shard-sub">S3</text></g>
+      <g class="rr__shard"><rect x="240" y="0" width="100" height="44" rx="8"/><text x="290" y="22">shard 3</text><text x="290" y="38" class="rr__shard-sub">Azure</text></g>
+      <g class="rr__shard"><rect x="360" y="0" width="100" height="44" rx="8"/><text x="410" y="22">shard 4</text><text x="410" y="38" class="rr__shard-sub">filesystem</text></g>
+    </g>
+
+    <!-- Bottom right: sharded in-memory -->
+    <g transform="translate(540 350)">
+      <text class="rr__row-label" x="0" y="-12">Sharded in-memory</text>
+      <g class="rr__shard"><rect x="0"  y="0" width="50" height="44" rx="8"/><text x="25" y="22">R1</text><text x="25" y="38" class="rr__shard-sub">Redis</text></g>
+      <g class="rr__shard"><rect x="60" y="0" width="50" height="44" rx="8"/><text x="85" y="22">R2</text><text x="85" y="38" class="rr__shard-sub">Redis</text></g>
+      <g class="rr__shard"><rect x="120" y="0" width="50" height="44" rx="8"/><text x="145" y="22">R3</text><text x="145" y="38" class="rr__shard-sub">Valkey</text></g>
+    </g>
+
+    <text x="40" y="40" class="rr__title">Scale the data plane without rewriting the cluster</text>
+  </svg>
+</div>
+
+<style>
+  .rr {
+    width: 100%;
+    aspect-ratio: 720 / 460;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: clamp(0.5rem, 1.5vw, 1rem);
+    box-shadow: var(--shadow-1);
+  }
+  .rr svg { width: 100%; height: 100%; overflow: visible; }
+  .rr__title {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    fill: var(--text-dim);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .rr__app rect {
+    fill: var(--brand-soft);
+    stroke: var(--brand);
+    stroke-width: 1.25;
+  }
+  .rr__app-name {
+    fill: var(--brand);
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 700;
+    text-anchor: middle;
+    dominant-baseline: middle;
+  }
+  .rr__app-sub {
+    fill: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    text-anchor: middle;
+    dominant-baseline: middle;
+    letter-spacing: 0.04em;
+  }
+
+  .rr__db rect {
+    fill: var(--surface-2);
+    stroke: var(--border-strong);
+    stroke-width: 1;
+  }
+  .rr__db--primary rect {
+    fill: var(--brand-soft);
+    stroke: var(--brand);
+  }
+  .rr__db-name {
+    fill: var(--text);
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 600;
+    text-anchor: middle;
+    dominant-baseline: middle;
+  }
+  .rr__db--primary .rr__db-name { fill: var(--brand); }
+  .rr__db-sub {
+    fill: var(--brand);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    text-anchor: middle;
+    dominant-baseline: middle;
+  }
+
+  .rr__shard rect {
+    fill: var(--surface);
+    stroke: var(--border-strong);
+    stroke-width: 1;
+  }
+  .rr__shard text {
+    fill: var(--text);
+    font-family: var(--font-sans);
+    font-size: 11px;
+    text-anchor: middle;
+    dominant-baseline: middle;
+    font-weight: 600;
+  }
+  .rr__shard-sub {
+    fill: var(--text-muted) !important;
+    font-family: var(--font-mono) !important;
+    font-size: 9px !important;
+    font-weight: 400 !important;
+  }
+
+  .rr__row-label {
+    fill: var(--text-dim);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .rr__edge-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    fill: var(--text-muted);
+    letter-spacing: 0.04em;
+  }
+  .rr__edge-label--good { fill: #2dba6c; }
+</style>

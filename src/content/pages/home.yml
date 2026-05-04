@@ -8,8 +8,8 @@ slug: /
 hero:
   eyebrow: All-in-one mail & collaboration server
   title: |
-    Modern mail and collaboration made simple.
-  titleHighlight: made simple
+    Upgrade your email with Stalwart.
+  titleHighlight: Stalwart
   lead: >-
     One server for your email, calendars, contacts and shared files,
     with spam and phishing protection built in. Every standard
@@ -116,8 +116,8 @@ sections:
       - Memory-safe implementation in Rust.
       - Independently security-audited.
     visual:
-      kind: placeholder
-      caption: "Diagram needed: encryption-at-rest, transport (DANE/MTA-STS/TLS-RPT) and ACME stack as one stack image."
+      kind: diagram
+      id: security-stack
 
   - kind: feature
     reverse: true
@@ -159,8 +159,8 @@ sections:
       - Fine-grained sharing through WebDAV ACL and JMAP Sharing.
       - Auto-discovery for desktop and mobile clients.
     visual:
-      kind: placeholder
-      caption: "Screenshot needed: calendar + contacts + files split view, or representative collaboration screenshot beyond the calendar form already used on the collaboration page hero."
+      kind: diagram
+      id: collab-unified
 
   - kind: feature
     reverse: true
@@ -206,8 +206,8 @@ sections:
       - Peer-to-peer cluster coordination using Zenoh; no external coordinator required.
       - Optional coordinator-based clustering with Apache Kafka, Redpanda, NATS, or Redis.
     visual:
-      kind: placeholder
-      caption: "Diagram needed: cluster topology (multiple Stalwart nodes serving every protocol over a shared distributed data + blob store, no external coordinator)."
+      kind: diagram
+      id: cluster
 
 footerCta:
   cta: Run your own mail server today.

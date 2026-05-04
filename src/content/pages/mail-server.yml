@@ -48,8 +48,21 @@ sections:
       - label: Read the JMAP overview
         href: /docs/http/jmap/
     visual:
-      kind: placeholder
-      caption: "Diagram needed: JMAP request/response over HTTP and WebSocket, with push updates and stateful sync."
+      kind: code
+      lang: json
+      filename: jmap-session.json
+      body: |
+        {
+          "using": ["urn:ietf:params:jmap:core", "urn:ietf:params:jmap:mail"],
+          "methodCalls": [
+            ["Email/changes", { "accountId": "u1", "sinceState": "42" }, "0"],
+            ["Email/get", {
+              "accountId": "u1",
+              "#ids": { "resultOf": "0", "name": "Email/changes", "path": "/created" },
+              "properties": ["subject", "from", "receivedAt"]
+            }, "1"]
+          ]
+        }
 
   - kind: feature
     reverse: true
@@ -68,8 +81,8 @@ sections:
       - ManageSieve for user-managed server-side filters.
       - POP3 with STLS and SASL for older devices.
     visual:
-      kind: placeholder
-      caption: "Screenshot needed: IMAP/POP3 listener configuration in the WebUI."
+      kind: diagram
+      id: imap-client-grid
 
   - kind: feature
     eyebrow: Automated DNS
@@ -90,8 +103,8 @@ sections:
       - label: Read DNS records
         href: /docs/domains/dns-records
     visual:
-      kind: placeholder
-      caption: "Screenshot needed: DNS provider list with per-domain MX/SPF/DKIM/DMARC/TLSA records and 'managed' badges."
+      kind: diagram
+      id: dns-records-tile
 
   - kind: feature
     reverse: true
@@ -135,8 +148,8 @@ sections:
       - label: Read the ACME overview
         href: /docs/server/tls/acme/
     visual:
-      kind: placeholder
-      caption: "Screenshot needed: ACME certificate list with renewal countdown, or TLS configuration pane with EAB."
+      kind: diagram
+      id: acme-lifecycle
 
   - kind: feature
     reverse: true
@@ -159,8 +172,8 @@ sections:
       - label: Read Autoconfig
         href: /docs/server/autoconfig
     visual:
-      kind: placeholder
-      caption: "Screenshot needed: Mail client autoconfig flow showing IMAP/SMTP/CalDAV settings returned from the server."
+      kind: diagram
+      id: autoconfig
 
   - kind: feature
     eyebrow: Multi-tenancy and quotas
@@ -200,8 +213,28 @@ sections:
       - ManageSieve and JMAP for Sieve Scripts management.
       - Trusted and untrusted execution contexts.
     visual:
-      kind: placeholder
-      caption: "Screenshot needed: Sieve script editor in the WebUI."
+      kind: code
+      lang: sieve
+      filename: filter.sieve
+      body: |
+        require ["fileinto", "imap4flags", "vacation", "envelope"];
+
+        # Newsletters land in their own folder.
+        if header :contains "List-Id" "@" {
+          fileinto "INBOX/Newsletters";
+          stop;
+        }
+
+        # Tag and route monitoring alerts.
+        if envelope :is "from" "alerts@monitoring.example.com" {
+          addflag "\\Flagged";
+          fileinto "INBOX/Alerts";
+          stop;
+        }
+
+        # Out-of-office reply, once per sender per week.
+        vacation :days 7
+          "I am away until Monday. Will reply on return.";
 
   - kind: feature
     eyebrow: Web admin

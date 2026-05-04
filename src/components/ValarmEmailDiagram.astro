@@ -1,0 +1,162 @@
+---
+// VALARM email path: VEVENT with VALARM trigger -> server fires -> email
+// envelope leaving for the attendee, even if the calendar app is closed.
+---
+<div class="va">
+  <svg viewBox="0 0 720 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="VALARM email reminder path">
+    <defs>
+      <marker id="va-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0 0 L10 5 L0 10 z" fill="var(--brand)" opacity="0.85"/>
+      </marker>
+    </defs>
+
+    <!-- VEVENT card on the left -->
+    <g transform="translate(160 230)">
+      <rect class="va__event" x="-110" y="-100" width="220" height="200" rx="14"/>
+      <text class="va__event-tag" x="-94" y="-78">VEVENT</text>
+      <text class="va__event-line" x="-94" y="-56">SUMMARY: Quarterly review</text>
+      <text class="va__event-line" x="-94" y="-38">DTSTART: 2026-05-20 10:00 UTC</text>
+
+      <!-- VALARM nested -->
+      <g transform="translate(0 32)">
+        <rect class="va__alarm" x="-90" y="-30" width="180" height="80" rx="8"/>
+        <text class="va__alarm-tag" x="-78" y="-12">VALARM</text>
+        <text class="va__alarm-line" x="-78" y="6">TRIGGER: -PT15M</text>
+        <text class="va__alarm-line va__alarm-line--brand" x="-78" y="22">ACTION: EMAIL</text>
+        <text class="va__alarm-line" x="-78" y="38">ATTENDEE: bob@example.com</text>
+      </g>
+    </g>
+
+    <!-- Server -->
+    <g transform="translate(420 230)">
+      <rect x="-70" y="-34" width="140" height="68" rx="10" fill="var(--brand-soft)" stroke="var(--brand)" stroke-width="1.25"/>
+      <text class="va__server-name" y="-8">Stalwart</text>
+      <text class="va__server-sub" y="14">scheduler + MTA</text>
+    </g>
+
+    <!-- Envelope -->
+    <g transform="translate(620 230)">
+      <rect class="va__envelope" x="-90" y="-46" width="180" height="92" rx="6"/>
+      <path d="M -90 -46 L 0 0 L 90 -46" fill="none" stroke="var(--border-strong)" stroke-width="1.5"/>
+      <text class="va__env-line" x="-78" y="22">Reminder: Quarterly review</text>
+      <text class="va__env-line va__env-sub" x="-78" y="38">starts in 15 minutes</text>
+    </g>
+
+    <!-- Edges -->
+    <g fill="none" stroke="var(--brand)" stroke-width="1.75" stroke-opacity="0.7" marker-end="url(#va-arrow)">
+      <line x1="270" y1="262" x2="346" y2="240"/>
+      <line x1="490" y1="230" x2="524" y2="230"/>
+    </g>
+
+    <text class="va__edge-label" x="500" y="222">SMTP</text>
+
+    <text x="40" y="40" class="va__title">Reminder fires from the server</text>
+  </svg>
+</div>
+
+<style>
+  .va {
+    width: 100%;
+    aspect-ratio: 720 / 460;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: clamp(0.5rem, 1.5vw, 1rem);
+    box-shadow: var(--shadow-1);
+  }
+  .va svg { width: 100%; height: 100%; overflow: visible; }
+
+  .va__title {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    fill: var(--text-dim);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .va__caption {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    fill: var(--text-muted);
+  }
+
+  .va__event {
+    fill: var(--surface);
+    stroke: var(--border-strong);
+    stroke-width: 1;
+  }
+  .va__event-tag {
+    fill: var(--brand);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+  }
+  .va__event-line {
+    fill: var(--text);
+    font-family: var(--font-mono);
+    font-size: 10px;
+  }
+  .va__alarm {
+    fill: var(--brand-soft);
+    stroke: var(--brand);
+    stroke-width: 1.25;
+  }
+  .va__alarm-tag {
+    fill: var(--brand);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+  }
+  .va__alarm-line {
+    fill: var(--text);
+    font-family: var(--font-mono);
+    font-size: 10px;
+  }
+  .va__alarm-line--brand { fill: var(--brand); font-weight: 600; }
+
+  .va__server-name {
+    fill: var(--brand);
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 700;
+    text-anchor: middle;
+    dominant-baseline: middle;
+  }
+  .va__server-sub {
+    fill: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    text-anchor: middle;
+    dominant-baseline: middle;
+    letter-spacing: 0.04em;
+  }
+
+  .va__envelope {
+    fill: var(--surface);
+    stroke: var(--border-strong);
+    stroke-width: 1;
+  }
+  .va__env-line {
+    fill: var(--text);
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .va__env-sub { fill: var(--text-muted); font-weight: 400; font-size: 11px; }
+
+  .va__phone-status {
+    fill: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    text-anchor: middle;
+  }
+  .va__phone-status--brand { fill: #2dba6c; font-weight: 600; }
+
+  .va__edge-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    fill: var(--text-muted);
+    letter-spacing: 0.04em;
+  }
+</style>
