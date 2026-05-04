@@ -48,6 +48,17 @@ This default is chosen deliberately for IaC contexts: a partially-applied plan i
 
 To override, pass `--continue-on-error`, in which case every operation is attempted and the final summary reports the count of successes and failures. The exit code is still non-zero when at least one failed.
 
+### Idempotent re-runs
+
+`apply` does not diff a plan against the live server state. It executes the operations the plan declares, in order. A plan that only contains `create` operations therefore succeeds on the first run and fails on the second: re-creating the same `Domain`, `AllowedIp`, `Certificate`, etc. trips the server's primary-key constraints, and re-creating types that have no such constraint produces duplicate rows.
+
+To make a plan re-runnable, pair every `create` of a type with a leading `destroy` of the same type. The destroy pass clears the existing instances; the create pass then rebuilds them. This is the shape that [`stalwart-cli snapshot`](./snapshot.md) emits, and it is the shape used in the [annotated example](#annotated-example) below.
+
+Two practical notes:
+
+* **Server-assigned ids change** across a teardown-and-rebuild, so external systems that cache Stalwart ids must look them up again after each apply.
+* **Destroy filters scope the teardown.** `{"@type":"destroy","object":"Domain","value":{"name":"example.com"}}` only removes the named domain. `{"@type":"destroy","object":"Domain"}` (no `value`) removes every domain on the server. Choose the filter to match the slice of state the plan owns; an unfiltered destroy in a plan that only declares one domain will silently delete every other domain on the server.
+
 ### Cross-operation references
 
 The plan can express references between objects that have not been created yet by using the JMAP `#<id>` reference syntax. Two distinct mechanisms cooperate:

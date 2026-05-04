@@ -229,7 +229,7 @@ Diagnostic output is written to the log destination configured in Step 4 of the 
 
 Once `https://<hostname>/admin` is reachable and a permanent administrator is in use, disable the HTTP configuration listener so that `http://<host>:8080/admin` no longer accepts sign-ins. Remove the `STALWART_RECOVERY_ADMIN` environment variable, or delete the HTTP listener through the WebUI, then restart the service.
 
-If something does not behave as expected, consult [Troubleshooting](#troubleshooting) below. Further questions can be raised on the [community forum](https://github.com/stalwartlabs/stalwart/discussions).
+If something does not behave as expected, consult [Troubleshooting](#troubleshooting) below. Further questions can be raised on the [community forum](https://support.stalw.art).
 
 :::tip
 

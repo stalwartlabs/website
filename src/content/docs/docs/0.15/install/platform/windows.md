@@ -99,7 +99,7 @@ If you have selected to use the internal directory, you can now add your users i
 
 If everything went well, your users should now be able to connect to the server and send and receive emails. If you are unable to connect to the server, check the log files from the web-admin or under `<INSTALL_DIR>/logs` for any errors.
 
-If you encounter any issues, please refer to the [troubleshooting](/docs/management/troubleshoot) section for help. If you have questions please check the [FAQ](/docs/faq) section or start a discussion in the [community forum](https://github.com/stalwartlabs/stalwart/discussions).
+If you encounter any issues, please refer to the [troubleshooting](/docs/management/troubleshoot) section for help. If you have questions please check the [FAQ](/docs/faq) section or start a discussion in the [community forum](https://support.stalw.art).
 
 :::tip 
 

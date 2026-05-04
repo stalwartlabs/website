@@ -142,14 +142,18 @@ spec:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
     spec:
+      {{- with .Values.podSecurityContext }}
       securityContext:
-        fsGroup: 2000
-        runAsUser: 2000
-        runAsGroup: 2000
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       containers:
         - name: stalwart
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- with .Values.containerSecurityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           args:
             - "--config"
             - "/etc/stalwart/config.json"
@@ -458,6 +462,20 @@ persistence:
 
 # Resource requests and limits for the container.
 resources: {}
+
+# Pod-level security context. Applied to every container in the pod.
+# The defaults are sufficient for the `baseline` Pod Security Standard.
+# See "Restricted Pod Security Standards" below for the override
+# required under the `restricted` profile.
+podSecurityContext:
+  fsGroup: 2000
+  runAsUser: 2000
+  runAsGroup: 2000
+
+# Container-level security context for the stalwart container.
+# Empty by default. Set this to opt into the `restricted` Pod Security
+# Standard; see "Restricted Pod Security Standards" below.
+containerSecurityContext: {}
 ```
 
 ## `config.json` handling
@@ -522,6 +540,42 @@ Each release produces its own StatefulSet with its own PVCs, role, and push shar
 
 Coordination between nodes is handled by the [Coordinator](/docs/ref/object/coordinator) singleton (found in the WebUI under <!-- breadcrumb:Coordinator --><svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M10 5H3" /><path d="M12 19H3" /><path d="M14 3v4" /><path d="M16 17v4" /><path d="M21 12h-9" /><path d="M21 19h-5" /><path d="M21 5h-7" /><path d="M8 10v4" /><path d="M8 12H3" /></svg> Settings › <svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M2.97 12.92A2 2 0 0 0 2 14.63v3.24a2 2 0 0 0 .97 1.71l3 1.8a2 2 0 0 0 2.06 0L12 19v-5.5l-5-3-4.03 2.42Z" /><path d="m7 16.5-4.74-2.85" /><path d="m7 16.5 5-3" /><path d="M7 16.5v5.17" /><path d="M12 13.5V19l3.97 2.38a2 2 0 0 0 2.06 0l3-1.8a2 2 0 0 0 .97-1.71v-3.24a2 2 0 0 0-.97-1.71L17 10.5l-5 3Z" /><path d="m17 16.5-5-3" /><path d="m17 16.5 4.74-2.85" /><path d="M17 16.5v5.17" /><path d="M7.97 4.42A2 2 0 0 0 7 6.13v4.37l5 3 5-3V6.13a2 2 0 0 0-.97-1.71l-3-1.8a2 2 0 0 0-2.06 0l-3 1.8Z" /><path d="M12 8 7.26 5.15" /><path d="m12 8 4.74-2.85" /><path d="M12 13.5V8" /></svg> Cluster › Coordinator<!-- /breadcrumb:Coordinator -->), which can be backed by peer-to-peer, Apache Kafka / Redpanda, NATS, or Redis. The coordinator is configured from the database rather than from `config.json`, so pointing a Kubernetes deployment at an external coordinator is a post-install operation: bring the first pod up, open the WebUI, set the Coordinator object in `Settings` > `Cluster`, and redeploy with the target `replicaCount`. Subsequent pods pick the coordinator configuration up from the shared DataStore on start. See the [coordination overview](/docs/cluster/coordination/) for the choice of backend.
 
+## Restricted Pod Security Standards
+
+The defaults shown in `values.yaml` produce a pod compatible with the [baseline](https://kubernetes.io/docs/concepts/security/pod-security-standards/) Pod Security Standard. The stricter `restricted` profile (enforced by `pod-security.kubernetes.io/enforce: restricted` on the namespace, and by the equivalent Security Context Constraints on OpenShift) additionally requires `runAsNonRoot: true`, `allowPrivilegeEscalation: false`, `readOnlyRootFilesystem: true`, `seccompProfile.type: RuntimeDefault`, and `capabilities.drop: [ALL]`.
+
+One detail of the Stalwart image matters under this profile. The Dockerfile runs `setcap cap_net_bind_service=+ep /usr/local/bin/stalwart` so that the non-root `stalwart` user (UID 2000) can bind to the privileged mail ports (`25`, `110`, `143`, `443`, `465`, `587`, `993`, `995`). When the kernel `execve`s a binary with effective file capabilities, those capabilities must also be present in the calling process's bounding set; `capabilities.drop: [ALL]` empties that set, and the exec is rejected with:
+
+```
+exec /usr/local/bin/stalwart: operation not permitted
+```
+
+Restricted PSS explicitly permits `NET_BIND_SERVICE` to be re-added through `capabilities.add`, which restores the bounding-set entry the file capability needs. Set the following in `values.yaml`:
+
+```yaml
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 2000
+  runAsGroup: 2000
+  fsGroup: 2000
+  seccompProfile:
+    type: RuntimeDefault
+
+containerSecurityContext:
+  runAsNonRoot: true
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+  capabilities:
+    drop: [ALL]
+    add: [NET_BIND_SERVICE]
+  seccompProfile:
+    type: RuntimeDefault
+```
+
+`NET_BIND_SERVICE` can be omitted from `capabilities.add` only if every configured listener binds to a port `>= 1024` *and* the file capability has been stripped from the binary (a custom image without the `setcap` step, or an init container that runs `setcap -r` against a copy of the binary). With the file capability still set on `/usr/local/bin/stalwart`, the bounding-set check fails regardless of which ports the configuration uses.
+
+`readOnlyRootFilesystem: true` requires that any path Stalwart writes to outside `/etc/stalwart` and `/var/lib/stalwart` is backed by a writable volume. A stock install with RocksDB and the `Console` log destination writes only into the data PVC and stdout, so no extra volumes are needed; configurations that need scratch space should add an `emptyDir` mount on `/tmp`.
+
 ## Bootstrapping
 
 [Bootstrap mode](/docs/configuration/bootstrap-mode) is triggered only when `config.json` is absent at startup. On Kubernetes the ConfigMap always renders a `config.json`, so the chart never enters bootstrap mode: an empty DataStore would instead cause the server to exit with an error before serving any listener. The chart therefore expects the initial `config.json` to be populated by the operator (the `.Values.config` default already points at a single-node RocksDB DataStore that lets the pod start cleanly on first install) and provisions the rest of the configuration through the management API once the pod is running. Setting `recoveryAdmin.enabled: true` makes that first sign-in possible without scraping the pod logs for a generated temporary password.
@@ -556,6 +610,7 @@ The StatefulSet rolls pods one at a time, each pod reusing its existing PVC, so 
 
 ## Troubleshooting
 
+- Container fails to start with `exec /usr/local/bin/stalwart: operation not permitted`: the namespace enforces the `restricted` Pod Security Standard (or an equivalent SCC) and the file capability on the binary is incompatible with `capabilities.drop: [ALL]`. Add `NET_BIND_SERVICE` back to `capabilities.add` in `containerSecurityContext`. See [Restricted Pod Security Standards](#restricted-pod-security-standards).
 - No administrator sign-in on first install: set `recoveryAdmin.enabled: true` in `values.yaml` and redeploy. See [bootstrap mode](/docs/configuration/bootstrap-mode).
 - Pod stuck in `CrashLoopBackOff` on a fresh install with RocksDB: check that `persistence.enabled: true` and that the cluster's default StorageClass can provision a `ReadWriteOnce` volume of the requested size. See [persistent storage](/docs/install/store).
 - Mail ports unreachable from outside the cluster: `service.type: ClusterIP` only exposes the listeners inside the cluster. Switch to `LoadBalancer`, add a `NodePort`, or front the chart with an L4 load balancer. Review [securing your server](/docs/install/security) before exposing SMTP and IMAP publicly.

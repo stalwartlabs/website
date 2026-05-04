@@ -119,7 +119,7 @@ sections:
     bullets:
       - Sieve scripting with every registered extension.
       - Milter for Rspamd, ClamAV, SpamAssassin or any sendmail-compatible filter.
-      - MTA Hooks for HTTP + JSON filters, with Basic and Bearer auth.
+      - MTA Hooks for HTTP + JSON filters.
       - Built-in spam and phishing filter; no external Rspamd required.
       - Inbound concurrency and rate limiting.
     learnMore:
