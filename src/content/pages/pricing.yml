@@ -65,9 +65,8 @@ sections:
     eyebrow: How licensing works
     title: Per-mailbox subscription, annual or monthly.
     body: >-
-      Two billing cycles are available: **annual**, with a discount applied
-      for paying yearly, and **monthly**, for organisations that prefer a
-      shorter commitment.
+      Two billing cycles are available: **annual** and **monthly**, 
+      for organisations that prefer a shorter commitment.
 
       Only user and group mailboxes count toward the total. Mailing 
       lists and aliases are not billed. Every plan
@@ -109,10 +108,6 @@ sections:
     eyebrow: Frequently asked
     title: Pricing FAQ.
     items:
-      - question: Are mailboxes counted on a peak or average basis?
-        answer: >-
-          Mailbox count is measured at billing. Only user and group
-          mailboxes are counted; mailing lists and aliases are not.
       - question: Can I move the license to a different server?
         answer: >-
           Yes, as long as the server hostname falls under the licensed

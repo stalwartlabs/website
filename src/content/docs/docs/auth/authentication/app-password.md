@@ -17,12 +17,6 @@ Each Application Password is represented by an [AppPassword](/docs/ref/object/ap
 
 Administrators have limited control over Application Passwords. They can view and revoke a user's Application Passwords but cannot create new ones on a user's behalf.
 
-:::tip[Note]
-
-Application Passwords can be managed from the WebUI only when Stalwart is configured to use the [internal directory](/docs/auth/backend/internal). When the server is configured with an external directory, such as LDAP or SQL, administrators must add the App Password secret as one of the account secrets in the external directory.
-
-:::
-
 ## Internal Storage
 
 Each Application Password is stored on the account as one of its secrets, in the form `$app$name$password`, where `$app$` marks the secret as an Application Password, `name` is the unique identifier for the credential, and `password` is the hashed secret. The `$app$` prefix keeps Application Passwords distinguishable from other credential kinds, and storing only the hash of the generated secret prevents the raw password from being recovered from the directory.
