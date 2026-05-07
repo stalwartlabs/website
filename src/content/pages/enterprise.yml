@@ -1,0 +1,241 @@
+title: Enterprise Edition | Stalwart Labs
+description: >-
+  Multi-tenancy, branding, AI-assisted spam filtering, live telemetry and
+  read replicas on top of the Stalwart mail and collaboration server.
+slug: /enterprise
+
+hero:
+  eyebrow: Enterprise edition
+  title: Stalwart at enterprise scale
+  titleHighlight: enterprise scale
+  lead: >-
+    Stalwart Enterprise extends the open-source server with the
+    operations features that matter once a business depends on it:
+    multi-tenancy and branding for hosted customers, archiving and
+    un-deletion for fast recovery, real-time telemetry and alerts for
+    your support team, AI-driven spam filtering, masked email for
+    privacy-conscious users, and read replicas and sharded storage for
+    the largest deployments.
+  ctas:
+    - label: Start a 30-day trial
+      href: https://license.stalw.art/trial
+      external: true
+    - label: See pricing
+      href: /pricing
+      primary: false
+  meta:
+    - 30-day trial
+    - Per-mailbox tiered pricing
+  visual:
+    kind: screenshot
+    src: /images/webadmin/dashboard-performance.png
+    alt: Stalwart performance dashboard with ingestion time, indexing time, DNS lookup time and server memory, plus an ingest pipeline chart
+    url: admin.stalw.art / Dashboard / Performance
+
+sections:
+  - kind: feature
+    eyebrow: Multi-tenancy
+    title: Many organisations on the same deployment.
+    body: >-
+      Hosting many customers on shared infrastructure only works if the
+      isolation between them is real. Each Stalwart tenant has its own
+      accounts, groups, mailing lists and domains, with full isolation
+      between them, so a user in one tenant never sees the resources
+      of another. Per-tenant disk quotas and principal-count quotas
+      cap how much of the deployment a single customer can consume,
+      and tenant administrators only see the parts of the system they
+      are responsible for.
+
+      Each tenant can also bring its own identity backend, so a
+      customer using LDAP or OpenID Connect keeps using it on
+      the shared deployment instead of migrating users.
+    learnMore:
+      - label: Multi-tenancy reference
+        href: /docs/auth/authorization/tenants
+    visual:
+      kind: diagram
+      id: tenants-list
+
+  - kind: feature
+    reverse: true
+    band: alt
+    eyebrow: Branding
+    title: Tailored branding for a cohesive customer experience.
+    body: >-
+      A hosted customer does not want to see your logo in the admin
+      console; they want to see their own. Stalwart serves a per-tenant
+      and per-domain logo on the web admin and on the customer-facing
+      Account Manager, where end users sign in to manage their own
+      password, application passwords, two-factor authentication and
+      masked email addresses, all under the brand they recognise.
+      White-label hosting becomes a configuration choice, not a fork.
+    learnMore:
+      - label: Branding reference
+        href: /docs/management/webui/branding
+    visual:
+      kind: diagram
+      id: branding
+
+  - kind: feature
+    eyebrow: Account archiving and un-deletion
+    title: Get deleted mail back, without restoring from backup.
+    body: >-
+      Most "we need to restore from backup" tickets are really about a
+      single deleted mailbox or a handful of deleted messages, not a
+      whole-server failure. Stalwart keeps deleted emails in an archive
+      for a configurable retention window instead of removing them
+      outright. Administrators can browse archived items with their
+      original sender, subject and date, then restore individual
+      messages or whole accounts in a few clicks; the same archive
+      backs full account un-deletion.
+
+      This shortens the recovery loop after a misconfigured filter
+      rule, an over-eager retention policy or a user mistake. It does
+      not replace backups, but it removes the most common reason
+      operators reach for them.
+    learnMore:
+      - label: Storage and retention reference
+        href: /docs/storage/
+    visual:
+      kind: screenshot
+      src: /images/webadmin/undelete.png
+      alt: Stalwart undelete interface
+      url: admin.stalw.art / Account / Archived Items
+
+  - kind: feature
+    reverse: true
+    band: alt
+    eyebrow: Live telemetry and metric alerts
+    title: Real-time insights and alerts for complete email oversight.
+    body: >-
+      Enterprise includes a real-time dashboard and live telemetry
+      streams, so support engineers triaging a ticket see what is
+      happening on the server right now, not what happened five
+      minutes ago. Logs, traces and metrics stream in real time and
+      can be filtered by remote IP, domain, account or protocol.
+
+      Alerts evaluate expressions against the live metric stream and
+      can trigger webhooks, send an email to a list of recipients, or
+      both. Conditions can combine multiple metrics, so a noisy
+      single-metric threshold gives way to alerts that fire on
+      patterns operators actually care about.
+    learnMore:
+      - label: Live telemetry
+        href: /docs/telemetry/live
+      - label: Metric alerts
+        href: /docs/telemetry/alerts
+    visual:
+      kind: screenshot
+      src: /images/webadmin/live-tracing.png
+      alt: Stalwart live tracing pane streaming SMTP connection and command events as they happen
+      url: admin.stalw.art / Observability / Live Tracing
+      glow: true
+
+  - kind: feature
+    eyebrow: AI-assisted spam filtering and Sieve scripting
+    title: AI in the spam filter, not just on the side.
+    body: >-
+      The Enterprise spam classifier can call out to a large language
+      model alongside the statistical classifier, the blocklist
+      pipeline and the rest of the anti-spam stack, so a model gets
+      the chance to read the messages your filter is least sure
+      about. The same AI integration is available to server-side
+      filter rules, so operators can build custom analyses (urgency
+      detection, language detection, automated triage) without leaving
+      the server.
+
+      Any OpenAI-compatible endpoint is supported, so models can run
+      on a hosted provider (OpenAI, Anthropic) or on infrastructure
+      you already operate, for privacy or cost reasons.
+    learnMore:
+      - label: Sieve LLM integration
+        href: /docs/sieve/llm
+      - label: AI model configuration
+        href: /docs/server/ai-models
+    visual:
+      kind: diagram
+      id: ai-byom
+
+  - kind: feature
+    reverse: true
+    band: alt
+    eyebrow: Masked email
+    title: Disposable addresses for users who care about privacy.
+    body: >-
+      Privacy-conscious users want a different email address for every
+      site they sign up to, so a leak at one site does not become spam
+      at the rest. Stalwart lets end users create disposable addresses
+      directly from their Account Manager or through any password
+      manager that supports the standard. Each mask carries a
+      description and an enabled toggle, so a user can disable a
+      leaking address without losing the record of where it was
+      handed out.
+
+      This gives mailbox operators a privacy primitive to surface to
+      their customers without running a separate aliasing service.
+    learnMore:
+      - label: Masked email reference
+        href: /docs/email/management/masked-email
+    visual:
+      kind: screenshot
+      src: /images/webadmin/masked-email.png
+      alt: Stalwart Account Manager masked email page listing disposable addresses with description and enabled toggle
+      url: account.stalw.art / Masked Addresses
+
+  - kind: feature
+    eyebrow: Read replicas and sharded storage
+    title: Scale the data plane without rewriting the cluster.
+    body: >-
+      Read traffic outweighs write traffic in a typical mail
+      deployment, and the easiest way to absorb the read side is to
+      add replicas. Stalwart routes read-heavy workloads to secondary
+      copies of the data store while writes continue to target the
+      primary. Sharded blob storage spreads message bodies across
+      multiple backends, so total throughput and capacity grow with
+      each shard added; sharded in-memory data stores do the same for
+      the hot-path key-value layer used by sessions and rate limits.
+    learnMore:
+      - label: Storage backends
+        href: /docs/storage/backends/
+    visual:
+      kind: diagram
+      id: read-replicas
+
+  - kind: list
+    band: alt
+    eyebrow: For mail-hosting providers and MSPs
+    title: One deployment, many customers, your brand.
+    body: >-
+      For ISPs, MSPs and white-label hosters, the operational features
+      above combine into a single hosting platform.
+    bullets:
+      - "**Multi-tenancy** isolates customers from each other, with per-tenant disk and principal quotas and per-domain directory backends."
+      - "**Branding** lets each customer see their own logo at their own domain, on the same WebUI bundle."
+      - "**Account Manager** gives each customer's end users a self-service portal for passwords, 2FA, application passwords and masked email."
+      - "**Live telemetry, alerts and message delivery history** give support engineers the data they need to triage tickets."
+      - "**Lawful interception** is available on demand for jurisdictions that require it."
+      - "**Domain-anchored licensing** ties the Enterprise key to a domain name and keeps the per-server count unlimited under that domain."
+
+  - kind: feature
+    eyebrow: Premium Support
+    title: Priority Support, included with Enterprise.
+    body: >-
+      Production deployments need a way to reach the people who build
+      the server, not just a community forum. Premium Support is
+      included at no extra cost with every Enterprise subscription of
+      150 mailboxes or more, and covers priority response and a direct 
+      line to the engineers who write Stalwart.
+
+      A **dedicated Support Engineer**, a **custom SLA**, and
+      **lawful-interception assistance** are available as separately
+      purchasable add-ons on top of Premium Support, for organisations
+      that need them.
+    learnMore:
+      - label: Support overview
+        href: /support
+
+footerCta:
+  cta: Try Stalwart Enterprise for 30 days
+  ctaSub: Full feature set, no commitment, instant key issuance.
+  ctaButton: Start a trial
+  ctaLink: https://license.stalw.art/trial

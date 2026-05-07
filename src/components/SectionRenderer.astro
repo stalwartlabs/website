@@ -1,0 +1,45 @@
+---
+import FeatureSection from "./sections/FeatureSection.astro";
+import ProseSection from "./sections/ProseSection.astro";
+import ListSection from "./sections/ListSection.astro";
+import PillarGridSection from "./sections/PillarGridSection.astro";
+import FeatureGridSection from "./sections/FeatureGridSection.astro";
+import CtaCalloutSection from "./sections/CtaCalloutSection.astro";
+import FaqSection from "./sections/FaqSection.astro";
+import AddressesSection from "./sections/AddressesSection.astro";
+import ComparisonTablesSection from "./sections/ComparisonTablesSection.astro";
+import PricingTiersSection from "./sections/PricingTiersSection.astro";
+import CalculatorSection from "./sections/CalculatorSection.astro";
+import ContactFormSection from "./sections/ContactFormSection.astro";
+
+interface Props {
+  sections: any[];
+}
+const { sections } = Astro.props;
+
+// For the calculator: locate the most recent pricing-tiers section so we can
+// hand it the same tier data.
+function tiersForIndex(idx: number): any[] {
+  for (let i = idx - 1; i >= 0; i--) {
+    if (sections[i].kind === "pricing-tiers") return sections[i].tiers;
+  }
+  return [];
+}
+---
+{sections.map((section: any, i: number) => {
+  switch (section.kind) {
+    case "feature":            return <FeatureSection data={section} />;
+    case "prose":              return <ProseSection data={section} />;
+    case "list":               return <ListSection data={section} />;
+    case "pillar-grid":        return <PillarGridSection data={section} />;
+    case "feature-grid":       return <FeatureGridSection data={section} />;
+    case "cta-callout":        return <CtaCalloutSection data={section} />;
+    case "faq":                return <FaqSection data={section} />;
+    case "addresses":          return <AddressesSection data={section} />;
+    case "comparison-tables":  return <ComparisonTablesSection data={section} />;
+    case "pricing-tiers":      return <PricingTiersSection data={section} />;
+    case "calculator":         return <CalculatorSection data={section} tiers={tiersForIndex(i)} />;
+    case "contact-form":       return <ContactFormSection data={section} />;
+    default:                   return null;
+  }
+})}

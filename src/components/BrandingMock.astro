@@ -1,0 +1,201 @@
+---
+// Branding mock: two miniature admin panes side by side, each with a
+// different placeholder logo and accent colour, captioned with their
+// host name. Shows the same WebUI surface under two tenant brands.
+---
+<div class="brand">
+  <svg viewBox="0 0 720 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Same WebUI under two tenant brands">
+    <text x="40" y="40" class="brand__title">Tailored branding for a cohesive customer experience</text>
+
+    <!-- Pane 1: Acme (brand red) -->
+    <g transform="translate(40 72)">
+      <!-- Browser frame chrome -->
+      <rect x="0" y="0" width="320" height="332" rx="10" fill="var(--surface-2)" stroke="var(--border-strong)" stroke-width="1"/>
+      <rect x="0" y="0" width="320" height="28" rx="10" fill="#15151c"/>
+      <circle cx="14" cy="14" r="4" fill="#ff5f57"/>
+      <circle cx="28" cy="14" r="4" fill="#febc2e"/>
+      <circle cx="42" cy="14" r="4" fill="#28c840"/>
+      <rect x="100" y="6" width="120" height="16" rx="8" fill="rgba(255,255,255,0.05)"/>
+      <text x="160" y="14" class="brand__url">admin.acme.com</text>
+
+      <!-- App body: top bar with logo + accent button + sidebar + main pane -->
+      <rect x="0" y="28" width="320" height="40" fill="#0e0e13"/>
+      <g class="brand__logo brand__logo--a" transform="translate(16 48)">
+        <rect x="-8" y="-10" width="20" height="20" rx="4"/>
+        <text x="20" y="0" class="brand__brand-name">Acme</text>
+      </g>
+      <rect x="240" y="40" width="64" height="20" rx="10" class="brand__cta brand__cta--a"/>
+      <text x="272" y="50" class="brand__cta-text">+ New</text>
+
+      <!-- Sidebar -->
+      <rect x="0" y="68" width="80" height="264" fill="var(--surface)"/>
+      <text x="16" y="92"  class="brand__nav brand__nav--a brand__nav--active">Dashboard</text>
+      <text x="16" y="116" class="brand__nav">Accounts</text>
+      <text x="16" y="140" class="brand__nav">Domains</text>
+      <text x="16" y="164" class="brand__nav">Spam</text>
+      <text x="16" y="188" class="brand__nav">Reports</text>
+
+      <!-- Main pane content: cards -->
+      <g transform="translate(96 84)">
+        <rect x="0" y="0" width="100" height="50" rx="6" fill="var(--surface)" stroke="var(--border)"/>
+        <text x="10" y="18" class="brand__card-label">Users</text>
+        <text x="10" y="40" class="brand__card-num brand__card-num--a">1,420</text>
+
+        <rect x="112" y="0" width="100" height="50" rx="6" fill="var(--surface)" stroke="var(--border)"/>
+        <text x="122" y="18" class="brand__card-label">Domains</text>
+        <text x="122" y="40" class="brand__card-num brand__card-num--a">3</text>
+
+        <rect x="0" y="62" width="212" height="120" rx="6" fill="var(--surface)" stroke="var(--border)"/>
+        <text x="10" y="80" class="brand__card-label">Messages today</text>
+        <!-- mini area-chart -->
+        <path d="M 12 162 L 36 142 L 60 156 L 84 130 L 108 138 L 132 116 L 156 124 L 180 102 L 204 110" fill="none" class="brand__chart brand__chart--a"/>
+      </g>
+    </g>
+
+    <!-- Pane 2: Foobar (green accent) -->
+    <g transform="translate(380 72)">
+      <rect x="0" y="0" width="320" height="332" rx="10" fill="var(--surface-2)" stroke="var(--border-strong)" stroke-width="1"/>
+      <rect x="0" y="0" width="320" height="28" rx="10" fill="#15151c"/>
+      <circle cx="14" cy="14" r="4" fill="#ff5f57"/>
+      <circle cx="28" cy="14" r="4" fill="#febc2e"/>
+      <circle cx="42" cy="14" r="4" fill="#28c840"/>
+      <rect x="100" y="6" width="120" height="16" rx="8" fill="rgba(255,255,255,0.05)"/>
+      <text x="160" y="14" class="brand__url">admin.foobar.org</text>
+
+      <rect x="0" y="28" width="320" height="40" fill="#0e0e13"/>
+      <g class="brand__logo brand__logo--b" transform="translate(16 48)">
+        <circle cx="0" cy="0" r="9"/>
+        <text x="20" y="0" class="brand__brand-name">Foobar</text>
+      </g>
+      <rect x="240" y="40" width="64" height="20" rx="10" class="brand__cta brand__cta--b"/>
+      <text x="272" y="50" class="brand__cta-text">+ New</text>
+
+      <rect x="0" y="68" width="80" height="264" fill="var(--surface)"/>
+      <text x="16" y="92"  class="brand__nav brand__nav--b brand__nav--active">Dashboard</text>
+      <text x="16" y="116" class="brand__nav">Accounts</text>
+      <text x="16" y="140" class="brand__nav">Domains</text>
+      <text x="16" y="164" class="brand__nav">Spam</text>
+      <text x="16" y="188" class="brand__nav">Reports</text>
+
+      <g transform="translate(96 84)">
+        <rect x="0" y="0" width="100" height="50" rx="6" fill="var(--surface)" stroke="var(--border)"/>
+        <text x="10" y="18" class="brand__card-label">Users</text>
+        <text x="10" y="40" class="brand__card-num brand__card-num--b">820</text>
+
+        <rect x="112" y="0" width="100" height="50" rx="6" fill="var(--surface)" stroke="var(--border)"/>
+        <text x="122" y="18" class="brand__card-label">Domains</text>
+        <text x="122" y="40" class="brand__card-num brand__card-num--b">1</text>
+
+        <rect x="0" y="62" width="212" height="120" rx="6" fill="var(--surface)" stroke="var(--border)"/>
+        <text x="10" y="80" class="brand__card-label">Messages today</text>
+        <path d="M 12 158 L 36 132 L 60 148 L 84 124 L 108 134 L 132 110 L 156 122 L 180 96 L 204 108" fill="none" class="brand__chart brand__chart--b"/>
+      </g>
+    </g>
+
+    <!-- Footnote: same WebUI bundle, two tenants -->
+    <text x="200" y="430" class="brand__caption" text-anchor="middle">acme.com</text>
+    <text x="540" y="430" class="brand__caption" text-anchor="middle">foobar.org</text>
+    <line x1="40"  y1="416" x2="360" y2="416" stroke="var(--brand)" stroke-opacity="0.3" stroke-dasharray="3 3"/>
+    <line x1="380" y1="416" x2="700" y2="416" stroke="#2dba6c" stroke-opacity="0.3" stroke-dasharray="3 3"/>
+  </svg>
+</div>
+
+<style>
+  .brand {
+    width: 100%;
+    aspect-ratio: 720 / 460;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: clamp(0.5rem, 1.5vw, 1rem);
+    box-shadow: var(--shadow-1);
+  }
+  .brand svg { width: 100%; height: 100%; overflow: visible; }
+  .brand__title {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    fill: var(--text-dim);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .brand__url {
+    fill: #6e6e78;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    text-anchor: middle;
+    dominant-baseline: middle;
+  }
+  .brand__brand-name {
+    fill: var(--text);
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 700;
+    dominant-baseline: middle;
+  }
+  .brand__cta-text {
+    fill: #fff;
+    font-family: var(--font-sans);
+    font-size: 10px;
+    font-weight: 600;
+    text-anchor: middle;
+    dominant-baseline: middle;
+  }
+  .brand__nav {
+    fill: var(--text-muted);
+    font-family: var(--font-sans);
+    font-size: 11px;
+    dominant-baseline: middle;
+  }
+  .brand__nav--active {
+    font-weight: 700;
+  }
+  .brand__nav--a.brand__nav--active { fill: var(--brand); }
+  .brand__nav--b.brand__nav--active { fill: #2dba6c; }
+
+  .brand__card-label {
+    fill: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    dominant-baseline: middle;
+  }
+  .brand__card-num {
+    fill: var(--text);
+    font-family: var(--font-sans);
+    font-size: 18px;
+    font-weight: 700;
+    dominant-baseline: middle;
+  }
+  .brand__card-num--a { fill: var(--brand); }
+  .brand__card-num--b { fill: #2dba6c; }
+
+  .brand__logo--a rect {
+    fill: var(--brand);
+  }
+  .brand__logo--b circle {
+    fill: #2dba6c;
+  }
+  .brand__cta--a {
+    fill: var(--brand);
+  }
+  .brand__cta--b {
+    fill: #2dba6c;
+  }
+
+  .brand__chart {
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .brand__chart--a { stroke: var(--brand); }
+  .brand__chart--b { stroke: #2dba6c; }
+
+  .brand__caption {
+    fill: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    dominant-baseline: middle;
+  }
+</style>

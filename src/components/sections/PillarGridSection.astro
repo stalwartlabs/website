@@ -1,0 +1,47 @@
+---
+import PillarCard from "../PillarCard.astro";
+import { inlineMd } from "../../lib/md";
+
+interface Props {
+  data: any;
+}
+const { data } = Astro.props;
+---
+<section class={`band ${data.band === "alt" ? "band--alt" : ""}`}>
+  <div class="container">
+    {(data.eyebrow || data.title) && (
+      <div class="section-head reveal">
+        {data.eyebrow && <span class="eyebrow">{data.eyebrow}</span>}
+        {data.title && <h2 class="h2" set:html={inlineMd(data.title)}></h2>}
+      </div>
+    )}
+    <div class="pillar-grid">
+      {data.items.map((item: any) => (
+        <PillarCard href={item.href} icon={item.icon} title={item.title}>
+          <Fragment set:html={inlineMd(item.body)} />
+        </PillarCard>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .section-head {
+    max-width: 760px;
+    margin-bottom: clamp(2.5rem, 4vw, 3.5rem);
+  }
+  .section-head .h2 {
+    margin-top: 1rem;
+  }
+  .pillar-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+  @media (min-width: 600px) {
+    .pillar-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 1024px) {
+    .pillar-grid { grid-template-columns: repeat(4, 1fr); }
+  }
+</style>

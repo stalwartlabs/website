@@ -1,0 +1,124 @@
+title: Community Edition | Stalwart Labs
+description: >-
+  The full Stalwart mail and collaboration server under AGPL-3.0.
+  Production-ready, memory-safe Rust, security-audited, with a sponsor path
+  to Enterprise.
+slug: /open-source
+
+hero:
+  eyebrow: Community edition
+  title: Stalwart Community, free under AGPL-3.0.
+  titleHighlight: free under AGPL-3.0
+  lead: >-
+    Stalwart's Community Edition is free under AGPL-3.0.
+  ctas:
+    - label: Get the source
+      href: https://github.com/stalwartlabs/stalwart
+      external: true
+    - label: Install Stalwart
+      href: /docs/install/
+      primary: false
+  meta:
+    - AGPL-3.0
+    - Security audited
+
+sections:
+  - kind: feature
+    eyebrow: Take control of your email
+    title: Your data, on your infrastructure.
+    body: >-
+      Running your own mail server means your messages live on
+      hardware you control, under policies you set, with no third
+      party indexing the contents for ads or training data. Stalwart
+      gives you the full server to run anywhere you can run a Linux
+      host, with the same flexibility you would get from a hosted
+      provider and none of the lock-in.
+    bullets:
+      - Full ownership of mailboxes, calendars, contacts and files.
+      - No vendor lock-in; standard protocols on every interface.
+      - Customise, extend or audit the source to your own standards.
+    learnMore:
+      - label: Read the install guide
+        href: /docs/install/
+
+  - kind: feature
+    reverse: true
+    band: alt
+    eyebrow: Transparency and trust
+    title: Auditable code, reviewed by the community.
+    body: >-
+      Open source means anyone can read the code, file an issue or
+      contribute a fix. Stalwart is written in Rust, which removes
+      whole categories of vulnerability common in older mail servers
+      (use-after-free, buffer overruns, type confusion in protocol
+      parsers) at compile time. The codebase has been through an
+      independent security audit and the public report is on the blog.
+    learnMore:
+      - label: Read the security audit
+        href: /blog/security-audit
+      - label: Browse the source on GitHub
+        href: https://github.com/stalwartlabs/stalwart
+        external: true
+
+  - kind: feature
+    eyebrow: AGPL-3.0
+    title: Free software, designed to be deployed.
+    body: >-
+      Stalwart is dual-licensed under the GNU Affero General Public
+      License v3.0 and the Stalwart Enterprise License v1.
+      The AGPL-3.0 obligations apply only when modified versions
+      of the server are themselves redistributed or offered as a
+      network service; running unmodified Stalwart, or using it
+      internally, does not trigger any source-disclosure requirement.
+      Operators that prefer not to comply with AGPL-3.0 on their own
+      modifications can purchase the proprietary SELv1 license through
+      the Enterprise Edition.
+    learnMore:
+      - label: Compare editions
+        href: /compare
+
+  - kind: feature
+    eyebrow: Community support
+    title: Free support from the community.
+    body: >-
+      Community users get a free account on the support portal at
+      [support.stalw.art](https://support.stalw.art), where questions
+      and bug reports are answered by the wider Stalwart community.
+      For real-time discussion, the project also has active Reddit,
+      Discord and Matrix communities that operators and contributors
+      use day to day.
+    learnMore:
+      - label: Support portal
+        href: https://support.stalw.art
+        external: true
+      - label: Reddit
+        href: https://www.reddit.com/r/stalwartlabs
+        external: true
+      - label: Discord
+        href: https://discord.com/servers/stalwart-923615863037390889
+        external: true
+      - label: Matrix
+        href: https://matrix.to/#/#stalwart:matrix.org
+        external: true
+
+  - kind: prose
+    band: alt
+    eyebrow: Funding
+    title: Built with public-interest funding.
+    body: >-
+      Part of Stalwart's development has been funded by NLnet through
+      two grants. **NGI0 Entrust Fund** was established by NLnet with
+      financial support from the European Commission's Next Generation
+      Internet programme, under DG Communications Networks, Content
+      and Technology, grant agreement No 101069594. **NGI Zero Core**
+      was established by NLnet with financial support from the
+      European Commission's programme, under the same DG, grant
+      agreement No 101092990. Public funding has helped Stalwart ship
+      features that benefit the whole open-source ecosystem and stay
+      free for self-hosters.
+
+footerCta:
+  cta: Help keep Stalwart free and open
+  ctaSub: Sponsor at $5 per month and receive an Enterprise key in return.
+  ctaButton: Become a sponsor
+  ctaLink: https://opencollective.com/stalwart

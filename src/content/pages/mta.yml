@@ -1,0 +1,203 @@
+title: Stalwart MTA | Stalwart Labs
+description: >-
+  Programmable SMTP server with distributed virtual queues, DMARC, DKIM, SPF,
+  ARC verification, DANE, MTA-STS, TLS-RPT, milter and MTA Hooks.
+slug: /mta
+
+hero:
+  eyebrow: SMTP server
+  title: A programmable, distributed MTA
+  titleHighlight: distributed MTA
+  lead: >-
+    Stalwart's MTA delivers your outbound mail and accepts the inbound
+    traffic for it, with sender authentication, transport-layer
+    security, a fault-tolerant queue and a programmable filter
+    pipeline, all in the same product as the rest of the server. Run it
+    next to the mail store on a small deployment, or pull it out into a
+    dedicated outbound tier when the volume grows.
+  ctas:
+    - label: Get started
+      href: /docs/install/
+  meta:
+    - Programmable
+    - Distributed
+  visual:
+    kind: screenshot
+    src: /images/webadmin/dashboard-delivery.png
+    alt: Stalwart delivery dashboard showing messages sent (DSNs, messages, reports) and delivery time over the last 24 hours
+    url: admin.stalw.art / Dashboard / Delivery
+
+sections:
+  - kind: feature
+    eyebrow: Sender and message authentication
+    title: Comprehensive sender and message authentication.
+    body: >-
+      Sender authentication is what stops a stranger from emailing your
+      customers as you, and what stops a forged message from your bank
+      from reaching your inbox. Stalwart supports the latest standards
+      in sender and message authentication, with both verification and
+      reporting paths, and pairs them with the [automated DKIM
+      rotation](/docs/domains/dkim-rotation) on the mail server side
+      so signing keys are generated, published and retired on schedule.
+    bullets:
+      - DMARC verification, alignment checking and reporting.
+      - DKIM signing, verification and failure reporting.
+      - SPF policy evaluation and failure reporting.
+      - ARC verification on inbound mail.
+      - Reverse-DNS validation.
+      - Automatic ingestion of received DMARC, TLS-RPT and ARF reports.
+    visual:
+      kind: screenshot
+      src: /images/webadmin/dmarc-report-detail.png
+      alt: Stalwart DMARC report detail with policy domain, alignment, disposition and per-source records
+      url: admin.stalw.art / Reports / Inbox / DMARC
+
+  - kind: feature
+    reverse: true
+    band: alt
+    eyebrow: Transport security
+    title: Strong transport security between servers.
+    body: >-
+      Stalwart protects mail in transit between servers with the
+      current transport-security standards, so messages stay encrypted,
+      authenticated end to end, and protected from silent downgrade.
+      TLS reports flow in both directions; TLSA records stay in sync
+      with the same automated DNS management that handles MX and DKIM,
+      so DANE keeps validating after a certificate rollover without a
+      second tool in the loop.
+    bullets:
+      - DANE (DNS-Based Authentication of Named Entities) for outbound TLS.
+      - MTA-STS policy fetching and enforcement.
+      - SMTP TLS Reporting delivery and ingestion.
+      - Automatic TLSA refresh with ACME certificate rotation.
+    visual:
+      kind: screenshot
+      src: /images/webadmin/delivery-test-trace.png
+      alt: Stalwart delivery test trace showing MX, MTA-STS, TLS-RPT, TLSA, DANE, IP, TCP and STARTTLS stages with timings
+      url: admin.stalw.art / Emails / Delivery tests
+      glow: true
+
+  - kind: feature
+    eyebrow: Distributed virtual queues
+    title: Advanced queue management for efficient delivery.
+    body: >-
+      Stalwart manages outbound delivery with a distributed,
+      fault-tolerant queue, so high-volume mailers, transactional
+      traffic and DMARC report streams do not interfere with each other
+      and a node failure never strands its messages. Each virtual queue
+      carries its own concurrency, retry policy and quota; routing
+      rules can branch on listener, sender, recipient or any other
+      message metadata.
+    bullets:
+      - Distributed, fault-tolerant queue store; no per-node local spool.
+      - Unlimited virtual queues with per-queue concurrency.
+      - Delayed delivery, priority delivery and per-queue quotas.
+      - Dynamic routing rules and per-domain throttling.
+      - Smart-host and relay routing for upstream submission.
+    learnMore:
+      - label: Read the outbound queue docs
+        href: /docs/mta/outbound/queue
+    visual:
+      kind: screenshot
+      src: /images/webadmin/queue-delivery-detail.png
+      alt: Stalwart outbound delivery detail showing the queue ID, attempts, MX lookup, MTA-STS check and per-stage timings for a single message
+      url: admin.stalw.art / Emails / Queued / History
+
+  - kind: feature
+    reverse: true
+    band: alt
+    eyebrow: Filter pipeline
+    title: Programmable filtering, at every SMTP stage.
+    body: >-
+      Inbound mail can be filtered at every SMTP stage so abusive
+      traffic is rejected as early as possible and legitimate traffic
+      only pays for the checks it actually needs. Sieve scripts cover
+      server-side rules; milter and MTA Hooks plug into existing
+      filtering infrastructure; the built-in
+      [spam filter](/anti-spam) is always available without an extra
+      daemon to install.
+    bullets:
+      - Sieve scripting with every registered extension.
+      - Milter for Rspamd, ClamAV, SpamAssassin or any sendmail-compatible filter.
+      - MTA Hooks for HTTP + JSON filters.
+      - Built-in spam and phishing filter; no external Rspamd required.
+      - Inbound concurrency and rate limiting.
+    learnMore:
+      - label: Read milter
+        href: /docs/mta/filter/milter
+      - label: Read MTA Hooks
+        href: /docs/mta/filter/mtahooks
+    visual:
+      kind: diagram
+      id: smtp-pipeline
+
+  - kind: feature
+    eyebrow: Envelope and message rewriting
+    title: Enforce policy on every message that passes through.
+    body: >-
+      Compliance disclaimers, address normalisation and attachment
+      policy should be enforced by the server, not asked of every user.
+      Stalwart can rewrite envelope addresses, add or remove headers,
+      append disclaimers and strip attachments before queueing or
+      delivery, with rules that branch on listener, sender, recipient
+      or any other message metadata.
+    bullets:
+      - Sender, recipient and domain address rewriting.
+      - Header add, modify and remove.
+      - Body modification and attachment policy.
+      - Programmable rules per listener, sender or recipient.
+    learnMore:
+      - label: Read message rewriting
+        href: /docs/mta/rewrite/
+    visual:
+      kind: diagram
+      id: envelope-rewrite
+
+  - kind: feature
+    reverse: true
+    band: alt
+    eyebrow: Web admin
+    title: Queue, reports and live tracing in a browser.
+    body: >-
+      An SMTP operator should not need a terminal to do day-to-day work.
+      The web admin covers queue management for messages and outbound
+      DMARC and TLS reports, visualisation of received DMARC, TLS-RPT
+      and ARF reports, log search and live tracing of an in-flight
+      transaction.
+    bullets:
+      - Queue management for messages and outbound reports.
+      - Received DMARC, TLS-RPT and ARF (failure) report visualisation.
+      - Live tracing and message delivery history.
+      - Log viewer with search and filtering.
+    visual:
+      kind: screenshot
+      src: /images/webadmin/live-tracing.png
+      alt: Stalwart live tracing
+      url: admin.stalw.art / Observability / Live Tracing
+
+  - kind: feature
+    eyebrow: High availability
+    title: Seamless failover with distributed queues.
+    body: >-
+      With its distributed message-queue design, Stalwart's MTA is
+      built for high availability. Unlike traditional MTAs that rely on
+      local storage for queues, Stalwart shares the queue across the
+      cluster, so any node can take over message delivery if another
+      one fails and no message is stranded on a downed host. Adding
+      outbound nodes increases delivery throughput without changing the
+      rest of the topology.
+    bullets:
+      - Distributed, fault-tolerant SMTP queue.
+      - Any node delivers any message; no per-node spool.
+      - Node autodiscovery for streamlined network expansion.
+      - Network partition-tolerant failure detection.
+      - Dedicated outbound nodes for high-volume delivery tiers.
+    visual:
+      kind: diagram
+      id: cluster
+
+footerCta:
+  cta: A modern SMTP server, ready for production.
+  ctaSub: Run an SMTP cluster that signs, authenticates, reports and survives node failures.
+  ctaButton: Get started
+  ctaLink: /docs/install/

@@ -1,0 +1,153 @@
+---
+// "Records published" tile: a stylised mini zone file as SVG. Each row is
+// one record type the server can manage, with a green "managed" check.
+---
+<div class="dns">
+  <svg viewBox="0 0 720 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="DNS records managed by Stalwart">
+    <defs>
+      <linearGradient id="dns-row" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="var(--surface)" stop-opacity="1"/>
+        <stop offset="100%" stop-color="var(--surface-2)" stop-opacity="1"/>
+      </linearGradient>
+    </defs>
+
+    <!-- Zone header bar -->
+    <g transform="translate(40 40)">
+      <rect x="0" y="0" width="640" height="36" rx="10" fill="var(--brand-soft)" stroke="var(--brand)" stroke-opacity="0.45"/>
+      <text x="20" y="23" class="dns__zone">$ORIGIN example.com.</text>
+      <g class="dns__source-pill" transform="translate(560 18)">
+        <rect x="-60" y="-10" width="120" height="20" rx="10"/>
+        <text>managed by Stalwart</text>
+      </g>
+    </g>
+
+    <!-- Records list. Columns: name (16-180), type (200), value (260-590), managed tick (620). -->
+    <g transform="translate(40 96)">
+      <g class="dns__row" transform="translate(0 0)">
+        <rect x="0" y="0" width="640" height="34" rx="8" fill="url(#dns-row)" stroke="var(--border)"/>
+        <text class="dns__name"  x="16"  y="22">@</text>
+        <text class="dns__type"  x="200" y="22">MX</text>
+        <text class="dns__value" x="260" y="22">10 mail.example.com.</text>
+        <g class="dns__managed" transform="translate(620 17)"><path d="M-6 0 l4 4 l8 -8" /></g>
+      </g>
+      <g class="dns__row" transform="translate(0 42)">
+        <rect x="0" y="0" width="640" height="34" rx="8" fill="url(#dns-row)" stroke="var(--border)"/>
+        <text class="dns__name"  x="16"  y="22">@</text>
+        <text class="dns__type"  x="200" y="22">TXT</text>
+        <text class="dns__value" x="260" y="22">"v=spf1 mx ~all"</text>
+        <g class="dns__type-pill" transform="translate(560 17)"><rect x="-22" y="-9" width="44" height="18" rx="9"/><text>SPF</text></g>
+        <g class="dns__managed" transform="translate(620 17)"><path d="M-6 0 l4 4 l8 -8" /></g>
+      </g>
+      <g class="dns__row" transform="translate(0 84)">
+        <rect x="0" y="0" width="640" height="34" rx="8" fill="url(#dns-row)" stroke="var(--border)"/>
+        <text class="dns__name"  x="16"  y="22">2026e._domainkey</text>
+        <text class="dns__type"  x="200" y="22">TXT</text>
+        <text class="dns__value" x="260" y="22">"v=DKIM1; k=ed25519; p=MCo..."</text>
+        <g class="dns__type-pill" transform="translate(560 17)"><rect x="-26" y="-9" width="52" height="18" rx="9"/><text>DKIM</text></g>
+        <g class="dns__managed" transform="translate(620 17)"><path d="M-6 0 l4 4 l8 -8" /></g>
+      </g>
+      <g class="dns__row" transform="translate(0 126)">
+        <rect x="0" y="0" width="640" height="34" rx="8" fill="url(#dns-row)" stroke="var(--border)"/>
+        <text class="dns__name"  x="16"  y="22">_dmarc</text>
+        <text class="dns__type"  x="200" y="22">TXT</text>
+        <text class="dns__value" x="260" y="22">"v=DMARC1; p=quarantine; rua=..."</text>
+        <g class="dns__type-pill" transform="translate(560 17)"><rect x="-32" y="-9" width="64" height="18" rx="9"/><text>DMARC</text></g>
+        <g class="dns__managed" transform="translate(620 17)"><path d="M-6 0 l4 4 l8 -8" /></g>
+      </g>
+      <g class="dns__row" transform="translate(0 168)">
+        <rect x="0" y="0" width="640" height="34" rx="8" fill="url(#dns-row)" stroke="var(--border)"/>
+        <text class="dns__name"  x="16"  y="22">_25._tcp.mail</text>
+        <text class="dns__type"  x="200" y="22">TLSA</text>
+        <text class="dns__value" x="260" y="22">3 1 1 a3b1...c4f9</text>
+        <g class="dns__managed" transform="translate(620 17)"><path d="M-6 0 l4 4 l8 -8" /></g>
+      </g>
+      <g class="dns__row" transform="translate(0 210)">
+        <rect x="0" y="0" width="640" height="34" rx="8" fill="url(#dns-row)" stroke="var(--border)"/>
+        <text class="dns__name"  x="16"  y="22">_mta-sts</text>
+        <text class="dns__type"  x="200" y="22">TXT</text>
+        <text class="dns__value" x="260" y="22">"v=STSv1; id=20260301T000000Z"</text>
+        <g class="dns__type-pill" transform="translate(560 17)"><rect x="-32" y="-9" width="64" height="18" rx="9"/><text>MTA-STS</text></g>
+        <g class="dns__managed" transform="translate(620 17)"><path d="M-6 0 l4 4 l8 -8" /></g>
+      </g>
+      <g class="dns__row" transform="translate(0 252)">
+        <rect x="0" y="0" width="640" height="34" rx="8" fill="url(#dns-row)" stroke="var(--border)"/>
+        <text class="dns__name"  x="16"  y="22">_smtp._tls</text>
+        <text class="dns__type"  x="200" y="22">TXT</text>
+        <text class="dns__value" x="260" y="22">"v=TLSRPTv1; rua=mailto:..."</text>
+        <g class="dns__type-pill" transform="translate(560 17)"><rect x="-32" y="-9" width="64" height="18" rx="9"/><text>TLS-RPT</text></g>
+        <g class="dns__managed" transform="translate(620 17)"><path d="M-6 0 l4 4 l8 -8" /></g>
+      </g>
+      <g class="dns__row" transform="translate(0 294)">
+        <rect x="0" y="0" width="640" height="34" rx="8" fill="url(#dns-row)" stroke="var(--border)"/>
+        <text class="dns__name"  x="16"  y="22">autoconfig</text>
+        <text class="dns__type"  x="200" y="22">CNAME</text>
+        <text class="dns__value" x="260" y="22">mail.example.com.</text>
+        <g class="dns__type-pill" transform="translate(560 17)"><rect x="-44" y="-9" width="88" height="18" rx="9"/><text>autoconfig</text></g>
+        <g class="dns__managed" transform="translate(620 17)"><path d="M-6 0 l4 4 l8 -8" /></g>
+      </g>
+    </g>
+  </svg>
+</div>
+
+<style>
+  .dns {
+    width: 100%;
+    aspect-ratio: 720 / 460;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: clamp(0.5rem, 1.5vw, 1rem);
+    box-shadow: var(--shadow-1);
+  }
+  .dns svg { width: 100%; height: 100%; overflow: visible; }
+
+  .dns__zone {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    fill: var(--brand);
+    font-weight: 600;
+  }
+  .dns__source-pill rect {
+    fill: var(--surface);
+    stroke: var(--brand);
+  }
+  .dns__source-pill text {
+    fill: var(--brand);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    text-anchor: middle;
+    dominant-baseline: middle;
+    letter-spacing: 0.04em;
+  }
+  .dns__name, .dns__type, .dns__value {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    dominant-baseline: middle;
+  }
+  .dns__name { fill: var(--text); }
+  .dns__type { fill: var(--brand); font-weight: 600; }
+  .dns__value { fill: var(--text-muted); }
+  .dns__type-pill rect {
+    fill: var(--brand-soft);
+    stroke: var(--brand);
+  }
+  .dns__type-pill text {
+    fill: var(--brand);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    text-anchor: middle;
+    dominant-baseline: middle;
+  }
+  .dns__managed path {
+    fill: none;
+    stroke: #2dba6c;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .dns__caption {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    fill: var(--text-muted);
+  }
+</style>

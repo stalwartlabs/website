@@ -1,0 +1,151 @@
+---
+// Phishing detection axes: three lanes (homograph URL, sender spoof,
+// lookalike domain) feeding into a combined score; a separate
+// trusted-reply lane subtracts.
+---
+<div class="phi">
+  <svg viewBox="0 0 720 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Phishing detection axes">
+    <defs>
+      <linearGradient id="phi-flow" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="var(--brand)" stop-opacity="0.55"/>
+        <stop offset="100%" stop-color="var(--brand)" stop-opacity="0.15"/>
+      </linearGradient>
+      <marker id="phi-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0 0 L10 5 L0 10 z" fill="var(--brand)" opacity="0.85"/>
+      </marker>
+      <marker id="phi-arrow-good" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0 0 L10 5 L0 10 z" fill="#2dba6c"/>
+      </marker>
+    </defs>
+
+    <!-- Three detector lanes -->
+    <g class="phi__lane" transform="translate(180 110)">
+      <rect x="-130" y="-30" width="260" height="60" rx="10"/>
+      <text class="phi__lane-name" y="-8">Homograph URL</text>
+      <text class="phi__lane-eg" y="14">paypaр.com (Cyrillic 'р')</text>
+    </g>
+    <g class="phi__lane" transform="translate(180 220)">
+      <rect x="-130" y="-30" width="260" height="60" rx="10"/>
+      <text class="phi__lane-name" y="-8">Sender spoof</text>
+      <text class="phi__lane-eg" y="14">From: "CEO &lt;ceo@ceo-secure.com&gt;"</text>
+    </g>
+    <g class="phi__lane" transform="translate(180 330)">
+      <rect x="-130" y="-30" width="260" height="60" rx="10"/>
+      <text class="phi__lane-name" y="-8">Lookalike domain</text>
+      <text class="phi__lane-eg" y="14">chase-banking.example.com</text>
+    </g>
+
+    <!-- Score box (right) -->
+    <g class="phi__score" transform="translate(580 220)">
+      <rect x="-70" y="-50" width="140" height="100" rx="14"/>
+      <text class="phi__score-label" y="-22">Phishing score</text>
+      <text class="phi__score-num" y="14">+4.7</text>
+      <text class="phi__score-sub" y="36">SUSPECTED</text>
+    </g>
+
+    <!-- Edges from each lane to score -->
+    <g fill="none" stroke="url(#phi-flow)" stroke-width="2" marker-end="url(#phi-arrow)">
+      <line x1="310" y1="110" x2="510" y2="200"/>
+      <line x1="310" y1="220" x2="510" y2="220"/>
+      <line x1="310" y1="330" x2="510" y2="240"/>
+    </g>
+
+    <!-- Trusted-reply lane (subtracts) -->
+    <g class="phi__lane phi__lane--good" transform="translate(180 410)">
+      <rect x="-130" y="-22" width="260" height="44" rx="22"/>
+      <text class="phi__lane-name" y="-3">Trusted reply</text>
+      <text class="phi__lane-eg" y="13">recognises a real reply thread</text>
+    </g>
+    <path d="M 310 410 C 400 410, 480 320, 510 280" fill="none" stroke="#2dba6c" stroke-width="1.75" stroke-dasharray="4 3" marker-end="url(#phi-arrow-good)"/>
+    <text class="phi__edge-label phi__edge-label--good" x="430" y="395">subtracts from score</text>
+
+    <text x="40" y="40" class="phi__title">Phishing, structurally</text>
+  </svg>
+</div>
+
+<style>
+  .phi {
+    width: 100%;
+    aspect-ratio: 720 / 460;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: clamp(0.5rem, 1.5vw, 1rem);
+    box-shadow: var(--shadow-1);
+  }
+  .phi svg { width: 100%; height: 100%; overflow: visible; }
+
+  .phi__title {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    fill: var(--text-dim);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .phi__caption {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    fill: var(--text-muted);
+  }
+
+  .phi__lane rect {
+    fill: var(--surface-2);
+    stroke: var(--brand);
+    stroke-opacity: 0.45;
+    stroke-width: 1;
+  }
+  .phi__lane-name {
+    fill: var(--text);
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 600;
+    text-anchor: middle;
+    dominant-baseline: middle;
+  }
+  .phi__lane-eg {
+    fill: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-anchor: middle;
+    dominant-baseline: middle;
+  }
+  .phi__lane--good rect {
+    stroke: #2dba6c;
+  }
+  .phi__lane--good .phi__lane-name { fill: #2dba6c; }
+
+  .phi__score rect {
+    fill: var(--brand-soft);
+    stroke: var(--brand);
+    stroke-width: 1.5;
+  }
+  .phi__score-label {
+    fill: var(--brand);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    text-anchor: middle;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .phi__score-num {
+    fill: var(--brand);
+    font-family: var(--font-sans);
+    font-size: 28px;
+    font-weight: 700;
+    text-anchor: middle;
+    dominant-baseline: middle;
+  }
+  .phi__score-sub {
+    fill: var(--brand);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-anchor: middle;
+    letter-spacing: 0.08em;
+  }
+  .phi__edge-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    fill: var(--text-muted);
+  }
+  .phi__edge-label--good { fill: #2dba6c; }
+</style>

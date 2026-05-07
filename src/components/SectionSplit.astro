@@ -1,0 +1,39 @@
+---
+interface Props {
+  reverse?: boolean;
+  align?: "center" | "start";
+  class?: string;
+}
+const { reverse = false, align = "center", class: cls = "" } = Astro.props;
+---
+<div class={`split ${reverse ? "split--reverse" : ""} ${align === "start" ? "split--start" : ""} ${cls}`}>
+  <div class="split__text">
+    <slot name="text" />
+  </div>
+  <div class="split__visual">
+    <slot name="visual" />
+  </div>
+</div>
+
+<style>
+  .split {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(2.5rem, 5vw, 4.5rem);
+    align-items: center;
+  }
+  .split--start {
+    align-items: flex-start;
+  }
+  @media (min-width: 900px) {
+    .split {
+      grid-template-columns: 1fr 1fr;
+    }
+    .split--reverse .split__text {
+      order: 2;
+    }
+  }
+  .split__text {
+    max-width: 540px;
+  }
+</style>

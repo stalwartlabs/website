@@ -1,0 +1,128 @@
+---
+// iTIP/iMIP scheduling fan-out. Organiser at the top, Stalwart scheduler
+// in the middle, two outputs: internal CalDAV peers (iTIP) and external
+// attendees (iMIP via email).
+---
+<div class="itip">
+  <svg viewBox="0 0 720 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="iTIP and iMIP scheduling flow">
+    <defs>
+      <marker id="itip-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0 0 L10 5 L0 10 z" fill="var(--brand)" opacity="0.85"/>
+      </marker>
+      <marker id="itip-back" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0 0 L10 5 L0 10 z" fill="#2dba6c"/>
+      </marker>
+    </defs>
+
+    <!-- Organiser -->
+    <g class="itip__node" transform="translate(360 80)">
+      <rect x="-90" y="-26" width="180" height="52" rx="10"/>
+      <text class="itip__node-name">Organiser (Alice)</text>
+      <text class="itip__node-sub" y="14">creates VEVENT</text>
+    </g>
+
+    <!-- Scheduler -->
+    <g class="itip__node itip__node--brand" transform="translate(360 220)">
+      <rect x="-110" y="-30" width="220" height="60" rx="10"/>
+      <text class="itip__node-name">Stalwart scheduler</text>
+      <text class="itip__node-sub" y="14">CalDAV + JMAP for Calendars</text>
+    </g>
+
+    <!-- Internal peers (left) -->
+    <g class="itip__node" transform="translate(160 380)">
+      <rect x="-110" y="-26" width="220" height="52" rx="10"/>
+      <text class="itip__node-name">Internal CalDAV peer (Bob)</text>
+      <text class="itip__node-sub" y="14">iTIP: REQUEST → REPLY</text>
+    </g>
+
+    <!-- External attendees (right) -->
+    <g class="itip__node" transform="translate(560 380)">
+      <rect x="-110" y="-26" width="220" height="52" rx="10"/>
+      <text class="itip__node-name">External attendee (Carol)</text>
+      <text class="itip__node-sub" y="14">iMIP: SMTP delivery</text>
+    </g>
+
+    <!-- Arrows org -> scheduler -->
+    <line class="itip__edge" x1="360" y1="106" x2="360" y2="186" marker-end="url(#itip-arrow)"/>
+    <text class="itip__edge-label" x="370" y="150">VEVENT</text>
+
+    <!-- Arrows scheduler -> internal -->
+    <path class="itip__edge" d="M 290 250 C 220 290, 180 320, 160 354" fill="none" marker-end="url(#itip-arrow)"/>
+    <text class="itip__edge-label" x="200" y="310">iTIP</text>
+
+    <!-- Arrows scheduler -> external (with envelope hop) -->
+    <path class="itip__edge" d="M 430 250 C 500 290, 540 320, 560 354" fill="none" marker-end="url(#itip-arrow)"/>
+    <text class="itip__edge-label" x="500" y="310">iMIP via SMTP</text>
+
+    <!-- Reply paths back -->
+    <path class="itip__edge itip__edge--back" d="M 220 354 C 280 320, 320 290, 350 252" fill="none" marker-end="url(#itip-back)"/>
+    <path class="itip__edge itip__edge--back" d="M 500 354 C 440 320, 400 290, 370 252" fill="none" marker-end="url(#itip-back)"/>
+    <text class="itip__edge-label itip__edge-label--good" x="270" y="280">REPLY</text>
+    <text class="itip__edge-label itip__edge-label--good" x="430" y="280">REPLY</text>
+
+    <text x="40" y="40" class="itip__title">One scheduler, two delivery paths</text>
+  </svg>
+</div>
+
+<style>
+  .itip {
+    width: 100%;
+    aspect-ratio: 720 / 460;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: clamp(0.5rem, 1.5vw, 1rem);
+    box-shadow: var(--shadow-1);
+  }
+  .itip svg { width: 100%; height: 100%; overflow: visible; }
+  .itip__title {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    fill: var(--text-dim);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .itip__node rect {
+    fill: var(--surface-2);
+    stroke: var(--border-strong);
+    stroke-width: 1;
+  }
+  .itip__node-name {
+    fill: var(--text);
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 600;
+    text-anchor: middle;
+    dominant-baseline: middle;
+  }
+  .itip__node-sub {
+    fill: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    text-anchor: middle;
+    dominant-baseline: middle;
+    letter-spacing: 0.04em;
+  }
+  .itip__node--brand rect {
+    fill: var(--brand-soft);
+    stroke: var(--brand);
+  }
+  .itip__node--brand .itip__node-name { fill: var(--brand); }
+  .itip__edge {
+    stroke: var(--brand);
+    stroke-width: 1.5;
+    stroke-opacity: 0.7;
+    fill: none;
+  }
+  .itip__edge--back {
+    stroke: #2dba6c;
+    stroke-dasharray: 4 3;
+  }
+  .itip__edge-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    fill: var(--text-muted);
+    letter-spacing: 0.04em;
+  }
+  .itip__edge-label--good { fill: #2dba6c; }
+</style>

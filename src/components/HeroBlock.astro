@@ -1,0 +1,229 @@
+---
+import VisualBlock from "./VisualBlock.astro";
+import { inlineMd, paragraphMd, withHighlight } from "../lib/md";
+
+interface Props {
+  hero: any;
+}
+const { hero } = Astro.props;
+const titleHtml = hero.titleHighlight ? withHighlight(hero.title, hero.titleHighlight) : inlineMd(hero.title);
+const hasVisual = !!hero.visual;
+---
+<section class={`hero ${hasVisual ? "hero--with-visual" : ""}`}>
+  <div class="hero__bg" aria-hidden="true">
+    <div class="hero__grid grid-bg"></div>
+    <div class="hero__bloom hero__bloom--a"></div>
+    <div class="hero__bloom hero__bloom--b"></div>
+    <div class="hero__bloom hero__bloom--c"></div>
+  </div>
+
+  <div class="container hero__inner">
+    {hero.banner && (
+      <div class={`hero__banner hero__banner--${hero.banner.tone} reveal`}>
+        <span class="hero__banner-label">{hero.banner.label}</span>
+        <span class="hero__banner-body" set:html={inlineMd(hero.banner.body)}></span>
+      </div>
+    )}
+    <div class="hero__copy">
+      {hero.eyebrow && <span class="eyebrow reveal">{hero.eyebrow}</span>}
+      <h1 class="hero__title reveal" set:html={titleHtml}></h1>
+      {hero.lead && <p class="hero__lead reveal" set:html={inlineMd(hero.lead)}></p>}
+      {(hero.ctas?.length > 0 || hero.meta?.length > 0) && (
+        <div class="hero__cta-row reveal">
+          {hero.ctas?.map((cta: any) => (
+            <a
+              href={cta.href}
+              class={`btn ${cta.primary === false ? "btn-ghost" : "btn-primary btn-arrow"}`}
+              {...(cta.external ? { target: "_blank", rel: "noopener" } : {})}
+            >{cta.label}</a>
+          ))}
+          {hero.meta?.length > 0 && (
+            <ul class="hero__meta">
+              {hero.meta.map((m: string) => (
+                <li><span class="dot"></span>{m}</li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )}
+    </div>
+  </div>
+
+  {hasVisual && (
+    <div class="hero__stage container reveal">
+      <div class="hero__stage-glow" aria-hidden="true"></div>
+      <VisualBlock visual={hero.visual} />
+    </div>
+  )}
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    padding-block: clamp(1.75rem, 3.5vw, 3.25rem) 0;
+    overflow: hidden;
+    isolation: isolate;
+    text-align: center;
+  }
+  .hero:not(.hero--with-visual) {
+    padding-bottom: clamp(2rem, 4vw, 3.5rem);
+  }
+  .hero__bg {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+  }
+  .hero__grid {
+    position: absolute;
+    inset: 0;
+    -webkit-mask-image: radial-gradient(ellipse at 50% 35%, #000 0%, transparent 65%);
+    mask-image: radial-gradient(ellipse at 50% 35%, #000 0%, transparent 65%);
+  }
+  .hero__bloom {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0.75;
+  }
+  .hero__bloom--a {
+    width: 760px;
+    height: 760px;
+    top: -240px;
+    left: 50%;
+    transform: translateX(-65%);
+    background: radial-gradient(circle, var(--brand-glow) 0%, transparent 62%);
+  }
+  .hero__bloom--b {
+    width: 620px;
+    height: 620px;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-15%);
+    background: radial-gradient(circle, rgba(123, 90, 220, 0.4) 0%, transparent 62%);
+  }
+  .hero__bloom--c {
+    width: 560px;
+    height: 560px;
+    top: 60px;
+    left: 50%;
+    transform: translateX(-110%);
+    background: radial-gradient(circle, rgba(255, 138, 79, 0.28) 0%, transparent 62%);
+  }
+  :global([data-theme="light"]) .hero__bloom {
+    opacity: 0.4;
+  }
+
+  .hero__inner {
+    position: relative;
+    z-index: 1;
+  }
+  .hero__copy {
+    max-width: 880px;
+    margin-inline: auto;
+  }
+  .hero__banner {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.5rem 0.95rem;
+    border-radius: 999px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    margin-bottom: 1.5rem;
+    font-size: 0.875rem;
+  }
+  .hero__banner--info {
+    background: var(--brand-soft);
+    border-color: rgba(219, 45, 84, 0.25);
+  }
+  .hero__banner--info .hero__banner-label {
+    color: var(--brand);
+  }
+  .hero__banner-label {
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.7rem;
+  }
+  .hero__banner-body {
+    color: var(--text);
+  }
+  .hero__title {
+    font-size: clamp(2.5rem, 6vw + 0.4rem, 5.25rem);
+    line-height: 1.04;
+    letter-spacing: -0.04em;
+    font-weight: 600;
+    margin-top: 1.5rem;
+    text-wrap: balance;
+  }
+  .hero__lead {
+    font-size: clamp(1rem, 0.6vw + 0.85rem, 1.2rem);
+    line-height: 1.5;
+    color: var(--text-muted);
+    max-width: 640px;
+    margin: 1.75rem auto 0;
+    text-wrap: pretty;
+  }
+  .hero__cta-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem 2.5rem;
+    flex-wrap: wrap;
+    margin-top: 2.5rem;
+  }
+  .hero__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem 2rem;
+    color: var(--text-muted);
+    font-size: 0.875rem;
+  }
+  .hero__meta li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .hero__meta .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--brand);
+    box-shadow: 0 0 8px var(--brand-glow);
+  }
+
+  .hero__stage {
+    margin-top: clamp(3.5rem, 7vw, 6rem);
+    position: relative;
+    isolation: isolate;
+  }
+  .hero__stage-glow {
+    position: absolute;
+    inset: -10% -5% -20% -5%;
+    background:
+      radial-gradient(ellipse 60% 50% at 30% 50%, var(--brand-glow) 0%, transparent 65%),
+      radial-gradient(ellipse 60% 50% at 75% 60%, rgba(123, 90, 220, 0.35) 0%, transparent 65%);
+    filter: blur(60px);
+    z-index: -1;
+    opacity: 0.85;
+    pointer-events: none;
+  }
+  :global([data-theme="light"]) .hero__stage-glow {
+    opacity: 0.55;
+  }
+  .hero__stage :global(.frame) {
+    border-radius: clamp(12px, 1.5vw, 18px);
+    transform: perspective(2400px) rotateX(2.5deg);
+    transform-origin: center top;
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 72%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 72%, transparent 100%);
+  }
+  @media (max-width: 720px) {
+    .hero__stage :global(.frame) {
+      transform: none;
+      -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 80%, transparent 100%);
+      mask-image: linear-gradient(to bottom, #000 0%, #000 80%, transparent 100%);
+    }
+  }
+</style>

@@ -1,0 +1,37 @@
+# Cloudflare Pages redirects (https://developers.cloudflare.com/pages/configuration/redirects/)
+# Format: <source> <destination> <status>
+# 301 = permanent (default), 302 = temporary, 200 = rewrite (no client redirect).
+
+# Docusaurus auto-generated category pages -> canonical landing pages.
+/docs/category/installation              /docs/install/                  301
+/docs/category/sender-authentication     /docs/mta/authentication/       301
+/docs/category/development               /docs/development/              301
+/docs/category/server-settings           /docs/server/                   301
+
+# /docs root and the long-published /docs/install/get-started URL both
+# now point at the renamed install landing page (Welcome to Stalwart).
+/docs                                    /docs/install/                  301
+/docs/install/get-started                /docs/install/                  301
+
+# Section overview pages were renamed to index.md; redirect old URLs.
+/docs/storage/overview                   /docs/storage/                  301
+/docs/auth/overview                      /docs/auth/                     301
+/docs/encryption/overview                /docs/encryption/               301
+/docs/mta/overview                       /docs/mta/                      301
+/docs/email/overview                     /docs/email/                    301
+/docs/collaboration/overview             /docs/collaboration/            301
+/docs/spamfilter/overview                /docs/spamfilter/               301
+/docs/sieve/overview                     /docs/sieve/                    301
+/docs/cluster/overview                   /docs/cluster/                  301
+/docs/telemetry/overview                 /docs/telemetry/                301
+/docs/management/overview                /docs/management/               301
+/docs/configuration/overview             /docs/configuration/            301
+/docs/server/overview                    /docs/server/                   301
+/docs/development/overview               /docs/development/              301
+
+# Wildcard fallback: any nested `/docs/.../overview` path now lives at
+# `/docs/.../`. Cloudflare splat matching keeps anchors and query strings.
+/docs/*/overview                         /docs/:splat/                   301
+/docs/*/overview/                        /docs/:splat/                   301
+
+# Old blog post URL shape (/blog/<slug>) is unchanged; no redirect needed.

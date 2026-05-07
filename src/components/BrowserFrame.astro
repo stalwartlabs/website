@@ -1,0 +1,112 @@
+---
+interface Props {
+  src: string;
+  alt: string;
+  url?: string;
+  tilt?: boolean;
+  glow?: boolean;
+  width?: number;
+  height?: number;
+  loading?: "eager" | "lazy";
+}
+const {
+  src,
+  alt,
+  url = "admin.stalw.art",
+  tilt = false,
+  glow = false,
+  width = 1280,
+  height = 800,
+  loading = "lazy",
+} = Astro.props;
+---
+<div class={`frame ${tilt ? "frame--tilt" : ""} ${glow ? "frame--glow" : ""}`}>
+  {glow && <div class="frame__bloom" aria-hidden="true"></div>}
+  <div class="frame__chrome">
+    <div class="frame__dots" aria-hidden="true">
+      <span></span><span></span><span></span>
+    </div>
+    <div class="frame__url" aria-hidden="true">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      <span>{url}</span>
+    </div>
+    <span class="frame__spacer"></span>
+  </div>
+  <img src={src} alt={alt} width={width} height={height} loading={loading} decoding="async" class="frame__img"/>
+</div>
+
+<style>
+  .frame {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: #0a0a10;
+    border: 1px solid var(--border);
+    box-shadow: var(--frame-shadow);
+    isolation: isolate;
+    transform-origin: center;
+  }
+  .frame--tilt {
+    transform: perspective(1800px) rotateX(4deg) rotateY(-2deg);
+    transition: transform var(--t-slow) var(--ease-emph);
+  }
+  .frame--tilt:hover {
+    transform: perspective(1800px) rotateX(2deg) rotateY(-1deg);
+  }
+  .frame__bloom {
+    position: absolute;
+    inset: -30%;
+    background:
+      radial-gradient(circle at 30% 20%, rgba(219, 45, 84, 0.45) 0%, transparent 45%),
+      radial-gradient(circle at 80% 80%, rgba(123, 90, 220, 0.3) 0%, transparent 45%);
+    filter: blur(40px);
+    z-index: -1;
+    pointer-events: none;
+  }
+  .frame__chrome {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    height: 38px;
+    padding: 0 0.875rem;
+    background: linear-gradient(to bottom, #15151c 0%, #0d0d12 100%);
+    border-bottom: 1px solid #1f1f28;
+  }
+  .frame__dots {
+    display: flex;
+    gap: 6px;
+  }
+  .frame__dots span {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: #2a2a35;
+  }
+  .frame__dots span:nth-child(1) { background: #ff5f57; }
+  .frame__dots span:nth-child(2) { background: #febc2e; }
+  .frame__dots span:nth-child(3) { background: #28c840; }
+  .frame__url {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    height: 22px;
+    padding-inline: 0.75rem;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 999px;
+    color: #6e6e78;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    max-width: 360px;
+    margin-inline: auto;
+  }
+  .frame__spacer {
+    width: 51px;
+  }
+  .frame__img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+</style>

@@ -1,0 +1,139 @@
+---
+// Four-category auto-ban gauges. Each category fills a radial gauge as
+// recent failures pile up; one gauge is hitting its threshold and the IP
+// is being shipped to the banned list.
+---
+<div class="ab">
+  <svg viewBox="0 0 720 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Auto-ban thresholds for four abuse categories">
+    <defs>
+      <marker id="ab-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0 0 L10 5 L0 10 z" fill="var(--brand)"/>
+      </marker>
+    </defs>
+
+    <!-- Four gauges -->
+    <g class="ab__gauge" transform="translate(140 200)">
+      <circle class="ab__track" r="60"/>
+      <!-- arc up to 60% -->
+      <path class="ab__fill" d="M -60 0 A 60 60 0 0 1 18.5 -57"/>
+      <text class="ab__name" y="-12">auth-failure</text>
+      <text class="ab__value" y="14">3 / 5</text>
+      <text class="ab__sub" y="34">in 10 minutes</text>
+    </g>
+
+    <g class="ab__gauge" transform="translate(300 200)">
+      <circle class="ab__track" r="60"/>
+      <!-- arc up to 35% -->
+      <path class="ab__fill" d="M -60 0 A 60 60 0 0 1 -42.4 -42.4"/>
+      <text class="ab__name" y="-12">abuse</text>
+      <text class="ab__value" y="14">17 / 50</text>
+      <text class="ab__sub" y="34">in 5 minutes</text>
+    </g>
+
+    <g class="ab__gauge ab__gauge--firing" transform="translate(460 200)">
+      <circle class="ab__track"  r="60"/>
+      <!-- full arc -->
+      <path class="ab__fill ab__fill--full" d="M -60 0 A 60 60 0 1 1 60 0.001"/>
+      <text class="ab__name" y="-12">loiter</text>
+      <text class="ab__value" y="14">3 / 3</text>
+      <text class="ab__sub" y="34">→ BAN</text>
+    </g>
+
+    <g class="ab__gauge" transform="translate(620 200)">
+      <circle class="ab__track" r="60"/>
+      <!-- arc up to 20% -->
+      <path class="ab__fill" d="M -60 0 A 60 60 0 0 1 -54.7 -24.6"/>
+      <text class="ab__name" y="-12">scan</text>
+      <text class="ab__value" y="14">2 / 10</text>
+      <text class="ab__sub" y="34">in 1 minute</text>
+    </g>
+
+    <!-- Banned list (bottom) -->
+    <g transform="translate(360 380)">
+      <rect x="-180" y="-26" width="360" height="52" rx="10" fill="var(--brand-soft)" stroke="var(--brand)"/>
+      <text class="ab__ban-label">203.0.113.42 banned for 1h (loiter)</text>
+    </g>
+
+    <!-- Arrow from firing gauge to banned list -->
+    <path class="ab__fire" d="M 460 268 C 460 320, 420 360, 380 360" fill="none" stroke="var(--brand)" stroke-width="1.75" stroke-dasharray="3 3" marker-end="url(#ab-arrow)"/>
+
+    <text x="40" y="40" class="ab__title">Four categories, one ban list</text>
+  </svg>
+</div>
+
+<style>
+  .ab {
+    width: 100%;
+    aspect-ratio: 720 / 460;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: clamp(0.5rem, 1.5vw, 1rem);
+    box-shadow: var(--shadow-1);
+  }
+  .ab svg { width: 100%; height: 100%; overflow: visible; }
+
+  .ab__title {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    fill: var(--text-dim);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .ab__caption {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    fill: var(--text-muted);
+  }
+
+  .ab__track {
+    fill: none;
+    stroke: var(--border);
+    stroke-width: 6;
+  }
+  .ab__fill {
+    fill: none;
+    stroke: var(--brand);
+    stroke-width: 6;
+    stroke-linecap: round;
+    transform: rotate(0deg);
+    transform-origin: center;
+  }
+  .ab__fill--full {
+    filter: drop-shadow(0 0 8px var(--brand-glow));
+  }
+
+  .ab__name {
+    fill: var(--text);
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 600;
+    text-anchor: middle;
+  }
+  .ab__value {
+    fill: var(--text);
+    font-family: var(--font-mono);
+    font-size: 18px;
+    font-weight: 700;
+    text-anchor: middle;
+    dominant-baseline: middle;
+  }
+  .ab__sub {
+    fill: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    text-anchor: middle;
+    letter-spacing: 0.04em;
+  }
+  .ab__gauge--firing .ab__value { fill: var(--brand); }
+  .ab__gauge--firing .ab__sub { fill: var(--brand); font-weight: 700; }
+
+  .ab__ban-label {
+    fill: var(--brand);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    text-anchor: middle;
+    dominant-baseline: middle;
+  }
+</style>

@@ -1,0 +1,187 @@
+title: Stalwart Collaboration Server | Stalwart Labs
+description: >-
+  Calendars, contacts and file storage over CalDAV, CardDAV, WebDAV and JMAP,
+  with scheduling, sharing and email notifications built in.
+slug: /collaboration
+
+hero:
+  eyebrow: Collaboration
+  title: Collaboration, included with your mail
+  titleHighlight: included with your mail
+  lead: >-
+    Calendars, contacts and shared files live in the same Stalwart
+    server as your mail, with the same accounts, the same disk quotas,
+    the same sharing model and the same backups. Every standard
+    collaboration protocol is supported, so any client your team
+    already runs keeps working without an add-on.
+  ctas:
+    - label: Get started
+      href: /docs/install/
+  meta:
+    - Calendars, contacts, files
+    - DAV and JMAP
+  visual:
+    kind: screenshot
+    src: /images/webadmin/calendar-edit.png
+    alt: Stalwart calendar settings
+    url: admin.stalw.art / Calendars
+
+sections:
+  - kind: feature
+    eyebrow: Calendars
+    title: Calendars on every device.
+    body: >-
+      Calendars in Stalwart show up in the apps your team already uses.
+      CalDAV covers Apple Calendar, Outlook, Thunderbird and every
+      mobile calendar app in the field; JMAP for Calendars covers
+      modern clients. Personal, group and shared calendars all behave
+      the same way; per-account and per-tenant caps stop a single team
+      from filling up a shared deployment.
+    bullets:
+      - CalDAV with scheduling for desktop and mobile clients.
+      - JMAP for Calendars for modern clients.
+      - Personal, group and shared calendars.
+      - Per-account and per-tenant calendar caps.
+      - Free/busy lookups for scheduling.
+    learnMore:
+      - label: Read the Calendar docs
+        href: /docs/collaboration/calendar
+    visual:
+      kind: diagram
+      id: calendar-grid
+
+  - kind: feature
+    reverse: true
+    band: alt
+    eyebrow: Scheduling
+    title: Seamless scheduling for teams and individuals.
+    body: >-
+      Plan events, manage recurring meetings, set reminders and
+      coordinate with attendees, all from inside the same product that
+      runs your mail. Invitations reach colleagues on the same server
+      and external recipients alike, free/busy lookups make it easy to
+      find a time that works for everyone, and reply tracking keeps
+      replies visible to organisers.
+    bullets:
+      - Invitations and replies for events on any client.
+      - Email fallback for attendees outside the deployment.
+      - Free/busy availability for scheduling.
+      - Federated attendee scheduling for cross-server events.
+      - Configurable recipient limits to prevent abuse.
+    learnMore:
+      - label: Read Scheduling
+        href: /docs/collaboration/scheduling
+    visual:
+      kind: diagram
+      id: itip-imip
+
+  - kind: feature
+    eyebrow: Contacts
+    title: Manage, share and sync your contacts.
+    body: >-
+      Contacts are exposed over CardDAV for established clients and
+      over JMAP for Contacts for modern ones, so an address book stays
+      in step across every device a user opens. The same address-book
+      entries pay off elsewhere in the server: a sender already in a
+      recipient's contacts is treated as a known correspondent by the
+      spam filter and the calendar scheduler, which removes a common
+      source of false positives.
+    bullets:
+      - CardDAV for legacy clients.
+      - JMAP for Contacts for modern clients.
+      - Personal, group and shared address books.
+      - Address-book signal feeds back into spam scoring and scheduling.
+    learnMore:
+      - label: Read the Contacts docs
+        href: /docs/collaboration/contact
+    visual:
+      kind: diagram
+      id: contacts-sync
+
+  - kind: feature
+    reverse: true
+    band: alt
+    eyebrow: File storage
+    title: Shared files alongside the mail.
+    body: >-
+      Shared files live in the same server as the mail, so there is no
+      second product to operate or pay for. Stalwart serves files over
+      WebDAV for any standard file manager, and over JMAP for File
+      Storage for modern clients. The same disk quota that caps a
+      mailbox caps its files, so a user cannot bypass the cap by
+      uploading files instead of mail.
+    bullets:
+      - WebDAV for desktop and mobile file managers.
+      - JMAP for File Storage for modern clients.
+      - Unified quota with email storage.
+      - Personal, group and shared file spaces.
+    learnMore:
+      - label: Read File Storage
+        href: /docs/collaboration/file-storage
+    visual:
+      kind: diagram
+      id: file-browser
+
+  - kind: feature
+    eyebrow: Sharing
+    title: Granular control over calendars, contacts and files.
+    body: >-
+      Sharing works the same way across calendars, address books and
+      file collections, so a user only learns one set of permissions to
+      cover the lot. Read, write and manage rights can be granted to
+      individual users or to groups  with the standard sharing protocols 
+      on both the legacy and modern client sides.
+    bullets:
+      - Share calendars, address books and file spaces.
+      - Read, write and manage permissions per principal.
+      - User and group sharing.
+      - Standard sharing protocols on both DAV and JMAP clients.
+    visual:
+      kind: screenshot
+      src: /images/webadmin/calendar-share.png
+      alt: Stalwart calendar sharing settings
+      url: admin.stalw.art / Calendars
+  
+  - kind: feature
+    reverse: true
+    band: alt
+    eyebrow: Notifications
+    title: Real-time event reminders by email.
+    body: >-
+      A meeting reminder is only useful if it actually fires. Stalwart
+      delivers email-action reminders directly from the server, so
+      organisers and attendees get notified even when their calendar
+      app is closed or their phone is offline. Reasonable defaults
+      prevent floods of reminders, and external-recipient policy is
+      configurable per deployment.
+    bullets:
+      - Server-side email reminders for events.
+      - Sensible per-account interval limits.
+      - External-recipient policy configurable per deployment.
+    learnMore:
+      - label: Read Notifications
+        href: /docs/collaboration/notifications
+    visual:
+      kind: diagram
+      id: valarm-email
+
+  - kind: list
+    eyebrow: Discovery and clients
+    title: Works with every standard mail and calendar client.
+    body: >-
+      Stalwart supports automatic discovery and configuration, so users
+      can point any standard CalDAV, CardDAV, WebDAV or JMAP client at
+      the server and get to work without manual setup. No vendor
+      lock-in, no proprietary client required.
+    bullets:
+      - Apple Mail, Calendar and Contacts.
+      - Mozilla Thunderbird.
+      - GNOME Evolution and KDE Kontact.
+      - iOS, Android and any standards-compliant mobile client.
+      - Any JMAP-compliant calendar, contacts or file-storage client.
+
+footerCta:
+  cta: Mail and collaboration, in the same product.
+  ctaSub: One identity, one quota, one access model. Calendars, contacts and files included.
+  ctaButton: Get started
+  ctaLink: /docs/install/

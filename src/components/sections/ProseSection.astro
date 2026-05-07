@@ -1,0 +1,35 @@
+---
+import { inlineMd, paragraphMd } from "../../lib/md";
+
+interface Props {
+  data: any;
+}
+const { data } = Astro.props;
+---
+<section class={`band ${data.band === "alt" ? "band--alt" : ""}`}>
+  <div class="container container-narrow">
+    <div class="reveal">
+      {data.eyebrow && <span class="eyebrow">{data.eyebrow}</span>}
+      {data.title && <h2 class="h2 prose__title" set:html={inlineMd(data.title)}></h2>}
+      <div class="prose__body" set:html={paragraphMd(data.body)}></div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .prose__title {
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .prose__body {
+    color: var(--text-muted);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+  }
+  .prose__body :global(p + p) {
+    margin-top: 1em;
+  }
+  .prose__body :global(strong) {
+    color: var(--text);
+  }
+</style>

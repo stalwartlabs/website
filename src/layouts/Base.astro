@@ -1,0 +1,131 @@
+---
+import "../styles/global.css";
+import interLatinUrl from "@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  cta?: string;
+  ctaSub?: string;
+  ctaButton?: string;
+  ctaLink?: string;
+  /** Override the default site-wide social card. */
+  ogImage?: string;
+  /** Add `<meta name="robots" content="noindex">` (used by 404, etc.). */
+  noindex?: boolean;
+  /** Optional JSON-LD structured data; rendered in <head>. Pass an object
+   * (or array of objects) and it'll be serialized as application/ld+json. */
+  jsonLd?: unknown;
+}
+
+const {
+  title,
+  description,
+  cta,
+  ctaSub,
+  ctaButton,
+  ctaLink,
+  ogImage = "/img/stalwart-social-card.jpg",
+  noindex = false,
+  jsonLd,
+} = Astro.props;
+
+const SITE = Astro.site?.toString().replace(/\/$/, "") ?? "https://stalw.art";
+const canonical = new URL(Astro.url.pathname, SITE).toString();
+const ogImageAbs = ogImage.startsWith("http") ? ogImage : `${SITE}${ogImage}`;
+const ldBlocks = jsonLd
+  ? Array.isArray(jsonLd)
+    ? jsonLd
+    : [jsonLd]
+  : [];
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>{title}</title>
+    <meta name="description" content={description}/>
+    {noindex && <meta name="robots" content="noindex"/>}
+    <link rel="canonical" href={canonical}/>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+    <link rel="sitemap" href="/sitemap-index.xml"/>
+    <link rel="alternate" type="application/rss+xml" title="Stalwart Blog" href="/blog/rss.xml"/>
+    {/* Preload the latin Inter weight bundle so cold loads don't flash
+        unstyled text. The URL comes from a Vite import so Astro re-hashes
+        it on each build automatically. `crossorigin` is required because
+        woff2 is fetched as a CORS resource. */}
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href={interLatinUrl}
+      crossorigin
+    />
+    <meta name="theme-color" content="#08080b" media="(prefers-color-scheme: dark)"/>
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)"/>
+    <meta property="og:title" content={title}/>
+    <meta property="og:description" content={description}/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content={canonical}/>
+    <meta property="og:site_name" content="Stalwart"/>
+    <meta property="og:image" content={ogImageAbs}/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="630"/>
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:image" content={ogImageAbs}/>
+    {ldBlocks.map((data) => (
+      <script type="application/ld+json" set:html={JSON.stringify(data)}/>
+    ))}
+    <script is:inline>
+      // Set theme before paint to avoid flash
+      (() => {
+        const stored = localStorage.getItem("stalwart-theme");
+        const initial = stored || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+        document.documentElement.setAttribute("data-theme", initial);
+      })();
+    </script>
+  </head>
+  <body>
+    <a href="#main" class="skip-link">Skip to content</a>
+    <Header />
+    <main id="main" data-pagefind-body>
+      <slot />
+    </main>
+    <Footer cta={cta} ctaSub={ctaSub} ctaButton={ctaButton} ctaLink={ctaLink} />
+    <script is:inline>
+      // Reveal-on-scroll
+      (() => {
+        if (!("IntersectionObserver" in window)) {
+          document.querySelectorAll(".reveal").forEach(el => el.classList.add("is-visible"));
+          return;
+        }
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              io.unobserve(entry.target);
+            }
+          });
+        }, { rootMargin: "0px 0px -8% 0px", threshold: 0.05 });
+        document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+      })();
+    </script>
+    <style is:global>
+      .skip-link {
+        position: absolute;
+        top: -100px;
+        left: 0;
+        padding: 0.75rem 1rem;
+        background: var(--brand);
+        color: #fff;
+        z-index: 1000;
+      }
+      .skip-link:focus {
+        top: 0;
+      }
+    </style>
+  </body>
+</html>

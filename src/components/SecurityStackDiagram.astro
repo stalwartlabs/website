@@ -1,0 +1,126 @@
+---
+// Security stack: encryption-at-rest (mailbox layer) at the bottom,
+// transport security (DANE/MTA-STS/TLS-RPT) in the middle, ACME-managed TLS
+// at the top. Each layer carries a small lock and the standards that
+// enforce it.
+---
+<div class="sec">
+  <svg viewBox="0 0 720 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Stalwart security stack: at-rest, in-transit, certificate management">
+    <defs>
+      <radialGradient id="sec-glow" cx="50%" cy="50%" r="60%">
+        <stop offset="0%" stop-color="var(--brand)" stop-opacity="0.18"/>
+        <stop offset="100%" stop-color="var(--brand)" stop-opacity="0"/>
+      </radialGradient>
+      <linearGradient id="sec-layer" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="var(--surface)" stop-opacity="1"/>
+        <stop offset="100%" stop-color="var(--surface-2)" stop-opacity="1"/>
+      </linearGradient>
+    </defs>
+
+    <rect x="0" y="0" width="720" height="460" fill="url(#sec-glow)"/>
+
+    <!-- Layer 1: ACME (top) -->
+    <g class="sec__layer">
+      <rect x="80" y="60" width="560" height="110" rx="14" fill="url(#sec-layer)" stroke="var(--brand)" stroke-opacity="0.45"/>
+      <g transform="translate(120 115)">
+        <circle r="20" fill="var(--brand-soft)" stroke="var(--brand)" stroke-width="1.25"/>
+        <path d="M-7 -1 v -5 a 7 7 0 0 1 14 0 v 5" fill="none" stroke="var(--brand)" stroke-width="1.5"/>
+        <rect x="-9" y="-1" width="18" height="12" rx="2" fill="var(--brand)" fill-opacity="0.15" stroke="var(--brand)" stroke-width="1.25"/>
+      </g>
+      <text x="160" y="94" class="sec__layer-title">Certificate management</text>
+      <text x="160" y="114" class="sec__layer-sub">ACME (every challenge type) · TLSA refresh · external account binding</text>
+      <g class="sec__chips" transform="translate(160 148)">
+        <g class="sec__chip"><rect x="0" y="-10" width="56" height="20" rx="10"/><text x="28" y="0">ACME</text></g>
+        <g class="sec__chip" transform="translate(64 0)"><rect x="0" y="-10" width="64" height="20" rx="10"/><text x="32" y="0">HTTP-01</text></g>
+        <g class="sec__chip" transform="translate(136 0)"><rect x="0" y="-10" width="56" height="20" rx="10"/><text x="28" y="0">DNS-01</text></g>
+        <g class="sec__chip" transform="translate(200 0)"><rect x="0" y="-10" width="80" height="20" rx="10"/><text x="40" y="0">TLS-ALPN-01</text></g>
+      </g>
+    </g>
+
+    <!-- Layer 2: Transport (middle) -->
+    <g class="sec__layer">
+      <rect x="80" y="184" width="560" height="110" rx="14" fill="url(#sec-layer)" stroke="var(--brand)" stroke-opacity="0.55"/>
+      <g transform="translate(120 239)">
+        <circle r="20" fill="var(--brand-soft)" stroke="var(--brand)" stroke-width="1.25"/>
+        <path d="M-7 -1 v -5 a 7 7 0 0 1 14 0 v 5" fill="none" stroke="var(--brand)" stroke-width="1.5"/>
+        <rect x="-9" y="-1" width="18" height="12" rx="2" fill="var(--brand)" fill-opacity="0.15" stroke="var(--brand)" stroke-width="1.25"/>
+      </g>
+      <text x="160" y="218" class="sec__layer-title">In transit, between servers</text>
+      <text x="160" y="238" class="sec__layer-sub">DANE for TLSA-pinned outbound, MTA-STS policy enforcement, TLS-RPT</text>
+      <g class="sec__chips" transform="translate(160 272)">
+        <g class="sec__chip sec__chip--brand"><rect x="0" y="-10" width="56" height="20" rx="10"/><text x="28" y="0">DANE</text></g>
+        <g class="sec__chip sec__chip--brand" transform="translate(64 0)"><rect x="0" y="-10" width="72" height="20" rx="10"/><text x="36" y="0">MTA-STS</text></g>
+        <g class="sec__chip sec__chip--brand" transform="translate(144 0)"><rect x="0" y="-10" width="64" height="20" rx="10"/><text x="32" y="0">TLS-RPT</text></g>
+        <g class="sec__chip sec__chip--brand" transform="translate(216 0)"><rect x="0" y="-10" width="80" height="20" rx="10"/><text x="40" y="0">STARTTLS</text></g>
+      </g>
+    </g>
+
+    <!-- Layer 3: At-rest (bottom) -->
+    <g class="sec__layer">
+      <rect x="80" y="308" width="560" height="110" rx="14" fill="url(#sec-layer)" stroke="var(--brand)" stroke-opacity="0.45"/>
+      <g transform="translate(120 363)">
+        <circle r="20" fill="var(--brand-soft)" stroke="var(--brand)" stroke-width="1.25"/>
+        <path d="M-7 -1 v -5 a 7 7 0 0 1 14 0 v 5" fill="none" stroke="var(--brand)" stroke-width="1.5"/>
+        <rect x="-9" y="-1" width="18" height="12" rx="2" fill="var(--brand)" fill-opacity="0.15" stroke="var(--brand)" stroke-width="1.25"/>
+      </g>
+      <text x="160" y="342" class="sec__layer-title">At rest, in the mailbox</text>
+      <text x="160" y="362" class="sec__layer-sub">Per-mailbox encryption with the user's own S/MIME cert or OpenPGP key</text>
+      <g class="sec__chips" transform="translate(160 396)">
+        <g class="sec__chip"><rect x="0" y="-10" width="64" height="20" rx="10"/><text x="32" y="0">S/MIME</text></g>
+        <g class="sec__chip" transform="translate(72 0)"><rect x="0" y="-10" width="72" height="20" rx="10"/><text x="36" y="0">OpenPGP</text></g>
+        <g class="sec__chip" transform="translate(152 0)"><rect x="0" y="-10" width="120" height="20" rx="10"/><text x="60" y="0">disk-access proof</text></g>
+      </g>
+    </g>
+
+    <text x="40" y="40" class="sec__title">Security from the wire to the mailbox</text>
+  </svg>
+</div>
+
+<style>
+  .sec {
+    width: 100%;
+    aspect-ratio: 720 / 460;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: clamp(0.5rem, 1.5vw, 1rem);
+    box-shadow: var(--shadow-1);
+  }
+  .sec svg { width: 100%; height: 100%; overflow: visible; }
+  .sec__title {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    fill: var(--text-dim);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .sec__layer-title {
+    fill: var(--text);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .sec__layer-sub {
+    fill: var(--text-muted);
+    font-family: var(--font-sans);
+    font-size: 11px;
+  }
+  .sec__chip rect {
+    fill: var(--surface-2);
+    stroke: var(--border-strong);
+    stroke-width: 1;
+  }
+  .sec__chip text {
+    fill: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    text-anchor: middle;
+    dominant-baseline: middle;
+    letter-spacing: 0.04em;
+  }
+  .sec__chip--brand rect {
+    fill: var(--brand-soft);
+    stroke: var(--brand);
+  }
+  .sec__chip--brand text { fill: var(--brand); }
+</style>

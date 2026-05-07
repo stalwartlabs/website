@@ -1,0 +1,216 @@
+title: Stalwart Mail & Collaboration Server
+description: >-
+  Open-source mail and collaboration server with JMAP, IMAP4, POP3, SMTP,
+  CalDAV, CardDAV and WebDAV support. Written in Rust, designed to be secure,
+  scalable, and easy to operate.
+slug: /
+
+hero:
+  eyebrow: All-in-one mail & collaboration server
+  title: |
+    Upgrade your email with Stalwart.
+  titleHighlight: Stalwart
+  lead: >-
+    One server for your email, calendars, contacts and shared files,
+    with spam and phishing protection built in. Every standard
+    protocol your clients already speak (JMAP, IMAP, POP3, SMTP, CalDAV,
+    CardDAV and WebDAV) supported natively.
+  ctas:
+    - label: Get started
+      href: /docs/install/
+  meta:
+    - Open source
+    - Rust-native
+  visual:
+    kind: screenshot
+    src: /images/webadmin/dashboard-delivery.png
+    alt: Stalwart admin dashboard showing user, domain and message counters with a 24-hour message volume chart
+    url: admin.stalw.art / Dashboard / Overview
+
+sections:
+  - kind: pillar-grid
+    eyebrow: Stalwart at a glance
+    title: What used to take five servers, now takes one.
+    items:
+      - icon: mail
+        title: Email
+        body: >-
+          Compatible with every email client your users already have.
+          Modern JMAP for new apps, full IMAP and POP3 for everything
+          else, and SMTP for delivery.
+        href: /mail-server
+      - icon: users
+        title: Collaboration
+        body: >-
+          Calendars, contacts and shared files in the same server as the
+          mail. Standard CalDAV, CardDAV and WebDAV for existing clients,
+          and the modern JMAP equivalents for new ones.
+        href: /collaboration
+      - icon: shield
+        title: Anti-spam
+        body: >-
+          Spam and phishing handled before messages reach
+          the user. A statistical filter, public blocklists, sender
+          reputation and AI-driven analysis, with no extra
+          daemon to run.
+        href: /anti-spam
+      - icon: cpu
+        title: Scale & security
+        body: >-
+          Runs as one node or as a cluster across regions. Memory-safe
+          Rust, encrypted-at-rest mailboxes, automatic TLS, and transport
+          security verified end to end.
+        href: /architecture
+
+  - kind: feature-grid
+    eyebrow: All-in-one solution
+    title: Replace the legacy stack with **one platform**.
+    body: >-
+      Running mail used to mean stitching together half a dozen separate
+      components (an MTA, a message store, a spam filter, a calendar
+      server, a contacts server, a file server) each with its own
+      configuration quirks. Stalwart collapses all of that into one
+      platform: fewer services to deploy, one configuration to learn,
+      one place to look when something needs attention, and a smaller
+      attack surface.
+    items:
+      - title: JMAP & IMAP
+        body: >-
+          Instant multi-device sync over JMAP for new clients, plus full
+          IMAP for the ones already in your fleet.
+        href: /mail-server
+      - title: MTA
+        body: >-
+          An SMTP server that authenticates senders (DKIM, SPF, DMARC, ARC),
+          queues across the cluster and routes per domain, all without a
+          separate relay tier.
+        href: /mta
+      - title: Anti-spam
+        body: >-
+          Stop unwanted mail and phishing at SMTP time, with a built-in
+          classifier, blocklists, sender reputation and
+          AI-driven analysis.
+        href: /anti-spam
+      - title: Collaboration
+        body: >-
+          Calendars, contacts, file storage and sharing, reachable over
+          both DAV and JMAP, sharing one identity layer with the mail.
+        href: /collaboration
+
+  - kind: feature
+    eyebrow: Enhanced security
+    title: Email security from the wire to the mailbox.
+    body: >-
+      Security is a default in Stalwart, not an add-on. Mail in transit
+      between servers stays encrypted and verified end to end, with
+      DANE, MTA-STS and TLS reporting; TLS certificates renew themselves
+      over ACME so nothing breaks at expiry; and mailboxes at rest can
+      be encrypted with the user's own S/MIME certificate or OpenPGP
+      key, so even an operator with disk access cannot read them.
+    bullets:
+      - Encryption at rest with S/MIME or OpenPGP.
+      - Strong transport security through DANE, MTA-STS, and TLS reporting.
+      - Automatic TLS provisioning over ACME.
+      - Automated DKIM key generation, rotation, and DNS publication.
+      - Granular ACLs, rate limiting, and automatic IP banning.
+      - Memory-safe implementation in Rust.
+      - Independently security-audited.
+    visual:
+      kind: diagram
+      id: security-stack
+
+  - kind: feature
+    reverse: true
+    band: alt
+    eyebrow: Fits the stack you already run
+    title: A server that adapts to your environment.
+    body: >-
+      From a single-node setup to a multi-tenant hosting platform,
+      Stalwart fits the storage, search, external directory and DNS
+      infrastructure you already run, instead of asking you to replace
+      it. Mix and match the backends below to match the deployment you
+      have, not the one a vendor would prefer.
+    bullets:
+      - "Pluggable storage: RocksDB, FoundationDB, PostgreSQL, MySQL, SQLite, S3, Azure Blob, Redis."
+      - Full-text search in 17 languages, internal or via Meilisearch, ElasticSearch, OpenSearch, PostgreSQL.
+      - LDAP, OIDC, SQL, or built-in auth, with 2FA, app passwords, and API keys.
+      - Automated DNS management on Cloudflare, Route53, Google Cloud DNS, and more.
+      - Sieve scripting plus Stalwart's expression language.
+      - Web administration plus a CLI.
+    visual:
+      kind: screenshot
+      src: /images/webadmin/dashboard-storage.png
+      alt: Stalwart storage dashboard showing data store and blob store latency
+      url: admin.stalw.art / Dashboard / Storage
+
+  - kind: feature
+    eyebrow: Unified collaboration
+    title: Calendars, contacts and file storage in the same server.
+    body: >-
+      Collaboration is part of the core product, not a sidecar. The same
+      sign-in, the same access controls, the same disk quotas and the
+      same monitoring cover mail, calendars, contacts and files. One
+      backup covers all of it; one audit log records all of it.
+    bullets:
+      - Calendar event scheduling with attendee invitations and free/busy lookup.
+      - Contact management with CardDAV and JMAP for Contacts.
+      - File storage and secure sharing over WebDAV and JMAP for File Storage.
+      - iMIP email notifications for invitations and updates.
+      - Fine-grained sharing through WebDAV ACL and JMAP Sharing.
+      - Auto-discovery for desktop and mobile clients.
+    visual:
+      kind: diagram
+      id: collab-unified
+
+  - kind: feature
+    reverse: true
+    band: alt
+    eyebrow: Spam & phishing filter
+    title: Defence built in, not bolted on.
+    body: >-
+      The spam and phishing filter ships inside the same product as
+      the SMTP server, so unwanted mail is scored and rejected before
+      it reaches the mailbox, with no extra daemon to deploy. Reports,
+      trusted-reply tracking and sender reputation live in the same admin
+      surface as the rest of the server, so an operator never has to chase
+      a problem across two products.
+    bullets:
+      - Built-in DMARC, DKIM and SPF for sender authentication.
+      - Statistical classifier with automatic training.
+      - Optional LLM-driven message analysis.
+      - DNSBL checking of IP addresses, domains, URLs, and hashes.
+      - Phishing protection against homograph URL attacks, sender spoofing, and other techniques.
+      - Trusted reply tracking and sender reputation by IP, ASN, domain, and email.
+      - Greylisting, spam traps, and Pyzor digest filtering.
+      - Milter and HTTP-based MTA Hooks for SpamAssassin, RSPAMD, and external scanners.
+    visual:
+      kind: screenshot
+      src: /images/webadmin/dashboard-security-home.png
+      alt: Stalwart security dashboard showing spam and phishing filter status
+      url: admin.stalw.art / Dashboard / Security
+
+  - kind: feature
+    eyebrow: Built to scale
+    title: Built to scale to millions of mailboxes.
+    body: >-
+      Stalwart was designed for clustering from day one, not retrofitted.
+      Any node can serve any protocol, no external coordinator is
+      required, and capacity grows by adding nodes, so the same product
+      that handles a small organisation today handles a hosting platform
+      tomorrow.
+    bullets:
+      - High availability, load balancing and fault tolerance.
+      - Kubernetes, Apache Mesos, and Docker Swarm orchestration.
+      - Distributed MTA queue with delayed delivery, priority, quotas, routing, and throttling.
+      - Read replicas, sharded blob storage and in-memory data stores.
+      - Peer-to-peer cluster coordination using Zenoh; no external coordinator required.
+      - Optional coordinator-based clustering with Apache Kafka, Redpanda, NATS, or Redis.
+    visual:
+      kind: diagram
+      id: cluster
+
+footerCta:
+  cta: Run your own mail server today.
+  ctaSub: Install Stalwart in minutes, then keep it running for years.
+  ctaButton: Get Stalwart
+  ctaLink: /docs/install/

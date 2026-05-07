@@ -1,0 +1,277 @@
+---
+// Stalwart cluster topology, modelled on the mermaid chart at
+// /docs/cluster/. Layers (top to bottom): Clients -> Nodes -> Storage.
+// Coordination shown as a side column tied to the node row.
+---
+<div class="cluster">
+  <svg viewBox="0 0 720 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Stalwart cluster topology">
+    <defs>
+      <linearGradient id="cluster-edge" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="var(--brand)" stop-opacity="0.55"/>
+        <stop offset="100%" stop-color="var(--brand)" stop-opacity="0.1"/>
+      </linearGradient>
+      <radialGradient id="cluster-node-glow" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="var(--brand)" stop-opacity="0.3"/>
+        <stop offset="100%" stop-color="var(--brand)" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+
+    <!-- Edges: clients -> nodes (every-to-every) -->
+    <g class="cluster__edges" stroke="url(#cluster-edge)" stroke-width="1" fill="none">
+      <line x1="160" y1="80"  x2="180" y2="200"/>
+      <line x1="160" y1="80"  x2="340" y2="200"/>
+      <line x1="160" y1="80"  x2="500" y2="200"/>
+      <line x1="340" y1="80"  x2="180" y2="200"/>
+      <line x1="340" y1="80"  x2="340" y2="200"/>
+      <line x1="340" y1="80"  x2="500" y2="200"/>
+      <line x1="520" y1="80"  x2="180" y2="200"/>
+      <line x1="520" y1="80"  x2="340" y2="200"/>
+      <line x1="520" y1="80"  x2="500" y2="200"/>
+    </g>
+
+    <!-- Edges: nodes -> storage (every-to-every) -->
+    <g class="cluster__edges" stroke="url(#cluster-edge)" stroke-width="1" fill="none">
+      <line x1="180" y1="260" x2="120" y2="380"/>
+      <line x1="180" y1="260" x2="280" y2="380"/>
+      <line x1="180" y1="260" x2="440" y2="380"/>
+      <line x1="180" y1="260" x2="600" y2="380"/>
+      <line x1="340" y1="260" x2="120" y2="380"/>
+      <line x1="340" y1="260" x2="280" y2="380"/>
+      <line x1="340" y1="260" x2="440" y2="380"/>
+      <line x1="340" y1="260" x2="600" y2="380"/>
+      <line x1="500" y1="260" x2="120" y2="380"/>
+      <line x1="500" y1="260" x2="280" y2="380"/>
+      <line x1="500" y1="260" x2="440" y2="380"/>
+      <line x1="500" y1="260" x2="600" y2="380"/>
+    </g>
+
+    <!-- Edges: nodes <-> coordination column -->
+    <g class="cluster__edges cluster__edges--solid" stroke="var(--brand)" stroke-width="1" stroke-opacity="0.45" fill="none">
+      <line x1="570" y1="220" x2="660" y2="220"/>
+      <line x1="570" y1="240" x2="660" y2="240"/>
+    </g>
+
+    <!-- Cluster glow plate -->
+    <g class="cluster__plate">
+      <rect x="60" y="160" width="520" height="120" rx="20" fill="url(#cluster-node-glow)" stroke="var(--brand)" stroke-opacity="0.35" stroke-dasharray="4 4"/>
+      <text x="80" y="180" class="cluster__plate-label">Stalwart cluster (any node serves any protocol)</text>
+    </g>
+
+    <!-- Row: Clients -->
+    <g class="cluster__row">
+      <text x="40" y="50" class="cluster__row-label">Clients</text>
+      <g class="cluster__client" transform="translate(160 80)">
+        <rect x="-50" y="-22" width="100" height="44" rx="22"/>
+        <text>JMAP</text>
+      </g>
+      <g class="cluster__client" transform="translate(340 80)">
+        <rect x="-50" y="-22" width="100" height="44" rx="22"/>
+        <text>IMAP</text>
+      </g>
+      <g class="cluster__client" transform="translate(520 80)">
+        <rect x="-50" y="-22" width="100" height="44" rx="22"/>
+        <text>SMTP</text>
+      </g>
+    </g>
+
+    <!-- Row: Nodes -->
+    <g class="cluster__row">
+      <g class="cluster__node" transform="translate(180 220)">
+        <rect x="-70" y="-30" width="140" height="60" rx="14"/>
+        <text class="cluster__node-name">Node 1</text>
+        <text class="cluster__node-sub" y="18">all protocols</text>
+      </g>
+      <g class="cluster__node" transform="translate(340 220)">
+        <rect x="-70" y="-30" width="140" height="60" rx="14"/>
+        <text class="cluster__node-name">Node 2</text>
+        <text class="cluster__node-sub" y="18">all protocols</text>
+      </g>
+      <g class="cluster__node" transform="translate(500 220)">
+        <rect x="-70" y="-30" width="140" height="60" rx="14"/>
+        <text class="cluster__node-name">Node N</text>
+        <text class="cluster__node-sub" y="18">all protocols</text>
+      </g>
+
+      <!-- Pulses to communicate "active / heartbeating" -->
+      <rect class="cluster__pulse" x="110" y="190" width="140" height="60" rx="14" fill="none" stroke="var(--brand)" stroke-width="1.5"/>
+      <rect class="cluster__pulse cluster__pulse--2" x="270" y="190" width="140" height="60" rx="14" fill="none" stroke="var(--brand)" stroke-width="1.5"/>
+      <rect class="cluster__pulse cluster__pulse--3" x="430" y="190" width="140" height="60" rx="14" fill="none" stroke="var(--brand)" stroke-width="1.5"/>
+    </g>
+
+    <!-- Coordination column -->
+    <g class="cluster__coord">
+      <rect x="600" y="160" width="100" height="120" rx="14" fill="none" stroke="var(--brand)" stroke-opacity="0.4" stroke-dasharray="3 3"/>
+      <text x="650" y="152" class="cluster__row-label" text-anchor="middle">Coordination</text>
+      <g class="cluster__coord-pill cluster__coord-pill--brand" transform="translate(650 192)">
+        <rect x="-38" y="-12" width="76" height="24" rx="12"/>
+        <text>P2P</text>
+      </g>
+      <g class="cluster__coord-pill" transform="translate(650 220)">
+        <rect x="-30" y="-12" width="60" height="24" rx="12"/>
+        <text>Kafka</text>
+      </g>
+      <g class="cluster__coord-pill" transform="translate(650 246)">
+        <rect x="-30" y="-12" width="60" height="24" rx="12"/>
+        <text>Redis</text>
+      </g>
+    </g>
+
+    <!-- Row: Storage -->
+    <g class="cluster__row">
+      <text x="40" y="350" class="cluster__row-label">Storage</text>
+      <g class="cluster__store" transform="translate(120 380)">
+        <rect x="-58" y="-22" width="116" height="44" rx="10"/>
+        <text class="cluster__store-name">Data store</text>
+        <text class="cluster__store-sub" y="14">FoundationDB</text>
+      </g>
+      <g class="cluster__store" transform="translate(280 380)">
+        <rect x="-58" y="-22" width="116" height="44" rx="10"/>
+        <text class="cluster__store-name">Blob store</text>
+        <text class="cluster__store-sub" y="14">S3 / Azure</text>
+      </g>
+      <g class="cluster__store" transform="translate(440 380)">
+        <rect x="-58" y="-22" width="116" height="44" rx="10"/>
+        <text class="cluster__store-name">Search store</text>
+        <text class="cluster__store-sub" y="14">Elasticsearch</text>
+      </g>
+      <g class="cluster__store" transform="translate(600 380)">
+        <rect x="-58" y="-22" width="116" height="44" rx="10"/>
+        <text class="cluster__store-name">In-memory store</text>
+        <text class="cluster__store-sub" y="14">Redis / Valkey</text>
+      </g>
+    </g>
+  </svg>
+</div>
+
+<style>
+  .cluster {
+    width: 100%;
+    aspect-ratio: 720 / 460;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: clamp(0.5rem, 1.5vw, 1rem);
+    box-shadow: var(--shadow-1);
+  }
+  .cluster svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  .cluster__edges {
+    stroke-dasharray: 4 4;
+  }
+  .cluster__edges--solid {
+    stroke-dasharray: none;
+  }
+
+  .cluster__row-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    fill: var(--text-dim);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .cluster__plate-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    fill: var(--brand);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.85;
+  }
+
+  .cluster__client rect {
+    fill: var(--surface-2);
+    stroke: var(--border-strong);
+    stroke-width: 1;
+  }
+  .cluster__client text {
+    fill: var(--text);
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 600;
+    text-anchor: middle;
+    dominant-baseline: middle;
+  }
+
+  .cluster__node rect {
+    fill: var(--brand-soft);
+    stroke: var(--brand);
+    stroke-width: 1.25;
+  }
+  .cluster__node-name {
+    fill: var(--brand);
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 700;
+    text-anchor: middle;
+    dominant-baseline: middle;
+  }
+  .cluster__node-sub {
+    fill: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    text-anchor: middle;
+    dominant-baseline: middle;
+    letter-spacing: 0.04em;
+  }
+
+  .cluster__store rect {
+    fill: var(--surface);
+    stroke: var(--border-strong);
+    stroke-width: 1;
+  }
+  .cluster__store-name {
+    fill: var(--text);
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 600;
+    text-anchor: middle;
+    dominant-baseline: middle;
+  }
+  .cluster__store-sub {
+    fill: var(--text-dim);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    text-anchor: middle;
+    dominant-baseline: middle;
+  }
+
+  .cluster__coord-pill rect {
+    fill: var(--surface);
+    stroke: var(--border-strong);
+    stroke-width: 1;
+  }
+  .cluster__coord-pill text {
+    fill: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-anchor: middle;
+    dominant-baseline: middle;
+  }
+  .cluster__coord-pill--brand rect {
+    fill: var(--brand-soft);
+    stroke: var(--brand);
+  }
+  .cluster__coord-pill--brand text {
+    fill: var(--brand);
+  }
+
+  @keyframes cluster-pulse {
+    0%   { transform: scale(1);     opacity: 0.7; }
+    100% { transform: scale(1.18);  opacity: 0; }
+  }
+  .cluster__pulse {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: cluster-pulse 2.6s var(--ease-emph) infinite;
+  }
+  .cluster__pulse--2 { animation-delay: 0.85s; }
+  .cluster__pulse--3 { animation-delay: 1.7s; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cluster__pulse { animation: none; opacity: 0; }
+  }
+</style>

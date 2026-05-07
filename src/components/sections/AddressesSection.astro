@@ -1,0 +1,97 @@
+---
+import { inlineMd, paragraphMd } from "../../lib/md";
+
+interface Props {
+  data: any;
+}
+const { data } = Astro.props;
+---
+<section class={`band ${data.band === "alt" ? "band--alt" : ""}`}>
+  <div class="container container-narrow">
+    {(data.eyebrow || data.title) && (
+      <div class="section-head reveal">
+        {data.eyebrow && <span class="eyebrow">{data.eyebrow}</span>}
+        {data.title && <h2 class="h2" set:html={inlineMd(data.title)}></h2>}
+        {data.body && <div class="addresses__body" set:html={paragraphMd(data.body)}></div>}
+      </div>
+    )}
+    <div class="addresses reveal">
+      {data.items.map((item: any) => (
+        <div class="address">
+          <span class="address__label">{item.label}</span>
+          {item.lines && (
+            <address>
+              {item.lines.map((line: string, i: number) => (
+                <Fragment>
+                  <span set:html={inlineMd(line)}></span>
+                  {i < item.lines.length - 1 && <br/>}
+                </Fragment>
+              ))}
+            </address>
+          )}
+          {item.email && (
+            <a class="address__email" href={`mailto:${item.email}`}>{item.email}</a>
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .section-head {
+    margin-bottom: clamp(2rem, 3vw, 2.75rem);
+  }
+  .section-head .h2 {
+    margin-top: 0.75rem;
+  }
+  .addresses__body {
+    margin-top: 1rem;
+    color: var(--text-muted);
+  }
+  .addresses {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  @media (min-width: 600px) {
+    .addresses {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 900px) {
+    .addresses {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  .address {
+    padding: 1.5rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .address__label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--text-dim);
+    font-weight: 600;
+  }
+  .address address {
+    font-style: normal;
+    color: var(--text);
+    font-size: 0.9375rem;
+    line-height: 1.55;
+  }
+  .address__email {
+    color: var(--brand);
+    font-size: 0.9375rem;
+    align-self: flex-start;
+  }
+  .address__email:hover {
+    color: var(--brand-hi);
+  }
+</style>

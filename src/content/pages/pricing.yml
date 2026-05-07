@@ -1,0 +1,157 @@
+title: Pricing | Stalwart Labs
+description: >-
+  Per-mailbox pricing for the Stalwart Enterprise edition, with tiered
+  annual rates from 25 to 10 million-plus mailboxes.
+slug: /pricing
+
+hero:
+  eyebrow: Pricing
+  title: More features than the alternatives, for less.
+  titleHighlight: for less
+  lead: >-
+    Stalwart Enterprise gives you a complete mail and collaboration
+    platform for a per-mailbox rate that drops as you grow. Every license
+    includes unlimited domains, tenants, mailing lists and
+    aliases at no extra cost, and the same license can be installed on
+    an unlimited number of servers.
+  ctas:
+    - label: Buy now
+      href: https://license.stalw.art/buy
+      external: true
+    - label: Start a 30-day trial
+      href: https://license.stalw.art/trial
+      external: true
+      primary: false
+    - label: Contact sales
+      href: /contact
+      primary: false
+
+sections:
+  - kind: pricing-tiers
+    eyebrow: Tier rates
+    title: Each tier billed at its own rate.
+    body: >-
+      The total bill for a given deployment combines the rates across the
+      tiers it spans. A 600-mailbox deployment, for example, is charged
+      the rate for 25-499 on the first 499 mailboxes and the rate for
+      500-999 on the remainder.
+    showTableBelow: 100000
+    quoteCta:
+      label: Obtain quote
+      href: /contact
+    tiers:
+      - { lower: 25,         upper: 499,        eur: 2.00, usd: 2.40 }
+      - { lower: 500,        upper: 999,        eur: 1.70, usd: 2.04 }
+      - { lower: 1000,       upper: 4999,       eur: 1.45, usd: 1.74 }
+      - { lower: 5000,       upper: 10000,      eur: 1.23, usd: 1.48 }
+      - { lower: 10000,      upper: 49999,      eur: 1.04, usd: 1.25 }
+      - { lower: 50000,      upper: 99999,      eur: 0.89, usd: 1.09 }
+      - { lower: 100000,     upper: 499999,     eur: 0.75, usd: 0.90 }
+      - { lower: 500000,     upper: 999999,     eur: 0.64, usd: 0.78 }
+      - { lower: 1000000,    upper: 9999999,    eur: 0.54, usd: 0.65 }
+      - { lower: 10000000,   upper: null,       eur: 0.46, usd: 0.55 }
+
+  - kind: calculator
+    band: alt
+    eyebrow: Calculate
+    title: Estimate your annual cost.
+    body: >-
+      Drag the slider or type a mailbox count. The total uses the same
+      tiered rates above. Premium Support is included at 150 mailboxes
+      and above.
+    premiumSupportThreshold: 150
+
+  - kind: prose
+    eyebrow: How licensing works
+    title: Per-mailbox subscription, annual or monthly.
+    body: >-
+      Two billing cycles are available: **annual**, with a discount applied
+      for paying yearly, and **monthly**, for organisations that prefer a
+      shorter commitment.
+
+      Only user and group mailboxes count toward the total. Mailing 
+      lists and aliases are not billed. Every plan
+      includes unlimited domains, tenants, mailing lists and
+      aliases at no extra cost.
+
+  - kind: list
+    band: alt
+    title: How a license is issued.
+    body: >-
+      After purchase at the [Stalwart Labs licensing portal](https://license.stalw.art/buy),
+      the key is available immediately and activates Enterprise features
+      as soon as it is installed on the server. A 30-day Enterprise trial
+      is available at the [trial portal](https://license.stalw.art/trial),
+      with full access to Enterprise features for evaluation.
+    bullets:
+      - "**Anchored to a hostname domain**, not to an individual server. A key for `*.example.org` covers an unlimited number of servers under that domain."
+      - "**Unlimited client domains**: the domain restriction applies only to server hostnames, not to the domains your users send and receive mail under."
+      - "**Cancellation reverts to Community.** Enterprise-only features are disabled, but no data is lost and service continues without interruption."
+
+  - kind: prose
+    eyebrow: Premium Support
+    title: Premium Support is included from 150 mailboxes.
+    body: >-
+      Enterprise subscriptions of 150 mailboxes or more include
+      Premium Support: priority response, 
+      expedited bug fixing and influence on the product roadmap.
+      Smaller Enterprise subscriptions (below 150 mailboxes) get the
+      Enterprise feature set only; for help and questions, those
+      customers rely on the same community support channels as
+      Community-edition users.
+
+      On-demand options for Premium Support customers include a
+      dedicated Support Engineer, a custom SLA and lawful
+      interception. The full response-time matrix and the list of
+      on-demand services live on the [Support page](/support).
+
+  - kind: faq
+    eyebrow: Frequently asked
+    title: Pricing FAQ.
+    items:
+      - question: Are mailboxes counted on a peak or average basis?
+        answer: >-
+          Mailbox count is measured at billing. Only user and group
+          mailboxes are counted; mailing lists and aliases are not.
+      - question: Can I move the license to a different server?
+        answer: >-
+          Yes, as long as the server hostname falls under the licensed
+          domain (for example, anywhere under `*.example.org`).
+      - question: Do I need a separate license for each region or data centre?
+        answer: >-
+          No. One key covers every server under the licensed hostname
+          domain, regardless of where it runs.
+      - question: What happens if my mailbox count exceeds my plan mid-cycle?
+        answer: >-
+          Existing mailboxes keep working without restriction; the
+          server simply stops creating new mailboxes once your licensed
+          count is reached. To unblock new mailboxes, buy additional
+          licenses at [license.stalw.art](https://license.stalw.art)
+          and apply them to the running server: there is no downtime
+          and the system generates a prorated invoice for the
+          remaining period.
+      - question: Can I purchase additional mailboxes mid-cycle?
+        answer: >-
+          Yes. Buy more mailbox licenses at
+          [license.stalw.art](https://license.stalw.art) at any time
+          during your billing period, then apply the new key to the
+          running server: it takes effect without a restart, and the
+          system charges only for the prorated remainder of the cycle.
+      - question: Can I switch between monthly and annual billing?
+        answer: >-
+          Yes, in either direction. The change is applied at
+          [license.stalw.art](https://license.stalw.art) and takes
+          effect without downtime; the system reconciles the change
+          with a prorated invoice for the rest of the period.
+      - question: What happens if I cancel my Enterprise subscription?
+        answer: >-
+          The server reverts to the Community edition automatically.
+          Enterprise-only features are disabled, but no data is lost
+          and standard email and collaboration service continues
+          without interruption.
+
+footerCta:
+  cta: Ready to deploy Stalwart Enterprise?
+  ctaSub: Buy a license now, start a 30-day trial, or talk to sales for custom requirements.
+  ctaButton: Buy now
+  ctaLink: https://license.stalw.art/buy

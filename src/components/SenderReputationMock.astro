@@ -1,0 +1,201 @@
+---
+// Sender-reputation table mock: per-IP / per-ASN / per-domain / per-email
+// rows, each with a horizontal ham <-> spam scale and a marker for the
+// learned position.
+---
+<div class="rep">
+  <svg viewBox="0 0 720 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sender reputation table">
+    <defs>
+      <linearGradient id="rep-bar" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%"   stop-color="#2dba6c" stop-opacity="0.55"/>
+        <stop offset="50%"  stop-color="var(--text-dim)" stop-opacity="0.4"/>
+        <stop offset="100%" stop-color="var(--brand)" stop-opacity="0.55"/>
+      </linearGradient>
+    </defs>
+
+    <text x="40" y="40" class="rep__title">Sender reputation</text>
+
+    <!-- Table header -->
+    <g transform="translate(40 76)">
+      <rect x="0" y="0" width="640" height="32" rx="8" fill="var(--surface-2)" stroke="var(--border)"/>
+      <text class="rep__header" x="16"  y="20">Axis</text>
+      <text class="rep__header" x="100" y="20">Identifier</text>
+      <text class="rep__header" x="320" y="20" text-anchor="middle">ham &#8226;&#8226;&#8226; spam</text>
+      <text class="rep__header" x="500" y="20">Score</text>
+      <text class="rep__header" x="556" y="20">Verdict</text>
+    </g>
+
+    <!-- Row 1: IP -->
+    <g class="rep__row" transform="translate(40 124)">
+      <rect x="0" y="0" width="640" height="44" rx="8"/>
+      <g class="rep__axis-pill" transform="translate(40 22)"><rect x="-30" y="-10" width="60" height="20" rx="10"/><text>IP</text></g>
+      <text class="rep__id" x="100" y="28">203.0.113.42</text>
+      <g class="rep__scale" transform="translate(220 22)">
+        <rect class="rep__bar" x="0" y="-3" width="200" height="6" rx="3"/>
+        <line class="rep__mid" x1="100" y1="-8" x2="100" y2="8"/>
+        <circle class="rep__marker rep__marker--spam" cx="166" cy="0" r="6"/>
+      </g>
+      <text class="rep__score rep__score--spam" x="498" y="28">+2.4</text>
+      <g class="rep__verdict rep__verdict--spam" transform="translate(580 22)"><rect x="-30" y="-10" width="60" height="20" rx="10"/><text>spam</text></g>
+    </g>
+
+    <!-- Row 2: ASN -->
+    <g class="rep__row" transform="translate(40 174)">
+      <rect x="0" y="0" width="640" height="44" rx="8"/>
+      <g class="rep__axis-pill" transform="translate(40 22)"><rect x="-30" y="-10" width="60" height="20" rx="10"/><text>ASN</text></g>
+      <text class="rep__id" x="100" y="28">AS15169 (Google)</text>
+      <g class="rep__scale" transform="translate(220 22)">
+        <rect class="rep__bar" x="0" y="-3" width="200" height="6" rx="3"/>
+        <line class="rep__mid" x1="100" y1="-8" x2="100" y2="8"/>
+        <circle class="rep__marker rep__marker--ham" cx="34" cy="0" r="6"/>
+      </g>
+      <text class="rep__score rep__score--ham" x="498" y="28">-3.1</text>
+      <g class="rep__verdict rep__verdict--ham" transform="translate(580 22)"><rect x="-30" y="-10" width="60" height="20" rx="10"/><text>ham</text></g>
+    </g>
+
+    <!-- Row 3: Domain -->
+    <g class="rep__row" transform="translate(40 224)">
+      <rect x="0" y="0" width="640" height="44" rx="8"/>
+      <g class="rep__axis-pill" transform="translate(40 22)"><rect x="-32" y="-10" width="64" height="20" rx="10"/><text>domain</text></g>
+      <text class="rep__id" x="100" y="28">marketing.acme.example</text>
+      <g class="rep__scale" transform="translate(220 22)">
+        <rect class="rep__bar" x="0" y="-3" width="200" height="6" rx="3"/>
+        <line class="rep__mid" x1="100" y1="-8" x2="100" y2="8"/>
+        <circle class="rep__marker rep__marker--neutral" cx="116" cy="0" r="6"/>
+      </g>
+      <text class="rep__score" x="498" y="28">+0.4</text>
+      <g class="rep__verdict" transform="translate(580 22)"><rect x="-36" y="-10" width="72" height="20" rx="10"/><text>neutral</text></g>
+    </g>
+
+    <!-- Row 4: Email -->
+    <g class="rep__row" transform="translate(40 274)">
+      <rect x="0" y="0" width="640" height="44" rx="8"/>
+      <g class="rep__axis-pill" transform="translate(40 22)"><rect x="-30" y="-10" width="60" height="20" rx="10"/><text>email</text></g>
+      <text class="rep__id" x="100" y="28">no-reply@acme.example</text>
+      <g class="rep__scale" transform="translate(220 22)">
+        <rect class="rep__bar" x="0" y="-3" width="200" height="6" rx="3"/>
+        <line class="rep__mid" x1="100" y1="-8" x2="100" y2="8"/>
+        <circle class="rep__marker rep__marker--ham" cx="60" cy="0" r="6"/>
+      </g>
+      <text class="rep__score rep__score--ham" x="498" y="28">-1.8</text>
+      <g class="rep__verdict rep__verdict--ham" transform="translate(580 22)"><rect x="-30" y="-10" width="60" height="20" rx="10"/><text>ham</text></g>
+    </g>
+
+    <!-- Row 5: Greylist -->
+    <g class="rep__row rep__row--alt" transform="translate(40 324)">
+      <rect x="0" y="0" width="640" height="44" rx="8"/>
+      <g class="rep__axis-pill" transform="translate(40 22)"><rect x="-32" y="-10" width="64" height="20" rx="10"/><text>greylist</text></g>
+      <text class="rep__id" x="100" y="28">198.51.100.7</text>
+      <g class="rep__scale" transform="translate(220 22)">
+        <rect class="rep__bar" x="0" y="-3" width="200" height="6" rx="3"/>
+        <line class="rep__mid" x1="100" y1="-8" x2="100" y2="8"/>
+        <circle class="rep__marker rep__marker--unknown" cx="100" cy="0" r="6"/>
+      </g>
+      <text class="rep__score" x="498" y="28">held</text>
+      <g class="rep__verdict rep__verdict--hold" transform="translate(580 22)"><rect x="-30" y="-10" width="60" height="20" rx="10"/><text>hold</text></g>
+    </g>
+  </svg>
+</div>
+
+<style>
+  .rep {
+    width: 100%;
+    aspect-ratio: 720 / 460;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: clamp(0.5rem, 1.5vw, 1rem);
+    box-shadow: var(--shadow-1);
+  }
+  .rep svg { width: 100%; height: 100%; overflow: visible; }
+  .rep__title {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    fill: var(--text-dim);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .rep__header {
+    fill: var(--text-dim);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    dominant-baseline: middle;
+  }
+  .rep__row rect {
+    fill: var(--surface);
+    stroke: var(--border);
+    stroke-width: 1;
+  }
+  .rep__row--alt rect { fill: var(--surface-2); }
+
+  .rep__axis-pill rect {
+    fill: var(--surface-2);
+    stroke: var(--border-strong);
+    stroke-width: 1;
+  }
+  .rep__axis-pill text {
+    fill: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    text-anchor: middle;
+    dominant-baseline: middle;
+    letter-spacing: 0.04em;
+  }
+
+  .rep__id {
+    fill: var(--text);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    dominant-baseline: middle;
+  }
+  .rep__bar {
+    fill: url(#rep-bar);
+    stroke: none;
+  }
+  .rep__mid {
+    stroke: var(--text-dim);
+    stroke-width: 1;
+    stroke-dasharray: 2 2;
+  }
+  .rep__marker {
+    fill: var(--text);
+    stroke: var(--surface);
+    stroke-width: 2;
+  }
+  .rep__marker--ham     { fill: #2dba6c; }
+  .rep__marker--spam    { fill: var(--brand); }
+  .rep__marker--neutral { fill: var(--text-muted); }
+  .rep__marker--unknown { fill: #d6a72c; }
+
+  .rep__score {
+    fill: var(--text);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    dominant-baseline: middle;
+  }
+  .rep__score--ham   { fill: #2dba6c; }
+  .rep__score--spam  { fill: var(--brand); }
+
+  .rep__verdict rect {
+    fill: var(--surface-2);
+    stroke: var(--border-strong);
+    stroke-width: 1;
+  }
+  .rep__verdict text {
+    fill: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    text-anchor: middle;
+    dominant-baseline: middle;
+    letter-spacing: 0.04em;
+  }
+  .rep__verdict--ham   rect { fill: rgba(45, 186, 108, 0.15); stroke: #2dba6c; }
+  .rep__verdict--ham   text { fill: #2dba6c; }
+  .rep__verdict--spam  rect { fill: var(--brand-soft); stroke: var(--brand); }
+  .rep__verdict--spam  text { fill: var(--brand); }
+  .rep__verdict--hold  rect { fill: rgba(214, 167, 44, 0.15); stroke: #d6a72c; }
+  .rep__verdict--hold  text { fill: #d6a72c; }
+</style>

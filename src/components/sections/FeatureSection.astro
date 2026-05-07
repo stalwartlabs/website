@@ -1,0 +1,88 @@
+---
+import VisualBlock from "../VisualBlock.astro";
+import CheckList from "../CheckList.astro";
+import { inlineMd, paragraphMd } from "../../lib/md";
+
+interface Props {
+  data: any;
+}
+const { data } = Astro.props;
+const hasVisual = !!data.visual;
+const reverse = !!data.reverse;
+---
+<section class={`band ${data.band === "alt" ? "band--alt" : ""}`}>
+  <div class="container">
+    <div class={`split ${hasVisual ? "" : "split--no-visual"} ${reverse ? "split--reverse" : ""} reveal`}>
+      <div class="split__text">
+        {data.eyebrow && <span class="eyebrow">{data.eyebrow}</span>}
+        <h2 class="h2 split__title" set:html={inlineMd(data.title)}></h2>
+        {data.body && <div class="split__body" set:html={paragraphMd(data.body)}></div>}
+        {data.bullets?.length > 0 && (
+          <div class="split__list">
+            <CheckList items={data.bullets.map((b: string) => inlineMd(b))} />
+          </div>
+        )}
+        {data.learnMore?.length > 0 && (
+          <div class="split__links">
+            {data.learnMore.map((cta: any) => (
+              <a
+                href={cta.href}
+                class="link-arrow"
+                {...(cta.external ? { target: "_blank", rel: "noopener" } : {})}
+              >{cta.label}</a>
+            ))}
+          </div>
+        )}
+      </div>
+      {hasVisual && (
+        <div class="split__visual">
+          <VisualBlock visual={data.visual} />
+        </div>
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+  .split {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(2.5rem, 5vw, 4.5rem);
+    align-items: center;
+  }
+  @media (min-width: 900px) {
+    .split {
+      grid-template-columns: 1fr 1fr;
+    }
+    .split--reverse .split__text {
+      order: 2;
+    }
+    .split--no-visual {
+      grid-template-columns: minmax(0, 760px);
+    }
+  }
+  .split__text {
+    max-width: 580px;
+  }
+  .split__title {
+    margin-top: 1rem;
+  }
+  .split__body {
+    margin-top: 1.25rem;
+    color: var(--text-muted);
+    font-size: 1.0625rem;
+    line-height: 1.55;
+  }
+  .split__body :global(p + p) {
+    margin-top: 0.85em;
+  }
+  .split__list {
+    margin-top: 1.75rem;
+  }
+  .split__links {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+</style>

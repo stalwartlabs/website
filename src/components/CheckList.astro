@@ -1,0 +1,54 @@
+---
+interface Props {
+  items: string[];
+}
+const { items } = Astro.props;
+---
+<ul class="checklist">
+  {items.map((item) => (
+    <li>
+      <span class="check" aria-hidden="true">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+      </span>
+      <span class="check-text" set:html={item}></span>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .checklist {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+  .checklist li {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    color: var(--text);
+    font-size: 0.9375rem;
+    line-height: 1.55;
+  }
+  .check {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--brand-soft);
+    color: var(--brand);
+    display: inline-grid;
+    place-items: center;
+    margin-top: 2px;
+  }
+  .check-text :global(code) {
+    font-family: var(--font-mono);
+    font-size: 0.8em;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    padding: 0.05em 0.4em;
+    border-radius: 5px;
+    color: var(--text);
+  }
+</style>

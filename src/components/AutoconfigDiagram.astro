@@ -1,0 +1,174 @@
+---
+// Autoconfig probe-and-response. Phone on the left enters an email; three
+// labelled probe arrows reach into the network; one return arrow carries
+// IMAP / SMTP / CalDAV / CardDAV settings.
+---
+<div class="ac">
+  <svg viewBox="0 0 720 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Autoconfig probe and response">
+    <defs>
+      <marker id="ac-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0 0 L10 5 L0 10 z" fill="var(--brand)" opacity="0.85"/>
+      </marker>
+      <marker id="ac-arrow-back" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M0 0 L10 5 L0 10 z" fill="#2dba6c"/>
+      </marker>
+    </defs>
+
+    <!-- Phone frame on the left -->
+    <g transform="translate(140 230)">
+      <rect x="-70" y="-150" width="140" height="300" rx="22" fill="var(--surface-2)" stroke="var(--border-strong)" stroke-width="1.5"/>
+      <rect x="-58" y="-130" width="116" height="240" rx="6" fill="var(--bg-elev)" stroke="var(--border)"/>
+      <rect x="-12" y="-138" width="24" height="6" rx="3" fill="var(--border-strong)"/>
+      <text class="ac__phone-title" x="0" y="-100" text-anchor="middle">Add account</text>
+      <line x1="-44" y1="-92" x2="44" y2="-92" stroke="var(--border)"/>
+      <text class="ac__phone-label" x="-44" y="-70">Email</text>
+      <rect x="-44" y="-62" width="88" height="22" rx="6" fill="var(--surface)" stroke="var(--brand)" stroke-opacity="0.4"/>
+      <text class="ac__phone-input" x="-40" y="-46">alice@example.com</text>
+      <text class="ac__phone-tick" x="38" y="-46">✓</text>
+      <text class="ac__phone-label" x="-44" y="-22">Password</text>
+      <rect x="-44" y="-14" width="88" height="22" rx="6" fill="var(--surface)" stroke="var(--border)"/>
+      <text class="ac__phone-dots" x="-40" y="2">••••••••••</text>
+      <rect x="-44" y="40" width="88" height="28" rx="14" fill="var(--brand-soft)" stroke="var(--brand)"/>
+      <text class="ac__phone-cta" x="0" y="58" text-anchor="middle">Continue</text>
+      <text class="ac__phone-found" x="0" y="92" text-anchor="middle">Settings found</text>
+      <text class="ac__phone-found" x="0" y="106" text-anchor="middle">for example.com</text>
+    </g>
+
+    <!-- Probe arrows -->
+    <g class="ac__probes" fill="none" stroke="var(--brand)" stroke-width="1.5" stroke-opacity="0.8">
+      <path d="M 220 180 L 380 130" marker-end="url(#ac-arrow)"/>
+      <path d="M 220 230 L 380 230" marker-end="url(#ac-arrow)"/>
+      <path d="M 220 280 L 380 330" marker-end="url(#ac-arrow)"/>
+    </g>
+
+    <!-- Probe target boxes (URL pills) -->
+    <g class="ac__target" transform="translate(490 130)">
+      <rect x="-110" y="-22" width="220" height="44" rx="10"/>
+      <text class="ac__target-name" y="-3">autoconfig.example.com</text>
+      <text class="ac__target-sub" y="13">Mozilla autoconfig</text>
+    </g>
+    <g class="ac__target ac__target--brand" transform="translate(490 230)">
+      <rect x="-110" y="-22" width="220" height="44" rx="10"/>
+      <text class="ac__target-name" y="-3">autoconfig-v1.1</text>
+      <text class="ac__target-sub" y="13">UA Autoconfig (modern)</text>
+    </g>
+    <g class="ac__target" transform="translate(490 330)">
+      <rect x="-110" y="-22" width="220" height="44" rx="10"/>
+      <text class="ac__target-name" y="-3">autodiscover.example.com</text>
+      <text class="ac__target-sub" y="13">Microsoft Autodiscover v1+v2</text>
+    </g>
+
+    <!-- Return arrow with payload -->
+    <path class="ac__return" d="M 600 250 C 660 250, 660 400, 380 400 L 220 400 L 220 320" fill="none" stroke="#2dba6c" stroke-width="1.75" stroke-dasharray="4 3" marker-end="url(#ac-arrow-back)"/>
+
+    <g class="ac__payload" transform="translate(440 396)">
+      <rect x="-130" y="-14" width="260" height="28" rx="14"/>
+      <text>IMAP · SMTP · CalDAV · CardDAV settings</text>
+    </g>
+
+    <text x="40" y="40" class="ac__title">Three probes, one good answer</text>
+  </svg>
+</div>
+
+<style>
+  .ac {
+    width: 100%;
+    aspect-ratio: 720 / 460;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: clamp(0.5rem, 1.5vw, 1rem);
+    box-shadow: var(--shadow-1);
+  }
+  .ac svg { width: 100%; height: 100%; overflow: visible; }
+
+  .ac__title {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    fill: var(--text-dim);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .ac__caption {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    fill: var(--text-muted);
+  }
+
+  .ac__phone-title {
+    fill: var(--text);
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .ac__phone-label {
+    fill: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .ac__phone-input, .ac__phone-dots {
+    fill: var(--text);
+    font-family: var(--font-mono);
+    font-size: 8px;
+  }
+  .ac__phone-tick {
+    fill: #2dba6c;
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 700;
+    text-anchor: middle;
+  }
+  .ac__phone-cta {
+    fill: var(--brand);
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .ac__phone-found {
+    fill: #2dba6c;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.04em;
+  }
+
+  .ac__target rect {
+    fill: var(--surface-2);
+    stroke: var(--border-strong);
+    stroke-width: 1;
+  }
+  .ac__target-name {
+    fill: var(--text);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-anchor: middle;
+    dominant-baseline: middle;
+  }
+  .ac__target-sub {
+    fill: var(--text-muted);
+    font-family: var(--font-sans);
+    font-size: 10px;
+    text-anchor: middle;
+    dominant-baseline: middle;
+  }
+  .ac__target--brand rect {
+    fill: var(--brand-soft);
+    stroke: var(--brand);
+  }
+  .ac__target--brand .ac__target-name { fill: var(--brand); font-weight: 600; }
+
+  .ac__payload rect {
+    fill: var(--surface);
+    stroke: #2dba6c;
+    stroke-width: 1.25;
+  }
+  .ac__payload text {
+    fill: #2dba6c;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-anchor: middle;
+    dominant-baseline: middle;
+    letter-spacing: 0.02em;
+  }
+</style>

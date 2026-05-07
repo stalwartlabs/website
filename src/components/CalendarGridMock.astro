@@ -1,0 +1,189 @@
+---
+// Calendar week-grid mock: Mon-Fri columns, hour rows, three event chips
+// in different colours, one with a "shared" badge.
+---
+<div class="cal">
+  <svg viewBox="0 0 720 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Calendar week view">
+    <text x="40" y="40" class="cal__title">Calendars on every device</text>
+
+    <!-- Outer card -->
+    <rect x="40" y="64" width="640" height="356" rx="14" fill="var(--surface)" stroke="var(--border-strong)" stroke-width="1"/>
+
+    <!-- Header bar with month + day cells -->
+    <g transform="translate(40 64)">
+      <rect x="0" y="0" width="640" height="36" rx="14" fill="var(--surface-2)"/>
+      <text class="cal__month" x="20" y="22">May 2026</text>
+      <g class="cal__day-headers" transform="translate(120 22)">
+        <text x="48"  text-anchor="middle">Mon 18</text>
+        <text x="148" text-anchor="middle">Tue 19</text>
+        <text x="248" text-anchor="middle">Wed 20</text>
+        <text x="348" text-anchor="middle">Thu 21</text>
+        <text x="448" text-anchor="middle">Fri 22</text>
+      </g>
+    </g>
+
+    <!-- Time labels -->
+    <g class="cal__time-axis">
+      <text x="80"  y="142" text-anchor="end">09:00</text>
+      <text x="80"  y="194" text-anchor="end">10:00</text>
+      <text x="80"  y="246" text-anchor="end">11:00</text>
+      <text x="80"  y="298" text-anchor="end">12:00</text>
+      <text x="80"  y="350" text-anchor="end">13:00</text>
+      <text x="80"  y="402" text-anchor="end">14:00</text>
+    </g>
+
+    <!-- Grid lines: hours and day separators -->
+    <g class="cal__grid">
+      <line x1="100" y1="148" x2="660" y2="148"/>
+      <line x1="100" y1="200" x2="660" y2="200"/>
+      <line x1="100" y1="252" x2="660" y2="252"/>
+      <line x1="100" y1="304" x2="660" y2="304"/>
+      <line x1="100" y1="356" x2="660" y2="356"/>
+      <line x1="100" y1="408" x2="660" y2="408"/>
+
+      <line x1="212" y1="116" x2="212" y2="408"/>
+      <line x1="324" y1="116" x2="324" y2="408"/>
+      <line x1="436" y1="116" x2="436" y2="408"/>
+      <line x1="548" y1="116" x2="548" y2="408"/>
+    </g>
+
+    <!-- Event chip 1: Mon 09:30-11:00 (brand) -->
+    <g class="cal__event cal__event--brand">
+      <rect x="108" y="158" width="100" height="84" rx="6"/>
+      <text class="cal__event-title" x="116" y="178">Sprint plan</text>
+      <text class="cal__event-time"  x="116" y="194">09:30 - 11:00</text>
+      <g class="cal__event-shared" transform="translate(196 174)">
+        <circle r="9"/>
+        <text>+</text>
+      </g>
+    </g>
+
+    <!-- Event chip 2: Wed 10:00-11:30 (green) - "shared" -->
+    <g class="cal__event cal__event--ham">
+      <rect x="332" y="200" width="100" height="80" rx="6"/>
+      <text class="cal__event-title" x="340" y="220">Quarterly review</text>
+      <text class="cal__event-time"  x="340" y="236">10:00 - 11:30</text>
+      <g class="cal__shared-badge" transform="translate(360 256)">
+        <rect x="-26" y="-9" width="52" height="18" rx="9"/>
+        <text>shared</text>
+      </g>
+    </g>
+
+    <!-- Event chip 3: Fri 13:00-14:00 (warn) -->
+    <g class="cal__event cal__event--warn">
+      <rect x="556" y="304" width="100" height="52" rx="6"/>
+      <text class="cal__event-title" x="564" y="324">Client demo</text>
+      <text class="cal__event-time"  x="564" y="340">13:00 - 14:00</text>
+    </g>
+
+    <!-- Now line -->
+    <line class="cal__now" x1="100" y1="226" x2="660" y2="226"/>
+    <circle class="cal__now-dot" cx="100" cy="226" r="4"/>
+  </svg>
+</div>
+
+<style>
+  .cal {
+    width: 100%;
+    aspect-ratio: 720 / 460;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: clamp(0.5rem, 1.5vw, 1rem);
+    box-shadow: var(--shadow-1);
+  }
+  .cal svg { width: 100%; height: 100%; overflow: visible; }
+  .cal__title {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    fill: var(--text-dim);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .cal__month {
+    fill: var(--text);
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 600;
+    dominant-baseline: middle;
+  }
+  .cal__day-headers text {
+    fill: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    dominant-baseline: middle;
+    letter-spacing: 0.04em;
+  }
+  .cal__time-axis text {
+    fill: var(--text-dim);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    dominant-baseline: middle;
+  }
+  .cal__grid line {
+    stroke: var(--border);
+    stroke-width: 1;
+  }
+
+  .cal__event rect {
+    fill: var(--brand-soft);
+    stroke: var(--brand);
+    stroke-width: 1.25;
+  }
+  .cal__event--ham rect {
+    fill: rgba(45, 186, 108, 0.18);
+    stroke: #2dba6c;
+  }
+  .cal__event--warn rect {
+    fill: rgba(214, 167, 44, 0.18);
+    stroke: #d6a72c;
+  }
+  .cal__event-title {
+    fill: var(--text);
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .cal__event-time {
+    fill: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.04em;
+  }
+  .cal__event-shared circle {
+    fill: var(--brand);
+    stroke: var(--surface);
+    stroke-width: 1.5;
+  }
+  .cal__event-shared text {
+    fill: #fff;
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 700;
+    text-anchor: middle;
+    dominant-baseline: middle;
+  }
+
+  .cal__shared-badge rect {
+    fill: rgba(45, 186, 108, 0.25);
+    stroke: #2dba6c;
+    stroke-width: 1;
+  }
+  .cal__shared-badge text {
+    fill: #2dba6c;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    text-anchor: middle;
+    dominant-baseline: middle;
+    letter-spacing: 0.04em;
+  }
+
+  .cal__now {
+    stroke: var(--brand);
+    stroke-width: 1.25;
+    stroke-opacity: 0.7;
+  }
+  .cal__now-dot {
+    fill: var(--brand);
+  }
+</style>

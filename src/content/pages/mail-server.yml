@@ -1,0 +1,264 @@
+title: Stalwart Mail Server | Stalwart Labs
+description: >-
+  Modern mail server with JMAP, IMAP4rev2, POP3 and SMTP, automated DNS and
+  DKIM, ACME certificates, and disk quotas per user and tenant.
+slug: /mail-server
+
+hero:
+  eyebrow: Mail server
+  title: Mail server fluent in every protocol
+  titleHighlight: every protocol
+  lead: >-
+    Stalwart speaks every standard mail protocol your users' clients
+    already use, so no one in your fleet gets left behind. JMAP for new
+    apps, IMAP for everything else. Storage,
+    search, external directory and automated DNS are part of the same
+    server, so what you install is one mail server, not a stack of
+    services to glue together.
+  ctas:
+    - label: Get started
+      href: /docs/install/
+  meta:
+    - Modern
+    - Scalable
+  visual:
+    kind: screenshot
+    src: /images/webadmin/dashboard-connections.png
+    alt: Stalwart network dashboard showing per-protocol active and total connection counters and an SMTP connections chart
+    url: admin.stalw.art / Dashboard / Network
+
+sections:
+  - kind: feature
+    eyebrow: JMAP
+    title: First-class JMAP support.
+    body: >-
+      JMAP is the modern replacement for IMAP, designed around JSON over
+      HTTP instead of the old line-based wire protocol. New mail appears
+      the moment it arrives, every device stays in step, and the
+      protocol is efficient enough to feel native to a mobile or web
+      app. Stalwart supports every JMAP extension, so any compliant
+      client gets the full feature set.
+    bullets:
+      - JMAP for Mail.
+      - JMAP for Sieve Scripts.
+      - JMAP over WebSocket.
+      - JMAP Blob Management.
+      - JMAP Quotas.
+    learnMore:
+      - label: Read the JMAP overview
+        href: /docs/http/jmap/
+    visual:
+      kind: code
+      lang: json
+      filename: jmap-session.json
+      body: |
+        {
+          "using": ["urn:ietf:params:jmap:core", "urn:ietf:params:jmap:mail"],
+          "methodCalls": [
+            ["Email/changes", { "accountId": "u1", "sinceState": "42" }, "0"],
+            ["Email/get", {
+              "accountId": "u1",
+              "#ids": { "resultOf": "0", "name": "Email/changes", "path": "/created" },
+              "properties": ["subject", "from", "receivedAt"]
+            }, "1"]
+          ]
+        }
+
+  - kind: feature
+    reverse: true
+    band: alt
+    eyebrow: IMAP and POP3
+    title: No client left behind.
+    body: >-
+      Stalwart ships full IMAP4rev2 with IMAP4rev1 fallback, plus a POP3
+      server for older devices, so an existing fleet keeps working
+      without forcing a client migration. Per-account quotas show up
+      directly in the client, and users can edit their own server-side
+      filters through any ManageSieve client.
+    bullets:
+      - IMAP4rev2 and IMAP4rev1 with dozens of supported extensions.
+      - IMAP QUOTA reporting per account.
+      - ManageSieve for user-managed server-side filters.
+      - POP3 with STLS and SASL for older devices.
+    visual:
+      kind: diagram
+      id: imap-client-grid
+
+  - kind: feature
+    eyebrow: Automated DNS
+    title: Hands-off DNS for every mail domain.
+    body: >-
+      DNS is the most common reason a mail deployment breaks, and the
+      hardest one for a generalist administrator to debug. Stalwart can
+      publish and maintain a domain's records directly against a managed
+      zone, so the manual copy-and-paste step that breaks the most
+      deployments goes away. Records reconcile on save, propagation is
+      checked before a key is activated, and ACME DNS challenges run
+      through the same automation.
+    bullets:
+      - Direct integration with Cloudflare, Route 53, Google Cloud DNS, DigitalOcean, OVH and others.
+      - Dynamic DNS updates with TSIG or SIG(0) for self-hosted authoritative servers.
+      - Automatic publication of MX, SPF, DKIM, DMARC, TLSA and autoconfig records.
+    learnMore:
+      - label: Read DNS records
+        href: /docs/domains/dns-records
+    visual:
+      kind: diagram
+      id: dns-records-tile
+
+  - kind: feature
+    reverse: true
+    band: alt
+    eyebrow: Automated DKIM rotation
+    title: DKIM keys, rotated on a schedule.
+    body: >-
+      Rotating DKIM signing keys on a schedule is recommended practice
+      and easy to forget under operational pressure. Stalwart owns the
+      full lifecycle: new keys are generated on schedule, published in
+      DNS, activated only after propagation is observed, then retired
+      and deleted on configurable timers.
+    bullets:
+      - Per-domain rotation cadence.
+      - Selector templating with date and version variables.
+      - Emergency rotation on demand for suspected key compromise.
+    learnMore:
+      - label: Read DKIM rotation
+        href: /docs/domains/dkim-rotation
+    visual:
+      kind: screenshot
+      src: /images/webadmin/tasks-scheduled.png
+      alt: Stalwart scheduled tasks list showing pending DKIM key rotations, ACME certificate renewals and outbound DMARC and TLS reports
+      url: admin.stalw.art / Tasks / Scheduled
+
+  - kind: feature
+    eyebrow: ACME and TLS
+    title: Certificates that renew themselves.
+    body: >-
+      Expired TLS certificates are a routine cause of avoidable outages.
+      Stalwart implements ACME directly so renewals run well before
+      expiry, every supported challenge type is available, and TLSA
+      records are refreshed alongside the new certificate so DANE keeps
+      validating without a second tool in the loop.
+    bullets:
+      - Every supported ACME challenge type.
+      - External Account Binding for CAs that require it.
+      - On-demand renewal triggered after a DNS update.
+      - Automatic TLSA refresh after each rotation.
+    learnMore:
+      - label: Read the ACME overview
+        href: /docs/server/tls/acme/
+    visual:
+      kind: diagram
+      id: acme-lifecycle
+
+  - kind: feature
+    reverse: true
+    band: alt
+    eyebrow: Autoconfig and Autodiscover
+    title: Clients configure themselves.
+    body: >-
+      Helpdesk tickets that begin "I can't get my email set up"
+      disappear when a client can fetch its own settings from the
+      server. Pointing a mail client at a Stalwart server returns IMAP,
+      POP, SMTP, CalDAV and CardDAV settings without the user typing a
+      host name. The modern UA Autoconfig discovery is served alongside
+      the legacy Mozilla Autoconfig and Microsoft Autodiscover v1 and
+      v2 formats, so old and new clients are both covered.
+    bullets:
+      - Modern UA Autoconfig discovery.
+      - Mozilla Autoconfig for older Thunderbird-based clients.
+      - Microsoft Autodiscover v1 and v2 for Outlook and Exchange clients.
+    learnMore:
+      - label: Read Autoconfig
+        href: /docs/server/autoconfig
+    visual:
+      kind: diagram
+      id: autoconfig
+
+  - kind: feature
+    eyebrow: Multi-tenancy and quotas
+    title: Multi-tenant from the ground up.
+    body: >-
+      Stalwart was built for multi-tenancy from the start, so hosting
+      many organisations on the same deployment stays safe by design.
+      Accounts, domains and tenants are fully isolated; disk quotas are
+      enforced per user and per tenant; aliases and catch-all addresses
+      can be enabled, disabled or annotated; and a whole domain can be
+      redirected onto another without touching the mailboxes underneath.
+    bullets:
+      - Multi-tenant by design, with per-tenant administrators and quotas.
+      - Domain aliases (one domain pointing at another).
+      - Email aliases with descriptions; the alias mechanism can be disabled per account.
+      - Plus-addressing, sub-addressing, catch-all and mailing-list expansion.
+      - Disk quotas per user and per tenant.
+    visual:
+      kind: screenshot
+      src: /images/webadmin/accounts-list.png
+      alt: Stalwart accounts directory listing user accounts with email, full name and creation date
+      url: admin.stalw.art / Directory / Accounts
+
+  - kind: feature
+    reverse: true
+    band: alt
+    eyebrow: Sieve scripting
+    title: Filter, route and rewrite without leaving the server.
+    body: >-
+      Mail rules belong on the server, where they apply to every device
+      a user opens. Stalwart includes a full Sieve interpreter with every
+      registered extension. User scripts run sandboxed and are managed
+      through any standard ManageSieve client or JMAP; administrators
+      run trusted scripts at SMTP stages with elevated permissions.
+    bullets:
+      - Every IANA-registered Sieve extension.
+      - ManageSieve and JMAP for Sieve Scripts management.
+      - Trusted and untrusted execution contexts.
+    visual:
+      kind: code
+      lang: sieve
+      filename: filter.sieve
+      body: |
+        require ["fileinto", "imap4flags", "vacation", "envelope"];
+
+        # Newsletters land in their own folder.
+        if header :contains "List-Id" "@" {
+          fileinto "INBOX/Newsletters";
+          stop;
+        }
+
+        # Tag and route monitoring alerts.
+        if envelope :is "from" "alerts@monitoring.example.com" {
+          addflag "\\Flagged";
+          fileinto "INBOX/Alerts";
+          stop;
+        }
+
+        # Out-of-office reply, once per sender per week.
+        vacation :days 7
+          "I am away until Monday. Will reply on return.";
+
+  - kind: feature
+    eyebrow: Web admin
+    title: Manage everything from a browser.
+    body: >-
+      Day-to-day administration happens in a browser, not in a config
+      file or an SSH session. Account, domain, group and mailing-list
+      management; SMTP queue and report visualisation; configuration of
+      every server object; a log viewer with search; and a self-service
+      portal for password reset and encryption-at-rest key management,
+      all in one console.
+    bullets:
+      - Real-time dashboards and live tracing.
+      - Account, domain, group, list and Sieve management.
+      - Queue and report visualisation for DMARC, TLS-RPT and ARF.
+      - Configuration of every server object from a single web admin.
+    visual:
+      kind: screenshot
+      src: /images/webadmin/network-settings.png
+      alt: Stalwart network settings
+      url: admin.stalw.art / Settings / Network
+
+footerCta:
+  cta: A modern mail server, ready in minutes.
+  ctaSub: Install Stalwart in minutes; pick the storage, search and external directory backends that fit your deployment.
+  ctaButton: Get started
+  ctaLink: /docs/install/

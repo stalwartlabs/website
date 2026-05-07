@@ -1,0 +1,116 @@
+---
+import { inlineMd, paragraphMd } from "../../lib/md";
+
+interface Props {
+  data: any;
+}
+const { data } = Astro.props;
+
+function fmtRange(lower: number, upper: number | null): string {
+  const f = (n: number) => n.toLocaleString("en-US");
+  if (upper === null) return `${f(lower)}+`;
+  return `${f(lower)} to ${f(upper)}`;
+}
+
+const visibleTiers = data.tiers.filter((t: any) => t.lower < data.showTableBelow);
+const hasQuoteRow = !!data.quoteCta && data.tiers.some((t: any) => t.upper === null || t.lower >= data.showTableBelow);
+
+// Stash tier data on the page for the calculator JS to read.
+const tierData = JSON.stringify(data.tiers);
+---
+<section class={`band ${data.band === "alt" ? "band--alt" : ""}`}>
+  <div class="container">
+    {(data.eyebrow || data.title) && (
+      <div class="section-head section-head--center reveal">
+        {data.eyebrow && <span class="eyebrow">{data.eyebrow}</span>}
+        {data.title && <h2 class="h2" set:html={inlineMd(data.title)}></h2>}
+        {data.body && <div class="tiers__body" set:html={paragraphMd(data.body)}></div>}
+      </div>
+    )}
+    <div class="tiers__wrap reveal" data-tier-source={tierData}>
+      <table class="tiers__table">
+        <thead>
+          <tr>
+            <th>Mailboxes</th>
+            <th>EUR per mailbox per year</th>
+            <th>USD per mailbox per year</th>
+          </tr>
+        </thead>
+        <tbody>
+          {visibleTiers.map((t: any) => (
+            <tr>
+              <td>{fmtRange(t.lower, t.upper)}</td>
+              <td>EUR {t.eur.toFixed(2)}</td>
+              <td>USD {t.usd.toFixed(2)}</td>
+            </tr>
+          ))}
+          {hasQuoteRow && data.quoteCta && (
+            <tr class="tiers__quote">
+              <td>{data.showTableBelow.toLocaleString("en-US")} and beyond</td>
+              <td colspan="2">
+                <a
+                  href={data.quoteCta.href}
+                  class="btn btn-primary btn-sm btn-arrow"
+                  {...(data.quoteCta.external ? { target: "_blank", rel: "noopener" } : {})}
+                >{data.quoteCta.label}</a>
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<style>
+  .section-head--center {
+    text-align: center;
+    max-width: 720px;
+    margin-inline: auto;
+    margin-bottom: clamp(2rem, 3.5vw, 3rem);
+  }
+  .section-head--center .h2 {
+    margin-top: 0.75rem;
+  }
+  .tiers__body {
+    margin-top: 1rem;
+    color: var(--text-muted);
+  }
+  .tiers__wrap {
+    overflow-x: auto;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .tiers__table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9375rem;
+  }
+  .tiers__table thead th {
+    text-align: left;
+    padding: 0.85rem 1.25rem;
+    background: var(--surface-2);
+    color: var(--text-muted);
+    font-weight: 500;
+    font-size: 0.8125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    border-bottom: 1px solid var(--border);
+  }
+  .tiers__table tbody td {
+    padding: 0.85rem 1.25rem;
+    border-top: 1px solid var(--border);
+    color: var(--text);
+  }
+  .tiers__table tbody tr:first-child td {
+    border-top: none;
+  }
+  .tiers__quote td {
+    background: linear-gradient(90deg, var(--brand-soft) 0%, transparent 100%);
+  }
+  .btn-sm {
+    padding: 0.4rem 0.95rem;
+    font-size: 0.8125rem;
+  }
+</style>

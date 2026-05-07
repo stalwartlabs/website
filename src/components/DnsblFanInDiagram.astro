@@ -1,0 +1,152 @@
+---
+// Multi-source DNSBL/Pyzor fan-in: incoming message at the top, four
+// parallel arrows to provider chips, results converging into a single score.
+---
+<div class="rbl">
+  <svg viewBox="0 0 720 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="DNSBL multi-source fan-in">
+    <defs>
+      <linearGradient id="rbl-flow" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="var(--brand)" stop-opacity="0.55"/>
+        <stop offset="100%" stop-color="var(--brand)" stop-opacity="0.15"/>
+      </linearGradient>
+      <marker id="rbl-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0 0 L10 5 L0 10 z" fill="var(--brand)" opacity="0.85"/>
+      </marker>
+    </defs>
+
+    <!-- Top: message -->
+    <g class="rbl__msg" transform="translate(360 80)">
+      <rect x="-130" y="-26" width="260" height="52" rx="10"/>
+      <text class="rbl__node-name">Inbound message</text>
+      <text class="rbl__node-sub" y="14">connecting IP, body URLs, content hash</text>
+    </g>
+
+    <!-- Provider row -->
+    <g class="rbl__provider" transform="translate(120 240)">
+      <rect x="-72" y="-30" width="144" height="60" rx="10"/>
+      <text class="rbl__node-name" y="-6">Spamhaus ZEN</text>
+      <text class="rbl__node-sub" y="14">IP lookup</text>
+    </g>
+    <g class="rbl__provider" transform="translate(280 240)">
+      <rect x="-72" y="-30" width="144" height="60" rx="10"/>
+      <text class="rbl__node-name" y="-6">SURBL multi</text>
+      <text class="rbl__node-sub" y="14">URL lookup</text>
+    </g>
+    <g class="rbl__provider" transform="translate(440 240)">
+      <rect x="-72" y="-30" width="144" height="60" rx="10"/>
+      <text class="rbl__node-name" y="-6">Spamhaus DBL</text>
+      <text class="rbl__node-sub" y="14">domain lookup</text>
+    </g>
+    <g class="rbl__provider rbl__provider--alt" transform="translate(600 240)">
+      <rect x="-72" y="-30" width="144" height="60" rx="10"/>
+      <text class="rbl__node-name" y="-6">Pyzor</text>
+      <text class="rbl__node-sub" y="14">content-hash digest</text>
+    </g>
+
+    <!-- Score (bottom) -->
+    <g class="rbl__score" transform="translate(360 380)">
+      <rect x="-90" y="-26" width="180" height="52" rx="26"/>
+      <text class="rbl__score-label">Aggregated score</text>
+    </g>
+
+    <!-- Edges: msg -> providers -->
+    <g fill="none" stroke="url(#rbl-flow)" stroke-width="1.75" marker-end="url(#rbl-arrow)">
+      <path d="M 320 106 C 280 150, 200 180, 140 210"/>
+      <path d="M 340 106 C 320 160, 290 180, 280 210"/>
+      <path d="M 380 106 C 400 160, 430 180, 440 210"/>
+      <path d="M 400 106 C 460 150, 540 180, 600 210"/>
+    </g>
+
+    <!-- Edges: providers -> score -->
+    <g fill="none" stroke="url(#rbl-flow)" stroke-width="1.75" marker-end="url(#rbl-arrow)">
+      <path d="M 140 270 C 200 320, 280 340, 320 360"/>
+      <path d="M 280 270 C 300 320, 330 340, 340 360"/>
+      <path d="M 440 270 C 420 320, 390 340, 380 360"/>
+      <path d="M 600 270 C 540 320, 460 340, 400 360"/>
+    </g>
+
+    <!-- Tags on the lane -->
+    <g class="rbl__tags">
+      <g class="rbl__tag" transform="translate(120 320)"><rect x="-44" y="-9" width="88" height="18" rx="9"/><text>RBL_SPAMHAUS</text></g>
+      <g class="rbl__tag" transform="translate(280 320)"><rect x="-32" y="-9" width="64" height="18" rx="9"/><text>RBL_SURBL</text></g>
+      <g class="rbl__tag" transform="translate(440 320)"><rect x="-26" y="-9" width="52" height="18" rx="9"/><text>RBL_DBL</text></g>
+      <g class="rbl__tag rbl__tag--alt" transform="translate(600 320)"><rect x="-44" y="-9" width="88" height="18" rx="9"/><text>PYZOR_LISTED</text></g>
+    </g>
+
+    <text x="40" y="40" class="rbl__title">Many sources, one decision</text>
+  </svg>
+</div>
+
+<style>
+  .rbl {
+    width: 100%;
+    aspect-ratio: 720 / 460;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: clamp(0.5rem, 1.5vw, 1rem);
+    box-shadow: var(--shadow-1);
+  }
+  .rbl svg { width: 100%; height: 100%; overflow: visible; }
+
+  .rbl__title {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    fill: var(--text-dim);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .rbl__caption {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    fill: var(--text-muted);
+  }
+
+  .rbl__msg rect, .rbl__provider rect {
+    fill: var(--surface-2);
+    stroke: var(--border-strong);
+    stroke-width: 1;
+  }
+  .rbl__provider--alt rect { stroke: var(--brand); }
+  .rbl__node-name {
+    fill: var(--text);
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 600;
+    text-anchor: middle;
+    dominant-baseline: middle;
+  }
+  .rbl__node-sub {
+    fill: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    text-anchor: middle;
+    dominant-baseline: middle;
+    letter-spacing: 0.04em;
+  }
+  .rbl__score rect {
+    fill: var(--brand);
+    stroke: var(--brand);
+  }
+  .rbl__score-label {
+    fill: #fff;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 700;
+    text-anchor: middle;
+    dominant-baseline: middle;
+  }
+  .rbl__tag rect {
+    fill: var(--surface);
+    stroke: var(--border-strong);
+  }
+  .rbl__tag text {
+    fill: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    text-anchor: middle;
+    dominant-baseline: middle;
+  }
+  .rbl__tag--alt rect { stroke: var(--brand); }
+  .rbl__tag--alt text { fill: var(--brand); }
+</style>

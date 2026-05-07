@@ -1,0 +1,51 @@
+---
+interface Props {
+  href: string;
+  title: string;
+}
+const { href, title } = Astro.props;
+---
+<a href={href} class="feat reveal">
+  <h4 class="feat__title">{title}</h4>
+  <p class="feat__body"><slot /></p>
+  <span class="feat__more" aria-hidden="true">→</span>
+</a>
+
+<style>
+  .feat {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1.25rem 1.25rem 1.25rem 1.25rem;
+    padding-right: 2.75rem;
+    border-radius: var(--radius);
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    transition: border-color var(--t-mid) var(--ease), transform var(--t-mid) var(--ease);
+  }
+  .feat:hover {
+    border-color: var(--brand);
+    transform: translateY(-2px);
+  }
+  .feat__title {
+    font-size: 1rem;
+    font-weight: 600;
+  }
+  .feat__body {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    line-height: 1.55;
+  }
+  .feat__more {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
+    color: var(--text-dim);
+    transition: color var(--t-fast) var(--ease), transform var(--t-fast) var(--ease);
+  }
+  .feat:hover .feat__more {
+    color: var(--brand);
+    transform: translateX(2px);
+  }
+</style>

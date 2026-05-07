@@ -1,0 +1,169 @@
+---
+// Client compatibility grid: six tiles for the most common email clients
+// each carries the protocol(s) it speaks. Lines converge on a Stalwart pill
+// at the bottom.
+---
+<div class="grid">
+  <svg viewBox="0 0 720 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Client compatibility grid">
+    <defs>
+      <linearGradient id="grid-line" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="var(--brand)" stop-opacity="0.5"/>
+        <stop offset="100%" stop-color="var(--brand)" stop-opacity="0.1"/>
+      </linearGradient>
+    </defs>
+
+    <!-- Six client tiles in two rows -->
+    <g class="grid__client" transform="translate(120 90)">
+      <rect x="-72" y="-44" width="144" height="88" rx="12"/>
+      <text class="grid__client-name" y="-12">Apple Mail</text>
+      <text class="grid__client-sub" y="6">macOS / iOS / iPadOS</text>
+      <g class="grid__pill" transform="translate(-38 26)">
+        <rect x="-22" y="-9" width="44" height="18" rx="9"/><text>IMAP</text>
+      </g>
+      <g class="grid__pill" transform="translate(20 26)">
+        <rect x="-32" y="-9" width="64" height="18" rx="9"/><text>CalDAV</text>
+      </g>
+    </g>
+
+    <g class="grid__client" transform="translate(360 90)">
+      <rect x="-72" y="-44" width="144" height="88" rx="12"/>
+      <text class="grid__client-name" y="-12">Outlook</text>
+      <text class="grid__client-sub" y="6">desktop &amp; mobile</text>
+      <g class="grid__pill" transform="translate(-38 26)">
+        <rect x="-22" y="-9" width="44" height="18" rx="9"/><text>IMAP</text>
+      </g>
+      <g class="grid__pill" transform="translate(34 26)">
+        <rect x="-46" y="-9" width="75" height="18" rx="9"/><text>Autodiscov</text>
+      </g>
+    </g>
+
+    <g class="grid__client" transform="translate(600 90)">
+      <rect x="-72" y="-44" width="144" height="88" rx="12"/>
+      <text class="grid__client-name" y="-12">Thunderbird</text>
+      <text class="grid__client-sub" y="6">Mozilla autoconfig</text>
+      <g class="grid__pill" transform="translate(-38 26)">
+        <rect x="-22" y="-9" width="44" height="18" rx="9"/><text>IMAP</text>
+      </g>
+      <g class="grid__pill" transform="translate(20 26)">
+        <rect x="-32" y="-9" width="64" height="18" rx="9"/><text>CalDAV</text>
+      </g>
+    </g>
+
+    <g class="grid__client" transform="translate(120 220)">
+      <rect x="-72" y="-44" width="144" height="88" rx="12"/>
+      <text class="grid__client-name" y="-12">GNOME Evolution</text>
+      <text class="grid__client-sub" y="6">Linux desktop</text>
+      <g class="grid__pill" transform="translate(-38 26)">
+        <rect x="-22" y="-9" width="44" height="18" rx="9"/><text>IMAP</text>
+      </g>
+      <g class="grid__pill" transform="translate(20 26)">
+        <rect x="-32" y="-9" width="64" height="18" rx="9"/><text>CardDAV</text>
+      </g>
+    </g>
+
+    <g class="grid__client" transform="translate(360 220)">
+      <rect x="-72" y="-44" width="144" height="88" rx="12"/>
+      <text class="grid__client-name" y="-12">K-9 Mail / FairEmail</text>
+      <text class="grid__client-sub" y="6">Android</text>
+      <g class="grid__pill" transform="translate(-38 26)">
+        <rect x="-22" y="-9" width="44" height="18" rx="9"/><text>IMAP</text>
+      </g>
+      <g class="grid__pill" transform="translate(20 26)">
+        <rect x="-32" y="-9" width="64" height="18" rx="9"/><text>POP3</text>
+      </g>
+    </g>
+
+    <g class="grid__client" transform="translate(600 220)">
+      <rect x="-72" y="-44" width="144" height="88" rx="12"/>
+      <text class="grid__client-name" y="-12">JMAP-native</text>
+      <text class="grid__client-sub" y="6">modern apps</text>
+      <g class="grid__pill grid__pill--brand" transform="translate(0 26)">
+        <rect x="-22" y="-9" width="44" height="18" rx="9"/><text>JMAP</text>
+      </g>
+    </g>
+
+    <!-- Convergence lines -->
+    <g class="grid__lines" stroke="url(#grid-line)" stroke-width="1.25" stroke-dasharray="4 4" fill="none">
+      <line x1="120" y1="135" x2="360" y2="380"/>
+      <line x1="360" y1="135" x2="360" y2="380"/>
+      <line x1="600" y1="135" x2="360" y2="380"/>
+      <line x1="120" y1="265" x2="360" y2="380"/>
+      <line x1="360" y1="265" x2="360" y2="380"/>
+      <line x1="600" y1="265" x2="360" y2="380"/>
+    </g>
+
+    <!-- Stalwart pill -->
+    <g transform="translate(360 400)">
+      <rect x="-180" y="-22" width="360" height="44" rx="22" fill="var(--brand-soft)" stroke="var(--brand)" stroke-width="1.25"/>
+      <text class="grid__hub-name">JMAP · IMAP4rev2 · POP3 · ManageSieve</text>
+    </g>
+
+    <text x="40" y="40" class="grid__title">Every client speaks something Stalwart speaks</text>
+  </svg>
+</div>
+
+<style>
+  .grid {
+    width: 100%;
+    aspect-ratio: 720 / 460;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: clamp(0.5rem, 1.5vw, 1rem);
+    box-shadow: var(--shadow-1);
+  }
+  .grid svg { width: 100%; height: 100%; overflow: visible; }
+  .grid__title {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    fill: var(--text-dim);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .grid__client rect {
+    fill: var(--surface);
+    stroke: var(--border-strong);
+    stroke-width: 1;
+  }
+  .grid__client-name {
+    fill: var(--text);
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 600;
+    text-anchor: middle;
+    dominant-baseline: middle;
+  }
+  .grid__client-sub {
+    fill: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-anchor: middle;
+    dominant-baseline: middle;
+  }
+  .grid__pill rect {
+    fill: var(--surface-2);
+    stroke: var(--border-strong);
+    stroke-width: 1;
+  }
+  .grid__pill text {
+    fill: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    text-anchor: middle;
+    dominant-baseline: middle;
+    letter-spacing: 0.04em;
+  }
+  .grid__pill--brand rect {
+    fill: var(--brand-soft);
+    stroke: var(--brand);
+  }
+  .grid__pill--brand text { fill: var(--brand); }
+  .grid__hub-name {
+    fill: var(--brand);
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 600;
+    text-anchor: middle;
+    dominant-baseline: middle;
+  }
+</style>
