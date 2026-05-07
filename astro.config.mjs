@@ -118,7 +118,7 @@ export default defineConfig({
               name: "Mauro D.",
               title: "Project Maintainer",
               url: "https://github.com/mdecimus",
-              picture: "https://github.com/mdecimus.png",
+              picture: "/img/authors/mdecimus.png",
             },
           },
         }),
