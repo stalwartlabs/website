@@ -315,6 +315,11 @@ These functions target an in-memory store identified by its ID. An empty string 
 - **Arguments**: 1 (IP Address)
 - **Example**: `ip_reverse_name(remote_ip) + '.zen.spamhaus.org'` builds the query name used with `dns_query` to consult the Spamhaus DNSBL.
 
+### `is_ip_in_cidr`
+- **Description**: Returns `true` when the first argument is an IP address that falls inside the network described by the second argument. The network argument accepts either a CIDR block (`10.0.0.0/8`, `2001:db8::/32`) or a bare IP address (in which case the function is an exact-match check). IPv4-mapped IPv6 addresses (`::ffff:1.2.3.4`) are matched correctly against IPv4 networks, and vice versa. Both arguments must parse cleanly; malformed values yield `false`.
+- **Arguments**: 2 (IP Address, CIDR or IP Address)
+- **Example**: `is_ip_in_cidr(remote_ip, '10.0.0.0/8') || is_ip_in_cidr(remote_ip, '192.168.0.0/16')` recognises connections from RFC 1918 ranges, useful for relaxing rate limits or skipping greylisting on traffic arriving from a TLS-terminating reverse proxy that does not preserve the original client port.
+
 ### `if_then`
 - **Description**: Returns the second argument when the first is truthy, otherwise the third.
 - **Arguments**: 3 (Condition, When True, When False)

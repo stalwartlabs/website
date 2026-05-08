@@ -157,10 +157,6 @@ Almost always one of the following:
 
 The OAuth flow used by the WebUI binds to the configured `defaultHostname` over HTTPS. Loading the WebUI by IP, by container name, or over plain HTTP appears to load the page but fails at the OAuth callback. Use the configured hostname over HTTPS, or sign in at `http://<host>:8080/admin` (which is exempt from the hostname check) until TLS is in place.
 
-### Can application passwords be configured for accounts in an external directory?
-
-Application passwords are stored against the internal directory's account record. When the principal originates in an external directory (LDAP, SQL, OIDC), the secret has to live in the external directory, not in Stalwart. For clients that do not speak SASL OAUTHBEARER (CalDAV / CardDAV in particular), either configure the external directory to accept the application password as a secondary credential, or run a hybrid setup with the internal directory covering app-password use.
-
 ### No log files appear under `/var/log/stalwart`. What's wrong?
 
 Three causes, in descending order of frequency:

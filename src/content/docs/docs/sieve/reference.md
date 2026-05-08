@@ -325,6 +325,13 @@ Returns the reverse-DNS form of an IP address, suitable for composing DNSBL look
 
 - **Arguments**: 1 (IP Address)
 
+### `is_ip_in_cidr` *(trusted only)*
+
+Returns `true` when the first argument is an IP address that falls inside the network described by the second argument. The network argument accepts either a CIDR block (`10.0.0.0/8`, `2001:db8::/32`) or a bare IP address, in which case the function is an exact-match check. IPv4-mapped IPv6 addresses (`::ffff:1.2.3.4`) are matched correctly against IPv4 networks, and vice versa. Both arguments must parse cleanly; malformed values yield `false`.
+
+- **Arguments**: 2 (IP Address, CIDR or IP Address)
+- **Example**: `if eval "is_ip_in_cidr(env.remote_ip, '10.0.0.0/8') || is_ip_in_cidr(env.remote_ip, '192.168.0.0/16')" { ... }` recognises connections from RFC 1918 ranges, useful when a TLS-terminating reverse proxy fronts the SMTP listener and the special handling that normally applies to port 25 needs to be reapplied based on the original source.
+
 ## Hashing *(trusted only)*
 
 ### `hash`
