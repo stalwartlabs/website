@@ -1,0 +1,17 @@
+{
+  "name": "stalwart-slides",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Stalwart conference slide deck (Slidev). Builds to ../public/slides.",
+  "type": "module",
+  "scripts": {
+    "dev": "slidev slides.md --open",
+    "build": "slidev build slides.md --base /slides/ --out ../public/slides",
+    "export": "slidev export slides.md"
+  },
+  "dependencies": {
+    "@slidev/cli": "^0.50.0",
+    "@slidev/theme-default": "^0.25.0",
+    "vue": "^3.4.0"
+  }
+}

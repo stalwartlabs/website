@@ -13,6 +13,9 @@
     "preview": "astro preview --host 127.0.0.1 --port 8787",
     "check:includes": "node ./scripts/expand-includes.mjs --check",
     "pdfs": "node ./scripts/generate-legal-pdfs.mjs",
+    "slides:dev": "npm --prefix slides run dev",
+    "slides:build": "npm --prefix slides run build",
+    "slides:export": "npm --prefix slides run export",
     "astro": "astro"
   },
   "dependencies": {

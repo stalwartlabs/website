@@ -1,0 +1,338 @@
+/* Auto-loaded by Slidev as a global stylesheet.
+   Imports the website token mirror plus our slide-level overrides. */
+
+@import "./styles/tokens.css";
+
+/* ----------------------------------------------------------------- */
+/*  Layout: trim Slidev's default padding so headlines breathe       */
+/* ----------------------------------------------------------------- */
+
+.slidev-layout {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  padding: 2.25rem 3rem !important;
+  font-size: 1.05rem;
+  line-height: 1.55;
+}
+
+.slidev-layout.text-center {
+  text-align: center;
+}
+
+/* The center layout that Slidev uses on section dividers */
+.slidev-layout.default,
+.slidev-layout.cover,
+.slidev-layout.center {
+  /* Allow the storm component (or any positioned bg) to fill the slide */
+  position: relative;
+  overflow: hidden;
+}
+
+/* ----------------------------------------------------------------- */
+/*  Typography                                                       */
+/* ----------------------------------------------------------------- */
+
+.slidev-layout h1 {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: clamp(2rem, 4.5vw, 3.4rem);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  margin: 0 0 1.25rem 0;
+  color: var(--text);
+}
+.slidev-layout h2 {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: clamp(1.6rem, 3.2vw, 2.2rem);
+  line-height: 1.1;
+  margin: 0 0 0.75rem 0;
+  color: var(--text);
+}
+.slidev-layout h3 {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 1.35rem;
+  line-height: 1.2;
+  margin: 0 0 0.5rem 0;
+  color: var(--text);
+}
+
+.slidev-layout p,
+.slidev-layout li {
+  font-size: 1.05rem;
+  line-height: 1.55;
+  color: var(--text);
+  margin: 0.5rem 0;
+}
+
+.slidev-layout p.lead {
+  font-size: 1.3rem;
+  color: var(--text-muted);
+  max-width: 60ch;
+  line-height: 1.45;
+}
+
+.slidev-layout strong { color: var(--text); font-weight: 600; }
+.slidev-layout em     { color: var(--text-muted); font-style: normal; letter-spacing: 0.02em; }
+
+/* ----------------------------------------------------------------- */
+/*  Lists                                                            */
+/* ----------------------------------------------------------------- */
+
+.slidev-layout ul {
+  list-style: none;
+  padding: 0;
+  margin: 0.75rem 0;
+}
+.slidev-layout ul > li {
+  position: relative;
+  padding-left: 1.4rem;
+  margin: 0.45rem 0;
+}
+.slidev-layout ul > li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.65rem;
+  width: 0.45rem;
+  height: 0.45rem;
+  background: var(--brand);
+  border-radius: 1px;
+}
+.slidev-layout ol {
+  list-style: decimal;
+  padding-left: 1.5rem;
+}
+.slidev-layout ol > li::marker {
+  color: var(--brand);
+  font-weight: 600;
+}
+
+/* ----------------------------------------------------------------- */
+/*  Code                                                             */
+/* ----------------------------------------------------------------- */
+
+.slidev-layout :not(pre) > code {
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.05em 0.35em;
+  color: var(--text);
+}
+.slidev-layout pre,
+.slidev-layout pre.shiki {
+  background: var(--code-bg) !important;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.9rem 1.15rem !important;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  line-height: 1.55;
+  box-shadow: var(--shadow-1);
+  margin: 0.5rem 0;
+}
+.slidev-layout pre code {
+  background: transparent;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+}
+
+/* ----------------------------------------------------------------- */
+/*  Tables                                                           */
+/* ----------------------------------------------------------------- */
+
+.slidev-layout table {
+  border-collapse: collapse;
+  margin: 0.5rem 0;
+  font-size: 0.92rem;
+  width: 100%;
+}
+.slidev-layout th,
+.slidev-layout td {
+  border-bottom: 1px solid var(--border);
+  padding: 0.4rem 0.65rem;
+  text-align: left;
+}
+.slidev-layout th {
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ----------------------------------------------------------------- */
+/*  Helpers                                                          */
+/* ----------------------------------------------------------------- */
+
+.brand { color: var(--brand) !important; }
+.muted { color: var(--text-muted) !important; }
+.dim   { color: var(--text-dim)  !important; }
+.kbd {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  background: var(--surface-2);
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  padding: 0.1em 0.4em;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--brand);
+  margin-bottom: 0.6rem;
+}
+
+.title-meta {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+
+.callout {
+  color: var(--brand) !important;
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-top: 1rem;
+}
+
+/* Two-column helper used by `<div class="cols">` */
+.cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: center;
+}
+.cols.col-3-2 { grid-template-columns: 3fr 2fr; }
+.cols.col-2-3 { grid-template-columns: 2fr 3fr; }
+
+/* `.cols.dense` shrinks the bullet font and tightens line-height
+   for slides that pair a diagram with two columns of bullets and
+   need to fit more content without losing detail. */
+.cols.dense ul li,
+.cols.dense p {
+  font-size: 0.92rem;
+  line-height: 1.45;
+  margin: 0.3rem 0;
+}
+
+/* Big-number wall (slide 02.05) */
+.bignum {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.9rem 1.5rem;
+  margin: 1.25rem 0;
+}
+.bignum .item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.bignum .item .n {
+  font-family: var(--font-sans);
+  font-size: clamp(1.8rem, 3.4vw, 2.6rem);
+  font-weight: 700;
+  color: var(--brand);
+  line-height: 1;
+}
+.bignum .item .l {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 0.35rem;
+}
+
+/* ----------------------------------------------------------------- */
+/*  Storm theme: applied via per-slide `class: storm`                */
+/* ----------------------------------------------------------------- */
+
+.slidev-layout.storm {
+  background: radial-gradient(ellipse at top, #14141d 0%, #08080b 60%, #04040a 100%);
+}
+.slidev-layout.storm h1,
+.slidev-layout.storm h2 {
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.55);
+}
+.slidev-layout.storm p,
+.slidev-layout.storm li {
+  color: #d6d6dc;
+}
+
+/* ----------------------------------------------------------------- */
+/*  Section divider layout (used by SectionDivider component)        */
+/* ----------------------------------------------------------------- */
+
+.section-divider {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 2.5rem;
+  align-items: center;
+  height: 100%;
+  text-align: left;
+}
+.section-divider .num {
+  font-family: var(--font-mono);
+  font-size: clamp(5rem, 11vw, 9rem);
+  color: var(--brand);
+  opacity: 0.9;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  font-weight: 700;
+}
+.section-divider .title {
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 700;
+  line-height: 1.05;
+  margin: 0;
+  color: var(--text);
+}
+.section-divider .sub {
+  margin-top: 0.5rem;
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  max-width: 50ch;
+}
+
+/* ----------------------------------------------------------------- */
+/*  Slidev goto-dialog patch                                          */
+/*                                                                    */
+/*  Slidev v0.50 ships with fuse.js v7; fuse.search('') in v7 returns */
+/*  all items instead of [], so #slidev-goto-dialog's autocomplete    */
+/*  list (v-if="result.length > 0") always renders. The dialog is     */
+/*  positioned at top: -5rem when hidden, but the list is             */
+/*  max-height: calc(100vh - 100px) tall, so it spills back down into */
+/*  the viewport. Hide the list unless the dialog is actively shown   */
+/*  (i.e. has the .top-5 class set by Vue's :class binding).          */
+/* ----------------------------------------------------------------- */
+
+#slidev-goto-dialog .autocomplete-list {
+  visibility: hidden;
+  pointer-events: none;
+}
+#slidev-goto-dialog.top-5 .autocomplete-list {
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* ----------------------------------------------------------------- */
+/*  v-clicks: the bullets that have not yet been clicked are dim.    */
+/* ----------------------------------------------------------------- */
+
+.slidev-vclick-target {
+  transition: opacity var(--t-mid) var(--ease), filter var(--t-mid) var(--ease);
+}
+.slidev-vclick-hidden {
+  opacity: 0.18;
+  pointer-events: none;
+}
