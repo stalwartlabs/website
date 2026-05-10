@@ -124,7 +124,7 @@ Description=imports certs from caddy to stalwart
 Type=oneshot
 ExecStart=/usr/bin/cp -f /var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/mail.example.com/mail.example.com.pem /opt/stalwart/cert/
 ExecStart=/usr/bin/cp -f /var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/mail.example.com/mail.example.com.priv.pem /opt/stalwart/cert/
-ExecStart=/usr/bin/curl -X GET -H "Accept: application/json" -H "Authorization: Bearer <TOKEN>"  https://mail.example.com/api/reload/certificate
+ExecStart=/usr/local/bin/stalwart-cli --url https://mail.example.com --api-key <TOKEN> create action/ReloadTlsCertificates
 
 [Install]
 WantedBy=multi-user.target
