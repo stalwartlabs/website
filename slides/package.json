@@ -2,14 +2,20 @@
   "name": "stalwart-slides",
   "private": true,
   "version": "0.1.0",
-  "description": "Stalwart conference slide deck (Slidev). Builds to ../public/slides.",
+  "description": "Stalwart conference slide deck (Slidev). Builds to ../public/slides for the live site, or to dist-offline for a self-contained zip-able bundle.",
   "type": "module",
   "scripts": {
     "dev": "slidev slides.md --open",
+    "clean": "rm -rf ../public/slides dist-offline",
+    "prebuild": "rm -rf ../public/slides",
     "build": "slidev build slides.md --base /slides/ --out ../public/slides",
+    "prebuild:offline": "rm -rf dist-offline",
+    "build:offline": "slidev build slides.md --base ./ --out dist-offline && node ./scripts/finalize-offline.mjs dist-offline",
     "export": "slidev export slides.md"
   },
   "dependencies": {
+    "@fontsource-variable/inter": "^5.2.8",
+    "@fontsource-variable/jetbrains-mono": "^5.2.8",
     "@slidev/cli": "^0.50.0",
     "@slidev/theme-default": "^0.25.0",
     "vue": "^3.4.0"

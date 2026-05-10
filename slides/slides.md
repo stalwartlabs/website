@@ -1,6 +1,8 @@
 ---
 theme: default
 title: "Stalwart: One server. Every protocol."
+titleTemplate: "%s"
+favicon: "./favicon.svg"
 info: |
   Stalwart presentation: an open-source mail and collaboration server
   written in Rust. Source at github.com/stalwartlabs/stalwart.
@@ -18,6 +20,7 @@ fonts:
   mono: "JetBrains Mono"
   weights: "400,500,600,700"
   italic: false
+  provider: "none"
 hideInToc: true
 ---
 
@@ -295,7 +298,7 @@ clicks: 5
 # Done. Your mail server is running.
 
 <BrowserFrame
-  src="/images/slides/website/dashboard-overview.png"
+  src="/images/slides/demo/dashboard-performance.png"
   alt="Stalwart admin dashboard with users, domains, memory and message volume"
   url="admin.stalw.art / Dashboard / Overview"
   :glow="true"
@@ -690,7 +693,7 @@ class: text-center
 
 ---
 
-# A queue that survives node failure.
+# Flexible distributed queues.
 
 <div class="cols">
 <div>
@@ -701,6 +704,7 @@ class: text-center
 - Unlimited virtual queues, each with its own concurrency, retries, quota.
 - Delayed delivery, priority delivery, per-queue throttling.
 - Smart-host and relay routing for upstream submission.
+- Managed from WebUI, CLI or JMAP API.
 
 </v-clicks>
 
@@ -764,16 +768,16 @@ Small conditional programs, compiled to bytecode at startup; evaluated at runtim
 
 ---
 
-# Expressions in action: a Spamhaus DNSBL classifier.
+# Expressions in action: spam filtering.
 
 <div class="cols col-2-3">
 <div>
 
-The same expression shape composes function calls and DNS lookups to score messages by category.
+Expressions are also used to build spam filter rules.
 
 <v-clicks>
 
-- `ip_reverse_name(remote_ip)` builds the reverse-DNS query name.
+- `ip_reverse_name(remote_ip)` builds the reverse-DNS query.
 - `dns_query(...)` issues a live A-record lookup.
 - The matched return code (`127.0.0.2`, `127.0.0.3`, ...) maps to a Spamhaus list (SBL, CSS, XBL, ...).
 - The matching list name becomes the spam-filter `tag`, scored elsewhere.
@@ -783,15 +787,18 @@ The same expression shape composes function calls and DNS lookups to score messa
 </div>
 <div>
 
-```json {2-3|4-5|7-8|10-11|13-14|all}
+```json {2-3|4-6|7-9|10-12|13-14|all}
 {
   "tag": {
     "match": [
-      { "if": "contains(dns_query(ip_reverse_name(remote_ip) + '.zen.spamhaus.org', 'ipv4'), '127.0.0.2')",
+      { "if": "contains(dns_query(
+        ip_reverse_name(remote_ip) + '.zen.spamhaus.org', 'ipv4'), '127.0.0.2')",
         "then": "'SBL'" },
-      { "if": "contains(dns_query(ip_reverse_name(remote_ip) + '.zen.spamhaus.org', 'ipv4'), '127.0.0.3')",
+      { "if": "contains(dns_query(
+        ip_reverse_name(remote_ip) + '.zen.spamhaus.org', 'ipv4'), '127.0.0.3')",
         "then": "'CSS'" },
-      { "if": "contains(dns_query(ip_reverse_name(remote_ip) + '.zen.spamhaus.org', 'ipv4'), '127.0.0.4')",
+      { "if": "contains(dns_query(
+        ip_reverse_name(remote_ip) + '.zen.spamhaus.org', 'ipv4'), '127.0.0.4')",
         "then": "'XBL'" }
     ],
     "else": "false"
@@ -804,7 +811,7 @@ The same expression shape composes function calls and DNS lookups to score messa
 
 ---
 
-# Or plug into what you already run.
+# Plug the filters that you already run.
 
 <v-clicks>
 
@@ -839,7 +846,7 @@ class: text-center
 
 ---
 
-# The filter ships inside the SMTP server.
+# The filter ships inside the MTA.
 
 <v-clicks>
 
@@ -1001,6 +1008,7 @@ if eval "llm('phishing-classifier',
 - SMTP relay / recipient-probing abuse.
 - Loitering connections.
 - Port and exploit-URL scanning.
+- Built-in, does not require third party software.
 
 </v-clicks>
 
@@ -1281,7 +1289,7 @@ class: text-center
 
 # Day-to-day operations live in a browser.
 
-<BrowserFrame src="/images/slides/website/dashboard-overview.png" alt="Dashboard overview with users, domains, memory, message volume" url="admin.stalw.art / Dashboard / Overview" :glow="true" />
+<BrowserFrame src="/images/slides/website/dashboard-delivery.png" alt="Dashboard overview with users, domains, memory, message volume" url="admin.stalw.art / Dashboard / Overview" :glow="true" />
 
 <p class="muted" style="margin-top: 0.5rem;">Dashboard, queue, accounts, domains, settings, log viewer, report visualisation: all in the same console.</p>
 
@@ -1502,11 +1510,11 @@ class: text-center
 
 - Queue is shared across the cluster, not per-node.
 - Any node delivers any message; a node failure strands nothing.
-- Outbound MTA can be a **dedicated cluster role** for high-volume delivery tiers.
+- Outbound throughput grows by adding outbound nodes; nothing else needs to change.
 
 </v-clicks>
 
-<p v-click class="muted" style="margin-top: 0.75rem; font-size: 0.9rem;">Outbound throughput grows by adding outbound nodes; nothing else needs to change.</p>
+<p v-click class="muted" style="margin-top: 0.75rem; font-size: 0.9rem;">Outbound MTA can be a dedicated cluster role for high-volume delivery tiers.</p>
 
 </div>
 <div>

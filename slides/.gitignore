@@ -1,5 +1,6 @@
 node_modules/
 dist/
+dist-offline/
 .slidev/
 *.log
-public/images
+public/images/slides
