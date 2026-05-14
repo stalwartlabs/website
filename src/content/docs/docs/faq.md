@@ -39,9 +39,9 @@ It depends on the directory backend you are using. If you are using the [interna
 
 ### How do I add a new domain?
 
-It also depends on the directory backend you are using. If you are using the [internal directory](/docs/auth/backend/internal), you can create and manage domains using the [web-admin](/docs/management/webui/) interface. If you are using an external directory such as [LDAP](/docs/auth/backend/ldap) or [SQL](/docs/auth/backend/sql), it is not necessary to configure new domain names in order to start receiving emails for it. Just like user accounts, your local domains are also retrieved the directory server. For [SQL](/docs/auth/backend/sql) servers this is done by executing the `domains` [lookup query](/docs/auth/backend/sql#directory-queries) and in [LDAP](/docs/auth/backend/ldap) servers this is done by searching for objects using `domain` [lookup query](/docs/auth/backend/ldap#lookup-filters).
+Domains are managed independently of the directory backend. A new domain is created from the [web-admin](/docs/management/webui/) interface (Management › Domains › Domains), which stores it as a [Domain](/docs/ref/object/domain) object and exposes the per-domain settings for recipient resolution, DKIM signing, TLS certificate issuance, and DNS record publication. The Domain record is required even when accounts are stored in an external [LDAP](/docs/auth/backend/ldap) or [SQL](/docs/auth/backend/sql) directory; those backends provide account authentication only.
 
-Sending emails from a new domain does not require any additional configuration either, but to improve deliverability it is recommended that you [create a new DKIM key](/docs/mta/authentication/dkim/sign#generating-keys), add it to your [DNS records](/docs/mta/authentication/dkim/sign#publishing-dkim-keys) and [enable DKIM signing](/docs/mta/authentication/dkim/sign#multiple-domains) for the new domain.
+Sending mail from a new domain does not require any additional configuration. To improve deliverability, a new DKIM key should be [generated](/docs/mta/authentication/dkim/sign#generating-keys), [published in DNS](/docs/mta/authentication/dkim/sign#publishing-dkim-keys), and [enabled for signing](/docs/mta/authentication/dkim/sign#multiple-domains) on the new domain.
 
 ### How can I migrate from another server?
 

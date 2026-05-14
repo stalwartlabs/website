@@ -122,21 +122,23 @@ By default, the CLI prints a one-line confirmation including the new server-assi
 Created Domain xyz789
 ```
 
-If the server returns additional properties (for example, a generated API key, app password, or DKIM keypair), those are rendered below the confirmation using the same form-driven view as [`get`](./get.md). This matters in cases where the value is shown only once and must be captured immediately:
+If the server returns additional properties (for example, a generated API key, app password, or DKIM keypair), those are rendered below the confirmation using the same form-driven view as [`get`](./get.md). This matters in cases where the value is shown only once and must be captured immediately. The `ApiKey` and `AppPassword` objects do not take an explicit owner field; the credential is attached to the principal that authenticates the CLI request, so a separate `accountId` is neither supplied nor accepted:
 
 ```sh
-stalwart-cli create apikey --field accountId=b --field description='CI deploy key'
+stalwart-cli create apikey \
+  --field description='CI deploy key' \
+  --field 'permissions={"@type":"Inherit"}' \
+  --field 'allowedIps={}'
 ```
 
 ```text
 Created ApiKey aaa111
 
-ApiKey
-  Description: CI deploy key
-  Account:     alice (id: b)
-  Token:       sk_live_REDACTED_FROM_DOC
-  Created At:  2026-04-16T08:00:00Z
+Credential
+  Secret: API_AAAAEwAAAAHDN7BtUeZSrGrM9DibqfhzRGD7sw
 ```
+
+The `Secret` value is returned by the server only on this create response. A subsequent [`get`](./get.md) of the same `ApiKey` returns the server's masked placeholder (`****`) for `Secret`; the original cannot be recovered. Capture and store the value before running anything else.
 
 Unlike [`get`](./get.md), `create` does not currently support a JSON output mode (the input flag `--json` is reserved as an input source). For machine-readable workflows, use [`apply`](./apply.md), which can emit NDJSON status records.
 

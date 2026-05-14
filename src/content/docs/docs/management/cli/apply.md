@@ -109,6 +109,7 @@ A plan is **NDJSON**: every non-blank line is a JSON object describing one opera
 # Create / update pass: parents-first.
 {"@type":"create","object":"Domain","value":{"dom-a":{"name":"example.com"},"dom-b":{"name":"example.net"}}}
 {"@type":"create","object":"Account","value":{"grp-sales":{"@type":"Group","name":"sales","domainId":"#dom-a"}}}
+{"@type":"update","object":"Domain","id":"#dom-a","value":{"description":"Primary corporate domain"}}
 {"@type":"update","object":"SystemSettings","value":{"defaultDomainId":"#dom-a"}}
 ```
 
@@ -220,10 +221,30 @@ A `create` operation maps directly to one or more JMAP `Object/set` requests wit
 |---|---|---|---|
 | `@type` | `"update"` | yes | |
 | `object` | string | yes | |
-| `id` | string or null | required for non-singletons | May be a `#<id>` reference to an earlier create. May be `null` or omitted for singletons. |
+| `id` | string or null | required for non-singletons | **Top-level sibling of `value`, not a key inside `value`.** May be a `#<id>` reference to an object created earlier in the plan. May be `null` or omitted for singletons. |
 | `value` | object | yes | JMAP patch object. Top-level keys may be JSON pointers (`"aliases/2/name"`). |
 
 `update` corresponds to a single JMAP `Object/set` with `update` populated. Patches use the JMAP semantics: only changed fields are sent; sub-fields can be addressed with `/`-separated paths; `null` removes a value.
+
+A singleton update omits the top-level `id` field (or sets it to `null`):
+
+```text
+{"@type":"update","object":"SystemSettings","value":{"defaultDomainId":"#dom-a"}}
+```
+
+A non-singleton update sets the top-level `id` field to the id of the object being patched. The id may be a `#<id>` reference to an object created earlier in the same plan:
+
+```text
+{"@type":"update","object":"Domain","id":"#dom-a","value":{"description":"Renamed"}}
+```
+
+Or a literal server-assigned id, for patching an existing object the plan does not create:
+
+```text
+{"@type":"update","object":"Domain","id":"k1234abcd","value":{"description":"Renamed"}}
+```
+
+Note that `id` is a top-level field of the operation, alongside `@type`, `object`, and `value`. It is not a key inside `value`. (The map-keyed shape, where ids are keys of `value`, is the `create` convention; conflating the two is a common mistake when writing the first non-singleton update.)
 
 For multi-variant changes (where the entire variant is being switched), pass the new variant's body as a single value rather than patching individual sub-paths (see [Updating objects](./update.md) for the rationale).
 
