@@ -4,8 +4,6 @@ description: Stores a collected server metric data point.
 custom_edit_url: null
 ---
 
-# Metric
-
 Stores a collected server metric data point.
 
 ## Fields

@@ -4,8 +4,6 @@ description: Constants available in expression contexts referencing MtaVerifyCon
 custom_edit_url: null
 ---
 
-# MtaVerifyConstant
-
 
 
 Constants available in expression contexts that reference `MtaVerifyConstant`.

@@ -1,11 +1,9 @@
 ---
-title: Schema reference
+title: Overview
 description: Reference documentation for every management and configuration object exposed by the Stalwart JMAP API.
 sidebar_position: 1
 custom_edit_url: null
 ---
-
-# Schema reference
 
 Every management and configuration object Stalwart exposes over JMAP is documented here. Each page covers the object's fields, the JMAP methods it supports (with `curl` examples), the equivalent `stalwart-cli` commands, and where to find the object in the WebUI.
 

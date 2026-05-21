@@ -4,8 +4,6 @@ description: Stores a message delivery trace with associated events.
 custom_edit_url: null
 ---
 
-# Trace
-
 Stores a message delivery trace with associated events.
 
 :::note[Enterprise feature]

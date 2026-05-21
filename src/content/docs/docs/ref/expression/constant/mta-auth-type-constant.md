@@ -4,8 +4,6 @@ description: Constants available in expression contexts referencing MtaAuthTypeC
 custom_edit_url: null
 ---
 
-# MtaAuthTypeConstant
-
 
 
 Constants available in expression contexts that reference `MtaAuthTypeConstant`.

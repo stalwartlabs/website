@@ -1,11 +1,9 @@
 ---
 title: Metrics
 description: Telemetry metrics collected by the Stalwart, grouped by subsystem.
-sidebar_position: 3
+sidebar_position: 7
 custom_edit_url: null
 ---
-
-# Metrics
 
 Every metric Stalwart collects is listed below, grouped by subsystem. Each metric has an **identifier** (formatted as `<subsystem>.<name>`), a **unit**, and a **description**.
 

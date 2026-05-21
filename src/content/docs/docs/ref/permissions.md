@@ -1,11 +1,9 @@
 ---
 title: Permissions
 description: Permission identifiers accepted in role and credential assignments, grouped by category.
-sidebar_position: 4
+sidebar_position: 5
 custom_edit_url: null
 ---
-
-# Permissions
 
 Permissions are identifiers granted to accounts, groups, tenants, roles, and credentials. Each identifier is referenced in JMAP payloads as a plain string.
 
@@ -245,6 +243,7 @@ The first section lists the baseline permissions declared in the permission sche
 - **`jmapFileNodeCreate`**: Create new file nodes
 - **`jmapFileNodeUpdate`**: Modify existing file nodes
 - **`jmapFileNodeDestroy`**: Remove file nodes
+- **`jmapFileNodeCopy`**: Copy file nodes to another account
 
 
 ### JmapIdentity

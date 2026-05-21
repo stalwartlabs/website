@@ -4,8 +4,6 @@ description: Variables available in expression contexts referencing MtaConnectio
 custom_edit_url: null
 ---
 
-# MtaConnectionVariable
-
 
 
 Variables available in expression contexts that reference `MtaConnectionVariable`.

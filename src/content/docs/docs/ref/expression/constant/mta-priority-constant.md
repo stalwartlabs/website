@@ -4,8 +4,6 @@ description: Constants available in expression contexts referencing MtaPriorityC
 custom_edit_url: null
 ---
 
-# MtaPriorityConstant
-
 
 
 Constants available in expression contexts that reference `MtaPriorityConstant`.

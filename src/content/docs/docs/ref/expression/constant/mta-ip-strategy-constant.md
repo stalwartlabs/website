@@ -4,8 +4,6 @@ description: Constants available in expression contexts referencing MtaIpStrateg
 custom_edit_url: null
 ---
 
-# MtaIpStrategyConstant
-
 
 
 Constants available in expression contexts that reference `MtaIpStrategyConstant`.

@@ -4,8 +4,6 @@ description: Configures the LLM-based spam classifier.
 custom_edit_url: null
 ---
 
-# SpamLlm
-
 Configures the LLM-based spam classifier.
 
 :::note[Enterprise feature]

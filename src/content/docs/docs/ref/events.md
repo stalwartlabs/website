@@ -1,11 +1,9 @@
 ---
 title: Events
 description: Telemetry events emitted by Stalwart, grouped by subsystem.
-sidebar_position: 2
+sidebar_position: 6
 custom_edit_url: null
 ---
-
-# Events
 
 Every event Stalwart can emit is listed below, grouped by subsystem. Each event has:
 

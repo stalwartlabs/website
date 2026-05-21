@@ -4,8 +4,6 @@ description: Defines an AI model endpoint for LLM-based features.
 custom_edit_url: null
 ---
 
-# AiModel
-
 Defines an AI model endpoint for LLM-based features.
 
 :::note[Enterprise feature]

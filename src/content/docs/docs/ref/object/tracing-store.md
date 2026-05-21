@@ -4,8 +4,6 @@ description: Configures the storage backend for tracing data.
 custom_edit_url: null
 ---
 
-# TracingStore
-
 Configures the storage backend for tracing data.
 
 :::note[Enterprise feature]

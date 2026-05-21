@@ -4,8 +4,6 @@ description: Variables available in expression contexts referencing MtaQueueSend
 custom_edit_url: null
 ---
 
-# MtaQueueSenderVariable
-
 
 
 Variables available in expression contexts that reference `MtaQueueSenderVariable`.

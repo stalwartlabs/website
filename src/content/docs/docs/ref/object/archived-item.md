@@ -4,8 +4,6 @@ description: Represents an archived item that can be restored.
 custom_edit_url: null
 ---
 
-# ArchivedItem
-
 Represents an archived item that can be restored.
 
 :::note[Enterprise feature]

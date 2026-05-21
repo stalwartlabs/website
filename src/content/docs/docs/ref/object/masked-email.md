@@ -4,8 +4,6 @@ description: Defines a masked email address for privacy protection.
 custom_edit_url: null
 ---
 
-# MaskedEmail
-
 Defines a masked email address for privacy protection.
 
 :::note[Enterprise feature]

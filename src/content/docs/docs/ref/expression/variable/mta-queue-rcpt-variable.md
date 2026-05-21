@@ -4,8 +4,6 @@ description: Variables available in expression contexts referencing MtaQueueRcpt
 custom_edit_url: null
 ---
 
-# MtaQueueRcptVariable
-
 
 
 Variables available in expression contexts that reference `MtaQueueRcptVariable`.

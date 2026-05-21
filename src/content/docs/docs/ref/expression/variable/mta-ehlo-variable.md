@@ -4,8 +4,6 @@ description: Variables available in expression contexts referencing MtaEhloVaria
 custom_edit_url: null
 ---
 
-# MtaEhloVariable
-
 
 
 Variables available in expression contexts that reference `MtaEhloVariable`.

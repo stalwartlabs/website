@@ -4,8 +4,6 @@ description: Constants available in expression contexts referencing MtaRequireCo
 custom_edit_url: null
 ---
 
-# MtaRequireConstant
-
 
 
 Constants available in expression contexts that reference `MtaRequireConstant`.

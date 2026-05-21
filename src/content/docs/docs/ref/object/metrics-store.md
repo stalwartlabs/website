@@ -4,8 +4,6 @@ description: Configures the storage backend for metrics data.
 custom_edit_url: null
 ---
 
-# MetricsStore
-
 Configures the storage backend for metrics data.
 
 :::note[Enterprise feature]

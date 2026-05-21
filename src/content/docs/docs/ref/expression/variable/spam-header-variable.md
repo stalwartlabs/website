@@ -4,8 +4,6 @@ description: Variables available in expression contexts referencing SpamHeaderVa
 custom_edit_url: null
 ---
 
-# SpamHeaderVariable
-
 
 
 Variables available in expression contexts that reference `SpamHeaderVariable`.

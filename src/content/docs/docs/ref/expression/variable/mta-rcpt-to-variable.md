@@ -4,8 +4,6 @@ description: Variables available in expression contexts referencing MtaRcptToVar
 custom_edit_url: null
 ---
 
-# MtaRcptToVariable
-
 
 
 Variables available in expression contexts that reference `MtaRcptToVariable`.

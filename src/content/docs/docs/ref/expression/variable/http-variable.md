@@ -4,8 +4,6 @@ description: Variables available in expression contexts referencing HttpVariable
 custom_edit_url: null
 ---
 
-# HttpVariable
-
 
 
 Variables available in expression contexts that reference `HttpVariable`.

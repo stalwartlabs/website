@@ -4,8 +4,6 @@ description: Variables available in expression contexts referencing MtaQueueHost
 custom_edit_url: null
 ---
 
-# MtaQueueHostVariable
-
 
 
 Variables available in expression contexts that reference `MtaQueueHostVariable`.

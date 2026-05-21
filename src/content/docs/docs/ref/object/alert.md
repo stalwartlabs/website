@@ -4,8 +4,6 @@ description: Defines an alert rule triggered by metric conditions.
 custom_edit_url: null
 ---
 
-# Alert
-
 Defines an alert rule triggered by metric conditions.
 
 :::note[Enterprise feature]

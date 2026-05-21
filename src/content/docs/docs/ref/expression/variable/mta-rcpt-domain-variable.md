@@ -4,8 +4,6 @@ description: Variables available in expression contexts referencing MtaRcptDomai
 custom_edit_url: null
 ---
 
-# MtaRcptDomainVariable
-
 
 
 Variables available in expression contexts that reference `MtaRcptDomainVariable`.

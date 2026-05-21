@@ -4,8 +4,6 @@ description: Constants available in expression contexts referencing MtaAggregate
 custom_edit_url: null
 ---
 
-# MtaAggregateConstant
-
 
 
 Constants available in expression contexts that reference `MtaAggregateConstant`.

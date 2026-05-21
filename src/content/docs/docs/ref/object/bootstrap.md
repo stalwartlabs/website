@@ -4,8 +4,6 @@ description: Initial setup shown the first time Stalwart starts. Configures the 
 custom_edit_url: null
 ---
 
-# Bootstrap
-
 Initial setup shown the first time Stalwart starts. Configures the server's identity, storage, user accounts, logging, and DNS management.
 
 ## Fields
@@ -946,7 +944,7 @@ Automatic DNS server management.
 
 - **`Manual`**: Manual DNS server management. No additional fields.
 - **`Tsig`**: RFC2136 (TSIG). Carries the fields of [`DnsServerTsig`](#dnsservertsig).
-- **`Sig0`**: RFC2136 (SIG0). Carries the fields of [`DnsServerSig0`](#dnsserversig0).
+- **`Deprecated1`**: RFC2136 (SIG0 - deprecated). No additional fields.
 - **`Cloudflare`**: Cloudflare. Carries the fields of [`DnsServerCloudflare`](#dnsservercloudflare).
 - **`DigitalOcean`**: DigitalOcean. Carries the fields of [`DnsServerCloud`](#dnsservercloud).
 - **`DeSEC`**: DeSEC. Carries the fields of [`DnsServerCloud`](#dnsservercloud).
@@ -957,6 +955,64 @@ Automatic DNS server management.
 - **`Spaceship`**: Spaceship. Carries the fields of [`DnsServerSpaceship`](#dnsserverspaceship).
 - **`Route53`**: AWS Route53. Carries the fields of [`DnsServerRoute53`](#dnsserverroute53).
 - **`GoogleCloudDns`**: Google Cloud DNS. Carries the fields of [`DnsServerGoogleCloudDns`](#dnsservergoogleclouddns).
+- **`Alidns`**: Alibaba Cloud DNS. Carries the fields of [`DnsServerAlidns`](#dnsserveralidns).
+- **`ArvanCloud`**: ArvanCloud. Carries the fields of [`DnsServerCloud`](#dnsservercloud).
+- **`Autodns`**: InterNetX AutoDNS. Carries the fields of [`DnsServerAutodns`](#dnsserverautodns).
+- **`AzureDns`**: Microsoft Azure DNS. Carries the fields of [`DnsServerAzureDns`](#dnsserverazuredns).
+- **`BaiduCloud`**: Baidu Cloud DNS. Carries the fields of [`DnsServerBaiduCloud`](#dnsserverbaiducloud).
+- **`BluecatV2`**: BlueCat Address Manager. Carries the fields of [`DnsServerBluecatV2`](#dnsserverbluecatv2).
+- **`ClouDns`**: ClouDNS. Carries the fields of [`DnsServerClouDns`](#dnsservercloudns).
+- **`Constellix`**: Constellix. Carries the fields of [`DnsServerConstellix`](#dnsserverconstellix).
+- **`Cpanel`**: cPanel. Carries the fields of [`DnsServerCpanel`](#dnsservercpanel).
+- **`Ddnss`**: DDNSS.de. Carries the fields of [`DnsServerCloud`](#dnsservercloud).
+- **`DnsMadeEasy`**: DNS Made Easy. Carries the fields of [`DnsServerDnsMadeEasy`](#dnsserverdnsmadeeasy).
+- **`Domeneshop`**: Domeneshop. Carries the fields of [`DnsServerDomeneshop`](#dnsserverdomeneshop).
+- **`Dreamhost`**: Dreamhost. Carries the fields of [`DnsServerCloud`](#dnsservercloud).
+- **`DuckDns`**: DuckDNS. Carries the fields of [`DnsServerCloud`](#dnsservercloud).
+- **`Dynu`**: Dynu. Carries the fields of [`DnsServerCloud`](#dnsservercloud).
+- **`EasyDns`**: EasyDNS. Carries the fields of [`DnsServerEasyDns`](#dnsservereasydns).
+- **`EdgeDns`**: Akamai EdgeDNS. Carries the fields of [`DnsServerEdgeDns`](#dnsserveredgedns).
+- **`Exoscale`**: Exoscale. Carries the fields of [`DnsServerExoscale`](#dnsserverexoscale).
+- **`FreeMyIp`**: freemyip.com. Carries the fields of [`DnsServerCloud`](#dnsservercloud).
+- **`GandiV5`**: Gandi LiveDNS v5. Carries the fields of [`DnsServerCloud`](#dnsservercloud).
+- **`Gcore`**: Gcore. Carries the fields of [`DnsServerCloud`](#dnsservercloud).
+- **`Glesys`**: GleSYS. Carries the fields of [`DnsServerGlesys`](#dnsserverglesys).
+- **`Godaddy`**: GoDaddy. Carries the fields of [`DnsServerGodaddy`](#dnsservergodaddy).
+- **`Hetzner`**: Hetzner. Carries the fields of [`DnsServerCloud`](#dnsservercloud).
+- **`HostingDe`**: hosting.de. Carries the fields of [`DnsServerCloud`](#dnsservercloud).
+- **`Hostinger`**: Hostinger. Carries the fields of [`DnsServerCloud`](#dnsservercloud).
+- **`HuaweiCloud`**: Huawei Cloud DNS. Carries the fields of [`DnsServerHuaweiCloud`](#dnsserverhuaweicloud).
+- **`Hurricane`**: Hurricane Electric. Carries the fields of [`DnsServerHurricane`](#dnsserverhurricane).
+- **`IbmCloud`**: IBM Cloud. Carries the fields of [`DnsServerIbmCloud`](#dnsserveribmcloud).
+- **`Infoblox`**: Infoblox NIOS WAPI. Carries the fields of [`DnsServerInfoblox`](#dnsserverinfoblox).
+- **`Infomaniak`**: Infomaniak. Carries the fields of [`DnsServerCloud`](#dnsservercloud).
+- **`Inwx`**: INWX. Carries the fields of [`DnsServerInwx`](#dnsserverinwx).
+- **`Ionos`**: IONOS. Carries the fields of [`DnsServerCloud`](#dnsservercloud).
+- **`Ipv64`**: IPv64. Carries the fields of [`DnsServerCloud`](#dnsservercloud).
+- **`Joker`**: Joker. Carries the fields of [`DnsServerJoker`](#dnsserverjoker).
+- **`Lightsail`**: AWS Lightsail. Carries the fields of [`DnsServerLightsail`](#dnsserverlightsail).
+- **`Linode`**: Linode. Carries the fields of [`DnsServerCloud`](#dnsservercloud).
+- **`LuaDns`**: LuaDNS. Carries the fields of [`DnsServerLuaDns`](#dnsserverluadns).
+- **`MythicBeasts`**: Mythic Beasts. Carries the fields of [`DnsServerMythicBeasts`](#dnsservermythicbeasts).
+- **`Namecheap`**: Namecheap. Carries the fields of [`DnsServerNamecheap`](#dnsservernamecheap).
+- **`NameDotCom`**: Name.com. Carries the fields of [`DnsServerNameDotCom`](#dnsservernamedotcom).
+- **`NameSilo`**: NameSilo. Carries the fields of [`DnsServerCloud`](#dnsservercloud).
+- **`Netcup`**: Netcup. Carries the fields of [`DnsServerNetcup`](#dnsservernetcup).
+- **`Netlify`**: Netlify. Carries the fields of [`DnsServerCloud`](#dnsservercloud).
+- **`Nifcloud`**: Nifcloud. Carries the fields of [`DnsServerNifcloud`](#dnsservernifcloud).
+- **`Ns1`**: NS1. Carries the fields of [`DnsServerCloud`](#dnsservercloud).
+- **`OracleCloud`**: Oracle Cloud. Carries the fields of [`DnsServerOracleCloud`](#dnsserveroraclecloud).
+- **`Plesk`**: Plesk. Carries the fields of [`DnsServerPlesk`](#dnsserverplesk).
+- **`Safedns`**: ANS SafeDNS. Carries the fields of [`DnsServerCloud`](#dnsservercloud).
+- **`Scaleway`**: Scaleway. Carries the fields of [`DnsServerCloud`](#dnsservercloud).
+- **`TencentCloud`**: Tencent Cloud DNSPod. Carries the fields of [`DnsServerTencentCloud`](#dnsservertencentcloud).
+- **`Transip`**: TransIP. Carries the fields of [`DnsServerTransip`](#dnsservertransip).
+- **`UltraDns`**: UltraDNS. Carries the fields of [`DnsServerUltraDns`](#dnsserverultradns).
+- **`Vercel`**: Vercel. Carries the fields of [`DnsServerVercel`](#dnsserververcel).
+- **`Volcengine`**: Volcano Engine. Carries the fields of [`DnsServerVolcengine`](#dnsservervolcengine).
+- **`Vultr`**: Vultr. Carries the fields of [`DnsServerCloud`](#dnsservercloud).
+- **`WebSupport`**: WebSupport. Carries the fields of [`DnsServerWebSupport`](#dnsserverwebsupport).
+- **`YandexCloud`**: Yandex Cloud. Carries the fields of [`DnsServerYandexCloud`](#dnsserveryandexcloud).
 
 
 
@@ -1073,152 +1129,10 @@ A secret value provided directly, from an environment variable, or from a file.
 
 
 
-#### DnsServerSig0
-
-RFC2136 SIG0 DNS server.
-
-
-
-##### `host`
-
-> Type: <code>IpAddr</code> · required
->
-> The IP address of the DNS server
-
-
-##### `port`
-
-> Type: <code>UnsignedInt</code> · default: `53` · max: 65535 · min: 1
->
-> The port used to communicate with the DNS server
-
-
-##### `publicKey`
-
-> Type: <code>String</code> · required
->
-> The public key used to authenticate with the DNS server
-
-
-##### `key`
-
-> Type: [<code>SecretText</code>](#secrettext) · required
->
-> The secret or token used to authenticate with the DNS server
-
-
-##### `signerName`
-
-> Type: <code>String</code> · required
->
-> The signer name used in the SIG0 records
-
-
-##### `protocol`
-
-> Type: [<code>IpProtocol</code>](#ipprotocol) · default: `"udp"`
->
-> The protocol used to communicate with the DNS server
-
-
-##### `sig0Algorithm`
-
-> Type: [<code>Sig0Algorithm</code>](#sig0algorithm) · default: `"ed25519"`
->
-> The SIG0 algorithm used to authenticate with the DNS server
-
-
-##### `description`
-
-> Type: <code>String</code> · required
->
-> Short description of this DNS server
-
-
-##### `memberTenantId`
-
-> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
->
-> Identifier for the tenant this DNS server belongs to
-
-
-##### `timeout`
-
-> Type: <code>Duration</code> · default: `"30s"`
->
-> Request timeout for the DNS server
-
-
-##### `ttl`
-
-> Type: <code>Duration</code> · default: `"5m"`
->
-> The TTL for new DNS record
-
-
-##### `pollingInterval`
-
-> Type: <code>Duration</code> · default: `"15s"`
->
-> How often to check for DNS records to propagate
-
-
-##### `propagationTimeout`
-
-> Type: <code>Duration</code> · default: `"1m"`
->
-> How long to wait for DNS records to propagate
-
-
-##### `propagationDelay`
-
-> Type: <code>Duration?</code>
->
-> Initial delay before first propagation check (useful for slow providers)
-
-
-
-
-
-##### SecretText
-
-A secret text value provided directly, from an environment variable, or from a file.
-
-
-- **`Text`**: Secret value. Carries the fields of [`SecretTextValue`](#secrettextvalue).
-- **`EnvironmentVariable`**: Secret read from environment variable. Carries the fields of [`SecretKeyEnvironmentVariable`](#secretkeyenvironmentvariable).
-- **`File`**: Secret read from file. Carries the fields of [`SecretKeyFile`](#secretkeyfile).
-
-
-
-
-##### SecretTextValue
-
-A secret text value provided directly.
-
-
-
-##### `secret`
-
-> Type: <code>Text</code> · required · secret
->
-> Password or secret value
-
-
-
-
-
 #### DnsServerCloudflare
 
 Cloudflare DNS server.
 
-
-
-##### `email`
-
-> Type: <code>String?</code>
->
-> Optional account email to authenticate with Cloudflare
 
 
 ##### `secret`
@@ -1451,13 +1365,6 @@ Porkbun DNS server.
 > The secret API key used to authenticate with Porkbun
 
 
-##### `secret`
-
-> Type: [<code>SecretKey</code>](#secretkey) · required
->
-> The secret or token used to authenticate with the DNS server
-
-
 ##### `description`
 
 > Type: <code>String</code> · required
@@ -1528,13 +1435,6 @@ DNSimple DNS server.
 > Type: <code>String</code> · required
 >
 > The account ID used to authenticate with DNSimple
-
-
-##### `secret`
-
-> Type: [<code>SecretKey</code>](#secretkey) · required
->
-> The secret or token used to authenticate with the DNS server
 
 
 ##### `description`
@@ -1854,6 +1754,3044 @@ Google Cloud DNS server.
 
 
 
+##### SecretText
+
+A secret text value provided directly, from an environment variable, or from a file.
+
+
+- **`Text`**: Secret value. Carries the fields of [`SecretTextValue`](#secrettextvalue).
+- **`EnvironmentVariable`**: Secret read from environment variable. Carries the fields of [`SecretKeyEnvironmentVariable`](#secretkeyenvironmentvariable).
+- **`File`**: Secret read from file. Carries the fields of [`SecretKeyFile`](#secretkeyfile).
+
+
+
+
+##### SecretTextValue
+
+A secret text value provided directly.
+
+
+
+##### `secret`
+
+> Type: <code>Text</code> · required · secret
+>
+> Password or secret value
+
+
+
+
+
+#### DnsServerAlidns
+
+Alibaba Cloud DNS server.
+
+
+
+##### `accessKey`
+
+> Type: <code>String</code> · required
+>
+> The Alibaba Cloud access key ID
+
+
+##### `secretKey`
+
+> Type: [<code>SecretKey</code>](#secretkey) · required
+>
+> The Alibaba Cloud access key secret
+
+
+##### `region`
+
+> Type: <code>String?</code>
+>
+> Optional regional endpoint (defaults to the global endpoint)
+
+
+##### `securityToken`
+
+> Type: [<code>SecretKeyOptional</code>](#secretkeyoptional) · required
+>
+> Optional STS security token for temporary credentials
+
+
+##### `line`
+
+> Type: <code>String?</code>
+>
+> Optional ISP line identifier (used for split-resolution accounts)
+
+
+##### `description`
+
+> Type: <code>String</code> · required
+>
+> Short description of this DNS server
+
+
+##### `memberTenantId`
+
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
+>
+> Identifier for the tenant this DNS server belongs to
+
+
+##### `timeout`
+
+> Type: <code>Duration</code> · default: `"30s"`
+>
+> Request timeout for the DNS server
+
+
+##### `ttl`
+
+> Type: <code>Duration</code> · default: `"5m"`
+>
+> The TTL for new DNS record
+
+
+##### `pollingInterval`
+
+> Type: <code>Duration</code> · default: `"15s"`
+>
+> How often to check for DNS records to propagate
+
+
+##### `propagationTimeout`
+
+> Type: <code>Duration</code> · default: `"1m"`
+>
+> How long to wait for DNS records to propagate
+
+
+##### `propagationDelay`
+
+> Type: <code>Duration?</code>
+>
+> Initial delay before first propagation check (useful for slow providers)
+
+
+
+
+
+#### DnsServerAutodns
+
+InterNetX AutoDNS server.
+
+
+
+##### `username`
+
+> Type: <code>String</code> · required
+>
+> AutoDNS account username
+
+
+##### `password`
+
+> Type: [<code>SecretKey</code>](#secretkey) · required
+>
+> AutoDNS account password
+
+
+##### `context`
+
+> Type: <code>UnsignedInt?</code>
+>
+> Optional account context identifier
+
+
+##### `description`
+
+> Type: <code>String</code> · required
+>
+> Short description of this DNS server
+
+
+##### `memberTenantId`
+
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
+>
+> Identifier for the tenant this DNS server belongs to
+
+
+##### `timeout`
+
+> Type: <code>Duration</code> · default: `"30s"`
+>
+> Request timeout for the DNS server
+
+
+##### `ttl`
+
+> Type: <code>Duration</code> · default: `"5m"`
+>
+> The TTL for new DNS record
+
+
+##### `pollingInterval`
+
+> Type: <code>Duration</code> · default: `"15s"`
+>
+> How often to check for DNS records to propagate
+
+
+##### `propagationTimeout`
+
+> Type: <code>Duration</code> · default: `"1m"`
+>
+> How long to wait for DNS records to propagate
+
+
+##### `propagationDelay`
+
+> Type: <code>Duration?</code>
+>
+> Initial delay before first propagation check (useful for slow providers)
+
+
+
+
+
+#### DnsServerAzureDns
+
+Microsoft Azure DNS server (OAuth2 client credentials).
+
+
+
+##### `tenantId`
+
+> Type: <code>String</code> · required
+>
+> Azure Active Directory tenant ID
+
+
+##### `clientId`
+
+> Type: <code>String</code> · required
+>
+> Application (client) ID
+
+
+##### `clientSecret`
+
+> Type: [<code>SecretKey</code>](#secretkey) · required
+>
+> Application client secret
+
+
+##### `subscriptionId`
+
+> Type: <code>String</code> · required
+>
+> Azure subscription ID that owns the DNS zone
+
+
+##### `resourceGroup`
+
+> Type: <code>String</code> · required
+>
+> Resource group that contains the DNS zone
+
+
+##### `environment`
+
+> Type: [<code>AzureEnvironment</code>](#azureenvironment) · default: `"public"`
+>
+> Azure cloud environment
+
+
+##### `description`
+
+> Type: <code>String</code> · required
+>
+> Short description of this DNS server
+
+
+##### `memberTenantId`
+
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
+>
+> Identifier for the tenant this DNS server belongs to
+
+
+##### `timeout`
+
+> Type: <code>Duration</code> · default: `"30s"`
+>
+> Request timeout for the DNS server
+
+
+##### `ttl`
+
+> Type: <code>Duration</code> · default: `"5m"`
+>
+> The TTL for new DNS record
+
+
+##### `pollingInterval`
+
+> Type: <code>Duration</code> · default: `"15s"`
+>
+> How often to check for DNS records to propagate
+
+
+##### `propagationTimeout`
+
+> Type: <code>Duration</code> · default: `"1m"`
+>
+> How long to wait for DNS records to propagate
+
+
+##### `propagationDelay`
+
+> Type: <code>Duration?</code>
+>
+> Initial delay before first propagation check (useful for slow providers)
+
+
+
+
+
+#### DnsServerBaiduCloud
+
+Baidu Cloud DNS server.
+
+
+
+##### `accessKey`
+
+> Type: <code>String</code> · required
+>
+> Baidu Cloud access key
+
+
+##### `secretKey`
+
+> Type: [<code>SecretKey</code>](#secretkey) · required
+>
+> Baidu Cloud secret key
+
+
+##### `description`
+
+> Type: <code>String</code> · required
+>
+> Short description of this DNS server
+
+
+##### `memberTenantId`
+
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
+>
+> Identifier for the tenant this DNS server belongs to
+
+
+##### `timeout`
+
+> Type: <code>Duration</code> · default: `"30s"`
+>
+> Request timeout for the DNS server
+
+
+##### `ttl`
+
+> Type: <code>Duration</code> · default: `"5m"`
+>
+> The TTL for new DNS record
+
+
+##### `pollingInterval`
+
+> Type: <code>Duration</code> · default: `"15s"`
+>
+> How often to check for DNS records to propagate
+
+
+##### `propagationTimeout`
+
+> Type: <code>Duration</code> · default: `"1m"`
+>
+> How long to wait for DNS records to propagate
+
+
+##### `propagationDelay`
+
+> Type: <code>Duration?</code>
+>
+> Initial delay before first propagation check (useful for slow providers)
+
+
+
+
+
+#### DnsServerBluecatV2
+
+BlueCat Address Manager v2 REST API.
+
+
+
+##### `baseUrl`
+
+> Type: <code>String</code> · required
+>
+> Base URL of the BlueCat Address Manager
+
+
+##### `username`
+
+> Type: <code>String</code> · required
+>
+> BlueCat account username
+
+
+##### `password`
+
+> Type: [<code>SecretKey</code>](#secretkey) · required
+>
+> BlueCat account password
+
+
+##### `configName`
+
+> Type: <code>String</code> · required
+>
+> BlueCat configuration name
+
+
+##### `viewName`
+
+> Type: <code>String</code> · required
+>
+> BlueCat DNS view name
+
+
+##### `skipDeploy`
+
+> Type: <code>Boolean</code> · default: `false`
+>
+> Skip deploying changes after applying them
+
+
+##### `description`
+
+> Type: <code>String</code> · required
+>
+> Short description of this DNS server
+
+
+##### `memberTenantId`
+
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
+>
+> Identifier for the tenant this DNS server belongs to
+
+
+##### `timeout`
+
+> Type: <code>Duration</code> · default: `"30s"`
+>
+> Request timeout for the DNS server
+
+
+##### `ttl`
+
+> Type: <code>Duration</code> · default: `"5m"`
+>
+> The TTL for new DNS record
+
+
+##### `pollingInterval`
+
+> Type: <code>Duration</code> · default: `"15s"`
+>
+> How often to check for DNS records to propagate
+
+
+##### `propagationTimeout`
+
+> Type: <code>Duration</code> · default: `"1m"`
+>
+> How long to wait for DNS records to propagate
+
+
+##### `propagationDelay`
+
+> Type: <code>Duration?</code>
+>
+> Initial delay before first propagation check (useful for slow providers)
+
+
+
+
+
+#### DnsServerClouDns
+
+ClouDNS server.
+
+
+
+##### `authId`
+
+> Type: <code>String?</code>
+>
+> ClouDNS auth ID (use either auth-id or sub-auth-id)
+
+
+##### `subAuthId`
+
+> Type: <code>String?</code>
+>
+> ClouDNS sub-auth ID
+
+
+##### `password`
+
+> Type: [<code>SecretKey</code>](#secretkey) · required
+>
+> ClouDNS auth password
+
+
+##### `description`
+
+> Type: <code>String</code> · required
+>
+> Short description of this DNS server
+
+
+##### `memberTenantId`
+
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
+>
+> Identifier for the tenant this DNS server belongs to
+
+
+##### `timeout`
+
+> Type: <code>Duration</code> · default: `"30s"`
+>
+> Request timeout for the DNS server
+
+
+##### `ttl`
+
+> Type: <code>Duration</code> · default: `"5m"`
+>
+> The TTL for new DNS record
+
+
+##### `pollingInterval`
+
+> Type: <code>Duration</code> · default: `"15s"`
+>
+> How often to check for DNS records to propagate
+
+
+##### `propagationTimeout`
+
+> Type: <code>Duration</code> · default: `"1m"`
+>
+> How long to wait for DNS records to propagate
+
+
+##### `propagationDelay`
+
+> Type: <code>Duration?</code>
+>
+> Initial delay before first propagation check (useful for slow providers)
+
+
+
+
+
+#### DnsServerConstellix
+
+Constellix DNS server.
+
+
+
+##### `apiKey`
+
+> Type: <code>String</code> · required
+>
+> Constellix API key
+
+
+##### `secretKey`
+
+> Type: [<code>SecretKey</code>](#secretkey) · required
+>
+> Constellix secret key
+
+
+##### `description`
+
+> Type: <code>String</code> · required
+>
+> Short description of this DNS server
+
+
+##### `memberTenantId`
+
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
+>
+> Identifier for the tenant this DNS server belongs to
+
+
+##### `timeout`
+
+> Type: <code>Duration</code> · default: `"30s"`
+>
+> Request timeout for the DNS server
+
+
+##### `ttl`
+
+> Type: <code>Duration</code> · default: `"5m"`
+>
+> The TTL for new DNS record
+
+
+##### `pollingInterval`
+
+> Type: <code>Duration</code> · default: `"15s"`
+>
+> How often to check for DNS records to propagate
+
+
+##### `propagationTimeout`
+
+> Type: <code>Duration</code> · default: `"1m"`
+>
+> How long to wait for DNS records to propagate
+
+
+##### `propagationDelay`
+
+> Type: <code>Duration?</code>
+>
+> Initial delay before first propagation check (useful for slow providers)
+
+
+
+
+
+#### DnsServerCpanel
+
+cPanel UAPI DNS server.
+
+
+
+##### `baseUrl`
+
+> Type: <code>String</code> · required
+>
+> Base URL of the cPanel server (e.g. https://host:2083)
+
+
+##### `username`
+
+> Type: <code>String</code> · required
+>
+> cPanel account username
+
+
+##### `token`
+
+> Type: [<code>SecretKey</code>](#secretkey) · required
+>
+> cPanel API token
+
+
+##### `description`
+
+> Type: <code>String</code> · required
+>
+> Short description of this DNS server
+
+
+##### `memberTenantId`
+
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
+>
+> Identifier for the tenant this DNS server belongs to
+
+
+##### `timeout`
+
+> Type: <code>Duration</code> · default: `"30s"`
+>
+> Request timeout for the DNS server
+
+
+##### `ttl`
+
+> Type: <code>Duration</code> · default: `"5m"`
+>
+> The TTL for new DNS record
+
+
+##### `pollingInterval`
+
+> Type: <code>Duration</code> · default: `"15s"`
+>
+> How often to check for DNS records to propagate
+
+
+##### `propagationTimeout`
+
+> Type: <code>Duration</code> · default: `"1m"`
+>
+> How long to wait for DNS records to propagate
+
+
+##### `propagationDelay`
+
+> Type: <code>Duration?</code>
+>
+> Initial delay before first propagation check (useful for slow providers)
+
+
+
+
+
+#### DnsServerDnsMadeEasy
+
+DNS Made Easy DNS server.
+
+
+
+##### `apiKey`
+
+> Type: <code>String</code> · required
+>
+> DNS Made Easy API key
+
+
+##### `secret`
+
+> Type: [<code>SecretKey</code>](#secretkey) · required
+>
+> DNS Made Easy API secret
+
+
+##### `description`
+
+> Type: <code>String</code> · required
+>
+> Short description of this DNS server
+
+
+##### `memberTenantId`
+
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
+>
+> Identifier for the tenant this DNS server belongs to
+
+
+##### `timeout`
+
+> Type: <code>Duration</code> · default: `"30s"`
+>
+> Request timeout for the DNS server
+
+
+##### `ttl`
+
+> Type: <code>Duration</code> · default: `"5m"`
+>
+> The TTL for new DNS record
+
+
+##### `pollingInterval`
+
+> Type: <code>Duration</code> · default: `"15s"`
+>
+> How often to check for DNS records to propagate
+
+
+##### `propagationTimeout`
+
+> Type: <code>Duration</code> · default: `"1m"`
+>
+> How long to wait for DNS records to propagate
+
+
+##### `propagationDelay`
+
+> Type: <code>Duration?</code>
+>
+> Initial delay before first propagation check (useful for slow providers)
+
+
+
+
+
+#### DnsServerDomeneshop
+
+Domeneshop DNS server.
+
+
+
+##### `authToken`
+
+> Type: <code>String</code> · required
+>
+> Domeneshop API token
+
+
+##### `secret`
+
+> Type: [<code>SecretKey</code>](#secretkey) · required
+>
+> Domeneshop API secret
+
+
+##### `description`
+
+> Type: <code>String</code> · required
+>
+> Short description of this DNS server
+
+
+##### `memberTenantId`
+
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
+>
+> Identifier for the tenant this DNS server belongs to
+
+
+##### `timeout`
+
+> Type: <code>Duration</code> · default: `"30s"`
+>
+> Request timeout for the DNS server
+
+
+##### `ttl`
+
+> Type: <code>Duration</code> · default: `"5m"`
+>
+> The TTL for new DNS record
+
+
+##### `pollingInterval`
+
+> Type: <code>Duration</code> · default: `"15s"`
+>
+> How often to check for DNS records to propagate
+
+
+##### `propagationTimeout`
+
+> Type: <code>Duration</code> · default: `"1m"`
+>
+> How long to wait for DNS records to propagate
+
+
+##### `propagationDelay`
+
+> Type: <code>Duration?</code>
+>
+> Initial delay before first propagation check (useful for slow providers)
+
+
+
+
+
+#### DnsServerEasyDns
+
+EasyDNS REST API server.
+
+
+
+##### `token`
+
+> Type: <code>String</code> · required
+>
+> EasyDNS token
+
+
+##### `key`
+
+> Type: [<code>SecretKey</code>](#secretkey) · required
+>
+> EasyDNS key
+
+
+##### `description`
+
+> Type: <code>String</code> · required
+>
+> Short description of this DNS server
+
+
+##### `memberTenantId`
+
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
+>
+> Identifier for the tenant this DNS server belongs to
+
+
+##### `timeout`
+
+> Type: <code>Duration</code> · default: `"30s"`
+>
+> Request timeout for the DNS server
+
+
+##### `ttl`
+
+> Type: <code>Duration</code> · default: `"5m"`
+>
+> The TTL for new DNS record
+
+
+##### `pollingInterval`
+
+> Type: <code>Duration</code> · default: `"15s"`
+>
+> How often to check for DNS records to propagate
+
+
+##### `propagationTimeout`
+
+> Type: <code>Duration</code> · default: `"1m"`
+>
+> How long to wait for DNS records to propagate
+
+
+##### `propagationDelay`
+
+> Type: <code>Duration?</code>
+>
+> Initial delay before first propagation check (useful for slow providers)
+
+
+
+
+
+#### DnsServerEdgeDns
+
+Akamai EdgeDNS server.
+
+
+
+##### `host`
+
+> Type: <code>String</code> · required
+>
+> Akamai API host
+
+
+##### `clientToken`
+
+> Type: <code>String</code> · required
+>
+> Akamai client token
+
+
+##### `clientSecret`
+
+> Type: [<code>SecretKey</code>](#secretkey) · required
+>
+> Akamai client secret
+
+
+##### `accessToken`
+
+> Type: [<code>SecretKey</code>](#secretkey) · required
+>
+> Akamai access token
+
+
+##### `accountSwitchKey`
+
+> Type: <code>String?</code>
+>
+> Optional account switch key for managing multiple accounts
+
+
+##### `description`
+
+> Type: <code>String</code> · required
+>
+> Short description of this DNS server
+
+
+##### `memberTenantId`
+
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
+>
+> Identifier for the tenant this DNS server belongs to
+
+
+##### `timeout`
+
+> Type: <code>Duration</code> · default: `"30s"`
+>
+> Request timeout for the DNS server
+
+
+##### `ttl`
+
+> Type: <code>Duration</code> · default: `"5m"`
+>
+> The TTL for new DNS record
+
+
+##### `pollingInterval`
+
+> Type: <code>Duration</code> · default: `"15s"`
+>
+> How often to check for DNS records to propagate
+
+
+##### `propagationTimeout`
+
+> Type: <code>Duration</code> · default: `"1m"`
+>
+> How long to wait for DNS records to propagate
+
+
+##### `propagationDelay`
+
+> Type: <code>Duration?</code>
+>
+> Initial delay before first propagation check (useful for slow providers)
+
+
+
+
+
+#### DnsServerExoscale
+
+Exoscale DNS server.
+
+
+
+##### `apiKey`
+
+> Type: <code>String</code> · required
+>
+> Exoscale API key
+
+
+##### `secret`
+
+> Type: [<code>SecretKey</code>](#secretkey) · required
+>
+> Exoscale API secret
+
+
+##### `description`
+
+> Type: <code>String</code> · required
+>
+> Short description of this DNS server
+
+
+##### `memberTenantId`
+
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
+>
+> Identifier for the tenant this DNS server belongs to
+
+
+##### `timeout`
+
+> Type: <code>Duration</code> · default: `"30s"`
+>
+> Request timeout for the DNS server
+
+
+##### `ttl`
+
+> Type: <code>Duration</code> · default: `"5m"`
+>
+> The TTL for new DNS record
+
+
+##### `pollingInterval`
+
+> Type: <code>Duration</code> · default: `"15s"`
+>
+> How often to check for DNS records to propagate
+
+
+##### `propagationTimeout`
+
+> Type: <code>Duration</code> · default: `"1m"`
+>
+> How long to wait for DNS records to propagate
+
+
+##### `propagationDelay`
+
+> Type: <code>Duration?</code>
+>
+> Initial delay before first propagation check (useful for slow providers)
+
+
+
+
+
+#### DnsServerGlesys
+
+GleSYS DNS server.
+
+
+
+##### `apiUser`
+
+> Type: <code>String</code> · required
+>
+> GleSYS API user
+
+
+##### `apiKey`
+
+> Type: [<code>SecretKey</code>](#secretkey) · required
+>
+> GleSYS API key
+
+
+##### `description`
+
+> Type: <code>String</code> · required
+>
+> Short description of this DNS server
+
+
+##### `memberTenantId`
+
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
+>
+> Identifier for the tenant this DNS server belongs to
+
+
+##### `timeout`
+
+> Type: <code>Duration</code> · default: `"30s"`
+>
+> Request timeout for the DNS server
+
+
+##### `ttl`
+
+> Type: <code>Duration</code> · default: `"5m"`
+>
+> The TTL for new DNS record
+
+
+##### `pollingInterval`
+
+> Type: <code>Duration</code> · default: `"15s"`
+>
+> How often to check for DNS records to propagate
+
+
+##### `propagationTimeout`
+
+> Type: <code>Duration</code> · default: `"1m"`
+>
+> How long to wait for DNS records to propagate
+
+
+##### `propagationDelay`
+
+> Type: <code>Duration?</code>
+>
+> Initial delay before first propagation check (useful for slow providers)
+
+
+
+
+
+#### DnsServerGodaddy
+
+GoDaddy DNS server.
+
+
+
+##### `apiKey`
+
+> Type: <code>String</code> · required
+>
+> GoDaddy API key
+
+
+##### `secret`
+
+> Type: [<code>SecretKey</code>](#secretkey) · required
+>
+> GoDaddy API secret
+
+
+##### `description`
+
+> Type: <code>String</code> · required
+>
+> Short description of this DNS server
+
+
+##### `memberTenantId`
+
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
+>
+> Identifier for the tenant this DNS server belongs to
+
+
+##### `timeout`
+
+> Type: <code>Duration</code> · default: `"30s"`
+>
+> Request timeout for the DNS server
+
+
+##### `ttl`
+
+> Type: <code>Duration</code> · default: `"5m"`
+>
+> The TTL for new DNS record
+
+
+##### `pollingInterval`
+
+> Type: <code>Duration</code> · default: `"15s"`
+>
+> How often to check for DNS records to propagate
+
+
+##### `propagationTimeout`
+
+> Type: <code>Duration</code> · default: `"1m"`
+>
+> How long to wait for DNS records to propagate
+
+
+##### `propagationDelay`
+
+> Type: <code>Duration?</code>
+>
+> Initial delay before first propagation check (useful for slow providers)
+
+
+
+
+
+#### DnsServerHuaweiCloud
+
+Huawei Cloud DNS server.
+
+
+
+##### `accessKey`
+
+> Type: <code>String</code> · required
+>
+> Huawei Cloud access key
+
+
+##### `secretKey`
+
+> Type: [<code>SecretKey</code>](#secretkey) · required
+>
+> Huawei Cloud secret key
+
+
+##### `region`
+
+> Type: <code>String</code> · default: `"ap-southeast-1"`
+>
+> Huawei Cloud region
+
+
+##### `description`
+
+> Type: <code>String</code> · required
+>
+> Short description of this DNS server
+
+
+##### `memberTenantId`
+
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
+>
+> Identifier for the tenant this DNS server belongs to
+
+
+##### `timeout`
+
+> Type: <code>Duration</code> · default: `"30s"`
+>
+> Request timeout for the DNS server
+
+
+##### `ttl`
+
+> Type: <code>Duration</code> · default: `"5m"`
+>
+> The TTL for new DNS record
+
+
+##### `pollingInterval`
+
+> Type: <code>Duration</code> · default: `"15s"`
+>
+> How often to check for DNS records to propagate
+
+
+##### `propagationTimeout`
+
+> Type: <code>Duration</code> · default: `"1m"`
+>
+> How long to wait for DNS records to propagate
+
+
+##### `propagationDelay`
+
+> Type: <code>Duration?</code>
+>
+> Initial delay before first propagation check (useful for slow providers)
+
+
+
+
+
+#### DnsServerHurricane
+
+Hurricane Electric free DNS service.
+
+
+
+##### `credentials`
+
+> Type: [<code>HurricaneCredential</code>](#hurricanecredential)<code>[]</code> · min items: 1
+>
+> Per-zone Hurricane Electric DDNS keys
+
+
+##### `description`
+
+> Type: <code>String</code> · required
+>
+> Short description of this DNS server
+
+
+##### `memberTenantId`
+
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
+>
+> Identifier for the tenant this DNS server belongs to
+
+
+##### `timeout`
+
+> Type: <code>Duration</code> · default: `"30s"`
+>
+> Request timeout for the DNS server
+
+
+##### `ttl`
+
+> Type: <code>Duration</code> · default: `"5m"`
+>
+> The TTL for new DNS record
+
+
+##### `pollingInterval`
+
+> Type: <code>Duration</code> · default: `"15s"`
+>
+> How often to check for DNS records to propagate
+
+
+##### `propagationTimeout`
+
+> Type: <code>Duration</code> · default: `"1m"`
+>
+> How long to wait for DNS records to propagate
+
+
+##### `propagationDelay`
+
+> Type: <code>Duration?</code>
+>
+> Initial delay before first propagation check (useful for slow providers)
+
+
+
+
+
+##### HurricaneCredential
+
+Hurricane Electric per-zone DDNS credential.
+
+
+
+##### `zone`
+
+> Type: <code>DomainName</code> · required
+>
+> DNS zone (origin) the credential applies to
+
+
+##### `secret`
+
+> Type: [<code>SecretKey</code>](#secretkey) · required
+>
+> DDNS key for the zone
+
+
+
+
+
+#### DnsServerIbmCloud
+
+IBM Cloud (SoftLayer classic) DNS server.
+
+
+
+##### `username`
+
+> Type: <code>String</code> · required
+>
+> IBM Cloud account username
+
+
+##### `apiKey`
+
+> Type: [<code>SecretKey</code>](#secretkey) · required
+>
+> IBM Cloud API key
+
+
+##### `description`
+
+> Type: <code>String</code> · required
+>
+> Short description of this DNS server
+
+
+##### `memberTenantId`
+
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
+>
+> Identifier for the tenant this DNS server belongs to
+
+
+##### `timeout`
+
+> Type: <code>Duration</code> · default: `"30s"`
+>
+> Request timeout for the DNS server
+
+
+##### `ttl`
+
+> Type: <code>Duration</code> · default: `"5m"`
+>
+> The TTL for new DNS record
+
+
+##### `pollingInterval`
+
+> Type: <code>Duration</code> · default: `"15s"`
+>
+> How often to check for DNS records to propagate
+
+
+##### `propagationTimeout`
+
+> Type: <code>Duration</code> · default: `"1m"`
+>
+> How long to wait for DNS records to propagate
+
+
+##### `propagationDelay`
+
+> Type: <code>Duration?</code>
+>
+> Initial delay before first propagation check (useful for slow providers)
+
+
+
+
+
+#### DnsServerInfoblox
+
+Infoblox NIOS WAPI server.
+
+
+
+##### `host`
+
+> Type: <code>String</code> · required
+>
+> Infoblox grid master host
+
+
+##### `port`
+
+> Type: <code>String?</code>
+>
+> Optional port (defaults to 443)
+
+
+##### `username`
+
+> Type: <code>String</code> · required
+>
+> Infoblox account username
+
+
+##### `password`
+
+> Type: [<code>SecretKey</code>](#secretkey) · required
+>
+> Infoblox account password
+
+
+##### `wapiVersion`
+
+> Type: <code>String?</code>
+>
+> WAPI version to use (defaults to 2.11)
+
+
+##### `dnsView`
+
+> Type: <code>String?</code>
+>
+> DNS view name (defaults to External)
+
+
+##### `description`
+
+> Type: <code>String</code> · required
+>
+> Short description of this DNS server
+
+
+##### `memberTenantId`
+
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
+>
+> Identifier for the tenant this DNS server belongs to
+
+
+##### `timeout`
+
+> Type: <code>Duration</code> · default: `"30s"`
+>
+> Request timeout for the DNS server
+
+
+##### `ttl`
+
+> Type: <code>Duration</code> · default: `"5m"`
+>
+> The TTL for new DNS record
+
+
+##### `pollingInterval`
+
+> Type: <code>Duration</code> · default: `"15s"`
+>
+> How often to check for DNS records to propagate
+
+
+##### `propagationTimeout`
+
+> Type: <code>Duration</code> · default: `"1m"`
+>
+> How long to wait for DNS records to propagate
+
+
+##### `propagationDelay`
+
+> Type: <code>Duration?</code>
+>
+> Initial delay before first propagation check (useful for slow providers)
+
+
+
+
+
+#### DnsServerInwx
+
+INWX DNS server.
+
+
+
+##### `username`
+
+> Type: <code>String</code> · required
+>
+> INWX account username
+
+
+##### `password`
+
+> Type: [<code>SecretKey</code>](#secretkey) · required
+>
+> INWX account password
+
+
+##### `sharedSecret`
+
+> Type: [<code>SecretKeyOptional</code>](#secretkeyoptional) · required
+>
+> Optional shared secret for TOTP-based two-factor authentication
+
+
+##### `sandbox`
+
+> Type: <code>Boolean</code> · default: `false`
+>
+> Use the INWX sandbox API instead of production
+
+
+##### `description`
+
+> Type: <code>String</code> · required
+>
+> Short description of this DNS server
+
+
+##### `memberTenantId`
+
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
+>
+> Identifier for the tenant this DNS server belongs to
+
+
+##### `timeout`
+
+> Type: <code>Duration</code> · default: `"30s"`
+>
+> Request timeout for the DNS server
+
+
+##### `ttl`
+
+> Type: <code>Duration</code> · default: `"5m"`
+>
+> The TTL for new DNS record
+
+
+##### `pollingInterval`
+
+> Type: <code>Duration</code> · default: `"15s"`
+>
+> How often to check for DNS records to propagate
+
+
+##### `propagationTimeout`
+
+> Type: <code>Duration</code> · default: `"1m"`
+>
+> How long to wait for DNS records to propagate
+
+
+##### `propagationDelay`
+
+> Type: <code>Duration?</code>
+>
+> Initial delay before first propagation check (useful for slow providers)
+
+
+
+
+
+#### DnsServerJoker
+
+Joker DMAPI DNS server.
+
+
+
+##### `auth`
+
+> Type: [<code>JokerAuth</code>](#jokerauth) · required
+>
+> Joker authentication method
+
+
+##### `description`
+
+> Type: <code>String</code> · required
+>
+> Short description of this DNS server
+
+
+##### `memberTenantId`
+
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
+>
+> Identifier for the tenant this DNS server belongs to
+
+
+##### `timeout`
+
+> Type: <code>Duration</code> · default: `"30s"`
+>
+> Request timeout for the DNS server
+
+
+##### `ttl`
+
+> Type: <code>Duration</code> · default: `"5m"`
+>
+> The TTL for new DNS record
+
+
+##### `pollingInterval`
+
+> Type: <code>Duration</code> · default: `"15s"`
+>
+> How often to check for DNS records to propagate
+
+
+##### `propagationTimeout`
+
+> Type: <code>Duration</code> · default: `"1m"`
+>
+> How long to wait for DNS records to propagate
+
+
+##### `propagationDelay`
+
+> Type: <code>Duration?</code>
+>
+> Initial delay before first propagation check (useful for slow providers)
+
+
+
+
+
+##### JokerAuth
+
+Joker DMAPI authentication credentials.
+
+
+- **`ApiKey`**: API Key. Carries the fields of [`JokerAuthApiKey`](#jokerauthapikey).
+- **`UsernamePassword`**: Username and Password. Carries the fields of [`JokerAuthUsernamePassword`](#jokerauthusernamepassword).
+
+
+
+
+##### JokerAuthApiKey
+
+Joker API key authentication.
+
+
+
+##### `apiKey`
+
+> Type: [<code>SecretKey</code>](#secretkey) · required
+>
+> Joker DMAPI API key
+
+
+
+
+
+##### JokerAuthUsernamePassword
+
+Joker username/password authentication.
+
+
+
+##### `username`
+
+> Type: <code>String</code> · required
+>
+> Joker DMAPI account username
+
+
+##### `password`
+
+> Type: [<code>SecretKey</code>](#secretkey) · required
+>
+> Joker DMAPI account password
+
+
+
+
+
+#### DnsServerLightsail
+
+AWS Lightsail DNS server.
+
+
+
+##### `accessKeyId`
+
+> Type: <code>String</code> · required
+>
+> AWS access key ID
+
+
+##### `secretAccessKey`
+
+> Type: [<code>SecretKey</code>](#secretkey) · required
+>
+> AWS secret access key
+
+
+##### `sessionToken`
+
+> Type: [<code>SecretKeyOptional</code>](#secretkeyoptional) · required
+>
+> Optional session token for temporary AWS credentials
+
+
+##### `region`
+
+> Type: <code>String?</code>
+>
+> AWS region (defaults to us-east-1)
+
+
+##### `domain`
+
+> Type: <code>String?</code>
+>
+> Optional Lightsail domain name to scope record operations to
+
+
+##### `description`
+
+> Type: <code>String</code> · required
+>
+> Short description of this DNS server
+
+
+##### `memberTenantId`
+
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
+>
+> Identifier for the tenant this DNS server belongs to
+
+
+##### `timeout`
+
+> Type: <code>Duration</code> · default: `"30s"`
+>
+> Request timeout for the DNS server
+
+
+##### `ttl`
+
+> Type: <code>Duration</code> · default: `"5m"`
+>
+> The TTL for new DNS record
+
+
+##### `pollingInterval`
+
+> Type: <code>Duration</code> · default: `"15s"`
+>
+> How often to check for DNS records to propagate
+
+
+##### `propagationTimeout`
+
+> Type: <code>Duration</code> · default: `"1m"`
+>
+> How long to wait for DNS records to propagate
+
+
+##### `propagationDelay`
+
+> Type: <code>Duration?</code>
+>
+> Initial delay before first propagation check (useful for slow providers)
+
+
+
+
+
+#### DnsServerLuaDns
+
+LuaDNS server.
+
+
+
+##### `username`
+
+> Type: <code>String</code> · required
+>
+> LuaDNS account email or username
+
+
+##### `authToken`
+
+> Type: [<code>SecretKey</code>](#secretkey) · required
+>
+> LuaDNS API token
+
+
+##### `description`
+
+> Type: <code>String</code> · required
+>
+> Short description of this DNS server
+
+
+##### `memberTenantId`
+
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
+>
+> Identifier for the tenant this DNS server belongs to
+
+
+##### `timeout`
+
+> Type: <code>Duration</code> · default: `"30s"`
+>
+> Request timeout for the DNS server
+
+
+##### `ttl`
+
+> Type: <code>Duration</code> · default: `"5m"`
+>
+> The TTL for new DNS record
+
+
+##### `pollingInterval`
+
+> Type: <code>Duration</code> · default: `"15s"`
+>
+> How often to check for DNS records to propagate
+
+
+##### `propagationTimeout`
+
+> Type: <code>Duration</code> · default: `"1m"`
+>
+> How long to wait for DNS records to propagate
+
+
+##### `propagationDelay`
+
+> Type: <code>Duration?</code>
+>
+> Initial delay before first propagation check (useful for slow providers)
+
+
+
+
+
+#### DnsServerMythicBeasts
+
+Mythic Beasts DNSv2 server.
+
+
+
+##### `username`
+
+> Type: <code>String</code> · required
+>
+> Mythic Beasts API key ID
+
+
+##### `password`
+
+> Type: [<code>SecretKey</code>](#secretkey) · required
+>
+> Mythic Beasts API key secret
+
+
+##### `description`
+
+> Type: <code>String</code> · required
+>
+> Short description of this DNS server
+
+
+##### `memberTenantId`
+
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
+>
+> Identifier for the tenant this DNS server belongs to
+
+
+##### `timeout`
+
+> Type: <code>Duration</code> · default: `"30s"`
+>
+> Request timeout for the DNS server
+
+
+##### `ttl`
+
+> Type: <code>Duration</code> · default: `"5m"`
+>
+> The TTL for new DNS record
+
+
+##### `pollingInterval`
+
+> Type: <code>Duration</code> · default: `"15s"`
+>
+> How often to check for DNS records to propagate
+
+
+##### `propagationTimeout`
+
+> Type: <code>Duration</code> · default: `"1m"`
+>
+> How long to wait for DNS records to propagate
+
+
+##### `propagationDelay`
+
+> Type: <code>Duration?</code>
+>
+> Initial delay before first propagation check (useful for slow providers)
+
+
+
+
+
+#### DnsServerNamecheap
+
+Namecheap DNS server.
+
+
+
+##### `apiUser`
+
+> Type: <code>String</code> · required
+>
+> Namecheap API user
+
+
+##### `apiKey`
+
+> Type: [<code>SecretKey</code>](#secretkey) · required
+>
+> Namecheap API key
+
+
+##### `clientIp`
+
+> Type: <code>String</code> · required
+>
+> Whitelisted client IP address registered with Namecheap
+
+
+##### `username`
+
+> Type: <code>String?</code>
+>
+> Optional account username (defaults to the API user)
+
+
+##### `description`
+
+> Type: <code>String</code> · required
+>
+> Short description of this DNS server
+
+
+##### `memberTenantId`
+
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
+>
+> Identifier for the tenant this DNS server belongs to
+
+
+##### `timeout`
+
+> Type: <code>Duration</code> · default: `"30s"`
+>
+> Request timeout for the DNS server
+
+
+##### `ttl`
+
+> Type: <code>Duration</code> · default: `"5m"`
+>
+> The TTL for new DNS record
+
+
+##### `pollingInterval`
+
+> Type: <code>Duration</code> · default: `"15s"`
+>
+> How often to check for DNS records to propagate
+
+
+##### `propagationTimeout`
+
+> Type: <code>Duration</code> · default: `"1m"`
+>
+> How long to wait for DNS records to propagate
+
+
+##### `propagationDelay`
+
+> Type: <code>Duration?</code>
+>
+> Initial delay before first propagation check (useful for slow providers)
+
+
+
+
+
+#### DnsServerNameDotCom
+
+Name.com v4 DNS server.
+
+
+
+##### `username`
+
+> Type: <code>String</code> · required
+>
+> Name.com account username
+
+
+##### `authToken`
+
+> Type: [<code>SecretKey</code>](#secretkey) · required
+>
+> Name.com API token
+
+
+##### `description`
+
+> Type: <code>String</code> · required
+>
+> Short description of this DNS server
+
+
+##### `memberTenantId`
+
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
+>
+> Identifier for the tenant this DNS server belongs to
+
+
+##### `timeout`
+
+> Type: <code>Duration</code> · default: `"30s"`
+>
+> Request timeout for the DNS server
+
+
+##### `ttl`
+
+> Type: <code>Duration</code> · default: `"5m"`
+>
+> The TTL for new DNS record
+
+
+##### `pollingInterval`
+
+> Type: <code>Duration</code> · default: `"15s"`
+>
+> How often to check for DNS records to propagate
+
+
+##### `propagationTimeout`
+
+> Type: <code>Duration</code> · default: `"1m"`
+>
+> How long to wait for DNS records to propagate
+
+
+##### `propagationDelay`
+
+> Type: <code>Duration?</code>
+>
+> Initial delay before first propagation check (useful for slow providers)
+
+
+
+
+
+#### DnsServerNetcup
+
+Netcup CCP DNS server.
+
+
+
+##### `customerNumber`
+
+> Type: <code>String</code> · required
+>
+> Netcup customer number
+
+
+##### `apiKey`
+
+> Type: <code>String</code> · required
+>
+> Netcup API key
+
+
+##### `password`
+
+> Type: [<code>SecretKey</code>](#secretkey) · required
+>
+> Netcup API password
+
+
+##### `description`
+
+> Type: <code>String</code> · required
+>
+> Short description of this DNS server
+
+
+##### `memberTenantId`
+
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
+>
+> Identifier for the tenant this DNS server belongs to
+
+
+##### `timeout`
+
+> Type: <code>Duration</code> · default: `"30s"`
+>
+> Request timeout for the DNS server
+
+
+##### `ttl`
+
+> Type: <code>Duration</code> · default: `"5m"`
+>
+> The TTL for new DNS record
+
+
+##### `pollingInterval`
+
+> Type: <code>Duration</code> · default: `"15s"`
+>
+> How often to check for DNS records to propagate
+
+
+##### `propagationTimeout`
+
+> Type: <code>Duration</code> · default: `"1m"`
+>
+> How long to wait for DNS records to propagate
+
+
+##### `propagationDelay`
+
+> Type: <code>Duration?</code>
+>
+> Initial delay before first propagation check (useful for slow providers)
+
+
+
+
+
+#### DnsServerNifcloud
+
+Nifcloud DNS server.
+
+
+
+##### `accessKey`
+
+> Type: <code>String</code> · required
+>
+> Nifcloud access key
+
+
+##### `secretKey`
+
+> Type: [<code>SecretKey</code>](#secretkey) · required
+>
+> Nifcloud secret key
+
+
+##### `description`
+
+> Type: <code>String</code> · required
+>
+> Short description of this DNS server
+
+
+##### `memberTenantId`
+
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
+>
+> Identifier for the tenant this DNS server belongs to
+
+
+##### `timeout`
+
+> Type: <code>Duration</code> · default: `"30s"`
+>
+> Request timeout for the DNS server
+
+
+##### `ttl`
+
+> Type: <code>Duration</code> · default: `"5m"`
+>
+> The TTL for new DNS record
+
+
+##### `pollingInterval`
+
+> Type: <code>Duration</code> · default: `"15s"`
+>
+> How often to check for DNS records to propagate
+
+
+##### `propagationTimeout`
+
+> Type: <code>Duration</code> · default: `"1m"`
+>
+> How long to wait for DNS records to propagate
+
+
+##### `propagationDelay`
+
+> Type: <code>Duration?</code>
+>
+> Initial delay before first propagation check (useful for slow providers)
+
+
+
+
+
+#### DnsServerOracleCloud
+
+Oracle Cloud Infrastructure DNS server.
+
+
+
+##### `tenancyOcid`
+
+> Type: <code>String</code> · required
+>
+> Tenancy OCID
+
+
+##### `userOcid`
+
+> Type: <code>String</code> · required
+>
+> User OCID
+
+
+##### `fingerprint`
+
+> Type: <code>String</code> · required
+>
+> API signing key fingerprint
+
+
+##### `privateKeyPem`
+
+> Type: [<code>SecretText</code>](#secrettext) · required
+>
+> API signing private key in PEM format
+
+
+##### `privateKeyPassword`
+
+> Type: [<code>SecretKeyOptional</code>](#secretkeyoptional) · required
+>
+> Optional passphrase for the private key
+
+
+##### `region`
+
+> Type: <code>String</code> · required
+>
+> OCI region (e.g. us-ashburn-1)
+
+
+##### `compartmentOcid`
+
+> Type: <code>String</code> · required
+>
+> Compartment OCID that owns the DNS zone
+
+
+##### `description`
+
+> Type: <code>String</code> · required
+>
+> Short description of this DNS server
+
+
+##### `memberTenantId`
+
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
+>
+> Identifier for the tenant this DNS server belongs to
+
+
+##### `timeout`
+
+> Type: <code>Duration</code> · default: `"30s"`
+>
+> Request timeout for the DNS server
+
+
+##### `ttl`
+
+> Type: <code>Duration</code> · default: `"5m"`
+>
+> The TTL for new DNS record
+
+
+##### `pollingInterval`
+
+> Type: <code>Duration</code> · default: `"15s"`
+>
+> How often to check for DNS records to propagate
+
+
+##### `propagationTimeout`
+
+> Type: <code>Duration</code> · default: `"1m"`
+>
+> How long to wait for DNS records to propagate
+
+
+##### `propagationDelay`
+
+> Type: <code>Duration?</code>
+>
+> Initial delay before first propagation check (useful for slow providers)
+
+
+
+
+
+#### DnsServerPlesk
+
+Plesk REST API DNS server.
+
+
+
+##### `baseUrl`
+
+> Type: <code>String</code> · required
+>
+> Base URL of the Plesk server (e.g. https://host:8443)
+
+
+##### `apiKey`
+
+> Type: [<code>SecretKey</code>](#secretkey) · required
+>
+> Plesk API key
+
+
+##### `description`
+
+> Type: <code>String</code> · required
+>
+> Short description of this DNS server
+
+
+##### `memberTenantId`
+
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
+>
+> Identifier for the tenant this DNS server belongs to
+
+
+##### `timeout`
+
+> Type: <code>Duration</code> · default: `"30s"`
+>
+> Request timeout for the DNS server
+
+
+##### `ttl`
+
+> Type: <code>Duration</code> · default: `"5m"`
+>
+> The TTL for new DNS record
+
+
+##### `pollingInterval`
+
+> Type: <code>Duration</code> · default: `"15s"`
+>
+> How often to check for DNS records to propagate
+
+
+##### `propagationTimeout`
+
+> Type: <code>Duration</code> · default: `"1m"`
+>
+> How long to wait for DNS records to propagate
+
+
+##### `propagationDelay`
+
+> Type: <code>Duration?</code>
+>
+> Initial delay before first propagation check (useful for slow providers)
+
+
+
+
+
+#### DnsServerTencentCloud
+
+Tencent Cloud DNSPod server.
+
+
+
+##### `secretId`
+
+> Type: <code>String</code> · required
+>
+> Tencent Cloud secret ID
+
+
+##### `secretKey`
+
+> Type: [<code>SecretKey</code>](#secretkey) · required
+>
+> Tencent Cloud secret key
+
+
+##### `region`
+
+> Type: <code>String?</code>
+>
+> Optional regional endpoint
+
+
+##### `sessionToken`
+
+> Type: [<code>SecretKeyOptional</code>](#secretkeyoptional) · required
+>
+> Optional STS session token for temporary credentials
+
+
+##### `description`
+
+> Type: <code>String</code> · required
+>
+> Short description of this DNS server
+
+
+##### `memberTenantId`
+
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
+>
+> Identifier for the tenant this DNS server belongs to
+
+
+##### `timeout`
+
+> Type: <code>Duration</code> · default: `"30s"`
+>
+> Request timeout for the DNS server
+
+
+##### `ttl`
+
+> Type: <code>Duration</code> · default: `"5m"`
+>
+> The TTL for new DNS record
+
+
+##### `pollingInterval`
+
+> Type: <code>Duration</code> · default: `"15s"`
+>
+> How often to check for DNS records to propagate
+
+
+##### `propagationTimeout`
+
+> Type: <code>Duration</code> · default: `"1m"`
+>
+> How long to wait for DNS records to propagate
+
+
+##### `propagationDelay`
+
+> Type: <code>Duration?</code>
+>
+> Initial delay before first propagation check (useful for slow providers)
+
+
+
+
+
+#### DnsServerTransip
+
+TransIP v6 DNS server.
+
+
+
+##### `username`
+
+> Type: <code>String</code> · required
+>
+> TransIP account login
+
+
+##### `privateKeyPem`
+
+> Type: [<code>SecretText</code>](#secrettext) · required
+>
+> TransIP private key in PEM format
+
+
+##### `description`
+
+> Type: <code>String</code> · required
+>
+> Short description of this DNS server
+
+
+##### `memberTenantId`
+
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
+>
+> Identifier for the tenant this DNS server belongs to
+
+
+##### `timeout`
+
+> Type: <code>Duration</code> · default: `"30s"`
+>
+> Request timeout for the DNS server
+
+
+##### `ttl`
+
+> Type: <code>Duration</code> · default: `"5m"`
+>
+> The TTL for new DNS record
+
+
+##### `pollingInterval`
+
+> Type: <code>Duration</code> · default: `"15s"`
+>
+> How often to check for DNS records to propagate
+
+
+##### `propagationTimeout`
+
+> Type: <code>Duration</code> · default: `"1m"`
+>
+> How long to wait for DNS records to propagate
+
+
+##### `propagationDelay`
+
+> Type: <code>Duration?</code>
+>
+> Initial delay before first propagation check (useful for slow providers)
+
+
+
+
+
+#### DnsServerUltraDns
+
+UltraDNS REST API server.
+
+
+
+##### `username`
+
+> Type: <code>String</code> · required
+>
+> UltraDNS account username
+
+
+##### `password`
+
+> Type: [<code>SecretKey</code>](#secretkey) · required
+>
+> UltraDNS account password
+
+
+##### `endpoint`
+
+> Type: <code>String?</code>
+>
+> Optional REST API endpoint override
+
+
+##### `description`
+
+> Type: <code>String</code> · required
+>
+> Short description of this DNS server
+
+
+##### `memberTenantId`
+
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
+>
+> Identifier for the tenant this DNS server belongs to
+
+
+##### `timeout`
+
+> Type: <code>Duration</code> · default: `"30s"`
+>
+> Request timeout for the DNS server
+
+
+##### `ttl`
+
+> Type: <code>Duration</code> · default: `"5m"`
+>
+> The TTL for new DNS record
+
+
+##### `pollingInterval`
+
+> Type: <code>Duration</code> · default: `"15s"`
+>
+> How often to check for DNS records to propagate
+
+
+##### `propagationTimeout`
+
+> Type: <code>Duration</code> · default: `"1m"`
+>
+> How long to wait for DNS records to propagate
+
+
+##### `propagationDelay`
+
+> Type: <code>Duration?</code>
+>
+> Initial delay before first propagation check (useful for slow providers)
+
+
+
+
+
+#### DnsServerVercel
+
+Vercel DNS server.
+
+
+
+##### `authToken`
+
+> Type: [<code>SecretKey</code>](#secretkey) · required
+>
+> Vercel auth token
+
+
+##### `teamId`
+
+> Type: <code>String?</code>
+>
+> Optional team ID to scope API requests to
+
+
+##### `description`
+
+> Type: <code>String</code> · required
+>
+> Short description of this DNS server
+
+
+##### `memberTenantId`
+
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
+>
+> Identifier for the tenant this DNS server belongs to
+
+
+##### `timeout`
+
+> Type: <code>Duration</code> · default: `"30s"`
+>
+> Request timeout for the DNS server
+
+
+##### `ttl`
+
+> Type: <code>Duration</code> · default: `"5m"`
+>
+> The TTL for new DNS record
+
+
+##### `pollingInterval`
+
+> Type: <code>Duration</code> · default: `"15s"`
+>
+> How often to check for DNS records to propagate
+
+
+##### `propagationTimeout`
+
+> Type: <code>Duration</code> · default: `"1m"`
+>
+> How long to wait for DNS records to propagate
+
+
+##### `propagationDelay`
+
+> Type: <code>Duration?</code>
+>
+> Initial delay before first propagation check (useful for slow providers)
+
+
+
+
+
+#### DnsServerVolcengine
+
+Volcano Engine DNS server.
+
+
+
+##### `accessKey`
+
+> Type: <code>String</code> · required
+>
+> Volcengine access key
+
+
+##### `secretKey`
+
+> Type: [<code>SecretKey</code>](#secretkey) · required
+>
+> Volcengine secret key
+
+
+##### `region`
+
+> Type: <code>String?</code>
+>
+> Optional regional endpoint
+
+
+##### `host`
+
+> Type: <code>String?</code>
+>
+> Optional API host override
+
+
+##### `scheme`
+
+> Type: <code>String?</code>
+>
+> Optional URL scheme (http or https)
+
+
+##### `description`
+
+> Type: <code>String</code> · required
+>
+> Short description of this DNS server
+
+
+##### `memberTenantId`
+
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
+>
+> Identifier for the tenant this DNS server belongs to
+
+
+##### `timeout`
+
+> Type: <code>Duration</code> · default: `"30s"`
+>
+> Request timeout for the DNS server
+
+
+##### `ttl`
+
+> Type: <code>Duration</code> · default: `"5m"`
+>
+> The TTL for new DNS record
+
+
+##### `pollingInterval`
+
+> Type: <code>Duration</code> · default: `"15s"`
+>
+> How often to check for DNS records to propagate
+
+
+##### `propagationTimeout`
+
+> Type: <code>Duration</code> · default: `"1m"`
+>
+> How long to wait for DNS records to propagate
+
+
+##### `propagationDelay`
+
+> Type: <code>Duration?</code>
+>
+> Initial delay before first propagation check (useful for slow providers)
+
+
+
+
+
+#### DnsServerWebSupport
+
+WebSupport DNS server.
+
+
+
+##### `apiKey`
+
+> Type: <code>String</code> · required
+>
+> WebSupport API key
+
+
+##### `secret`
+
+> Type: [<code>SecretKey</code>](#secretkey) · required
+>
+> WebSupport API secret
+
+
+##### `description`
+
+> Type: <code>String</code> · required
+>
+> Short description of this DNS server
+
+
+##### `memberTenantId`
+
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
+>
+> Identifier for the tenant this DNS server belongs to
+
+
+##### `timeout`
+
+> Type: <code>Duration</code> · default: `"30s"`
+>
+> Request timeout for the DNS server
+
+
+##### `ttl`
+
+> Type: <code>Duration</code> · default: `"5m"`
+>
+> The TTL for new DNS record
+
+
+##### `pollingInterval`
+
+> Type: <code>Duration</code> · default: `"15s"`
+>
+> How often to check for DNS records to propagate
+
+
+##### `propagationTimeout`
+
+> Type: <code>Duration</code> · default: `"1m"`
+>
+> How long to wait for DNS records to propagate
+
+
+##### `propagationDelay`
+
+> Type: <code>Duration?</code>
+>
+> Initial delay before first propagation check (useful for slow providers)
+
+
+
+
+
+#### DnsServerYandexCloud
+
+Yandex Cloud DNS server.
+
+
+
+##### `apiKey`
+
+> Type: [<code>SecretText</code>](#secrettext) · required
+>
+> Base64-encoded IAM service account key JSON
+
+
+##### `folderId`
+
+> Type: <code>String</code> · required
+>
+> Yandex Cloud folder ID that owns the DNS zone
+
+
+##### `description`
+
+> Type: <code>String</code> · required
+>
+> Short description of this DNS server
+
+
+##### `memberTenantId`
+
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
+>
+> Identifier for the tenant this DNS server belongs to
+
+
+##### `timeout`
+
+> Type: <code>Duration</code> · default: `"30s"`
+>
+> Request timeout for the DNS server
+
+
+##### `ttl`
+
+> Type: <code>Duration</code> · default: `"5m"`
+>
+> The TTL for new DNS record
+
+
+##### `pollingInterval`
+
+> Type: <code>Duration</code> · default: `"15s"`
+>
+> How often to check for DNS records to propagate
+
+
+##### `propagationTimeout`
+
+> Type: <code>Duration</code> · default: `"1m"`
+>
+> How long to wait for DNS records to propagate
+
+
+##### `propagationDelay`
+
+> Type: <code>Duration?</code>
+>
+> Initial delay before first propagation check (useful for slow providers)
+
+
+
+
+
 ## Enums
 
 
@@ -1896,17 +4834,6 @@ Google Cloud DNS server.
 | `hmac-sha512-256` | HMAC-SHA512-256 |
 
 
-### Sig0Algorithm
-
-
-
-| Value | Label |
-|---|---|
-| `ecdsa-p256-sha256` | ECDSA-P256-SHA256 |
-| `ecdsa-p384-sha384` | ECDSA-P384-SHA384 |
-| `ed25519` | ED25519 |
-
-
 ### OvhEndpoint
 
 
@@ -1919,5 +4846,16 @@ Google Cloud DNS server.
 | `kimsufi-ca` | Kimsufi CA |
 | `soyoustart-eu` | Soyoustart EU |
 | `soyoustart-ca` | Soyoustart CA |
+
+
+### AzureEnvironment
+
+
+
+| Value | Label |
+|---|---|
+| `public` | Public |
+| `china` | China |
+| `us-government` | US Government |
 
 

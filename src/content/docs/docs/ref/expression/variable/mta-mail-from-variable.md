@@ -4,8 +4,6 @@ description: Variables available in expression contexts referencing MtaMailFromV
 custom_edit_url: null
 ---
 
-# MtaMailFromVariable
-
 
 
 Variables available in expression contexts that reference `MtaMailFromVariable`.

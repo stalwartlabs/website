@@ -4,8 +4,6 @@ description: Variables available in expression contexts referencing SpamGenericV
 custom_edit_url: null
 ---
 
-# SpamGenericVariable
-
 
 
 Variables available in expression contexts that reference `SpamGenericVariable`.

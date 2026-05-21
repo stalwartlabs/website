@@ -4,8 +4,6 @@ description: Locale enumeration reference.
 custom_edit_url: null
 ---
 
-# Locale
-
 
 
 This enumeration defines 336 values.

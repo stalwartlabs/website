@@ -4,8 +4,6 @@ description: Defines a tenant for multi-tenant environments with isolated resour
 custom_edit_url: null
 ---
 
-# Tenant
-
 Defines a tenant for multi-tenant environments with isolated resources and quotas.
 
 :::note[Enterprise feature]
