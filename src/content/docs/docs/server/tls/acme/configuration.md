@@ -24,35 +24,11 @@ Default-certificate selection is made on the [SystemSettings](/docs/ref/object/s
 
 :::
 
-## DNS-01 configuration
+## DNS configuration
 
-When [`challengeType`](/docs/ref/object/acme-provider#challengetype) is set to `Dns01`, Stalwart publishes the validation record through a configured DNS provider. DNS providers are stored as [DnsServer](/docs/ref/object/dns-server) objects (found in the WebUI under <!-- breadcrumb:DnsServer --><svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M10 5H3" /><path d="M12 19H3" /><path d="M14 3v4" /><path d="M16 17v4" /><path d="M21 12h-9" /><path d="M21 19h-5" /><path d="M21 5h-7" /><path d="M8 10v4" /><path d="M8 12H3" /></svg> Settings › <svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M17 19a1 1 0 0 1-1-1v-2a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2a1 1 0 0 1-1 1z" /><path d="M17 21v-2" /><path d="M19 14V6.5a1 1 0 0 0-7 0v11a1 1 0 0 1-7 0V10" /><path d="M21 21v-2" /><path d="M3 5V3" /><path d="M4 10a2 2 0 0 1-2-2V6a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2a2 2 0 0 1-2 2z" /><path d="M7 5V3" /></svg> Network › DNS › DNS Providers<!-- /breadcrumb:DnsServer -->). Each DnsServer carries its own variant (`Tsig`, `Sig0`, or `Cloudflare`) with the fields needed to talk to that provider. Common timing fields that apply to every DNS variant are:
+When [`challengeType`](/docs/ref/object/acme-provider#challengetype) is set to `Dns01` or `DnsPersist01`, Stalwart publishes the validation record through a configured DNS provider. DNS providers are registered as [DnsServer](/docs/ref/object/dns-server) objects; see [DNS providers](/docs/server/dns/provider) for the supported variants and the credentials each one needs.
 
-- [`pollingInterval`](/docs/ref/object/dns-server#pollinginterval): how often to check whether the TXT record has propagated. Default `"15s"`.
-- [`propagationTimeout`](/docs/ref/object/dns-server#propagationtimeout): maximum time to wait for propagation. Default `"1m"`.
-- [`ttl`](/docs/ref/object/dns-server#ttl): TTL applied to new records. Default `"5m"`.
-- [`timeout`](/docs/ref/object/dns-server#timeout): per-request timeout against the DNS API. Default `"30s"`.
-
-The DNS zone used for record updates is no longer carried on the DnsServer itself. It is set per domain on the [Domain](/docs/ref/object/domain) object: when [`dnsManagement`](/docs/ref/object/domain#dnsmanagement) is the `Automatic` variant, [`dnsServerId`](/docs/ref/object/domain#dnsmanagementproperties) picks the DnsServer to drive and [`origin`](/docs/ref/object/domain#dnsmanagementproperties) names the zone that carries the records (for example, `example.com` for a domain `sub.example.com`). Leaving [`origin`](/docs/ref/object/domain#dnsmanagementproperties) empty uses the domain name itself as the zone. This lets several domains share one DnsServer while each pins its own zone for DNS-01 and DNS-PERSIST-01 validation.
-
-### RFC2136 (TSIG)
-
-The `Tsig` variant of DnsServer speaks RFC 2136 dynamic update with TSIG authentication. Its fields are:
-
-- [`host`](/docs/ref/object/dns-server#host): IP address of the authoritative DNS server.
-- [`port`](/docs/ref/object/dns-server#port): port used to reach the server. Default `53`.
-- [`protocol`](/docs/ref/object/dns-server#protocol): `udp` or `tcp`. Default `udp`.
-- [`tsigAlgorithm`](/docs/ref/object/dns-server#tsigalgorithm): TSIG HMAC algorithm. Default `hmac-sha512`.
-- [`keyName`](/docs/ref/object/dns-server#keyname): TSIG key name.
-- [`key`](/docs/ref/object/dns-server#key): TSIG key secret.
-
-### Cloudflare
-
-The `Cloudflare` variant of DnsServer drives the Cloudflare DNS API. Its fields are:
-
-- [`secret`](/docs/ref/object/dns-server#secret): Cloudflare API token, or API key when `email` is set.
-- [`email`](/docs/ref/object/dns-server#email): account email used with the legacy `X-Auth-Email` / `X-Auth-Key` flow. Leave unset to authenticate with an API token.
-- [`timeout`](/docs/ref/object/dns-server#timeout): HTTP request timeout. Default `"30s"`.
+The DNS zone used for record updates is set per domain on the [Domain](/docs/ref/object/domain) object. When [`dnsManagement`](/docs/ref/object/domain#dnsmanagement) is the `Automatic` variant, [`dnsServerId`](/docs/ref/object/domain#dnsmanagementproperties) picks the DnsServer to drive and [`origin`](/docs/ref/object/domain#dnsmanagementproperties) names the zone that carries the records (for example, `example.com` for a domain `sub.example.com`). Leaving [`origin`](/docs/ref/object/domain#dnsmanagementproperties) empty uses the domain name itself as the zone. This lets several domains share one DnsServer while each pins its own zone for DNS-01 and DNS-PERSIST-01 validation.
 
 ## Example
 
