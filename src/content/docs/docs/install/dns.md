@@ -100,7 +100,7 @@ CNAME	autoconfig.example.org.	mail.example.org.
 CNAME	autodiscover.example.org.	mail.example.org.
 ```
 
-The newer PACC protocol does not require its own subdomain; compliant clients fetch the configuration from `https://example.org/.well-known/user-agent-configuration` directly.
+The newer PACC protocol does not require its own subdomain; compliant clients fetch the configuration from `https://example.org/.well-known/user-agent-configuration.json` directly.
 
 ## Certificate Authority Authorization (CAA) records
 

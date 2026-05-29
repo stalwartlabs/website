@@ -41,8 +41,9 @@ Running `snapshot` against a fresh server to capture a typical baseline configur
 ```sh
 stalwart-cli snapshot \
     Tenant Domain DkimSignature AcmeProvider Certificate DnsServer Role \
-    Account Directory Credential \
+    Account Directory \
     SystemSettings DataRetention BlobStore InMemoryStore SearchStore \
+    --allow-unresolved PublicKey \
     --output plan.ndjson
 ```
 
@@ -180,8 +181,9 @@ In practice this is rare for configuration objects and indicates either a schema
 ```sh
 stalwart-cli snapshot \
     Tenant Domain Directory DkimSignature AcmeProvider Certificate DnsServer Role \
-    Account Credential \
+    Account \
     SystemSettings DataRetention BlobStore InMemoryStore SearchStore \
+    --allow-unresolved PublicKey \
     --output "backup-$(date +%Y-%m-%d).ndjson"
 ```
 
