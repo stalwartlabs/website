@@ -11,14 +11,14 @@ The `query` command lists objects of a given type, with optional filters and a c
 stalwart-cli query <object> [--where key=value]... [--fields a,b,c] [--json]
 ```
 
-* `<object>`: object type name, with or without the `x:` prefix, case-insensitive. Singletons are rejected (use [`get`](./get.md) instead).
+* `<object>`: object type name, with or without the `x:` prefix, case-insensitive. Singletons are rejected (use [`get`](/docs/management/cli/get) instead).
 * `--where`: filter clause (repeatable). The supported operator forms are described below.
 * `--fields`: comma-separated list of properties to return. When omitted, the default columns from the object's list (or from any view targeting it) are used, with an `Id` column prepended.
 * `--json`: emit one record per line as **NDJSON** (newline-delimited JSON) instead of the human-friendly table. With `--fields`, each record is the object; without `--fields`, each record is just the id string.
 
 ## Default columns
 
-Without `--fields`, the CLI uses the column set declared by the object's list, which mirrors what the web UI shows. An `Id` column is always prepended so each row is addressable by [`get`](./get.md), [`update`](./update.md), or [`delete`](./delete.md).
+Without `--fields`, the CLI uses the column set declared by the object's list, which mirrors what the web UI shows. An `Id` column is always prepended so each row is addressable by [`get`](/docs/management/cli/get), [`update`](/docs/management/cli/update), or [`delete`](/docs/management/cli/delete).
 
 ```sh
 stalwart-cli query domain
@@ -90,7 +90,7 @@ stalwart-cli query trafficstat --where receivedCount>=1000 --fields domainId,rec
 
 Repeating the same `--where` field overrides the previous value (filters are single-valued by definition); duplicates are not an error.
 
-To list which filters an object supports, run [`describe <object>`](./describe.md). The `Filters:` section lists each accepted key, its kind, and a label.
+To list which filters an object supports, run [`describe <object>`](/docs/management/cli/describe). The `Filters:` section lists each accepted key, its kind, and a label.
 
 ## JSON output
 
@@ -153,6 +153,6 @@ When stdout is **not** a TTY (for example, piping to a file or another command),
 
 ## See also
 
-* [Fetching a single object](./get.md) for full per-object detail.
-* [Removing objects](./delete.md), often combined with the ids returned here.
-* [Declarative bulk operations](./apply.md) for filter-driven destroys at scale.
+* [Fetching a single object](/docs/management/cli/get) for full per-object detail.
+* [Removing objects](/docs/management/cli/delete), often combined with the ids returned here.
+* [Declarative bulk operations](/docs/management/cli/apply) for filter-driven destroys at scale.

@@ -11,7 +11,7 @@ The `update` command applies a JMAP patch to one object (or a singleton). The pa
 stalwart-cli update <object> [<id>] ( --field key=value... | --json '<json>' | --file <path> | --stdin )
 ```
 
-* `<object>`: object type name (with or without `x:` prefix). The slash form is rejected here (it is a [`create`](./create.md) feature).
+* `<object>`: object type name (with or without `x:` prefix). The slash form is rejected here (it is a [`create`](/docs/management/cli/create) feature).
 * `<id>`: required for normal objects; optional for singletons (defaults to `singleton`). Passing any non-`singleton` id for a singleton is rejected.
 * The four input forms are mutually exclusive.
 
@@ -63,7 +63,7 @@ Both are equivalent. Passing any other id for a singleton is rejected with a cle
 
 ## Input sources
 
-Identical to [`create`](./create.md):
+Identical to [`create`](/docs/management/cli/create):
 
 | Source | When to use |
 |---|---|
@@ -144,10 +144,10 @@ A success line is printed:
 Updated Domain b
 ```
 
-If the server returns server-set fields after the update (rare; mostly for fields that are recomputed), they are rendered below in the same form-driven view as [`get`](./get.md).
+If the server returns server-set fields after the update (rare; mostly for fields that are recomputed), they are rendered below in the same form-driven view as [`get`](/docs/management/cli/get).
 
 ## See also
 
-* [Fetching a single object](./get.md) to verify changes.
-* [Creating objects](./create.md) for the corresponding create flow.
-* [Declarative bulk operations](./apply.md) for atomic multi-object updates with cross-references.
+* [Fetching a single object](/docs/management/cli/get) to verify changes.
+* [Creating objects](/docs/management/cli/create) for the corresponding create flow.
+* [Declarative bulk operations](/docs/management/cli/apply) for atomic multi-object updates with cross-references.

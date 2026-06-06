@@ -11,14 +11,14 @@ The tool is **schema-driven**: on first use it downloads (and caches) a JSON sch
 
 | Task | Command | Title |
 |---|---|---|
-| Inspect what objects and enums the server exposes | `describe` | [Exploring the schema](./describe.md) |
-| Read a single object by id (or a singleton) | `get` | [Fetching a single object](./get.md) |
-| List or filter objects of a given type | `query` | [Searching and listing](./query.md) |
-| Create one or more objects | `create` | [Creating objects](./create.md) |
-| Modify an existing object (or singleton) | `update` | [Updating objects](./update.md) |
-| Destroy one or more objects | `delete` | [Removing objects](./delete.md) |
-| Apply a bulk plan from a JSON file | `apply` | [Declarative bulk operations](./apply.md) |
-| Export live server state as an apply plan | `snapshot` | [Exporting server state](./snapshot.md) |
+| Inspect what objects and enums the server exposes | `describe` | [Exploring the schema](/docs/management/cli/describe) |
+| Read a single object by id (or a singleton) | `get` | [Fetching a single object](/docs/management/cli/get) |
+| List or filter objects of a given type | `query` | [Searching and listing](/docs/management/cli/query) |
+| Create one or more objects | `create` | [Creating objects](/docs/management/cli/create) |
+| Modify an existing object (or singleton) | `update` | [Updating objects](/docs/management/cli/update) |
+| Destroy one or more objects | `delete` | [Removing objects](/docs/management/cli/delete) |
+| Apply a bulk plan from a JSON file | `apply` | [Declarative bulk operations](/docs/management/cli/apply) |
+| Export live server state as an apply plan | `snapshot` | [Exporting server state](/docs/management/cli/snapshot) |
 
 ## Installation
 
@@ -128,16 +128,16 @@ stalwart-cli get jmap
 stalwart-cli get jmap singleton
 ```
 
-Singletons cannot be created or destroyed, only updated. The [Updating objects](./update.md) and [Fetching a single object](./get.md) pages cover the specifics.
+Singletons cannot be created or destroyed, only updated. The [Updating objects](/docs/management/cli/update) and [Fetching a single object](/docs/management/cli/get) pages cover the specifics.
 
 ## Multi-variant objects
 
-Some objects (for example `Account`) have multiple variants discriminated by an `@type` field (`User`, `Group`, etc.). When [creating](./create.md) such an object, two equivalent forms are accepted:
+Some objects (for example `Account`) have multiple variants discriminated by an `@type` field (`User`, `Group`, etc.). When [creating](/docs/management/cli/create) such an object, two equivalent forms are accepted:
 
 * The shorthand `Object/Variant` syntax (`stalwart-cli create account/user ...`), which auto-injects `@type`.
 * Passing `@type` explicitly via `--field` or as part of a `--json` payload.
 
-For [`get`](./get.md), [`query`](./query.md), [`update`](./update.md), and [`delete`](./delete.md), only the bare object name is accepted (the slash form is rejected).
+For [`get`](/docs/management/cli/get), [`query`](/docs/management/cli/query), [`update`](/docs/management/cli/update), and [`delete`](/docs/management/cli/delete), only the bare object name is accepted (the slash form is rejected).
 
 ## Output formats
 
@@ -177,4 +177,4 @@ stalwart-cli get --help
 stalwart-cli apply --help
 ```
 
-For schema-driven help (descriptions of objects, fields, enums, filters, and sort options), use the [`describe`](./describe.md) command.
+For schema-driven help (descriptions of objects, fields, enums, filters, and sort options), use the [`describe`](/docs/management/cli/describe) command.

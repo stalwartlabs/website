@@ -5,7 +5,7 @@ title: "Declarative bulk operations"
 
 The `apply` command takes an NDJSON file describing a batch of `create`, `update`, and `destroy` operations, and applies them to the server in dependency-aware order. It is intended as the integration surface for infrastructure-as-code tooling (Ansible, Terraform, NixOS, Pulumi, ...) and for one-shot deployments / migrations performed by hand or by CI.
 
-For interactive use cases see the per-command pages: [Creating objects](./create.md), [Updating objects](./update.md), [Removing objects](./delete.md).
+For interactive use cases see the per-command pages: [Creating objects](/docs/management/cli/create), [Updating objects](/docs/management/cli/update), [Removing objects](/docs/management/cli/delete).
 
 ## Synopsis
 
@@ -52,7 +52,7 @@ To override, pass `--continue-on-error`, in which case every operation is attemp
 
 `apply` does not diff a plan against the live server state. It executes the operations the plan declares, in order. A plan that only contains `create` operations therefore succeeds on the first run and fails on the second: re-creating the same `Domain`, `AllowedIp`, `Certificate`, etc. trips the server's primary-key constraints, and re-creating types that have no such constraint produces duplicate rows.
 
-To make a plan re-runnable, pair every `create` of a type with a leading `destroy` of the same type. The destroy pass clears the existing instances; the create pass then rebuilds them. This is the shape that [`stalwart-cli snapshot`](./snapshot.md) emits, and it is the shape used in the [annotated example](#annotated-example) below.
+To make a plan re-runnable, pair every `create` of a type with a leading `destroy` of the same type. The destroy pass clears the existing instances; the create pass then rebuilds them. This is the shape that [`stalwart-cli snapshot`](/docs/management/cli/snapshot) emits, and it is the shape used in the [annotated example](#annotated-example) below.
 
 Two practical notes:
 
@@ -246,7 +246,7 @@ Or a literal server-assigned id, for patching an existing object the plan does n
 
 Note that `id` is a top-level field of the operation, alongside `@type`, `object`, and `value`. It is not a key inside `value`. (The map-keyed shape, where ids are keys of `value`, is the `create` convention; conflating the two is a common mistake when writing the first non-singleton update.)
 
-For multi-variant changes (where the entire variant is being switched), pass the new variant's body as a single value rather than patching individual sub-paths (see [Updating objects](./update.md) for the rationale).
+For multi-variant changes (where the entire variant is being switched), pass the new variant's body as a single value rather than patching individual sub-paths (see [Updating objects](/docs/management/cli/update) for the rationale).
 
 #### `destroy`
 
@@ -256,7 +256,7 @@ For multi-variant changes (where the entire variant is being switched), pass the
 | `object` | string | yes | Singletons cannot be destroyed. |
 | `value` | object or null | no | JMAP filter object. `{}` or `null` matches every instance of the type. |
 
-Destroys are *filter-based*, not id-based: the CLI runs a paginated `Object/query` with the supplied filter, then destroys every returned id in batches. To delete a specific known id, use a filter that matches it (e.g. `{"name": "..."}`) or the standalone [`delete`](./delete.md) command.
+Destroys are *filter-based*, not id-based: the CLI runs a paginated `Object/query` with the supplied filter, then destroys every returned id in batches. To delete a specific known id, use a filter that matches it (e.g. `{"name": "..."}`) or the standalone [`delete`](/docs/management/cli/delete) command.
 
 The set of filterable properties is whatever the server's `Object/query` accepts for the type. Most user-facing properties (`name`, `domainId`, etc.) are universally supported. Filtering on the `@type` discriminator works for some multi-variant types (notably `Account`) but not all. If a destroy fails with `unsupportedFilter: Filter on property @type is not supported or invalid`, drop the `@type` clause and either destroy all variants of the parent (omit `value`) or filter on a regular property.
 
@@ -569,8 +569,8 @@ apply:
 
 ## See also
 
-* [Exporting server state](./snapshot.md) for the inverse operation (generating an apply plan from a live deployment).
-* [Overview](./overview.md) for installation and connection setup.
-* [Exploring the schema](./describe.md) to discover what objects, fields, and filters are available.
-* [Creating objects](./create.md) and [Updating objects](./update.md) for the single-shot equivalents.
-* [Removing objects](./delete.md) for id-based deletes outside a plan.
+* [Exporting server state](/docs/management/cli/snapshot) for the inverse operation (generating an apply plan from a live deployment).
+* [Overview](/docs/management/cli/) for installation and connection setup.
+* [Exploring the schema](/docs/management/cli/describe) to discover what objects, fields, and filters are available.
+* [Creating objects](/docs/management/cli/create) and [Updating objects](/docs/management/cli/update) for the single-shot equivalents.
+* [Removing objects](/docs/management/cli/delete) for id-based deletes outside a plan.

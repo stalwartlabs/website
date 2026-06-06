@@ -3,7 +3,7 @@ sidebar_position: 9
 title: "Exporting server state"
 ---
 
-The `snapshot` command walks the live server and emits an NDJSON plan in the exact format that [`apply`](./apply.md) consumes. The same file can be used for:
+The `snapshot` command walks the live server and emits an NDJSON plan in the exact format that [`apply`](/docs/management/cli/apply) consumes. The same file can be used for:
 
 * **Configuration backups** (stdout redirected to a versioned artifact, committed to a repository, or stored in a secrets manager).
 * **Cross-environment migration** (snapshot a staging deployment, apply the plan to production).
@@ -47,7 +47,7 @@ stalwart-cli snapshot \
     --output plan.ndjson
 ```
 
-Use [`describe`](./describe.md) to discover what types a deployment exposes.
+Use [`describe`](/docs/management/cli/describe) to discover what types a deployment exposes.
 
 ### Multi-variant types
 
@@ -67,7 +67,7 @@ Any field that references another object (`id<Type>`, `set<id<Type>>`, `map<id<T
   * `x:DkimSignature` → `dkimsignature-a`
 * The mapping is deterministic and idempotent: two snapshots of the same state produce byte-identical plans (modulo server id churn in the fresh snapshot itself).
 
-On the restore side, [`apply`](./apply.md) handles these references through JMAP's `createdIds` mechanism, so the client-ids never need to round-trip back to the source server.
+On the restore side, [`apply`](/docs/management/cli/apply) handles these references through JMAP's `createdIds` mechanism, so the client-ids never need to round-trip back to the source server.
 
 ## Static reference validation
 
@@ -98,7 +98,7 @@ With the above, a `Domain` whose `acmeProviderId` points to a real ACME provider
 
 ## Output format
 
-The plan is **NDJSON**: one operation per line, no enclosing array. The same format [`apply`](./apply.md) consumes.
+The plan is **NDJSON**: one operation per line, no enclosing array. The same format [`apply`](/docs/management/cli/apply) consumes.
 
 ```text
 # Destroy block (unless --no-destroys): one entry per non-singleton parent
@@ -201,7 +201,7 @@ stalwart-cli --url https://prod.mail.example.com \
     apply --file plan.ndjson
 ```
 
-The plan's destroy block wipes the relevant types on production, then recreates them with staging's content. Use [`--dry-run` on `apply`](./apply.md) in the promotion CI step so the diff can be reviewed before taking effect.
+The plan's destroy block wipes the relevant types on production, then recreates them with staging's content. Use [`--dry-run` on `apply`](/docs/management/cli/apply) in the promotion CI step so the diff can be reviewed before taking effect.
 
 ### Round-trip validation
 
@@ -225,6 +225,6 @@ NDJSON files diff line-by-line, which makes round-trip validation easy. The only
 
 ## See also
 
-* [Declarative bulk operations](./apply.md): the consumer of the plan file.
-* [Exploring the schema](./describe.md): to enumerate available types before composing a selection.
-* [Overview](./overview.md): installation and connection setup.
+* [Declarative bulk operations](/docs/management/cli/apply): the consumer of the plan file.
+* [Exploring the schema](/docs/management/cli/describe): to enumerate available types before composing a selection.
+* [Overview](/docs/management/cli/): installation and connection setup.

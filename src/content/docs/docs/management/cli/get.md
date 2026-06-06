@@ -16,7 +16,7 @@ stalwart-cli get <object> [<id>] [--fields name,email,...] [--json]
 * `--fields`: comma-separated list of properties to fetch. When omitted, the server returns every property.
 * `--json`: emit a single-line JSON document instead of the human-friendly view.
 
-The slash form `<Object>/<Variant>` is rejected here (it is only valid for [`create`](./create.md)).
+The slash form `<Object>/<Variant>` is rejected here (it is only valid for [`create`](/docs/management/cli/create)).
 
 ## Reading a regular object
 
@@ -136,6 +136,6 @@ For ObjectId fields, the CLI batches lookups: when a single `get` returns ten re
 
 ## See also
 
-* [Searching and listing](./query.md) for retrieving multiple objects with filters.
-* [Updating objects](./update.md) for modifying an object after fetching it.
-* [Exploring the schema](./describe.md) to discover what fields exist on a given object.
+* [Searching and listing](/docs/management/cli/query) for retrieving multiple objects with filters.
+* [Updating objects](/docs/management/cli/update) for modifying an object after fetching it.
+* [Exploring the schema](/docs/management/cli/describe) to discover what fields exist on a given object.

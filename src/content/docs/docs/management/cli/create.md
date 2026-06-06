@@ -40,7 +40,7 @@ stalwart-cli create account \
   --field domainId=b
 ```
 
-If both the slash form and an explicit `@type` are supplied, the user's value wins and a warning is printed. To inspect a multi-variant object's variants and their fields, see [Exploring the schema](./describe.md).
+If both the slash form and an explicit `@type` are supplied, the user's value wins and a warning is printed. To inspect a multi-variant object's variants and their fields, see [Exploring the schema](/docs/management/cli/describe).
 
 ## Input sources
 
@@ -72,7 +72,7 @@ stalwart-cli create dkimsignature \
   --field selector=2026
 ```
 
-Repeating the same key in one invocation is an error. To set a JSON sub-key in a `create`, use a structured `--field` value (JSON pointer paths are an [`update`](./update.md) feature, not a `create` feature).
+Repeating the same key in one invocation is an error. To set a JSON sub-key in a `create`, use a structured `--field` value (JSON pointer paths are an [`update`](/docs/management/cli/update) feature, not a `create` feature).
 
 #### Quoting field names
 
@@ -122,7 +122,7 @@ By default, the CLI prints a one-line confirmation including the new server-assi
 Created Domain xyz789
 ```
 
-If the server returns additional properties (for example, a generated API key, app password, or DKIM keypair), those are rendered below the confirmation using the same form-driven view as [`get`](./get.md). This matters in cases where the value is shown only once and must be captured immediately. The `ApiKey` and `AppPassword` objects do not take an explicit owner field; the credential is attached to the principal that authenticates the CLI request, so a separate `accountId` is neither supplied nor accepted:
+If the server returns additional properties (for example, a generated API key, app password, or DKIM keypair), those are rendered below the confirmation using the same form-driven view as [`get`](/docs/management/cli/get). This matters in cases where the value is shown only once and must be captured immediately. The `ApiKey` and `AppPassword` objects do not take an explicit owner field; the credential is attached to the principal that authenticates the CLI request, so a separate `accountId` is neither supplied nor accepted:
 
 ```sh
 stalwart-cli create apikey \
@@ -138,12 +138,12 @@ Credential
   Secret: API_AAAAEwAAAAHDN7BtUeZSrGrM9DibqfhzRGD7sw
 ```
 
-The `Secret` value is returned by the server only on this create response. A subsequent [`get`](./get.md) of the same `ApiKey` returns the server's masked placeholder (`****`) for `Secret`; the original cannot be recovered. Capture and store the value before running anything else.
+The `Secret` value is returned by the server only on this create response. A subsequent [`get`](/docs/management/cli/get) of the same `ApiKey` returns the server's masked placeholder (`****`) for `Secret`; the original cannot be recovered. Capture and store the value before running anything else.
 
-Unlike [`get`](./get.md), `create` does not currently support a JSON output mode (the input flag `--json` is reserved as an input source). For machine-readable workflows, use [`apply`](./apply.md), which can emit NDJSON status records.
+Unlike [`get`](/docs/management/cli/get), `create` does not currently support a JSON output mode (the input flag `--json` is reserved as an input source). For machine-readable workflows, use [`apply`](/docs/management/cli/apply), which can emit NDJSON status records.
 
 ## See also
 
-* [Updating objects](./update.md) for modifying an existing object.
-* [Declarative bulk operations](./apply.md) for creating many objects in one plan, including cross-object references.
-* [Exploring the schema](./describe.md) to see required and accepted fields.
+* [Updating objects](/docs/management/cli/update) for modifying an existing object.
+* [Declarative bulk operations](/docs/management/cli/apply) for creating many objects in one plan, including cross-object references.
+* [Exploring the schema](/docs/management/cli/describe) to see required and accepted fields.

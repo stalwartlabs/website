@@ -5,7 +5,7 @@ title: "Exploring the schema"
 
 The `describe` command introspects the schema downloaded from the server and prints, in human-readable form, what objects exist, what fields and variants each one has, what enums are defined, and which list-level filters and sort options are supported.
 
-It is the recommended starting point when working with an unfamiliar deployment or when designing a configuration plan for [bulk apply](./apply.md).
+It is the recommended starting point when working with an unfamiliar deployment or when designing a configuration plan for [bulk apply](/docs/management/cli/apply).
 
 ## Listing every object
 
@@ -29,7 +29,7 @@ SystemSettings          Server-wide configuration. [singleton]
 ...
 ```
 
-The `[singleton]` tag identifies objects that have exactly one instance per server (configuration objects). Singletons cannot be created or destroyed (only updated). See the [Updating objects](./update.md) page for details on how singleton ids work.
+The `[singleton]` tag identifies objects that have exactly one instance per server (configuration objects). Singletons cannot be created or destroyed (only updated). See the [Updating objects](/docs/management/cli/update) page for details on how singleton ids work.
 
 ## Inspecting a single object
 
@@ -71,7 +71,7 @@ The output has up to four sections:
 * **Header**: object name, optional `[singleton]` tag, description.
 * **Fields** (single-schema objects): every property the server exposes, with type, mutability (`mutable`, `immutable`, `server-set`), and a description.
 * **Variants** (multi-variant objects): each `@type` discriminator value with a label, followed by that variant's fields. See the next section.
-* **Filters**: what `--where` keys [`query`](./query.md) accepts for this object. The kind (`text`, `integer`, `date`, `enum`, `id<Object>`) hints at the expected value shape.
+* **Filters**: what `--where` keys [`query`](/docs/management/cli/query) accepts for this object. The kind (`text`, `integer`, `date`, `enum`, `id<Object>`) hints at the expected value shape.
 * **Sort by**: the property names accepted by JMAP `sort` (omitted when none are declared).
 
 A `?` after a type indicates the field is nullable (`null` is an accepted value).
@@ -112,7 +112,7 @@ Filters:
     memberTenantId  id<Tenant>         Tenant
 ```
 
-When [creating](./create.md) a multi-variant object, the `@type` must be supplied (either via the `Object/Variant` shorthand or as an explicit field). `Filters` are always merged across the parent object's list and any view lists that target it, and deduplicated by field name.
+When [creating](/docs/management/cli/create) a multi-variant object, the `@type` must be supplied (either via the `Object/Variant` shorthand or as an explicit field). `Filters` are always merged across the parent object's list and any view lists that target it, and deduplicated by field name.
 
 ## Inspecting an enum
 
@@ -149,6 +149,6 @@ TracingLevel  (enum)
 
 ## Tips
 
-* The output is purely descriptive (no requests are issued for individual objects). Run it freely to learn the schema before designing an [apply plan](./apply.md).
+* The output is purely descriptive (no requests are issued for individual objects). Run it freely to learn the schema before designing an [apply plan](/docs/management/cli/apply).
 * For very large enums (hundreds of variants), `describe` on an object that references one shows `enum (see <enumName>)` instead of inlining the values. Run `describe <enumName>` to see them.
 * Field type summaries use compact notation: `string<format>`, `number<format>`, `set<scalar>`, `list<embedded>`, `map<key, value>`, `id<RefObject>`. The `?` suffix marks nullable fields.

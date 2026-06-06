@@ -3,7 +3,7 @@ sidebar_position: 7
 title: "Removing objects"
 ---
 
-The `delete` command destroys one or more objects by id. Singletons cannot be destroyed (they can only be updated; see [Updating objects](./update.md)).
+The `delete` command destroys one or more objects by id. Singletons cannot be destroyed (they can only be updated; see [Updating objects](/docs/management/cli/update)).
 
 ## Synopsis
 
@@ -40,7 +40,7 @@ or a comma-, space-, or newline-separated list:
 printf 'id1\nid2\nid3\n' | stalwart-cli delete domain --stdin
 ```
 
-This is convenient when piping from [`query`](./query.md):
+This is convenient when piping from [`query`](/docs/management/cli/query):
 
 ```sh
 stalwart-cli query domain --where namespace=tmp --json \
@@ -72,13 +72,13 @@ Internally, deletions are split into batches of `maxObjectsInSet` (taken from th
 | SetError type | Meaning | Resolution |
 |---|---|---|
 | `objectIsLinked` | Other objects reference this one | Destroy the linked objects first (the message lists them) |
-| `notFound` | The id does not exist | Confirm with [`query`](./query.md) |
+| `notFound` | The id does not exist | Confirm with [`query`](/docs/management/cli/query) |
 | `forbidden` | Insufficient permissions on this object type | Authenticate as a user with the required permission |
-| `singleton` | An attempt was made to destroy a singleton | Use [`update`](./update.md) instead |
+| `singleton` | An attempt was made to destroy a singleton | Use [`update`](/docs/management/cli/update) instead |
 
-For dependency-aware bulk teardowns (where order matters), the [`apply`](./apply.md) command processes destroys in reverse plan order, which makes it the right tool for tearing down full deployments.
+For dependency-aware bulk teardowns (where order matters), the [`apply`](/docs/management/cli/apply) command processes destroys in reverse plan order, which makes it the right tool for tearing down full deployments.
 
 ## See also
 
-* [Searching and listing](./query.md) to obtain the ids to delete.
-* [Declarative bulk operations](./apply.md) for filter-based destroys and dependency-ordered teardowns.
+* [Searching and listing](/docs/management/cli/query) to obtain the ids to delete.
+* [Declarative bulk operations](/docs/management/cli/apply) for filter-based destroys and dependency-ordered teardowns.
