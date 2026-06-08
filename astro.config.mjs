@@ -33,6 +33,10 @@ export default defineConfig({
   redirects: {
     "/docs": "/docs/install/",
     "/docs/install/get-started": "/docs/install/",
+    "/docs/management/tasks": "/docs/management/tasks-actions/tasks",
+    "/docs/management/actions": "/docs/management/tasks-actions/actions",
+    "/docs/applications": "/docs/management/applications/",
+    "/docs/applications/update": "/docs/management/applications/update",
   },
   server: {
     host: "127.0.0.1",

@@ -13,6 +13,6 @@ A [Domain](/docs/ref/object/domain) (found in the WebUI under <!-- breadcrumb:Do
 
 ## Refreshing records
 
-Records are kept current by the task manager. The [Task](/docs/ref/object/task) object exposes a `DnsManagement` variant that targets a specific [Domain](/docs/ref/object/domain) and optionally narrows the refresh to a subset of record types through its `updateRecords` field. Triggering a task of this variant causes Stalwart to reconcile the domain's zone with the current configuration, publishing any missing records and replacing any stale ones. The same variant is used internally when DKIM keys are rotated or when the set of managed records changes. See [Scheduled tasks](/docs/management/tasks) for how tasks are scheduled, triggered, and monitored.
+Records are kept current by the task manager. The [Task](/docs/ref/object/task) object exposes a `DnsManagement` variant that targets a specific [Domain](/docs/ref/object/domain) and optionally narrows the refresh to a subset of record types through its `updateRecords` field. Triggering a task of this variant causes Stalwart to reconcile the domain's zone with the current configuration, publishing any missing records and replacing any stale ones. The same variant is used internally when DKIM keys are rotated or when the set of managed records changes. See [Scheduled tasks](/docs/management/tasks-actions/tasks) for how tasks are scheduled, triggered, and monitored.
 
 For the list of supported providers and protocols, see [Supported providers](/docs/server/dns/provider).

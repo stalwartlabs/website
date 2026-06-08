@@ -52,7 +52,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `defaultReturnPath`
 
-> Type: [<code>Expression</code>](#expression) · required
+> Type: [<code>Expression</code>](#expression)
 >
 > Default return path to use in email notifications sent from a Sieve script
 >

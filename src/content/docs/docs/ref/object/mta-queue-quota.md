@@ -34,7 +34,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `match`
 
-> Type: [<code>Expression</code>](#expression) · required
+> Type: [<code>Expression</code>](#expression)
 >
 > Enable the imposition of concurrency and rate limits only when a specific condition is met
 >

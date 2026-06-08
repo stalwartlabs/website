@@ -42,6 +42,6 @@ The update procedure is identical whether it was triggered by the schedule or by
 2. Unpacks the archive into the working directory selected by [`unpackDirectory`](/docs/ref/object/application#unpackdirectory), rewriting the `<base href>` in `index.html` to match the mount path.
 3. Swaps the live mount over to the newly unpacked files so that subsequent HTTP requests for the Application's [`urlPrefix`](/docs/ref/object/application#urlprefix) entries are served from the new version.
 
-No checksum or signature verification is performed on the downloaded bundle; see the [bundle format](/docs/applications/#bundle-format) section for the security implications. A malformed archive or an unreachable download is logged and leaves the previously installed bundle in service, so a failed update does not take an Application offline.
+No checksum or signature verification is performed on the downloaded bundle; see the [bundle format](/docs/management/applications/#bundle-format) section for the security implications. A malformed archive or an unreachable download is logged and leaves the previously installed bundle in service, so a failed update does not take an Application offline.
 
 Disabled Applications (those with [`enabled`](/docs/ref/object/application#enabled) set to `false`) are skipped during both scheduled and on-demand runs. An `UpdateApps` Action always refreshes every enabled Application in a single run; the variant has no fields to limit the operation to a single Application.

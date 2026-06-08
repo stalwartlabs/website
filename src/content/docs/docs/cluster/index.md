@@ -7,7 +7,7 @@ Clustering and high availability are central to scalable mail infrastructure. Cl
 
 Stalwart supports clustering and high availability natively. Deployments can range from a single node to thousands of nodes in a high-demand environment. The server recovers from faults automatically, tolerates hardware and software failures, and keeps operating with minimal manual intervention.
 
-Unlike many traditional mail servers, Stalwart does not rely on external directors or proxy servers to route traffic or manage roles. Any node within a Stalwart cluster can handle IMAP, SMTP, JMAP, or WebDAV requests independently. This simplifies deployment, removes single points of failure, and improves horizontal scalability.
+Unlike many traditional mail servers, Stalwart does not rely on external directors or proxy servers to route traffic. Any node within a Stalwart cluster can handle IMAP, SMTP, JMAP, or WebDAV requests independently. This simplifies deployment, removes single points of failure, and improves horizontal scalability.
 
 In addition to stateless protocol handling, Stalwart supports distributed SMTP queues, so multiple instances process the queue concurrently. Delivery throughput increases and service continues if an individual node becomes unavailable.
 

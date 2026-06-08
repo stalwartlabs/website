@@ -29,6 +29,14 @@
 /docs/server/overview                    /docs/server/                   301
 /docs/development/overview               /docs/development/              301
 
+# Tasks & Actions moved under their own subdirectory.
+/docs/management/tasks                    /docs/management/tasks-actions/tasks     301
+/docs/management/actions                  /docs/management/tasks-actions/actions   301
+
+# Applications moved under Management.
+/docs/applications                        /docs/management/applications/           301
+/docs/applications/update                 /docs/management/applications/update     301
+
 # Wildcard fallback: any nested `/docs/.../overview` path now lives at
 # `/docs/.../`. Cloudflare splat matching keeps anchors and query strings.
 /docs/*/overview                         /docs/:splat/                   301

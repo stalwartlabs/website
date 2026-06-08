@@ -137,7 +137,7 @@ The documentation is versioned; links below point at the current release line. O
 - [Management overview](https://stalw.art/docs/management/): administering a running server.
 - [CLI overview](https://stalw.art/docs/management/cli/): the `stalwart` CLI (get, query, create, update, delete, apply, snapshot).
 - [Web UI overview](https://stalw.art/docs/management/webui/): the admin web interface.
-- [Actions](https://stalw.art/docs/management/actions) and [Tasks](https://stalw.art/docs/management/tasks): operational actions and background tasks.
+- [Tasks & Actions](https://stalw.art/docs/management/tasks-actions/): operational actions and background tasks, with [Actions](https://stalw.art/docs/management/tasks-actions/actions) and [Tasks](https://stalw.art/docs/management/tasks-actions/tasks).
 - [Database maintenance](https://stalw.art/docs/management/maintenance/database) and [Migration](https://stalw.art/docs/management/maintenance/migration).
 - [Troubleshooting](https://stalw.art/docs/management/troubleshoot): diagnostic procedures.
 - [Telemetry overview](https://stalw.art/docs/telemetry/): metrics, traces, events.
@@ -160,7 +160,7 @@ The documentation is versioned; links below point at the current release line. O
 - [Database internals](https://stalw.art/docs/development/database): on-disk data layout.
 - [Supported RFCs](https://stalw.art/docs/development/rfcs): RFC compliance matrix.
 - [URN reference](https://stalw.art/docs/development/urn): internal URN scheme.
-- [Client applications](https://stalw.art/docs/applications/): recommended client applications.
+- [Client applications](https://stalw.art/docs/management/applications/): recommended client applications.
 - [Blog](https://stalw.art/blog): release announcements and articles.
 - [0.15 documentation](https://stalw.art/docs/0.15/install/get-started): previous release line.
 - [GitHub](https://github.com/stalwartlabs): source code and issue tracker.

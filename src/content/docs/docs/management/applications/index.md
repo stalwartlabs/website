@@ -29,7 +29,7 @@ When [access control](/docs/http/access-control) rules are in force, requests to
 
 ## Installing an Application
 
-An Application is installed by creating an [Application](/docs/ref/object/application) record with the bundle's download URL in [`resourceUrl`](/docs/ref/object/application#resourceurl), the desired mount paths in [`urlPrefix`](/docs/ref/object/application#urlprefix), and a short [`description`](/docs/ref/object/application#description). The server then fetches the archive on the schedule described on the [Updates](/docs/applications/update) page, unpacks it into the working directory, and begins serving the files. The same workflow is exposed through the WebUI, through `stalwart-cli`, and directly over the JMAP API on the `x:Application/set` method.
+An Application is installed by creating an [Application](/docs/ref/object/application) record with the bundle's download URL in [`resourceUrl`](/docs/ref/object/application#resourceurl), the desired mount paths in [`urlPrefix`](/docs/ref/object/application#urlprefix), and a short [`description`](/docs/ref/object/application#description). The server then fetches the archive on the schedule described on the [Updates](/docs/management/applications/update) page, unpacks it into the working directory, and begins serving the files. The same workflow is exposed through the WebUI, through `stalwart-cli`, and directly over the JMAP API on the `x:Application/set` method.
 
 ## Outbound network requirement
 
