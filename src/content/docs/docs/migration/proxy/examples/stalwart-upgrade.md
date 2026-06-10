@@ -3,7 +3,7 @@ sidebar_position: 3
 title: "Upgrading Stalwart"
 ---
 
-This example runs an older Stalwart deployment and a newer one side by side behind the proxy and migrates accounts from one to the other gradually. It is the reference proxy configuration for the [Stalwart migration guide](/docs/migration/guide/), which walks through the full end-to-end procedure. This page concentrates on the proxy configuration itself and the reasoning behind each decision. A ready-to-edit version of the file below ships in the proxy repository as `resources/config.stalwart-upgrade.toml`.
+This example runs an older Stalwart deployment and a newer one side by side behind the proxy and migrates accounts from one to the other gradually. It is the reference proxy configuration for the [Stalwart migration guide](/docs/migration/guide/), which walks through the full end-to-end procedure. This page concentrates on the proxy configuration itself and the reasoning behind each decision. A ready-to-edit version of the file below ships in the proxy repository as [`resources/dovecot-postfix-trust.conf`](https://github.com/stalwartlabs/proxy/blob/main/resources/config.stalwart-upgrade.toml).
 
 Because both backends are Stalwart, both understand the PROXY protocol, so each destination announces the real client to its backend. Beyond the mail protocols, this scenario also routes HTTP and JMAP traffic, including WebDAV and WebSocket connections. The two deployments expose different web interfaces and login endpoints, and the same hostname has to serve both, so the HTTP rules pin the handful of paths that are unique to each version and resolve everything else by the account behind the request.
 

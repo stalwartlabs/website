@@ -5,11 +5,11 @@ title: "Preparation"
 
 The migration relies on four components running alongside the existing deployment: the new Stalwart server, the Stalwart command-line interface, the migration proxy and Vandelay. This stage installs all four. None of them touches the live server, so the entire stage is performed without downtime and without any change visible to existing clients.
 
-The guide assumes an existing, running Stalwart deployment of version 0.15 or below, referred to throughout as the old deployment, and that the goal is to move its accounts onto a fresh installation of the latest release, referred to as the new deployment.
+The guide assumes an existing, running self-hosted mail server, referred to throughout as the source: either a Stalwart deployment of version 0.15 or below, or a Dovecot and Postfix stack such as Mail-in-a-Box or mailcow. The goal is to move its accounts onto a fresh installation of the latest Stalwart release, referred to as the new deployment.
 
 ## Planning the addresses
 
-The proxy will eventually take over the public ports that the old server currently answers on, so the two Stalwart deployments need to be reachable at addresses of their own that the proxy can forward to. A common arrangement gives each deployment an internal hostname, for example `old.internal.example.org` and `new.internal.example.org`, while the public hostname that clients already use, such as `mail.example.org`, is repointed to the proxy at the cutover. Deciding on these addresses now makes the configuration that follows straightforward. No public DNS change is made yet; the public hostname continues to resolve to the old server until the cutover.
+The proxy will eventually take over the public ports that the source currently answers on, so the source and the new deployment need to be reachable at addresses of their own that the proxy can forward to. A common arrangement gives each an internal hostname, for example `source.internal.example.org` and `new.internal.example.org`, while the public hostname that clients already use, such as `mail.example.org`, is repointed to the proxy at the cutover. Deciding on these addresses now makes the configuration that follows straightforward. No public DNS change is made yet; the public hostname continues to resolve to the source until the cutover.
 
 ## Installing the new Stalwart deployment
 
@@ -31,4 +31,4 @@ Vandelay performs the per-account data transfer. It is installed on an administr
 
 ## Rollback
 
-Nothing installed in this stage alters the old deployment or the path that clients take to it. Abandoning the migration here requires no rollback: the additional components can simply be left unused or removed, and the old server continues to operate exactly as before.
+Nothing installed in this stage alters the source or the path that clients take to it. Abandoning the migration here requires no rollback: the additional components can simply be left unused or removed, and the source continues to operate exactly as before.

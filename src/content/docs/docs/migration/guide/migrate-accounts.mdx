@@ -1,0 +1,297 @@
+---
+sidebar_position: 7
+title: "Migrating accounts"
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+With the proxy live and every account still served from the source, accounts are now moved one at a time. Moving an account recreates it on the new server, copies its data across with Vandelay, and then flips its mapping so the proxy routes it to the new server. Everything except the final flip happens while the account continues to be served from the source, so the work is invisible to the account's owner until the moment of the switch, which disconnects any live session and lets it reconnect to the new server automatically. There is no downtime; an account is either served by the source or, after its switch, by the new deployment.
+
+The procedure below moves a single account and is repeated for each. It is written for an account whose address is `alice@example.org`. The data that has to survive the move is the account's mail, its mailboxes and their structure, its sieve scripts, its contacts and address books, its calendars and events, and its files, all of which Vandelay carries. Where a step differs by source, a tabbed block shows each variant; selecting the source once carries the choice through the page. The destination names `old` and `new` used below are those of the Stalwart configuration; for a Dovecot and Postfix source they are `legacy` and `stalwart`.
+
+## Directing the administrator session
+
+<Tabs syncKey="source">
+<TabItem label="Older Stalwart">
+
+The migration tools authenticate as an administrator and connect to the proxy on the public hostname, exactly as a client would. The proxy therefore routes them by the administrator's login, which means the proxy has to be told which deployment an administrative session should reach. This is done with a single mapping entry for the administrator account, pointed at the source while data is being read from it and at the new server while data is being written to it.
+
+The proxy's management API sets the entry. The administrator token authorises the call:
+
+```bash
+TOKEN=$(cat /etc/proxy/admin.token)
+admin_route() {
+  curl -sk -X PUT -H "Authorization: Bearer $TOKEN" \
+    "https://127.0.0.1:9443/mappings?identifier=admin&destination=$1"
+}
+```
+
+`admin_route old` and `admin_route new` then point the administrative session at the chosen deployment before each tool is run. When the migration of all accounts is complete the entry is removed, which the [finalizing](/docs/migration/guide/finalize/) step covers.
+
+</TabItem>
+<TabItem label="Dovecot / Postfix">
+
+For a Dovecot and Postfix source the migration tools do not need to be routed through the proxy. The source is read directly with the master user configured on the [source's configuration page](/docs/migration/guide/configure-source/dovecot-postfix/), and the new account is created and filled by administering the new server directly at its internal address. Neither operation passes through the proxy, so no administrator mapping entry is required.
+
+If a tool is nonetheless pointed at the public hostname rather than at a server's own address, the proxy routes it by the `admin` login like any other account, and a mapping entry for `admin` pointed at `stalwart` steers it to the new server while writing. The token that authorises such a call is read once for the management calls used later in this page:
+
+```bash
+TOKEN=$(cat /etc/proxy/admin.token)
+```
+
+</TabItem>
+</Tabs>
+
+## Recreating the account on the new server
+
+<Tabs syncKey="source">
+<TabItem label="Older Stalwart">
+
+The account is recreated from its definition on the source, preserving its password so that the owner notices no change in credentials. A small script reads the account from the source's management API and produces a plan that the command-line interface applies. The script is published in the proxy repository as [`resources/migrate_v015_to_plan.py`](https://github.com/stalwartlabs/proxy/blob/main/resources/migrate_v015_to_plan.py).
+
+The account is read from the source, so the administrative session is pointed there first. The script is given the source's administrator credentials and the identifier of the domain as it exists on the new server, because that domain was already created during the new server's configuration and the plan has to reference it rather than create it again. The domain identifier is read from the new server, then supplied to the script:
+
+```bash
+stalwart-cli query Domain --where name=example.org --fields id
+
+admin_route old
+python3 migrate_v015_to_plan.py alice \
+  --url https://mail.example.org \
+  --user admin --password "$OLD_ADMIN_PASSWORD" \
+  --existing-domain example.org=<domain-id> \
+  --output alice-plan.ndjson
+```
+
+The `<domain-id>` is the value the query printed. Supplying it tells the script to reference the existing domain on the new server rather than emit an instruction to create it, which would fail because the domain already exists.
+
+The script writes a plan describing the account: its name, its domain, its password and any aliases it carried. Passwords are copied as stored hashes rather than in clear, so the original password continues to work without ever being known to the migration. The plan is then applied to the new server, which is where the account is created, so the administrative session is pointed there:
+
+```bash
+admin_route new
+stalwart-cli apply --file alice-plan.ndjson
+```
+
+</TabItem>
+<TabItem label="Dovecot / Postfix">
+
+A Dovecot and Postfix source has no Stalwart management API to read, so the account is recreated on the new server from the source's own user directory. Where that directory lives depends on the deployment: a `passwd-file`, an LDAP or SQL backend, or the user list a distribution such as Mail-in-a-Box or mailcow maintains. The account is created on the new server with the command-line interface, named by its full e-mail address:
+
+```bash
+stalwart-cli create Account/User \
+  --field name=alice@example.org \
+  --field description="Alice"
+```
+
+The original password is preserved when the source exposes its stored hash. Stalwart recognises the common crypt formats, so a secret that begins with a recognised prefix, such as `$6$` for sha512-crypt, `$2` for bcrypt or `$argon2`, is stored verbatim and continues to verify the owner's existing password; a secret supplied in clear is hashed on creation. The hash read from the source directory is set as the account's secret:
+
+```bash
+stalwart-cli update Account alice@example.org \
+  --field 'secret=$6$rounds=5000$...'
+```
+
+When the source does not expose usable hashes, a temporary password is set and the owner is asked to reset it after migration. Aliases the account carried on the source are recreated alongside it with the same interface.
+
+</TabItem>
+</Tabs>
+
+After the account is created its credentials must be made effective immediately, because the new server caches the absence of an account it has never seen. Invalidating the caches forces the new account and its password to be recognised on the next authentication attempt:
+
+```bash
+stalwart-cli create Action --json '{"@type":"InvalidateCaches"}'
+```
+
+Skipping this invalidation is the most common reason a freshly created account appears to reject its correct password, because a stale negative cache entry continues to answer until it expires.
+
+## Copying the account data
+
+The account now exists on the new server but is empty. Vandelay fills it by reading the account from the source into a local archive and then writing that archive onto the new server. The archive is an ordinary file that holds one account; keeping it until the migration of this account has been validated provides a local copy of everything that was moved.
+
+<Tabs syncKey="source">
+<TabItem label="Older Stalwart">
+
+Reading from the source is done with the source's administrator credentials, with the administrative session pointed at the source. The account is named as it is known on the source, which for a server that predates e-mail-address logins is the bare account name:
+
+```bash
+admin_route old
+export VANDELAY_PASSWORD="$OLD_ADMIN_PASSWORD"
+
+vandelay import jmap \
+  --url https://mail.example.org \
+  --auth-basic admin \
+  --account-name alice \
+  alice.sqlite
+```
+
+This reads the account's mail, mailboxes, sieve scripts, contacts and calendars over JMAP. Files are handled separately. Older Stalwart releases implement an earlier draft of the JMAP file specification that Vandelay's JMAP file transfer does not recognise, so the account's files are read from the source over WebDAV instead, into the same archive. The WebDAV path addresses the account's file area on the source:
+
+```bash
+vandelay import webdav \
+  --url https://mail.example.org/dav/file/alice/ \
+  --auth-basic admin \
+  alice.sqlite
+```
+
+</TabItem>
+<TabItem label="Dovecot / Postfix">
+
+A Dovecot and Postfix source is read over IMAP for mail and over ManageSieve for sieve scripts, using the master user configured on the source. Because the source accepts direct connections, Vandelay reads it at its own address rather than through the proxy. The master user is presented as `<account>%<master-user>`, here `alice@example.org%vmadmin`, with the master user's password:
+
+```bash
+export VANDELAY_PASSWORD="$MASTER_PASSWORD"
+
+vandelay import imap \
+  --url imaps://source.internal.example.org \
+  --auth-basic 'alice@example.org%vmadmin' \
+  alice.sqlite
+
+vandelay import managesieve \
+  --url sieve://source.internal.example.org \
+  --auth-basic 'alice@example.org%vmadmin' \
+  alice.sqlite
+```
+
+Calendars and contacts are read with `vandelay import caldav` and `vandelay import carddav` when the deployment runs a CalDAV or CardDAV server such as SOGo, Radicale or Baikal, against that server's address. A Dovecot and Postfix stack serves no files, so there is no file import on the source side.
+
+</TabItem>
+</Tabs>
+
+The contents of the archive can be inspected before it is written anywhere, which is a useful confirmation that the expected data was read:
+
+```bash
+vandelay inspect alice.sqlite
+```
+
+The archive is then written onto the new server. Writing uses the new server's administrator credentials and names the account by its full e-mail address as it is known there:
+
+<Tabs syncKey="source">
+<TabItem label="Older Stalwart">
+
+```bash
+admin_route new
+export VANDELAY_PASSWORD="$NEW_ADMIN_PASSWORD"
+
+vandelay export \
+  --url https://mail.example.org \
+  --auth-basic admin \
+  --account-name alice@example.org \
+  alice.sqlite
+```
+
+</TabItem>
+<TabItem label="Dovecot / Postfix">
+
+```bash
+export VANDELAY_PASSWORD="$NEW_ADMIN_PASSWORD"
+
+vandelay export \
+  --url https://new.internal.example.org \
+  --auth-basic admin \
+  --account-name alice@example.org \
+  alice.sqlite
+```
+
+</TabItem>
+</Tabs>
+
+Vandelay matches the account's standard mailboxes against those the new account already has, so the inbox, sent, drafts and other default folders are reused rather than duplicated, and the messages are placed inside them. Mail, sieve scripts, contacts, calendars and, for a Stalwart source, files are all written across. Because Vandelay reconciles rather than blindly inserts, re-running the export after an interruption completes it without creating duplicates.
+
+## Routing the account to the new server
+
+At this point the account exists on both servers: the copy on the source is intact and the new copy is a faithful reproduction of it. The switch is made by flipping the account's mapping to the new server. Both the e-mail address and, if the source allowed it, the bare account name are pointed at the new server so that either login form follows. Any live session is then disconnected so that it reconnects through the new mapping:
+
+```bash
+curl -sk -X PUT -H "Authorization: Bearer $TOKEN" \
+  "https://127.0.0.1:9443/mappings?identifier=alice@example.org&destination=new"
+curl -sk -X PUT -H "Authorization: Bearer $TOKEN" \
+  "https://127.0.0.1:9443/mappings?identifier=alice&destination=new"
+curl -sk -X POST -H "Authorization: Bearer $TOKEN" \
+  "https://127.0.0.1:9443/connections/kick?identifier=alice@example.org"
+```
+
+From this moment the account is served by the new deployment. Its mail, web client and every protocol follow the same mapping, so a client reconnecting after the disconnection lands on the new server without any reconfiguration. Inbound mail for the account, which was being relayed to the source, is now recognised by the new server as a local account and delivered locally instead, with no change required.
+
+## Validating the migrated account
+
+Validation confirms that the account works on the new server and that its data arrived intact, and it is done before moving on, because an account is far easier to roll back immediately than after its owner has begun using it on the new server.
+
+Authentication is confirmed by signing in through the proxy with the account's original password, which now reaches the new server. An IMAP session lists the migrated mailboxes and their message counts:
+
+```bash
+openssl s_client -quiet -connect mail.example.org:993 <<'EOF'
+a1 LOGIN alice@example.org "password"
+a2 LIST "" "*"
+a3 STATUS INBOX (MESSAGES)
+a4 LOGOUT
+EOF
+```
+
+The other data types are confirmed over JMAP, which the new server serves regardless of what the source was. A session request returns the account's identifier, and method calls against it report the number of e-mails, contacts, calendar events and files, which are compared against what the account held on the source:
+
+```bash
+curl -sk -u 'alice@example.org:password' https://mail.example.org/.well-known/jmap
+```
+
+Opening the account in a real mail client and in the web interface, sending a message to it and reading existing mail, is the final confirmation that the migration succeeded for this account. Only then is the next account migrated.
+
+## Login names after migration
+
+The latest Stalwart releases identify accounts by their full e-mail address. An account that signed in to the source with a bare name continues to work after migration because the new server appends the account's domain to a bare login, turning `alice` into `alice@example.org`, provided a default domain is configured. Pointing both the bare name and the e-mail address at the new server in the mapping, as shown above, keeps either login form working through the proxy. Account owners can be advised to switch to the full e-mail address at their convenience, but nothing forces an immediate change.
+
+## Rollback
+
+An account can be returned to the source at any time, because the copy on the source was never removed. The migration only ever copied data, so the source still holds the account exactly as it was at the moment of the copy.
+
+The immediate rollback reverses the mapping, pointing the account back at the source and disconnecting its current sessions:
+
+```bash
+curl -sk -X PUT -H "Authorization: Bearer $TOKEN" \
+  "https://127.0.0.1:9443/mappings?identifier=alice@example.org&destination=old"
+curl -sk -X PUT -H "Authorization: Bearer $TOKEN" \
+  "https://127.0.0.1:9443/mappings?identifier=alice&destination=old"
+curl -sk -X POST -H "Authorization: Bearer $TOKEN" \
+  "https://127.0.0.1:9443/connections/kick?identifier=alice@example.org"
+```
+
+If the rollback happens immediately after the switch, before the account has received or created anything on the new server, this is all that is required: the copy on the source is complete and current. If the account was active on the new server for a while, any mail or other data that arrived there after the switch exists only on the new server and has to be carried back.
+
+<Tabs syncKey="source">
+<TabItem label="Older Stalwart">
+
+Carrying data back is done by reversing the Vandelay direction, reading the account from the new server and writing it onto the source, with the administrative session pointed appropriately:
+
+```bash
+admin_route new
+VANDELAY_PASSWORD="$NEW_ADMIN_PASSWORD" vandelay import jmap \
+  --url https://mail.example.org --auth-basic admin \
+  --account-name alice@example.org alice-back.sqlite
+
+admin_route old
+VANDELAY_PASSWORD="$OLD_ADMIN_PASSWORD" vandelay export \
+  --url https://mail.example.org --auth-basic admin \
+  --account-name alice alice-back.sqlite
+```
+
+Mail, mailboxes, sieve scripts, contacts and calendars are carried back this way. Files are the exception: the source's earlier JMAP file draft does not accept the files Vandelay writes, so any file created or changed on the new server after the switch cannot be written back automatically and has to be copied by hand over WebDAV from the new server to the source. For this reason, rolling an account back is simplest when done promptly, before significant new data accumulates on the new server.
+
+</TabItem>
+<TabItem label="Dovecot / Postfix">
+
+Vandelay's export writes onto a Stalwart server over JMAP, not onto a Dovecot and Postfix stack, so the account cannot be carried back to the source with a reverse export. The source still holds the complete copy made at migration, so an immediate rollback by remapping loses nothing; only the mail and other items that arrived on the new server after the switch are at stake. They are recovered by reading the account from the new server into a Vandelay archive and converting that archive to a Maildir tree with the `export_archive.py` script in the Vandelay repository's `scripts/` directory. The account has already been remapped to the source by the calls above, so the new server is read at its own address rather than through the proxy:
+
+```bash
+export VANDELAY_PASSWORD="$NEW_ADMIN_PASSWORD"
+vandelay import jmap \
+  --url https://new.internal.example.org \
+  --auth-basic admin \
+  --account-name alice@example.org \
+  alice-back.sqlite
+
+python3 export_archive.py alice-back.sqlite alice-rollback
+```
+
+The script writes the archive's mail under `alice-rollback/mail/` in Maildir layout, preserving the folder structure and the seen, answered, flagged, draft and deleted flags, and writes the account's calendars, contacts, sieve scripts and files alongside it. The `mail/` tree is then merged into the account's Maildir on the source, which makes the messages that arrived on the new server appear there. The archive holds the whole account as it stood on the new server, not only the messages added after the switch, so the merge is restricted to what the source does not already have, for example by matching on `Message-ID`, to avoid reintroducing duplicates of the mail that was migrated. Rolling an account back is therefore simplest when done promptly, before significant new data accumulates on the new server.
+
+</TabItem>
+</Tabs>
+
+Once the account is serving from the source again and its recent data has been carried back, the new copy can be left in place for a later retry or removed.

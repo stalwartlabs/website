@@ -1,0 +1,39 @@
+---
+title: "Migration proxy: zero-downtime upgrades"
+description: "Vandelay shipped the data-transfer half of our zero-downtime migration story. Today we complete it with the migration proxy, which fronts an old and a new Stalwart deployment on a single endpoint and shifts traffic account by account as mailboxes move, so deployments stuck on v0.15 or below can finally reach v0.16 with no maintenance window. The same proxy migrates from other self-hosted mail systems too."
+authors: [mdecimus]
+tags: [proxy, migration, vandelay, upgrade, server]
+excerpt: |
+  A good number of Stalwart deployments are still on an older release for one reason: upgrading between versions meant a maintenance window, and downtime on a mail server is the one thing nobody wants to schedule. We promised a zero-downtime path built from two tools. Vandelay, the data-transfer half, [shipped a couple of weeks ago](/blog/jmap-account-migration/). Today we are shipping the second and final part, the migration proxy, and with it the full workflow is real: a live deployment can move from an older Stalwart version to v0.16 one account at a time, with no scheduled maintenance window and nothing for end users to reconfigure.
+date: 2026-06-10
+---
+
+A good number of Stalwart deployments are still running an old release, some on v0.15 and some as far back as v0.11, and in most cases not by choice. Upgrading between versions on a populated server has meant migrating the stored data onto a new on-disk schema, and migrating data means downtime, and downtime on a mail server is the one thing nobody wants to schedule. So the upgrade keeps getting postponed, and a deployment that should be on the current line stays where it is. We promised a way out of that bind: a zero-downtime migration path built from two tools that work together.
+
+The first of those, Vandelay, [shipped a couple of weeks ago](/blog/jmap-account-migration/). It is the transfer tool, the part that moves an account's data, its mail, calendars, contacts, filters and files, from one server to another, one account at a time.
+
+Today we are shipping the second and final component, the [migration proxy](https://github.com/stalwartlabs/proxy), and with it the full workflow is complete. A live production deployment can now move from an older Stalwart version to v0.16 on an account-by-account basis, with no scheduled maintenance window and nothing for end users to reconfigure. What makes that possible is the proxy standing in front of both the old and the new deployment as a single endpoint, routing each connection to whichever server currently owns the account behind it.
+
+### A single endpoint in front of two deployments
+
+The proxy sits on the public mail and web ports that clients already use and terminates each protocol far enough to see who is connecting. From the credentials the client presents, its IMAP, POP3, SMTP, ManageSieve or JMAP login, it derives which account the connection belongs to, looks up which of the two deployments currently owns that account, and bridges the session to it. Because the decision comes from the login itself, clients keep the same hostname, the same ports and the same passwords throughout, and nothing on their devices changes.
+
+Inbound mail is handled without needing a login to route on. The new deployment becomes the public mail exchanger for the duration of the migration and performs split delivery: a message for an account that has already moved is delivered locally, while a message for an account that still lives on the old server is relayed there. Mail never has to be repointed in the middle of the migration, and it keeps flowing to every account regardless of which side currently holds it.
+
+Moving an account is then a small, self-contained operation. Vandelay copies the account's mail, mailboxes, sieve scripts, contacts, calendars and files into the new deployment while the account continues to be served from the old one, so the work is invisible to its owner. When the copy has been verified, a single routing entry is flipped and the account's next connection lands on the new server. The switch disconnects any live session, which reconnects on its own, and that is the entire visible effect. Until an account accumulates new data on the new server the move stays fully reversible, because the old copy is never removed. The result is that a gradual, account-by-account, reversible migration looks, from the outside, like an ordinary server that never went down.
+
+### Migrating from other self-hosted systems
+
+Although the immediate reason we built the proxy was Stalwart-to-Stalwart upgrades, the same model works for moving onto Stalwart from another self-hosted mail server. Legacy stacks built on Dovecot and Postfix, the foundation of distributions such as Mail-in-a-Box and mailcow, can sit behind the proxy exactly as an older Stalwart does. The proxy announces the real client to those backends over XCLIENT and the IMAP ID rather than the PROXY protocol, and Vandelay reads their data over IMAP, ManageSieve, CalDAV and CardDAV instead of JMAP, but the shape of the migration is the same: front both servers, copy each account, flip it over, keep a way back. For operators who have been looking for a path off an aging self-hosted deployment and onto a modern open-source server, this is that path, and it comes without a flag day.
+
+### Documentation and where to start
+
+Alongside the proxy we are publishing the documentation we promised when Vandelay shipped: a complete, step-by-step migration guide that covers the whole workflow end to end. The [migration overview](/docs/migration/) introduces the two tools and how they fit together, and the [migration guide](/docs/migration/guide/) walks through the entire procedure, from installing the new deployment and configuring the proxy to moving accounts one at a time, validating each one, and finalizing the migration once the old server is empty. The proxy itself lives on [GitHub](https://github.com/stalwartlabs/proxy), with its own [reference documentation](/docs/migration/proxy/) for every configuration option.
+
+### Upgrading to v0.16 now, or waiting for 1.0
+
+With the migration path complete, the question many operators will reasonably ask is whether to move to v0.16 now or hold out for the next milestone. Stalwart 1.0 is planned for release later this year, and it is worth being clear about how it relates to v0.16.
+
+We do not foresee 1.0 introducing the kind of major breaking changes that earlier upgrades did. v0.16 is already very close to what 1.0 will be, and the heavy architectural work that made previous upgrades disruptive is behind us. What remains before 1.0 is a final round of performance and code optimization, and until that review is finished we cannot yet promise that the current database schema is final. If it does change, we intend for 1.0 to be an automated upgrade from v0.16 that detects any schema difference and migrates it in place, so that going from v0.16 to 1.0 is a routine update rather than another migration exercise.
+
+What this means in practice is straightforward. Operators who need something in v0.16 today, whether a specific feature or simply a supported path off a much older release, can migrate now with no downtime, and as described above our aim, though not yet a guarantee, is for the later step to 1.0 to be a routine, automated upgrade rather than another migration. Operators who are comfortable where they are and do not need anything in v0.16 with any urgency may prefer to wait for 1.0 and make a single move then. Both are sound choices, and the difference between them is only timing. For the first time, that timing is no longer dictated by how much downtime a migration would cost.

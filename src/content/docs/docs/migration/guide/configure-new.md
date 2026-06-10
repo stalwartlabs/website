@@ -11,19 +11,19 @@ The examples assume the command-line interface has been pointed at the new deplo
 
 ## Recreating the domains
 
-Every domain that exists on the old deployment has to exist on the new one before any of its accounts can be migrated, and before split delivery can recognise it as local. A domain is created by name:
+Every domain that exists on the source has to exist on the new one before any of its accounts can be migrated, and before split delivery can recognise it as local. A domain is created by name:
 
 ```bash
 stalwart-cli create Domain --field name=example.org
 ```
 
-Creating the domain on the new server does not divert any mail to it. Mail continues to reach the old server until the proxy is started, and even then the new server only delivers locally for accounts that have actually been migrated.
+Creating the domain on the new server does not divert any mail to it. Mail continues to reach the source until the proxy is started, and even then the new server only delivers locally for accounts that have actually been migrated.
 
 ## Enabling relaying for split delivery
 
-By default a Stalwart server rejects mail addressed to a local domain when the recipient does not exist as a local account. During the migration this default is wrong, because the new server is the mail exchanger for the domain while most of its accounts still live on the old server. Those recipients are not local accounts on the new server yet, so without a change they would be rejected outright instead of being relayed.
+By default a Stalwart server rejects mail addressed to a local domain when the recipient does not exist as a local account. During the migration this default is wrong, because the new server is the mail exchanger for the domain while most of its accounts still live on the source. Those recipients are not local accounts on the new server yet, so without a change they would be rejected outright instead of being relayed.
 
-The `allowRelaying` property on the domain changes this. When it is enabled, the new server accepts mail for a recipient in that domain even when no local account matches, which allows the routing rules described next to forward the message to the old server. The property is set by the domain's internal identifier, which is read first and then used to update the domain:
+The `allowRelaying` property on the domain changes this. When it is enabled, the new server accepts mail for a recipient in that domain even when no local account matches, which allows the routing rules described next to forward the message to the source. The property is set by the domain's internal identifier, which is read first and then used to update the domain:
 
 ```bash
 stalwart-cli query Domain --where name=example.org --fields id
@@ -34,25 +34,25 @@ The query prints the identifier the new server assigned to the domain, and that 
 
 ## Configuring split delivery
 
-Split delivery is expressed as a relay route that points at the old deployment and a routing rule that chooses, for each recipient, whether to deliver locally or relay to that route. The new server already ships with a `local` route for local delivery and an `mx` route for ordinary outbound mail, so only the relay to the old server has to be added.
+Split delivery is expressed as a relay route that points at the source and a routing rule that chooses, for each recipient, whether to deliver locally or relay to that route. The new server already ships with a `local` route for local delivery and an `mx` route for ordinary outbound mail, so only the relay to the source has to be added.
 
-The relay route names the old deployment by its internal address. TLS is left off for implicit mode so that the connection is made in cleartext or upgraded opportunistically through STARTTLS, and invalid certificates are accepted because the link is internal:
+The relay route names the source by its internal address. TLS is left off for implicit mode so that the connection is made in cleartext or upgraded opportunistically through STARTTLS, and invalid certificates are accepted because the link is internal:
 
 ```bash
 stalwart-cli create MtaRoute/Relay \
-  --field name=stalwart-old \
-  --field address=old.internal.example.org \
+  --field name=source \
+  --field address=source.internal.example.org \
   --field port=25 \
   --field protocol=smtp \
   --field implicitTls=false \
   --field allowInvalidCerts=true
 ```
 
-The routing rule is the outbound strategy's `route` expression. It is evaluated once per recipient and returns the name of the route to use. The expression below delivers locally when the recipient is a real local account on the new server, relays to the old deployment when the recipient belongs to a local domain but is not a local account, and otherwise hands the message to ordinary MX delivery:
+The routing rule is the outbound strategy's `route` expression. It is evaluated once per recipient and returns the name of the route to use. The expression below delivers locally when the recipient is a real local account on the new server, relays to the source when the recipient belongs to a local domain but is not a local account, and otherwise hands the message to ordinary MX delivery:
 
 ```bash
 stalwart-cli update MtaOutboundStrategy singleton \
-  --field 'route={"match":{"0":{"if":"is_local_address(rcpt)","then":"'\''local'\''"},"1":{"if":"is_local_domain(rcpt_domain)","then":"'\''stalwart-old'\''"}},"else":"'\''mx'\''"}'
+  --field 'route={"match":{"0":{"if":"is_local_address(rcpt)","then":"'\''local'\''"},"1":{"if":"is_local_domain(rcpt_domain)","then":"'\''source'\''"}},"else":"'\''mx'\''"}'
 ```
 
 The route names returned by the expression, written as quoted literals, must match the names of existing routes. The order of the two conditions matters: a recipient that is a local account is caught by the first condition and delivered locally, and only recipients that are not local accounts reach the second condition and are relayed. This is what produces the split. As accounts are migrated and become local on the new server, mail for them stops being relayed and starts being delivered locally, with no further configuration.

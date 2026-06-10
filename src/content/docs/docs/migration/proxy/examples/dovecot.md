@@ -3,7 +3,7 @@ sidebar_position: 2
 title: "Migrating from Dovecot"
 ---
 
-This example fronts a legacy mail stack (Dovecot serving IMAP, POP3 and ManageSieve, with Postfix handling submission) and a new Stalwart server with a single proxy, migrating accounts from the legacy stack to Stalwart one at a time. Every account initially resolves to the legacy backend through the default destination, and as each mailbox is migrated it is given an explicit mapping to Stalwart. Clients keep their existing settings throughout. A ready-to-edit copy of the proxy configuration ships in the proxy repository as `resources/config.dovecot-postfix.toml`, and the backend changes are collected in `resources/dovecot-postfix-trust.conf`.
+This example fronts a legacy mail stack (Dovecot serving IMAP, POP3 and ManageSieve, with Postfix handling submission) and a new Stalwart server with a single proxy, migrating accounts from the legacy stack to Stalwart one at a time. Every account initially resolves to the legacy backend through the default destination, and as each mailbox is migrated it is given an explicit mapping to Stalwart. Clients keep their existing settings throughout. A ready-to-edit copy of the proxy configuration ships in the proxy repository as [`resources/dovecot-postfix-trust.conf`](https://github.com/stalwartlabs/proxy/blob/main/resources/config.dovecot-postfix.toml), and the backend changes are collected in [`resources/dovecot-postfix-trust.conf`](https://github.com/stalwartlabs/proxy/blob/main/resources/dovecot-postfix-trust.conf).
 
 The defining characteristic of this scenario is that the legacy backend speaks the Dovecot and Postfix conventions: it expects the client's real address to arrive through the XCLIENT command (and the IMAP ID command), not through a PROXY protocol header. The legacy destination therefore uses `forwarding = "xclient"`, while the Stalwart destination uses `forwarding = "proxy"`. The backends are reached over TLS on the classic ports, and the legacy server presents a self-signed certificate that the proxy either pins by fingerprint or, on a trusted internal network, accepts without verification.
 
@@ -119,7 +119,7 @@ Dovecot and Postfix serve no HTTP or JMAP, so no HTTP listener is defined. Once 
 
 ## Trusting the proxy on the legacy backend
 
-The XCLIENT mechanism only conveys the real client address if the legacy stack is told to trust the proxy. Without that trust, logins still succeed, but Dovecot and Postfix record the proxy's address as the client rather than the real one. The proxy's address is added to Dovecot's trusted networks and to Postfix's authorized XCLIENT hosts, scoped to the proxy alone so that other hosts cannot spoof a client address. The full set of changes is in `resources/dovecot-postfix-trust.conf`.
+The XCLIENT mechanism only conveys the real client address if the legacy stack is told to trust the proxy. Without that trust, logins still succeed, but Dovecot and Postfix record the proxy's address as the client rather than the real one. The proxy's address is added to Dovecot's trusted networks and to Postfix's authorized XCLIENT hosts, scoped to the proxy alone so that other hosts cannot spoof a client address. The full set of changes is in [`resources/dovecot-postfix-trust.conf`](https://github.com/stalwartlabs/proxy/blob/main/resources/dovecot-postfix-trust.conf).
 
 In Dovecot, in `dovecot.conf` or a file under `conf.d`:
 
@@ -139,7 +139,7 @@ Whether the trust is in effect can be confirmed by signing in through the proxy 
 
 ## Reading mailboxes during migration
 
-The migration tool, Vandelay, reads each legacy mailbox over IMAP and writes it to Stalwart. So that it can read any mailbox without each user's password, Dovecot is given a master user, which Vandelay authenticates as on behalf of the account being migrated. The master user and the separator that joins it to the target login are configured as shown in `resources/dovecot-postfix-trust.conf`:
+The migration tool, Vandelay, reads each legacy mailbox over IMAP and writes it to Stalwart. So that it can read any mailbox without each user's password, Dovecot is given a master user, which Vandelay authenticates as on behalf of the account being migrated. The master user and the separator that joins it to the target login are configured as shown in [`resources/dovecot-postfix-trust.conf`](https://github.com/stalwartlabs/proxy/blob/main/resources/dovecot-postfix-trust.conf):
 
 ```
 auth_master_user_separator = %

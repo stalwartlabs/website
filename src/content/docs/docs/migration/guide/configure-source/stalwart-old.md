@@ -1,14 +1,20 @@
 ---
-sidebar_position: 5
-title: "Configuring the old deployment"
+sidebar_position: 2
+title: "Older Stalwart server"
+prev:
+  link: /docs/migration/guide/configure-proxy/
+  label: Configuring the proxy
+next:
+  link: /docs/migration/guide/cutover/
+  label: Starting the proxy
 ---
 
-The old deployment needs a small number of changes so that it can sit behind the proxy and accept relayed mail from the new server. These are the only changes made to the live system, and they are written now but deliberately not applied. The settings that take effect through a configuration reload are harmless to leave staged, and the settings that require a restart are held back until the cutover, so that the brief interruption a restart causes happens once, at a controlled moment. Until then the old server continues to operate exactly as it does today.
+When the source is an older Stalwart deployment, of version 0.15 or below, it needs a small number of changes so that it can sit behind the proxy and accept relayed mail from the new server. These are the only changes made to the live system, and they are written now but deliberately not applied. The settings that take effect through a configuration reload are harmless to leave staged, and the settings that require a restart are held back until the cutover, so that the brief interruption a restart causes happens once, at a controlled moment. Until then the old server continues to operate exactly as it does today.
 
 Every change shown here uses the v0.15 management API with an administrator's credentials. The same values can be edited through the v0.15 administration interface or written directly into the server's TOML configuration file. The API is used in the examples because it expresses each change as an unambiguous key and value. The administrator's login and password authenticate the requests:
 
 ```bash
-OLD="https://old.internal.example.org"
+OLD="https://source.internal.example.org"
 AUTH="admin:administrator-password"   # the old server's administrator credentials
 ```
 
