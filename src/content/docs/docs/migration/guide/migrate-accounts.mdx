@@ -74,22 +74,23 @@ stalwart-cli apply --file alice-plan.ndjson
 </TabItem>
 <TabItem label="Dovecot / Postfix">
 
-A Dovecot and Postfix source has no Stalwart management API to read, so the account is recreated on the new server from the source's own user directory. Where that directory lives depends on the deployment: a `passwd-file`, an LDAP or SQL backend, or the user list a distribution such as Mail-in-a-Box or mailcow maintains. The account is created on the new server with the command-line interface, named by its full e-mail address:
+A Dovecot and Postfix source has no Stalwart management API to read, so the account is recreated on the new server from the source's own user directory. Where that directory lives depends on the deployment: a `passwd-file`, an LDAP or SQL backend, or the user list a distribution such as Mail-in-a-Box or mailcow maintains. The account is created on the new server with the command-line interface. Stalwart identifies an account by the bare local part of its address together with the identifier of its domain, so the domain identifier is read from the new server first, exactly as in the proxy-based flow:
+
+```bash
+stalwart-cli query Domain --where name=example.org --fields id
+```
+
+The original password is preserved when the source exposes its stored hash. Stalwart recognises the common crypt formats, so a secret that begins with a recognised prefix, such as `$6$` for sha512-crypt, `$2` for bcrypt or `$argon2`, is stored verbatim and continues to verify the owner's existing password; a secret supplied in clear is hashed on creation. The hash read from the source directory is supplied as the account's password credential, so the account is created complete in a single call:
 
 ```bash
 stalwart-cli create Account/User \
-  --field name=alice@example.org \
-  --field description="Alice"
+  --field name=alice \
+  --field 'domainId=<domain-id>' \
+  --field description="Alice" \
+  --field 'credentials={"0":{"@type":"Password","secret":"$6$rounds=5000$..."}}'
 ```
 
-The original password is preserved when the source exposes its stored hash. Stalwart recognises the common crypt formats, so a secret that begins with a recognised prefix, such as `$6$` for sha512-crypt, `$2` for bcrypt or `$argon2`, is stored verbatim and continues to verify the owner's existing password; a secret supplied in clear is hashed on creation. The hash read from the source directory is set as the account's secret:
-
-```bash
-stalwart-cli update Account alice@example.org \
-  --field 'secret=$6$rounds=5000$...'
-```
-
-When the source does not expose usable hashes, a temporary password is set and the owner is asked to reset it after migration. Aliases the account carried on the source are recreated alongside it with the same interface.
+The `<domain-id>` is the value the query printed. When the source does not expose usable hashes, a temporary password is set in the same field and the owner is asked to reset it after migration. Aliases the account carried on the source are recreated alongside it with the same interface.
 
 </TabItem>
 </Tabs>
