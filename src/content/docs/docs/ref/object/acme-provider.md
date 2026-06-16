@@ -81,6 +81,13 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 > Identifier for the tenant this ACME provider belongs to
 
 
+##### `preferredChain`
+
+> Type: <code>String?</code>
+>
+> Preferred certificate chain to use when multiple chains are available
+
+
 
 ## JMAP API
 
@@ -172,7 +179,7 @@ curl -X POST https://mail.example.com/api \
           {
             "update": {
               "id1": {
-                "challengeType": "TlsAlpn01"
+                "preferredChain": "updated value"
               }
             }
           },
@@ -288,7 +295,7 @@ stalwart-cli query AcmeProvider --where text=example
 ### Update
 
 ```sh
-stalwart-cli update AcmeProvider id1 --field challengeType=TlsAlpn01
+stalwart-cli update AcmeProvider id1 --field preferredChain='updated value'
 ```
 
 

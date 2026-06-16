@@ -21,7 +21,7 @@ An [`expiresAt`](/docs/ref/object/o-auth-client#expiresat) timestamp can be set 
 
 ## Redirect URIs
 
-The [`redirectUris`](/docs/ref/object/o-auth-client#redirecturis) field enumerates the redirection endpoints the client may use at the end of an authorization code flow. The server refuses to complete a flow whose `redirect_uri` parameter does not exactly match one of the entries in this list, which prevents an attacker who learns a client id from redirecting authorization responses to a host they control. For native applications, this is also where the custom URI scheme used to return control to the app is declared; for instance, the Stalwart WebUI registers `stalwart://auth`.
+The [`redirectUris`](/docs/ref/object/o-auth-client#redirecturis) field enumerates the redirection endpoints the client may use at the end of an authorization code flow. The server refuses to complete a flow whose `redirect_uri` parameter does not exactly match one of the entries in this list, which prevents an attacker who learns a client id from redirecting authorization responses to a host they control. For native applications, this is also where the custom URI scheme used to return control to the app is declared; for instance, a native client might register a custom scheme such as `myapp://auth`.
 
 ## Tenant scoping
 

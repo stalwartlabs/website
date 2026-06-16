@@ -33,14 +33,14 @@ Once dynamic registration is enabled and a client registers successfully, the cl
 
 ## WebUI client
 
-The Stalwart [WebUI](/docs/management/webui/), which includes the Self-Service Portal for end users, authenticates through OAuth. When `requireClientRegistration` is set to `true`, the WebUI stops working unless it is itself registered, because its default client id (`webadmin`) is not registered automatically.
+The Stalwart [WebUI](/docs/management/webui/), which includes the Self-Service Portal for end users, authenticates through OAuth. When `requireClientRegistration` is set to `true`, the WebUI stops working unless it is itself registered, because its default client id (`stalwart-webui`) is not registered automatically.
 
 ### Manual registration
 
 To keep the WebUI functional after enforcing client registration, create an OAuthClient object with:
 
-- [`clientId`](/docs/ref/object/o-auth-client#clientid): `webadmin`
-- [`redirectUris`](/docs/ref/object/o-auth-client#redirecturis): `["stalwart://auth"]`
+- [`clientId`](/docs/ref/object/o-auth-client#clientid): `stalwart-webui`
+- [`redirectUris`](/docs/ref/object/o-auth-client#redirecturis): the OAuth callback for each base path the WebUI is served under, built from the server's public URL: `["https://<server>/admin/oauth/callback", "https://<server>/account/oauth/callback"]`. The `/admin` path is the administration interface and `/account` is the Self-Service Portal; adjust these prefixes if `server.url-prefix` has been customized.
 
 With the WebUI registered as an OAuth client, administrators and users continue to reach the WebUI and the Self-Service Portal without interruption.
 
