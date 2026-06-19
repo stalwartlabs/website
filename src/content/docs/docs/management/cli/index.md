@@ -46,7 +46,7 @@ brew install stalwartlabs/tap/stalwart-cli
 ### npm (Node.js, all platforms)
 
 ```sh
-npm install -g @stalwartlabs/cli
+npm install -g stalwart-cli
 ```
 
 ### Windows MSI
