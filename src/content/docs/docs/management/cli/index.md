@@ -22,7 +22,7 @@ The tool is **schema-driven**: on first use it downloads (and caches) a JSON sch
 
 ## Installation
 
-Pre-built binaries are produced for macOS (Intel and Apple Silicon), Linux (x86_64 and aarch64, glibc and musl), and Windows (x86_64 and aarch64). Pick the installer that matches the platform.
+Pre-built binaries are produced for macOS (Intel and Apple Silicon), Linux (x86_64 and aarch64, glibc and musl), and Windows (x86_64 and aarch64), alongside a multi-architecture Docker image. Pick the installer that matches the platform.
 
 ### macOS / Linux (shell installer)
 
@@ -47,6 +47,40 @@ brew install stalwartlabs/tap/stalwart-cli
 
 ```sh
 npm install -g @stalwartlabs/cli
+```
+
+### Docker (all platforms)
+
+A multi-architecture image (`linux/amd64` and `linux/arm64`) is published with every release to both GitHub Container Registry and Docker Hub:
+
+```sh
+docker run --rm ghcr.io/stalwartlabs/cli --version
+docker run --rm stalwartlabs/cli --version
+```
+
+Image tags track releases: a full version (`:1.2.3`), the minor series (`:1.2`), and `:latest`. Images are signed with [cosign](https://docs.sigstore.dev/cosign/overview/) and carry build-provenance attestations.
+
+Pass connection settings through the environment, and bind-mount a working directory for commands that read or write files (`apply --file`, `snapshot --output`):
+
+```sh
+docker run --rm \
+  -e STALWART_URL=https://mail.example.com \
+  -e STALWART_TOKEN \
+  ghcr.io/stalwartlabs/cli query Account --fields id,name
+
+docker run --rm \
+  -v "$PWD:/work" -w /work \
+  -e STALWART_URL -e STALWART_TOKEN \
+  ghcr.io/stalwartlabs/cli apply --file plan.json
+```
+
+The container runs as a non-root user whose home is `/home/nonroot`. To persist the [schema cache](#schema-cache) across runs (and avoid a re-fetch each invocation), mount a volume at `/home/nonroot/.cache`:
+
+```sh
+docker run --rm \
+  -v stalwart-cli-cache:/home/nonroot/.cache \
+  -e STALWART_URL -e STALWART_TOKEN \
+  ghcr.io/stalwartlabs/cli describe
 ```
 
 ### Windows MSI

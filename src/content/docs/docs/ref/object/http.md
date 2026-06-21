@@ -62,6 +62,13 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 > Specifies whether to use the Forwarded or X-Forwarded-For header to determine the client's IP address
 
 
+##### `redirectRoot`
+
+> Type: <code>String?</code> · default: `"/account"`
+>
+> The URL to redirect users to when they access the root path of the HTTP server. If not set, the server will return a 404 Not Found response.
+
+
 
 ## JMAP API
 
@@ -122,10 +129,7 @@ curl -X POST https://mail.example.com/api \
           {
             "update": {
               "singleton": {
-                "rateLimitAuthenticated": {
-                  "count": 1000,
-                  "period": "1m"
-                }
+                "redirectRoot": "updated value"
               }
             }
           },
@@ -157,7 +161,7 @@ stalwart-cli get Http
 ### Update
 
 ```sh
-stalwart-cli update Http --field rateLimitAuthenticated='{"count":1000,"period":"1m"}'
+stalwart-cli update Http --field redirectRoot='updated value'
 ```
 
 

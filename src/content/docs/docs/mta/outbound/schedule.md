@@ -122,6 +122,8 @@ The `high-priority` MtaDeliverySchedule uses `retry = {"@type": "Custom", "inter
 
 Messages involving VIP clients can be routed to a dedicated queue. The schedule expression invokes `sql_query` against a lookup store to check whether sender or recipient is listed in a VIP table, and selects a `vip-client` scheduling strategy when it matches. The VIP scheduling strategy targets a high-concurrency queue and uses aggressive retry intervals; the default scheduling strategy targets a smaller queue with the standard retry schedule.
 
+The `?` placeholders below use SQLite or MySQL syntax; on PostgreSQL use `$1`, `$2`, ... instead, since the query is passed to the database driver verbatim.
+
 ```json
 {
   "schedule": {

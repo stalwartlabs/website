@@ -483,12 +483,12 @@ Stores a value under a key, creating it if necessary, and optionally sets an exp
 
 ### `query`
 
-Runs a SQL statement against a data store of type SQL. If the first argument is the empty string, the default data store is used. The third argument binds parameters to the query's `?` placeholders, in order.
+Runs a SQL statement against a data store of type SQL. If the first argument is the empty string, the default data store is used. The third argument binds parameters to the query's placeholders, in order. The query is passed to the database driver verbatim, so the statement must use the configured database's native placeholder syntax: `?` for SQLite and MySQL, and `$1`, `$2`, ... for PostgreSQL.
 
 A `SELECT` returning exactly one row and one column returns the scalar value; a `SELECT` returning a single row with multiple columns returns that row as an array; multiple rows return an array of arrays. A non-`SELECT` statement returns `true` on success.
 
 - **Arguments**: 3 (Store ID, Query, Parameters)
-- **Example**: greylisting triplet:
+- **Example**: greylisting triplet (the `?` placeholders below are for SQLite or MySQL; on PostgreSQL use `$1`, `$2`, ...):
 
     ```sieve
     require ["variables", "vnd.stalwart.expressions", "envelope", "reject"];

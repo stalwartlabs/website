@@ -18,6 +18,8 @@ The following script implements a greylisting filter backed by an SQL store. Ins
 }
 ```
 
+The `?` placeholders in the queries above use SQLite or MySQL syntax; on PostgreSQL use `$1`, `$2`, ... instead, since the query is passed to the database driver verbatim.
+
 The `script` field on MtaStageRcpt then selects the script by name:
 
 ```json
@@ -39,7 +41,7 @@ The following script rejects messages whose `HELO`/`EHLO` domain is found in an 
 }
 ```
 
-The referenced `sql/blocked-domains` list is defined as a [StoreLookup](/docs/ref/object/store-lookup) against the SQL store, using the query `SELECT 1 FROM blocked_domains WHERE domain=? LIMIT 1`.
+The referenced `sql/blocked-domains` list is defined as a [StoreLookup](/docs/ref/object/store-lookup) against the SQL store, using the query `SELECT 1 FROM blocked_domains WHERE domain=? LIMIT 1` (on PostgreSQL the placeholder would be `$1` instead of `?`).
 
 The `script` field on MtaStageEhlo then selects the script:
 

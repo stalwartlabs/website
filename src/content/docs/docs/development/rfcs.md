@@ -53,11 +53,11 @@ The following RFCs are implemented by Stalwart.
 - [RFC 8437 - UNAUTHENTICATE Extension for Connection Reuse](https://datatracker.ietf.org/doc/html/rfc8437)
 - [RFC 8438 - Extension for STATUS=SIZE](https://datatracker.ietf.org/doc/html/rfc8438)
 - [RFC 8457 - "$Important" Keyword and "\Important" Special-Use Attribute](https://datatracker.ietf.org/doc/html/rfc8457)
-- [RFC 8474 - Extension for Object Identifiers](https://datatracker.ietf.org/doc/html/rfc8474)
 - [RFC 8970 - Message Preview Generation](https://datatracker.ietf.org/doc/html/rfc8970)
 - [RFC 9208 - IMAP QUOTA Extension](https://datatracker.ietf.org/doc/html/rfc9208)
 - [RFC 9698 - The JMAPACCESS Extension for IMAP](https://datatracker.ietf.org/doc/html/rfc9698)
-- [draft-ietf-messageflag - Registration of further IMAP/JMAP keywords and mailbox name attributes](https://datatracker.ietf.org/doc/html/draft-ietf-mailmaint-messageflag-mailboxattribute-13)
+- [RFC 9979 - Registration of further IMAP/JMAP keywords and mailbox name attributes](https://datatracker.ietf.org/doc/html/rfc9979)
+- [draft-ietf-mailmaint-imap-objectid-bis-04 - IMAP Extension for Object Identifiers](https://datatracker.ietf.org/doc/draft-ietf-mailmaint-imap-objectid-bis/)
 
 ### POP3
 
@@ -275,9 +275,14 @@ The following RFCs are implemented by Stalwart.
 - [RFC 7591 - OAuth 2.0 Dynamic Client Registration Protocol](https://www.rfc-editor.org/rfc/rfc7591.html)
 - [RFC 7662 - OAuth 2.0 Token Introspection](https://datatracker.ietf.org/doc/html/rfc7662)
 - [RFC 7517 - JSON Web Key (JWK)](https://datatracker.ietf.org/doc/html/rfc7517)
+- [RFC 7628 - A Set of Simple Authentication and Security Layer (SASL) Mechanisms for OAuth](https://datatracker.ietf.org/doc/html/rfc7628)
+- [RFC 8707 - Resource Indicators for OAuth 2.0](https://www.rfc-editor.org/rfc/rfc8707)
+- [RFC 9207 - OAuth 2.0 Authorization Server Issuer Identification](https://www.rfc-editor.org/rfc/rfc9207)
+- [RFC 9728 - OAuth 2.0 Protected Resource Metadata](https://www.rfc-editor.org/rfc/rfc9728)
 - [OpenID Connect Core 1.0](https://openid.net/specs/openid-connect-core-1_0.html)
 - [OpenID Connect Discovery 1.0](https://openid.net/specs/openid-connect-discovery-1_0.html)
 - [OpenID Connect Dynamic Client Registration 1.0](https://openid.net/specs/openid-connect-registration-1_0.html)
+- [draft-ietf-mailmaint-oauth-public - OAuth Profile for Open Public Clients](https://datatracker.ietf.org/doc/draft-ietf-mailmaint-oauth-public/)
 
 
 ## Planned Extensions

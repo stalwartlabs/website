@@ -20,7 +20,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `anonymousClientRegistration`
 
-> Type: <code>Boolean</code> · default: `false`
+> Type: <code>Boolean</code> · default: `true`
 >
 > Whether to allow OAuth clients to register without authentication
 

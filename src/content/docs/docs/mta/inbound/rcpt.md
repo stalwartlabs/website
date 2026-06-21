@@ -110,7 +110,7 @@ For example, the following expression runs a `greylist` Sieve script only for un
 }
 ```
 
-A companion `greylist` Sieve script stores the triplet in a store and rejects the first attempt:
+A companion `greylist` Sieve script stores the triplet in a store and rejects the first attempt. The `?` placeholders below use SQLite or MySQL syntax; on PostgreSQL use `$1`, `$2`, ... instead, since the query is passed to the database driver verbatim:
 
 ```sieve
 require ["variables", "vnd.stalwart.execute", "envelope", "reject"];

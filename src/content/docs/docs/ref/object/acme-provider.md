@@ -88,6 +88,13 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 > Preferred certificate chain to use when multiple chains are available
 
 
+##### `reuseKey`
+
+> Type: <code>Boolean</code> · default: `false`
+>
+> Whether to reuse the existing private key when renewing a certificate
+
+
 
 ## JMAP API
 

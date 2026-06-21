@@ -272,9 +272,9 @@ These functions target an in-memory store identified by its ID. An empty string 
 ## SQL store functions
 
 ### `sql_query`
-- **Description**: Runs a SQL statement against a data store of type SQL. The third argument binds parameters to the query's `?` placeholders, in order. A `SELECT` returning exactly one row and one column returns the scalar value; a `SELECT` returning a single row with multiple columns returns that row as an array; multiple rows return an array of arrays. A non-`SELECT` statement returns the number of affected rows.
+- **Description**: Runs a SQL statement against a data store of type SQL. The third argument binds parameters to the query's placeholders, in order. The query is passed to the database driver verbatim, so the statement must use the configured database's native placeholder syntax: `?` for SQLite and MySQL, and `$1`, `$2`, ... for PostgreSQL. A `SELECT` returning exactly one row and one column returns the scalar value; a `SELECT` returning a single row with multiple columns returns that row as an array; multiple rows return an array of arrays. A non-`SELECT` statement returns the number of affected rows.
 - **Arguments**: 3 (Store ID, Query, Parameters)
-- **Example**: `sql_query('crm', 'SELECT quota FROM users WHERE address = ?', [rcpt])` retrieves the recipient's quota from the `crm` SQL store.
+- **Example**: `sql_query('crm', 'SELECT quota FROM users WHERE address = ?', [rcpt])` retrieves the recipient's quota from the `crm` SQL store (on PostgreSQL the placeholder would be `$1` instead of `?`).
 
 ## DNS functions
 
