@@ -3,7 +3,7 @@ sidebar_position: 9
 title: "Exporting server state"
 ---
 
-The `snapshot` command walks the live server and emits an NDJSON plan in the exact format that [`apply`](/docs/management/cli/apply) consumes. The same file can be used for:
+The `snapshot` command walks the live server and emits an NDJSON plan in the exact format that [`apply`](/docs/management/cli/apply) consumes. The plan is built from idempotent `upsert` operations (and `update` operations for singletons): it contains no destroys, so applying it reconciles a target in place rather than wiping and rebuilding it, and re-applying it converges. The same file can be used for:
 
 * **Configuration backups** (stdout redirected to a versioned artifact, committed to a repository, or stored in a secrets manager).
 * **Cross-environment migration** (snapshot a staging deployment, apply the plan to production).
@@ -17,7 +17,6 @@ Server-assigned ids are stripped from the payload and replaced with deterministi
 ```text
 stalwart-cli snapshot <OBJECT>...
                       [--output <PATH>]
-                      [--no-destroys]
                       [--include-secrets]
                       [--allow-unresolved <TYPES>]
                       [--quiet]
@@ -27,7 +26,6 @@ stalwart-cli snapshot <OBJECT>...
 |---|---|
 | `<OBJECT>...` | One or more object type names (positional, required). Names are case-insensitive and the `x:` prefix is optional. Slash forms (`Account/User`) are rejected; for multi-variant types, listing the bare name includes every variant. |
 | `--output <PATH>` | Write the plan to a file. If omitted, the plan is written to stdout. |
-| `--no-destroys` | Skip the teardown prelude at the top of the plan. |
 | `--include-secrets` | Keep secret field values as returned by the server. Default: strip them. |
 | `--allow-unresolved <TYPES>` | Comma-separated list of object types that references may point to without those types being part of the snapshot. References to any listed type are dropped from the exported plan entirely (the field is omitted from the object's body). |
 | `--quiet` | Suppress the per-type progress lines on stderr. |
@@ -51,11 +49,17 @@ Use [`describe`](/docs/management/cli/describe) to discover what types a deploym
 
 ### Multi-variant types
 
-Multi-variant types are listed by the bare name. `Account` captures both `User` and `Group` variants in a single pass. The plan splits them into separate `create` operations, ordered so that variants referenced by other variants appear first.
+Multi-variant types are listed by the bare name. `Account` captures both `User` and `Group` variants in a single pass. The plan splits them into separate `upsert` operations, ordered so that variants referenced by other variants appear first. Each entry carries its `@type`, so `apply` matches it within the right variant.
 
 ### Singletons
 
-Singletons are accepted anywhere in the positional list. The generated plan emits an `update` operation per singleton (with the current value), since singletons cannot be destroyed or created.
+Singletons are accepted anywhere in the positional list. The generated plan emits an `update` operation per singleton (with the current value), since singletons cannot be destroyed, created, or upserted. Because an `update` simply overwrites the singleton's fields, it is idempotent by nature.
+
+## Match keys
+
+Each non-singleton object is exported as an `upsert` whose `matchOn` is the type's **label property**: the field the WebUI lists objects by (for example `name` for `Domain`). On restore, [`apply`](/docs/management/cli/apply) uses this key to decide whether each object already exists (update it) or not (create it), which is what lets a snapshot be re-applied without duplicating or deleting anything.
+
+If a type has no label property in the schema, `snapshot` omits `matchOn` for it and prints a warning. With no key, `apply` falls back to matching that type by comparing every non-secret scalar field, which is **not** convergent: changing any field makes the object look new and a duplicate is created instead of the original being updated. For such a type, edit the plan to add an explicit `matchOn` naming a stable identifying property before relying on re-applies. See [Matching](/docs/management/cli/apply#matching) for the full resolution order.
 
 ## Reference handling
 
@@ -101,26 +105,20 @@ With the above, a `Domain` whose `acmeProviderId` points to a real ACME provider
 The plan is **NDJSON**: one operation per line, no enclosing array. The same format [`apply`](/docs/management/cli/apply) consumes.
 
 ```text
-# Destroy block (unless --no-destroys): one entry per non-singleton parent
-# type in the selection, in forward dependency order so apply's reverse
-# pass executes children-first at restore time. Multi-variant types emit
-# a single destroy for the parent (no per-variant filter); destroying all
-# variants is equivalent to destroying every instance of the type.
-{"@type":"destroy","object":"Tenant"}
-{"@type":"destroy","object":"Domain"}
-{"@type":"destroy","object":"Account"}
+# Upsert block: one entry per non-singleton shard (one per type, one per
+# variant for multi-variant types), in forward dependency order so parents
+# are applied before the objects that reference them. matchOn is the type's
+# label property. Client-side ids are the map keys. Cross-object references
+# use #<prefix>-<server-id>.
+{"@type":"upsert","object":"Tenant","matchOn":["name"],"value":{"tenant-b":{"name":"acme-corp"}}}
+{"@type":"upsert","object":"Domain","matchOn":["name"],"value":{"domain-b":{"name":"example.com","memberTenantId":"#tenant-b"}}}
 
-# Create block: one entry per non-singleton shard (one per type, one per
-# variant for multi-variant types). Client-side ids are the map keys.
-# Cross-object references use #<prefix>-<server-id>.
-{"@type":"create","object":"Tenant","value":{"tenant-b":{"name":"acme-corp"}}}
-{"@type":"create","object":"Domain","value":{"domain-b":{"name":"example.com","memberTenantId":"#tenant-b"}}}
-
-# Singleton updates: one per singleton in the selection.
-{"@type":"update","object":"SystemSettings","value":{"defaultHostname":"mail.example.com"}}
+# Singleton updates: one per singleton in the selection, emitted last so any
+# references they carry point at objects upserted above.
+{"@type":"update","object":"SystemSettings","value":{"defaultHostname":"mail.example.com","defaultDomainId":"#domain-b"}}
 ```
 
-(The `#` lines above are annotations for clarity; the real output contains only the NDJSON records.)
+(The `#` lines above are annotations for clarity; the real output contains only the NDJSON records.) There is no destroy block: the plan reconciles a target in place. Applying it to a clean server creates everything; applying it to a populated one updates the matching objects and creates the rest.
 
 ### Streaming
 
@@ -128,7 +126,7 @@ The output is written incrementally. Each parent object type is fetched from the
 
 ### How variants are fetched
 
-For multi-variant types, snapshot does **not** rely on server-side filtering by `@type`, because Stalwart's `query` does not universally support that filter. Instead, it queries each parent type once unfiltered, fetches the full objects, and partitions them by `@type` client-side to assign each one to its variant's create block.
+For multi-variant types, snapshot does **not** rely on server-side filtering by `@type`, because Stalwart's `query` does not universally support that filter. Instead, it queries each parent type once unfiltered, fetches the full objects, and partitions them by `@type` client-side to assign each one to its variant's upsert block.
 
 ### What is stripped
 
@@ -147,7 +145,7 @@ Running with `--include-secrets` keeps the server's returned values verbatim. Wh
 Per-type progress is written to stderr so that stdout contains only the plan:
 
 ```text
-snapshot: 2 creates, 1 singletons
+snapshot: 2 upserts, 1 singletons
   fetching Tenant...
     4 fetched
     Tenant: 4
@@ -166,7 +164,7 @@ Pass `--quiet` to silence this output.
 
 ## Cyclic dependency detection
 
-The topological sort emits the create block in dependency order (referenced types before their referrers; within multi-variant types, referenced variants before referring variants). If the selected types form a cycle the CLI refuses to emit a plan and names the participating shards:
+The topological sort emits the upsert block in dependency order (referenced types before their referrers; within multi-variant types, referenced variants before referring variants). If the selected types form a cycle the CLI refuses to emit a plan and names the participating shards:
 
 ```text
 error: cannot snapshot: cyclic dependency between the selected types (Foo, Bar/Variant)
@@ -201,7 +199,7 @@ stalwart-cli --url https://prod.mail.example.com \
     apply --file plan.ndjson
 ```
 
-The plan's destroy block wipes the relevant types on production, then recreates them with staging's content. Use [`--dry-run` on `apply`](/docs/management/cli/apply) in the promotion CI step so the diff can be reviewed before taking effect.
+The plan reconciles the selected types on production with staging's content: objects that already exist (matched by their key) are updated, objects that do not are created, and nothing on production is destroyed. Objects present on production but absent from the snapshot are left untouched; if a promotion needs to remove them, add explicit `destroy` operations to the plan. Use [`--dry-run` on `apply`](/docs/management/cli/apply) in the promotion CI step so the plan can be reviewed before taking effect.
 
 ### Round-trip validation
 
@@ -214,14 +212,14 @@ stalwart-cli snapshot Tenant --output /tmp/s2.ndjson
 diff /tmp/s1.ndjson /tmp/s2.ndjson
 ```
 
-NDJSON files diff line-by-line, which makes round-trip validation easy. The only legitimate differences between `s1.ndjson` and `s2.ndjson` are the opaque client-ids (new server-assigned ids produce new prefixes). Sort the records by `name` (or any other stable field) for a cleaner diff.
+Here the second `apply` is a no-net-change reconcile: every object in `s1.ndjson` already exists, so the run updates each in place. NDJSON files diff line-by-line, which makes round-trip validation easy. Because `upsert` preserves the id of a matched object, `s1.ndjson` and `s2.ndjson` carry the same client-id prefixes (no id churn across the round-trip); the only differences are field values that the apply legitimately reconciled. Sort the records by `name` (or any other stable field) for a cleaner diff.
 
 ## Operational considerations
 
-* **Auto-created dependents**: some types (notably `DkimSignature` and `Certificate`) are created automatically by the server when a parent is created. A snapshot that includes `Domain` but not `DkimSignature` will fail to *restore* cleanly, because `apply`'s destroy block cannot remove a Domain while auto-created DkimSignatures still link to it. Either include the auto-created type in the snapshot, or cascade-delete it manually before running `apply`.
+* **Auto-created dependents**: some types (notably `DkimSignature` and `Certificate`) are created automatically by the server when a parent is created. Because the plan no longer destroys anything, a snapshot of `Domain` alone now restores cleanly onto a populated server (the domain is matched and updated, the auto-created dependents are left in place). For a faithful backup that captures those dependents' own configuration, still include the auto-created type in the selection.
 * **Partial exports**: a selection does not have to be the whole world, but it should be a self-contained dependency closure. Use `--allow-unresolved` sparingly; every dropped reference is a piece of state the restore will not reconstruct.
 * **Unique uniqueness**: client-ids are deterministic per source-server (prefix + original server id). Two snapshots taken from the same server produce the same client-ids; two snapshots from different servers produce disjoint client-id spaces. Merging plans from multiple sources is not supported and is not recommended.
-* **Ordering stability**: server-returned object ordering is relied upon only for paging. Both `describe` and `apply` are insensitive to the map-key order inside each create op.
+* **Ordering stability**: server-returned object ordering is relied upon only for paging. Both `describe` and `apply` are insensitive to the map-key order inside each upsert op.
 
 ## See also
 

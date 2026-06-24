@@ -3,7 +3,9 @@ sidebar_position: 8
 title: "Declarative bulk operations"
 ---
 
-The `apply` command takes an NDJSON file describing a batch of `create`, `update`, and `destroy` operations, and applies them to the server in dependency-aware order. It is intended as the integration surface for infrastructure-as-code tooling (Ansible, Terraform, NixOS, Pulumi, ...) and for one-shot deployments / migrations performed by hand or by CI.
+The `apply` command takes an NDJSON file describing a batch of `upsert`, `update`, `create`, and `destroy` operations, and applies them to the server in dependency-aware order. It is intended as the integration surface for infrastructure-as-code tooling (Ansible, Terraform, NixOS, Pulumi, ...) and for one-shot deployments / migrations performed by hand or by CI.
+
+The primary operation is `upsert`: it matches each object in the plan against the live server (by a natural key such as a domain's `name`) and either updates the existing object in place or creates it if absent. A plan built from `upsert` operations is **idempotent**: applying it once or many times converges to the same server state, with no deletions and no duplicate objects. This is the operation [`snapshot`](/docs/management/cli/snapshot) emits, and the shape every infrastructure-as-code integration below uses.
 
 For interactive use cases see the per-command pages: [Creating objects](/docs/management/cli/create), [Updating objects](/docs/management/cli/update), [Removing objects](/docs/management/cli/delete).
 
@@ -26,19 +28,19 @@ stalwart-cli apply ( --file <path> | --stdin )
 | `--continue-on-error` | Do not abort on the first failed operation; report all errors at the end and exit non-zero. |
 | `--quiet` | Suppress per-operation log lines; print only the final summary. |
 | `--json` | Emit one NDJSON record per completed operation to stdout, plus a summary record at the end. The plan header and any progress lines remain on stderr. |
-| `--progress` | Print one extra line per request batch during large `destroy` and `create` operations. |
+| `--progress` | Print one extra line per request batch during large `destroy`, `create`, and `upsert` operations. |
 
 Exactly one of `--file` and `--stdin` must be supplied.
 
 ## How it works
 
-The plan is **NDJSON**: one operation per line, no enclosing array. Blank lines are ignored; surrounding whitespace on a line is tolerated. Each operation is one of three types: `update`, `destroy`, or `create`. The CLI processes the plan in **two passes**:
+The plan is **NDJSON**: one operation per line, no enclosing array. Blank lines are ignored; surrounding whitespace on a line is tolerated. Each operation is one of four types: `upsert`, `update`, `create`, or `destroy`. The CLI processes the plan in **two passes**:
 
-1. **Destroy pass (reverse order).** Every `destroy` operation is executed in **reverse** of its position in the plan. Update and create operations are skipped during this pass. This is what makes dependency-aware teardowns possible: when a plan creates `Domain → Account → DkimSignature` (parents first), the same plan, when teardown is needed, can be applied with destroys in the same order, and the reverse pass will undo them in `DkimSignature → Account → Domain` order, satisfying foreign-key constraints.
+1. **Destroy pass (reverse order).** Every `destroy` operation is executed in **reverse** of its position in the plan. All other operations are skipped during this pass. This is what makes dependency-aware teardowns possible: when a plan lists `Domain → Account → DkimSignature` (parents first), the reverse pass tears them down in `DkimSignature → Account → Domain` order, satisfying foreign-key constraints. Most plans contain no destroys at all; the pass is a no-op for them. See [Teardown with destroy](#teardown-with-destroy).
 
-2. **Create / update pass (plan order).** All `update` and `create` operations run in the order they appear in the plan. Destroys are skipped during this pass. This ordering is what allows objects to reference each other: a `Domain` can be created in operation 5 and then referenced by an `Account` in operation 7.
+2. **Apply pass (plan order).** All `upsert`, `update`, and `create` operations run in the order they appear in the plan. Destroys are skipped during this pass. This ordering is what allows objects to reference each other: a `Domain` can be upserted in operation 1 and then referenced by an `Account` in operation 2.
 
-The two-pass model lets a single plan file describe a complete state transition (destroy old state, then create / update new state) without the author needing to interleave operations manually.
+The two passes let a single plan file describe a teardown followed by a rebuild, but for the common case (declaring desired state and re-applying it) the plan is a flat list of `upsert` and singleton `update` operations and only the second pass does any work.
 
 ### Stop on first error (default)
 
@@ -50,13 +52,34 @@ To override, pass `--continue-on-error`, in which case every operation is attemp
 
 ### Idempotent re-runs
 
-`apply` does not diff a plan against the live server state. It executes the operations the plan declares, in order. A plan that only contains `create` operations therefore succeeds on the first run and fails on the second: re-creating the same `Domain`, `AllowedIp`, `Certificate`, etc. trips the server's primary-key constraints, and re-creating types that have no such constraint produces duplicate rows.
+Use `upsert` operations to make a plan re-runnable. An `upsert` matches each object in its `value` map against the live server using a **match key** (see [Matching](#matching)); if a match is found the object is updated in place, otherwise it is created. Because nothing is destroyed and an existing object is never duplicated, applying the same `upsert` plan once or a hundred times converges to the same server state. This is the shape [`stalwart-cli snapshot`](/docs/management/cli/snapshot) emits, and the shape used in the [annotated example](#annotated-example) below.
 
-To make a plan re-runnable, pair every `create` of a type with a leading `destroy` of the same type. The destroy pass clears the existing instances; the create pass then rebuilds them. This is the shape that [`stalwart-cli snapshot`](/docs/management/cli/snapshot) emits, and it is the shape used in the [annotated example](#annotated-example) below.
+This sidesteps the problems that a `create`-only or `destroy` + `create` plan has:
 
-Two practical notes:
+* A `create`-only plan succeeds on the first run and fails on the second: re-creating the same `Domain`, `AllowedIp`, `Certificate`, etc. trips the server's primary-key constraints, and re-creating types that have no such constraint produces duplicate rows.
+* A `destroy` + `create` plan can be re-run, but it tears down and rebuilds the world on every apply. That cannot work for an object another object depends on: a `Domain` referenced by an `Account`, a `DkimSignature`, or the non-nullable `SystemSettings.defaultDomainId` cannot be destroyed while the reference exists (the destroy fails with `objectIsLinked`). `upsert` reconciles such an object in place instead, leaving its id and its dependents untouched.
 
-* **Server-assigned ids change** across a teardown-and-rebuild, so external systems that cache Stalwart ids must look them up again after each apply.
+`apply` does **not** diff the desired value against the current one. An `upsert` whose match key finds an existing object always issues the `update`, even when no field changed; the run reports it as updated and the resulting state is identical. Idempotency here means the end state converges, not that an unchanged re-run is a no-op.
+
+A practical consequence worth noting: an `upsert` preserves the server-assigned id of a matched object, so external systems that cache Stalwart ids keep working across re-applies (unlike a `destroy` + `create`, which assigns fresh ids each time).
+
+#### Matching
+
+The match key for an `upsert` is resolved in this order:
+
+1. **Explicit `matchOn`.** If the operation carries a `matchOn` list of property names, those properties are the key. An object in the `value` map matches an existing object when every listed property is equal. Every property in `matchOn` must be present in each object body, or the operation errors.
+2. **The schema's label property.** If `matchOn` is omitted, the CLI uses the type's label property (the field the WebUI lists objects by, for example `name` on `Domain`). [`snapshot`](/docs/management/cli/snapshot) writes this `matchOn` explicitly so plans are self-describing.
+3. **Value match (fallback).** If the type has no label property and no `matchOn` was given, the CLI matches by comparing every non-secret scalar field (string, number, boolean, enum, datetime) of the body against existing objects. A `warning` is printed, because this fallback is not convergent: changing any compared field means the body no longer matches the old object, so a **new** object is created instead of the old one being updated. For any type you re-apply, supply an explicit `matchOn` (or rely on a label property) rather than the value fallback.
+
+If the match key matches **more than one** existing object the operation errors as ambiguous, rather than guessing which one to update. For [multi-variant types](/docs/management/cli/#multi-variant-objects), each body must carry its `@type`, and matching is done within that variant.
+
+When an `upsert` updates a matched object, server-set and immutable fields in the body are dropped from the patch (the server would reject them); only mutable fields are sent.
+
+#### Teardown with destroy
+
+`destroy` remains available for the cases where deletion is the intent: removing objects a plan no longer owns, or wiping a type before a migration. It is not part of the idempotent re-run flow above. See [the `destroy` reference](#destroy) and [Operational guidance](#operational-guidance).
+
+* **Server-assigned ids change** across a destroy-and-recreate, so external systems that cache Stalwart ids must look them up again afterwards.
 * **Destroy filters scope the teardown.** `{"@type":"destroy","object":"Domain","value":{"name":"example.com"}}` only removes the named domain. `{"@type":"destroy","object":"Domain"}` (no `value`) removes every domain on the server. Choose the filter to match the slice of state the plan owns; an unfiltered destroy in a plan that only declares one domain will silently delete every other domain on the server.
 
 ### Cross-operation references
@@ -65,7 +88,9 @@ The plan can express references between objects that have not been created yet b
 
 * **Refs in values** (`"domainId": "#dom-a"`): the CLI never rewrites these. It collects them recursively from every string value and every object key, and forwards them to the server in the request-level `createdIds` map. The server resolves `#dom-a` to the real id assigned during the matching `create`. This works across separate JMAP requests, including across batches.
 
-* **Refs as the `id` of an `update`** (`"id": "#dom-a"`): JMAP does not resolve `#`-prefixed update keys server-side. The CLI resolves these client-side from the `created_ids` map populated during earlier `create` operations. If the reference does not match any prior create, the CLI errors before sending the request.
+* **Refs as the `id` of an `update`** (`"id": "#dom-a"`): JMAP does not resolve `#`-prefixed update keys server-side. The CLI resolves these client-side from the id map populated during earlier `create` and `upsert` operations. If the reference does not match any prior create or upsert, the CLI errors before sending the request.
+
+An `upsert` registers a client id (`#dom-a`) the same way a `create` does, whether the object was matched or freshly created, so later operations can reference an upserted object regardless of whether this run created it or reconciled an existing one. This is what lets a snapshot's singleton `update` set `"defaultDomainId": "#domain-b"` and have it resolve to the already-present domain on a re-apply.
 
 Refs work in:
 
@@ -75,21 +100,23 @@ Refs work in:
 
 Refs do **not** work for:
 
-* The `id` field of an `update` operation when no matching `create` exists in the same plan (the CLI surfaces a clear error in this case).
+* The `id` field of an `update` operation when no matching `create` or `upsert` exists in the same plan (the CLI surfaces a clear error in this case).
 
 ### Dependency ordering
 
 Because the CLI does not know the dependency graph in advance, plan authors are responsible for ordering operations correctly:
 
-* **Creates** must be ordered parents-first. A `Domain` create must appear before an `Account` create that references the domain via `"domainId": "#..."`.
-* **Updates** must come after the create of the object they patch (or reference an existing server id directly).
-* **Destroys** must be listed **in the same order as the creates**. The reverse pass will then take them down children-first, matching foreign-key constraints.
+* **Upserts** (and **creates**) must be ordered parents-first. A `Domain` upsert must appear before an `Account` upsert that references the domain via `"domainId": "#..."`.
+* **Updates** must come after the upsert or create of the object they patch (or reference an existing server id directly). Singleton updates that reference other objects (for example `SystemSettings` pointing at `defaultDomainId`) belong at the end, after the objects they point to.
+* **Destroys**, when present, must be listed **in the same order as the creates/upserts**. The reverse pass will then take them down children-first, matching foreign-key constraints.
 
-A common pitfall: writing destroys in reverse-of-creates order (children-first) makes the apply *re-reverse* them at runtime to parents-first, which fails on `objectIsLinked`. The fix is to write destroys forwards (parents-first); the apply does the reversal.
+A common pitfall with teardowns: writing destroys in reverse-of-creates order (children-first) makes the apply *re-reverse* them at runtime to parents-first, which fails on `objectIsLinked`. The fix is to write destroys forwards (parents-first); the apply does the reversal.
 
 ### Batching
 
-The CLI splits large operations into batches sized by the server's `maxObjectsInSet` (typically 500), so a `create` of 5,000 objects is sent in 10 requests. The first batch of a given object type sees only the previously-tracked `createdIds`. Each completed batch contributes its newly-assigned ids to the global tracker, so subsequent batches (and subsequent operations) can reference them.
+The CLI splits large operations into batches sized by the server's `maxObjectsInSet` (typically 500), so an `upsert` or `create` of 5,000 objects is sent in batches of 500. The first batch of a given object type sees only the previously-tracked `createdIds`. Each completed batch contributes its newly-assigned ids to the global tracker, so subsequent batches (and subsequent operations) can reference them.
+
+To resolve matches, an `upsert` first reads the existing objects of the type once (paginated by `maxObjectsInGet`) and caches them for the run, then issues the `create` and `update` batches.
 
 For destroys, ids are first collected by paginating the corresponding `query` (anchor-based, in `maxObjectsInGet` increments), then destroyed in `maxObjectsInSet` batches.
 
@@ -99,21 +126,20 @@ A plan is **NDJSON**: every non-blank line is a JSON object describing one opera
 
 ### Annotated example
 
-```text
-# Destroy pass: written parents-first, executed children-first.
-{"@type":"destroy","object":"Domain","value":{"name":"example.com"}}
-{"@type":"destroy","object":"Domain","value":{"name":"example.net"}}
-{"@type":"destroy","object":"Account","value":{"@type":"Group"}}
-{"@type":"destroy","object":"DkimSignature"}
+A re-runnable plan: `upsert` the objects (parents first), then point the singleton at one of them. Applying it twice converges to the same state.
 
-# Create / update pass: parents-first.
-{"@type":"create","object":"Domain","value":{"dom-a":{"name":"example.com"},"dom-b":{"name":"example.net"}}}
-{"@type":"create","object":"Account","value":{"grp-sales":{"@type":"Group","name":"sales","domainId":"#dom-a"}}}
-{"@type":"update","object":"Domain","id":"#dom-a","value":{"description":"Primary corporate domain"}}
+```text
+# Upsert objects, parents-first. matchOn names the natural key.
+{"@type":"upsert","object":"Domain","matchOn":["name"],"value":{"dom-a":{"name":"example.com","description":"Primary corporate domain"},"dom-b":{"name":"example.net"}}}
+{"@type":"upsert","object":"Account","matchOn":["name"],"value":{"grp-sales":{"@type":"Group","name":"sales","domainId":"#dom-a"}}}
+
+# Singleton update, last: it references a domain upserted above.
 {"@type":"update","object":"SystemSettings","value":{"defaultDomainId":"#dom-a"}}
 ```
 
 (Annotation lines starting with `#` are shown above for clarity; the actual NDJSON parser does **not** accept comments. Every non-blank line must be a JSON object.)
+
+On the first apply, no `example.com`/`example.net` domain exists, so both are created and `#dom-a` resolves to the new `example.com`. On the second apply, the `matchOn: ["name"]` key finds the existing domains and they are updated in place; `#dom-a` resolves to the same id, so `defaultDomainId` stays valid and nothing is duplicated or destroyed.
 
 A complete obfuscated example plan is included with these docs at [example-bulk-plan.ndjson](./example-bulk-plan.ndjson).
 
@@ -126,6 +152,7 @@ A machine-readable schema for **a single line** of the plan format:
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Stalwart CLI bulk plan operation",
   "oneOf": [
+    { "$ref": "#/$defs/upsertOp" },
     { "$ref": "#/$defs/createOp" },
     { "$ref": "#/$defs/updateOp" },
     { "$ref": "#/$defs/destroyOp" }
@@ -143,6 +170,28 @@ A machine-readable schema for **a single line** of the plan format:
       "type": "string",
       "pattern": "^#.+",
       "description": "Reference to a client-assigned id earlier in the plan."
+    },
+
+    "upsertOp": {
+      "type": "object",
+      "required": ["@type", "object", "value"],
+      "additionalProperties": false,
+      "properties": {
+        "@type": { "const": "upsert" },
+        "object": { "$ref": "#/$defs/objectName" },
+        "matchOn": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1,
+          "description": "Property names forming the match key. If omitted, the type's label property is used, falling back to a by-value match (with a warning). Cannot be empty."
+        },
+        "value": {
+          "type": "object",
+          "minProperties": 1,
+          "description": "Map of user-assigned id -> object body. Each body must include every property named in matchOn (and @type for multi-variant types). References inside the body use #<id> syntax.",
+          "additionalProperties": { "type": "object" }
+        }
+      }
     },
 
     "createOp": {
@@ -203,6 +252,19 @@ A machine-readable schema for **a single line** of the plan format:
 
 ### Per-operation field reference
 
+#### `upsert`
+
+| Field | Type | Required | Notes |
+|---|---|---|---|
+| `@type` | `"upsert"` | yes | |
+| `object` | string | yes | Object type name (`x:` prefix optional). Singletons are rejected: use `update`. |
+| `matchOn` | array of string | no | Property names forming the [match key](#matching). If omitted, the type's label property is used, falling back to a by-value match (with a warning). If present it must be non-empty. |
+| `value` | object | yes | Map of client id -> object body. Each body must include every property named in `matchOn`, and `@type` for multi-variant objects. References use `#<id>`. |
+
+For each object in `value`, the CLI looks for an existing object matching the [match key](#matching): if found it issues an `update` (server-set and immutable fields are dropped from the patch); if not, it issues a `create`. The map keys are client-assigned ids that may be referenced elsewhere as `#<key>`, whether the object ends up matched or created. As with `create`, a single leading `#` on a map key is stripped, so `{"dom-a": {...}}` and `{"#dom-a": {...}}` are equivalent.
+
+An `upsert` reads the existing objects of the type once to resolve matches, then maps to JMAP `Object/set` requests with `create` and `update` populated. Batching is handled automatically. An ambiguous match (the key matches more than one existing object), a `matchOn` property missing from a body, an empty `value`, an empty `matchOn`, or an `upsert` of a singleton each fail the operation with a clear error.
+
 #### `create`
 
 | Field | Type | Required | Notes |
@@ -213,7 +275,7 @@ A machine-readable schema for **a single line** of the plan format:
 
 The map keys are client-assigned ids. They may be referenced elsewhere as `#<key>`. As a convenience, the CLI strips a single leading `#` from create-map keys, so `{"dom-a": {...}}` and `{"#dom-a": {...}}` are equivalent.
 
-A `create` operation maps directly to one or more JMAP `Object/set` requests with `create` populated. Batching is handled automatically.
+A `create` operation maps directly to one or more JMAP `Object/set` requests with `create` populated. Batching is handled automatically. Unlike `upsert`, a `create` is not re-runnable: a second apply trips a primary-key violation or produces duplicate rows. Reach for `create` only in one-shot plans; prefer `upsert` for anything re-applied.
 
 #### `update`
 
@@ -265,36 +327,28 @@ The set of filterable properties is whatever the server's `Object/query` accepts
 ### Human (default)
 
 ```text
-Plan: 4 destroy, 5 update, 3 create (8 objects)
-✓ destroyed Domain (1)
-✓ destroyed Domain (1)
-✓ destroyed Account (2)
-✓ destroyed DkimSignature (8)
-✓ created Domain (2)
-✓ created Account (2)
-✓ created DkimSignature (3)
+Plan: 0 destroy, 1 update, 0 create, 3 upsert (7 objects)
+✓ upserted Domain (2)
+✓ upserted Account (2)
+✓ upserted DkimSignature (3)
 ✓ updated SystemSettings (1)
-✓ updated Enterprise (1)
-✓ updated BlobStore (1)
-✓ updated InMemoryStore (1)
-✓ updated SearchStore (1)
-Done: 12 destroyed, 5 updated, 7 created (0 failed)
+Done: 0 destroyed, 4 updated, 4 created (0 failed)
 ```
 
-The `Plan:` line and the `Done:` line are written to **stderr** so that `--json` output stays clean for downstream tools.
+An `upsert` line shows the total objects handled; in the `Done:` summary those split into `created` (no existing match) and `updated` (matched and reconciled). Here the seven upserted objects landed as four creates and three updates, plus the one singleton update. The `Plan:` line and the `Done:` line are written to **stderr** so that `--json` output stays clean for downstream tools.
 
 ### NDJSON (`--json`)
 
 One record per completed operation, plus a `summary` record:
 
 ```text
-{"op":"destroy","object":"Domain","index":0,"count":1,"status":"ok"}
-{"op":"create","object":"Domain","index":4,"count":2,"status":"ok"}
-{"op":"create","object":"Account","index":5,"status":"error","error":"Account: create failed for `grp-sales` (operation #6): error: invalidPatch | ..."}
-{"op":"summary","plan":{"destroys":4,"updates":5,"creates":3,"create_objects":8},"done":{"destroyed":1,"updated":0,"created":2,"failed":1}}
+{"op":"upsert","object":"Domain","index":0,"count":2,"status":"ok"}
+{"op":"upsert","object":"Account","index":1,"count":2,"status":"ok"}
+{"op":"update","object":"SystemSettings","index":2,"count":1,"status":"ok"}
+{"op":"summary","plan":{"destroys":0,"updates":1,"creates":0,"create_objects":0,"upserts":2,"upsert_objects":4},"done":{"destroyed":0,"updated":3,"created":2,"failed":0}}
 ```
 
-This is the recommended mode for CI pipelines and IaC providers. The plan header and any progress lines remain on stderr; only the records above appear on stdout.
+This is the recommended mode for CI pipelines and IaC providers. The plan header and any progress lines remain on stderr; only the records above appear on stdout. The summary's `plan` block counts the planned operations (`upserts` and `upsert_objects` alongside the create/update/destroy counts); the `done` block counts the actual outcome, where an upsert's objects are tallied under `created` or `updated`.
 
 ### Dry run
 
@@ -303,11 +357,11 @@ stalwart-cli apply --file plan.ndjson --dry-run
 ```
 
 ```text
-Plan: 4 destroy, 5 update, 3 create (8 objects)
+Plan: 0 destroy, 1 update, 0 create, 3 upsert (7 objects)
 (dry run: no changes will be made)
 ```
 
-`--dry-run` validates that the plan parses, that every referenced object type exists in the schema, and that singleton / id rules are respected. It does not contact the server beyond fetching the schema (which is normally cached).
+`--dry-run` validates that the plan parses, that every referenced object type exists in the schema, and that the structural rules are respected (singleton / id rules, no `upsert` of a singleton, non-empty `value` and `matchOn`). It does not contact the server beyond fetching the schema (which is normally cached), so match resolution (whether an object exists, whether a match is ambiguous) is only checked at apply time.
 
 ## Integrating with infrastructure-as-code
 
@@ -352,15 +406,14 @@ Use `ansible.builtin.template` to render a plan from a Jinja2 template, then `an
 `stalwart-plan.ndjson.j2` (one JSON object per line, no enclosing array):
 
 ```jinja
-{% for d in domains %}
-{"@type":"destroy","object":"Domain","value":{"name":"{{ d.name }}"}}
-{% endfor %}
-{"@type":"create","object":"Domain","value":{
+{"@type":"upsert","object":"Domain","matchOn":["name"],"value":{
 {%- for d in domains -%}
 "dom-{{ loop.index }}":{"name":"{{ d.name }}","description":"{{ d.description }}"}{% if not loop.last %},{% endif %}
 {%- endfor -%}
 }}
 ```
+
+The single `upsert` line is idempotent: the first apply creates the domains, every later apply matches them by `name` and reconciles their fields. No teardown loop is needed.
 
 Use `--dry-run` in a `check` task for `--check` Ansible runs.
 
@@ -374,8 +427,9 @@ Two patterns are supported.
 locals {
   ops = [
     {
-      "@type" = "create"
+      "@type" = "upsert"
       object  = "Domain"
+      matchOn = ["name"]
       value = {
         for d in var.domains :
         "dom-${d.id}" => { name = d.name, description = d.description }
@@ -410,7 +464,7 @@ resource "terraform_data" "stalwart_apply" {
 }
 ```
 
-`triggers_replace` ensures the apply re-runs whenever the rendered plan changes. The resource is destroyed-and-recreated on plan changes, which keeps Terraform's drift detection meaningful.
+`triggers_replace` ensures the apply re-runs whenever the rendered plan changes. Because the plan is built from `upsert` operations, a re-run reconciles the existing Stalwart objects in place rather than recreating them, so re-applying after an unrelated change is safe.
 
 For a more idiomatic Terraform integration (typed resources, real drift detection, partial applies), wrap the CLI in a small custom provider written in Go that shells out to `stalwart-cli` for the actual operations.
 
@@ -468,8 +522,9 @@ services.stalwart-bootstrap = {
   url = "https://mail.example.com";
   credentialsFile = "/run/secrets/stalwart-admin";
   plan = [
-    { "@type" = "create";
+    { "@type" = "upsert";
       object  = "Domain";
+      matchOn = [ "name" ];
       value   = { dom-a = { name = "example.com"; }; };
     }
     { "@type" = "update";
@@ -480,7 +535,7 @@ services.stalwart-bootstrap = {
 };
 ```
 
-The plan is regenerated and re-applied on every NixOS rebuild. Combine with `agenix` or `sops-nix` for the credentials file. Use `--dry-run` in a separate `nixos-test` to validate plans in CI.
+The plan is regenerated and re-applied on every NixOS rebuild. Because it is built from `upsert` operations, each rebuild reconciles the existing objects in place rather than recreating them, so repeated rebuilds converge instead of failing on the second run. Combine with `agenix` or `sops-nix` for the credentials file. Use `--dry-run` in a separate `nixos-test` to validate plans in CI.
 
 ### Pulumi
 
@@ -561,11 +616,12 @@ apply:
 
 ## Operational guidance
 
+* **Prefer `upsert` for anything re-applied.** A plan of `upsert` and singleton `update` operations converges on every run. Reserve `create` for one-shot plans and `destroy` for deliberate teardowns.
+* **Give each re-applied type a stable match key.** Rely on the type's label property or set an explicit `matchOn`; avoid the by-value fallback for anything you re-apply, since a changed field there creates a duplicate instead of updating. See [Matching](#matching).
 * **Generate, review, apply.** Treat the plan file as an artifact: render it from templates, commit the rendered version (or its diff) for review, then apply.
 * **Use `--dry-run` in pull requests.** Every plan change should pass a `--dry-run` before merging.
 * **Never embed real secrets in committed plans.** Use placeholders that the renderer substitutes from a secrets manager (Vault, sops, SSM, ...). Plans containing private keys, password hashes, or license tokens should never be checked in unencrypted.
-* **Keep the destroy and create lists in the same order.** The reverse pass relies on this. If the destroy list and the create list match position-for-position (parents first), the apply round-trips cleanly.
-* **Watch out for `objectIsLinked`.** If a destroy fails with `objectIsLinked`, an earlier object in the destroy list is too far up the tree (i.e. children-first ordering). Re-order so parents come first.
+* **For teardowns, keep the destroy list in creates order.** When a plan does include `destroy` operations, list them parents-first (the same order as the corresponding upserts/creates); the reverse pass takes them down children-first. If a destroy fails with `objectIsLinked`, an earlier entry is too far down the tree (children-first ordering): re-order so parents come first.
 
 ## See also
 

@@ -216,7 +216,7 @@ curl -X POST https://mail.example.com/api \
           "x:Certificate/query",
           {
             "filter": {
-              "text": "example"
+              "subjectAlternativeNames": "example"
             }
           },
           "c1"
@@ -236,7 +236,7 @@ The `x:Certificate/query` `filter` argument accepts the following conditions (co
 
 | Condition | Kind |
 |---|---|
-| `text` | text |
+| `subjectAlternativeNames` | text |
 
 ## CLI
 
@@ -263,7 +263,7 @@ stalwart-cli create Certificate \
 
 ```sh
 stalwart-cli query Certificate
-stalwart-cli query Certificate --where text=example
+stalwart-cli query Certificate --where subjectAlternativeNames=example
 ```
 
 
