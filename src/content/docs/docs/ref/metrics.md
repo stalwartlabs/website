@@ -75,6 +75,7 @@ Every metric Stalwart collects is listed below, grouped by subsystem. Each metri
 | `dane.tlsa-record-not-found` | `count` | TLSA record not found |
 | `dane.tlsa-record-not-dnssec-signed` | `count` | TLSA record not DNSSEC signed |
 | `dane.tlsa-record-invalid` | `count` | Invalid TLSA record |
+| `dane.bogus-dnssec-record` | `count` | Bogus DNSSEC record |
 
 
 ## Delivery
@@ -132,6 +133,30 @@ Every metric Stalwart collects is listed below, grouped by subsystem. Each metri
 | `dkim.signature-expired` | `count` | DKIM signature expired |
 | `dkim.signature-length` | `count` | DKIM signature length issue |
 | `dkim.signer-not-found` | `count` | DKIM signer not found |
+| `dkim.instance-missing` | `count` | DKIM2 message-instance missing |
+| `dkim.instance-syntax` | `count` | DKIM2 message-instance syntax error |
+| `dkim.instance-tag-missing` | `count` | DKIM2 message-instance tag missing |
+| `dkim.instance-not-signed` | `count` | DKIM2 message-instance not signed |
+| `dkim.instance-above-signature` | `count` | DKIM2 message-instance above signature |
+| `dkim.signature-missing` | `count` | DKIM2 signature missing |
+| `dkim.signature-syntax` | `count` | DKIM2 signature syntax error |
+| `dkim.signature-tag-missing` | `count` | DKIM2 signature tag missing |
+| `dkim.signature-tag-unexpected` | `count` | DKIM2 signature unexpected tag |
+| `dkim.sequence-gap` | `count` | DKIM2 sequence gap |
+| `dkim.sequence-overflow` | `count` | DKIM2 sequence overflow |
+| `dkim.mail-from-mismatch` | `count` | DKIM2 MAIL FROM mismatch |
+| `dkim.rcpt-to-mismatch` | `count` | DKIM2 RCPT TO mismatch |
+| `dkim.mail-from-domain-mismatch` | `count` | DKIM2 MAIL FROM domain mismatch |
+| `dkim.next-domain-mismatch` | `count` | DKIM2 next domain mismatch |
+| `dkim.public-key-fetch` | `count` | DKIM2 public key fetch error |
+| `dkim.public-key-missing` | `count` | DKIM2 public key missing |
+| `dkim.public-key-multiple` | `count` | DKIM2 multiple public keys |
+| `dkim.public-key-syntax` | `count` | DKIM2 public key syntax error |
+| `dkim.public-key-algorithm-mismatch` | `count` | DKIM2 public key algorithm mismatch |
+| `dkim.no-valid-algorithm` | `count` | DKIM2 no valid algorithm |
+| `dkim.header-hash-mismatch` | `count` | DKIM2 header hash mismatch |
+| `dkim.modified` | `count` | DKIM2 message modified |
+| `dkim.exploded` | `count` | DKIM2 message exploded |
 
 
 ## Dmarc
@@ -469,6 +494,9 @@ Every metric Stalwart collects is listed below, grouped by subsystem. Each metri
 | `smtp.loop-detected` | `count` | Mail loop detected |
 | `smtp.dkim-pass` | `count` | DKIM verification passed |
 | `smtp.dkim-fail` | `count` | DKIM verification failed |
+| `smtp.dkim2-pass` | `count` | DKIM2 verification passed |
+| `smtp.dkim2-fail` | `count` | DKIM2 verification failed |
+| `smtp.dkim2-dsn-discarded` | `count` | DKIM2 DSN discarded |
 | `smtp.arc-pass` | `count` | ARC verification passed |
 | `smtp.arc-fail` | `count` | ARC verification failed |
 | `smtp.spf-ehlo-pass` | `count` | SPF EHLO check passed |

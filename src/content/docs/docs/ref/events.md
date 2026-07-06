@@ -122,6 +122,7 @@ Metrics reported alongside events are listed on the [Metrics](/docs/ref/metrics)
 | `dane.tlsa-record-not-found` | `info` | TLSA record not found | No TLSA record exists for the remote server's domain; DANE verification is skipped for this connection. |
 | `dane.tlsa-record-not-dnssec-signed` | `info` | TLSA record not DNSSEC signed | The TLSA record was found but is not protected by DNSSEC; it cannot be trusted for DANE verification. |
 | `dane.tlsa-record-invalid` | `info` | Invalid TLSA record | The TLSA record syntax or content is invalid and cannot be used for certificate matching. |
+| `dane.bogus-dnssec-record` | `info` | Bogus DNSSEC record | The DNSSEC signature for the record is invalid; the record cannot be trusted for DANE verification. |
 
 
 ## Delivery
@@ -196,6 +197,30 @@ Metrics reported alongside events are listed on the [Metrics](/docs/ref/metrics)
 | `dkim.signature-retiring` | `info` | DKIM signature retiring | The DKIM signing key is being phased out; the DNS record will be removed after the retirement period to allow in-flight messages to verify. |
 | `dkim.signature-retired` | `info` | DKIM signature retired | The DKIM key's retirement period has elapsed and its DNS record has been removed; the key is no longer in use. |
 | `dkim.signature-deleted` | `info` | DKIM signature deleted | The DKIM signing key has been permanently deleted from the system and its DNS record removed. |
+| `dkim.instance-missing` | `debug` | DKIM2 message-instance missing | A referenced DKIM2 Message-Instance header is missing, so the signature chain cannot be reconstructed. |
+| `dkim.instance-syntax` | `debug` | DKIM2 message-instance syntax error | A DKIM2 Message-Instance header is malformed and could not be parsed. |
+| `dkim.instance-tag-missing` | `debug` | DKIM2 message-instance tag missing | A DKIM2 Message-Instance header is missing a required tag, so it cannot be evaluated. |
+| `dkim.instance-not-signed` | `debug` | DKIM2 message-instance not signed | A DKIM2 Message-Instance is not covered by any signature, leaving part of the chain unprotected. |
+| `dkim.instance-above-signature` | `debug` | DKIM2 message-instance above signature | A DKIM2 Message-Instance has a higher instance number than any DKIM2-Signature, breaking the chain ordering. |
+| `dkim.signature-missing` | `debug` | DKIM2 signature missing | A DKIM2-Signature referenced by the chain is missing, so verification cannot continue. |
+| `dkim.signature-syntax` | `debug` | DKIM2 signature syntax error | A DKIM2-Signature header is malformed and could not be parsed. |
+| `dkim.signature-tag-missing` | `debug` | DKIM2 signature tag missing | A DKIM2-Signature is missing a required tag, so it cannot be evaluated. |
+| `dkim.signature-tag-unexpected` | `debug` | DKIM2 signature unexpected tag | A DKIM2-Signature contains a tag that is not permitted in this context. |
+| `dkim.sequence-gap` | `debug` | DKIM2 sequence gap | The DKIM2 instance sequence numbering has a gap, indicating a missing hop in the chain. |
+| `dkim.sequence-overflow` | `debug` | DKIM2 sequence overflow | The DKIM2 instance sequence numbering would overflow the permitted range. |
+| `dkim.mail-from-mismatch` | `debug` | DKIM2 MAIL FROM mismatch | The DKIM2-Signature MAIL FROM address does not match the envelope sender. |
+| `dkim.rcpt-to-mismatch` | `debug` | DKIM2 RCPT TO mismatch | The DKIM2-Signature RCPT TO address does not match the envelope recipient. |
+| `dkim.mail-from-domain-mismatch` | `debug` | DKIM2 MAIL FROM domain mismatch | The DKIM2-Signature MAIL FROM domain does not match the signing domain (d=). |
+| `dkim.next-domain-mismatch` | `debug` | DKIM2 next domain mismatch | The DKIM2-Signature next-domain (nd=) tag does not match the expected forwarding domain. |
+| `dkim.public-key-fetch` | `debug` | DKIM2 public key fetch error | The public key for the DKIM2-Signature could not be fetched from DNS. |
+| `dkim.public-key-missing` | `debug` | DKIM2 public key missing | No public key record exists in DNS for the DKIM2-Signature selector. |
+| `dkim.public-key-multiple` | `debug` | DKIM2 multiple public keys | Multiple public key records were published for the DKIM2-Signature selector; the key is ambiguous. |
+| `dkim.public-key-syntax` | `debug` | DKIM2 public key syntax error | The DKIM2 public key record published in DNS is malformed and could not be parsed. |
+| `dkim.public-key-algorithm-mismatch` | `debug` | DKIM2 public key algorithm mismatch | The DKIM2-Signature algorithm and the published public key algorithm are incompatible. |
+| `dkim.no-valid-algorithm` | `debug` | DKIM2 no valid algorithm | The DKIM2-Signature lists no signature algorithm acceptable to this server. |
+| `dkim.header-hash-mismatch` | `debug` | DKIM2 header hash mismatch | The hash of the signed headers does not match the DKIM2 Message-Instance header hash. |
+| `dkim.modified` | `debug` | DKIM2 message modified | The message was modified despite a donotmodify request in the DKIM2 signature. |
+| `dkim.exploded` | `debug` | DKIM2 message exploded | The message was exploded to multiple recipients despite a donotexplode request in the DKIM2 signature. |
 
 
 ## Dmarc
@@ -650,6 +675,9 @@ Metrics reported alongside events are listed on the [Metrics](/docs/ref/metrics)
 | `smtp.loop-detected` | `info` | Mail loop detected | A mail loop was detected, the message contains too many Received headers |
 | `smtp.dkim-pass` | `info` | DKIM verification passed | Successful DKIM verification |
 | `smtp.dkim-fail` | `info` | DKIM verification failed | Failed to verify DKIM signature |
+| `smtp.dkim2-pass` | `info` | DKIM2 verification passed | The DKIM2 signature chain on the incoming message verified successfully. |
+| `smtp.dkim2-fail` | `info` | DKIM2 verification failed | The DKIM2 signature chain on the incoming message failed to verify. |
+| `smtp.dkim2-dsn-discarded` | `info` | DKIM2 DSN discarded | An inbound delivery status notification was discarded because its DKIM2 signature chain failed validation, indicating a forged or unauthenticated bounce. |
 | `smtp.arc-pass` | `info` | ARC verification passed | Successful ARC verification |
 | `smtp.arc-fail` | `info` | ARC verification failed | Failed to verify ARC signature |
 | `smtp.spf-ehlo-pass` | `info` | SPF EHLO check passed | EHLO identity passed SPF check |

@@ -405,7 +405,7 @@ Content of a DMARC aggregate report.
 
 > Type: <code>Boolean</code> · default: `false`
 >
-> Whether the policy is in testing mode (pct &lt; 100)
+> Whether the policy is in testing mode
 
 
 ##### `policyFailureReportingOptions`
@@ -427,6 +427,27 @@ Content of a DMARC aggregate report.
 > Type: [<code>DmarcExtension</code>](#dmarcextension)<code>[]</code>
 >
 > Custom vendor-specific extensions to the report
+
+
+##### `generator`
+
+> Type: <code>String?</code>
+>
+> Name and version of the software that generated the report
+
+
+##### `policyNp`
+
+> Type: [<code>DmarcDisposition</code>](#dmarcdisposition) · default: `"unspecified"`
+>
+> Requested handling policy for failing messages from non-existent subdomains
+
+
+##### `policyDiscoveryMethod`
+
+> Type: [<code>DmarcDiscovery</code>](#dmarcdiscovery) · default: `"unspecified"`
+>
+> Method used to discover the DMARC policy record
 
 
 
@@ -719,6 +740,7 @@ A vendor-specific extension in a DMARC report.
 | `MailingList` | Message came from a mailing list |
 | `LocalPolicy` | Local policy override was applied |
 | `Other` | Other reason for override |
+| `PolicyTestMode` | Message exempted because the DMARC policy is in test mode |
 
 
 ### DkimAuthResult
@@ -760,5 +782,16 @@ A vendor-specific extension in a DMARC report.
 | `softFail` | SPF check returned soft fail |
 | `tempError` | Temporary error during SPF check |
 | `permError` | Permanent error in SPF record |
+
+
+### DmarcDiscovery
+
+
+
+| Value | Label |
+|---|---|
+| `psl` | Public Suffix List method (RFC 7489) |
+| `treewalk` | DNS Tree Walk method (RFC 9989) |
+| `unspecified` | Discovery method not specified |
 
 

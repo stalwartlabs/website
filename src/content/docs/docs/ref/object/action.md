@@ -69,6 +69,13 @@ DMARC: Troubleshooting
 > MAIL FROM address provided by the SMTP client
 
 
+##### `to`
+
+> Type: <code>EmailAddress[]</code>
+>
+> RCPT TO addresses provided by the SMTP client, used for DKIM2 envelope verification
+
+
 ##### `message`
 
 > Type: <code>Text?</code>
@@ -130,6 +137,20 @@ DMARC: Troubleshooting
 > Type: <code>Boolean</code> · server-set · default: `false`
 >
 > Whether the DKIM checks passed
+
+
+##### `dkim2Result`
+
+> Type: [<code>DmarcTroubleshootAuthResult</code>](#dmarctroubleshootauthresult) · server-set
+>
+> Result of the DKIM2 signature chain verification
+
+
+##### `dkim2Pass`
+
+> Type: <code>Boolean</code> · server-set · default: `false`
+>
+> Whether the DKIM2 checks passed
 
 
 ##### `arcResult`

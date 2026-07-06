@@ -314,6 +314,96 @@ Redis Cluster
 
 
 
+### `@type: "RedisSentinel"`
+
+Redis Sentinel
+
+
+##### `urls`
+
+> Type: <code>Uri[]</code> · default: `["redis://127.0.0.1:26379"]`
+>
+> Address(es) of the Sentinel node(s)
+
+
+##### `serviceName`
+
+> Type: <code>String</code> · default: `"mymaster"`
+>
+> Name of the monitored master (service) to query via the Sentinels
+
+
+##### `timeout`
+
+> Type: <code>Duration</code> · default: `"10s"`
+>
+> Connection timeout to the database
+
+
+##### `authUsername`
+
+> Type: <code>String?</code> · default: `"stalwart"`
+>
+> Username to connect to the data nodes
+
+
+##### `authSecret`
+
+> Type: [<code>SecretKeyOptional</code>](#secretkeyoptional) · required
+>
+> Password to connect to the data nodes
+
+
+##### `sentinelUsername`
+
+> Type: <code>String?</code>
+>
+> Username to connect to the Sentinel nodes
+
+
+##### `sentinelSecret`
+
+> Type: [<code>SecretKeyOptional</code>](#secretkeyoptional) · required
+>
+> Password to connect to the Sentinel nodes
+
+
+##### `protocolVersion`
+
+> Type: [<code>RedisProtocol</code>](#redisprotocol) · default: `"resp2"`
+>
+> Protocol Version
+
+
+##### `poolMaxConnections`
+
+> Type: <code>UnsignedInt</code> · default: `10` · max: 8192 · min: 1
+>
+> Maximum number of connections to the store
+
+
+##### `poolTimeoutCreate`
+
+> Type: <code>Duration?</code> · default: `"30s"`
+>
+> Timeout for creating a new connection
+
+
+##### `poolTimeoutWait`
+
+> Type: <code>Duration?</code> · default: `"30s"`
+>
+> Timeout for waiting for a connection from the pool
+
+
+##### `poolTimeoutRecycle`
+
+> Type: <code>Duration?</code> · default: `"30s"`
+>
+> Timeout for recycling a connection
+
+
+
 
 ## JMAP API
 

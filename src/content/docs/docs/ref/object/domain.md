@@ -588,8 +588,10 @@ A single condition-result pair in an expression.
 
 | Value | Label |
 |---|---|
-| `Dkim1Ed25519Sha256` | DKIM1 - Ed25519 SHA-256 |
-| `Dkim1RsaSha256` | DKIM1 - RSA SHA-256 |
+| `Dkim1Ed25519Sha256` | DKIM1 (Ed25519 SHA-256) |
+| `Dkim1RsaSha256` | DKIM1 (RSA SHA-256) |
+| `Dkim2Ed25519Sha256` | DKIM2 (Ed25519 SHA-256) |
+| `Dkim2RsaSha256` | DKIM2 (RSA SHA-256) |
 
 
 ### DnsRecordType

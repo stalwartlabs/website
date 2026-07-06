@@ -15,7 +15,7 @@ DkimSignature is a **multi-variant** object: each instance has an `@type` discri
 
 ### `@type: "Dkim1Ed25519Sha256"`
 
-DKIM1 - Ed25519 SHA-256
+DKIM1 (Ed25519 SHA-256)
 
 
 ##### `auid`
@@ -126,7 +126,7 @@ DKIM1 - Ed25519 SHA-256
 
 ### `@type: "Dkim1RsaSha256"`
 
-DKIM1 - RSA SHA-256
+DKIM1 (RSA SHA-256)
 
 
 ##### `auid`
@@ -190,6 +190,144 @@ DKIM1 - RSA SHA-256
 > Type: [<code>DkimHash</code>](#dkimhash)<code>?</code>
 >
 > Hashing algorithm used to verify the authorized third-party signature DNS record
+
+
+##### `domainId`
+
+> Type: <code>Id&lt;</code>[<code>Domain</code>](/docs/ref/object/domain)<code>&gt;</code> · required
+>
+> Identifier for the domain this DKIM signature is associated with
+
+
+##### `memberTenantId`
+
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code> · [enterprise](/docs/server/enterprise)
+>
+> Identifier for the tenant this DKIM signature belongs to
+
+
+##### `selector`
+
+> Type: <code>String</code> · required
+>
+> Selector used to locate the DKIM public key in DNS
+
+
+##### `createdAt`
+
+> Type: <code>UTCDateTime</code> · server-set
+>
+> Creation date of the DKIM signature
+
+
+##### `nextTransitionAt`
+
+> Type: <code>UTCDateTime?</code>
+>
+> Date when this key will transition to the next rotation stage, or null if no transition is scheduled
+
+
+##### `stage`
+
+> Type: [<code>DkimRotationStage</code>](#dkimrotationstage) · default: `"active"`
+>
+> Current stage of the DKIM key in its rotation lifecycle
+
+
+
+### `@type: "Dkim2Ed25519Sha256"`
+
+DKIM2 (Ed25519 SHA-256)
+
+
+##### `flags`
+
+> Type: [<code>Dkim2Flag</code>](#dkim2flag)<code>[]</code>
+>
+> Policy flags added to the signature, requesting downstream handlers to honor delivery constraints or provide feedback
+
+
+##### `privateKey`
+
+> Type: [<code>SecretText</code>](#secrettext) · required
+>
+> PEM-encoded private key used to sign outgoing messages
+
+
+##### `publicKey`
+
+> Type: <code>Text</code> · server-set
+>
+> PEM-encoded public key used to verify signatures, derived from the private key
+
+
+##### `domainId`
+
+> Type: <code>Id&lt;</code>[<code>Domain</code>](/docs/ref/object/domain)<code>&gt;</code> · required
+>
+> Identifier for the domain this DKIM signature is associated with
+
+
+##### `memberTenantId`
+
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code> · [enterprise](/docs/server/enterprise)
+>
+> Identifier for the tenant this DKIM signature belongs to
+
+
+##### `selector`
+
+> Type: <code>String</code> · required
+>
+> Selector used to locate the DKIM public key in DNS
+
+
+##### `createdAt`
+
+> Type: <code>UTCDateTime</code> · server-set
+>
+> Creation date of the DKIM signature
+
+
+##### `nextTransitionAt`
+
+> Type: <code>UTCDateTime?</code>
+>
+> Date when this key will transition to the next rotation stage, or null if no transition is scheduled
+
+
+##### `stage`
+
+> Type: [<code>DkimRotationStage</code>](#dkimrotationstage) · default: `"active"`
+>
+> Current stage of the DKIM key in its rotation lifecycle
+
+
+
+### `@type: "Dkim2RsaSha256"`
+
+DKIM2 (RSA SHA-256)
+
+
+##### `flags`
+
+> Type: [<code>Dkim2Flag</code>](#dkim2flag)<code>[]</code>
+>
+> Policy flags added to the signature, requesting downstream handlers to honor delivery constraints or provide feedback
+
+
+##### `privateKey`
+
+> Type: [<code>SecretText</code>](#secrettext) · required
+>
+> PEM-encoded private key used to sign outgoing messages
+
+
+##### `publicKey`
+
+> Type: <code>Text</code> · server-set
+>
+> PEM-encoded public key used to verify signatures, derived from the private key
 
 
 ##### `domainId`
@@ -560,5 +698,16 @@ A secret value read from a file.
 | `pending` | DKIM key is scheduled for DNS publication and not yet active |
 | `retiring` | DKIM key has been superseded by a new key but still published in DNS |
 | `retired` | DKIM key has been removed from DNS and is pending deletion |
+
+
+### Dkim2Flag
+
+
+
+| Value | Label |
+|---|---|
+| `donotmodify` | Request that the message not be modified in transit |
+| `donotexplode` | Request that the message not be delivered to more than one recipient |
+| `feedback` | Request feedback about how the message is handled during delivery |
 
 

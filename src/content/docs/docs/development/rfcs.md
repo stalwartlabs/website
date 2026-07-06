@@ -149,6 +149,8 @@ The following RFCs are implemented by Stalwart.
 
 ### DKIM
 
+- [draft-ietf-dkim-dkim2-spec - DKIM2 Signatures](https://datatracker.ietf.org/doc/draft-ietf-dkim-dkim2-spec/)
+- [draft-chuang-dkim2-dns - DKIM2 DNS Records](https://datatracker.ietf.org/doc/draft-chuang-dkim2-dns/)
 - [RFC 6376 - DomainKeys Identified Mail (DKIM) Signatures](https://datatracker.ietf.org/doc/html/rfc6376)
 - [RFC 6541 - DomainKeys Identified Mail (DKIM) Authorized Third-Party Signatures](https://datatracker.ietf.org/doc/html/rfc6541)
 - [RFC 6651 - Extensions to DomainKeys Identified Mail (DKIM) for Failure Reporting](https://datatracker.ietf.org/doc/html/rfc6651)
@@ -169,7 +171,9 @@ The following RFCs are implemented by Stalwart.
 - [RFC 8617 - The Authenticated Received Chain (ARC) Protocol](https://datatracker.ietf.org/doc/html/rfc8617)
 
 ### DMARC
-- [RFC 7489 - Domain-based Message Authentication, Reporting, and Conformance (DMARC)](https://datatracker.ietf.org/doc/html/rfc7489)
+- [RFC 9989 - Domain-based Message Authentication, Reporting, and Conformance (DMARC)](https://datatracker.ietf.org/doc/html/rfc9989)
+- [RFC 9990 - DMARC Aggregate Reporting](https://datatracker.ietf.org/doc/html/rfc9990)
+- [RFC 9991 - DMARC Failure Reporting](https://datatracker.ietf.org/doc/html/rfc9991)
 - [RFC 8601 - Message Header Field for Indicating Message Authentication Status](https://datatracker.ietf.org/doc/html/rfc8601)
 - [RFC 8616 - Email Authentication for Internationalized Mail](https://datatracker.ietf.org/doc/html/rfc8616)
 - [RFC 7960 - Interoperability Issues between Domain-based Message Authentication, Reporting, and Conformance (DMARC) and Indirect Email Flows](https://datatracker.ietf.org/doc/html/rfc7960)

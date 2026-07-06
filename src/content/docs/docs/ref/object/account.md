@@ -709,6 +709,8 @@ Encryption-at-rest algorithm selection.
 - **`Disabled`**: Disabled. No additional fields.
 - **`Aes128`**: AES-128. Carries the fields of [`EncryptionSettings`](#encryptionsettings).
 - **`Aes256`**: AES-256. Carries the fields of [`EncryptionSettings`](#encryptionsettings).
+- **`Aes256Gcm`**: AES-256-GCM (S/MIME only). Carries the fields of [`EncryptionSettings`](#encryptionsettings).
+- **`ChaCha20Poly1305`**: ChaCha20-Poly1305 (S/MIME only). Carries the fields of [`EncryptionSettings`](#encryptionsettings).
 
 
 
