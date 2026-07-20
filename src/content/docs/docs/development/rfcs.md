@@ -15,6 +15,7 @@ The following RFCs are implemented by Stalwart.
 - [RFC 9425 - JSON Meta Application Protocol (JMAP) for Quotas](https://www.rfc-editor.org/rfc/rfc9425.html)
 - [RFC 8621 - The JSON Meta Application Protocol (JMAP) for Mail](https://www.rfc-editor.org/rfc/rfc8621)
 - [RFC 9661 - JMAP for Sieve Scripts](https://www.rfc-editor.org/rfc/rfc9661.html)
+- [RFC 9749 - Use of Voluntary Application Server Identification (VAPID) in JMAP Web Push](https://datatracker.ietf.org/doc/html/rfc9749)
 
 ### IMAP4
 

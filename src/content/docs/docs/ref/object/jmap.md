@@ -207,6 +207,20 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 > The default maximum number of push subscriptions a user can create
 
 
+##### `webPushKey`
+
+> Type: [<code>SecretTextOptional</code>](#secrettextoptional) · required
+>
+> ECDSA P-256 private key (PKCS#8 PEM) used to sign VAPID (RFC 8292) authentication tokens for Web Push.
+
+
+##### `webPushContact`
+
+> Type: <code>String?</code>
+>
+> Optional contact URI (a mailto: or https: address) included as the sub claim of VAPID tokens so that push services can reach the server operator. Leave empty to omit the claim.
+
+
 
 ## JMAP API
 
@@ -267,7 +281,7 @@ curl -X POST https://mail.example.com/api \
           {
             "update": {
               "singleton": {
-                "parseLimitEvent": 10
+                "webPushContact": "updated value"
               }
             }
           },
@@ -299,8 +313,72 @@ stalwart-cli get Jmap
 ### Update
 
 ```sh
-stalwart-cli update Jmap --field parseLimitEvent=10
+stalwart-cli update Jmap --field webPushContact='updated value'
 ```
+
+
+
+## Nested types
+
+
+### SecretTextOptional
+
+An optional secret text value, or none.
+
+
+- **`None`**: No secret. No additional fields.
+- **`Text`**: Secret value. Carries the fields of [`SecretTextValue`](#secrettextvalue).
+- **`EnvironmentVariable`**: Secret read from environment variable. Carries the fields of [`SecretKeyEnvironmentVariable`](#secretkeyenvironmentvariable).
+- **`File`**: Secret read from file. Carries the fields of [`SecretKeyFile`](#secretkeyfile).
+
+
+
+
+#### SecretTextValue
+
+A secret text value provided directly.
+
+
+
+##### `secret`
+
+> Type: <code>Text</code> · required · secret
+>
+> Password or secret value
+
+
+
+
+
+#### SecretKeyEnvironmentVariable
+
+A secret value read from an environment variable.
+
+
+
+##### `variableName`
+
+> Type: <code>String</code> · required
+>
+> Environment variable name to read the secret from
+
+
+
+
+
+#### SecretKeyFile
+
+A secret value read from a file.
+
+
+
+##### `filePath`
+
+> Type: <code>String</code> · required
+>
+> File path to read the secret from
+
+
 
 
 

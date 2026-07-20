@@ -199,7 +199,7 @@ stalwart-cli --url https://prod.mail.example.com \
     apply --file plan.ndjson
 ```
 
-The plan reconciles the selected types on production with staging's content: objects that already exist (matched by their key) are updated, objects that do not are created, and nothing on production is destroyed. Objects present on production but absent from the snapshot are left untouched; if a promotion needs to remove them, add explicit `destroy` operations to the plan. Use [`--dry-run` on `apply`](/docs/management/cli/apply) in the promotion CI step so the plan can be reviewed before taking effect.
+The plan reconciles the selected types on production with staging's content: objects that already exist (matched by their key) are updated, objects that do not are created, and nothing on production is destroyed. Objects present on production but absent from the snapshot are left untouched; if a promotion needs to remove them, add explicit `destroy` operations to the plan, or change the relevant `upsert` operations to [`reconcile`](/docs/management/cli/apply#reconciling-to-exact-state), which deletes objects of the type that the plan does not list. Use [`--dry-run` on `apply`](/docs/management/cli/apply) in the promotion CI step so the plan can be reviewed before taking effect.
 
 ### Round-trip validation
 

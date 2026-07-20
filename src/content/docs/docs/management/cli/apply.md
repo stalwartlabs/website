@@ -3,9 +3,11 @@ sidebar_position: 8
 title: "Declarative bulk operations"
 ---
 
-The `apply` command takes an NDJSON file describing a batch of `upsert`, `update`, `create`, and `destroy` operations, and applies them to the server in dependency-aware order. It is intended as the integration surface for infrastructure-as-code tooling (Ansible, Terraform, NixOS, Pulumi, ...) and for one-shot deployments / migrations performed by hand or by CI.
+The `apply` command takes an NDJSON file describing a batch of `upsert`, `reconcile`, `update`, `create`, and `destroy` operations, and applies them to the server in dependency-aware order. It is intended as the integration surface for infrastructure-as-code tooling (Ansible, Terraform, NixOS, Pulumi, ...) and for one-shot deployments / migrations performed by hand or by CI.
 
 The primary operation is `upsert`: it matches each object in the plan against the live server (by a natural key such as a domain's `name`) and either updates the existing object in place or creates it if absent. A plan built from `upsert` operations is **idempotent**: applying it once or many times converges to the same server state, with no deletions and no duplicate objects. This is the operation [`snapshot`](/docs/management/cli/snapshot) emits, and the shape every infrastructure-as-code integration below uses.
+
+`reconcile` extends `upsert` with deletion: it does everything `upsert` does and additionally destroys every existing object of the type that the plan did **not** match, converging the type to exactly the set described in the plan. Where `upsert` only ever adds or updates, `reconcile` also removes, so it closes the one gap `upsert` leaves open (a renamed or dropped object is not left behind). See [Reconciling to exact state](#reconciling-to-exact-state).
 
 For interactive use cases see the per-command pages: [Creating objects](/docs/management/cli/create), [Updating objects](/docs/management/cli/update), [Removing objects](/docs/management/cli/delete).
 
@@ -28,19 +30,21 @@ stalwart-cli apply ( --file <path> | --stdin )
 | `--continue-on-error` | Do not abort on the first failed operation; report all errors at the end and exit non-zero. |
 | `--quiet` | Suppress per-operation log lines; print only the final summary. |
 | `--json` | Emit one NDJSON record per completed operation to stdout, plus a summary record at the end. The plan header and any progress lines remain on stderr. |
-| `--progress` | Print one extra line per request batch during large `destroy`, `create`, and `upsert` operations. |
+| `--progress` | Print one extra line per request batch during large `destroy`, `create`, `upsert`, and `reconcile` operations. |
 
 Exactly one of `--file` and `--stdin` must be supplied.
 
 ## How it works
 
-The plan is **NDJSON**: one operation per line, no enclosing array. Blank lines are ignored; surrounding whitespace on a line is tolerated. Each operation is one of four types: `upsert`, `update`, `create`, or `destroy`. The CLI processes the plan in **two passes**:
+The plan is **NDJSON**: one operation per line, no enclosing array. Blank lines are ignored; surrounding whitespace on a line is tolerated. Each operation is one of five types: `upsert`, `reconcile`, `update`, `create`, or `destroy`. The CLI processes the plan in **three passes**:
 
-1. **Destroy pass (reverse order).** Every `destroy` operation is executed in **reverse** of its position in the plan. All other operations are skipped during this pass. This is what makes dependency-aware teardowns possible: when a plan lists `Domain → Account → DkimSignature` (parents first), the reverse pass tears them down in `DkimSignature → Account → Domain` order, satisfying foreign-key constraints. Most plans contain no destroys at all; the pass is a no-op for them. See [Teardown with destroy](#teardown-with-destroy).
+1. **Destroy pass (reverse order).** Every `destroy` operation is executed in **reverse** of its position in the plan. All other operations are skipped during this pass. This is what makes dependency-aware teardowns possible: when a plan lists `Domain`, then `Account`, then `DkimSignature` (parents first), the reverse pass tears them down in `DkimSignature`, `Account`, `Domain` order, satisfying foreign-key constraints. Most plans contain no destroys at all; the pass is a no-op for them. See [Teardown with destroy](#teardown-with-destroy).
 
-2. **Apply pass (plan order).** All `upsert`, `update`, and `create` operations run in the order they appear in the plan. Destroys are skipped during this pass. This ordering is what allows objects to reference each other: a `Domain` can be upserted in operation 1 and then referenced by an `Account` in operation 2.
+2. **Apply pass (plan order).** All `upsert`, `reconcile`, `update`, and `create` operations run in the order they appear in the plan. Destroys are skipped during this pass, and the delete half of each `reconcile` is deferred to pass 3. This ordering is what allows objects to reference each other: a `Domain` can be upserted in operation 1 and then referenced by an `Account` in operation 2.
 
-The two passes let a single plan file describe a teardown followed by a rebuild, but for the common case (declaring desired state and re-applying it) the plan is a flat list of `upsert` and singleton `update` operations and only the second pass does any work.
+3. **Reconcile cleanup pass (reverse order).** The objects each `reconcile` marked for deletion (existing objects the plan did not match) are destroyed now, with the reconciles processed in **reverse** of their plan position. Deferring the deletes until after the whole apply pass, and running them children-first, means a dependent is repointed or removed before the object it referenced is deleted, so a leaked parent is not blocked by a leaked child. A plan with no `reconcile` operations skips this pass.
+
+The three passes let a single plan file describe a teardown followed by a rebuild, and let a `reconcile` add, update, and delete in one declarative sweep. For the common non-destructive case (declaring desired state with `upsert` and re-applying it) the plan is a flat list of `upsert` and singleton `update` operations and only the second pass does any work.
 
 ### Stop on first error (default)
 
@@ -69,9 +73,11 @@ The match key for an `upsert` is resolved in this order:
 
 1. **Explicit `matchOn`.** If the operation carries a `matchOn` list of property names, those properties are the key. An object in the `value` map matches an existing object when every listed property is equal. Every property in `matchOn` must be present in each object body, or the operation errors.
 2. **The schema's label property.** If `matchOn` is omitted, the CLI uses the type's label property (the field the WebUI lists objects by, for example `name` on `Domain`). [`snapshot`](/docs/management/cli/snapshot) writes this `matchOn` explicitly so plans are self-describing.
-3. **Value match (fallback).** If the type has no label property and no `matchOn` was given, the CLI matches by comparing every non-secret scalar field (string, number, boolean, enum, datetime) of the body against existing objects. A `warning` is printed, because this fallback is not convergent: changing any compared field means the body no longer matches the old object, so a **new** object is created instead of the old one being updated. For any type you re-apply, supply an explicit `matchOn` (or rely on a label property) rather than the value fallback.
+3. **Value match (fallback).** If the type has no label property and no `matchOn` was given, the CLI matches by comparing every non-secret scalar field (string, number, boolean, enum, datetime) of the body against existing objects. A `warning` is printed, because this fallback is not convergent: changing any compared field means the body no longer matches the old object, so a **new** object is created instead of the old one being updated. For any type you re-apply, supply an explicit `matchOn` (or rely on a label property) rather than the value fallback. `reconcile` does not offer this fallback at all: it requires an explicit `matchOn` or a label property, since a by-value non-match would delete the old object.
 
 If the match key matches **more than one** existing object the operation errors as ambiguous, rather than guessing which one to update. For [multi-variant types](/docs/management/cli/#multi-variant-objects), each body must carry its `@type`, and matching is done within that variant.
+
+A `matchOn` may include a **reference field**. When a match-key property is a reference (an `ObjectId`, such as `Account.domainId`) and its value in the body is a `#<id>` reference, the CLI resolves that reference to the real server id before comparing it against existing objects. This makes the effective primary key expressible: matching an `Account` on `["name", "domainId"]` where `domainId` is `#dom-a` compares against the domain's actual id, whether it was created earlier in the plan or matched from the live server. A `#`-shaped value in a non-reference field is treated as a literal, not a reference. A `#<id>` in a match key that no earlier operation produced is a hard error (caught upfront, so `--dry-run` reports it too).
 
 When an `upsert` updates a matched object, server-set and immutable fields in the body are dropped from the patch (the server would reject them); only mutable fields are sent.
 
@@ -82,6 +88,25 @@ When an `upsert` updates a matched object, server-set and immutable fields in th
 * **Server-assigned ids change** across a destroy-and-recreate, so external systems that cache Stalwart ids must look them up again afterwards.
 * **Destroy filters scope the teardown.** `{"@type":"destroy","object":"Domain","value":{"name":"example.com"}}` only removes the named domain. `{"@type":"destroy","object":"Domain"}` (no `value`) removes every domain on the server. Choose the filter to match the slice of state the plan owns; an unfiltered destroy in a plan that only declares one domain will silently delete every other domain on the server.
 
+### Reconciling to exact state
+
+`upsert` never deletes, so it cannot express "these are the only objects of this type that should exist". Re-applying an `upsert` plan after removing an entry leaves the old object in place: if you rename a domain from `example.org` to `example.net` and re-apply, you end up with **both**. `reconcile` closes that gap. It performs the same match-update-or-create as `upsert`, then destroys every existing object of the type that no entry in the plan matched. The result is that the type converges to exactly the plan:
+
+```text
+{"@type":"reconcile","object":"Domain","matchOn":["name"],"value":{"dom-a":{"name":"example.net"}}}
+```
+
+Applying this leaves `example.net` as the **only** domain: it is created (or matched and updated) if present in the plan, and every other domain is destroyed. Re-applying is idempotent. An empty `value` (`"value":{}`) is therefore valid for `reconcile` (it means "this type should have no objects"), whereas `upsert` rejects it.
+
+Because `reconcile` deletes, a few rules keep it safe:
+
+* **A match key is required.** `reconcile` refuses the by-value fallback that `upsert` allows: an operation with no `matchOn` on a type that also has no label property is rejected at plan time. Value matching treats any drifted field as a non-match, which under `reconcile` would delete the existing object and recreate it under a new id; requiring an explicit `matchOn` (or a label property) makes that impossible to trigger by accident.
+* **Deletion is scoped per variant.** For [multi-variant types](/docs/management/cli/#multi-variant-objects), only the `@type` variants that actually appear in the plan value are eligible for deletion. A `reconcile` of `MtaRoute` that lists only `Local` routes never touches `Mx` routes, and an empty-value `reconcile` on a multi-variant type deletes nothing (no variant is named).
+* **Renames are delete-and-recreate.** The match key *is* the object's identity. Changing the value of a match-key property means the old object no longer matches any entry, so it is deleted and a new object is created with a fresh server id. If you need to preserve the id across a rename, key on a stable property rather than the one being renamed.
+* **A blocked delete fails the run.** If an object the plan wants to delete is still referenced elsewhere (for example a `Domain` pinned by an `Account`), the destroy fails with `objectIsLinked` and the operation is reported as failed, exactly as a `destroy` would. `reconcile` does not force-delete.
+
+`reconcile` is **not** emitted by [`snapshot`](/docs/management/cli/snapshot), which stays non-destructive (`upsert`-only) so that restoring a snapshot never deletes objects the snapshot happened to omit. Author `reconcile` by hand when converging a type to an exact, plan-owned set is the intent.
+
 ### Cross-operation references
 
 The plan can express references between objects that have not been created yet by using the JMAP `#<id>` reference syntax. Two distinct mechanisms cooperate:
@@ -90,7 +115,7 @@ The plan can express references between objects that have not been created yet b
 
 * **Refs as the `id` of an `update`** (`"id": "#dom-a"`): JMAP does not resolve `#`-prefixed update keys server-side. The CLI resolves these client-side from the id map populated during earlier `create` and `upsert` operations. If the reference does not match any prior create or upsert, the CLI errors before sending the request.
 
-An `upsert` registers a client id (`#dom-a`) the same way a `create` does, whether the object was matched or freshly created, so later operations can reference an upserted object regardless of whether this run created it or reconciled an existing one. This is what lets a snapshot's singleton `update` set `"defaultDomainId": "#domain-b"` and have it resolve to the already-present domain on a re-apply.
+An `upsert` or `reconcile` registers a client id (`#dom-a`) the same way a `create` does, whether the object was matched or freshly created, so later operations can reference it regardless of whether this run created it or reconciled an existing one. This is what lets a snapshot's singleton `update` set `"defaultDomainId": "#domain-b"` and have it resolve to the already-present domain on a re-apply.
 
 Refs work in:
 
@@ -106,7 +131,7 @@ Refs do **not** work for:
 
 Because the CLI does not know the dependency graph in advance, plan authors are responsible for ordering operations correctly:
 
-* **Upserts** (and **creates**) must be ordered parents-first. A `Domain` upsert must appear before an `Account` upsert that references the domain via `"domainId": "#..."`.
+* **Upserts**, **reconciles**, and **creates** must be ordered parents-first. A `Domain` upsert must appear before an `Account` upsert that references the domain via `"domainId": "#..."`. This also covers references in a `reconcile` match key: the parent must be produced before the child op that keys on it. The delete half of a `reconcile` needs no ordering care, because it is deferred to the final children-first pass.
 * **Updates** must come after the upsert or create of the object they patch (or reference an existing server id directly). Singleton updates that reference other objects (for example `SystemSettings` pointing at `defaultDomainId`) belong at the end, after the objects they point to.
 * **Destroys**, when present, must be listed **in the same order as the creates/upserts**. The reverse pass will then take them down children-first, matching foreign-key constraints.
 
@@ -116,7 +141,7 @@ A common pitfall with teardowns: writing destroys in reverse-of-creates order (c
 
 The CLI splits large operations into batches sized by the server's `maxObjectsInSet` (typically 500), so an `upsert` or `create` of 5,000 objects is sent in batches of 500. The first batch of a given object type sees only the previously-tracked `createdIds`. Each completed batch contributes its newly-assigned ids to the global tracker, so subsequent batches (and subsequent operations) can reference them.
 
-To resolve matches, an `upsert` first reads the existing objects of the type once (paginated by `maxObjectsInGet`) and caches them for the run, then issues the `create` and `update` batches.
+To resolve matches, an `upsert` or `reconcile` first reads the existing objects of the type once (paginated by `maxObjectsInGet`) and caches them for the run, then issues the `create` and `update` batches. A `reconcile` reuses that same cached read to compute which existing objects were not matched, and destroys them in `maxObjectsInSet` batches during the cleanup pass.
 
 For destroys, ids are first collected by paginating the corresponding `query` (anchor-based, in `maxObjectsInGet` increments), then destroyed in `maxObjectsInSet` batches.
 
@@ -153,6 +178,7 @@ A machine-readable schema for **a single line** of the plan format:
   "title": "Stalwart CLI bulk plan operation",
   "oneOf": [
     { "$ref": "#/$defs/upsertOp" },
+    { "$ref": "#/$defs/reconcileOp" },
     { "$ref": "#/$defs/createOp" },
     { "$ref": "#/$defs/updateOp" },
     { "$ref": "#/$defs/destroyOp" }
@@ -189,6 +215,27 @@ A machine-readable schema for **a single line** of the plan format:
           "type": "object",
           "minProperties": 1,
           "description": "Map of user-assigned id -> object body. Each body must include every property named in matchOn (and @type for multi-variant types). References inside the body use #<id> syntax.",
+          "additionalProperties": { "type": "object" }
+        }
+      }
+    },
+
+    "reconcileOp": {
+      "type": "object",
+      "required": ["@type", "object", "value"],
+      "additionalProperties": false,
+      "properties": {
+        "@type": { "const": "reconcile" },
+        "object": { "$ref": "#/$defs/objectName" },
+        "matchOn": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1,
+          "description": "Property names forming the match key. If omitted, the type's label property is used. Unlike upsert, reconcile has no by-value fallback: a type with no label property must supply matchOn. Cannot be empty."
+        },
+        "value": {
+          "type": "object",
+          "description": "Map of user-assigned id -> object body. Same shape as upsert. Existing objects of the type not matched by any entry are destroyed. An empty object ({}) means the type should have no objects. For multi-variant types, only the @type variants present here are eligible for deletion.",
           "additionalProperties": { "type": "object" }
         }
       }
@@ -265,6 +312,17 @@ For each object in `value`, the CLI looks for an existing object matching the [m
 
 An `upsert` reads the existing objects of the type once to resolve matches, then maps to JMAP `Object/set` requests with `create` and `update` populated. Batching is handled automatically. An ambiguous match (the key matches more than one existing object), a `matchOn` property missing from a body, an empty `value`, an empty `matchOn`, or an `upsert` of a singleton each fail the operation with a clear error.
 
+#### `reconcile`
+
+| Field | Type | Required | Notes |
+|---|---|---|---|
+| `@type` | `"reconcile"` | yes | |
+| `object` | string | yes | Object type name (`x:` prefix optional). Singletons are rejected: use `update`. |
+| `matchOn` | array of string | no | Property names forming the [match key](#matching). If omitted, the type's label property is used. Unlike `upsert`, there is **no** by-value fallback: a type with no label property must supply `matchOn`, or the operation is rejected. If present it must be non-empty. |
+| `value` | object | yes | Map of client id -> object body, same shape as `upsert`. May be empty (`{}`) to mean "this type should have no objects". Each body must include every property named in `matchOn`, and `@type` for multi-variant objects. |
+
+`reconcile` runs the `upsert` logic (match, then update or create each entry), then destroys every existing object of the type that no entry matched. See [Reconciling to exact state](#reconciling-to-exact-state) for the full semantics. Deletion for [multi-variant types](/docs/management/cli/#multi-variant-objects) is scoped to the `@type` variants that appear in `value`. The deletes are deferred to the cleanup pass (run after the whole apply pass, in reverse plan order), so a `reconcile` can add, update, and remove in one operation without ordering the deletes by hand. A `reconcile` on a singleton, an empty `matchOn`, or a type that would fall back to by-value matching each fail the operation with a clear error. A delete blocked by a live reference fails with `objectIsLinked`, exactly as `destroy` does.
+
 #### `create`
 
 | Field | Type | Required | Notes |
@@ -327,7 +385,7 @@ The set of filterable properties is whatever the server's `Object/query` accepts
 ### Human (default)
 
 ```text
-Plan: 0 destroy, 1 update, 0 create, 3 upsert (7 objects)
+Plan: 0 destroy, 1 update, 0 create, 3 upsert, 0 reconcile (7 objects)
 ✓ upserted Domain (2)
 ✓ upserted Account (2)
 ✓ upserted DkimSignature (3)
@@ -335,7 +393,7 @@ Plan: 0 destroy, 1 update, 0 create, 3 upsert (7 objects)
 Done: 0 destroyed, 4 updated, 4 created (0 failed)
 ```
 
-An `upsert` line shows the total objects handled; in the `Done:` summary those split into `created` (no existing match) and `updated` (matched and reconciled). Here the seven upserted objects landed as four creates and three updates, plus the one singleton update. The `Plan:` line and the `Done:` line are written to **stderr** so that `--json` output stays clean for downstream tools.
+An `upsert` (or `reconcile`) line shows the total objects handled; in the `Done:` summary those split into `created` (no existing match) and `updated` (matched and reconciled). Here the seven upserted objects landed as four creates and three updates, plus the one singleton update. A `reconcile` that deletes also prints a cleanup line during the final pass, for example `✓ reconcile removed Domain (2)`, and those deletions are tallied under `destroyed` in the summary. The `Plan:` line and the `Done:` line are written to **stderr** so that `--json` output stays clean for downstream tools.
 
 ### NDJSON (`--json`)
 
@@ -345,10 +403,17 @@ One record per completed operation, plus a `summary` record:
 {"op":"upsert","object":"Domain","index":0,"count":2,"status":"ok"}
 {"op":"upsert","object":"Account","index":1,"count":2,"status":"ok"}
 {"op":"update","object":"SystemSettings","index":2,"count":1,"status":"ok"}
-{"op":"summary","plan":{"destroys":0,"updates":1,"creates":0,"create_objects":0,"upserts":2,"upsert_objects":4},"done":{"destroyed":0,"updated":3,"created":2,"failed":0}}
+{"op":"summary","plan":{"destroys":0,"updates":1,"creates":0,"create_objects":0,"upserts":2,"upsert_objects":4,"reconciles":0,"reconcile_objects":0},"done":{"destroyed":0,"updated":3,"created":2,"failed":0}}
 ```
 
-This is the recommended mode for CI pipelines and IaC providers. The plan header and any progress lines remain on stderr; only the records above appear on stdout. The summary's `plan` block counts the planned operations (`upserts` and `upsert_objects` alongside the create/update/destroy counts); the `done` block counts the actual outcome, where an upsert's objects are tallied under `created` or `updated`.
+This is the recommended mode for CI pipelines and IaC providers. The plan header and any progress lines remain on stderr; only the records above appear on stdout. The summary's `plan` block counts the planned operations (`upserts`, `upsert_objects`, `reconciles`, and `reconcile_objects` alongside the create/update/destroy counts); the `done` block counts the actual outcome, where an upsert's or reconcile's objects are tallied under `created` or `updated`.
+
+A `reconcile` op emits its `create`/`update` record during the apply pass and, if it deleted anything, a second record during the cleanup pass carrying `"stage":"cleanup"` and the destroyed count:
+
+```text
+{"op":"reconcile","object":"Domain","index":0,"count":1,"status":"ok"}
+{"op":"reconcile","stage":"cleanup","object":"Domain","index":0,"destroyed":2,"status":"ok"}
+```
 
 ### Dry run
 
@@ -357,11 +422,11 @@ stalwart-cli apply --file plan.ndjson --dry-run
 ```
 
 ```text
-Plan: 0 destroy, 1 update, 0 create, 3 upsert (7 objects)
+Plan: 0 destroy, 1 update, 0 create, 3 upsert, 0 reconcile (7 objects)
 (dry run: no changes will be made)
 ```
 
-`--dry-run` validates that the plan parses, that every referenced object type exists in the schema, and that the structural rules are respected (singleton / id rules, no `upsert` of a singleton, non-empty `value` and `matchOn`). It does not contact the server beyond fetching the schema (which is normally cached), so match resolution (whether an object exists, whether a match is ambiguous) is only checked at apply time.
+`--dry-run` validates that the plan parses, that every referenced object type exists in the schema, and that the structural rules are respected (singleton / id rules, no `upsert` or `reconcile` of a singleton, non-empty `value` and `matchOn` where required, and that a `reconcile` has a usable match key). It also resolves the plan's `#<id>` references in match keys offline, walking operations in plan order: a `matchOn` reference to an id that no earlier operation produces is rejected at dry-run time, so this class of error no longer waits until apply. It does not contact the server beyond fetching the schema (which is normally cached), so match resolution against live data (whether an object exists, whether a match is ambiguous, what a `reconcile` would delete) is still only checked at apply time.
 
 ## Integrating with infrastructure-as-code
 
@@ -617,6 +682,7 @@ apply:
 ## Operational guidance
 
 * **Prefer `upsert` for anything re-applied.** A plan of `upsert` and singleton `update` operations converges on every run. Reserve `create` for one-shot plans and `destroy` for deliberate teardowns.
+* **Reach for `reconcile` only when the plan owns the whole type.** `reconcile` deletes every object of the type the plan does not list, so use it when the plan is the single source of truth for that type (and when you want a removed entry to be deleted, not left behind). If other tooling or operators also manage objects of that type, prefer `upsert` plus explicit `destroy` operations so you delete only what the plan owns. Always give `reconcile` an explicit `matchOn`, and review a `--dry-run` before applying.
 * **Give each re-applied type a stable match key.** Rely on the type's label property or set an explicit `matchOn`; avoid the by-value fallback for anything you re-apply, since a changed field there creates a duplicate instead of updating. See [Matching](#matching).
 * **Generate, review, apply.** Treat the plan file as an artifact: render it from templates, commit the rendered version (or its diff) for review, then apply.
 * **Use `--dry-run` in pull requests.** Every plan change should pass a `--dry-run` before merging.

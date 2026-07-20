@@ -139,7 +139,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `maxReceivedHeaders`
 
-> Type: <code>UnsignedInt</code> · default: `10` · min: 1
+> Type: <code>UnsignedInt</code> · default: `50` · min: 1
 >
 > Maximum number of received headers
 
