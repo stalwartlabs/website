@@ -51,6 +51,22 @@ For organizations with many users or a high volume of email traffic, the cumulat
 
 To mitigate these challenges, administrators should evaluate both the infrastructure and financial impact before enabling AI model interaction for user scripts. Restricting usage to specific scenarios, ensuring efficient AI model hosting with the appropriate hardware, and closely monitoring cloud-based API costs are essential to maintaining a balance between functionality, performance, and budget. Properly managing user access to AI models helps ensure that the integration remains scalable and cost-effective.
 
+## Writing the prompt
+
+The prompt is usually long enough to warrant its own variable, assigned with the `let` instruction from the `vnd.stalwart.expressions` extension. The value of a `let` is a Sieve string whose contents are parsed as an expression, so the prompt text has to carry its own quotes inside that string; an unquoted word is read as a variable name and the script fails to compile with `Invalid variable or function name`.
+
+A multi-line prompt is written with the Sieve multi-line form, which opens with `text:` and closes with a line containing a single period. The quoted expression string spans the whole block:
+
+```sieve
+let "prompt" text:
+"Classify the message into one of the folders listed below.
+If the category is not clear, respond with Inbox."
+.
+;
+```
+
+The contents of a `text:` block are taken verbatim, so the quote character that delimits the expression string cannot appear inside the prompt: the form above allows apostrophes in the text, while `'...'` allows double quotes. A prompt short enough for a single line can instead use `\n` escapes, as in `let "prompt" "'First line.\nSecond line.'";`. See [literal text in `let` and `eval`](/docs/sieve/expressions#literal-text-in-let-and-eval) for the full quoting rules.
+
 ## Example
 
 The following example demonstrates how to use the `llm_prompt` function in a Sieve script to analyze the content of an incoming email and categorize it based on the response from an AI model. In this case, the script sends the email subject and body to the AI model for classification, then processes the response to determine the mailbox to which the email should be delivered.
@@ -59,10 +75,11 @@ The following example demonstrates how to use the `llm_prompt` function in a Sie
 require ["fileinto", "vnd.stalwart.expressions"];
 
 # Base prompt for email classification
-let "prompt" '''You are an AI assistant tasked with classifying personal emails into specific folders. 
-Your job is to analyze the email's subject and body, then determine the most appropriate folder for filing. 
+let "prompt" text:
+"You are an AI assistant tasked with classifying personal emails into specific folders.
+Your job is to analyze the email's subject and body, then determine the most appropriate folder for filing.
 Use only the folder names provided in your response.
-If the category is not clear, respond with "Inbox".
+If the category is not clear, respond with Inbox.
 
 Classification Rules:
 - Family:
@@ -70,9 +87,9 @@ Classification Rules:
    * The recipient's name is John Doe
 - Cycling:
    * File here if the message is related to cycling
-   * File here if the message mentions the term "MAMIL"
+   * File here if the message mentions the term MAMIL
 - Work:
-   * File here if the message mentions "Dunder Mifflin Paper Company, Inc." or any part of this name
+   * File here if the message mentions Dunder Mifflin Paper Company, Inc. or any part of this name
    * File here if the message is related to paper supplies
    * Only classify as Work if it seems to be part of an existing sales thread or directly related to the company's operations
 - Junk Mail:
@@ -81,8 +98,9 @@ Classification Rules:
 - Inbox:
    * Use this if the message doesn't clearly fit into any of the above categories
 
-Analyze the following email and respond with only one of these folder names: Family, Cycling, Work, Junk Mail, or Inbox.
-''';
+Analyze the following email and respond with only one of these folder names: Family, Cycling, Work, Junk Mail, or Inbox."
+.
+;
 
 # Prepare the base Subject and Body
 let "subject" "thread_name(header.subject)";
@@ -95,5 +113,4 @@ let "llm_response" "llm_prompt('gpt-4', prompt + '\n\nSubject: ' + subject + '\n
 if eval "contains(['Family', 'Cycling', 'Work', 'Junk Mail'], llm_response)" {
     fileinto "${llm_response}";
 }
-
 ```

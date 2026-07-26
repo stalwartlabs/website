@@ -14,11 +14,11 @@ The following script implements a greylisting filter backed by an SQL store. Ins
   "name": "greylist",
   "description": "Greylisting filter backed by SQL",
   "isActive": true,
-  "contents": "require [\"variables\", \"vnd.stalwart.expressions\", \"envelope\", \"reject\"];\n\nset \"triplet\" \"${env.remote_ip}.${envelope.from}.${envelope.to}\";\n\nif eval \"!query(\\\"SELECT 1 FROM greylist WHERE addr = ? LIMIT 1\\\", [triplet])\" {\n    eval \"query(\\\"INSERT INTO greylist (addr) VALUES (?)\\\", [triplet])\";\n    reject \"422 4.2.2 Greylisted, please try again in a few moments.\";\n}\n"
+  "contents": "require [\"variables\", \"vnd.stalwart.expressions\", \"envelope\", \"reject\"];\n\nset \"triplet\" \"${env.remote_ip}.${envelope.from}.${envelope.to}\";\n\nif eval \"!query('sql', 'SELECT 1 FROM greylist WHERE addr = ? LIMIT 1', [triplet])\" {\n    eval \"query('sql', 'INSERT INTO greylist (addr) VALUES (?)', [triplet])\";\n    reject \"422 4.2.2 Greylisted, please try again in a few moments.\";\n}\n"
 }
 ```
 
-The `?` placeholders in the queries above use SQLite or MySQL syntax; on PostgreSQL use `$1`, `$2`, ... instead, since the query is passed to the database driver verbatim.
+The first argument of [`query`](/docs/sieve/reference#query) names the SQL store that holds the `greylist` table, `sql` in the script above; passing the empty string selects the default data store. The `?` placeholders in the queries use SQLite or MySQL syntax; on PostgreSQL use `$1`, `$2`, ... instead, since the query is passed to the database driver verbatim.
 
 The `script` field on MtaStageRcpt then selects the script by name:
 

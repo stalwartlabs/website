@@ -22,6 +22,18 @@ Evaluates a regular expression against a value and returns `true` on a match. Th
 - **Arguments**: 2 (Regex literal, Value)
 - **Example**: `matches('^([^@]+)@(.+)$', rcpt)` matches any syntactically valid recipient and exposes the local part as `$1` and the domain as `$2`.
 
+#### Escaping backslashes
+
+The expression parser passes the regex literal to the regex engine unchanged, so a metacharacter is escaped with a single backslash. In `matches('^([^.]+)\.([^.]+)$', rcpt)` the `\.` matches a literal period, while the unescaped `.` inside the character classes retains its regex meaning. This is the form to enter in an expression field in the WebUI, which stores the text exactly as typed.
+
+When the same expression travels inside a JSON document, such as an NDJSON bundle applied with [`stalwart-cli apply`](/docs/management/cli/apply) or a `Domain/set` call, the backslash is also subject to JSON string escaping and is therefore written twice:
+
+```json
+{"if": "matches('^([^.]+)\\.([^.]+)$', rcpt)", "then": "$2"}
+```
+
+The JSON parser converts `\\` back to a single backslash before the expression is compiled, so both forms produce the same regex. The JSON examples throughout this documentation show the doubled form for that reason. Entering the doubled form directly in the WebUI does not apply any unescaping: `\\.` is then read as an escaped backslash followed by the any-character metacharacter, and the pattern fails to match the intended addresses.
+
 ### `system`
 
 Returns a system-level identifier. The argument must be a string literal, selected from a fixed set of names:

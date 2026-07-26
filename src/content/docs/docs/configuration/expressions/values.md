@@ -42,6 +42,10 @@ For example, rewriting a recipient address by extracting the local part and the 
 
 At runtime, `$1` and `$3` are replaced by the first and third capture groups of the regex match.
 
+:::note
+The backslash in the regex is doubled because the expression is shown inside a JSON document; in an expression field in the WebUI it is written once, as `\.`. See [escaping backslashes](/docs/configuration/expressions/functions#escaping-backslashes).
+:::
+
 ## Composition
 
 The `+` operator concatenates strings and joins them with numeric values by converting the number to its string form. The following expression returns a tag such as `'tls-submission-10'` built from three context variables:

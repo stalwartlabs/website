@@ -811,6 +811,7 @@ Metrics reported alongside events are listed on the [Metrics](/docs/ref/metrics)
 | `store.cache-hit` | `debug` | Cache hit | Valid cached account data was found; the database lookup is skipped for this request. |
 | `store.cache-stale` | `debug` | Cache is stale | The cached account data has expired or been invalidated; it is being rebuilt from the database. |
 | `store.cache-update` | `debug` | Cache update | The account data cache was refreshed with the latest changes from the database. |
+| `store.cache-entry-too-large` | `warn` | Cache entry too large | A single cache entry is larger than the configured cache capacity, so it could not be stored and will be rebuilt from the database on every access; increase the corresponding cache size to resolve the repeated rebuilds. |
 | `store.blob-missing-marker` | `warn` | Blob missing marker | A blob in storage is missing its expected format marker; the blob may be corrupt or from an incompatible version. |
 | `store.data-write` | `trace` | Write batch operation | A batched write transaction was committed to the data store; logged at trace level for storage debugging. |
 | `store.data-iterate` | `trace` | Data store iteration operation | A range scan or iteration over the data store was performed; logged at trace level for storage debugging. |

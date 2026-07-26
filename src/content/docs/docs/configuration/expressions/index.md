@@ -65,6 +65,10 @@ An expression that rewrites non-SMTP recipients by extracting the local part and
 }
 ```
 
+:::note
+The backslash in the regex is doubled because the expression is shown inside a JSON document; in an expression field in the WebUI it is written once, as `\.`. See [escaping backslashes](/docs/configuration/expressions/functions#escaping-backslashes).
+:::
+
 A multi-condition routing expression that returns different queue targets depending on whether the recipient is local and how many retries have elapsed:
 
 ```json

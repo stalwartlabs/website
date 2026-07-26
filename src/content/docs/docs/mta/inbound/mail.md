@@ -22,6 +22,10 @@ For example, the following configuration removes any subdomain from the sender a
 }
 ```
 
+:::note
+The backslash in the regex is doubled because the expression is shown inside a JSON document; in an expression field in the WebUI it is written once, as `\.`. See [escaping backslashes](/docs/configuration/expressions/functions#escaping-backslashes).
+:::
+
 ## Allowed senders
 
 The [`isSenderAllowed`](/docs/ref/object/mta-stage-mail#issenderallowed) field accepts an expression that determines whether the sender is accepted. If the expression evaluates to `false`, the sender is rejected. The default policy allows the sender when authenticated or when the sender domain is not present in the `spam-block` list.

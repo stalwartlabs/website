@@ -38,7 +38,7 @@ if not body :text :contains "disclaimer" {
 The following Sieve script will remove any attachments that have a filename ending in `.exe` or that have a MIME type of `application/exe`. This is a simple example, but it demonstrates how Sieve can be used to remove potentially harmful attachments from email messages.
 
 ```sieve
-require ["mime", "foreverypart", " "replace"];
+require ["mime", "foreverypart", "replace"];
 
 foreverypart
 {

@@ -33,6 +33,30 @@ let "local" "parts[0]";
 let "domain" "parts[1]";
 ```
 
+## Literal text in `let` and `eval`
+
+The value assigned by `let`, and the argument of the `eval` test, is a Sieve string whose contents are parsed as an expression. A bare word inside that string is therefore read as a variable or function name rather than as text, and a script such as `let "prompt" "You are an assistant";` fails to compile with `Invalid variable or function name "You"`. Literal text has to carry its own quotes inside the Sieve string:
+
+```sieve
+let "prompt" "'You are an assistant'";
+```
+
+Text spanning several lines uses the Sieve multi-line form, which opens with `text:` and closes with a line containing a single period. The quoted expression string spans the whole block. There is no triple-quote form:
+
+```sieve
+let "prompt" text:
+"First line of the prompt.
+Second line of the prompt."
+.
+;
+```
+
+Two quoting layers are involved, so the delimiters are worth choosing with care:
+
+- A `text:` block is taken verbatim, with no backslash processing, so the quote character that delimits the expression string cannot appear inside it. Use `"..."` when the text contains apostrophes and `'...'` when it contains double quotes. A backslash does keep the string from ending early, but it remains part of the value: `'the email\'s subject'` evaluates to `the email\'s subject`.
+- A Sieve quoted string translates `\n`, `\r`, and `\t` before the expression is parsed, so a short multi-line value fits on one line: `let "prompt" "'First line.\nSecond line.'";` assigns two lines. A quote of the other kind is written directly, and `\\` produces a single backslash.
+- A line consisting of a single period closes a `text:` block. To carry such a line inside the text, double the period; the interpreter removes the added one.
+
 ## Functions
 
 A large set of functions is available from expressions. These range from pure string and array manipulation to DNS, SQL, and HTTP operations that the trusted interpreter can call during message processing. The [reference](/docs/sieve/reference) documents each function, its signature, and whether it is restricted to the [trusted interpreter](/docs/sieve/interpreter/trusted).
@@ -49,11 +73,16 @@ if eval "expression_here" {
 }
 ```
 
-For example, rejecting a message whose spam score, adjusted by a learning factor, exceeds a threshold:
+Every name in the expression has to resolve to a [variable](/docs/sieve/variables), to a variable assigned earlier in the script, or to a [function](/docs/sieve/reference); an unknown name is a compile-time error. For example, rejecting a message whose body is mostly links:
 
 ```sieve
-if eval "score + ((awl_score / awl_count) - score) * awl_factor > 2.25" {
-    reject "Your message is SPAM.";
+require ["variables", "vnd.stalwart.expressions", "reject"];
+
+let "words" "count(tokenize(body.to_text, 'words'))";
+let "urls"  "count(tokenize(body.to_text, 'url_strict'))";
+
+if eval "words > 0 && (urls * 100) / words > 25" {
+    reject "Your message is mostly links.";
     stop;
 }
 ```
@@ -63,7 +92,7 @@ if eval "score + ((awl_score / awl_count) - score) * awl_factor > 2.25" {
 The `let` instruction evaluates an expression and assigns the result to a variable.
 
 ```sieve
-let "score" "score + ((awl_score / awl_count) - score) * awl_factor";
+let "from_domain" "to_lowercase(email_part(envelope.from, 'domain'))";
 ```
 
 A common pattern is to compute several intermediate values with `let` and then branch on them with `if eval`:

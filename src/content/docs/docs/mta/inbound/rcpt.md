@@ -63,6 +63,16 @@ Subaddressing is configured per domain on the [Domain](/docs/ref/object/domain) 
 }
 ```
 
+:::caution
+The backslash in the regex is doubled above because the rule is shown as part of a JSON document, where JSON string escaping consumes one of the two. The expression field in the WebUI takes the text exactly as typed and applies no such unescaping, so the same rule is entered there with a single backslash:
+
+```
+matches('^([^.]+)\.([^.]+)$', rcpt)
+```
+
+See [escaping backslashes](/docs/configuration/expressions/functions#escaping-backslashes) for details.
+:::
+
 ## Catch-all addresses
 
 A catch-all address receives all messages sent to non-existent addresses within a domain, preventing loss of mail due to misspellings. The catch-all recipient is configured per domain on the [Domain](/docs/ref/object/domain) object through the [`catchAllAddress`](/docs/ref/object/domain#catchalladdress) field, which holds the destination email address that receives mail for unknown local recipients.
@@ -93,6 +103,10 @@ For example, the following configuration rewrites `first.last@example.org` to `f
 }
 ```
 
+:::note
+As above, the doubled backslash belongs to the JSON encoding; in the WebUI expression field the regex is written `^([^.]+)\.([^.]+)@(.+)$`. See [escaping backslashes](/docs/configuration/expressions/functions#escaping-backslashes).
+:::
+
 ## Sieve script
 
 Running Sieve at the RCPT stage opens up uses that the delivery-time Sieve runtime cannot satisfy. Recipients can be rejected based on criteria such as the recipient domain; [address rewriting](/docs/mta/rewrite/address#sieve) can correct common misspellings or redirect mail; and policies such as greylisting (temporarily rejecting mail from unknown sources and asking the sender to retry) can be implemented against the envelope before the message body is accepted.
@@ -110,15 +124,15 @@ For example, the following expression runs a `greylist` Sieve script only for un
 }
 ```
 
-A companion `greylist` Sieve script stores the triplet in a store and rejects the first attempt. The `?` placeholders below use SQLite or MySQL syntax; on PostgreSQL use `$1`, `$2`, ... instead, since the query is passed to the database driver verbatim:
+A companion `greylist` Sieve script stores the triplet in a store and rejects the first attempt. The first argument of [`query`](/docs/sieve/reference#query) names the SQL store holding the `greylist` table, `sql` in the example below; passing the empty string selects the default data store. The `?` placeholders use SQLite or MySQL syntax; on PostgreSQL use `$1`, `$2`, ... instead, since the query is passed to the database driver verbatim:
 
 ```sieve
-require ["variables", "vnd.stalwart.execute", "envelope", "reject"];
+require ["variables", "vnd.stalwart.expressions", "envelope", "reject"];
 
 set "triplet" "${env.remote_ip}.${envelope.from}.${envelope.to}";
 
-if not query "SELECT 1 FROM greylist WHERE addr=? LIMIT 1" ["${triplet}"] {
-    query "INSERT INTO greylist (addr) VALUES (?)" ["${triplet}"];
+if eval "!query('sql', 'SELECT 1 FROM greylist WHERE addr = ? LIMIT 1', [triplet])" {
+    eval "query('sql', 'INSERT INTO greylist (addr) VALUES (?)', [triplet])";
     reject "422 4.2.2 Greylisted, please try again in a few moments.";
 }
 ```
