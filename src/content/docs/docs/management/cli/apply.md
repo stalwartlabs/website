@@ -73,9 +73,11 @@ The match key for an `upsert` is resolved in this order:
 
 1. **Explicit `matchOn`.** If the operation carries a `matchOn` list of property names, those properties are the key. An object in the `value` map matches an existing object when every listed property is equal. Every property in `matchOn` must be present in each object body, or the operation errors.
 2. **The schema's label property.** If `matchOn` is omitted, the CLI uses the type's label property (the field the WebUI lists objects by, for example `name` on `Domain`). [`snapshot`](/docs/management/cli/snapshot) writes this `matchOn` explicitly so plans are self-describing.
-3. **Value match (fallback).** If the type has no label property and no `matchOn` was given, the CLI matches by comparing every non-secret scalar field (string, number, boolean, enum, datetime) of the body against existing objects. A `warning` is printed, because this fallback is not convergent: changing any compared field means the body no longer matches the old object, so a **new** object is created instead of the old one being updated. For any type you re-apply, supply an explicit `matchOn` (or rely on a label property) rather than the value fallback. `reconcile` does not offer this fallback at all: it requires an explicit `matchOn` or a label property, since a by-value non-match would delete the old object.
+3. **Value match.** If the type has no label property and no `matchOn` was given, the CLI matches by comparing every non-secret scalar field (string, number, boolean, enum, datetime) of the body against existing objects. A `warning` is printed, because this match is not convergent: changing any compared field means the body no longer matches the old object, so a **new** object is created instead of the old one being updated. For any type you re-apply, supply an explicit `matchOn` (or rely on a label property) rather than value matching. `reconcile` never selects this mode on its own, since a by-value non-match would delete the old object; request it there with `"matchOn": "*"`, which also overrides the label property on types that have one.
 
-If the match key matches **more than one** existing object the operation errors as ambiguous, rather than guessing which one to update. For [multi-variant types](/docs/management/cli/#multi-variant-objects), each body must carry its `@type`, and matching is done within that variant.
+A property the body sets to `null` compares equal to one the server omits, and vice versa. Under value matching and `scope` comparison a property the body omits entirely also compares equal to a server `null`; under an explicit `matchOn` a body cannot omit a match property at all, since that is an error. Stalwart returns unset nullable fields as explicit `null`s, so without this an unchanged plan would read as drifted on re-apply.
+
+If the match key matches **more than one** existing object the operation errors as ambiguous, rather than guessing which one to update. This holds for value matching too: taking the first of several identical candidates would mean `reconcile` destroys the others. For [multi-variant types](/docs/management/cli/#multi-variant-objects), each body must carry its `@type`, and matching is done within that variant.
 
 A `matchOn` may include a **reference field**. When a match-key property is a reference (an `ObjectId`, such as `Account.domainId`) and its value in the body is a `#<id>` reference, the CLI resolves that reference to the real server id before comparing it against existing objects. This makes the effective primary key expressible: matching an `Account` on `["name", "domainId"]` where `domainId` is `#dom-a` compares against the domain's actual id, whether it was created earlier in the plan or matched from the live server. A `#`-shaped value in a non-reference field is treated as a literal, not a reference. A `#<id>` in a match key that no earlier operation produced is a hard error (caught upfront, so `--dry-run` reports it too).
 
@@ -100,10 +102,52 @@ Applying this leaves `example.net` as the **only** domain: it is created (or mat
 
 Because `reconcile` deletes, a few rules keep it safe:
 
-* **A match key is required.** `reconcile` refuses the by-value fallback that `upsert` allows: an operation with no `matchOn` on a type that also has no label property is rejected at plan time. Value matching treats any drifted field as a non-match, which under `reconcile` would delete the existing object and recreate it under a new id; requiring an explicit `matchOn` (or a label property) makes that impossible to trigger by accident.
-* **Deletion is scoped per variant.** For [multi-variant types](/docs/management/cli/#multi-variant-objects), only the `@type` variants that actually appear in the plan value are eligible for deletion. A `reconcile` of `MtaRoute` that lists only `Local` routes never touches `Mx` routes, and an empty-value `reconcile` on a multi-variant type deletes nothing (no variant is named).
+* **A match key is required by default.** `reconcile` does not silently fall back to the by-value matching that `upsert` allows: an operation with no `matchOn` on a type that also has no label property is rejected at plan time. Value matching treats any drifted field as a non-match, which under `reconcile` means deleting the existing object and recreating it under a new id. Pass `"matchOn": "*"` to request value matching explicitly. Be aware of what it costs: on a type with a unique constraint, the recreate collides with the old object (whose deletion is deferred to the cleanup pass) and the operation fails with `primaryKeyViolation`. Value matching is dependable for re-applying an **unchanged** plan, not for absorbing drift; an explicit `matchOn` is almost always the better answer.
+* **A reconcile covers the whole type unless you scope it.** By default every unmatched object of the type is deleted, including variants the plan does not mention. Add a `scope` to narrow what the operation owns: a flat map of property/value pairs an object must match (all of them) to be part of the operation at all.
 * **Renames are delete-and-recreate.** The match key *is* the object's identity. Changing the value of a match-key property means the old object no longer matches any entry, so it is deleted and a new object is created with a fresh server id. If you need to preserve the id across a rename, key on a stable property rather than the one being renamed.
 * **A blocked delete fails the run.** If an object the plan wants to delete is still referenced elsewhere (for example a `Domain` pinned by an `Account`), the destroy fails with `objectIsLinked` and the operation is reported as failed, exactly as a `destroy` would. `reconcile` does not force-delete.
+
+#### Scoping an operation with `scope`
+
+`scope` is what makes `upsert` and `reconcile` usable for a type you only partly own. It declares the slice of the type the operation is responsible for, and it governs **both** halves of that responsibility: an entry may only match an existing object inside the scope, and a `reconcile` only deletes unmatched objects inside the scope. Everything outside is not the operation's business, so it is neither matched nor deleted.
+
+That is why `scope` is meaningful on `upsert` too, which never deletes anything. Restricting what an entry may match stops an operation reaching across into a slice it does not own. `MemoryLookupKey` is a good example: its label property is `key` alone, so a plan with no `matchOn` matches on `key` across every namespace and can silently update a row belonging to someone else. A scope makes that impossible regardless of the match key.
+
+It compares property values for equality only: there is no negation, set membership, or comparison operator, so ownership has to be expressible as "every object where these properties equal these values".
+
+The scope is evaluated **client-side**, against the objects the operation already fetched to resolve matches. That is deliberate, and unlike the server-side filter accepted by `destroy`: Stalwart rejects server-side filters on `@type` for several multi-variant types (`MtaRoute`, `SpamTag`, `Tracer`), which are exactly the types most in need of per-variant scoping. Evaluating locally makes `@type` work uniformly.
+
+Converge only the `Local` routes and leave every `Mx` route alone:
+
+```text
+{"@type":"reconcile","object":"MtaRoute","matchOn":["name"],"scope":{"@type":"Local"},"value":{"r-a":{"@type":"Local","name":"internal.example.com"}}}
+```
+
+Combined with an empty `value`, a scope expresses "this slice should be empty":
+
+```text
+{"@type":"reconcile","object":"MtaRoute","matchOn":["name"],"scope":{"@type":"Mx"},"value":{}}
+```
+
+A scope on several properties requires all of them to match, which is how you converge one namespace of a keyed lookup table without touching the others:
+
+```text
+{"@type":"reconcile","object":"MemoryLookupKey","matchOn":["namespace","key"],"scope":{"namespace":"spam-traps"},"value":{"lk-a":{"namespace":"spam-traps","key":"foo@*","isGlobPattern":true},"lk-b":{"namespace":"spam-traps","key":"bar@*","isGlobPattern":true}}}
+```
+
+That single operation replaces the `destroy` + `upsert` pair the same intent used to require, and it is better behaved: the `destroy` half of that pair tore down every row in the namespace and rebuilt it, so unchanged rows got new server ids on every apply. `reconcile` updates the rows that matched in place and only deletes what the plan dropped.
+
+Scope values on reference properties resolve `#<id>` references, so a scope can name an object an **earlier** operation produced (`{"domainId": "#dom-a"}`). It cannot name one the same operation creates, because the scope is resolved before that operation matches or creates anything; both `--dry-run` and the real run reject that. A `scope` on any operation other than `upsert` or `reconcile` is rejected rather than silently ignored, and so is any unrecognised key at the top level of an operation: a misspelled `scope` would otherwise be dropped silently and widen a `reconcile` to the whole type.
+
+Plan-time checks stop a scope from failing quietly, because a scope that matches nothing looks exactly like a successful reconcile:
+
+* **Keys and `@type` values are validated.** A key must be `@type` or a property the type declares (in any of its variants), and an `@type` value must name a declared variant of a multi-variant type. A typo in either is an error, and so is an operator-form key borrowed from `destroy`: `{"nameContains": "spam-"}` is rejected rather than silently matching nothing. `destroy`'s filter and `scope` are not the same language.
+* **`null` values are rejected.** A comparison treats an absent property and a `null` one as equal, so `{"description": null}` would match every object that leaves the property unset, widening the scope instead of narrowing it. Scope on a property that is actually set instead.
+* **Entries must be inside their own scope.** An entry that contradicts the scope (an `Mx` body under `"scope":{"@type":"Local"}`) could never match an existing object, so it would be created again on every apply. It is rejected, and belongs in its own operation.
+
+An entry that simply *omits* a scoped property is fine: it inherits it. The scope is filled into the entry before the duplicate-entry check, before matching and before creation, so an object created by a scoped operation lands inside that scope. A server-derived (`ServerSet`) property cannot be scoped on, because the create path strips it and the object would land outside the scope it was declared under. `{"scope":{"namespace":"spam-traps"},"value":{"lk":{"key":"foo@*"}}}` creates the key in `spam-traps` without repeating the namespace in every entry.
+
+A `reconcile`'s deletions are computed while the operation runs but carried out in the cleanup pass, so two rules keep the deferred list honest. An object is dropped from it if **any other operation in the plan** created, matched, or updated it, in either order: a plan never deletes an object it also wrote. And an object already destroyed by an earlier `reconcile` in the same run is not destroyed twice.
 
 `reconcile` is **not** emitted by [`snapshot`](/docs/management/cli/snapshot), which stays non-destructive (`upsert`-only) so that restoring a snapshot never deletes objects the snapshot happened to omit. Author `reconcile` by hand when converging a type to an exact, plan-owned set is the intent.
 
@@ -206,10 +250,16 @@ A machine-readable schema for **a single line** of the plan format:
         "@type": { "const": "upsert" },
         "object": { "$ref": "#/$defs/objectName" },
         "matchOn": {
-          "type": "array",
-          "items": { "type": "string" },
-          "minItems": 1,
-          "description": "Property names forming the match key. If omitted, the type's label property is used, falling back to a by-value match (with a warning). Cannot be empty."
+          "oneOf": [
+            { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+            { "const": "*" }
+          ],
+          "description": "Property names forming the match key, or \"*\" to match by value explicitly. If omitted, the type's label property is used, falling back to a by-value match (with a warning). A list cannot be empty."
+        },
+        "scope": {
+          "type": "object",
+          "description": "Flat property/value map restricting the slice of the type this operation owns. An entry may only match an existing object inside the scope. Same rules as the reconcile scope, minus the deletion half.",
+          "additionalProperties": { "not": { "type": "null" } }
         },
         "value": {
           "type": "object",
@@ -228,14 +278,20 @@ A machine-readable schema for **a single line** of the plan format:
         "@type": { "const": "reconcile" },
         "object": { "$ref": "#/$defs/objectName" },
         "matchOn": {
-          "type": "array",
-          "items": { "type": "string" },
-          "minItems": 1,
-          "description": "Property names forming the match key. If omitted, the type's label property is used. Unlike upsert, reconcile has no by-value fallback: a type with no label property must supply matchOn. Cannot be empty."
+          "oneOf": [
+            { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+            { "const": "*" }
+          ],
+          "description": "Property names forming the match key, or \"*\" to match by value explicitly. If omitted, the type's label property is used; unlike upsert, reconcile does not fall back to a by-value match silently, so a type with no label property must supply matchOn or \"*\". A list cannot be empty."
+        },
+        "scope": {
+          "type": "object",
+          "description": "Flat property/value map restricting the slice of the type this operation owns. An object must match every property to be matched or destroyed. Evaluated client-side, so scoping on @type works for every multi-variant type. Keys must be @type or a property declared by the type; values may not be null, and may use #<id> syntax on reference properties (resolvable from earlier operations only). Every entry in value must itself satisfy the scope. If omitted, the whole type is in scope.",
+          "additionalProperties": { "not": { "type": "null" } }
         },
         "value": {
           "type": "object",
-          "description": "Map of user-assigned id -> object body. Same shape as upsert. Existing objects of the type not matched by any entry are destroyed. An empty object ({}) means the type should have no objects. For multi-variant types, only the @type variants present here are eligible for deletion.",
+          "description": "Map of user-assigned id -> object body. Same shape as upsert. Existing objects in scope that no entry matched are destroyed. An empty object ({}) means the scope should contain no objects.",
           "additionalProperties": { "type": "object" }
         }
       }
@@ -305,12 +361,13 @@ A machine-readable schema for **a single line** of the plan format:
 |---|---|---|---|
 | `@type` | `"upsert"` | yes | |
 | `object` | string | yes | Object type name (`x:` prefix optional). Singletons are rejected: use `update`. |
-| `matchOn` | array of string | no | Property names forming the [match key](#matching). If omitted, the type's label property is used, falling back to a by-value match (with a warning). If present it must be non-empty. |
+| `matchOn` | array of string, or `"*"` | no | Property names forming the [match key](#matching), or `"*"` to match by value explicitly. If omitted, the type's label property is used, falling back to a by-value match (with a warning). A list must be non-empty. |
+| `scope` | object | no | Flat property/value map restricting which existing objects an entry may match. See [Scoping an operation](#scoping-an-operation-with-scope). Since `upsert` never deletes, it only narrows matching. If omitted, the whole type is in scope. |
 | `value` | object | yes | Map of client id -> object body. Each body must include every property named in `matchOn`, and `@type` for multi-variant objects. References use `#<id>`. |
 
 For each object in `value`, the CLI looks for an existing object matching the [match key](#matching): if found it issues an `update` (server-set and immutable fields are dropped from the patch); if not, it issues a `create`. The map keys are client-assigned ids that may be referenced elsewhere as `#<key>`, whether the object ends up matched or created. As with `create`, a single leading `#` on a map key is stripped, so `{"dom-a": {...}}` and `{"#dom-a": {...}}` are equivalent.
 
-An `upsert` reads the existing objects of the type once to resolve matches, then maps to JMAP `Object/set` requests with `create` and `update` populated. Batching is handled automatically. An ambiguous match (the key matches more than one existing object), a `matchOn` property missing from a body, an empty `value`, an empty `matchOn`, or an `upsert` of a singleton each fail the operation with a clear error.
+An `upsert` reads the existing objects of the type once to resolve matches, then maps to JMAP `Object/set` requests with `create` and `update` populated. Batching is handled automatically. An empty `value`, an empty `matchOn`, an entry outside the operation's own `scope`, or an `upsert` of a singleton each fail before any operation in the plan runs. An ambiguous match (the key matches more than one existing object) and a `matchOn` property missing from a body are detected while the operation runs, so earlier operations in the plan will already have been applied.
 
 #### `reconcile`
 
@@ -318,10 +375,11 @@ An `upsert` reads the existing objects of the type once to resolve matches, then
 |---|---|---|---|
 | `@type` | `"reconcile"` | yes | |
 | `object` | string | yes | Object type name (`x:` prefix optional). Singletons are rejected: use `update`. |
-| `matchOn` | array of string | no | Property names forming the [match key](#matching). If omitted, the type's label property is used. Unlike `upsert`, there is **no** by-value fallback: a type with no label property must supply `matchOn`, or the operation is rejected. If present it must be non-empty. |
-| `value` | object | yes | Map of client id -> object body, same shape as `upsert`. May be empty (`{}`) to mean "this type should have no objects". Each body must include every property named in `matchOn`, and `@type` for multi-variant objects. |
+| `matchOn` | array of string, or `"*"` | no | Property names forming the [match key](#matching), or `"*"` to match by value explicitly. If omitted, the type's label property is used. Unlike `upsert`, reconcile does not fall back to a by-value match silently: a type with no label property must supply `matchOn` or `"*"`, or the operation is rejected. A list must be non-empty. |
+| `scope` | object | no | Flat property/value map restricting the slice of the type this operation owns, for matching **and** deletion. An object must match every property listed. Evaluated client-side, so `@type` works on every multi-variant type. Keys must be `@type` or a declared property; values may not be `null`, and may use `#<id>` on reference properties from earlier operations. Every entry in `value` must satisfy it. If omitted, the whole type is in scope. |
+| `value` | object | yes | Map of client id -> object body, same shape as `upsert`. May be empty (`{}`) to mean "nothing in scope should exist". Each body must include every property named in `matchOn`, and `@type` for multi-variant objects. |
 
-`reconcile` runs the `upsert` logic (match, then update or create each entry), then destroys every existing object of the type that no entry matched. See [Reconciling to exact state](#reconciling-to-exact-state) for the full semantics. Deletion for [multi-variant types](/docs/management/cli/#multi-variant-objects) is scoped to the `@type` variants that appear in `value`. The deletes are deferred to the cleanup pass (run after the whole apply pass, in reverse plan order), so a `reconcile` can add, update, and remove in one operation without ordering the deletes by hand. A `reconcile` on a singleton, an empty `matchOn`, or a type that would fall back to by-value matching each fail the operation with a clear error. A delete blocked by a live reference fails with `objectIsLinked`, exactly as `destroy` does.
+`reconcile` runs the `upsert` logic (match, then update or create each entry), then destroys every existing object in scope that no entry matched. See [Reconciling to exact state](#reconciling-to-exact-state) for the full semantics. The deletes are deferred to the cleanup pass (run after the whole apply pass, in reverse plan order), so a `reconcile` can add, update, and remove in one operation without ordering the deletes by hand. A `reconcile` on a singleton, an empty `matchOn`, a `scope` that is not an object or that names an unknown property or a null value, an entry outside its own scope, or a type that would fall back to by-value matching without asking for it each fail with a clear error before any operation in the plan runs. A delete blocked by a live reference fails with `objectIsLinked`, exactly as `destroy` does.
 
 #### `create`
 
