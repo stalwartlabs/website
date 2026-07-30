@@ -24,6 +24,7 @@ The `[server]` table is optional; every key has a default, so an empty table or 
 | `backend_timeout` | `10s` | Time limit for establishing and authenticating a backend connection. |
 | `backend_connect_retries` | `1` | Number of additional attempts for a retryable backend connection failure. |
 | `host_down_threshold` | `5` | Consecutive backend failures after which a destination is marked down. `0` disables the circuit breaker. |
+| `host_down_min_clients` | `2` | Number of distinct client addresses a failure streak must span before failures that occurred after the backend saw the client can mark a destination down. `0` removes the requirement. |
 | `host_down_cooldown` | `30s` | Duration a destination stays marked down before the next connection is allowed to probe it. |
 | `proxy_ttl` | `7` | Initial forwarding time-to-live, decremented at each hop, used to detect proxy loops. |
 | `log_level` | `info` | Tracing verbosity. Overridden by the `RUST_LOG` environment variable when set. |

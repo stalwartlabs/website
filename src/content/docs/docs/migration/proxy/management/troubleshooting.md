@@ -32,6 +32,8 @@ Query `GET /mappings?identifier=<id>` to see exactly how an account resolves, in
 
 When connections to a destination fail, `GET /destinations` shows its consecutive-failure count and whether the circuit breaker has marked it down. A destination marked down rejects new connections immediately for `host_down_cooldown`; the first connection after the cooldown probes it again. After resolving the underlying outage, `POST /destinations/reset?destination=<id>` returns it to service without waiting.
 
+A failure count that climbs while `failure_sources` stays at 1 and `host_level_failure` is false points at one client rather than at the backend: the usual cause is a client whose address the backend has banned, since the proxy forwards the real client address and the backend then rejects every connection opened on that client's behalf. The destination is not marked down in that case. The client address itself is not reported by the API; it is in the proxy log, where every record carries the `peer` field of the connection that produced it.
+
 Clients see a protocol-appropriate temporary-failure response while a backend is unavailable (for example a `421` for submission or an `[UNAVAILABLE]` response for IMAP), rather than an authentication error, so a temporary-failure at login generally points at the backend rather than the credentials.
 
 ## TLS negotiation fails

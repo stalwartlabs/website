@@ -72,10 +72,24 @@ curl -sk -H "Authorization: Bearer $TOKEN" https://127.0.0.1:9443/stats
 
 ### Destinations
 
-`GET /destinations` lists every destination with its consecutive-failure count and whether it is currently marked down by the health circuit breaker.
+`GET /destinations` lists every destination with its consecutive-failure count and whether it is currently marked down by the health circuit breaker. Each entry also reports `failure_sources`, the number of distinct client addresses in the current failure streak, and `host_level_failure`, which is true when the streak includes a failure at the connect stage. Together they separate a failing backend from a backend that is rejecting one banned client, as described under [Destinations](/docs/migration/proxy/destinations).
 
 ```bash
 curl -sk -H "Authorization: Bearer $TOKEN" https://127.0.0.1:9443/destinations
+```
+
+```json
+{
+  "destinations": [
+    {
+      "destination": "legacy",
+      "consecutive_failures": 12,
+      "failure_sources": 1,
+      "host_level_failure": false,
+      "down": false
+    }
+  ]
+}
 ```
 
 `POST /destinations/reset?destination=<id>` clears a destination's failure count and down state, returning it to service immediately.

@@ -221,6 +221,13 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 > Optional contact URI (a mailto: or https: address) included as the sub claim of VAPID tokens so that push services can reach the server operator. Leave empty to omit the claim.
 
 
+##### `maxPushSize`
+
+> Type: <code>UnsignedInt</code> · default: `4096` · min: 512
+>
+> Maximum size in bytes for a Web Push notification payload; EmailPush objects are truncated to fit within this limit
+
+
 
 ## JMAP API
 
