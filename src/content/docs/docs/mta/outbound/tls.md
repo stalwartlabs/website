@@ -81,7 +81,7 @@ The TLS expression on MtaOutboundStrategy:
 {
   "tls": {
     "match": [
-      {"if": "retry_num > 0 && last_error == 'tls'", "then": "'invalid-tls'"},
+      {"if": "retry_num == 1 && last_error == 'tls'", "then": "'invalid-tls'"},
       {"if": "retry_num > 1 && last_error == 'tls'", "then": "'disable-tls'"}
     ],
     "else": "'default'"
