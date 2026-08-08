@@ -31,7 +31,7 @@ An OIDC integration is configured through the OIDC variant of the [Directory](/d
 
 - [`issuerUrl`](/docs/ref/object/directory#issuerurl): the base URL of the OIDC provider, for example `https://accounts.example.org/realms/myrealm`. Stalwart uses this URL to discover the provider's endpoints.
 - [`requireAudience`](/docs/ref/object/directory#requireaudience): if set, access tokens whose `aud` claim does not include this value are rejected. The default is `"stalwart"`. Set this to the client id or resource identifier registered for Stalwart at the provider.
-- [`requireScopes`](/docs/ref/object/directory#requirescopes): if set, access tokens must include every listed scope. Default `["openid", "email"]`.
+- [`requireScopes`](/docs/ref/object/directory#requirescopes): if set, access tokens must include every listed scope. The value is a set of scope names. Default `{"openid": true, "email": true}`.
 - [`claimUsername`](/docs/ref/object/directory#claimusername): the claim used to derive the account login name. Default `"preferred_username"`. If the claim value is not already an email address and [`usernameDomain`](/docs/ref/object/directory#usernamedomain) is set, the domain is appended automatically.
 - [`usernameDomain`](/docs/ref/object/directory#usernamedomain): the domain to append to the username claim when it does not already contain an `@`. When unset, the server falls back to the `email` claim.
 - [`claimName`](/docs/ref/object/directory#claimname): the claim used for the user's display name. Default `"name"`.
@@ -45,7 +45,7 @@ Example integration with a Keycloak-style provider that issues `preferred_userna
   "description": "External IdP",
   "issuerUrl": "https://accounts.example.org/realms/myrealm",
   "requireAudience": "stalwart",
-  "requireScopes": ["openid", "email"],
+  "requireScopes": {"openid": true, "email": true},
   "claimUsername": "preferred_username",
   "usernameDomain": "example.org",
   "claimName": "name",

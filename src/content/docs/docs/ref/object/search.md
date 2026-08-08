@@ -27,7 +27,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `supportedLanguages`
 
-> Type: [<code>Locale</code>](/docs/ref/enum/locale)<code>[]</code> · default: `["en_US"]`
+> Type: <code>Set&lt;</code>[<code>Locale</code>](/docs/ref/enum/locale)<code>&gt;</code> · default: `{"en_US":true}`
 >
 > List of languages to enable for full-text search
 
@@ -41,7 +41,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `indexCalendarFields`
 
-> Type: [<code>SearchCalendarField</code>](#searchcalendarfield)<code>[]</code> · default: `["title","description","location","owner","attendee","start","uid"]`
+> Type: <code>Set&lt;</code>[<code>SearchCalendarField</code>](#searchcalendarfield)<code>&gt;</code> · default: `{"attendee":true,"description":true,"location":true,"owner":true,"start":true,"title":true,"uid":true}`
 >
 > List of calendar fields to index
 
@@ -55,7 +55,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `indexContactFields`
 
-> Type: [<code>SearchContactField</code>](#searchcontactfield)<code>[]</code> · default: `["member","kind","name","nickname","organization","email","phone","onlineService","address","note","uid"]`
+> Type: <code>Set&lt;</code>[<code>SearchContactField</code>](#searchcontactfield)<code>&gt;</code> · default: `{"address":true,"email":true,"kind":true,"member":true,"name":true,"nickname":true,"note":true,"onlineService":true,"organization":true,"phone":true,"uid":true}`
 >
 > List of contact fields to index
 
@@ -69,7 +69,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `indexEmailFields`
 
-> Type: [<code>SearchEmailField</code>](#searchemailfield)<code>[]</code> · default: `["from","to","cc","bcc","subject","body","attachment","receivedAt","sentAt","size","hasAttachment"]`
+> Type: <code>Set&lt;</code>[<code>SearchEmailField</code>](#searchemailfield)<code>&gt;</code> · default: `{"attachment":true,"bcc":true,"body":true,"cc":true,"from":true,"hasAttachment":true,"receivedAt":true,"sentAt":true,"size":true,"subject":true,"to":true}`
 >
 > List of email fields to index
 
@@ -83,7 +83,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `indexTracingFields`
 
-> Type: [<code>SearchTracingField</code>](#searchtracingfield)<code>[]</code> · [enterprise](/docs/server/enterprise) · default: `["eventType","queueId","keywords"]`
+> Type: <code>Set&lt;</code>[<code>SearchTracingField</code>](#searchtracingfield)<code>&gt;</code> · [enterprise](/docs/server/enterprise) · default: `{"eventType":true,"keywords":true,"queueId":true}`
 >
 > List of tracing fields to index
 

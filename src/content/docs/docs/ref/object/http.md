@@ -13,14 +13,14 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `rateLimitAuthenticated`
 
-> Type: [<code>Rate</code>](#rate)<code>?</code> · default: `{"count":1000,"period":"1m"}`
+> Type: [<code>Rate</code>](#rate)<code>?</code> · default: `{"count":1000,"period":60000}`
 >
 > Specifies the request rate limit for authenticated users
 
 
 ##### `rateLimitAnonymous`
 
-> Type: [<code>Rate</code>](#rate)<code>?</code> · default: `{"count":100,"period":"1m"}`
+> Type: [<code>Rate</code>](#rate)<code>?</code> · default: `{"count":100,"period":60000}`
 >
 > Specifies the request rate limit for unauthenticated users
 
@@ -184,7 +184,7 @@ Defines a rate limit as a count over a time period.
 
 ##### `period`
 
-> Type: <code>Duration</code> · default: `"0s"` · min: 1
+> Type: <code>Duration</code> · default: `0` · min: 1
 >
 > Period
 
@@ -200,7 +200,7 @@ A conditional expression with match rules and a default value.
 
 ##### `match`
 
-> Type: [<code>ExpressionMatch</code>](#expressionmatch)<code>[]</code>
+> Type: <code>List&lt;</code>[<code>ExpressionMatch</code>](#expressionmatch)<code>&gt;</code>
 >
 > List of conditions and their corresponding results
 

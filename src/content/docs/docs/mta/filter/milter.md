@@ -14,7 +14,7 @@ Each milter is defined as an [MtaMilter](/docs/ref/object/mta-milter) object (fo
 - [`enable`](/docs/ref/object/mta-milter#enable): expression that determines whether this milter is active. Defaults to `true`, but can be set to conditionally enable a milter based on session state (for example only for the SMTP listener).
 - [`hostname`](/docs/ref/object/mta-milter#hostname): hostname or IP address of the milter server.
 - [`port`](/docs/ref/object/mta-milter#port): network port on the milter server. Default 11332.
-- [`stages`](/docs/ref/object/mta-milter#stages): list of SMTP stages at which this milter is invoked. Possible values are `connect`, `ehlo`, `auth`, `mail`, `rcpt`, and `data`. Default `["data"]`.
+- [`stages`](/docs/ref/object/mta-milter#stages): set of SMTP stages at which this milter is invoked. Possible values are `connect`, `ehlo`, `auth`, `mail`, `rcpt`, and `data`. Default `{"data": true}`.
 - [`useTls`](/docs/ref/object/mta-milter#usetls): whether to use TLS for the connection. Default `false`, since milters usually run on the same host as the MTA.
 - [`allowInvalidCerts`](/docs/ref/object/mta-milter#allowinvalidcerts): whether Stalwart should connect to a milter that presents an invalid TLS certificate. Default `false`.
 
@@ -25,9 +25,11 @@ A typical deployment runs Rspamd and ClamAV as separate milters. For example, fi
   {
     "hostname": "127.0.0.1",
     "port": 11332,
-    "stages": ["connect", "ehlo", "mail", "rcpt", "data"],
+    "stages": {"connect": true, "ehlo": true, "mail": true, "rcpt": true, "data": true},
     "enable": {
-      "match": [{"if": "listener == 'smtp'", "then": "true"}],
+      "match": {
+        "0": {"if": "listener == 'smtp'", "then": "true"}
+      },
       "else": "false"
     },
     "useTls": false,
@@ -36,9 +38,11 @@ A typical deployment runs Rspamd and ClamAV as separate milters. For example, fi
   {
     "hostname": "127.0.0.1",
     "port": 15112,
-    "stages": ["data"],
+    "stages": {"data": true},
     "enable": {
-      "match": [{"if": "listener == 'smtp'", "then": "true"}],
+      "match": {
+        "0": {"if": "listener == 'smtp'", "then": "true"}
+      },
       "else": "false"
     },
     "useTls": false,
@@ -53,11 +57,15 @@ Timeouts for milter communication are set with [`timeoutConnect`](/docs/ref/obje
 
 ```json
 {
-  "timeoutConnect": "30s",
-  "timeoutCommand": "30s",
-  "timeoutData": "60s"
+  "timeoutConnect": 30000,
+  "timeoutCommand": 30000,
+  "timeoutData": 60000
 }
 ```
+
+:::note
+Values on this page follow the [object encoding](/docs/configuration/object-encoding) rules: list and set fields are JSON objects rather than arrays, and durations and sizes are integers.
+:::
 
 ### Options
 

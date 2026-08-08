@@ -41,7 +41,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `minTriggerInterval`
 
-> Type: <code>Duration</code> · default: `"1h"`
+> Type: <code>Duration</code> · default: `3600000`
 >
 > Specifies the minimum interval for calendar alarms, ensuring that alarms are not triggered too frequently
 

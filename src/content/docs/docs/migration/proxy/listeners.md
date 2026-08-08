@@ -68,15 +68,15 @@ For the interactive protocols, the proxy conducts the pre-authentication dialogu
 
 The defaults advertise a broad, modern capability set and are suitable for most deployments; customization is mainly useful to match what a particular backend supports or to constrain the authentication mechanisms on offer. The common keys are:
 
-- `sasl`: the list of SASL mechanisms advertised. The defaults are `PLAIN`, `OAUTHBEARER` and `XOAUTH2`. The proxy intercepts and replays these mechanisms regardless of the backend; the `LOGIN` mechanism is never advertised because the proxy reconstructs it as `PLAIN` internally.
-- `allow_plain_auth_without_tls`: whether cleartext authentication (`PLAIN`, and the IMAP `LOGIN` and POP3 `USER`/`PASS` commands) is permitted before TLS is established. The default is `false`, which causes the proxy to advertise `LOGINDISABLED` and to reject cleartext authentication with a privacy-required error until the connection is encrypted.
+- `sasl`: the list of SASL mechanisms advertised. The defaults are `PLAIN`, `LOGIN`, `OAUTHBEARER` and `XOAUTH2`, which matches what Stalwart itself advertises on TLS-protected ports. The supported values are exactly those four, and a name outside that set, or a name repeated within the list, is rejected at startup. The proxy intercepts and replays these mechanisms regardless of the backend: `LOGIN` in particular is conducted by the proxy as its usual two-prompt exchange and reconstructed into a `PLAIN` challenge, so the backend leg never receives `LOGIN`. Removing `LOGIN` from the list stops it from being advertised and causes an attempt to use it to be rejected, which is appropriate where every client is known to support `PLAIN`; it should be kept where legacy clients such as Outlook 2019 for macOS, which authenticate with `LOGIN` and do not fall back, must keep working.
+- `allow_plain_auth_without_tls`: whether cleartext authentication (`PLAIN` and `LOGIN`, and the IMAP `LOGIN` and POP3 `USER`/`PASS` commands) is permitted before TLS is established. The default is `false`, which causes the proxy to advertise `LOGINDISABLED` and to reject cleartext authentication with a privacy-required error until the connection is encrypted.
 - `banner`: the greeting text presented on connection.
 
 ```toml
 [capabilities.imap]
 banner = "Stalwart IMAP4rev2 at your service."
 allow_plain_auth_without_tls = false
-sasl = ["PLAIN", "OAUTHBEARER", "XOAUTH2"]
+sasl = ["PLAIN", "LOGIN", "OAUTHBEARER", "XOAUTH2"]
 ```
 
 The IMAP table additionally accepts `advertise`, the list of capability tokens announced in the greeting and in response to the `CAPABILITY` command. The ManageSieve table accepts `sieve`, the list of supported Sieve extensions, and `implementation`, the implementation string reported to clients. The submission table accepts `ehlo`, the list of ESMTP keywords announced in the `EHLO` response.

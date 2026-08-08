@@ -41,7 +41,7 @@ DKIM1 (Ed25519 SHA-256)
 
 ##### `headers`
 
-> Type: <code>String[]</code> · default: `["From","To","Date","Subject","Message-ID"]`
+> Type: <code>Set&lt;String&gt;</code> · default: `{"Date":true,"From":true,"Message-ID":true,"Subject":true,"To":true}`
 >
 > List of message headers to include in the DKIM signature
 
@@ -152,7 +152,7 @@ DKIM1 (RSA SHA-256)
 
 ##### `headers`
 
-> Type: <code>String[]</code> · default: `["From","To","Date","Subject","Message-ID"]`
+> Type: <code>Set&lt;String&gt;</code> · default: `{"Date":true,"From":true,"Message-ID":true,"Subject":true,"To":true}`
 >
 > List of message headers to include in the DKIM signature
 
@@ -242,7 +242,7 @@ DKIM2 (Ed25519 SHA-256)
 
 ##### `flags`
 
-> Type: [<code>Dkim2Flag</code>](#dkim2flag)<code>[]</code>
+> Type: <code>Set&lt;</code>[<code>Dkim2Flag</code>](#dkim2flag)<code>&gt;</code>
 >
 > Policy flags added to the signature, requesting downstream handlers to honor delivery constraints or provide feedback
 
@@ -311,7 +311,7 @@ DKIM2 (RSA SHA-256)
 
 ##### `flags`
 
-> Type: [<code>Dkim2Flag</code>](#dkim2flag)<code>[]</code>
+> Type: <code>Set&lt;</code>[<code>Dkim2Flag</code>](#dkim2flag)<code>&gt;</code>
 >
 > Policy flags added to the signature, requesting downstream handlers to honor delivery constraints or provide feedback
 

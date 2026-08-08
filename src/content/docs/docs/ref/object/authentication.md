@@ -20,28 +20,28 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `defaultUserRoleIds`
 
-> Type: <code>Id&lt;</code>[<code>Role</code>](/docs/ref/object/role)<code>&gt;[]</code>
+> Type: <code>Set&lt;Id&lt;</code>[<code>Role</code>](/docs/ref/object/role)<code>&gt;&gt;</code>
 >
 > Default roles to assign for accounts.
 
 
 ##### `defaultGroupRoleIds`
 
-> Type: <code>Id&lt;</code>[<code>Role</code>](/docs/ref/object/role)<code>&gt;[]</code>
+> Type: <code>Set&lt;Id&lt;</code>[<code>Role</code>](/docs/ref/object/role)<code>&gt;&gt;</code>
 >
 > Default roles to assign for groups.
 
 
 ##### `defaultTenantRoleIds`
 
-> Type: <code>Id&lt;</code>[<code>Role</code>](/docs/ref/object/role)<code>&gt;[]</code> · [enterprise](/docs/server/enterprise)
+> Type: <code>Set&lt;Id&lt;</code>[<code>Role</code>](/docs/ref/object/role)<code>&gt;&gt;</code> · [enterprise](/docs/server/enterprise)
 >
 > Default roles to assign for tenants in multi-tenant environments.
 
 
 ##### `defaultAdminRoleIds`
 
-> Type: <code>Id&lt;</code>[<code>Role</code>](/docs/ref/object/role)<code>&gt;[]</code>
+> Type: <code>Set&lt;Id&lt;</code>[<code>Role</code>](/docs/ref/object/role)<code>&gt;&gt;</code>
 >
 > Default roles to assign for administrators.
 

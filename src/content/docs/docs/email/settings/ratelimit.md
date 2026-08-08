@@ -21,13 +21,13 @@ The maximum number of concurrent IMAP and POP3 connections a user may hold is se
 
 ### Requests
 
-The per-minute request cap is set by [`maxRequestRate`](/docs/ref/object/imap#maxrequestrate), which takes a `Rate` value of `count` and `period`. The default is 2000 requests per minute.
+The per-minute request cap is set by [`maxRequestRate`](/docs/ref/object/imap#maxrequestrate), which takes a `Rate` value of `count` and `period`, where `period` is a duration in milliseconds. The default is 2000 requests per minute.
 
 For example, to allow 2000 requests per minute:
 
 ```json
 {
-  "maxRequestRate": {"count": 2000, "period": "1m"}
+  "maxRequestRate": {"count": 2000, "period": 60000}
 }
 ```
 

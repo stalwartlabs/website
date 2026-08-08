@@ -24,11 +24,15 @@ The default policy for both fields applies `relaxed` when `local_port == 25` and
 ```json
 {
   "spfEhloVerify": {
-    "match": [{"if": "listener == 'smtp'", "then": "relaxed"}],
+    "match": {
+      "0": {"if": "listener == 'smtp'", "then": "relaxed"}
+    },
     "else": "disable"
   },
   "spfFromVerify": {
-    "match": [{"if": "listener == 'smtp'", "then": "relaxed"}],
+    "match": {
+      "0": {"if": "listener == 'smtp'", "then": "relaxed"}
+    },
     "else": "disable"
   }
 }

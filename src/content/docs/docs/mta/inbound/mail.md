@@ -16,7 +16,7 @@ For example, the following configuration removes any subdomain from the sender a
 ```json
 {
   "rewrite": {
-    "match": [{"if": "listener != 'smtp' & matches('^([^.]+)@([^.]+)\\.(.+)$', rcpt)", "then": "$1 + '@' + $3"}],
+    "match": {"0": {"if": "listener != 'smtp' & matches('^([^.]+)@([^.]+)\\.(.+)$', rcpt)", "then": "$1 + '@' + $3"}},
     "else": "false"
   }
 }

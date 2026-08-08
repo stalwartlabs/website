@@ -26,7 +26,7 @@ For example, a standalone Redis coordinator:
 {
   "@type": "Redis",
   "url": "redis://redis.example.com:6379",
-  "timeout": "10s",
+  "timeout": 10000,
   "poolMaxConnections": 10
 }
 ```
@@ -36,12 +36,12 @@ A Redis Cluster coordinator with authentication and retry tuning:
 ```json
 {
   "@type": "RedisCluster",
-  "urls": [
-    "redis://redis-1.example.com:6379",
-    "redis://redis-2.example.com:6379",
-    "redis://redis-3.example.com:6379"
-  ],
-  "timeout": "10s",
+  "urls": {
+    "redis://redis-1.example.com:6379": true,
+    "redis://redis-2.example.com:6379": true,
+    "redis://redis-3.example.com:6379": true
+  },
+  "timeout": 10000,
   "authUsername": "stalwart",
   "authSecret": {
     "@type": "Value",

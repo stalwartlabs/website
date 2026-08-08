@@ -30,14 +30,14 @@ Enabled
 
 ##### `categories`
 
-> Type: <code>String[]</code> · default: `["Unsolicited","Commercial","Harmful","Legitimate"]` · min items: 2
+> Type: <code>Set&lt;String&gt;</code> · default: `{"Commercial":true,"Harmful":true,"Legitimate":true,"Unsolicited":true}` · min items: 2
 >
 > The expected categories in the LLM response
 
 
 ##### `confidence`
 
-> Type: <code>String[]</code> · default: `["High","Medium","Low"]`
+> Type: <code>Set&lt;String&gt;</code> · default: `{"High":true,"Low":true,"Medium":true}`
 >
 > The expected confidence levels in the LLM response
 

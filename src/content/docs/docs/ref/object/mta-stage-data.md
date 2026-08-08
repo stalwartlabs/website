@@ -13,7 +13,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `addAuthResultsHeader`
 
-> Type: [<code>Expression</code>](#expression) · default: `{"else":"false","match":[{"if":"local_port == 25","then":"true"}]}`
+> Type: [<code>Expression</code>](#expression) · default: `{"else":"false"}`
 >
 > Whether to add an Authentication-Results header to the message
 >
@@ -22,7 +22,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `addDateHeader`
 
-> Type: [<code>Expression</code>](#expression) · default: `{"else":"false","match":[{"if":"local_port == 25","then":"true"}]}`
+> Type: [<code>Expression</code>](#expression) · default: `{"else":"false"}`
 >
 > Whether to add a Date header to the message
 >
@@ -38,7 +38,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `addMessageIdHeader`
 
-> Type: [<code>Expression</code>](#expression) · default: `{"else":"false","match":[{"if":"local_port == 25","then":"true"}]}`
+> Type: [<code>Expression</code>](#expression) · default: `{"else":"false"}`
 >
 > Whether to add a Message-Id header to the message
 >
@@ -47,7 +47,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `addReceivedHeader`
 
-> Type: [<code>Expression</code>](#expression) · default: `{"else":"false","match":[{"if":"local_port == 25","then":"true"}]}`
+> Type: [<code>Expression</code>](#expression) · default: `{"else":"false"}`
 >
 > Whether to add a Received header to the message
 >
@@ -56,7 +56,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `addReceivedSpfHeader`
 
-> Type: [<code>Expression</code>](#expression) · default: `{"else":"false","match":[{"if":"local_port == 25","then":"true"}]}`
+> Type: [<code>Expression</code>](#expression) · default: `{"else":"false"}`
 >
 > Whether to add a Received-SPF header to the message
 >
@@ -65,7 +65,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `addReturnPathHeader`
 
-> Type: [<code>Expression</code>](#expression) · default: `{"else":"false","match":[{"if":"local_port == 25","then":"true"}]}`
+> Type: [<code>Expression</code>](#expression) · default: `{"else":"false"}`
 >
 > Whether to add a Return-Path header to the message
 >
@@ -178,13 +178,7 @@ curl -X POST https://mail.example.com/api \
             "update": {
               "singleton": {
                 "addAuthResultsHeader": {
-                  "else": "false",
-                  "match": [
-                    {
-                      "if": "local_port == 25",
-                      "then": "true"
-                    }
-                  ]
+                  "else": "false"
                 }
               }
             }
@@ -217,7 +211,7 @@ stalwart-cli get MtaStageData
 ### Update
 
 ```sh
-stalwart-cli update MtaStageData --field addAuthResultsHeader='{"else":"false","match":[{"if":"local_port == 25","then":"true"}]}'
+stalwart-cli update MtaStageData --field addAuthResultsHeader='{"else":"false"}'
 ```
 
 
@@ -233,7 +227,7 @@ A conditional expression with match rules and a default value.
 
 ##### `match`
 
-> Type: [<code>ExpressionMatch</code>](#expressionmatch)<code>[]</code>
+> Type: <code>List&lt;</code>[<code>ExpressionMatch</code>](#expressionmatch)<code>&gt;</code>
 >
 > List of conditions and their corresponding results
 

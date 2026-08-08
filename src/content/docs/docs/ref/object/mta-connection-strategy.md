@@ -34,49 +34,49 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `sourceIps`
 
-> Type: [<code>MtaConnectionIpHost</code>](#mtaconnectioniphost)<code>[]</code>
+> Type: <code>List&lt;</code>[<code>MtaConnectionIpHost</code>](#mtaconnectioniphost)<code>&gt;</code>
 >
 > List of local IPv4 and IPv6 addresses to use when delivering emails to remote SMTP servers
 
 
 ##### `connectTimeout`
 
-> Type: <code>Duration</code> · default: `"5m"`
+> Type: <code>Duration</code> · default: `300000`
 >
 > Maximum time to wait for the connection to be established
 
 
 ##### `dataTimeout`
 
-> Type: <code>Duration</code> · default: `"10m"`
+> Type: <code>Duration</code> · default: `600000`
 >
 > Maximum time to wait for the DATA command response
 
 
 ##### `ehloTimeout`
 
-> Type: <code>Duration</code> · default: `"5m"`
+> Type: <code>Duration</code> · default: `300000`
 >
 > Maximum time to wait for the EHLO command response
 
 
 ##### `greetingTimeout`
 
-> Type: <code>Duration</code> · default: `"5m"`
+> Type: <code>Duration</code> · default: `300000`
 >
 > Maximum time to wait for the SMTP greeting message
 
 
 ##### `mailFromTimeout`
 
-> Type: <code>Duration</code> · default: `"5m"`
+> Type: <code>Duration</code> · default: `300000`
 >
 > Maximum time to wait for the MAIL-FROM command response
 
 
 ##### `rcptToTimeout`
 
-> Type: <code>Duration</code> · default: `"5m"`
+> Type: <code>Duration</code> · default: `300000`
 >
 > Maximum time to wait for the RCPT-TO command response
 

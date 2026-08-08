@@ -38,7 +38,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `duplicateExpiry`
 
-> Type: <code>Duration</code> · default: `"7d"`
+> Type: <code>Duration</code> · default: `604800000`
 >
 > Default expiration time for IDs stored by the duplicate extension from trusted scripts
 
@@ -218,7 +218,7 @@ A conditional expression with match rules and a default value.
 
 ##### `match`
 
-> Type: [<code>ExpressionMatch</code>](#expressionmatch)<code>[]</code>
+> Type: <code>List&lt;</code>[<code>ExpressionMatch</code>](#expressionmatch)<code>&gt;</code>
 >
 > List of conditions and their corresponding results
 

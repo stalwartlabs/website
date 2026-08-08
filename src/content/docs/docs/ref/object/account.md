@@ -41,7 +41,7 @@ User account
 
 ##### `credentials`
 
-> Type: [<code>Credential</code>](#credential)<code>[]</code>
+> Type: <code>List&lt;</code>[<code>Credential</code>](#credential)<code>&gt;</code>
 >
 > List of credential objects representing authentication methods for the account
 
@@ -55,7 +55,7 @@ User account
 
 ##### `memberGroupIds`
 
-> Type: <code>Id&lt;</code>[<code>Account</code>](/docs/ref/object/account)<code>&gt;[]</code>
+> Type: <code>Set&lt;Id&lt;</code>[<code>Account</code>](/docs/ref/object/account)<code>&gt;&gt;</code>
 >
 > List of groups that this account is a member of
 
@@ -97,7 +97,7 @@ User account
 
 ##### `aliases`
 
-> Type: [<code>EmailAlias</code>](#emailalias)<code>[]</code>
+> Type: <code>List&lt;</code>[<code>EmailAlias</code>](#emailalias)<code>&gt;</code>
 >
 > List of email aliases for the account
 
@@ -208,7 +208,7 @@ Group account
 
 ##### `aliases`
 
-> Type: [<code>EmailAlias</code>](#emailalias)<code>[]</code>
+> Type: <code>List&lt;</code>[<code>EmailAlias</code>](#emailalias)<code>&gt;</code>
 >
 > List of email aliases for the group
 
@@ -514,7 +514,7 @@ Password-based authentication credential.
 
 ##### `allowedIps`
 
-> Type: <code>IpMask[]</code>
+> Type: <code>Set&lt;IpMask&gt;</code>
 >
 > List of allowed IP addresses or CIDR ranges for this credential
 
@@ -565,7 +565,7 @@ App password or API key credential for programmatic access.
 
 ##### `allowedIps`
 
-> Type: <code>IpMask[]</code>
+> Type: <code>Set&lt;IpMask&gt;</code>
 >
 > List of allowed IP addresses or CIDR ranges for this credential
 
@@ -593,7 +593,7 @@ List of permissions to assign to a credential.
 
 ##### `permissions`
 
-> Type: [<code>Permission</code>](/docs/ref/permissions)<code>[]</code>
+> Type: <code>Set&lt;</code>[<code>Permission</code>](/docs/ref/permissions)<code>&gt;</code>
 >
 > List of permissions to assign.
 
@@ -621,7 +621,7 @@ Custom role assignment with specific role references.
 
 ##### `roleIds`
 
-> Type: <code>Id&lt;</code>[<code>Role</code>](/docs/ref/object/role)<code>&gt;[]</code>
+> Type: <code>Set&lt;Id&lt;</code>[<code>Role</code>](/docs/ref/object/role)<code>&gt;&gt;</code>
 >
 > List of roles assigned to this principal.
 
@@ -649,14 +649,14 @@ Explicit permission grants and denials.
 
 ##### `enabledPermissions`
 
-> Type: [<code>Permission</code>](/docs/ref/permissions)<code>[]</code>
+> Type: <code>Set&lt;</code>[<code>Permission</code>](/docs/ref/permissions)<code>&gt;</code>
 >
 > List of permissions that are explicitly enabled.
 
 
 ##### `disabledPermissions`
 
-> Type: [<code>Permission</code>](/docs/ref/permissions)<code>[]</code>
+> Type: <code>Set&lt;</code>[<code>Permission</code>](/docs/ref/permissions)<code>&gt;</code>
 >
 > List of permissions that are explicitly disabled, even if they would be inherited through other roles or groups. This takes precedence over enabled permissions.
 

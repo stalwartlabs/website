@@ -260,7 +260,7 @@ Calendar iTIP message
 
 ##### `messages`
 
-> Type: [<code>TaskCalendarItipContents</code>](#taskcalendaritipcontents)<code>[]</code> · server-set
+> Type: <code>List&lt;</code>[<code>TaskCalendarItipContents</code>](#taskcalendaritipcontents)<code>&gt;</code> · server-set
 >
 > List of iTIP messages associated with this task
 
@@ -315,7 +315,7 @@ Merge email threads
 
 ##### `messageIds`
 
-> Type: <code>String[]</code> · server-set
+> Type: <code>Set&lt;String&gt;</code> · server-set
 >
 > Message-IDs of the email messages to be merged into the thread
 
@@ -682,7 +682,7 @@ Perform DNS management for a domain
 
 ##### `updateRecords`
 
-> Type: [<code>DnsRecordType</code>](#dnsrecordtype)<code>[]</code>
+> Type: <code>Set&lt;</code>[<code>DnsRecordType</code>](#dnsrecordtype)<code>&gt;</code>
 >
 > Which DNS records should be updated for the domain as part of this task
 
@@ -1070,7 +1070,7 @@ Contents of an iTIP message to be delivered.
 
 ##### `to`
 
-> Type: <code>EmailAddress[]</code> · server-set
+> Type: <code>Set&lt;EmailAddress&gt;</code> · server-set
 >
 > Email addresses of the recipients of the iTIP message
 

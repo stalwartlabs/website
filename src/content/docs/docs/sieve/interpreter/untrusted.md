@@ -11,7 +11,7 @@ Interpreter settings, resource limits, and the list of globally available script
 
 User scripts execute in a sandbox that bounds their use of server resources. The limits are expressed as fields on the SieveUserInterpreter singleton:
 
-- [`maxScriptSize`](/docs/ref/object/sieve-user-interpreter#maxscriptsize): maximum size of a Sieve script. Default `"100kb"`.
+- [`maxScriptSize`](/docs/ref/object/sieve-user-interpreter#maxscriptsize): maximum size of a Sieve script, in bytes. Default `102400` (100 KiB).
 - [`maxStringLength`](/docs/ref/object/sieve-user-interpreter#maxstringlength): maximum size of a constant string. Default `4096`.
 - [`maxNestedBlocks`](/docs/ref/object/sieve-user-interpreter#maxnestedblocks): maximum depth of nested `if` / `elsif` / `else` blocks. Default `15`.
 - [`maxNestedTests`](/docs/ref/object/sieve-user-interpreter#maxnestedtests): maximum depth of nested tests. Default `15`.
@@ -35,7 +35,7 @@ Example limits:
 ```json
 {
   "maxScriptNameLength": 512,
-  "maxScriptSize": "100kb",
+  "maxScriptSize": 102400,
   "maxStringLength": 4096,
   "maxVarNameLength": 32,
   "maxVarSize": 4096,
@@ -58,31 +58,31 @@ Example limits:
 
 Stalwart supports [all registered Sieve extensions](https://www.iana.org/assignments/sieve-extensions/sieve-extensions.xhtml) and enables them by default. Administrators often want to disable extensions that let a user send outgoing email from a script (for example `enotify`) or modify message content (for example `editheader`, `replace`, `enclose`).
 
-Disabled extensions are listed in [`disableCapabilities`](/docs/ref/object/sieve-user-interpreter#disablecapabilities) on SieveUserInterpreter. The accepted values are documented on the [SieveCapability](/docs/ref/object/sieve-user-interpreter#sievecapability) enum.
+Disabled extensions are named as keys of [`disableCapabilities`](/docs/ref/object/sieve-user-interpreter#disablecapabilities) on SieveUserInterpreter, each with the value `true`. The accepted keys are documented on the [SieveCapability](/docs/ref/object/sieve-user-interpreter#sievecapability) enum.
 
 ```json
 {
-  "disableCapabilities": ["editheader", "replace", "enclose", "enotify"]
+  "disableCapabilities": {"editheader": true, "replace": true, "enclose": true, "enotify": true}
 }
 ```
 
 ## Notification URIs
 
-The allowed URI schemes for the `notify` extension are configured through [`allowedNotifyUris`](/docs/ref/object/sieve-user-interpreter#allowednotifyuris). The default is `["mailto"]`.
+The allowed URI schemes for the `notify` extension are named as keys of [`allowedNotifyUris`](/docs/ref/object/sieve-user-interpreter#allowednotifyuris), each with the value `true`. The default is `{"mailto": true}`.
 
 ```json
 {
-  "allowedNotifyUris": ["mailto"]
+  "allowedNotifyUris": {"mailto": true}
 }
 ```
 
 ## Protected Headers
 
-Headers that cannot be added or removed by the `editheader` extension are listed in [`protectedHeaders`](/docs/ref/object/sieve-user-interpreter#protectedheaders). The default list is `["Original-Subject", "Original-From", "Received", "Auto-Submitted"]`.
+Headers that cannot be added or removed by the `editheader` extension are named as keys of [`protectedHeaders`](/docs/ref/object/sieve-user-interpreter#protectedheaders), each with the value `true`. The default is `{"Original-Subject": true, "Original-From": true, "Received": true, "Auto-Submitted": true}`.
 
 ```json
 {
-  "protectedHeaders": ["Original-Subject", "Original-From", "Received", "Auto-Submitted"]
+  "protectedHeaders": {"Original-Subject": true, "Original-From": true, "Received": true, "Auto-Submitted": true}
 }
 ```
 
@@ -104,13 +104,13 @@ Defaults for the `vacation` extension are exposed on SieveUserInterpreter throug
 
 The default lifetimes for identifiers stored by the `vacation` and `duplicate` extensions are controlled by:
 
-- [`defaultExpiryVacation`](/docs/ref/object/sieve-user-interpreter#defaultexpiryvacation): default expiration for vacation response tracking. Default `"30d"`.
-- [`defaultExpiryDuplicate`](/docs/ref/object/sieve-user-interpreter#defaultexpiryduplicate): default expiration for identifiers stored by the `duplicate` extension. Default `"7d"`.
+- [`defaultExpiryVacation`](/docs/ref/object/sieve-user-interpreter#defaultexpiryvacation): default expiration for vacation response tracking, in milliseconds. Default `2592000000` (30 days).
+- [`defaultExpiryDuplicate`](/docs/ref/object/sieve-user-interpreter#defaultexpiryduplicate): default expiration for identifiers stored by the `duplicate` extension, in milliseconds. Default `604800000` (7 days).
 
 ```json
 {
-  "defaultExpiryVacation": "30d",
-  "defaultExpiryDuplicate": "7d"
+  "defaultExpiryVacation": 2592000000,
+  "defaultExpiryDuplicate": 604800000
 }
 ```
 

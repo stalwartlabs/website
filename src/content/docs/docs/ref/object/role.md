@@ -27,21 +27,21 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `roleIds`
 
-> Type: <code>Id&lt;</code>[<code>Role</code>](/docs/ref/object/role)<code>&gt;[]</code>
+> Type: <code>Set&lt;Id&lt;</code>[<code>Role</code>](/docs/ref/object/role)<code>&gt;&gt;</code>
 >
 > List of roles this role extends
 
 
 ##### `enabledPermissions`
 
-> Type: [<code>Permission</code>](/docs/ref/permissions)<code>[]</code>
+> Type: <code>Set&lt;</code>[<code>Permission</code>](/docs/ref/permissions)<code>&gt;</code>
 >
 > List of permissions that are explicitly enabled.
 
 
 ##### `disabledPermissions`
 
-> Type: [<code>Permission</code>](/docs/ref/permissions)<code>[]</code>
+> Type: <code>Set&lt;</code>[<code>Permission</code>](/docs/ref/permissions)<code>&gt;</code>
 >
 > List of permissions that are explicitly disabled, even if they would be inherited through other roles or groups. This takes precedence over enabled permissions.
 

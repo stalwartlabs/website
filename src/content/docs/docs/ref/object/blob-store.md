@@ -26,7 +26,7 @@ Sharded Blob Store
 
 ##### `stores`
 
-> Type: [<code>BlobStoreBase</code>](#blobstorebase)<code>[]</code> · min items: 2
+> Type: <code>List&lt;</code>[<code>BlobStoreBase</code>](#blobstorebase)<code>&gt;</code> · min items: 2
 >
 > Stores to use for sharding
 
@@ -53,7 +53,7 @@ S3-compatible
 
 ##### `accessKey`
 
-> Type: <code>String?</code>
+> Type: [<code>PublicStringOptional</code>](#publicstringoptional) · required
 >
 > Identifies the S3 account
 
@@ -88,7 +88,7 @@ S3-compatible
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > Connection timeout to the S3 service
 
@@ -157,7 +157,7 @@ Azure blob storage
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > Connection timeout to the database
 
@@ -252,7 +252,7 @@ PostgreSQL
 
 ##### `timeout`
 
-> Type: <code>Duration?</code> · default: `"15s"`
+> Type: <code>Duration?</code> · default: `15000`
 >
 > Connection timeout to the database
 
@@ -287,7 +287,7 @@ PostgreSQL
 
 ##### `readReplicas`
 
-> Type: [<code>PostgreSqlSettings</code>](#postgresqlsettings)<code>[]</code> · [enterprise](/docs/server/enterprise)
+> Type: <code>List&lt;</code>[<code>PostgreSqlSettings</code>](#postgresqlsettings)<code>&gt;</code> · [enterprise](/docs/server/enterprise)
 >
 > List of read replicas for the store
 
@@ -342,7 +342,7 @@ mySQL
 
 ##### `timeout`
 
-> Type: <code>Duration?</code> · default: `"15s"`
+> Type: <code>Duration?</code> · default: `15000`
 >
 > Connection timeout to the database
 
@@ -384,7 +384,7 @@ mySQL
 
 ##### `readReplicas`
 
-> Type: [<code>MySqlSettings</code>](#mysqlsettings)<code>[]</code> · [enterprise](/docs/server/enterprise)
+> Type: <code>List&lt;</code>[<code>MySqlSettings</code>](#mysqlsettings)<code>&gt;</code> · [enterprise](/docs/server/enterprise)
 >
 > List of read replicas for the store
 
@@ -562,7 +562,7 @@ S3-compatible blob store.
 
 ##### `accessKey`
 
-> Type: <code>String?</code>
+> Type: [<code>PublicStringOptional</code>](#publicstringoptional) · required
 >
 > Identifies the S3 account
 
@@ -597,7 +597,7 @@ S3-compatible blob store.
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > Connection timeout to the S3 service
 
@@ -708,30 +708,30 @@ Custom S3-compatible endpoint.
 
 
 
-##### SecretKeyOptional
+##### PublicStringOptional
 
-An optional secret value, or none.
-
-
-- **`None`**: No secret. No additional fields.
-- **`Value`**: Secret value. Carries the fields of [`SecretKeyValue`](#secretkeyvalue).
-- **`EnvironmentVariable`**: Secret read from environment variable. Carries the fields of [`SecretKeyEnvironmentVariable`](#secretkeyenvironmentvariable).
-- **`File`**: Secret read from file. Carries the fields of [`SecretKeyFile`](#secretkeyfile).
+An optional public value, or none.
 
 
-
-
-##### SecretKeyValue
-
-A secret value provided directly.
+- **`None`**: No value. No additional fields.
+- **`Value`**: Value. Carries the fields of [`PublicStringValue`](#publicstringvalue).
+- **`EnvironmentVariable`**: Value read from environment variable. Carries the fields of [`SecretKeyEnvironmentVariable`](#secretkeyenvironmentvariable).
+- **`File`**: Value read from file. Carries the fields of [`SecretKeyFile`](#secretkeyfile).
 
 
 
-##### `secret`
 
-> Type: <code>String</code> · required · secret
+##### PublicStringValue
+
+A public value provided directly.
+
+
+
+##### `value`
+
+> Type: <code>String</code> · required
 >
-> Password or secret value
+> Value
 
 
 
@@ -764,6 +764,35 @@ A secret value read from a file.
 > Type: <code>String</code> · required
 >
 > File path to read the secret from
+
+
+
+
+
+##### SecretKeyOptional
+
+An optional secret value, or none.
+
+
+- **`None`**: No secret. No additional fields.
+- **`Value`**: Secret value. Carries the fields of [`SecretKeyValue`](#secretkeyvalue).
+- **`EnvironmentVariable`**: Secret read from environment variable. Carries the fields of [`SecretKeyEnvironmentVariable`](#secretkeyenvironmentvariable).
+- **`File`**: Secret read from file. Carries the fields of [`SecretKeyFile`](#secretkeyfile).
+
+
+
+
+##### SecretKeyValue
+
+A secret value provided directly.
+
+
+
+##### `secret`
+
+> Type: <code>String</code> · required · secret
+>
+> Password or secret value
 
 
 
@@ -805,7 +834,7 @@ Azure Blob Storage store.
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > Connection timeout to the database
 
@@ -909,7 +938,7 @@ PostgreSQL data store.
 
 ##### `timeout`
 
-> Type: <code>Duration?</code> · default: `"15s"`
+> Type: <code>Duration?</code> · default: `15000`
 >
 > Connection timeout to the database
 
@@ -944,7 +973,7 @@ PostgreSQL data store.
 
 ##### `readReplicas`
 
-> Type: [<code>PostgreSqlSettings</code>](#postgresqlsettings)<code>[]</code> · [enterprise](/docs/server/enterprise)
+> Type: <code>List&lt;</code>[<code>PostgreSqlSettings</code>](#postgresqlsettings)<code>&gt;</code> · [enterprise](/docs/server/enterprise)
 >
 > List of read replicas for the store
 
@@ -1053,7 +1082,7 @@ MySQL data store.
 
 ##### `timeout`
 
-> Type: <code>Duration?</code> · default: `"15s"`
+> Type: <code>Duration?</code> · default: `15000`
 >
 > Connection timeout to the database
 
@@ -1095,7 +1124,7 @@ MySQL data store.
 
 ##### `readReplicas`
 
-> Type: [<code>MySqlSettings</code>](#mysqlsettings)<code>[]</code> · [enterprise](/docs/server/enterprise)
+> Type: <code>List&lt;</code>[<code>MySqlSettings</code>](#mysqlsettings)<code>&gt;</code> · [enterprise](/docs/server/enterprise)
 >
 > List of read replicas for the store
 

@@ -48,7 +48,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"5s"`
+> Type: <code>Duration</code> · default: `5000`
 >
 > The timeout for the Pyzor server. If the server does not respond within this time, the check is considered failed.
 

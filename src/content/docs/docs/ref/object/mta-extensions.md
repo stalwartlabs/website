@@ -22,7 +22,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `deliverBy`
 
-> Type: [<code>Expression</code>](#expression) · default: `{"else":"false","match":[{"if":"!is_empty(authenticated_as)","then":"15d"}]}`
+> Type: [<code>Expression</code>](#expression) · default: `{"else":"false"}`
 >
 > Specifies the maximum delivery time for a message using the DELIVERBY (RFC 2852) extension, which allows the sender to request a specific delivery time for a message
 >
@@ -31,7 +31,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `dsn`
 
-> Type: [<code>Expression</code>](#expression) · default: `{"else":"false","match":[{"if":"!is_empty(authenticated_as)","then":"true"}]}`
+> Type: [<code>Expression</code>](#expression) · default: `{"else":"false"}`
 >
 > Enables delivery status notifications (RFC 3461), which allows the sender to request a delivery status notification (DSN) from the recipient's mail server
 >
@@ -40,7 +40,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `expn`
 
-> Type: [<code>Expression</code>](#expression) · default: `{"else":"false","match":[{"if":"!is_empty(authenticated_as)","then":"true"}]}`
+> Type: [<code>Expression</code>](#expression) · default: `{"else":"false"}`
 >
 > Specifies whether to enable the EXPN command, which allows the sender to request the membership of a mailing list. It is recommended to disable this command to prevent spammers from harvesting email addresses
 >
@@ -49,7 +49,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `futureRelease`
 
-> Type: [<code>Expression</code>](#expression) · default: `{"else":"false","match":[{"if":"!is_empty(authenticated_as)","then":"7d"}]}`
+> Type: [<code>Expression</code>](#expression) · default: `{"else":"false"}`
 >
 > Specifies the maximum time that a message can be held for delivery using the FUTURERELEASE (RFC 4865) extension
 >
@@ -58,7 +58,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `mtPriority`
 
-> Type: [<code>Expression</code>](#expression) · default: `{"else":"false","match":[{"if":"!is_empty(authenticated_as)","then":"mixer"}]}`
+> Type: [<code>Expression</code>](#expression) · default: `{"else":"false"}`
 >
 > Specifies the priority assignment policy to advertise on the MT-PRIORITY (RFC 6710) extension, which allows the sender to specify a priority for a message. Available policies are mixer, stanag4406 and nsep, or false to disable this extension
 >
@@ -96,7 +96,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `vrfy`
 
-> Type: [<code>Expression</code>](#expression) · default: `{"else":"false","match":[{"if":"!is_empty(authenticated_as)","then":"true"}]}`
+> Type: [<code>Expression</code>](#expression) · default: `{"else":"false"}`
 >
 > Specifies whether to enable the VRFY command, which allows the sender to verify the existence of a mailbox. It is recommended to disable this command to prevent spammers from harvesting email addresses
 >
@@ -213,7 +213,7 @@ A conditional expression with match rules and a default value.
 
 ##### `match`
 
-> Type: [<code>ExpressionMatch</code>](#expressionmatch)<code>[]</code>
+> Type: <code>List&lt;</code>[<code>ExpressionMatch</code>](#expressionmatch)<code>&gt;</code>
 >
 > List of conditions and their corresponding results
 

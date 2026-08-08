@@ -22,15 +22,15 @@ Each recipient is evaluated independently and placed into the appropriate queue 
 
 ## Retries
 
-When a delivery attempt fails temporarily (for example because the remote server is unavailable), the MTA retries delivery later. Retry timing is controlled by the [`retry`](/docs/ref/object/mta-delivery-schedule#retry) field, which is a multi-variant value: the `Default` variant uses the built-in retry schedule, and the `Custom` variant carries an `intervals` array of `MtaDeliveryScheduleInterval` entries, each with a `duration` field.
+When a delivery attempt fails temporarily (for example because the remote server is unavailable), the MTA retries delivery later. Retry timing is controlled by the [`retry`](/docs/ref/object/mta-delivery-schedule#retry) field, which is a multi-variant value: the `Default` variant uses the built-in retry schedule, and the `Custom` variant carries a list of `MtaDeliveryScheduleInterval` entries under `intervals`, each with a `duration` field.
 
-With intervals such as `2m`, `5m`, `10m`, `15m`, `30m`, `1h`, `2h`, delivery is retried 2 minutes after the first failure, 5 minutes after that, and so on. When the list is exhausted, the last duration is reused for all subsequent attempts, until the message is delivered, expires, or exceeds the maximum number of delivery attempts. Retries are scheduled independently for each recipient.
+With intervals such as 2 minutes, 5 minutes, 10 minutes, 15 minutes, 30 minutes, 1 hour and 2 hours, delivery is retried 2 minutes after the first failure, 5 minutes after that, and so on. When the list is exhausted, the last duration is reused for all subsequent attempts, until the message is delivered, expires, or exceeds the maximum number of delivery attempts. Retries are scheduled independently for each recipient.
 
 ## Delay notifications
 
 Delayed Delivery Status Notifications (DSNs) inform the sender that a message has not yet been delivered but is still being retried. These notifications are useful for alerting users to delivery delays before the final expiration.
 
-Delay notifications are configured via [`notify`](/docs/ref/object/mta-delivery-schedule#notify), which accepts the same multi-variant shape as `retry`: the `Default` variant uses the built-in schedule and the `Custom` variant carries an `intervals` array. Durations are measured from the moment the message enters the queue; for example an interval list of `1d`, `3d` sends a delay DSN one day and three days after queue entry, provided the message is still undelivered.
+Delay notifications are configured via [`notify`](/docs/ref/object/mta-delivery-schedule#notify), which accepts the same multi-variant shape as `retry`: the `Default` variant uses the built-in schedule and the `Custom` variant carries an `intervals` list. Durations are measured from the moment the message enters the queue; for example intervals of 1 day and 3 days send a delay DSN one day and three days after queue entry, provided the message is still undelivered.
 
 Each interval triggers at most one notification. These delay notifications are separate from the final bounce message, which is sent when the message is permanently undeliverable.
 
@@ -38,7 +38,7 @@ Each interval triggers at most one notification. These delay notifications are s
 
 Message expiration determines how long the MTA should continue attempting delivery before giving up and returning a bounce [DSN](/docs/mta/reports/dsn) to the sender. Expiration is configured via [`expiry`](/docs/ref/object/mta-delivery-schedule#expiry), a multi-variant field with two variants:
 
-- `Ttl`: Time-To-Live. The message expires after a fixed duration, regardless of the number of delivery attempts. Carries an `expire` duration (default `3d`).
+- `Ttl`: Time-To-Live. The message expires after a fixed duration, regardless of the number of delivery attempts. Carries an `expire` duration in milliseconds (default 3 days, `259200000`).
 - `Attempts`: Attempt-based. The message expires after a specified number of failed delivery attempts, regardless of how much time has passed. Carries a `maxAttempts` count (default 5).
 
 TTL-based expiration suits deployments where guaranteed delivery within a fixed time window is important; attempt-based expiration suits environments where retry frequency may vary, but a maximum effort should be enforced.
@@ -51,18 +51,30 @@ A schedule that expires messages after 4 days with custom retry intervals:
   "queueId": "<MtaVirtualQueue id>",
   "retry": {
     "@type": "Custom",
-    "intervals": [
-      {"duration": "2m"}, {"duration": "5m"}, {"duration": "10m"},
-      {"duration": "15m"}, {"duration": "30m"}, {"duration": "1h"}, {"duration": "2h"}
-    ]
+    "intervals": {
+      "0": {"duration": 120000},
+      "1": {"duration": 300000},
+      "2": {"duration": 600000},
+      "3": {"duration": 900000},
+      "4": {"duration": 1800000},
+      "5": {"duration": 3600000},
+      "6": {"duration": 7200000}
+    }
   },
   "notify": {
     "@type": "Custom",
-    "intervals": [{"duration": "1d"}, {"duration": "3d"}]
+    "intervals": {
+      "0": {"duration": 86400000},
+      "1": {"duration": 259200000}
+    }
   },
-  "expiry": {"@type": "Ttl", "expire": "4d"}
+  "expiry": {"@type": "Ttl", "expire": 345600000}
 }
 ```
+
+:::note
+Values on this page follow the [object encoding](/docs/configuration/object-encoding) rules: list and set fields are JSON objects rather than arrays, and durations and sizes are integers.
+:::
 
 A schedule that gives up after 15 delivery attempts uses the `Attempts` variant instead:
 
@@ -87,12 +99,12 @@ The schedule expression:
 ```json
 {
   "schedule": {
-    "match": [
-      {"if": "is_local_domain('*', rcpt_domain)", "then": "'local'"},
-      {"if": "source == 'dsn'", "then": "'dsn'"},
-      {"if": "source == 'report'", "then": "'report'"},
-      {"if": "source == 'autogenerated'", "then": "'autogen'"}
-    ],
+    "match": {
+      "0": {"if": "is_local_domain('*', rcpt_domain)", "then": "'local'"},
+      "1": {"if": "source == 'dsn'", "then": "'dsn'"},
+      "2": {"if": "source == 'report'", "then": "'report'"},
+      "3": {"if": "source == 'autogenerated'", "then": "'autogen'"}
+    },
     "else": "'remote'"
   }
 }
@@ -102,21 +114,21 @@ Paired with five MtaVirtualQueue objects (`local`/1000, `dsn`/50, `report`/10, `
 
 ### Priority-based delivery queues
 
-Delivery priority can be driven by the `MT-PRIORITY` SMTP extension. A schedule expression that branches on `priority == 1` and `priority == 3` selects `high-priority`, `low-priority`, or `normal-priority` scheduling strategies. The high-priority strategy uses a short retry interval (`Custom` variant with intervals `["1m"]`) and a high-concurrency virtual queue; the low-priority strategy throttles retries (`["30m"]`) and uses a queue with very few threads.
+Delivery priority can be driven by the `MT-PRIORITY` SMTP extension. A schedule expression that branches on `priority == 1` and `priority == 3` selects `high-priority`, `low-priority`, or `normal-priority` scheduling strategies. The high-priority strategy uses a short retry interval (`Custom` variant with a single 1 minute interval) and a high-concurrency virtual queue; the low-priority strategy throttles retries (a single 30 minute interval) and uses a queue with very few threads.
 
 ```json
 {
   "schedule": {
-    "match": [
-      {"if": "priority == 1", "then": "'high-priority'"},
-      {"if": "priority == 3", "then": "'low-priority'"}
-    ],
+    "match": {
+      "0": {"if": "priority == 1", "then": "'high-priority'"},
+      "1": {"if": "priority == 3", "then": "'low-priority'"}
+    },
     "else": "'normal-priority'"
   }
 }
 ```
 
-The `high-priority` MtaDeliverySchedule uses `retry = {"@type": "Custom", "intervals": [{"duration": "1m"}]}` against a 2000-thread `high-priority` virtual queue; `low-priority` uses `retry = {"@type": "Custom", "intervals": [{"duration": "30m"}]}` against a 2-thread `low-priority` virtual queue; `normal-priority` uses the default schedule against a 100-thread `normal-priority` virtual queue.
+The `high-priority` MtaDeliverySchedule uses `retry = {"@type": "Custom", "intervals": {"0": {"duration": 60000}}}` (1 minute) against a 2000-thread `high-priority` virtual queue; `low-priority` uses `retry = {"@type": "Custom", "intervals": {"0": {"duration": 1800000}}}` (30 minutes) against a 2-thread `low-priority` virtual queue; `normal-priority` uses the default schedule against a 100-thread `normal-priority` virtual queue.
 
 ### VIP client queue
 
@@ -127,12 +139,12 @@ The `?` placeholders below use SQLite or MySQL syntax; on PostgreSQL use `$1`, `
 ```json
 {
   "schedule": {
-    "match": [
-      {"if": "sql_query('my-db', 'SELECT 1 FROM vip_clients WHERE email = ? OR email = ?', [rcpt, sender])", "then": "'vip-client'"}
-    ],
+    "match": {
+      "0": {"if": "sql_query('my-db', 'SELECT 1 FROM vip_clients WHERE email = ? OR email = ?', [rcpt, sender])", "then": "'vip-client'"}
+    },
     "else": "'default'"
   }
 }
 ```
 
-The `vip-client` MtaDeliverySchedule targets a 1000-thread `vip` virtual queue with intervals `["1m", "5m", "10m"]`; `default` targets a 100-thread `default` virtual queue with the standard retry schedule.
+The `vip-client` MtaDeliverySchedule targets a 1000-thread `vip` virtual queue with intervals of 1 minute, 5 minutes and 10 minutes (`{"0": {"duration": 60000}, "1": {"duration": 300000}, "2": {"duration": 600000}}`); `default` targets a 100-thread `default` virtual queue with the standard retry schedule.

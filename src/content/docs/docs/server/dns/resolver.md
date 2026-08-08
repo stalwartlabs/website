@@ -33,7 +33,7 @@ A System-resolver configuration using the default values:
   "@type": "System",
   "preserveIntermediates": true,
   "concurrency": 2,
-  "timeout": "5s",
+  "timeout": 5000,
   "attempts": 2,
   "tcpOnError": true,
   "enableEdns": true
@@ -45,10 +45,10 @@ A custom resolver pointing at two local DNS servers and one public one:
 ```json
 {
   "@type": "Custom",
-  "servers": [
-    {"address": "192.0.2.1", "port": 55, "protocol": "udp"},
-    {"address": "192.0.2.3", "port": 55, "protocol": "tcp"},
-    {"address": "8.8.8.8"}
-  ]
+  "servers": {
+    "0": {"address": "192.0.2.1", "port": 55, "protocol": "udp"},
+    "1": {"address": "192.0.2.3", "port": 55, "protocol": "tcp"},
+    "2": {"address": "8.8.8.8"}
+  }
 }
 ```

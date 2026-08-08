@@ -34,14 +34,14 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `urlPrefix`
 
-> Type: <code>String[]</code> · min items: 1
+> Type: <code>Set&lt;String&gt;</code> · min items: 1
 >
 > The URL prefixes to serve the application on. For example, if set to "/admin", the application will be accessible at http://server/admin.
 
 
 ##### `autoUpdateFrequency`
 
-> Type: <code>Duration</code> · default: `"90d"`
+> Type: <code>Duration</code> · default: `7776000000`
 >
 > Frequency to check for application updates
 

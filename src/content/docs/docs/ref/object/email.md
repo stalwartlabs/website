@@ -238,7 +238,7 @@ Defines a default email folder configuration.
 
 ##### `aliases`
 
-> Type: <code>String[]</code>
+> Type: <code>Set&lt;String&gt;</code>
 >
 > List of folder aliases
 

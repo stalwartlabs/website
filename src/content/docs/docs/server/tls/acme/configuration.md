@@ -13,7 +13,7 @@ ACME providers are registered as [AcmeProvider](/docs/ref/object/acme-provider) 
 - [`eabKeyId`](/docs/ref/object/acme-provider#eabkeyid) / [`eabHmacKey`](/docs/ref/object/acme-provider#eabhmackey): External Account Binding (EAB) credentials when the CA requires them.
 - [`memberTenantId`](/docs/ref/object/acme-provider#membertenantid): tenant scope of the provider (Enterprise deployments only).
 
-An AcmeProvider does not list the domains it covers. Instead, each [Domain](/docs/ref/object/domain) that needs an automatically managed certificate sets its [`certificateManagement`](/docs/ref/object/domain#certificatemanagement) to the `Automatic` variant, which carries an [`acmeProviderId`](/docs/ref/object/domain#certificatemanagementproperties) reference to the AcmeProvider and an optional [`subjectAlternativeNames`](/docs/ref/object/domain#certificatemanagementproperties) list (leave empty to request a wildcard or the default set of SANs). A single AcmeProvider can be referenced from any number of Domain records, so one ACME account issues certificates for many domains. ACME account keys and state are stored in the data store and need no filesystem path.
+An AcmeProvider does not list the domains it covers. Instead, each [Domain](/docs/ref/object/domain) that needs an automatically managed certificate sets its [`certificateManagement`](/docs/ref/object/domain#certificatemanagement) to the `Automatic` variant, which carries an [`acmeProviderId`](/docs/ref/object/domain#certificatemanagementproperties) reference to the AcmeProvider and an optional [`subjectAlternativeNames`](/docs/ref/object/domain#certificatemanagementproperties) set (leave empty to request a wildcard or the default set of SANs). A single AcmeProvider can be referenced from any number of Domain records, so one ACME account issues certificates for many domains. ACME account keys and state are stored in the data store and need no filesystem path.
 
 Default-certificate selection is made on the [SystemSettings](/docs/ref/object/system-settings) singleton through [`defaultCertificateId`](/docs/ref/object/system-settings#defaultcertificateid): whichever Certificate is pointed to there is served to clients that do not send SNI in their ClientHello. The AcmeProvider itself has no "default" flag; a provider becomes the default implicitly by issuing the Certificate selected via [`defaultCertificateId`](/docs/ref/object/system-settings#defaultcertificateid). This setting is optional, since clients negotiating with SNI pick their certificate from the domain records directly.
 
@@ -38,7 +38,7 @@ An ACME provider pointing at the Let's Encrypt production directory and using TL
 {
   "directory": "https://acme-v02.api.letsencrypt.org/directory",
   "challengeType": "TlsAlpn01",
-  "contact": ["postmaster@example.org"],
+  "contact": {"postmaster@example.org": true},
   "renewBefore": "R23"
 }
 ```

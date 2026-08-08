@@ -17,7 +17,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `events`
 
-> Type: [<code>TraceEvent</code>](#traceevent)<code>[]</code>
+> Type: <code>List&lt;</code>[<code>TraceEvent</code>](#traceevent)<code>&gt;</code>
 >
 > List of events associated with the trace entry
 
@@ -292,7 +292,7 @@ A single event within a delivery trace.
 
 ##### `keyValues`
 
-> Type: [<code>TraceKeyValue</code>](#tracekeyvalue)<code>[]</code>
+> Type: <code>List&lt;</code>[<code>TraceKeyValue</code>](#tracekeyvalue)<code>&gt;</code>
 >
 > List of key-value pairs associated with the trace entry
 
@@ -479,7 +479,7 @@ A list of trace values.
 
 ##### `value`
 
-> Type: [<code>TraceValue</code>](#tracevalue)<code>[]</code>
+> Type: <code>List&lt;</code>[<code>TraceValue</code>](#tracevalue)<code>&gt;</code>
 >
 > Value list
 
@@ -502,7 +502,7 @@ A nested event trace value.
 
 ##### `value`
 
-> Type: [<code>TraceKeyValue</code>](#tracekeyvalue)<code>[]</code>
+> Type: <code>List&lt;</code>[<code>TraceKeyValue</code>](#tracekeyvalue)<code>&gt;</code>
 >
 > List of key-value pairs associated with the trace entry
 

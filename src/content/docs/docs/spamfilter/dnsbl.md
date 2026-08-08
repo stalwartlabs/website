@@ -34,21 +34,21 @@ Example reproducing the Mailspike IP DNSBL using the `Ip` variant:
   "name": "STWT_RBL_MAILSPIKE_IP",
   "enable": true,
   "zone": {
-    "match": [{"if": "location == 'tcp'", "then": "ip_reverse + '.rep.mailspike.net'"}],
+    "match": {"0": {"if": "location == 'tcp'", "then": "ip_reverse + '.rep.mailspike.net'"}},
     "else": "false"
   },
   "tag": {
-    "match": [
-      {"if": "octets[0] != 127", "then": "false"},
-      {"if": "octets[3] == 10", "then": "'RBL_MAILSPIKE_WORST'"},
-      {"if": "octets[3] == 11", "then": "'RBL_MAILSPIKE_VERYBAD'"},
-      {"if": "octets[3] == 12", "then": "'RBL_MAILSPIKE_BAD'"},
-      {"if": "octets[3] >= 13 && octets[3] <= 16", "then": "'RWL_MAILSPIKE_NEUTRAL'"},
-      {"if": "octets[3] == 17", "then": "'RWL_MAILSPIKE_POSSIBLE'"},
-      {"if": "octets[3] == 18", "then": "'RWL_MAILSPIKE_GOOD'"},
-      {"if": "octets[3] == 19", "then": "'RWL_MAILSPIKE_VERYGOOD'"},
-      {"if": "octets[3] == 20", "then": "'RWL_MAILSPIKE_EXCELLENT'"}
-    ],
+    "match": {
+      "0": {"if": "octets[0] != 127", "then": "false"},
+      "1": {"if": "octets[3] == 10", "then": "'RBL_MAILSPIKE_WORST'"},
+      "2": {"if": "octets[3] == 11", "then": "'RBL_MAILSPIKE_VERYBAD'"},
+      "3": {"if": "octets[3] == 12", "then": "'RBL_MAILSPIKE_BAD'"},
+      "4": {"if": "octets[3] >= 13 && octets[3] <= 16", "then": "'RWL_MAILSPIKE_NEUTRAL'"},
+      "5": {"if": "octets[3] == 17", "then": "'RWL_MAILSPIKE_POSSIBLE'"},
+      "6": {"if": "octets[3] == 18", "then": "'RWL_MAILSPIKE_GOOD'"},
+      "7": {"if": "octets[3] == 19", "then": "'RWL_MAILSPIKE_VERYGOOD'"},
+      "8": {"if": "octets[3] == 20", "then": "'RWL_MAILSPIKE_EXCELLENT'"}
+    },
     "else": "false"
   }
 }

@@ -7,13 +7,17 @@ Stalwart accepts incoming TCP connections through one or more listeners. Each li
 
 ## Bind settings
 
-The addresses and ports a listener accepts connections on are set through [`bind`](/docs/ref/object/network-listener#bind), which takes a list of `host:port` entries. A single listener can bind to multiple IPv4 and IPv6 endpoints:
+The addresses and ports a listener accepts connections on are set through [`bind`](/docs/ref/object/network-listener#bind), which takes a set of `host:port` entries. A single listener can bind to multiple IPv4 and IPv6 endpoints:
 
 ```json
 {
   "name": "smtp",
   "protocol": "smtp",
-  "bind": ["192.0.2.1:25", "203.0.113.9:25", "[2001:db8::2]:25"]
+  "bind": {
+    "192.0.2.1:25": true,
+    "203.0.113.9:25": true,
+    "[2001:db8::2]:25": true
+  }
 }
 ```
 
@@ -25,8 +29,8 @@ Each listener selects its application protocol through [`protocol`](/docs/ref/ob
 
 ```json
 [
-  {"name": "smtp", "protocol": "smtp", "bind": ["[::]:25"]},
-  {"name": "imap", "protocol": "imap", "bind": ["[::]:143"]}
+  {"name": "smtp", "protocol": "smtp", "bind": {"[::]:25": true}},
+  {"name": "imap", "protocol": "imap", "bind": {"[::]:143": true}}
 ]
 ```
 
@@ -38,7 +42,7 @@ The server-wide cap on concurrent connections is set through [`maxConnections`](
 {
   "name": "submissions",
   "protocol": "smtp",
-  "bind": ["[::]:465"],
+  "bind": {"[::]:465": true},
   "tlsImplicit": true,
   "maxConnections": 1024
 }
@@ -67,9 +71,9 @@ The following listeners define an SMTP server on port 25, an explicit-TLS submis
 
 ```json
 [
-  {"name": "smtp", "protocol": "smtp", "bind": ["[::]:25"]},
-  {"name": "submission", "protocol": "smtp", "bind": ["[::]:587"]},
-  {"name": "submissions", "protocol": "smtp", "bind": ["[::]:465"], "tlsImplicit": true},
-  {"name": "management", "protocol": "http", "bind": ["127.0.0.1:8080"]}
+  {"name": "smtp", "protocol": "smtp", "bind": {"[::]:25": true}},
+  {"name": "submission", "protocol": "smtp", "bind": {"[::]:587": true}},
+  {"name": "submissions", "protocol": "smtp", "bind": {"[::]:465": true}, "tlsImplicit": true},
+  {"name": "management", "protocol": "http", "bind": {"127.0.0.1:8080": true}}
 ]
 ```

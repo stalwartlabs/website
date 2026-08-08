@@ -314,7 +314,7 @@ Custom role assignment with specific role references.
 
 ##### `roleIds`
 
-> Type: <code>Id&lt;</code>[<code>Role</code>](/docs/ref/object/role)<code>&gt;[]</code>
+> Type: <code>Set&lt;Id&lt;</code>[<code>Role</code>](/docs/ref/object/role)<code>&gt;&gt;</code>
 >
 > List of roles assigned to this principal.
 
@@ -342,14 +342,14 @@ Explicit permission grants and denials.
 
 ##### `enabledPermissions`
 
-> Type: [<code>Permission</code>](/docs/ref/permissions)<code>[]</code>
+> Type: <code>Set&lt;</code>[<code>Permission</code>](/docs/ref/permissions)<code>&gt;</code>
 >
 > List of permissions that are explicitly enabled.
 
 
 ##### `disabledPermissions`
 
-> Type: [<code>Permission</code>](/docs/ref/permissions)<code>[]</code>
+> Type: <code>Set&lt;</code>[<code>Permission</code>](/docs/ref/permissions)<code>&gt;</code>
 >
 > List of permissions that are explicitly disabled, even if they would be inherited through other roles or groups. This takes precedence over enabled permissions.
 

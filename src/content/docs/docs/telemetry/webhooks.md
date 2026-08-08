@@ -10,10 +10,10 @@ Webhooks deliver real-time notifications about server events by posting to an HT
 Each webhook is represented by a [WebHook](/docs/ref/object/web-hook) object (found in the WebUI under <!-- breadcrumb:WebHook --><svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M10 5H3" /><path d="M12 19H3" /><path d="M14 3v4" /><path d="M16 17v4" /><path d="M21 12h-9" /><path d="M21 19h-5" /><path d="M21 5h-7" /><path d="M8 10v4" /><path d="M8 12H3" /></svg> Settings › <svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M3 3v16a2 2 0 0 0 2 2h16" /><path d="m19 9-5 5-4-4-3 3" /></svg> Telemetry › Webhooks<!-- /breadcrumb:WebHook -->). Relevant fields are:
 
 - [`url`](/docs/ref/object/web-hook#url): endpoint to which `POST` requests are sent.
-- [`events`](/docs/ref/object/web-hook#events) and [`eventsPolicy`](/docs/ref/object/web-hook#eventspolicy): list of events and how to interpret it. With `eventsPolicy` set to `include`, only the listed events trigger the webhook; with `exclude`, all events except the listed ones trigger it. Event identifiers are documented on the [Events](/docs/telemetry/events#event-types) page.
-- [`timeout`](/docs/ref/object/web-hook#timeout): maximum time to wait for a response. Default `"30s"`.
-- [`throttle`](/docs/ref/object/web-hook#throttle): minimum interval between batches. Events that fall within the same window are grouped. Default `"1s"`.
-- [`discardAfter`](/docs/ref/object/web-hook#discardafter): duration after which an undelivered webhook request is discarded. Default `"5m"`.
+- [`events`](/docs/ref/object/web-hook#events) and [`eventsPolicy`](/docs/ref/object/web-hook#eventspolicy): set of events and how to interpret it. Each selected event is a key mapped to `true`. With `eventsPolicy` set to `include`, only the selected events trigger the webhook; with `exclude`, all events except the selected ones trigger it. Event identifiers are documented on the [Events](/docs/telemetry/events#event-types) page.
+- [`timeout`](/docs/ref/object/web-hook#timeout): maximum time to wait for a response, in milliseconds. Default `30000` (30 seconds).
+- [`throttle`](/docs/ref/object/web-hook#throttle): minimum interval between batches, in milliseconds. Events that fall within the same window are grouped. Default `1000` (one second).
+- [`discardAfter`](/docs/ref/object/web-hook#discardafter): time in milliseconds after which an undelivered webhook request is discarded. Default `300000` (five minutes).
 - [`signatureKey`](/docs/ref/object/web-hook#signaturekey): optional HMAC key used to sign each request body. The signature is base64-encoded and carried in the `X-Signature` header. The field is a `SecretKeyOptional` with variants `None`, `Value`, `EnvironmentVariable`, and `File`.
 - [`httpAuth`](/docs/ref/object/web-hook#httpauth): HTTP authentication used by the request. A nested type with variants `Unauthenticated`, `Basic`, and `Bearer`.
 - [`httpHeaders`](/docs/ref/object/web-hook#httpheaders): additional HTTP headers to include on each request.
@@ -59,10 +59,10 @@ The equivalent of a webhook firing on `auth.success` and `store.ingest`, signed 
 ```json
 {
   "url": "https://example.com/webhook",
-  "events": ["auth.success", "store.ingest"],
+  "events": {"auth.success": true, "store.ingest": true},
   "eventsPolicy": "include",
-  "timeout": "30s",
-  "throttle": "1s",
+  "timeout": 30000,
+  "throttle": 1000,
   "signatureKey": {"@type": "Value", "secret": "my-secret-key"},
   "httpHeaders": {"X-My-Header": "my-value"},
   "httpAuth": {
@@ -75,4 +75,4 @@ The equivalent of a webhook firing on `auth.success` and `store.ingest`, signed 
 }
 ```
 
-Each entry in [`events`](/docs/ref/object/web-hook#events) selects a single event from the EventType enum; wildcard patterns are not supported, so every event to be delivered must be listed explicitly.
+Each key in [`events`](/docs/ref/object/web-hook#events) selects a single event from the EventType enum; wildcard patterns are not supported, so every event to be delivered must be listed explicitly.

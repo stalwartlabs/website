@@ -13,182 +13,182 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `accessTokens`
 
-> Type: <code>Size</code> · default: `"10mb"` · min: 2048
+> Type: <code>Size</code> · default: `10485760` · min: 2048
 >
 > Maximum size of the access tokens cache
 
 
 ##### `contacts`
 
-> Type: <code>Size</code> · default: `"10mb"` · min: 2048
+> Type: <code>Size</code> · default: `10485760` · min: 2048
 >
 > Maximum size of the address books and contacts cache
 
 
 ##### `dnsIpv4`
 
-> Type: <code>Size</code> · default: `"5mb"` · min: 2048
+> Type: <code>Size</code> · default: `5242880` · min: 2048
 >
 > Maximum size of the IPv4 record cache
 
 
 ##### `dnsIpv6`
 
-> Type: <code>Size</code> · default: `"5mb"` · min: 2048
+> Type: <code>Size</code> · default: `5242880` · min: 2048
 >
 > Maximum size of the IPv6 record cache
 
 
 ##### `dnsMtaSts`
 
-> Type: <code>Size</code> · default: `"1mb"` · min: 2048
+> Type: <code>Size</code> · default: `1048576` · min: 2048
 >
 > Maximum size of the MTA-STS record cache
 
 
 ##### `dnsMx`
 
-> Type: <code>Size</code> · default: `"5mb"` · min: 2048
+> Type: <code>Size</code> · default: `5242880` · min: 2048
 >
 > Maximum size of the MX record cache
 
 
 ##### `dnsPtr`
 
-> Type: <code>Size</code> · default: `"1mb"` · min: 2048
+> Type: <code>Size</code> · default: `1048576` · min: 2048
 >
 > Maximum size of the PTR record cache
 
 
 ##### `dnsRbl`
 
-> Type: <code>Size</code> · default: `"5mb"` · min: 2048
+> Type: <code>Size</code> · default: `5242880` · min: 2048
 >
 > Maximum size of the DNSBl record cache
 
 
 ##### `dnsTlsa`
 
-> Type: <code>Size</code> · default: `"1mb"` · min: 2048
+> Type: <code>Size</code> · default: `1048576` · min: 2048
 >
 > Maximum size of the TLSA record cache
 
 
 ##### `dnsTxt`
 
-> Type: <code>Size</code> · default: `"5mb"` · min: 2048
+> Type: <code>Size</code> · default: `5242880` · min: 2048
 >
 > Maximum size of the TXT record cache
 
 
 ##### `events`
 
-> Type: <code>Size</code> · default: `"10mb"` · min: 2048
+> Type: <code>Size</code> · default: `10485760` · min: 2048
 >
 > Maximum size of the calendar and events cache
 
 
 ##### `scheduling`
 
-> Type: <code>Size</code> · default: `"1mb"` · min: 2048
+> Type: <code>Size</code> · default: `1048576` · min: 2048
 >
 > Maximum size of the scheduling cache
 
 
 ##### `files`
 
-> Type: <code>Size</code> · default: `"10mb"` · min: 2048
+> Type: <code>Size</code> · default: `10485760` · min: 2048
 >
 > Maximum size of the file storage data cache
 
 
 ##### `httpAuth`
 
-> Type: <code>Size</code> · default: `"1mb"` · min: 2048
+> Type: <code>Size</code> · default: `1048576` · min: 2048
 >
 > Maximum size of the HTTP authorization headers cache
 
 
 ##### `messages`
 
-> Type: <code>Size</code> · default: `"50mb"` · min: 2048
+> Type: <code>Size</code> · default: `52428800` · min: 2048
 >
 > Maximum size of the e-mail data cache
 
 
 ##### `domains`
 
-> Type: <code>Size</code> · default: `"5mb"` · min: 2048
+> Type: <code>Size</code> · default: `5242880` · min: 2048
 >
 > Maximum size of the domains cache
 
 
 ##### `domainNames`
 
-> Type: <code>Size</code> · default: `"10mb"` · min: 2048
+> Type: <code>Size</code> · default: `10485760` · min: 2048
 >
 > Maximum size of the domain name lookup cache
 
 
 ##### `domainNamesNegative`
 
-> Type: <code>Size</code> · default: `"1mb"` · min: 2048
+> Type: <code>Size</code> · default: `1048576` · min: 2048
 >
 > Maximum size of the domain name lookup negative cache
 
 
 ##### `emailAddresses`
 
-> Type: <code>Size</code> · default: `"10mb"` · min: 2048
+> Type: <code>Size</code> · default: `10485760` · min: 2048
 >
 > Maximum size of the email addresses lookup cache
 
 
 ##### `emailAddressesNegative`
 
-> Type: <code>Size</code> · default: `"2mb"` · min: 2048
+> Type: <code>Size</code> · default: `2097152` · min: 2048
 >
 > Maximum size of the email addresses lookup negative cache
 
 
 ##### `accounts`
 
-> Type: <code>Size</code> · default: `"20mb"` · min: 2048
+> Type: <code>Size</code> · default: `20971520` · min: 2048
 >
 > Maximum size of the accounts cache
 
 
 ##### `roles`
 
-> Type: <code>Size</code> · default: `"5mb"` · min: 2048
+> Type: <code>Size</code> · default: `5242880` · min: 2048
 >
 > Maximum size of the roles cache
 
 
 ##### `tenants`
 
-> Type: <code>Size</code> · default: `"5mb"` · min: 2048
+> Type: <code>Size</code> · default: `5242880` · min: 2048
 >
 > Maximum size of the tenants cache
 
 
 ##### `mailingLists`
 
-> Type: <code>Size</code> · default: `"2mb"` · min: 2048
+> Type: <code>Size</code> · default: `2097152` · min: 2048
 >
 > Maximum size of the mailing lists cache
 
 
 ##### `dkimSignatures`
 
-> Type: <code>Size</code> · default: `"10mb"` · min: 2048
+> Type: <code>Size</code> · default: `10485760` · min: 2048
 >
 > Maximum size of the DKIM signatures cache
 
 
 ##### `negativeTtl`
 
-> Type: <code>Duration</code> · default: `"1h"`
+> Type: <code>Duration</code> · default: `3600000`
 >
 > Time-to-live for domain and account name lookup negative cache entries
 
@@ -253,7 +253,7 @@ curl -X POST https://mail.example.com/api \
           {
             "update": {
               "singleton": {
-                "accessTokens": "10mb"
+                "accessTokens": 10485760
               }
             }
           },
@@ -285,7 +285,7 @@ stalwart-cli get Cache
 ### Update
 
 ```sh
-stalwart-cli update Cache --field accessTokens=10mb
+stalwart-cli update Cache --field accessTokens=10485760
 ```
 
 

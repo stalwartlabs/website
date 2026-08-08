@@ -22,7 +22,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `route`
 
-> Type: [<code>Expression</code>](#expression) · default: `{"else":"'mx'","match":[{"if":"is_local_domain(rcpt_domain)","then":"'local'"}]}`
+> Type: [<code>Expression</code>](#expression) · default: `{"else":"'mx'"}`
 >
 > An expression that returns the route name to use when delivering queued messages
 >
@@ -31,7 +31,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `schedule`
 
-> Type: [<code>Expression</code>](#expression) · default: `{"else":"'remote'","match":[{"if":"is_local_domain(rcpt_domain)","then":"'local'"},{"if":"source == 'dsn'","then":"'dsn'"},{"if":"source == 'report'","then":"'report'"}]}`
+> Type: [<code>Expression</code>](#expression) · default: `{"else":"'remote'"}`
 >
 > An expression that returns the scheduling strategy to use when queueing messages
 >
@@ -40,7 +40,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `tls`
 
-> Type: [<code>Expression</code>](#expression) · default: `{"else":"'default'","match":[{"if":"retry_num > 0 && last_error == 'tls'","then":"'invalid-tls'"}]}`
+> Type: [<code>Expression</code>](#expression) · default: `{"else":"'default'"}`
 >
 > An expression that returns the TLS strategy to use when delivering messages to remote SMTP servers
 >
@@ -157,7 +157,7 @@ A conditional expression with match rules and a default value.
 
 ##### `match`
 
-> Type: [<code>ExpressionMatch</code>](#expressionmatch)<code>[]</code>
+> Type: <code>List&lt;</code>[<code>ExpressionMatch</code>](#expressionmatch)<code>&gt;</code>
 >
 > List of conditions and their corresponding results
 

@@ -41,7 +41,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `holdSamplesFor`
 
-> Type: <code>Duration</code> · default: `"180d"`
+> Type: <code>Duration</code> · default: `15552000000`
 >
 > Duration to hold training samples for
 
@@ -69,7 +69,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `trainFrequency`
 
-> Type: <code>Duration?</code> · default: `"12h"`
+> Type: <code>Duration?</code> · default: `43200000`
 >
 > Frequency to train the spam classifier
 

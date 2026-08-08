@@ -19,7 +19,7 @@ Each AI endpoint is represented by an [AiModel](/docs/ref/object/ai-model) objec
 - [`url`](/docs/ref/object/ai-model#url): full URL of the OpenAI-compatible endpoint (for example `https://api.openai.com/v1/chat/completions`).
 - [`model`](/docs/ref/object/ai-model#model): the model name to send to the endpoint, such as `gpt-4`.
 - [`modelType`](/docs/ref/object/ai-model#modeltype): `Chat` for chat completions or `Text` for text completions. Default `Chat`.
-- [`timeout`](/docs/ref/object/ai-model#timeout): maximum time to wait for a response. Default `"2m"`.
+- [`timeout`](/docs/ref/object/ai-model#timeout): maximum time to wait for a response, in milliseconds. Default two minutes (`120000`).
 - [`temperature`](/docs/ref/object/ai-model#temperature): randomness of the response, in the range `0.0` to `1.0`. Default `0.7`.
 - [`allowInvalidCerts`](/docs/ref/object/ai-model#allowinvalidcerts): whether to accept invalid TLS certificates. Default `false`. Recommended only for local or self-signed endpoints.
 - [`httpAuth`](/docs/ref/object/ai-model#httpauth): authentication method, either `Unauthenticated`, `Basic`, or `Bearer`.
@@ -33,7 +33,7 @@ For example, a chat endpoint authenticated with a bearer token and an extra cust
   "url": "https://api.openai.com/v1/chat/completions",
   "model": "gpt-4",
   "modelType": "Chat",
-  "timeout": "2m",
+  "timeout": 120000,
   "temperature": 0.7,
   "allowInvalidCerts": false,
   "httpAuth": {

@@ -17,7 +17,7 @@ To accept JMAP connections, a NetworkListener must be created with [`protocol`](
 {
   "name": "jmap",
   "protocol": "http",
-  "bind": ["[::]:8080"],
+  "bind": {"[::]:8080": true},
   "tlsImplicit": true
 }
 ```
@@ -30,8 +30,8 @@ To accept IMAP4 connections, a NetworkListener must be created with [`protocol`]
 
 ```json
 [
-  {"name": "imap", "protocol": "imap", "bind": ["[::]:143"]},
-  {"name": "imaptls", "protocol": "imap", "bind": ["[::]:993"], "tlsImplicit": true}
+  {"name": "imap", "protocol": "imap", "bind": {"[::]:143": true}},
+  {"name": "imaptls", "protocol": "imap", "bind": {"[::]:993": true}, "tlsImplicit": true}
 ]
 ```
 
@@ -45,7 +45,7 @@ To accept POP3 connections, a NetworkListener must be created with [`protocol`](
 
 ```json
 [
-  {"name": "pop3", "protocol": "pop3", "bind": ["[::]:110"]},
-  {"name": "pop3s", "protocol": "pop3", "bind": ["[::]:995"], "tlsImplicit": true}
+  {"name": "pop3", "protocol": "pop3", "bind": {"[::]:110": true}},
+  {"name": "pop3s", "protocol": "pop3", "bind": {"[::]:995": true}, "tlsImplicit": true}
 ]
 ```

@@ -305,7 +305,7 @@ Defines a time-to-live based message expiration policy.
 
 ##### `expire`
 
-> Type: <code>Duration</code> · default: `"3d"`
+> Type: <code>Duration</code> · default: `259200000`
 >
 > Time after which the message will be expired if it is not delivered
 
@@ -348,7 +348,7 @@ Defines a custom list of delivery retry or notification intervals.
 
 ##### `intervals`
 
-> Type: [<code>MtaDeliveryScheduleInterval</code>](#mtadeliveryscheduleinterval)<code>[]</code> · min items: 1
+> Type: <code>List&lt;</code>[<code>MtaDeliveryScheduleInterval</code>](#mtadeliveryscheduleinterval)<code>&gt;</code> · min items: 1
 >
 > List of intervals
 
@@ -364,7 +364,7 @@ Defines a single time interval entry used in a delivery schedule.
 
 ##### `duration`
 
-> Type: <code>Duration</code> · default: `"1h"`
+> Type: <code>Duration</code> · default: `3600000`
 >
 > Time interval for retries or notifications
 

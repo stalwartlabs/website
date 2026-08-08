@@ -18,7 +18,7 @@ Related connection fields on the LDAP variant of the Directory object are:
 - [`url`](/docs/ref/object/directory#url): URL of the LDAP server.
 - [`useTls`](/docs/ref/object/directory#usetls): whether to negotiate TLS on the connection. Default `false`.
 - [`allowInvalidCerts`](/docs/ref/object/directory#allowinvalidcerts): whether to accept invalid TLS certificates. Default `false`.
-- [`timeout`](/docs/ref/object/directory#timeout): connection timeout. Default `"30s"`.
+- [`timeout`](/docs/ref/object/directory#timeout): connection timeout, in milliseconds. Default `30000` (30 seconds).
 
 For example:
 
@@ -27,7 +27,7 @@ For example:
   "@type": "Ldap",
   "description": "Corporate LDAP",
   "url": "ldap://localhost:389",
-  "timeout": "30s",
+  "timeout": 30000,
   "useTls": false,
   "allowInvalidCerts": false
 }
@@ -79,7 +79,7 @@ For example:
 {
   "@type": "Ldap",
   "bindAuthentication": false,
-  "attrSecret": ["userPassword"]
+  "attrSecret": {"userPassword": true}
 }
 ```
 
@@ -102,7 +102,7 @@ For example:
   "@type": "Ldap",
   "bindAuthentication": true,
   "filterLogin": "(&(objectClass=inetOrgPerson)(mail=?))",
-  "attrSecretChanged": ["pwdChangeTime"]
+  "attrSecretChanged": {"pwdChangeTime": true}
 }
 ```
 
@@ -136,13 +136,15 @@ For example, `"dc=example,dc=org"` restricts lookups to entries under the `examp
 
 LDAP schemas vary between servers, so Stalwart has to be told which attributes to read for each piece of account information. The mapping is carried on the LDAP variant of the Directory object through the following fields:
 
-- [`attrClass`](/docs/ref/object/directory#attrclass): attribute(s) carrying the account's object class. Defaults to `["objectClass"]`. An account entry is treated as an individual unless its class matches [`groupClass`](/docs/ref/object/directory#groupclass), which defaults to `"groupOfNames"`.
-- [`attrDescription`](/docs/ref/object/directory#attrdescription): attribute(s) used as the account description. Default `["description"]`.
-- [`attrSecret`](/docs/ref/object/directory#attrsecret): attribute carrying the password hash, used only when `bindAuthentication` is `false`. Default `["userPassword"]`.
-- [`attrSecretChanged`](/docs/ref/object/directory#attrsecretchanged): attribute carrying the last password-change timestamp (or version value), used to invalidate OAuth tokens in bind-authentication mode. Default `["pwdChangeTime"]`.
-- [`attrMemberOf`](/docs/ref/object/directory#attrmemberof): attribute(s) listing the groups an account belongs to. Default `["memberOf"]`.
-- [`attrEmail`](/docs/ref/object/directory#attremail): attribute carrying the primary email address. Default `["mail"]`.
-- [`attrEmailAlias`](/docs/ref/object/directory#attremailalias): attribute carrying email aliases. Default `["mailAlias"]`.
+Each of these fields is a set of attribute names.
+
+- [`attrClass`](/docs/ref/object/directory#attrclass): attribute(s) carrying the account's object class. Defaults to `{"objectClass": true}`. An account entry is treated as an individual unless its class matches [`groupClass`](/docs/ref/object/directory#groupclass), which defaults to `"groupOfNames"`.
+- [`attrDescription`](/docs/ref/object/directory#attrdescription): attribute(s) used as the account description. Default `{"description": true}`.
+- [`attrSecret`](/docs/ref/object/directory#attrsecret): attribute carrying the password hash, used only when `bindAuthentication` is `false`. Default `{"userPassword": true}`.
+- [`attrSecretChanged`](/docs/ref/object/directory#attrsecretchanged): attribute carrying the last password-change timestamp (or version value), used to invalidate OAuth tokens in bind-authentication mode. Default `{"pwdChangeTime": true}`.
+- [`attrMemberOf`](/docs/ref/object/directory#attrmemberof): attribute(s) listing the groups an account belongs to. Default `{"memberOf": true}`.
+- [`attrEmail`](/docs/ref/object/directory#attremail): attribute carrying the primary email address. Default `{"mail": true}`.
+- [`attrEmailAlias`](/docs/ref/object/directory#attremailalias): attribute carrying email aliases. Default `{"mailAlias": true}`.
 
 There is no attribute mapping for the account's login name or for a per-account disk quota: the login name is resolved from the entry returned by [`filterLogin`](/docs/ref/object/directory#filterlogin), and disk quotas are held on the [Account](/docs/ref/object/account) and [Tenant](/docs/ref/object/tenant) objects rather than read from the directory (see [Quotas](/docs/auth/authorization/quotas)).
 
@@ -151,11 +153,11 @@ For example:
 ```json
 {
   "@type": "Ldap",
-  "attrClass": ["objectClass"],
-  "attrDescription": ["principalName", "description"],
-  "attrSecret": ["userPassword"],
-  "attrMemberOf": ["memberOf", "otherGroups"],
-  "attrEmail": ["mail"],
-  "attrEmailAlias": ["mailAlias"]
+  "attrClass": {"objectClass": true},
+  "attrDescription": {"principalName": true, "description": true},
+  "attrSecret": {"userPassword": true},
+  "attrMemberOf": {"memberOf": true, "otherGroups": true},
+  "attrEmail": {"mail": true},
+  "attrEmailAlias": {"mailAlias": true}
 }
 ```

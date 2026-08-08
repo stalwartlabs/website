@@ -32,9 +32,9 @@ For example, rewriting a recipient address by extracting the local part and the 
 ```json
 {
   "rewrite": {
-    "match": [
-      {"if": "listener != 'smtp' && matches('^([^.]+)@([^.]+)\\.(.+)$', rcpt)", "then": "$1 + '@' + $3"}
-    ],
+    "match": {
+      "0": {"if": "listener != 'smtp' && matches('^([^.]+)@([^.]+)\\.(.+)$', rcpt)", "then": "$1 + '@' + $3"}
+    },
     "else": "false"
   }
 }

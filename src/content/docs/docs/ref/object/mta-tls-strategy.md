@@ -55,14 +55,14 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `mtaStsTimeout`
 
-> Type: <code>Duration</code> · default: `"5m"`
+> Type: <code>Duration</code> · default: `300000`
 >
 > Maximum time to wait for the MTA-STS policy lookup to complete
 
 
 ##### `tlsTimeout`
 
-> Type: <code>Duration</code> · default: `"3m"`
+> Type: <code>Duration</code> · default: `180000`
 >
 > Maximum time to wait for the TLS handshake to complete
 

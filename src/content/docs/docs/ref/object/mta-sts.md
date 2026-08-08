@@ -13,7 +13,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `maxAge`
 
-> Type: <code>Duration</code> · default: `"7d"`
+> Type: <code>Duration</code> · default: `604800000`
 >
 > Maximum time to cache the MTA-STS policy
 
@@ -27,7 +27,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `mxHosts`
 
-> Type: <code>String[]</code>
+> Type: <code>Set&lt;String&gt;</code>
 >
 > Override the allowed MX hosts for the MTA-STS policy domain. If empty, the MX hosts are determined from the system settings
 
@@ -92,7 +92,7 @@ curl -X POST https://mail.example.com/api \
           {
             "update": {
               "singleton": {
-                "maxAge": "7d"
+                "maxAge": 604800000
               }
             }
           },
@@ -124,7 +124,7 @@ stalwart-cli get MtaSts
 ### Update
 
 ```sh
-stalwart-cli update MtaSts --field maxAge=7d
+stalwart-cli update MtaSts --field maxAge=604800000
 ```
 
 

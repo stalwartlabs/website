@@ -27,7 +27,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `subjectAlternativeNames`
 
-> Type: <code>String[]</code> · server-set
+> Type: <code>Set&lt;String&gt;</code> · server-set
 >
 > Subject Alternative Names (SAN) for the certificate
 

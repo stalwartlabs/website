@@ -13,7 +13,7 @@ TLS is configured per listener: each [NetworkListener](/docs/ref/object/network-
 
 - [`useTls`](/docs/ref/object/network-listener#usetls): whether TLS is available on this listener. Default `true`.
 - [`tlsImplicit`](/docs/ref/object/network-listener#tlsimplicit): whether the listener uses implicit TLS (encrypted from the first byte) rather than explicit TLS (upgrade via `STARTTLS`). Default `false`.
-- [`tlsTimeout`](/docs/ref/object/network-listener#tlstimeout): how long to wait for the client to complete the TLS handshake. Default `"1m"`.
+- [`tlsTimeout`](/docs/ref/object/network-listener#tlstimeout): how long to wait for the client to complete the TLS handshake, in milliseconds. Default one minute (`60000`).
 - [`tlsDisableProtocols`](/docs/ref/object/network-listener#tlsdisableprotocols): TLS versions to refuse on this listener. When empty, both TLS 1.2 and TLS 1.3 are offered.
 - [`tlsDisableCipherSuites`](/docs/ref/object/network-listener#tlsdisableciphersuites): cipher suites to refuse. When empty, the full set built into the TLS library is offered.
 - [`tlsIgnoreClientOrder`](/docs/ref/object/network-listener#tlsignoreclientorder): whether the server uses its own cipher order. When `false`, the client's preferred order is honoured. Default `true`.
@@ -62,15 +62,15 @@ The following listener disables TLS 1.2 and two cipher suites, keeping implicit 
 {
   "name": "submission",
   "protocol": "smtp",
-  "bind": ["[::]:587"],
+  "bind": {"[::]:587": true},
   "useTls": true,
   "tlsImplicit": false,
-  "tlsTimeout": "1m",
-  "tlsDisableProtocols": ["tls12"],
-  "tlsDisableCipherSuites": [
-    "tls13-aes-256-gcm-sha384",
-    "tls-ecdhe-rsa-with-chacha20-poly1305-sha256"
-  ],
+  "tlsTimeout": 60000,
+  "tlsDisableProtocols": {"tls12": true},
+  "tlsDisableCipherSuites": {
+    "tls13-aes-256-gcm-sha384": true,
+    "tls-ecdhe-rsa-with-chacha20-poly1305-sha256": true
+  },
   "tlsIgnoreClientOrder": true
 }
 ```

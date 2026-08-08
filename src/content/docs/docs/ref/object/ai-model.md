@@ -45,7 +45,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"2m"`
+> Type: <code>Duration</code> · default: `120000`
 >
 > Maximum amount of time that Stalwart will wait for a response from this endpoint
 

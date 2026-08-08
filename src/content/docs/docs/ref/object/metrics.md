@@ -27,7 +27,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `metrics`
 
-> Type: [<code>MetricType</code>](/docs/ref/metrics)<code>[]</code>
+> Type: <code>Set&lt;</code>[<code>MetricType</code>](/docs/ref/metrics)<code>&gt;</code>
 >
 > List of metrics to include or exclude based on filter mode
 
@@ -168,14 +168,14 @@ OpenTelemetry HTTP metrics exporter.
 
 ##### `interval`
 
-> Type: <code>Duration</code> · default: `"1m"`
+> Type: <code>Duration</code> · default: `60000`
 >
 > The minimum amount of time that must pass between each push request to the OpenTelemetry endpoint
 
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"10s"`
+> Type: <code>Duration</code> · default: `10000`
 >
 > Maximum amount of time that Stalwart will wait for a response from the OpenTelemetry endpoint
 
@@ -323,14 +323,14 @@ OpenTelemetry gRPC metrics exporter.
 
 ##### `interval`
 
-> Type: <code>Duration</code> · default: `"1m"`
+> Type: <code>Duration</code> · default: `60000`
 >
 > The minimum amount of time that must pass between each push request to the OpenTelemetry endpoint
 
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"10s"`
+> Type: <code>Duration</code> · default: `10000`
 >
 > Maximum amount of time that Stalwart will wait for a response from the OpenTelemetry endpoint
 

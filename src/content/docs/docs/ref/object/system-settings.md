@@ -48,14 +48,14 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `proxyTrustedNetworks`
 
-> Type: <code>IpMask[]</code>
+> Type: <code>Set&lt;IpMask&gt;</code>
 >
 > Enable proxy protocol for connections from these networks
 
 
 ##### `mailExchangers`
 
-> Type: [<code>MailExchanger</code>](#mailexchanger)<code>[]</code> · default: `[{"priority":10}]`
+> Type: <code>List&lt;</code>[<code>MailExchanger</code>](#mailexchanger)<code>&gt;</code> · default: `{"0":{"priority":10}}`
 >
 > List of mail exchangers to publish in DNS MX records.
 

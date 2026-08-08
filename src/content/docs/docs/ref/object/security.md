@@ -13,7 +13,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `abuseBanRate`
 
-> Type: [<code>Rate</code>](#rate)<code>?</code> · default: `{"count":35,"period":"1d"}`
+> Type: [<code>Rate</code>](#rate)<code>?</code> · default: `{"count":35,"period":86400000}`
 >
 > The maximum number of abuse attempts (relaying or failed RCPT TO attempts) before the IP is banned
 
@@ -27,7 +27,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `authBanRate`
 
-> Type: [<code>Rate</code>](#rate)<code>?</code> · default: `{"count":100,"period":"1d"}`
+> Type: [<code>Rate</code>](#rate)<code>?</code> · default: `{"count":100,"period":86400000}`
 >
 > The maximum number of failed login attempts before the IP is banned
 
@@ -41,7 +41,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `loiterBanRate`
 
-> Type: [<code>Rate</code>](#rate)<code>?</code> · default: `{"count":150,"period":"1d"}`
+> Type: [<code>Rate</code>](#rate)<code>?</code> · default: `{"count":150,"period":86400000}`
 >
 > The maximum number of loitering disconnections before the IP is banned
 
@@ -55,14 +55,14 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `scanBanPaths`
 
-> Type: <code>String[]</code> · default: `["*.php*","*.cgi*","*.asp*","*/wp-*","*/php*","*/cgi-bin*","*xmlrpc*","*../*","*/..*","*joomla*","*wordpress*","*drupal*"]`
+> Type: <code>Set&lt;String&gt;</code> · default: `{"*../*":true,"*.asp*":true,"*.cgi*":true,"*.php*":true,"*/..*":true,"*/cgi-bin*":true,"*/php*":true,"*/wp-*":true,"*drupal*":true,"*joomla*":true,"*wordpress*":true,"*xmlrpc*":true}`
 >
 > The paths that will trigger an immediate ban if accessed. Each path should be a glob expression
 
 
 ##### `scanBanRate`
 
-> Type: [<code>Rate</code>](#rate)<code>?</code> · default: `{"count":30,"period":"1d"}`
+> Type: [<code>Rate</code>](#rate)<code>?</code> · default: `{"count":30,"period":86400000}`
 >
 > The maximum number of port scanning attempts before the IP is banned
 
@@ -136,7 +136,7 @@ curl -X POST https://mail.example.com/api \
               "singleton": {
                 "abuseBanRate": {
                   "count": 35,
-                  "period": "1d"
+                  "period": 86400000
                 }
               }
             }
@@ -169,7 +169,7 @@ stalwart-cli get Security
 ### Update
 
 ```sh
-stalwart-cli update Security --field abuseBanRate='{"count":35,"period":"1d"}'
+stalwart-cli update Security --field abuseBanRate='{"count":35,"period":86400000}'
 ```
 
 
@@ -192,7 +192,7 @@ Defines a rate limit as a count over a time period.
 
 ##### `period`
 
-> Type: <code>Duration</code> · default: `"0s"` · min: 1
+> Type: <code>Duration</code> · default: `0` · min: 1
 >
 > Period
 

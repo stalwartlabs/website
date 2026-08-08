@@ -69,7 +69,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `flags`
 
-> Type: [<code>MessageFlag</code>](#messageflag)<code>[]</code> · server-set
+> Type: <code>Set&lt;</code>[<code>MessageFlag</code>](#messageflag)<code>&gt;</code> · server-set
 >
 > Classification flags for the message
 
@@ -377,7 +377,7 @@ Delivery status and scheduling for a message recipient.
 
 ##### `flags`
 
-> Type: [<code>RecipientFlag</code>](#recipientflag)<code>[]</code> · server-set
+> Type: <code>Set&lt;</code>[<code>RecipientFlag</code>](#recipientflag)<code>&gt;</code> · server-set
 >
 > Status flags for this recipient
 

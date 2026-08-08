@@ -13,35 +13,35 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `defaultExpiryDuplicate`
 
-> Type: <code>Duration</code> · default: `"7d"`
+> Type: <code>Duration</code> · default: `604800000`
 >
 > Default expiration time for IDs stored by the duplicate extension from user scripts
 
 
 ##### `defaultExpiryVacation`
 
-> Type: <code>Duration</code> · default: `"30d"`
+> Type: <code>Duration</code> · default: `2592000000`
 >
 > Default expiration time for IDs stored by the vacation extension
 
 
 ##### `disableCapabilities`
 
-> Type: [<code>SieveCapability</code>](#sievecapability)<code>[]</code>
+> Type: <code>Set&lt;</code>[<code>SieveCapability</code>](#sievecapability)<code>&gt;</code>
 >
 > List of capabilities to disable in the user interpreter
 
 
 ##### `allowedNotifyUris`
 
-> Type: <code>String[]</code> · default: `["mailto"]`
+> Type: <code>Set&lt;String&gt;</code> · default: `{"mailto":true}`
 >
 > List of allowed URIs for the notify extension
 
 
 ##### `protectedHeaders`
 
-> Type: <code>String[]</code> · default: `["Original-Subject","Original-From","Received","Auto-Submitted"]`
+> Type: <code>Set&lt;String&gt;</code> · default: `{"Auto-Submitted":true,"Original-From":true,"Original-Subject":true,"Received":true}`
 >
 > List of headers that cannot be deleted or added using the editheader extension
 
@@ -153,7 +153,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `maxScriptSize`
 
-> Type: <code>Size</code> · default: `"100kb"` · min: 1
+> Type: <code>Size</code> · default: `102400` · min: 1
 >
 > Maximum size of a script
 

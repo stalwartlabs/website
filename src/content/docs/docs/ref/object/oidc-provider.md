@@ -34,42 +34,42 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `authCodeExpiry`
 
-> Type: <code>Duration</code> · default: `"10m"`
+> Type: <code>Duration</code> · default: `600000`
 >
 > Expiration time of an authorization code issued by the authorization code flow
 
 
 ##### `refreshTokenExpiry`
 
-> Type: <code>Duration</code> · default: `"30d"`
+> Type: <code>Duration</code> · default: `2592000000`
 >
 > Expiration time of an OAuth refresh token
 
 
 ##### `refreshTokenRenewal`
 
-> Type: <code>Duration</code> · default: `"4d"`
+> Type: <code>Duration</code> · default: `345600000`
 >
 > Remaining time in a refresh token before a new one is issued to the client
 
 
 ##### `accessTokenExpiry`
 
-> Type: <code>Duration</code> · default: `"1h"`
+> Type: <code>Duration</code> · default: `3600000`
 >
 > Expiration time of an OAuth access token
 
 
 ##### `userCodeExpiry`
 
-> Type: <code>Duration</code> · default: `"30m"`
+> Type: <code>Duration</code> · default: `1800000`
 >
 > Expiration time of a user code issued by the device authentication flow
 
 
 ##### `idTokenExpiry`
 
-> Type: <code>Duration</code> · default: `"15m"`
+> Type: <code>Duration</code> · default: `900000`
 >
 > Expiration time of an OpenID Connect ID token
 

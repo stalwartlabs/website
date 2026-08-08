@@ -48,7 +48,7 @@ System Resolver
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"5s"`
+> Type: <code>Duration</code> · default: `5000`
 >
 > Time after which a resolution request will be timed out if no response is received
 
@@ -68,7 +68,7 @@ Custom DNS
 
 ##### `servers`
 
-> Type: [<code>DnsCustomResolver</code>](#dnscustomresolver)<code>[]</code> · min items: 1
+> Type: <code>List&lt;</code>[<code>DnsCustomResolver</code>](#dnscustomresolver)<code>&gt;</code> · min items: 1
 >
 > List of custom DNS server URLs to use for resolution
 
@@ -103,7 +103,7 @@ Custom DNS
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"5s"`
+> Type: <code>Duration</code> · default: `5000`
 >
 > Time after which a resolution request will be timed out if no response is received
 
@@ -158,7 +158,7 @@ Cloudflare DNS
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"5s"`
+> Type: <code>Duration</code> · default: `5000`
 >
 > Time after which a resolution request will be timed out if no response is received
 
@@ -213,7 +213,7 @@ Quad9 DNS
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"5s"`
+> Type: <code>Duration</code> · default: `5000`
 >
 > Time after which a resolution request will be timed out if no response is received
 
@@ -261,7 +261,7 @@ Google DNS
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"5s"`
+> Type: <code>Duration</code> · default: `5000`
 >
 > Time after which a resolution request will be timed out if no response is received
 

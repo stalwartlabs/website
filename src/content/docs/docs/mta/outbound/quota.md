@@ -12,17 +12,17 @@ Each queue quota is defined as an [MtaQueueQuota](/docs/ref/object/mta-queue-quo
 - [`enable`](/docs/ref/object/mta-queue-quota#enable): whether the quota is active. Default `true`.
 - [`messages`](/docs/ref/object/mta-queue-quota#messages): optional maximum number of messages that the queue will accept.
 - [`size`](/docs/ref/object/mta-queue-quota#size): optional maximum total size of messages in the queue.
-- [`key`](/docs/ref/object/mta-queue-quota#key): list of context variables that determine the grouping of this quota (see [Groups](#groups) below).
+- [`key`](/docs/ref/object/mta-queue-quota#key): set of context variables that determine the grouping of this quota (see [Groups](#groups) below).
 - [`match`](/docs/ref/object/mta-queue-quota#match): expression evaluated to decide whether the quota applies to a given message.
 
-A quota may define only a message limit, only a size limit, or both. An MtaQueueQuota with an empty `key` list and a `match` expression that always returns true imposes a global limit.
+A quota may define only a message limit, only a size limit, or both. An MtaQueueQuota with an empty `key` and a `match` expression that always returns true imposes a global limit.
 
 A global quota of 100,000 messages / 10 GB:
 
 ```json
 {
   "enable": true,
-  "key": [],
+  "key": {},
   "match": {"else": "true"},
   "messages": 100000,
   "size": 10737418240
@@ -43,7 +43,7 @@ For example, to limit to 10 the total number of queued messages for any single r
 ```json
 {
   "enable": true,
-  "key": ["rcpt"],
+  "key": {"rcpt": true},
   "match": {"else": "true"},
   "messages": 10
 }
@@ -54,7 +54,7 @@ And, to limit the queue size to 5 MB per combination of sender domain and recipi
 ```json
 {
   "enable": true,
-  "key": ["senderDomain", "rcptDomain"],
+  "key": {"senderDomain": true, "rcptDomain": true},
   "match": {"else": "true"},
   "size": 5242880
 }
@@ -67,7 +67,7 @@ The [`match`](/docs/ref/object/mta-queue-quota#match) expression can restrict a 
 ```json
 {
   "enable": true,
-  "key": ["rcpt"],
+  "key": {"rcpt": true},
   "match": {"else": "sender_domain == 'example.org'"},
   "messages": 900,
   "size": 7340032

@@ -13,7 +13,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `inboundReportAddresses`
 
-> Type: <code>String[]</code> · default: `["postmaster@*"]`
+> Type: <code>Set&lt;String&gt;</code> · default: `{"postmaster@*":true}`
 >
 > List of addresses (which may include wildcards) from which reports will be intercepted and analyzed
 
@@ -151,7 +151,7 @@ A conditional expression with match rules and a default value.
 
 ##### `match`
 
-> Type: [<code>ExpressionMatch</code>](#expressionmatch)<code>[]</code>
+> Type: <code>List&lt;</code>[<code>ExpressionMatch</code>](#expressionmatch)<code>&gt;</code>
 >
 > List of conditions and their corresponding results
 

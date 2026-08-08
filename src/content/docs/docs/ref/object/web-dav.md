@@ -20,7 +20,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `maxLockTimeout`
 
-> Type: <code>Duration</code> · default: `"1h"`
+> Type: <code>Duration</code> · default: `3600000`
 >
 > Specifies the maximum duration for which a lock can be held on a resource
 
@@ -48,7 +48,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `requestMaxSize`
 
-> Type: <code>Size</code> · default: `"25mb"`
+> Type: <code>Size</code> · default: `26214400`
 >
 > Determines the maximum XML size of a WebDAV request that the server will accept
 

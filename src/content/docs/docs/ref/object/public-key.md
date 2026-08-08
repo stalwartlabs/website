@@ -48,7 +48,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `emailAddresses`
 
-> Type: <code>EmailAddress[]</code>
+> Type: <code>Set&lt;EmailAddress&gt;</code>
 >
 > Email addresses associated with the public key
 

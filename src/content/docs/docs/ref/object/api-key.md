@@ -48,7 +48,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `allowedIps`
 
-> Type: <code>IpMask[]</code>
+> Type: <code>Set&lt;IpMask&gt;</code>
 >
 > List of allowed IP addresses or CIDR ranges for this credential
 
@@ -300,7 +300,7 @@ List of permissions to assign to a credential.
 
 ##### `permissions`
 
-> Type: [<code>Permission</code>](/docs/ref/permissions)<code>[]</code>
+> Type: <code>Set&lt;</code>[<code>Permission</code>](/docs/ref/permissions)<code>&gt;</code>
 >
 > List of permissions to assign.
 

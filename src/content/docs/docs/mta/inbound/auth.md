@@ -20,11 +20,11 @@ Example restricting `PLAIN` and `LOGIN` to TLS-protected submission ports and re
 ```json
 {
   "saslMechanisms": {
-    "match": [{"if": "local_port != 25 && is_tls", "then": "[plain, login]"}],
+    "match": {"0": {"if": "local_port != 25 && is_tls", "then": "[plain, login]"}},
     "else": "false"
   },
   "require": {
-    "match": [{"if": "listener != 'smtp'", "then": "true"}],
+    "match": {"0": {"if": "listener != 'smtp'", "then": "true"}},
     "else": "false"
   },
   "mustMatchSender": {"else": "true"},

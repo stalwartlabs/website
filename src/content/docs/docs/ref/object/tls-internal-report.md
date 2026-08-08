@@ -13,21 +13,21 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `policyIdentifiers`
 
-> Type: <code>UnsignedInt[]</code>
+> Type: <code>Set&lt;UnsignedInt&gt;</code>
 >
 > Identifiers for the TLS policies that generated this report
 
 
 ##### `mailRua`
 
-> Type: <code>EmailAddress[]</code>
+> Type: <code>Set&lt;EmailAddress&gt;</code>
 >
 > Reporting email addresses from the TLS policy
 
 
 ##### `httpRua`
 
-> Type: <code>Uri[]</code>
+> Type: <code>Set&lt;Uri&gt;</code>
 >
 > Reporting URIs from the TLS policy
 
@@ -332,7 +332,7 @@ Content of a TLS aggregate report.
 
 ##### `policies`
 
-> Type: [<code>TlsReportPolicy</code>](#tlsreportpolicy)<code>[]</code>
+> Type: <code>List&lt;</code>[<code>TlsReportPolicy</code>](#tlsreportpolicy)<code>&gt;</code>
 >
 > Policy evaluation results for each domain
 
@@ -355,7 +355,7 @@ TLS policy evaluation result for a specific domain.
 
 ##### `policyStrings`
 
-> Type: <code>String[]</code>
+> Type: <code>Set&lt;String&gt;</code>
 >
 > Raw policy strings as retrieved
 
@@ -369,7 +369,7 @@ TLS policy evaluation result for a specific domain.
 
 ##### `mxHosts`
 
-> Type: <code>String[]</code>
+> Type: <code>Set&lt;String&gt;</code>
 >
 > MX hostnames covered by the policy
 
@@ -390,7 +390,7 @@ TLS policy evaluation result for a specific domain.
 
 ##### `failureDetails`
 
-> Type: [<code>TlsFailureDetails</code>](#tlsfailuredetails)<code>[]</code>
+> Type: <code>List&lt;</code>[<code>TlsFailureDetails</code>](#tlsfailuredetails)<code>&gt;</code>
 >
 > Details of TLS failures encountered
 

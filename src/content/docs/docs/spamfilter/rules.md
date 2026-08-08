@@ -26,11 +26,11 @@ Example reproducing the freemail/disposable provider rule, using the `Email` var
   "enable": true,
   "priority": 63,
   "condition": {
-    "match": [
-      {"if": "!contains(['env_from', 'from', 'reply_to', 'to', 'cc', 'bcc', 'dnt'], location) || is_empty(sld)", "then": "false"},
-      {"if": "key_exists('freemail-providers', sld)", "then": "'FREEMAIL_' + to_uppercase(location)"},
-      {"if": "key_exists('disposable-providers', sld)", "then": "'DISPOSABLE_' + to_uppercase(location)"}
-    ],
+    "match": {
+      "0": {"if": "!contains(['env_from', 'from', 'reply_to', 'to', 'cc', 'bcc', 'dnt'], location) || is_empty(sld)", "then": "false"},
+      "1": {"if": "key_exists('freemail-providers', sld)", "then": "'FREEMAIL_' + to_uppercase(location)"},
+      "2": {"if": "key_exists('disposable-providers', sld)", "then": "'DISPOSABLE_' + to_uppercase(location)"}
+    },
     "else": "false"
   }
 }

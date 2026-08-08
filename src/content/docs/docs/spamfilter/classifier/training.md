@@ -35,8 +35,8 @@ By combining online training with reservoir sampling, the classifier achieves bo
 
 Training behaviour is configured on the [SpamClassifier](/docs/ref/object/spam-classifier) singleton (found in the WebUI under <!-- breadcrumb:SpamClassifier --><svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M10 5H3" /><path d="M12 19H3" /><path d="M14 3v4" /><path d="M16 17v4" /><path d="M21 12h-9" /><path d="M21 19h-5" /><path d="M21 5h-7" /><path d="M8 10v4" /><path d="M8 12H3" /></svg> Settings › <svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" /><path d="M12 8v4" /><path d="M12 16h.01" /></svg> Spam Filter › Classifier<!-- /breadcrumb:SpamClassifier -->). The relevant fields are:
 
-- [`trainFrequency`](/docs/ref/object/spam-classifier#trainfrequency): how often the classifier is retrained using newly collected samples. Default `"12h"`. Adjusting this interval balances adaptation speed against computational load.
-- [`holdSamplesFor`](/docs/ref/object/spam-classifier#holdsamplesfor): how long training samples are retained. Default `"180d"`. Retaining samples enables retraining with historical data when necessary.
+- [`trainFrequency`](/docs/ref/object/spam-classifier#trainfrequency): how often the classifier is retrained using newly collected samples, in milliseconds. Default `43200000` (12 hours). Adjusting this interval balances adaptation speed against computational load.
+- [`holdSamplesFor`](/docs/ref/object/spam-classifier#holdsamplesfor): how long training samples are retained, in milliseconds. Default `15552000000` (180 days). Retaining samples enables retraining with historical data when necessary.
 - [`minSpamSamples`](/docs/ref/object/spam-classifier#minspamsamples): minimum number of spam training samples required before the classifier begins making decisions. Default `100`.
 - [`minHamSamples`](/docs/ref/object/spam-classifier#minhamsamples): minimum number of ham training samples required before the classifier begins making decisions. Default `100`.
 - [`reservoirCapacity`](/docs/ref/object/spam-classifier#reservoircapacity): maximum number of training samples retained in the reservoir used for balancing class representation. Default `1024`.
@@ -45,8 +45,8 @@ Example overriding the defaults to train every six hours and to keep samples for
 
 ```json
 {
-  "trainFrequency": "6h",
-  "holdSamplesFor": "30d",
+  "trainFrequency": 21600000,
+  "holdSamplesFor": 2592000000,
   "minSpamSamples": 100,
   "minHamSamples": 100,
   "reservoirCapacity": 1024

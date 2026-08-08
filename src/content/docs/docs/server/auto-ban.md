@@ -29,24 +29,24 @@ Clients that repeatedly connect but never send meaningful traffic consume resour
 
 ### Port and URL scanning
 
-The server tracks attempts to probe TCP ports it is not listening on, as well as HTTP requests for exploit-style paths. The scan rate is set through [`scanBanRate`](/docs/ref/object/security#scanbanrate) (default `30` attempts per day), the ban duration through [`scanBanPeriod`](/docs/ref/object/security#scanbanperiod), and the list of glob patterns that trigger an immediate ban on first HTTP request through [`scanBanPaths`](/docs/ref/object/security#scanbanpaths). The default patterns cover the most common web-application exploits:
+The server tracks attempts to probe TCP ports it is not listening on, as well as HTTP requests for exploit-style paths. The scan rate is set through [`scanBanRate`](/docs/ref/object/security#scanbanrate) (default `30` attempts per day), the ban duration through [`scanBanPeriod`](/docs/ref/object/security#scanbanperiod), and the set of glob patterns that trigger an immediate ban on first HTTP request through [`scanBanPaths`](/docs/ref/object/security#scanbanpaths). The default patterns cover the most common web-application exploits:
 
 ```json
 {
-  "scanBanRate": {"count": 30, "period": "1d"},
-  "scanBanPaths": [
-    "*.php*",
-    "*.cgi*",
-    "*.asp*",
-    "*/wp-*",
-    "*/php*",
-    "*/cgi-bin*",
-    "*xmlrpc*",
-    "*../*",
-    "*/..*",
-    "*joomla*",
-    "*wordpress*",
-    "*drupal*"
-  ]
+  "scanBanRate": {"count": 30, "period": 86400000},
+  "scanBanPaths": {
+    "*.php*": true,
+    "*.cgi*": true,
+    "*.asp*": true,
+    "*/wp-*": true,
+    "*/php*": true,
+    "*/cgi-bin*": true,
+    "*xmlrpc*": true,
+    "*../*": true,
+    "*/..*": true,
+    "*joomla*": true,
+    "*wordpress*": true,
+    "*drupal*": true
+  }
 }
 ```

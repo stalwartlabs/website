@@ -33,7 +33,7 @@ The [`allowRelaying`](/docs/ref/object/mta-stage-rcpt#allowrelaying) field on Mt
 ```json
 {
   "allowRelaying": {
-    "match": [{"if": "!is_empty(authenticated_as)", "then": "true"}],
+    "match": {"0": {"if": "!is_empty(authenticated_as)", "then": "true"}},
     "else": "false"
   }
 }
@@ -56,7 +56,7 @@ Subaddressing is configured per domain on the [Domain](/docs/ref/object/domain) 
   "subAddressing": {
     "@type": "Custom",
     "customRule": {
-      "match": [{"if": "matches('^([^.]+)\\.([^.]+)$', rcpt)", "then": "$2"}],
+      "match": {"0": {"if": "matches('^([^.]+)\\.([^.]+)$', rcpt)", "then": "$2"}},
       "else": "rcpt"
     }
   }
@@ -97,7 +97,7 @@ For example, the following configuration rewrites `first.last@example.org` to `f
 ```json
 {
   "rewrite": {
-    "match": [{"if": "is_local_domain('', rcpt_domain) & matches('^([^.]+)\\.([^.]+)@(.+)$', rcpt)", "then": "$1 + '+' + $2 + '@' + $3"}],
+    "match": {"0": {"if": "is_local_domain('', rcpt_domain) & matches('^([^.]+)\\.([^.]+)@(.+)$', rcpt)", "then": "$1 + '+' + $2 + '@' + $3"}},
     "else": "false"
   }
 }
@@ -118,7 +118,7 @@ For example, the following expression runs a `greylist` Sieve script only for un
 ```json
 {
   "script": {
-    "match": [{"if": "is_empty(authenticated_as)", "then": "'greylist'"}],
+    "match": {"0": {"if": "is_empty(authenticated_as)", "then": "'greylist'"}},
     "else": "false"
   }
 }

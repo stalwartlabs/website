@@ -34,35 +34,35 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `maxRequestRate`
 
-> Type: [<code>Rate</code>](#rate)<code>?</code> · default: `{"count":2000,"period":"1m"}`
+> Type: [<code>Rate</code>](#rate)<code>?</code> · default: `{"count":2000,"period":60000}`
 >
 > The maximum number of requests per minute
 
 
 ##### `maxRequestSize`
 
-> Type: <code>Size</code> · default: `"50mb"`
+> Type: <code>Size</code> · default: `52428800`
 >
 > Maximum size of an IMAP request that the server will accept
 
 
 ##### `timeoutAnonymous`
 
-> Type: <code>Duration</code> · default: `"1m"`
+> Type: <code>Duration</code> · default: `60000`
 >
 > Time an unauthenticated session can stay inactive before being ended by the server
 
 
 ##### `timeoutAuthenticated`
 
-> Type: <code>Duration</code> · default: `"30m"`
+> Type: <code>Duration</code> · default: `1800000`
 >
 > Time an authenticated session can remain idle before the server terminates it
 
 
 ##### `timeoutIdle`
 
-> Type: <code>Duration</code> · default: `"30m"`
+> Type: <code>Duration</code> · default: `1800000`
 >
 > Time a connection can stay idle in the IMAP IDLE state before the server breaks the connection
 
@@ -182,7 +182,7 @@ Defines a rate limit as a count over a time period.
 
 ##### `period`
 
-> Type: <code>Duration</code> · default: `"0s"` · min: 1
+> Type: <code>Duration</code> · default: `0` · min: 1
 >
 > Period
 

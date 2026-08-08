@@ -36,7 +36,7 @@ When the `Enabled` variant of [`emailAlert`](/docs/ref/object/alert#emailalert) 
 
 - [`fromName`](/docs/ref/object/alert#alertemailproperties): optional display name of the sender.
 - [`fromAddress`](/docs/ref/object/alert#alertemailproperties): sender email address.
-- [`to`](/docs/ref/object/alert#alertemailproperties): list of recipient addresses.
+- [`to`](/docs/ref/object/alert#alertemailproperties): set of recipient addresses, each keyed by address and mapped to `true`.
 - [`subject`](/docs/ref/object/alert#alertemailproperties): subject line. May reference metric values using placeholders.
 - [`body`](/docs/ref/object/alert#alertemailproperties): message body. May reference metric values using placeholders.
 
@@ -58,7 +58,7 @@ The following Alert fires when the count of FoundationDB or S3 errors exceeds on
     "@type": "Enabled",
     "fromName": "Alert Subsystem",
     "fromAddress": "alert@example.com",
-    "to": ["jdoe@example.com"],
+    "to": {"jdoe@example.com": true},
     "subject": "Found %{store.foundationdb-error}% FDB and %{store.s3-error}% S3 errors",
     "body": "We found %{store.foundationdb-error}% FDB and %{store.s3-error}% S3 errors."
   }

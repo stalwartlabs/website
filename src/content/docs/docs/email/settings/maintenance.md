@@ -27,13 +27,13 @@ Related schedules on the same object include [`expungeSchedule`](/docs/ref/objec
 
 Auto-expunge automates the management of email storage by systematically removing older messages from the "Deleted Items" and "Junk Mail" folders within all user accounts. This keeps mailboxes organised and bounds server storage usage.
 
-The retention period is controlled by [`expungeTrashAfter`](/docs/ref/object/data-retention#expungetrashafter), which expects a duration. The default is `"30d"`: messages older than thirty days are expunged from those folders on the next run of [`expungeSchedule`](/docs/ref/object/data-retention#expungeschedule). Setting [`expungeTrashAfter`](/docs/ref/object/data-retention#expungetrashafter) to `null` disables auto-expunge.
+The retention period is controlled by [`expungeTrashAfter`](/docs/ref/object/data-retention#expungetrashafter), which expects a duration in milliseconds. The default is `2592000000` (30 days): messages older than thirty days are expunged from those folders on the next run of [`expungeSchedule`](/docs/ref/object/data-retention#expungeschedule). Setting [`expungeTrashAfter`](/docs/ref/object/data-retention#expungetrashafter) to `null` disables auto-expunge.
 
 For example, to retain deleted and junk messages for thirty days before expunging:
 
 ```json
 {
-  "expungeTrashAfter": "30d"
+  "expungeTrashAfter": 2592000000
 }
 ```
 

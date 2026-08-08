@@ -41,7 +41,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `aliases`
 
-> Type: [<code>EmailAlias</code>](#emailalias)<code>[]</code>
+> Type: <code>List&lt;</code>[<code>EmailAlias</code>](#emailalias)<code>&gt;</code>
 >
 > List of email aliases for the mailing list
 
@@ -55,7 +55,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `recipients`
 
-> Type: <code>EmailAddress[]</code>
+> Type: <code>Set&lt;EmailAddress&gt;</code>
 >
 > List of email addresses that are members of the mailing list
 

@@ -13,7 +13,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `isSenderAllowed`
 
-> Type: [<code>Expression</code>](#expression) · default: `{"else":"!is_empty(authenticated_as) || !key_exists('spam-block', sender_domain)","match":[]}`
+> Type: [<code>Expression</code>](#expression) · default: `{"else":"!is_empty(authenticated_as) || !key_exists('spam-block', sender_domain)"}`
 >
 > Expression that returns true when the sender is allowed to send
 >
@@ -99,8 +99,7 @@ curl -X POST https://mail.example.com/api \
             "update": {
               "singleton": {
                 "isSenderAllowed": {
-                  "else": "!is_empty(authenticated_as) || !key_exists('spam-block', sender_domain)",
-                  "match": []
+                  "else": "!is_empty(authenticated_as) || !key_exists('spam-block', sender_domain)"
                 }
               }
             }
@@ -133,7 +132,7 @@ stalwart-cli get MtaStageMail
 ### Update
 
 ```sh
-stalwart-cli update MtaStageMail --field isSenderAllowed='{"else":"!is_empty(authenticated_as) || !key_exists('\''spam-block'\'', sender_domain)","match":[]}'
+stalwart-cli update MtaStageMail --field isSenderAllowed='{"else":"!is_empty(authenticated_as) || !key_exists('\''spam-block'\'', sender_domain)"}'
 ```
 
 
@@ -149,7 +148,7 @@ A conditional expression with match rules and a default value.
 
 ##### `match`
 
-> Type: [<code>ExpressionMatch</code>](#expressionmatch)<code>[]</code>
+> Type: <code>List&lt;</code>[<code>ExpressionMatch</code>](#expressionmatch)<code>&gt;</code>
 >
 > List of conditions and their corresponding results
 

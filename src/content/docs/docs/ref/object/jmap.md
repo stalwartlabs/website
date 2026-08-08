@@ -118,21 +118,21 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `uploadTtl`
 
-> Type: <code>Duration</code> · default: `"1h"`
+> Type: <code>Duration</code> · default: `3600000`
 >
 > Specifies the Time-To-Live (TTL) for each uploaded file, after which the file is deleted from temporary storage
 
 
 ##### `eventSourceThrottle`
 
-> Type: <code>Duration</code> · default: `"1s"`
+> Type: <code>Duration</code> · default: `1000`
 >
 > Specifies the minimum time between two event source notifications
 
 
 ##### `pushAttemptWait`
 
-> Type: <code>Duration</code> · default: `"1m"`
+> Type: <code>Duration</code> · default: `60000`
 >
 > Time to wait between push attempts
 
@@ -146,28 +146,28 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `pushRetryWait`
 
-> Type: <code>Duration</code> · default: `"1s"`
+> Type: <code>Duration</code> · default: `1000`
 >
 > Time to wait between retry attempts
 
 
 ##### `pushThrottle`
 
-> Type: <code>Duration</code> · default: `"1s"`
+> Type: <code>Duration</code> · default: `1000`
 >
 > Time to wait before sending a new request to the push service
 
 
 ##### `pushRequestTimeout`
 
-> Type: <code>Duration</code> · default: `"10s"`
+> Type: <code>Duration</code> · default: `10000`
 >
 > Time before a connection with a push service URL times out
 
 
 ##### `pushVerifyTimeout`
 
-> Type: <code>Duration</code> · default: `"1m"`
+> Type: <code>Duration</code> · default: `60000`
 >
 > Time to wait for the push service to verify a subscription
 
@@ -181,21 +181,21 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `websocketHeartbeat`
 
-> Type: <code>Duration</code> · default: `"1m"`
+> Type: <code>Duration</code> · default: `60000`
 >
 > Time to wait before sending a new heartbeat to the WebSocket client
 
 
 ##### `websocketThrottle`
 
-> Type: <code>Duration</code> · default: `"1s"`
+> Type: <code>Duration</code> · default: `1000`
 >
 > Amount of time to wait before sending a batch of notifications to a WS client
 
 
 ##### `websocketTimeout`
 
-> Type: <code>Duration</code> · default: `"10m"`
+> Type: <code>Duration</code> · default: `600000`
 >
 > Time before an inactive WebSocket connection times out
 

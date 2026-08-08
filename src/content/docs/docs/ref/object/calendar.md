@@ -41,7 +41,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `maxICalendarSize`
 
-> Type: <code>Size</code> · default: `"512kb"`
+> Type: <code>Size</code> · default: `524288`
 >
 > Specifies the maximum size of an iCalendar file that can be uploaded to the server
 

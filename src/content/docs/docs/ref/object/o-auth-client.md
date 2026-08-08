@@ -27,7 +27,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `contacts`
 
-> Type: <code>EmailAddress[]</code>
+> Type: <code>Set&lt;EmailAddress&gt;</code>
 >
 > Contact email addresses for the OAuth client
 
@@ -62,7 +62,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `redirectUris`
 
-> Type: <code>Uri[]</code>
+> Type: <code>Set&lt;Uri&gt;</code>
 >
 > List of redirect URIs for the OAuth client
 

@@ -18,7 +18,9 @@ The default policy applies `relaxed` when `local_port == 25` and `disable` other
 ```json
 {
   "dmarcVerify": {
-    "match": [{"if": "listener == 'smtp'", "then": "relaxed"}],
+    "match": {
+      "0": {"if": "listener == 'smtp'", "then": "relaxed"}
+    },
     "else": "disable"
   }
 }

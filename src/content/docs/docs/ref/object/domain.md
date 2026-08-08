@@ -20,7 +20,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `aliases`
 
-> Type: <code>DomainName[]</code>
+> Type: <code>Set&lt;DomainName&gt;</code>
 >
 > List of additional domain names that are aliases of this domain
 
@@ -390,7 +390,7 @@ Automatic TLS certificate management settings using an ACME provider.
 
 ##### `subjectAlternativeNames`
 
-> Type: <code>String[]</code>
+> Type: <code>Set&lt;String&gt;</code>
 >
 > Additional hostnames to include in the certificate as Subject Alternative Names (SANs).
 > Enter hostnames only (e.g. `mta-sts`, `autoconfig`), the domain is appended automatically.
@@ -420,7 +420,7 @@ Automatic DKIM key generation and rotation settings.
 
 ##### `algorithms`
 
-> Type: [<code>DkimSignatureType</code>](#dkimsignaturetype)<code>[]</code> · default: `["Dkim1Ed25519Sha256","Dkim1RsaSha256"]`
+> Type: <code>Set&lt;</code>[<code>DkimSignatureType</code>](#dkimsignaturetype)<code>&gt;</code> · default: `{"Dkim1Ed25519Sha256":true,"Dkim1RsaSha256":true}`
 >
 > List of signing algorithms to use when generating new DKIM keys
 
@@ -440,21 +440,21 @@ Automatic DKIM key generation and rotation settings.
 
 ##### `rotateAfter`
 
-> Type: <code>Duration</code> · default: `"90d"`
+> Type: <code>Duration</code> · default: `7776000000`
 >
 > How often to rotate DKIM keys. Requires automatic DNS management to be enabled for the domain.
 
 
 ##### `retireAfter`
 
-> Type: <code>Duration</code> · default: `"7d"`
+> Type: <code>Duration</code> · default: `604800000`
 >
 > How long to keep the old key's DNS record published after rotation before removing it. Requires automatic DNS management.
 
 
 ##### `deleteAfter`
 
-> Type: <code>Duration</code> · default: `"30d"`
+> Type: <code>Duration</code> · default: `2592000000`
 >
 > How long to retain old DKIM keys on the server after rotation before deleting them permanently. Requires automatic DNS management.
 
@@ -495,7 +495,7 @@ Automatic DNS record management settings using a DNS provider.
 
 ##### `publishRecords`
 
-> Type: [<code>DnsRecordType</code>](#dnsrecordtype)<code>[]</code> · default: `["dkim","spf","mx","dmarc","srv","mtaSts","tlsRpt","caa","autoConfig","autoConfigLegacy","autoDiscover"]` · min items: 1
+> Type: <code>Set&lt;</code>[<code>DnsRecordType</code>](#dnsrecordtype)<code>&gt;</code> · default: `{"autoConfig":true,"autoConfigLegacy":true,"autoDiscover":true,"caa":true,"dkim":true,"dmarc":true,"mtaSts":true,"mx":true,"spf":true,"srv":true,"tlsRpt":true}` · min items: 1
 >
 > Which DNS record types should be automatically published and kept in sync
 
@@ -541,7 +541,7 @@ A conditional expression with match rules and a default value.
 
 ##### `match`
 
-> Type: [<code>ExpressionMatch</code>](#expressionmatch)<code>[]</code>
+> Type: <code>List&lt;</code>[<code>ExpressionMatch</code>](#expressionmatch)<code>&gt;</code>
 >
 > List of conditions and their corresponding results
 

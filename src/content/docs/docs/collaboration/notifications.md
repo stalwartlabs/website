@@ -29,7 +29,7 @@ For finer control, email notifications can also be disabled on a per-account bas
 
 ### Notification interval
 
-[`minTriggerInterval`](/docs/ref/object/calendar-alarm#mintriggerinterval) specifies the shortest duration allowed between consecutive email notifications for a single account. The default is `"1h"`, meaning no more than one email alarm is sent per account within a one-hour window even if multiple alarms trigger in quick succession. This guards against excessive notification volume caused by misconfigured or malicious calendar entries.
+[`minTriggerInterval`](/docs/ref/object/calendar-alarm#mintriggerinterval) specifies the shortest duration allowed between consecutive email notifications for a single account, expressed in milliseconds. The default is `3600000` (one hour), meaning no more than one email alarm is sent per account within a one-hour window even if multiple alarms trigger in quick succession. This guards against excessive notification volume caused by misconfigured or malicious calendar entries.
 
 ### External recipients
 
@@ -40,7 +40,7 @@ A representative CalendarAlarm configuration:
 ```json
 {
   "enable": true,
-  "minTriggerInterval": "1h",
+  "minTriggerInterval": 3600000,
   "allowExternalRcpts": false
 }
 ```

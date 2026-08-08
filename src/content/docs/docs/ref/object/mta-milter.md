@@ -64,28 +64,28 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `stages`
 
-> Type: [<code>MtaStage</code>](#mtastage)<code>[]</code> · default: `["data"]` · min items: 1
+> Type: <code>Set&lt;</code>[<code>MtaStage</code>](#mtastage)<code>&gt;</code> · default: `{"data":true}` · min items: 1
 >
 > Which SMTP stages to run the milter on
 
 
 ##### `timeoutCommand`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > How long Stalwart will wait to send a command to the Milter server
 
 
 ##### `timeoutConnect`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > Maximum amount of time that Stalwart will wait to establish a connection with this Milter server
 
 
 ##### `timeoutData`
 
-> Type: <code>Duration</code> · default: `"60s"`
+> Type: <code>Duration</code> · default: `60000`
 >
 > Maximum amount of time Stalwart will wait for a response from the Milter server
 
@@ -331,7 +331,7 @@ A conditional expression with match rules and a default value.
 
 ##### `match`
 
-> Type: [<code>ExpressionMatch</code>](#expressionmatch)<code>[]</code>
+> Type: <code>List&lt;</code>[<code>ExpressionMatch</code>](#expressionmatch)<code>&gt;</code>
 >
 > List of conditions and their corresponding results
 

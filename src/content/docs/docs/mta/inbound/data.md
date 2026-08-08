@@ -81,23 +81,23 @@ The default policy for every expression-valued header is to add it only when `lo
 ```json
 {
   "addReceivedHeader": {
-    "match": [{"if": "listener == 'smtp'", "then": "true"}],
+    "match": {"0": {"if": "listener == 'smtp'", "then": "true"}},
     "else": "false"
   },
   "addReceivedSpfHeader": {
-    "match": [{"if": "listener == 'smtp'", "then": "true"}],
+    "match": {"0": {"if": "listener == 'smtp'", "then": "true"}},
     "else": "false"
   },
   "addAuthResultsHeader": {
-    "match": [{"if": "listener == 'smtp'", "then": "true"}],
+    "match": {"0": {"if": "listener == 'smtp'", "then": "true"}},
     "else": "false"
   },
   "addMessageIdHeader": {
-    "match": [{"if": "listener == 'smtp'", "then": "false"}],
+    "match": {"0": {"if": "listener == 'smtp'", "then": "false"}},
     "else": "true"
   },
   "addDateHeader": {
-    "match": [{"if": "listener == 'smtp'", "then": "false"}],
+    "match": {"0": {"if": "listener == 'smtp'", "then": "false"}},
     "else": "true"
   },
   "addReturnPathHeader": {"else": "false"},

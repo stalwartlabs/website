@@ -7,7 +7,7 @@ IMAP protocol settings cover request handling, authentication, timeouts, and rat
 
 ## Request size
 
-The [`maxRequestSize`](/docs/ref/object/imap#maxrequestsize) field sets the maximum size of an IMAP request that the server will accept. Requests larger than this limit are rejected. The default is `"50mb"`.
+The [`maxRequestSize`](/docs/ref/object/imap#maxrequestsize) field sets the maximum size of an IMAP request that the server will accept, in bytes. Requests larger than this limit are rejected. The default is `52428800` (50 MB).
 
 ## Authentication
 
@@ -50,18 +50,18 @@ Example:
 
 ## Timeouts
 
-Idle timeouts are controlled by three fields on the Imap singleton:
+Idle timeouts are controlled by three fields on the Imap singleton. Each is expressed in milliseconds:
 
-- [`timeoutAuthenticated`](/docs/ref/object/imap#timeoutauthenticated): time an authenticated session can remain idle before the server terminates it. Default `"30m"`.
-- [`timeoutAnonymous`](/docs/ref/object/imap#timeoutanonymous): time an anonymous (unauthenticated) session can stay inactive before being ended by the server. Default `"1m"`.
-- [`timeoutIdle`](/docs/ref/object/imap#timeoutidle): time a connection can stay idle in the IMAP `IDLE` state before the server breaks the connection. Default `"30m"`.
+- [`timeoutAuthenticated`](/docs/ref/object/imap#timeoutauthenticated): time an authenticated session can remain idle before the server terminates it. Default `1800000` (30 minutes).
+- [`timeoutAnonymous`](/docs/ref/object/imap#timeoutanonymous): time an anonymous (unauthenticated) session can stay inactive before being ended by the server. Default `60000` (one minute).
+- [`timeoutIdle`](/docs/ref/object/imap#timeoutidle): time a connection can stay idle in the IMAP `IDLE` state before the server breaks the connection. Default `1800000` (30 minutes).
 
 Example:
 
 ```json
 {
-  "timeoutAuthenticated": "30m",
-  "timeoutAnonymous": "1m",
-  "timeoutIdle": "30m"
+  "timeoutAuthenticated": 1800000,
+  "timeoutAnonymous": 60000,
+  "timeoutIdle": 1800000
 }
 ```

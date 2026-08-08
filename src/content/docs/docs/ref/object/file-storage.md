@@ -13,7 +13,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `maxSize`
 
-> Type: <code>Size</code> · default: `"25mb"`
+> Type: <code>Size</code> · default: `26214400`
 >
 > Specifies the maximum size of a file that can be uploaded to the server
 
@@ -92,7 +92,7 @@ curl -X POST https://mail.example.com/api \
           {
             "update": {
               "singleton": {
-                "maxSize": "25mb"
+                "maxSize": 26214400
               }
             }
           },
@@ -124,7 +124,7 @@ stalwart-cli get FileStorage
 ### Update
 
 ```sh
-stalwart-cli update FileStorage --field maxSize=25mb
+stalwart-cli update FileStorage --field maxSize=26214400
 ```
 
 

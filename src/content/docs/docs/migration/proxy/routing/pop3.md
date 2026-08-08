@@ -11,9 +11,9 @@ On connection the proxy sends a `+OK` greeting carrying the configured banner. B
 
 ## Authentication
 
-POP3 offers two authentication paths. The legacy `USER` and `PASS` command pair supplies the username and password across two commands; the proxy holds the `USER` value and, on receiving `PASS`, assembles the credentials and proceeds. The `AUTH` command carries a SASL mechanism, one of `PLAIN`, `OAUTHBEARER` or `XOAUTH2`, with the initial response supplied inline or after a continuation prompt; `AUTH` with no argument lists the available mechanisms.
+POP3 offers two authentication paths. The legacy `USER` and `PASS` command pair supplies the username and password across two commands; the proxy holds the `USER` value and, on receiving `PASS`, assembles the credentials and proceeds. The `AUTH` command carries a SASL mechanism, one of `PLAIN`, `LOGIN`, `OAUTHBEARER` or `XOAUTH2`, with the initial response supplied inline or after a continuation prompt; `AUTH` with no argument lists the available mechanisms. `AUTH LOGIN` is offered whenever `LOGIN` appears in the `sasl` list and cleartext authentication is permitted; the proxy issues the base64 `Username:` and `Password:` challenges itself and reconstructs the answers as a `PLAIN` challenge, so the backend leg only ever sees `PLAIN`.
 
-Cleartext authentication, meaning `USER`/`PASS` or `AUTH PLAIN`, is gated on transport security and is refused until the connection is encrypted unless `allow_plain_auth_without_tls` is set. The routing identifier is the supplied username, or the username carried in an OAuth frame, extracted as described under [Routing](/docs/migration/proxy/routing/).
+Cleartext authentication, meaning `USER`/`PASS`, `AUTH PLAIN` or `AUTH LOGIN`, is gated on transport security and is refused until the connection is encrypted unless `allow_plain_auth_without_tls` is set. The routing identifier is the supplied username, or the username carried in an OAuth frame, extracted as described under [Routing](/docs/migration/proxy/routing/).
 
 ## Backend handshake
 

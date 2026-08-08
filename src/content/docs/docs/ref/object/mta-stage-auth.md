@@ -31,7 +31,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `saslMechanisms`
 
-> Type: [<code>Expression</code>](#expression) · default: `{"else":"false","match":[{"if":"local_port != 25 && is_tls","then":"[plain, login, oauthbearer, xoauth2]"},{"if":"local_port != 25","then":"[oauthbearer, xoauth2]"}]}`
+> Type: [<code>Expression</code>](#expression) · default: `{"else":"false"}`
 >
 > A list of SASL authentication mechanisms offered to clients, or an empty list to disable authentication. Stalwart supports PLAIN, LOGIN, and OAUTHBEARER mechanisms
 >
@@ -168,7 +168,7 @@ A conditional expression with match rules and a default value.
 
 ##### `match`
 
-> Type: [<code>ExpressionMatch</code>](#expressionmatch)<code>[]</code>
+> Type: <code>List&lt;</code>[<code>ExpressionMatch</code>](#expressionmatch)<code>&gt;</code>
 >
 > List of conditions and their corresponding results
 

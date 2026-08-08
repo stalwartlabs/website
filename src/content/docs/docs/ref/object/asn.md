@@ -26,35 +26,35 @@ URL Resource
 
 ##### `expires`
 
-> Type: <code>Duration</code> · default: `"1d"`
+> Type: <code>Duration</code> · default: `86400000`
 >
 > How often to refresh the ASN/Geo data.
 
 
 ##### `maxSize`
 
-> Type: <code>Size</code> · default: `"100mb"`
+> Type: <code>Size</code> · default: `104857600`
 >
 > Maximum size of the ASN/Geo data file.
 
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"5m"`
+> Type: <code>Duration</code> · default: `300000`
 >
 > Time after which the ASN/Geo resource fetch is considered failed.
 
 
 ##### `asnUrls`
 
-> Type: <code>String[]</code>
+> Type: <code>Set&lt;String&gt;</code>
 >
 > URLs to fetch CSV file containing the IP to ASN mappings.
 
 
 ##### `geoUrls`
 
-> Type: <code>String[]</code>
+> Type: <code>Set&lt;String&gt;</code>
 >
 > URLs to fetch CSV file containing the IP to country code mappings.
 

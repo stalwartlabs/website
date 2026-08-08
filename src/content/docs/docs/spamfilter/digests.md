@@ -18,7 +18,7 @@ Relevant fields are:
 - [`enable`](/docs/ref/object/spam-pyzor#enable): enables or disables Pyzor.
 - [`host`](/docs/ref/object/spam-pyzor#host): the Pyzor server hostname.
 - [`port`](/docs/ref/object/spam-pyzor#port): the Pyzor server port.
-- [`timeout`](/docs/ref/object/spam-pyzor#timeout): maximum time to wait for a response before the check is treated as failed.
+- [`timeout`](/docs/ref/object/spam-pyzor#timeout): maximum time to wait for a response before the check is treated as failed, in milliseconds.
 - [`blockCount`](/docs/ref/object/spam-pyzor#blockcount): minimum number of times a hash must appear in the Pyzor blocklist for the message to be considered.
 - [`allowCount`](/docs/ref/object/spam-pyzor#allowcount): minimum number of times a hash must appear in the Pyzor allowlist for the message to be considered.
 - [`ratio`](/docs/ref/object/spam-pyzor#ratio): the ratio of blocklist hits to allowlist hits above which the message is treated as spam.
@@ -30,7 +30,7 @@ Example configuration matching the default public server:
   "enable": true,
   "host": "public.pyzor.org",
   "port": 24441,
-  "timeout": "5s",
+  "timeout": 5000,
   "blockCount": 5,
   "allowCount": 10,
   "ratio": 0.2

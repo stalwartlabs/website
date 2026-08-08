@@ -27,7 +27,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `key`
 
-> Type: [<code>MtaOutboundThrottleKey</code>](#mtaoutboundthrottlekey)<code>[]</code>
+> Type: <code>Set&lt;</code>[<code>MtaOutboundThrottleKey</code>](#mtaoutboundthrottlekey)<code>&gt;</code>
 >
 > Optional list of context variables that determine where this throttle should be applied
 
@@ -272,7 +272,7 @@ A conditional expression with match rules and a default value.
 
 ##### `match`
 
-> Type: [<code>ExpressionMatch</code>](#expressionmatch)<code>[]</code>
+> Type: <code>List&lt;</code>[<code>ExpressionMatch</code>](#expressionmatch)<code>&gt;</code>
 >
 > List of conditions and their corresponding results
 
@@ -325,7 +325,7 @@ Defines a rate limit as a count over a time period.
 
 ##### `period`
 
-> Type: <code>Duration</code> · default: `"0s"` · min: 1
+> Type: <code>Duration</code> · default: `0` · min: 1
 >
 > Period
 

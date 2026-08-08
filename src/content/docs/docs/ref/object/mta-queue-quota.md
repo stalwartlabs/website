@@ -27,7 +27,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `key`
 
-> Type: [<code>MtaQueueQuotaKey</code>](#mtaqueuequotakey)<code>[]</code> · min items: 1
+> Type: <code>Set&lt;</code>[<code>MtaQueueQuotaKey</code>](#mtaqueuequotakey)<code>&gt;</code> · min items: 1
 >
 > Optional list of context variables that determine where this quota should be applied
 
@@ -118,8 +118,7 @@ curl -X POST https://mail.example.com/api \
               "new1": {
                 "key": {},
                 "match": {
-                  "else": "Example",
-                  "match": {}
+                  "else": "Example"
                 }
               }
             }
@@ -243,7 +242,7 @@ stalwart-cli get MtaQueueQuota id1
 ```sh
 stalwart-cli create MtaQueueQuota \
   --field 'key={}' \
-  --field 'match={"else":"Example","match":{}}'
+  --field 'match={"else":"Example"}'
 ```
 
 
@@ -280,7 +279,7 @@ A conditional expression with match rules and a default value.
 
 ##### `match`
 
-> Type: [<code>ExpressionMatch</code>](#expressionmatch)<code>[]</code>
+> Type: <code>List&lt;</code>[<code>ExpressionMatch</code>](#expressionmatch)<code>&gt;</code>
 >
 > List of conditions and their corresponding results
 

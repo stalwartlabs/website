@@ -9,19 +9,21 @@ Expressions evaluate context variables, call functions, and combine values using
 
 ## Shape of an expression
 
-An expression is stored as a JSON object with two fields. The `match` array lists zero or more `{if, then}` pairs that are evaluated in order; the first matching condition determines the result. The `else` string is the fallback when no condition matches:
+An expression is stored as a JSON object with two fields. The `match` field lists zero or more `{if, then}` pairs that are evaluated in order; the first matching condition determines the result. The `else` string is the fallback when no condition matches:
 
 ```json
 {
-  "match": [
-    {"if": "<condition>", "then": "<value>"},
-    {"if": "<condition>", "then": "<value>"}
-  ],
+  "match": {
+    "0": {"if": "<condition>", "then": "<value>"},
+    "1": {"if": "<condition>", "then": "<value>"}
+  },
   "else": "<default value>"
 }
 ```
 
-All three fields (`if`, `then`, `else`) hold string values. Numbers, booleans, and arrays are written as their string representations: `"true"`, `"false"`, `"3"`, `"[plain, login]"`. When an expression always evaluates to the same result, the `match` array is omitted and only `else` is set:
+`match` is a list, so it follows the [object encoding](/docs/configuration/object-encoding) rules: its conditions are keyed `"0"`, `"1"`, `"2"` and so on, and are evaluated in that order.
+
+All three fields (`if`, `then`, `else`) hold string values. Numbers, booleans, and arrays are written as their string representations: `"true"`, `"false"`, `"3"`, `"[plain, login]"`. When an expression always evaluates to the same result, the `match` field is omitted and only `else` is set:
 
 ```json
 {"else": "value"}
@@ -46,7 +48,7 @@ A conditional expression offering `PLAIN` and `LOGIN` mechanisms only on TLS-pro
 ```json
 {
   "saslMechanisms": {
-    "match": [{"if": "local_port != 25 && is_tls", "then": "[plain, login]"}],
+    "match": {"0": {"if": "local_port != 25 && is_tls", "then": "[plain, login]"}},
     "else": "false"
   }
 }
@@ -57,9 +59,9 @@ An expression that rewrites non-SMTP recipients by extracting the local part and
 ```json
 {
   "rewrite": {
-    "match": [
-      {"if": "listener != 'smtp' && matches('^([^.]+)@([^.]+)\\.(.+)$', rcpt)", "then": "$1 + '@' + $3"}
-    ],
+    "match": {
+      "0": {"if": "listener != 'smtp' && matches('^([^.]+)@([^.]+)\\.(.+)$', rcpt)", "then": "$1 + '@' + $3"}
+    },
     "else": "false"
   }
 }
@@ -74,10 +76,10 @@ A multi-condition routing expression that returns different queue targets depend
 ```json
 {
   "route": {
-    "match": [
-      {"if": "is_local_domain(rcpt_domain)", "then": "'local'"},
-      {"if": "retry_num > 1", "then": "'fallback'"}
-    ],
+    "match": {
+      "0": {"if": "is_local_domain(rcpt_domain)", "then": "'local'"},
+      "1": {"if": "retry_num > 1", "then": "'fallback'"}
+    },
     "else": "'mx'"
   }
 }
@@ -88,11 +90,11 @@ A DNSBL check that consults Spamhaus Zen for the remote address and returns the 
 ```json
 {
   "tag": {
-    "match": [
-      {"if": "contains(dns_query(ip_reverse_name(remote_ip) + '.zen.spamhaus.org', 'ipv4'), '127.0.0.2')", "then": "'SBL'"},
-      {"if": "contains(dns_query(ip_reverse_name(remote_ip) + '.zen.spamhaus.org', 'ipv4'), '127.0.0.3')", "then": "'CSS'"},
-      {"if": "contains(dns_query(ip_reverse_name(remote_ip) + '.zen.spamhaus.org', 'ipv4'), '127.0.0.4')", "then": "'XBL'"}
-    ],
+    "match": {
+      "0": {"if": "contains(dns_query(ip_reverse_name(remote_ip) + '.zen.spamhaus.org', 'ipv4'), '127.0.0.2')", "then": "'SBL'"},
+      "1": {"if": "contains(dns_query(ip_reverse_name(remote_ip) + '.zen.spamhaus.org', 'ipv4'), '127.0.0.3')", "then": "'CSS'"},
+      "2": {"if": "contains(dns_query(ip_reverse_name(remote_ip) + '.zen.spamhaus.org', 'ipv4'), '127.0.0.4')", "then": "'XBL'"}
+    },
     "else": "false"
   }
 }
@@ -111,23 +113,23 @@ A longer ladder that classifies MailSpike DNSBL responses by the fourth octet of
 ```json
 {
   "tag": {
-    "match": [
-      {"if": "octets[0] != 127", "then": "false"},
-      {"if": "octets[3] == 10", "then": "'RBL_MAILSPIKE_WORST'"},
-      {"if": "octets[3] == 11", "then": "'RBL_MAILSPIKE_VERYBAD'"},
-      {"if": "octets[3] == 12", "then": "'RBL_MAILSPIKE_BAD'"},
-      {"if": "octets[3] >= 13 && octets[3] <= 16", "then": "'RWL_MAILSPIKE_NEUTRAL'"},
-      {"if": "octets[3] == 17", "then": "'RWL_MAILSPIKE_POSSIBLE'"},
-      {"if": "octets[3] == 18", "then": "'RWL_MAILSPIKE_GOOD'"},
-      {"if": "octets[3] == 19", "then": "'RWL_MAILSPIKE_VERYGOOD'"},
-      {"if": "octets[3] == 20", "then": "'RWL_MAILSPIKE_EXCELLENT'"}
-    ],
+    "match": {
+      "0": {"if": "octets[0] != 127", "then": "false"},
+      "1": {"if": "octets[3] == 10", "then": "'RBL_MAILSPIKE_WORST'"},
+      "2": {"if": "octets[3] == 11", "then": "'RBL_MAILSPIKE_VERYBAD'"},
+      "3": {"if": "octets[3] == 12", "then": "'RBL_MAILSPIKE_BAD'"},
+      "4": {"if": "octets[3] >= 13 && octets[3] <= 16", "then": "'RWL_MAILSPIKE_NEUTRAL'"},
+      "5": {"if": "octets[3] == 17", "then": "'RWL_MAILSPIKE_POSSIBLE'"},
+      "6": {"if": "octets[3] == 18", "then": "'RWL_MAILSPIKE_GOOD'"},
+      "7": {"if": "octets[3] == 19", "then": "'RWL_MAILSPIKE_VERYGOOD'"},
+      "8": {"if": "octets[3] == 20", "then": "'RWL_MAILSPIKE_EXCELLENT'"}
+    },
     "else": "false"
   }
 }
 ```
 
-A simple fallback-only expression, with no `match` array:
+A simple fallback-only expression, with no `match` field:
 
 ```json
 {

@@ -20,7 +20,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `contact`
 
-> Type: <code>EmailAddress[]</code> · min items: 1
+> Type: <code>Set&lt;EmailAddress&gt;</code> · min items: 1
 >
 > Contact email address, which is used for important communications regarding your ACME account and certificates
 

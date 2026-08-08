@@ -171,6 +171,28 @@ Refs do **not** work for:
 
 * The `id` field of an `update` operation when no matching `create` or `upsert` exists in the same plan (the CLI surfaces a clear error in this case).
 
+#### References and tenants
+
+Resolving a reference is not the same as the server accepting it. An object that belongs to a tenant (it sets `memberTenantId`) may only reference other objects **in that same tenant**. This applies to every tenant-scoped type, including `DnsServer`, `AcmeProvider`, `Directory`, `Role`, `DkimSignature`, `MailingList`, `OAuthClient` and `Account`. There is no notion of a global resource that tenanted objects can borrow: a `DnsServer` with no `memberTenantId` is visible to administrators but cannot be referenced by a `Domain` that sets one.
+
+A plan that mixes the two is rejected at apply time with `invalidForeignKey`:
+
+```text
+✗ upsert Domain: Domain: create failed for `domain-a` (operation #3): error: invalidForeignKey |   Object id:   DnsServer#i1nk7i22boqc (plan reference #dnsserver-ovh)
+```
+
+The `(plan reference #...)` suffix names the plan reference that produced the rejected server id, so the offending line can be found without looking the id up on the server. The CLI annotates ids this way in any `set` failure whose value referenced them, covering `Object id`, `Existing id` and `Linked by`.
+
+The fix is to place the referenced object in the same tenant as the objects that use it, giving each tenant its own copy:
+
+```text
+{"@type":"upsert","object":"Tenant","matchOn":["name"],"value":{"tenant-a":{"name":"a"}}}
+{"@type":"upsert","object":"DnsServer","matchOn":["description"],"value":{"dnsserver-ovh":{"@type":"Ovh","memberTenantId":"#tenant-a","description":"ovh (tenant a)","applicationKey":"...","ovhEndpoint":"ovh-eu"}}}
+{"@type":"upsert","object":"Domain","matchOn":["name"],"value":{"domain-a":{"memberTenantId":"#tenant-a","name":"a.com","dnsManagement":{"@type":"Automatic","dnsServerId":"#dnsserver-ovh"}}}}
+```
+
+When several tenants each need their own copy of a shared configuration, give each copy its own client id and a per-tenant natural key, and consider a [`scope`](#scoping-an-operation-with-scope) of `{"memberTenantId": "#tenant-a"}` so each tenant's operation only matches and converges its own slice.
+
 ### Dependency ordering
 
 Because the CLI does not know the dependency graph in advance, plan authors are responsible for ordering operations correctly:
@@ -211,6 +233,10 @@ A re-runnable plan: `upsert` the objects (parents first), then point the singlet
 On the first apply, no `example.com`/`example.net` domain exists, so both are created and `#dom-a` resolves to the new `example.com`. On the second apply, the `matchOn: ["name"]` key finds the existing domains and they are updated in place; `#dom-a` resolves to the same id, so `defaultDomainId` stays valid and nothing is duplicated or destroyed.
 
 A complete obfuscated example plan is included with these docs at [example-bulk-plan.ndjson](./example-bulk-plan.ndjson).
+
+### Encoding of values
+
+The `value` of each operation is a configuration object body, encoded as described in [Object encoding](/docs/configuration/object-encoding): list and set fields are JSON objects rather than arrays, and durations and sizes are integers. A payload that gets this wrong is rejected with `invalidPatch | Invalid value for object property`, naming the offending property. Running [`snapshot`](/docs/management/cli/snapshot) against a configured server prints a plan in the canonical encoding.
 
 ### Per-line JSON Schema
 
@@ -745,6 +771,7 @@ apply:
 * **Generate, review, apply.** Treat the plan file as an artifact: render it from templates, commit the rendered version (or its diff) for review, then apply.
 * **Use `--dry-run` in pull requests.** Every plan change should pass a `--dry-run` before merging.
 * **Never embed real secrets in committed plans.** Use placeholders that the renderer substitutes from a secrets manager (Vault, sops, SSM, ...). Plans containing private keys, password hashes, or license tokens should never be checked in unencrypted.
+* **Keep a tenant's objects self-contained.** A tenanted object can only reference objects in its own tenant, so each tenant needs its own copy of any configuration its objects point at. See [References and tenants](#references-and-tenants).
 * **For teardowns, keep the destroy list in creates order.** When a plan does include `destroy` operations, list them parents-first (the same order as the corresponding upserts/creates); the reverse pass takes them down children-first. If a destroy fails with `objectIsLinked`, an earlier entry is too far down the tree (children-first ordering): re-order so parents come first.
 
 ## See also

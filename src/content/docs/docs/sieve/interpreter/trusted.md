@@ -27,7 +27,7 @@ Resource limits protect the server from scripts that exceed reasonable bounds. T
 - [`maxReceivedHeaders`](/docs/ref/object/sieve-system-interpreter#maxreceivedheaders): maximum number of `Received` headers allowed in a message. Default `50`.
 - [`maxCpuCycles`](/docs/ref/object/sieve-system-interpreter#maxcpucycles): maximum number of instructions a script can execute. Default `1048576`.
 - [`maxNestedIncludes`](/docs/ref/object/sieve-system-interpreter#maxnestedincludes): maximum number of nested `include` instructions. Default `5`.
-- [`duplicateExpiry`](/docs/ref/object/sieve-system-interpreter#duplicateexpiry): default expiration time for identifiers stored by the `duplicate` extension. Default `"7d"`.
+- [`duplicateExpiry`](/docs/ref/object/sieve-system-interpreter#duplicateexpiry): default expiration time for identifiers stored by the `duplicate` extension, in milliseconds. Default `604800000` (7 days).
 - [`maxVarSize`](/docs/ref/object/sieve-system-interpreter#maxvarsize): maximum size of a variable, in bytes. Default `52428800`.
 
 ### Example
@@ -44,7 +44,7 @@ Resource limits protect the server from scripts that exceed reasonable bounds. T
   "maxReceivedHeaders": 50,
   "maxCpuCycles": 10000,
   "maxNestedIncludes": 5,
-  "duplicateExpiry": "7d"
+  "duplicateExpiry": 604800000
 }
 ```
 

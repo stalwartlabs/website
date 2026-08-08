@@ -27,7 +27,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `totalDeadline`
 
-> Type: <code>Duration</code> · default: `"6h"`
+> Type: <code>Duration</code> · default: `21600000`
 >
 > Total deadline for retrying a task before it is marked as failed
 
@@ -158,14 +158,14 @@ Exponential backoff retry strategy settings.
 
 ##### `initialDelay`
 
-> Type: <code>Duration</code> · default: `"1m"`
+> Type: <code>Duration</code> · default: `60000`
 >
 > Initial delay before retrying a failed task
 
 
 ##### `maxDelay`
 
-> Type: <code>Duration</code> · default: `"30m"`
+> Type: <code>Duration</code> · default: `1800000`
 >
 > Maximum delay between retry attempts
 
@@ -188,7 +188,7 @@ Fixed delay retry strategy settings.
 
 ##### `delay`
 
-> Type: <code>Duration</code> · default: `"5m"`
+> Type: <code>Duration</code> · default: `300000`
 >
 > Fixed delay before retrying a failed task
 

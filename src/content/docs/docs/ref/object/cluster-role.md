@@ -287,7 +287,7 @@ Specifies which tasks are enabled or disabled.
 
 ##### `taskTypes`
 
-> Type: [<code>ClusterTaskType</code>](#clustertasktype)<code>[]</code>
+> Type: <code>Set&lt;</code>[<code>ClusterTaskType</code>](#clustertasktype)<code>&gt;</code>
 >
 > Tasks to enable or disable for this group
 
@@ -316,7 +316,7 @@ Specifies which listeners are enabled or disabled.
 
 ##### `listenerIds`
 
-> Type: <code>Id&lt;</code>[<code>NetworkListener</code>](/docs/ref/object/network-listener)<code>&gt;[]</code>
+> Type: <code>Set&lt;Id&lt;</code>[<code>NetworkListener</code>](/docs/ref/object/network-listener)<code>&gt;&gt;</code>
 >
 > List of network listeners to enable or disable for this group
 

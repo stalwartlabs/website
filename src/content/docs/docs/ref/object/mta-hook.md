@@ -43,14 +43,14 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `stages`
 
-> Type: [<code>MtaStage</code>](#mtastage)<code>[]</code> · default: `["data"]`
+> Type: <code>Set&lt;</code>[<code>MtaStage</code>](#mtastage)<code>&gt;</code> · default: `{"data":true}`
 >
 > Which SMTP stages to run this hook on
 
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > Maximum amount of time that Stalwart will wait for a response from this hook server
 
@@ -302,7 +302,7 @@ A conditional expression with match rules and a default value.
 
 ##### `match`
 
-> Type: [<code>ExpressionMatch</code>](#expressionmatch)<code>[]</code>
+> Type: <code>List&lt;</code>[<code>ExpressionMatch</code>](#expressionmatch)<code>&gt;</code>
 >
 > List of conditions and their corresponding results
 

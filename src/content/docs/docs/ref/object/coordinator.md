@@ -32,7 +32,7 @@ Kafka
 
 ##### `brokers`
 
-> Type: <code>String[]</code> · min items: 1
+> Type: <code>Set&lt;String&gt;</code> · min items: 1
 >
 > List of Kafka brokers
 
@@ -46,14 +46,14 @@ Kafka
 
 ##### `timeoutMessage`
 
-> Type: <code>Duration</code> · default: `"5s"`
+> Type: <code>Duration</code> · default: `5000`
 >
 > Timeout for message processing
 
 
 ##### `timeoutSession`
 
-> Type: <code>Duration</code> · default: `"5s"`
+> Type: <code>Duration</code> · default: `5000`
 >
 > Timeout for session
 
@@ -66,7 +66,7 @@ NATS
 
 ##### `addresses`
 
-> Type: <code>String[]</code> · default: `["127.0.0.1:4444"]` · min items: 1
+> Type: <code>Set&lt;String&gt;</code> · default: `{"127.0.0.1:4444":true}` · min items: 1
 >
 > Address of the NATS server
 
@@ -80,21 +80,21 @@ NATS
 
 ##### `timeoutConnection`
 
-> Type: <code>Duration</code> · default: `"5s"`
+> Type: <code>Duration</code> · default: `5000`
 >
 > Timeout for establishing a connection to the server
 
 
 ##### `timeoutRequest`
 
-> Type: <code>Duration</code> · default: `"10s"`
+> Type: <code>Duration</code> · default: `10000`
 >
 > Timeout for requests to the server
 
 
 ##### `pingInterval`
 
-> Type: <code>Duration</code> · default: `"60s"`
+> Type: <code>Duration</code> · default: `60000`
 >
 > Interval between pings to the server
 
@@ -183,7 +183,7 @@ Redis
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"10s"`
+> Type: <code>Duration</code> · default: `10000`
 >
 > Connection timeout to the database
 
@@ -197,21 +197,21 @@ Redis
 
 ##### `poolTimeoutCreate`
 
-> Type: <code>Duration?</code> · default: `"30s"`
+> Type: <code>Duration?</code> · default: `30000`
 >
 > Timeout for creating a new connection
 
 
 ##### `poolTimeoutWait`
 
-> Type: <code>Duration?</code> · default: `"30s"`
+> Type: <code>Duration?</code> · default: `30000`
 >
 > Timeout for waiting for a connection from the pool
 
 
 ##### `poolTimeoutRecycle`
 
-> Type: <code>Duration?</code> · default: `"30s"`
+> Type: <code>Duration?</code> · default: `30000`
 >
 > Timeout for recycling a connection
 
@@ -224,14 +224,14 @@ Redis Cluster
 
 ##### `urls`
 
-> Type: <code>Uri[]</code> · default: `["redis://127.0.0.1"]`
+> Type: <code>Set&lt;Uri&gt;</code> · default: `{"redis://127.0.0.1":true}`
 >
 > URL(s) of the Redis server(s)
 
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"10s"`
+> Type: <code>Duration</code> · default: `10000`
 >
 > Connection timeout to the database
 
@@ -294,21 +294,21 @@ Redis Cluster
 
 ##### `poolTimeoutCreate`
 
-> Type: <code>Duration?</code> · default: `"30s"`
+> Type: <code>Duration?</code> · default: `30000`
 >
 > Timeout for creating a new connection
 
 
 ##### `poolTimeoutWait`
 
-> Type: <code>Duration?</code> · default: `"30s"`
+> Type: <code>Duration?</code> · default: `30000`
 >
 > Timeout for waiting for a connection from the pool
 
 
 ##### `poolTimeoutRecycle`
 
-> Type: <code>Duration?</code> · default: `"30s"`
+> Type: <code>Duration?</code> · default: `30000`
 >
 > Timeout for recycling a connection
 
@@ -321,7 +321,7 @@ Redis Sentinel
 
 ##### `urls`
 
-> Type: <code>Uri[]</code> · default: `["redis://127.0.0.1:26379"]`
+> Type: <code>Set&lt;Uri&gt;</code> · default: `{"redis://127.0.0.1:26379":true}`
 >
 > Address(es) of the Sentinel node(s)
 
@@ -335,7 +335,7 @@ Redis Sentinel
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"10s"`
+> Type: <code>Duration</code> · default: `10000`
 >
 > Connection timeout to the database
 
@@ -384,21 +384,21 @@ Redis Sentinel
 
 ##### `poolTimeoutCreate`
 
-> Type: <code>Duration?</code> · default: `"30s"`
+> Type: <code>Duration?</code> · default: `30000`
 >
 > Timeout for creating a new connection
 
 
 ##### `poolTimeoutWait`
 
-> Type: <code>Duration?</code> · default: `"30s"`
+> Type: <code>Duration?</code> · default: `30000`
 >
 > Timeout for waiting for a connection from the pool
 
 
 ##### `poolTimeoutRecycle`
 
-> Type: <code>Duration?</code> · default: `"30s"`
+> Type: <code>Duration?</code> · default: `30000`
 >
 > Timeout for recycling a connection
 

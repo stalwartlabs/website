@@ -29,18 +29,24 @@ The MTA-STS policy is published at `/.well-known/mta-sts.txt` under the HTTPS or
 Stalwart can automate the publication of MTA-STS policy files for all hosted domains, keeping every policy up to date without manual intervention. Policy publishing is configured on the [MtaSts](/docs/ref/object/mta-sts) singleton (found in the WebUI under <!-- breadcrumb:MtaSts --><svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M10 5H3" /><path d="M12 19H3" /><path d="M14 3v4" /><path d="M16 17v4" /><path d="M21 12h-9" /><path d="M21 19h-5" /><path d="M21 5h-7" /><path d="M8 10v4" /><path d="M8 12H3" /></svg> Settings › <svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="6" cy="19" r="3" /><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15" /><circle cx="18" cy="5" r="3" /></svg> MTA › Inbound › MTA-STS<!-- /breadcrumb:MtaSts -->):
 
 - [`mode`](/docs/ref/object/mta-sts#mode): operational mode of the policy. Accepted values are `enforce`, `testing`, and `disable`. Default `testing`.
-- [`maxAge`](/docs/ref/object/mta-sts#maxage): how long clients should cache the policy. Default 7 days.
-- [`mxHosts`](/docs/ref/object/mta-sts#mxhosts): optional override for the list of mail servers permitted to receive mail for the domain. If left empty, the hostnames included in all TLS certificates for the domain are used.
+- [`maxAge`](/docs/ref/object/mta-sts#maxage): how long clients should cache the policy, in milliseconds. Default 7 days (`604800000`).
+- [`mxHosts`](/docs/ref/object/mta-sts#mxhosts): optional override for the set of mail servers permitted to receive mail for the domain. If left empty, the hostnames included in all TLS certificates for the domain are used.
 
 Example:
 
 ```json
 {
   "mode": "testing",
-  "maxAge": "7d",
-  "mxHosts": ["mx1.example.com", "mx2.example.com"]
+  "maxAge": 604800000,
+  "mxHosts": {"mx1.example.com": true, "mx2.example.com": true}
 }
 ```
+
+:::note
+Values on this page follow the [object encoding](/docs/configuration/object-encoding) rules: list and set fields are JSON objects rather than arrays, and durations and sizes are integers.
+:::
+
+Note that the `max_age` field published in the policy file itself is expressed in seconds, as required by RFC 8461; the millisecond encoding applies only to the configuration object.
 
 :::tip[Note]
 

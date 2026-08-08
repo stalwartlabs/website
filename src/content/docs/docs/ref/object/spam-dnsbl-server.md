@@ -391,12 +391,10 @@ curl -X POST https://mail.example.com/api \
               "new1": {
                 "@type": "Any",
                 "tag": {
-                  "else": "Example",
-                  "match": {}
+                  "else": "Example"
                 },
                 "zone": {
-                  "else": "Example",
-                  "match": {}
+                  "else": "Example"
                 }
               }
             }
@@ -527,8 +525,8 @@ stalwart-cli get SpamDnsblServer id1
 
 ```sh
 stalwart-cli create SpamDnsblServer/Any \
-  --field 'tag={"else":"Example","match":{}}' \
-  --field 'zone={"else":"Example","match":{}}'
+  --field 'tag={"else":"Example"}' \
+  --field 'zone={"else":"Example"}'
 ```
 
 
@@ -566,7 +564,7 @@ A conditional expression with match rules and a default value.
 
 ##### `match`
 
-> Type: [<code>ExpressionMatch</code>](#expressionmatch)<code>[]</code>
+> Type: <code>List&lt;</code>[<code>ExpressionMatch</code>](#expressionmatch)<code>&gt;</code>
 >
 > List of conditions and their corresponding results
 

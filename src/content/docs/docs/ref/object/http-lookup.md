@@ -55,28 +55,28 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `maxSize`
 
-> Type: <code>Size</code> · default: `"100mb"` · max: 1073741824 · min: 10
+> Type: <code>Size</code> · default: `104857600` · max: 1073741824 · min: 10
 >
 > Maximum size of the list. The list is truncated if it exceeds this size.
 
 
 ##### `refresh`
 
-> Type: <code>Duration</code> · default: `"12h"`
+> Type: <code>Duration</code> · default: `43200000`
 >
 > How often to refresh the list
 
 
 ##### `retry`
 
-> Type: <code>Duration</code> · default: `"1h"`
+> Type: <code>Duration</code> · default: `3600000`
 >
 > How long to wait before retrying to download the list in case of failure.
 
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > How long to wait for the list to download before timing out
 

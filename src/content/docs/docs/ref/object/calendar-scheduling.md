@@ -27,7 +27,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `httpRsvpLinkExpiry`
 
-> Type: <code>Duration</code> · default: `"90d"`
+> Type: <code>Duration</code> · default: `7776000000`
 >
 > Sets the expiration duration for HTTP RSVP links, after which they will no longer be valid.
 
@@ -48,7 +48,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `itipMaxSize`
 
-> Type: <code>Size</code> · default: `"512kb"` · min: 100
+> Type: <code>Size</code> · default: `524288` · min: 100
 >
 > Sets the maximum iCalendar object size for incoming iTIP messages.
 

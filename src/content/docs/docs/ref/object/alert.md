@@ -105,8 +105,7 @@ curl -X POST https://mail.example.com/api \
             "create": {
               "new1": {
                 "condition": {
-                  "else": "Example",
-                  "match": {}
+                  "else": "Example"
                 },
                 "emailAlert": {
                   "@type": "Disabled"
@@ -144,8 +143,7 @@ curl -X POST https://mail.example.com/api \
             "update": {
               "id1": {
                 "condition": {
-                  "else": "Example",
-                  "match": {}
+                  "else": "Example"
                 }
               }
             }
@@ -238,7 +236,7 @@ stalwart-cli get Alert id1
 
 ```sh
 stalwart-cli create Alert \
-  --field 'condition={"else":"Example","match":{}}' \
+  --field 'condition={"else":"Example"}' \
   --field 'emailAlert={"@type":"Disabled"}' \
   --field 'eventAlert={"@type":"Disabled"}'
 ```
@@ -254,7 +252,7 @@ stalwart-cli query Alert
 ### Update
 
 ```sh
-stalwart-cli update Alert id1 --field condition='{"else":"Example","match":{}}'
+stalwart-cli update Alert id1 --field condition='{"else":"Example"}'
 ```
 
 
@@ -277,7 +275,7 @@ A conditional expression with match rules and a default value.
 
 ##### `match`
 
-> Type: [<code>ExpressionMatch</code>](#expressionmatch)<code>[]</code>
+> Type: <code>List&lt;</code>[<code>ExpressionMatch</code>](#expressionmatch)<code>&gt;</code>
 >
 > List of conditions and their corresponding results
 
@@ -362,7 +360,7 @@ Alert email notification settings.
 
 ##### `to`
 
-> Type: <code>EmailAddress[]</code> · min items: 1
+> Type: <code>Set&lt;EmailAddress&gt;</code> · min items: 1
 >
 > The email address of the recipient(s)
 

@@ -232,33 +232,33 @@ The mail and HTTP listeners are defined as [NetworkListener](/docs/ref/object/ne
   {
     "name": "http",
     "protocol": "http",
-    "bind": ["[::]:8080"]
+    "bind": {"[::]:8080": true}
   },
   {
     "name": "https",
     "protocol": "http",
-    "bind": ["[::]:443"],
+    "bind": {"[::]:443": true},
     "tlsImplicit": true
   },
   {
     "name": "smtp",
     "protocol": "smtp",
-    "bind": ["[::]:25"],
-    "overrideProxyTrustedNetworks": ["172.19.0.2", "172.19.0.0/16"]
+    "bind": {"[::]:25": true},
+    "overrideProxyTrustedNetworks": {"172.19.0.2": true, "172.19.0.0/16": true}
   },
   {
     "name": "submissions",
     "protocol": "smtp",
-    "bind": ["[::]:465"],
+    "bind": {"[::]:465": true},
     "tlsImplicit": true,
-    "overrideProxyTrustedNetworks": ["172.19.0.2", "172.19.0.0/16"]
+    "overrideProxyTrustedNetworks": {"172.19.0.2": true, "172.19.0.0/16": true}
   },
   {
     "name": "imaptls",
     "protocol": "imap",
-    "bind": ["[::]:993"],
+    "bind": {"[::]:993": true},
     "tlsImplicit": true,
-    "overrideProxyTrustedNetworks": ["172.19.0.2", "172.19.0.0/16"]
+    "overrideProxyTrustedNetworks": {"172.19.0.2": true, "172.19.0.0/16": true}
   }
 ]
 ```

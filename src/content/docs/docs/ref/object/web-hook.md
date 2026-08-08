@@ -27,21 +27,21 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `throttle`
 
-> Type: <code>Duration</code> · default: `"1s"`
+> Type: <code>Duration</code> · default: `1000`
 >
 > The minimum amount of time that must pass between each request to the webhook endpoint
 
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > Maximum amount of time that Stalwart will wait for a response from this webhook
 
 
 ##### `discardAfter`
 
-> Type: <code>Duration</code> · default: `"5m"`
+> Type: <code>Duration</code> · default: `300000`
 >
 > The duration after which the webhook will be discarded if it cannot be delivered
 
@@ -90,7 +90,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `events`
 
-> Type: [<code>EventType</code>](/docs/ref/events)<code>[]</code>
+> Type: <code>Set&lt;</code>[<code>EventType</code>](/docs/ref/events)<code>&gt;</code>
 >
 > List of events to include or exclude based on filter mode
 

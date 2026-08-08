@@ -11,7 +11,7 @@ Each ClusterRole carries the following fields:
 
 - [`name`](/docs/ref/object/cluster-role#name): a unique identifier for the role (read-only).
 - [`description`](/docs/ref/object/cluster-role#description): a human-readable description.
-- [`tasks`](/docs/ref/object/cluster-role#tasks): a [ClusterTaskGroup](/docs/ref/object/cluster-role#clustertaskgroup) selecting which cluster tasks the role enables. The variants are `EnableAll`, `DisableAll`, `EnableSome`, and `DisableSome`; the `EnableSome` and `DisableSome` variants carry a list of task types via `taskTypes`.
+- [`tasks`](/docs/ref/object/cluster-role#tasks): a [ClusterTaskGroup](/docs/ref/object/cluster-role#clustertaskgroup) selecting which cluster tasks the role enables. The variants are `EnableAll`, `DisableAll`, `EnableSome`, and `DisableSome`; the `EnableSome` and `DisableSome` variants carry a set of task types via `taskTypes`.
 - [`listeners`](/docs/ref/object/cluster-role#listeners): a [ClusterListenerGroup](/docs/ref/object/cluster-role#clusterlistenergroup) selecting which network listeners the role enables. The variants mirror those of `tasks`, with a `listenerIds` field referencing [NetworkListener](/docs/ref/object/network-listener) ids.
 
 A node is assigned to a role through the [`STALWART_ROLE`](/docs/configuration/environment-variables#clustering) environment variable, which names the ClusterRole whose tasks and listeners the node should run.
@@ -60,13 +60,13 @@ A simple two-role deployment might define a `frontend` role that serves client-f
   "description": "Runs store maintenance, indexing, and metrics",
   "tasks": {
     "@type": "EnableSome",
-    "taskTypes": [
-      "storeMaintenance",
-      "accountMaintenance",
-      "searchIndexing",
-      "metricsCalculate",
-      "metricsPush"
-    ]
+    "taskTypes": {
+      "storeMaintenance": true,
+      "accountMaintenance": true,
+      "searchIndexing": true,
+      "metricsCalculate": true,
+      "metricsPush": true
+    }
   },
   "listeners": {
     "@type": "DisableAll"

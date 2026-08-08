@@ -15,7 +15,7 @@ Example configuration setting all three fields together, including a per-listene
 {
   "require": {"else": "true"},
   "rejectNonFqdn": {
-    "match": [{"if": "listener == 'smtp'", "then": "true"}],
+    "match": {"0": {"if": "listener == 'smtp'", "then": "true"}},
     "else": "false"
   },
   "script": {"else": "'ehlo'"}
@@ -70,27 +70,27 @@ Example configuration restricting advanced extensions to authenticated sessions:
   "requireTls": {"else": "true"},
   "noSoliciting": {"else": "''"},
   "dsn": {
-    "match": [{"if": "!is_empty(authenticated_as)", "then": "true"}],
+    "match": {"0": {"if": "!is_empty(authenticated_as)", "then": "true"}},
     "else": "false"
   },
   "futureRelease": {
-    "match": [{"if": "!is_empty(authenticated_as)", "then": "7d"}],
+    "match": {"0": {"if": "!is_empty(authenticated_as)", "then": "7d"}},
     "else": "false"
   },
   "deliverBy": {
-    "match": [{"if": "!is_empty(authenticated_as)", "then": "15d"}],
+    "match": {"0": {"if": "!is_empty(authenticated_as)", "then": "15d"}},
     "else": "false"
   },
   "mtPriority": {
-    "match": [{"if": "!is_empty(authenticated_as)", "then": "mixer"}],
+    "match": {"0": {"if": "!is_empty(authenticated_as)", "then": "mixer"}},
     "else": "false"
   },
   "vrfy": {
-    "match": [{"if": "!is_empty(authenticated_as)", "then": "true"}],
+    "match": {"0": {"if": "!is_empty(authenticated_as)", "then": "true"}},
     "else": "false"
   },
   "expn": {
-    "match": [{"if": "!is_empty(authenticated_as)", "then": "true"}],
+    "match": {"0": {"if": "!is_empty(authenticated_as)", "then": "true"}},
     "else": "false"
   }
 }

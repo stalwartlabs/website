@@ -23,13 +23,13 @@ Both exporters can be configured at the same time when two independent collector
 
 ## Selecting metrics
 
-The set of metrics exported is controlled by [`metrics`](/docs/ref/object/metrics) and [`metricsPolicy`](/docs/ref/object/metrics#metricspolicy) on the `Metrics` singleton. With [`metricsPolicy`](/docs/ref/object/metrics#metricspolicy) set to `exclude` (the default), the listed metrics are suppressed and everything else is emitted; with `include`, only the listed metrics are emitted.
+The set of metrics exported is controlled by [`metrics`](/docs/ref/object/metrics) and [`metricsPolicy`](/docs/ref/object/metrics#metricspolicy) on the `Metrics` singleton. [`metrics`](/docs/ref/object/metrics) is a set in which each selected metric is a key mapped to `true`. With [`metricsPolicy`](/docs/ref/object/metrics#metricspolicy) set to `exclude` (the default), the selected metrics are suppressed and everything else is emitted; with `include`, only the selected metrics are emitted.
 
 For example, to suppress the noise of `auth.error` and `smtp.error` while leaving every other metric enabled:
 
 ```json
 {
-  "metrics": ["auth.error", "smtp.error"],
+  "metrics": {"auth.error": true, "smtp.error": true},
   "metricsPolicy": "exclude"
 }
 ```

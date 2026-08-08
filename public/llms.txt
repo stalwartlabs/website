@@ -113,6 +113,7 @@ The documentation is versioned; links below point at the current release line. O
 - [Variables](https://stalw.art/docs/configuration/variables): template variables.
 - [Environment variables](https://stalw.art/docs/configuration/environment-variables): supported environment variables.
 - [Expressions](https://stalw.art/docs/configuration/expressions/): expression language used throughout the configuration.
+- [Object encoding](https://stalw.art/docs/configuration/object-encoding): how configuration values are encoded as JSON (lists, sets, durations, sizes).
 
 ## Domains and encryption
 

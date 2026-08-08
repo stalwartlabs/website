@@ -18,7 +18,9 @@ Whether to sign a given message (and with which signature(s)) is controlled by t
 ```json
 {
   "dkimSignDomain": {
-    "match": [{"if": "is_local_domain(sender_domain) && !is_empty(authenticated_as)", "then": "sender_domain"}],
+    "match": {
+      "0": {"if": "is_local_domain(sender_domain) && !is_empty(authenticated_as)", "then": "sender_domain"}
+    },
     "else": "false"
   }
 }
@@ -33,9 +35,9 @@ DKIM signatures are [DkimSignature](/docs/ref/object/dkim-signature) objects (fo
 - [`privateKey`](/docs/ref/object/dkim-signature#privatekey): the PEM-encoded private key used for signing. Can be supplied directly or read from an environment variable or file.
 - [`domainId`](/docs/ref/object/dkim-signature#domainid): the identifier of the [Domain](/docs/ref/object/domain) this signature belongs to.
 - [`selector`](/docs/ref/object/dkim-signature#selector): the selector used to locate the public key in DNS.
-- [`headers`](/docs/ref/object/dkim-signature#headers): the list of headers included in the signature. Defaults to `["From", "To", "Date", "Subject", "Message-ID"]`.
+- [`headers`](/docs/ref/object/dkim-signature#headers): the set of headers included in the signature. Defaults to `{"From": true, "To": true, "Date": true, "Subject": true, "Message-ID": true}`.
 - [`canonicalization`](/docs/ref/object/dkim-signature#canonicalization): the canonicalization algorithm applied to the headers and body. Defaults to `relaxed/relaxed`.
-- [`expire`](/docs/ref/object/dkim-signature#expire): optional signature lifetime.
+- [`expire`](/docs/ref/object/dkim-signature#expire): optional signature lifetime, in milliseconds.
 - [`thirdParty`](/docs/ref/object/dkim-signature#thirdparty): optional authorised third-party signature value.
 - [`thirdPartyHash`](/docs/ref/object/dkim-signature#thirdpartyhash): optional hashing algorithm (`sha256` or `sha1`) used to verify third-party signature DNS records.
 - [`auid`](/docs/ref/object/dkim-signature#auid): optional Agent User Identifier included in the signature header.
@@ -52,9 +54,14 @@ For example, a pair of RSA and Ed25519 signatures for `example.org`, each coveri
     "domainId": "<Domain id>",
     "selector": "rsa-default",
     "privateKey": {"@type": "File", "filePath": "/opt/stalwart/etc/private/dkim-rsa.key"},
-    "headers": ["From", "To", "Cc", "Date", "Subject", "Message-ID", "Organization", "MIME-Version", "Content-Type", "In-Reply-To", "References", "List-Id", "User-Agent", "Thread-Topic", "Thread-Index"],
+    "headers": {
+      "From": true, "To": true, "Cc": true, "Date": true, "Subject": true,
+      "Message-ID": true, "Organization": true, "MIME-Version": true,
+      "Content-Type": true, "In-Reply-To": true, "References": true,
+      "List-Id": true, "User-Agent": true, "Thread-Topic": true, "Thread-Index": true
+    },
     "canonicalization": "relaxed/relaxed",
-    "expire": "10d",
+    "expire": 864000000,
     "report": true,
     "stage": "active"
   },
@@ -63,13 +70,22 @@ For example, a pair of RSA and Ed25519 signatures for `example.org`, each coveri
     "domainId": "<Domain id>",
     "selector": "ed-default",
     "privateKey": {"@type": "File", "filePath": "/opt/stalwart/etc/private/dkim-ed.key"},
-    "headers": ["From", "To", "Cc", "Date", "Subject", "Message-ID", "Organization", "MIME-Version", "Content-Type", "In-Reply-To", "References", "List-Id", "User-Agent", "Thread-Topic", "Thread-Index"],
+    "headers": {
+      "From": true, "To": true, "Cc": true, "Date": true, "Subject": true,
+      "Message-ID": true, "Organization": true, "MIME-Version": true,
+      "Content-Type": true, "In-Reply-To": true, "References": true,
+      "List-Id": true, "User-Agent": true, "Thread-Topic": true, "Thread-Index": true
+    },
     "canonicalization": "relaxed/relaxed",
     "report": false,
     "stage": "active"
   }
 ]
 ```
+
+:::note
+Values on this page follow the [object encoding](/docs/configuration/object-encoding) rules: list and set fields are JSON objects rather than arrays, and durations and sizes are integers.
+:::
 
 ## Multiple domains
 

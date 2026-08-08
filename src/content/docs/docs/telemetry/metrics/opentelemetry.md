@@ -18,8 +18,8 @@ The OpenTelemetry metrics exporter is configured through [`openTelemetry`](/docs
 Both active variants share the following fields:
 
 - [`endpoint`](/docs/ref/object/metrics#metricsotelhttp): collector endpoint URL. Required for `Http`; optional for `Grpc` (when omitted, the SDK default endpoint is used).
-- [`interval`](/docs/ref/object/metrics#metricsotelhttp): minimum interval between push requests. Default `"1m"`.
-- [`timeout`](/docs/ref/object/metrics#metricsotelhttp): maximum time to wait for a response. Default `"10s"`.
+- [`interval`](/docs/ref/object/metrics#metricsotelhttp): minimum interval between push requests, in milliseconds. Default `60000` (one minute).
+- [`timeout`](/docs/ref/object/metrics#metricsotelhttp): maximum time to wait for a response, in milliseconds. Default `10000` (ten seconds).
 
 The `Http` variant additionally carries:
 
@@ -35,7 +35,7 @@ The equivalent of pushing over gRPC every thirty seconds to a collector at `http
   "openTelemetry": {
     "@type": "Grpc",
     "endpoint": "https://otel-collector.example.com/v1/metrics",
-    "interval": "30s"
+    "interval": 30000
   }
 }
 ```

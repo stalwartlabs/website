@@ -11,7 +11,7 @@ ManageSieve begins with the server announcing its capabilities, so on connection
 
 ## Authentication
 
-Authentication uses the `AUTHENTICATE` command with a SASL mechanism, one of `PLAIN`, `OAUTHBEARER` or `XOAUTH2`. The SASL initial response may be supplied inline or as a literal after the proxy's continuation prompt, following the ManageSieve literal syntax. Cleartext `PLAIN` authentication is gated on transport security and refused until the connection is encrypted unless `allow_plain_auth_without_tls` is set. The routing identifier is extracted from the credentials as described under [Routing](/docs/migration/proxy/routing/).
+Authentication uses the `AUTHENTICATE` command with a SASL mechanism, one of `PLAIN`, `LOGIN`, `OAUTHBEARER` or `XOAUTH2`. The SASL initial response may be supplied inline, as a quoted string, or as a literal after the proxy's continuation prompt, following the ManageSieve literal syntax. With `LOGIN`, the proxy issues the base64 `Username:` and `Password:` challenges as literals and reconstructs the answers as a `PLAIN` challenge, so the backend leg only ever sees `PLAIN`. Cleartext `PLAIN` and `LOGIN` authentication is gated on transport security and refused until the connection is encrypted unless `allow_plain_auth_without_tls` is set. The routing identifier is extracted from the credentials as described under [Routing](/docs/migration/proxy/routing/).
 
 ## Backend handshake
 

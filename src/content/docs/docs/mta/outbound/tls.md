@@ -62,10 +62,14 @@ Timeouts for TLS-related operations are governed by [`tlsTimeout`](/docs/ref/obj
 
 ```json
 {
-  "tlsTimeout": "3m",
-  "mtaStsTimeout": "3m"
+  "tlsTimeout": 180000,
+  "mtaStsTimeout": 180000
 }
 ```
+
+:::note
+Values on this page follow the [object encoding](/docs/configuration/object-encoding) rules: list and set fields are JSON objects rather than arrays, and durations and sizes are integers.
+:::
 
 ## Examples
 
@@ -80,10 +84,10 @@ The TLS expression on MtaOutboundStrategy:
 ```json
 {
   "tls": {
-    "match": [
-      {"if": "retry_num > 0 && last_error == 'tls'", "then": "'invalid-tls'"},
-      {"if": "retry_num > 1 && last_error == 'tls'", "then": "'disable-tls'"}
-    ],
+    "match": {
+      "0": {"if": "retry_num > 0 && last_error == 'tls'", "then": "'invalid-tls'"},
+      "1": {"if": "retry_num > 1 && last_error == 'tls'", "then": "'disable-tls'"}
+    },
     "else": "'default'"
   }
 }
@@ -120,7 +124,9 @@ TLS strategies can also enforce strict transport security for specific hosts. A 
 ```json
 {
   "tls": {
-    "match": [{"if": "mx == 'highly-secure.host.org'", "then": "'high-security'"}],
+    "match": {
+      "0": {"if": "mx == 'highly-secure.host.org'", "then": "'high-security'"}
+    },
     "else": "'default'"
   }
 }

@@ -129,7 +129,7 @@ PostgreSQL
 
 ##### `timeout`
 
-> Type: <code>Duration?</code> · default: `"15s"`
+> Type: <code>Duration?</code> · default: `15000`
 >
 > Connection timeout to the database
 
@@ -164,7 +164,7 @@ PostgreSQL
 
 ##### `readReplicas`
 
-> Type: [<code>PostgreSqlSettings</code>](#postgresqlsettings)<code>[]</code> · [enterprise](/docs/server/enterprise)
+> Type: <code>List&lt;</code>[<code>PostgreSqlSettings</code>](#postgresqlsettings)<code>&gt;</code> · [enterprise](/docs/server/enterprise)
 >
 > List of read replicas for the store
 
@@ -219,7 +219,7 @@ mySQL
 
 ##### `timeout`
 
-> Type: <code>Duration?</code> · default: `"15s"`
+> Type: <code>Duration?</code> · default: `15000`
 >
 > Connection timeout to the database
 
@@ -261,7 +261,7 @@ mySQL
 
 ##### `readReplicas`
 
-> Type: [<code>MySqlSettings</code>](#mysqlsettings)<code>[]</code> · [enterprise](/docs/server/enterprise)
+> Type: <code>List&lt;</code>[<code>MySqlSettings</code>](#mysqlsettings)<code>&gt;</code> · [enterprise](/docs/server/enterprise)
 >
 > List of read replicas for the store
 

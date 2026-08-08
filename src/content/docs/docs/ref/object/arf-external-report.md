@@ -34,7 +34,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `to`
 
-> Type: <code>EmailAddress[]</code>
+> Type: <code>Set&lt;EmailAddress&gt;</code>
 >
 > List of recipient email addresses
 
@@ -312,7 +312,7 @@ Parsed content of an ARF feedback report.
 
 ##### `authenticationResults`
 
-> Type: <code>String[]</code>
+> Type: <code>Set&lt;String&gt;</code>
 >
 > Authentication-Results header values from the original message
 
@@ -347,14 +347,14 @@ Parsed content of an ARF feedback report.
 
 ##### `reportedDomains`
 
-> Type: <code>DomainName[]</code>
+> Type: <code>Set&lt;DomainName&gt;</code>
 >
 > Domains being reported
 
 
 ##### `reportedUris`
 
-> Type: <code>Uri[]</code>
+> Type: <code>Set&lt;Uri&gt;</code>
 >
 > URIs being reported
 

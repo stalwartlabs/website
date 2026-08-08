@@ -28,22 +28,26 @@ Outbound rate limits are defined as [MtaOutboundThrottle](/docs/ref/object/mta-o
 Both MtaInboundThrottle and MtaOutboundThrottle expose the same core fields:
 
 - [`enable`](/docs/ref/object/mta-outbound-throttle#enable): whether the throttle is active. Default `true`.
-- [`rate`](/docs/ref/object/mta-outbound-throttle#rate): the rate limit itself, a `Rate` object with `count` (requests allowed) and `period` (time window).
-- [`key`](/docs/ref/object/mta-outbound-throttle#key): optional list of context variables that scope the limit (see [Groups](#groups) below).
+- [`rate`](/docs/ref/object/mta-outbound-throttle#rate): the rate limit itself, a `Rate` object with `count` (requests allowed) and `period` (time window, in milliseconds).
+- [`key`](/docs/ref/object/mta-outbound-throttle#key): optional set of context variables that scope the limit (see [Groups](#groups) below).
 - [`match`](/docs/ref/object/mta-outbound-throttle#match): optional expression that determines whether the limit applies in a given context.
 - [`description`](/docs/ref/object/mta-outbound-throttle#description): short description used for identification (required on MtaOutboundThrottle, read-only on MtaInboundThrottle).
 
-A throttle with an empty `key` list applies globally. For example, an outbound throttle allowing at most 100 outgoing messages per second across all destinations:
+A throttle with an empty `key` applies globally. For example, an outbound throttle allowing at most 100 outgoing messages per second across all destinations:
 
 ```json
 {
   "enable": true,
   "description": "Global outbound cap",
-  "key": [],
+  "key": {},
   "match": {"else": "true"},
-  "rate": {"count": 100, "period": "1s"}
+  "rate": {"count": 100, "period": 1000}
 }
 ```
+
+:::note
+Values on this page follow the [object encoding](/docs/configuration/object-encoding) rules: list and set fields are JSON objects rather than arrays, and durations and sizes are integers.
+:::
 
 ### Groups
 
@@ -76,9 +80,9 @@ For example, an outbound throttle limiting to 25 messages per hour per recipient
 {
   "enable": true,
   "description": "Per recipient domain throttle",
-  "key": ["rcptDomain"],
+  "key": {"rcptDomain": true},
   "match": {"else": "true"},
-  "rate": {"count": 25, "period": "1h"}
+  "rate": {"count": 25, "period": 3600000}
 }
 ```
 
@@ -87,9 +91,9 @@ And an inbound throttle limiting a single sending domain to 6 messages per minut
 ```json
 {
   "enable": true,
-  "key": ["senderDomain", "rcpt"],
+  "key": {"senderDomain": true, "rcpt": true},
   "match": {"else": "true"},
-  "rate": {"count": 6, "period": "1m"}
+  "rate": {"count": 6, "period": 60000}
 }
 ```
 
@@ -101,9 +105,9 @@ The `match` expression can restrict a throttle to specific contexts. For example
 {
   "enable": true,
   "description": "Throttle deliveries routed via 192.0.2.20",
-  "key": ["sender", "rcptDomain"],
+  "key": {"sender": true, "rcptDomain": true},
   "match": {"else": "remote_ip == '192.0.2.20'"},
-  "rate": {"count": 100, "period": "1h"}
+  "rate": {"count": 100, "period": 3600000}
 }
 ```
 
@@ -112,8 +116,8 @@ And an inbound throttle imposing a per-recipient limit only for connections from
 ```json
 {
   "enable": true,
-  "key": ["rcpt"],
+  "key": {"rcpt": true},
   "match": {"else": "remote_ip == '192.0.2.25'"},
-  "rate": {"count": 5, "period": "1h"}
+  "rate": {"count": 5, "period": 3600000}
 }
 ```

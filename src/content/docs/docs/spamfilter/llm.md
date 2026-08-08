@@ -68,8 +68,8 @@ The relevant fields are:
 - [`responsePosCategory`](/docs/ref/object/spam-llm#responseposcategory): zero-based index of the category in the response. Default `0`.
 - [`responsePosConfidence`](/docs/ref/object/spam-llm#responseposconfidence): zero-based index of the confidence in the response. Default `1`.
 - [`responsePosExplanation`](/docs/ref/object/spam-llm#responseposexplanation): zero-based index of the explanation in the response. Default `2`.
-- [`categories`](/docs/ref/object/spam-llm#categories): accepted category labels. Responses outside this list are ignored. Default `["Unsolicited", "Commercial", "Harmful", "Legitimate"]`.
-- [`confidence`](/docs/ref/object/spam-llm#confidence): accepted confidence labels. Responses outside this list are ignored. Default `["High", "Medium", "Low"]`.
+- [`categories`](/docs/ref/object/spam-llm#categories): accepted category labels. Responses outside this set are ignored. Default `{"Unsolicited": true, "Commercial": true, "Harmful": true, "Legitimate": true}`.
+- [`confidence`](/docs/ref/object/spam-llm#confidence): accepted confidence labels. Responses outside this set are ignored. Default `{"High": true, "Medium": true, "Low": true}`.
 
 Example showing the defaults explicitly:
 
@@ -78,8 +78,8 @@ Example showing the defaults explicitly:
   "@type": "Enable",
   "modelId": "chat",
   "separator": ",",
-  "categories": ["Unsolicited", "Commercial", "Harmful", "Legitimate"],
-  "confidence": ["High", "Medium", "Low"],
+  "categories": {"Unsolicited": true, "Commercial": true, "Harmful": true, "Legitimate": true},
+  "confidence": {"High": true, "Medium": true, "Low": true},
   "responsePosCategory": 0,
   "responsePosConfidence": 1,
   "responsePosExplanation": 2

@@ -16,7 +16,7 @@ For example, a listener named `sieve` that binds to port 4190 on all interfaces 
 ```json
 {
   "name": "sieve",
-  "bind": ["[::]:4190"],
+  "bind": {"[::]:4190": true},
   "protocol": "manageSieve",
   "tlsImplicit": true
 }

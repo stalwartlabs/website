@@ -34,7 +34,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `to`
 
-> Type: <code>EmailAddress[]</code>
+> Type: <code>Set&lt;EmailAddress&gt;</code>
 >
 > List of recipient email addresses
 
@@ -367,7 +367,7 @@ Content of a DMARC aggregate report.
 
 ##### `errors`
 
-> Type: <code>String[]</code>
+> Type: <code>Set&lt;String&gt;</code>
 >
 > Errors encountered during report generation
 
@@ -423,21 +423,21 @@ Content of a DMARC aggregate report.
 
 ##### `policyFailureReportingOptions`
 
-> Type: [<code>FailureReportingOption</code>](#failurereportingoption)<code>[]</code>
+> Type: <code>Set&lt;</code>[<code>FailureReportingOption</code>](#failurereportingoption)<code>&gt;</code>
 >
 > Conditions under which failure reports should be generated
 
 
 ##### `records`
 
-> Type: [<code>DmarcReportRecord</code>](#dmarcreportrecord)<code>[]</code>
+> Type: <code>List&lt;</code>[<code>DmarcReportRecord</code>](#dmarcreportrecord)<code>&gt;</code>
 >
 > Aggregated authentication results grouped by source
 
 
 ##### `extensions`
 
-> Type: [<code>DmarcExtension</code>](#dmarcextension)<code>[]</code>
+> Type: <code>List&lt;</code>[<code>DmarcExtension</code>](#dmarcextension)<code>&gt;</code>
 >
 > Custom vendor-specific extensions to the report
 
@@ -509,7 +509,7 @@ An aggregated authentication result record from a single source.
 
 ##### `policyOverrideReasons`
 
-> Type: [<code>DmarcPolicyOverrideReason</code>](#dmarcpolicyoverridereason)<code>[]</code>
+> Type: <code>List&lt;</code>[<code>DmarcPolicyOverrideReason</code>](#dmarcpolicyoverridereason)<code>&gt;</code>
 >
 > Reasons why the evaluated disposition differs from the published policy
 
@@ -537,21 +537,21 @@ An aggregated authentication result record from a single source.
 
 ##### `dkimResults`
 
-> Type: [<code>DmarcDkimResult</code>](#dmarcdkimresult)<code>[]</code>
+> Type: <code>List&lt;</code>[<code>DmarcDkimResult</code>](#dmarcdkimresult)<code>&gt;</code>
 >
 > DKIM authentication results for the messages
 
 
 ##### `spfResults`
 
-> Type: [<code>DmarcSpfResult</code>](#dmarcspfresult)<code>[]</code>
+> Type: <code>List&lt;</code>[<code>DmarcSpfResult</code>](#dmarcspfresult)<code>&gt;</code>
 >
 > SPF authentication results for the messages
 
 
 ##### `extensions`
 
-> Type: [<code>DmarcExtension</code>](#dmarcextension)<code>[]</code>
+> Type: <code>List&lt;</code>[<code>DmarcExtension</code>](#dmarcextension)<code>&gt;</code>
 >
 > Custom vendor-specific extensions to this record
 

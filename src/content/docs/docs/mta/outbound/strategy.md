@@ -34,24 +34,34 @@ A typical configuration sets each expression to pick a different strategy name b
 ```json
 {
   "route": {
-    "match": [{"if": "is_local_domain('', rcpt_domain)", "then": "'local'"}],
+    "match": {
+      "0": {"if": "is_local_domain('', rcpt_domain)", "then": "'local'"}
+    },
     "else": "'mx'"
   },
   "schedule": {
-    "match": [
-      {"if": "is_local_domain('*', rcpt_domain)", "then": "'local'"},
-      {"if": "source == 'dsn'", "then": "'dsn'"},
-      {"if": "source == 'report'", "then": "'report'"}
-    ],
+    "match": {
+      "0": {"if": "is_local_domain('*', rcpt_domain)", "then": "'local'"},
+      "1": {"if": "source == 'dsn'", "then": "'dsn'"},
+      "2": {"if": "source == 'report'", "then": "'report'"}
+    },
     "else": "'remote'"
   },
   "connection": {
-    "match": [{"if": "retry_num > 0 && last_error == 'connection'", "then": "'long-timeout'"}],
+    "match": {
+      "0": {"if": "retry_num > 0 && last_error == 'connection'", "then": "'long-timeout'"}
+    },
     "else": "'default'"
   },
   "tls": {
-    "match": [{"if": "retry_num > 0 && last_error == 'tls'", "then": "'invalid-tls'"}],
+    "match": {
+      "0": {"if": "retry_num > 0 && last_error == 'tls'", "then": "'invalid-tls'"}
+    },
     "else": "'default'"
   }
 }
 ```
+
+:::note
+Values on this page follow the [object encoding](/docs/configuration/object-encoding) rules: list and set fields are JSON objects rather than arrays, and durations and sizes are integers.
+:::

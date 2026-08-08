@@ -13,7 +13,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `rejectNonFqdn`
 
-> Type: [<code>Expression</code>](#expression) · default: `{"else":"false","match":[{"if":"local_port == 25","then":"true"}]}`
+> Type: [<code>Expression</code>](#expression) · default: `{"else":"false"}`
 >
 > Whether to reject EHLO commands that do not include a fully-qualified domain name as a parameter
 >
@@ -99,13 +99,7 @@ curl -X POST https://mail.example.com/api \
             "update": {
               "singleton": {
                 "rejectNonFqdn": {
-                  "else": "false",
-                  "match": [
-                    {
-                      "if": "local_port == 25",
-                      "then": "true"
-                    }
-                  ]
+                  "else": "false"
                 }
               }
             }
@@ -138,7 +132,7 @@ stalwart-cli get MtaStageEhlo
 ### Update
 
 ```sh
-stalwart-cli update MtaStageEhlo --field rejectNonFqdn='{"else":"false","match":[{"if":"local_port == 25","then":"true"}]}'
+stalwart-cli update MtaStageEhlo --field rejectNonFqdn='{"else":"false"}'
 ```
 
 
@@ -154,7 +148,7 @@ A conditional expression with match rules and a default value.
 
 ##### `match`
 
-> Type: [<code>ExpressionMatch</code>](#expressionmatch)<code>[]</code>
+> Type: <code>List&lt;</code>[<code>ExpressionMatch</code>](#expressionmatch)<code>&gt;</code>
 >
 > List of conditions and their corresponding results
 

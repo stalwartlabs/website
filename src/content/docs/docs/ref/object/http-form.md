@@ -13,7 +13,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `deliverTo`
 
-> Type: <code>EmailAddress[]</code>
+> Type: <code>Set&lt;EmailAddress&gt;</code>
 >
 > List of local e-mail addresses to deliver the contact form to.
 
@@ -48,7 +48,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `maxSize`
 
-> Type: <code>Size</code> · default: `"100kb"`
+> Type: <code>Size</code> · default: `102400`
 >
 > Maximum size of the contact form submission in bytes.
 
@@ -69,7 +69,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `rateLimit`
 
-> Type: [<code>Rate</code>](#rate)<code>?</code> · default: `{"count":5,"period":"1h"}`
+> Type: [<code>Rate</code>](#rate)<code>?</code> · default: `{"count":5,"period":3600000}`
 >
 > Maximum number of contact form submissions that can be made in a timeframe by a given IP address.
 
@@ -210,7 +210,7 @@ Defines a rate limit as a count over a time period.
 
 ##### `period`
 
-> Type: <code>Duration</code> · default: `"0s"` · min: 1
+> Type: <code>Duration</code> · default: `0` · min: 1
 >
 > Period
 

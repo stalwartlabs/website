@@ -76,7 +76,7 @@ Log file
 
 ##### `events`
 
-> Type: [<code>EventType</code>](/docs/ref/events)<code>[]</code>
+> Type: <code>Set&lt;</code>[<code>EventType</code>](/docs/ref/events)<code>&gt;</code>
 >
 > List of events to include or exclude based on filter mode
 
@@ -138,7 +138,7 @@ Console
 
 ##### `events`
 
-> Type: [<code>EventType</code>](/docs/ref/events)<code>[]</code>
+> Type: <code>Set&lt;</code>[<code>EventType</code>](/docs/ref/events)<code>&gt;</code>
 >
 > List of events to include or exclude based on filter mode
 
@@ -179,7 +179,7 @@ Systemd Journal
 
 ##### `events`
 
-> Type: [<code>EventType</code>](/docs/ref/events)<code>[]</code>
+> Type: <code>Set&lt;</code>[<code>EventType</code>](/docs/ref/events)<code>&gt;</code>
 >
 > List of events to include or exclude based on filter mode
 
@@ -220,14 +220,14 @@ Open Telemetry (HTTP)
 
 ##### `throttle`
 
-> Type: <code>Duration</code> · default: `"1s"`
+> Type: <code>Duration</code> · default: `1000`
 >
 > The minimum amount of time that must pass between each request to the OpenTelemetry endpoint
 
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"10s"`
+> Type: <code>Duration</code> · default: `10000`
 >
 > Maximum amount of time that Stalwart will wait for a response from the OpenTelemetry endpoint
 
@@ -269,7 +269,7 @@ Open Telemetry (HTTP)
 
 ##### `events`
 
-> Type: [<code>EventType</code>](/docs/ref/events)<code>[]</code>
+> Type: <code>Set&lt;</code>[<code>EventType</code>](/docs/ref/events)<code>&gt;</code>
 >
 > List of events to include or exclude based on filter mode
 
@@ -310,14 +310,14 @@ Open Telemetry (gRPC)
 
 ##### `throttle`
 
-> Type: <code>Duration</code> · default: `"1s"`
+> Type: <code>Duration</code> · default: `1000`
 >
 > The minimum amount of time that must pass between each request to the OpenTelemetry endpoint
 
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"10s"`
+> Type: <code>Duration</code> · default: `10000`
 >
 > Maximum amount of time that Stalwart will wait for a response from the OpenTelemetry endpoint
 
@@ -359,7 +359,7 @@ Open Telemetry (gRPC)
 
 ##### `events`
 
-> Type: [<code>EventType</code>](/docs/ref/events)<code>[]</code>
+> Type: <code>Set&lt;</code>[<code>EventType</code>](/docs/ref/events)<code>&gt;</code>
 >
 > List of events to include or exclude based on filter mode
 

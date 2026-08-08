@@ -32,12 +32,12 @@ Example strategy with four source addresses, one of which overrides the EHLO hos
 {
   "name": "default",
   "ehloHostname": "mx.example.org",
-  "sourceIps": [
-    {"sourceIp": "192.0.2.10", "ehloHostname": "mx-192-0-2-10.example.org"},
-    {"sourceIp": "192.0.2.11"},
-    {"sourceIp": "2001:db8::a"},
-    {"sourceIp": "2001:db8::b"}
-  ]
+  "sourceIps": {
+    "0": {"sourceIp": "192.0.2.10", "ehloHostname": "mx-192-0-2-10.example.org"},
+    "1": {"sourceIp": "192.0.2.11"},
+    "2": {"sourceIp": "2001:db8::a"},
+    "3": {"sourceIp": "2001:db8::b"}
+  }
 }
 ```
 
@@ -47,11 +47,15 @@ Timeouts cap how long Stalwart waits for the remote server to respond at each st
 
 ```json
 {
-  "connectTimeout": "3m",
-  "greetingTimeout": "3m",
-  "ehloTimeout": "3m",
-  "mailFromTimeout": "3m",
-  "rcptToTimeout": "3m",
-  "dataTimeout": "10m"
+  "connectTimeout": 180000,
+  "greetingTimeout": 180000,
+  "ehloTimeout": 180000,
+  "mailFromTimeout": 180000,
+  "rcptToTimeout": 180000,
+  "dataTimeout": 600000
 }
 ```
+
+:::note
+Values on this page follow the [object encoding](/docs/configuration/object-encoding) rules: list and set fields are JSON objects rather than arrays, and durations and sizes are integers.
+:::

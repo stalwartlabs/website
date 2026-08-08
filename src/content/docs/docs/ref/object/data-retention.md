@@ -13,28 +13,28 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `expungeTrashAfter`
 
-> Type: <code>Duration?</code> · default: `"30d"`
+> Type: <code>Duration?</code> · default: `2592000000`
 >
 > How long to keep messages in the Trash and Junk Mail folders before auto-expunging
 
 
 ##### `expungeSubmissionsAfter`
 
-> Type: <code>Duration?</code> · default: `"3d"`
+> Type: <code>Duration?</code> · default: `259200000`
 >
 > How long to keep sent e-mail submissions before auto-expunging
 
 
 ##### `expungeShareNotifyAfter`
 
-> Type: <code>Duration?</code> · default: `"30d"`
+> Type: <code>Duration?</code> · default: `2592000000`
 >
 > Specifies the duration for which the JMAP share notification history is retained before it is automatically purged.
 
 
 ##### `expungeSchedulingInboxAfter`
 
-> Type: <code>Duration?</code> · default: `"30d"`
+> Type: <code>Duration?</code> · default: `2592000000`
 >
 > Sets the duration after which the iTIP inbox will automatically expunge old messages.
 
@@ -83,21 +83,21 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `holdMtaReportsFor`
 
-> Type: <code>Duration?</code> · default: `"30d"`
+> Type: <code>Duration?</code> · default: `2592000000`
 >
 > The duration for which MTA reports should be stored before being deleted, or None to disable storage
 
 
 ##### `holdTracesFor`
 
-> Type: <code>Duration?</code> · [enterprise](/docs/server/enterprise) · default: `"30d"`
+> Type: <code>Duration?</code> · [enterprise](/docs/server/enterprise) · default: `2592000000`
 >
 > How long to keep message delivery history before it is permanently deleted.
 
 
 ##### `holdMetricsFor`
 
-> Type: <code>Duration?</code> · [enterprise](/docs/server/enterprise) · default: `"90d"`
+> Type: <code>Duration?</code> · [enterprise](/docs/server/enterprise) · default: `7776000000`
 >
 > How long to keep metrics history before it is permanently deleted.
 
@@ -169,7 +169,7 @@ curl -X POST https://mail.example.com/api \
           {
             "update": {
               "singleton": {
-                "expungeTrashAfter": "30d"
+                "expungeTrashAfter": 2592000000
               }
             }
           },
@@ -201,7 +201,7 @@ stalwart-cli get DataRetention
 ### Update
 
 ```sh
-stalwart-cli update DataRetention --field expungeTrashAfter=30d
+stalwart-cli update DataRetention --field expungeTrashAfter=2592000000
 ```
 
 

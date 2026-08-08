@@ -232,7 +232,7 @@ LDAP directory connection and mapping settings.
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > Connection timeout to the server
 
@@ -302,49 +302,49 @@ LDAP directory connection and mapping settings.
 
 ##### `attrClass`
 
-> Type: <code>String[]</code> · default: `["objectClass"]`
+> Type: <code>Set&lt;String&gt;</code> · default: `{"objectClass":true}`
 >
 > LDAP attribute for the user's account type, if missing defaults to individual.
 
 
 ##### `attrDescription`
 
-> Type: <code>String[]</code> · default: `["description"]`
+> Type: <code>Set&lt;String&gt;</code> · default: `{"description":true}`
 >
 > LDAP attributes used to store the user's description
 
 
 ##### `attrEmail`
 
-> Type: <code>String[]</code> · default: `["mail"]`
+> Type: <code>Set&lt;String&gt;</code> · default: `{"mail":true}`
 >
 > LDAP attribute for the user's primary email address
 
 
 ##### `attrEmailAlias`
 
-> Type: <code>String[]</code> · default: `["mailAlias"]`
+> Type: <code>Set&lt;String&gt;</code> · default: `{"mailAlias":true}`
 >
 > LDAP attribute for the user's email alias(es)
 
 
 ##### `attrMemberOf`
 
-> Type: <code>String[]</code> · default: `["memberOf"]`
+> Type: <code>Set&lt;String&gt;</code> · default: `{"memberOf":true}`
 >
 > LDAP attributes for the groups that a user belongs to. Used when filterMemberOf is not configured or when the group membership is also provided in the account entry.
 
 
 ##### `attrSecret`
 
-> Type: <code>String[]</code> · default: `["userPassword"]`
+> Type: <code>Set&lt;String&gt;</code> · default: `{"userPassword":true}`
 >
 > LDAP attribute for the user's password hash. This setting is required when binding as a service user. When using bind authentication, configure the secret-changed attribute instead.
 
 
 ##### `attrSecretChanged`
 
-> Type: <code>String[]</code> · default: `["pwdChangeTime"]`
+> Type: <code>Set&lt;String&gt;</code> · default: `{"pwdChangeTime":true}`
 >
 > LDAP attribute that provides a password change hash or a timestamp indicating when the password was last changed. When using bind authentication, this attribute is used to determine when to invalidate OAuth tokens.
 
@@ -365,21 +365,21 @@ LDAP directory connection and mapping settings.
 
 ##### `poolTimeoutCreate`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > Maximum amount of time that the connection pool will wait for a new connection to be created
 
 
 ##### `poolTimeoutRecycle`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > Maximum amount of time that the connection pool manager will wait for a connection to be recycled
 
 
 ##### `poolTimeoutWait`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > Maximum amount of time that the connection pool will wait for a connection to become available
 
@@ -562,7 +562,7 @@ PostgreSQL data store.
 
 ##### `timeout`
 
-> Type: <code>Duration?</code> · default: `"15s"`
+> Type: <code>Duration?</code> · default: `15000`
 >
 > Connection timeout to the database
 
@@ -597,7 +597,7 @@ PostgreSQL data store.
 
 ##### `readReplicas`
 
-> Type: [<code>PostgreSqlSettings</code>](#postgresqlsettings)<code>[]</code> · [enterprise](/docs/server/enterprise)
+> Type: <code>List&lt;</code>[<code>PostgreSqlSettings</code>](#postgresqlsettings)<code>&gt;</code> · [enterprise](/docs/server/enterprise)
 >
 > List of read replicas for the store
 
@@ -706,7 +706,7 @@ MySQL data store.
 
 ##### `timeout`
 
-> Type: <code>Duration?</code> · default: `"15s"`
+> Type: <code>Duration?</code> · default: `15000`
 >
 > Connection timeout to the database
 
@@ -748,7 +748,7 @@ MySQL data store.
 
 ##### `readReplicas`
 
-> Type: [<code>MySqlSettings</code>](#mysqlsettings)<code>[]</code> · [enterprise](/docs/server/enterprise)
+> Type: <code>List&lt;</code>[<code>MySqlSettings</code>](#mysqlsettings)<code>&gt;</code> · [enterprise](/docs/server/enterprise)
 >
 > List of read replicas for the store
 
@@ -894,7 +894,7 @@ OpenID Connect directory settings.
 
 ##### `requireScopes`
 
-> Type: <code>String[]</code> · default: `["openid","email"]`
+> Type: <code>Set&lt;String&gt;</code> · default: `{"email":true,"openid":true}`
 >
 > If set, Stalwart will reject any token that does not include all of the specified scopes. Useful for ensuring that only tokens explicitly granted access to the mail server are accepted.
 
@@ -1081,28 +1081,28 @@ RFC2136 TSIG DNS server.
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > Request timeout for the DNS server
 
 
 ##### `ttl`
 
-> Type: <code>Duration</code> · default: `"5m"`
+> Type: <code>Duration</code> · default: `300000`
 >
 > The TTL for new DNS record
 
 
 ##### `pollingInterval`
 
-> Type: <code>Duration</code> · default: `"15s"`
+> Type: <code>Duration</code> · default: `15000`
 >
 > How often to check for DNS records to propagate
 
 
 ##### `propagationTimeout`
 
-> Type: <code>Duration</code> · default: `"1m"`
+> Type: <code>Duration</code> · default: `60000`
 >
 > How long to wait for DNS records to propagate
 
@@ -1158,28 +1158,28 @@ Cloudflare DNS server.
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > Request timeout for the DNS server
 
 
 ##### `ttl`
 
-> Type: <code>Duration</code> · default: `"5m"`
+> Type: <code>Duration</code> · default: `300000`
 >
 > The TTL for new DNS record
 
 
 ##### `pollingInterval`
 
-> Type: <code>Duration</code> · default: `"15s"`
+> Type: <code>Duration</code> · default: `15000`
 >
 > How often to check for DNS records to propagate
 
 
 ##### `propagationTimeout`
 
-> Type: <code>Duration</code> · default: `"1m"`
+> Type: <code>Duration</code> · default: `60000`
 >
 > How long to wait for DNS records to propagate
 
@@ -1223,28 +1223,28 @@ Cloud DNS server with token authentication.
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > Request timeout for the DNS server
 
 
 ##### `ttl`
 
-> Type: <code>Duration</code> · default: `"5m"`
+> Type: <code>Duration</code> · default: `300000`
 >
 > The TTL for new DNS record
 
 
 ##### `pollingInterval`
 
-> Type: <code>Duration</code> · default: `"15s"`
+> Type: <code>Duration</code> · default: `15000`
 >
 > How often to check for DNS records to propagate
 
 
 ##### `propagationTimeout`
 
-> Type: <code>Duration</code> · default: `"1m"`
+> Type: <code>Duration</code> · default: `60000`
 >
 > How long to wait for DNS records to propagate
 
@@ -1309,28 +1309,28 @@ OVH DNS server.
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > Request timeout for the DNS server
 
 
 ##### `ttl`
 
-> Type: <code>Duration</code> · default: `"5m"`
+> Type: <code>Duration</code> · default: `300000`
 >
 > The TTL for new DNS record
 
 
 ##### `pollingInterval`
 
-> Type: <code>Duration</code> · default: `"15s"`
+> Type: <code>Duration</code> · default: `15000`
 >
 > How often to check for DNS records to propagate
 
 
 ##### `propagationTimeout`
 
-> Type: <code>Duration</code> · default: `"1m"`
+> Type: <code>Duration</code> · default: `60000`
 >
 > How long to wait for DNS records to propagate
 
@@ -1381,28 +1381,28 @@ Porkbun DNS server.
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > Request timeout for the DNS server
 
 
 ##### `ttl`
 
-> Type: <code>Duration</code> · default: `"5m"`
+> Type: <code>Duration</code> · default: `300000`
 >
 > The TTL for new DNS record
 
 
 ##### `pollingInterval`
 
-> Type: <code>Duration</code> · default: `"15s"`
+> Type: <code>Duration</code> · default: `15000`
 >
 > How often to check for DNS records to propagate
 
 
 ##### `propagationTimeout`
 
-> Type: <code>Duration</code> · default: `"1m"`
+> Type: <code>Duration</code> · default: `60000`
 >
 > How long to wait for DNS records to propagate
 
@@ -1453,28 +1453,28 @@ DNSimple DNS server.
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > Request timeout for the DNS server
 
 
 ##### `ttl`
 
-> Type: <code>Duration</code> · default: `"5m"`
+> Type: <code>Duration</code> · default: `300000`
 >
 > The TTL for new DNS record
 
 
 ##### `pollingInterval`
 
-> Type: <code>Duration</code> · default: `"15s"`
+> Type: <code>Duration</code> · default: `15000`
 >
 > How often to check for DNS records to propagate
 
 
 ##### `propagationTimeout`
 
-> Type: <code>Duration</code> · default: `"1m"`
+> Type: <code>Duration</code> · default: `60000`
 >
 > How long to wait for DNS records to propagate
 
@@ -1525,28 +1525,28 @@ Spaceship DNS server.
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > Request timeout for the DNS server
 
 
 ##### `ttl`
 
-> Type: <code>Duration</code> · default: `"5m"`
+> Type: <code>Duration</code> · default: `300000`
 >
 > The TTL for new DNS record
 
 
 ##### `pollingInterval`
 
-> Type: <code>Duration</code> · default: `"15s"`
+> Type: <code>Duration</code> · default: `15000`
 >
 > How often to check for DNS records to propagate
 
 
 ##### `propagationTimeout`
 
-> Type: <code>Duration</code> · default: `"1m"`
+> Type: <code>Duration</code> · default: `60000`
 >
 > How long to wait for DNS records to propagate
 
@@ -1625,28 +1625,28 @@ AWS Route53 DNS server.
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > Request timeout for the DNS server
 
 
 ##### `ttl`
 
-> Type: <code>Duration</code> · default: `"5m"`
+> Type: <code>Duration</code> · default: `300000`
 >
 > The TTL for new DNS record
 
 
 ##### `pollingInterval`
 
-> Type: <code>Duration</code> · default: `"15s"`
+> Type: <code>Duration</code> · default: `15000`
 >
 > How often to check for DNS records to propagate
 
 
 ##### `propagationTimeout`
 
-> Type: <code>Duration</code> · default: `"1m"`
+> Type: <code>Duration</code> · default: `60000`
 >
 > How long to wait for DNS records to propagate
 
@@ -1718,28 +1718,28 @@ Google Cloud DNS server.
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > Request timeout for the DNS server
 
 
 ##### `ttl`
 
-> Type: <code>Duration</code> · default: `"5m"`
+> Type: <code>Duration</code> · default: `300000`
 >
 > The TTL for new DNS record
 
 
 ##### `pollingInterval`
 
-> Type: <code>Duration</code> · default: `"15s"`
+> Type: <code>Duration</code> · default: `15000`
 >
 > How often to check for DNS records to propagate
 
 
 ##### `propagationTimeout`
 
-> Type: <code>Duration</code> · default: `"1m"`
+> Type: <code>Duration</code> · default: `60000`
 >
 > How long to wait for DNS records to propagate
 
@@ -1839,28 +1839,28 @@ Alibaba Cloud DNS server.
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > Request timeout for the DNS server
 
 
 ##### `ttl`
 
-> Type: <code>Duration</code> · default: `"5m"`
+> Type: <code>Duration</code> · default: `300000`
 >
 > The TTL for new DNS record
 
 
 ##### `pollingInterval`
 
-> Type: <code>Duration</code> · default: `"15s"`
+> Type: <code>Duration</code> · default: `15000`
 >
 > How often to check for DNS records to propagate
 
 
 ##### `propagationTimeout`
 
-> Type: <code>Duration</code> · default: `"1m"`
+> Type: <code>Duration</code> · default: `60000`
 >
 > How long to wait for DNS records to propagate
 
@@ -1918,28 +1918,28 @@ InterNetX AutoDNS server.
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > Request timeout for the DNS server
 
 
 ##### `ttl`
 
-> Type: <code>Duration</code> · default: `"5m"`
+> Type: <code>Duration</code> · default: `300000`
 >
 > The TTL for new DNS record
 
 
 ##### `pollingInterval`
 
-> Type: <code>Duration</code> · default: `"15s"`
+> Type: <code>Duration</code> · default: `15000`
 >
 > How often to check for DNS records to propagate
 
 
 ##### `propagationTimeout`
 
-> Type: <code>Duration</code> · default: `"1m"`
+> Type: <code>Duration</code> · default: `60000`
 >
 > How long to wait for DNS records to propagate
 
@@ -2018,28 +2018,28 @@ Microsoft Azure DNS server (OAuth2 client credentials).
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > Request timeout for the DNS server
 
 
 ##### `ttl`
 
-> Type: <code>Duration</code> · default: `"5m"`
+> Type: <code>Duration</code> · default: `300000`
 >
 > The TTL for new DNS record
 
 
 ##### `pollingInterval`
 
-> Type: <code>Duration</code> · default: `"15s"`
+> Type: <code>Duration</code> · default: `15000`
 >
 > How often to check for DNS records to propagate
 
 
 ##### `propagationTimeout`
 
-> Type: <code>Duration</code> · default: `"1m"`
+> Type: <code>Duration</code> · default: `60000`
 >
 > How long to wait for DNS records to propagate
 
@@ -2090,28 +2090,28 @@ Baidu Cloud DNS server.
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > Request timeout for the DNS server
 
 
 ##### `ttl`
 
-> Type: <code>Duration</code> · default: `"5m"`
+> Type: <code>Duration</code> · default: `300000`
 >
 > The TTL for new DNS record
 
 
 ##### `pollingInterval`
 
-> Type: <code>Duration</code> · default: `"15s"`
+> Type: <code>Duration</code> · default: `15000`
 >
 > How often to check for DNS records to propagate
 
 
 ##### `propagationTimeout`
 
-> Type: <code>Duration</code> · default: `"1m"`
+> Type: <code>Duration</code> · default: `60000`
 >
 > How long to wait for DNS records to propagate
 
@@ -2190,28 +2190,28 @@ BlueCat Address Manager v2 REST API.
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > Request timeout for the DNS server
 
 
 ##### `ttl`
 
-> Type: <code>Duration</code> · default: `"5m"`
+> Type: <code>Duration</code> · default: `300000`
 >
 > The TTL for new DNS record
 
 
 ##### `pollingInterval`
 
-> Type: <code>Duration</code> · default: `"15s"`
+> Type: <code>Duration</code> · default: `15000`
 >
 > How often to check for DNS records to propagate
 
 
 ##### `propagationTimeout`
 
-> Type: <code>Duration</code> · default: `"1m"`
+> Type: <code>Duration</code> · default: `60000`
 >
 > How long to wait for DNS records to propagate
 
@@ -2269,28 +2269,28 @@ ClouDNS server.
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > Request timeout for the DNS server
 
 
 ##### `ttl`
 
-> Type: <code>Duration</code> · default: `"5m"`
+> Type: <code>Duration</code> · default: `300000`
 >
 > The TTL for new DNS record
 
 
 ##### `pollingInterval`
 
-> Type: <code>Duration</code> · default: `"15s"`
+> Type: <code>Duration</code> · default: `15000`
 >
 > How often to check for DNS records to propagate
 
 
 ##### `propagationTimeout`
 
-> Type: <code>Duration</code> · default: `"1m"`
+> Type: <code>Duration</code> · default: `60000`
 >
 > How long to wait for DNS records to propagate
 
@@ -2341,28 +2341,28 @@ Constellix DNS server.
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > Request timeout for the DNS server
 
 
 ##### `ttl`
 
-> Type: <code>Duration</code> · default: `"5m"`
+> Type: <code>Duration</code> · default: `300000`
 >
 > The TTL for new DNS record
 
 
 ##### `pollingInterval`
 
-> Type: <code>Duration</code> · default: `"15s"`
+> Type: <code>Duration</code> · default: `15000`
 >
 > How often to check for DNS records to propagate
 
 
 ##### `propagationTimeout`
 
-> Type: <code>Duration</code> · default: `"1m"`
+> Type: <code>Duration</code> · default: `60000`
 >
 > How long to wait for DNS records to propagate
 
@@ -2420,28 +2420,28 @@ cPanel UAPI DNS server.
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > Request timeout for the DNS server
 
 
 ##### `ttl`
 
-> Type: <code>Duration</code> · default: `"5m"`
+> Type: <code>Duration</code> · default: `300000`
 >
 > The TTL for new DNS record
 
 
 ##### `pollingInterval`
 
-> Type: <code>Duration</code> · default: `"15s"`
+> Type: <code>Duration</code> · default: `15000`
 >
 > How often to check for DNS records to propagate
 
 
 ##### `propagationTimeout`
 
-> Type: <code>Duration</code> · default: `"1m"`
+> Type: <code>Duration</code> · default: `60000`
 >
 > How long to wait for DNS records to propagate
 
@@ -2492,28 +2492,28 @@ DNS Made Easy DNS server.
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > Request timeout for the DNS server
 
 
 ##### `ttl`
 
-> Type: <code>Duration</code> · default: `"5m"`
+> Type: <code>Duration</code> · default: `300000`
 >
 > The TTL for new DNS record
 
 
 ##### `pollingInterval`
 
-> Type: <code>Duration</code> · default: `"15s"`
+> Type: <code>Duration</code> · default: `15000`
 >
 > How often to check for DNS records to propagate
 
 
 ##### `propagationTimeout`
 
-> Type: <code>Duration</code> · default: `"1m"`
+> Type: <code>Duration</code> · default: `60000`
 >
 > How long to wait for DNS records to propagate
 
@@ -2564,28 +2564,28 @@ Domeneshop DNS server.
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > Request timeout for the DNS server
 
 
 ##### `ttl`
 
-> Type: <code>Duration</code> · default: `"5m"`
+> Type: <code>Duration</code> · default: `300000`
 >
 > The TTL for new DNS record
 
 
 ##### `pollingInterval`
 
-> Type: <code>Duration</code> · default: `"15s"`
+> Type: <code>Duration</code> · default: `15000`
 >
 > How often to check for DNS records to propagate
 
 
 ##### `propagationTimeout`
 
-> Type: <code>Duration</code> · default: `"1m"`
+> Type: <code>Duration</code> · default: `60000`
 >
 > How long to wait for DNS records to propagate
 
@@ -2636,28 +2636,28 @@ EasyDNS REST API server.
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > Request timeout for the DNS server
 
 
 ##### `ttl`
 
-> Type: <code>Duration</code> · default: `"5m"`
+> Type: <code>Duration</code> · default: `300000`
 >
 > The TTL for new DNS record
 
 
 ##### `pollingInterval`
 
-> Type: <code>Duration</code> · default: `"15s"`
+> Type: <code>Duration</code> · default: `15000`
 >
 > How often to check for DNS records to propagate
 
 
 ##### `propagationTimeout`
 
-> Type: <code>Duration</code> · default: `"1m"`
+> Type: <code>Duration</code> · default: `60000`
 >
 > How long to wait for DNS records to propagate
 
@@ -2729,28 +2729,28 @@ Akamai EdgeDNS server.
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > Request timeout for the DNS server
 
 
 ##### `ttl`
 
-> Type: <code>Duration</code> · default: `"5m"`
+> Type: <code>Duration</code> · default: `300000`
 >
 > The TTL for new DNS record
 
 
 ##### `pollingInterval`
 
-> Type: <code>Duration</code> · default: `"15s"`
+> Type: <code>Duration</code> · default: `15000`
 >
 > How often to check for DNS records to propagate
 
 
 ##### `propagationTimeout`
 
-> Type: <code>Duration</code> · default: `"1m"`
+> Type: <code>Duration</code> · default: `60000`
 >
 > How long to wait for DNS records to propagate
 
@@ -2801,28 +2801,28 @@ Exoscale DNS server.
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > Request timeout for the DNS server
 
 
 ##### `ttl`
 
-> Type: <code>Duration</code> · default: `"5m"`
+> Type: <code>Duration</code> · default: `300000`
 >
 > The TTL for new DNS record
 
 
 ##### `pollingInterval`
 
-> Type: <code>Duration</code> · default: `"15s"`
+> Type: <code>Duration</code> · default: `15000`
 >
 > How often to check for DNS records to propagate
 
 
 ##### `propagationTimeout`
 
-> Type: <code>Duration</code> · default: `"1m"`
+> Type: <code>Duration</code> · default: `60000`
 >
 > How long to wait for DNS records to propagate
 
@@ -2873,28 +2873,28 @@ GleSYS DNS server.
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > Request timeout for the DNS server
 
 
 ##### `ttl`
 
-> Type: <code>Duration</code> · default: `"5m"`
+> Type: <code>Duration</code> · default: `300000`
 >
 > The TTL for new DNS record
 
 
 ##### `pollingInterval`
 
-> Type: <code>Duration</code> · default: `"15s"`
+> Type: <code>Duration</code> · default: `15000`
 >
 > How often to check for DNS records to propagate
 
 
 ##### `propagationTimeout`
 
-> Type: <code>Duration</code> · default: `"1m"`
+> Type: <code>Duration</code> · default: `60000`
 >
 > How long to wait for DNS records to propagate
 
@@ -2945,28 +2945,28 @@ GoDaddy DNS server.
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > Request timeout for the DNS server
 
 
 ##### `ttl`
 
-> Type: <code>Duration</code> · default: `"5m"`
+> Type: <code>Duration</code> · default: `300000`
 >
 > The TTL for new DNS record
 
 
 ##### `pollingInterval`
 
-> Type: <code>Duration</code> · default: `"15s"`
+> Type: <code>Duration</code> · default: `15000`
 >
 > How often to check for DNS records to propagate
 
 
 ##### `propagationTimeout`
 
-> Type: <code>Duration</code> · default: `"1m"`
+> Type: <code>Duration</code> · default: `60000`
 >
 > How long to wait for DNS records to propagate
 
@@ -3024,28 +3024,28 @@ Huawei Cloud DNS server.
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > Request timeout for the DNS server
 
 
 ##### `ttl`
 
-> Type: <code>Duration</code> · default: `"5m"`
+> Type: <code>Duration</code> · default: `300000`
 >
 > The TTL for new DNS record
 
 
 ##### `pollingInterval`
 
-> Type: <code>Duration</code> · default: `"15s"`
+> Type: <code>Duration</code> · default: `15000`
 >
 > How often to check for DNS records to propagate
 
 
 ##### `propagationTimeout`
 
-> Type: <code>Duration</code> · default: `"1m"`
+> Type: <code>Duration</code> · default: `60000`
 >
 > How long to wait for DNS records to propagate
 
@@ -3068,7 +3068,7 @@ Hurricane Electric free DNS service.
 
 ##### `credentials`
 
-> Type: [<code>HurricaneCredential</code>](#hurricanecredential)<code>[]</code> · min items: 1
+> Type: <code>List&lt;</code>[<code>HurricaneCredential</code>](#hurricanecredential)<code>&gt;</code> · min items: 1
 >
 > Per-zone Hurricane Electric DDNS keys
 
@@ -3089,28 +3089,28 @@ Hurricane Electric free DNS service.
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > Request timeout for the DNS server
 
 
 ##### `ttl`
 
-> Type: <code>Duration</code> · default: `"5m"`
+> Type: <code>Duration</code> · default: `300000`
 >
 > The TTL for new DNS record
 
 
 ##### `pollingInterval`
 
-> Type: <code>Duration</code> · default: `"15s"`
+> Type: <code>Duration</code> · default: `15000`
 >
 > How often to check for DNS records to propagate
 
 
 ##### `propagationTimeout`
 
-> Type: <code>Duration</code> · default: `"1m"`
+> Type: <code>Duration</code> · default: `60000`
 >
 > How long to wait for DNS records to propagate
 
@@ -3184,28 +3184,28 @@ IBM Cloud (SoftLayer classic) DNS server.
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > Request timeout for the DNS server
 
 
 ##### `ttl`
 
-> Type: <code>Duration</code> · default: `"5m"`
+> Type: <code>Duration</code> · default: `300000`
 >
 > The TTL for new DNS record
 
 
 ##### `pollingInterval`
 
-> Type: <code>Duration</code> · default: `"15s"`
+> Type: <code>Duration</code> · default: `15000`
 >
 > How often to check for DNS records to propagate
 
 
 ##### `propagationTimeout`
 
-> Type: <code>Duration</code> · default: `"1m"`
+> Type: <code>Duration</code> · default: `60000`
 >
 > How long to wait for DNS records to propagate
 
@@ -3284,28 +3284,28 @@ Infoblox NIOS WAPI server.
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > Request timeout for the DNS server
 
 
 ##### `ttl`
 
-> Type: <code>Duration</code> · default: `"5m"`
+> Type: <code>Duration</code> · default: `300000`
 >
 > The TTL for new DNS record
 
 
 ##### `pollingInterval`
 
-> Type: <code>Duration</code> · default: `"15s"`
+> Type: <code>Duration</code> · default: `15000`
 >
 > How often to check for DNS records to propagate
 
 
 ##### `propagationTimeout`
 
-> Type: <code>Duration</code> · default: `"1m"`
+> Type: <code>Duration</code> · default: `60000`
 >
 > How long to wait for DNS records to propagate
 
@@ -3370,28 +3370,28 @@ INWX DNS server.
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > Request timeout for the DNS server
 
 
 ##### `ttl`
 
-> Type: <code>Duration</code> · default: `"5m"`
+> Type: <code>Duration</code> · default: `300000`
 >
 > The TTL for new DNS record
 
 
 ##### `pollingInterval`
 
-> Type: <code>Duration</code> · default: `"15s"`
+> Type: <code>Duration</code> · default: `15000`
 >
 > How often to check for DNS records to propagate
 
 
 ##### `propagationTimeout`
 
-> Type: <code>Duration</code> · default: `"1m"`
+> Type: <code>Duration</code> · default: `60000`
 >
 > How long to wait for DNS records to propagate
 
@@ -3435,28 +3435,28 @@ Joker DMAPI DNS server.
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > Request timeout for the DNS server
 
 
 ##### `ttl`
 
-> Type: <code>Duration</code> · default: `"5m"`
+> Type: <code>Duration</code> · default: `300000`
 >
 > The TTL for new DNS record
 
 
 ##### `pollingInterval`
 
-> Type: <code>Duration</code> · default: `"15s"`
+> Type: <code>Duration</code> · default: `15000`
 >
 > How often to check for DNS records to propagate
 
 
 ##### `propagationTimeout`
 
-> Type: <code>Duration</code> · default: `"1m"`
+> Type: <code>Duration</code> · default: `60000`
 >
 > How long to wait for DNS records to propagate
 
@@ -3578,28 +3578,28 @@ AWS Lightsail DNS server.
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > Request timeout for the DNS server
 
 
 ##### `ttl`
 
-> Type: <code>Duration</code> · default: `"5m"`
+> Type: <code>Duration</code> · default: `300000`
 >
 > The TTL for new DNS record
 
 
 ##### `pollingInterval`
 
-> Type: <code>Duration</code> · default: `"15s"`
+> Type: <code>Duration</code> · default: `15000`
 >
 > How often to check for DNS records to propagate
 
 
 ##### `propagationTimeout`
 
-> Type: <code>Duration</code> · default: `"1m"`
+> Type: <code>Duration</code> · default: `60000`
 >
 > How long to wait for DNS records to propagate
 
@@ -3650,28 +3650,28 @@ LuaDNS server.
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > Request timeout for the DNS server
 
 
 ##### `ttl`
 
-> Type: <code>Duration</code> · default: `"5m"`
+> Type: <code>Duration</code> · default: `300000`
 >
 > The TTL for new DNS record
 
 
 ##### `pollingInterval`
 
-> Type: <code>Duration</code> · default: `"15s"`
+> Type: <code>Duration</code> · default: `15000`
 >
 > How often to check for DNS records to propagate
 
 
 ##### `propagationTimeout`
 
-> Type: <code>Duration</code> · default: `"1m"`
+> Type: <code>Duration</code> · default: `60000`
 >
 > How long to wait for DNS records to propagate
 
@@ -3722,28 +3722,28 @@ Mythic Beasts DNSv2 server.
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > Request timeout for the DNS server
 
 
 ##### `ttl`
 
-> Type: <code>Duration</code> · default: `"5m"`
+> Type: <code>Duration</code> · default: `300000`
 >
 > The TTL for new DNS record
 
 
 ##### `pollingInterval`
 
-> Type: <code>Duration</code> · default: `"15s"`
+> Type: <code>Duration</code> · default: `15000`
 >
 > How often to check for DNS records to propagate
 
 
 ##### `propagationTimeout`
 
-> Type: <code>Duration</code> · default: `"1m"`
+> Type: <code>Duration</code> · default: `60000`
 >
 > How long to wait for DNS records to propagate
 
@@ -3808,28 +3808,28 @@ Namecheap DNS server.
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > Request timeout for the DNS server
 
 
 ##### `ttl`
 
-> Type: <code>Duration</code> · default: `"5m"`
+> Type: <code>Duration</code> · default: `300000`
 >
 > The TTL for new DNS record
 
 
 ##### `pollingInterval`
 
-> Type: <code>Duration</code> · default: `"15s"`
+> Type: <code>Duration</code> · default: `15000`
 >
 > How often to check for DNS records to propagate
 
 
 ##### `propagationTimeout`
 
-> Type: <code>Duration</code> · default: `"1m"`
+> Type: <code>Duration</code> · default: `60000`
 >
 > How long to wait for DNS records to propagate
 
@@ -3880,28 +3880,28 @@ Name.com v4 DNS server.
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > Request timeout for the DNS server
 
 
 ##### `ttl`
 
-> Type: <code>Duration</code> · default: `"5m"`
+> Type: <code>Duration</code> · default: `300000`
 >
 > The TTL for new DNS record
 
 
 ##### `pollingInterval`
 
-> Type: <code>Duration</code> · default: `"15s"`
+> Type: <code>Duration</code> · default: `15000`
 >
 > How often to check for DNS records to propagate
 
 
 ##### `propagationTimeout`
 
-> Type: <code>Duration</code> · default: `"1m"`
+> Type: <code>Duration</code> · default: `60000`
 >
 > How long to wait for DNS records to propagate
 
@@ -3959,28 +3959,28 @@ Netcup CCP DNS server.
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > Request timeout for the DNS server
 
 
 ##### `ttl`
 
-> Type: <code>Duration</code> · default: `"5m"`
+> Type: <code>Duration</code> · default: `300000`
 >
 > The TTL for new DNS record
 
 
 ##### `pollingInterval`
 
-> Type: <code>Duration</code> · default: `"15s"`
+> Type: <code>Duration</code> · default: `15000`
 >
 > How often to check for DNS records to propagate
 
 
 ##### `propagationTimeout`
 
-> Type: <code>Duration</code> · default: `"1m"`
+> Type: <code>Duration</code> · default: `60000`
 >
 > How long to wait for DNS records to propagate
 
@@ -4031,28 +4031,28 @@ Nifcloud DNS server.
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > Request timeout for the DNS server
 
 
 ##### `ttl`
 
-> Type: <code>Duration</code> · default: `"5m"`
+> Type: <code>Duration</code> · default: `300000`
 >
 > The TTL for new DNS record
 
 
 ##### `pollingInterval`
 
-> Type: <code>Duration</code> · default: `"15s"`
+> Type: <code>Duration</code> · default: `15000`
 >
 > How often to check for DNS records to propagate
 
 
 ##### `propagationTimeout`
 
-> Type: <code>Duration</code> · default: `"1m"`
+> Type: <code>Duration</code> · default: `60000`
 >
 > How long to wait for DNS records to propagate
 
@@ -4138,28 +4138,28 @@ Oracle Cloud Infrastructure DNS server.
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > Request timeout for the DNS server
 
 
 ##### `ttl`
 
-> Type: <code>Duration</code> · default: `"5m"`
+> Type: <code>Duration</code> · default: `300000`
 >
 > The TTL for new DNS record
 
 
 ##### `pollingInterval`
 
-> Type: <code>Duration</code> · default: `"15s"`
+> Type: <code>Duration</code> · default: `15000`
 >
 > How often to check for DNS records to propagate
 
 
 ##### `propagationTimeout`
 
-> Type: <code>Duration</code> · default: `"1m"`
+> Type: <code>Duration</code> · default: `60000`
 >
 > How long to wait for DNS records to propagate
 
@@ -4210,28 +4210,28 @@ Plesk REST API DNS server.
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > Request timeout for the DNS server
 
 
 ##### `ttl`
 
-> Type: <code>Duration</code> · default: `"5m"`
+> Type: <code>Duration</code> · default: `300000`
 >
 > The TTL for new DNS record
 
 
 ##### `pollingInterval`
 
-> Type: <code>Duration</code> · default: `"15s"`
+> Type: <code>Duration</code> · default: `15000`
 >
 > How often to check for DNS records to propagate
 
 
 ##### `propagationTimeout`
 
-> Type: <code>Duration</code> · default: `"1m"`
+> Type: <code>Duration</code> · default: `60000`
 >
 > How long to wait for DNS records to propagate
 
@@ -4296,28 +4296,28 @@ Tencent Cloud DNSPod server.
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > Request timeout for the DNS server
 
 
 ##### `ttl`
 
-> Type: <code>Duration</code> · default: `"5m"`
+> Type: <code>Duration</code> · default: `300000`
 >
 > The TTL for new DNS record
 
 
 ##### `pollingInterval`
 
-> Type: <code>Duration</code> · default: `"15s"`
+> Type: <code>Duration</code> · default: `15000`
 >
 > How often to check for DNS records to propagate
 
 
 ##### `propagationTimeout`
 
-> Type: <code>Duration</code> · default: `"1m"`
+> Type: <code>Duration</code> · default: `60000`
 >
 > How long to wait for DNS records to propagate
 
@@ -4368,28 +4368,28 @@ TransIP v6 DNS server.
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > Request timeout for the DNS server
 
 
 ##### `ttl`
 
-> Type: <code>Duration</code> · default: `"5m"`
+> Type: <code>Duration</code> · default: `300000`
 >
 > The TTL for new DNS record
 
 
 ##### `pollingInterval`
 
-> Type: <code>Duration</code> · default: `"15s"`
+> Type: <code>Duration</code> · default: `15000`
 >
 > How often to check for DNS records to propagate
 
 
 ##### `propagationTimeout`
 
-> Type: <code>Duration</code> · default: `"1m"`
+> Type: <code>Duration</code> · default: `60000`
 >
 > How long to wait for DNS records to propagate
 
@@ -4447,28 +4447,28 @@ UltraDNS REST API server.
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > Request timeout for the DNS server
 
 
 ##### `ttl`
 
-> Type: <code>Duration</code> · default: `"5m"`
+> Type: <code>Duration</code> · default: `300000`
 >
 > The TTL for new DNS record
 
 
 ##### `pollingInterval`
 
-> Type: <code>Duration</code> · default: `"15s"`
+> Type: <code>Duration</code> · default: `15000`
 >
 > How often to check for DNS records to propagate
 
 
 ##### `propagationTimeout`
 
-> Type: <code>Duration</code> · default: `"1m"`
+> Type: <code>Duration</code> · default: `60000`
 >
 > How long to wait for DNS records to propagate
 
@@ -4519,28 +4519,28 @@ Vercel DNS server.
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > Request timeout for the DNS server
 
 
 ##### `ttl`
 
-> Type: <code>Duration</code> · default: `"5m"`
+> Type: <code>Duration</code> · default: `300000`
 >
 > The TTL for new DNS record
 
 
 ##### `pollingInterval`
 
-> Type: <code>Duration</code> · default: `"15s"`
+> Type: <code>Duration</code> · default: `15000`
 >
 > How often to check for DNS records to propagate
 
 
 ##### `propagationTimeout`
 
-> Type: <code>Duration</code> · default: `"1m"`
+> Type: <code>Duration</code> · default: `60000`
 >
 > How long to wait for DNS records to propagate
 
@@ -4612,28 +4612,28 @@ Volcano Engine DNS server.
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > Request timeout for the DNS server
 
 
 ##### `ttl`
 
-> Type: <code>Duration</code> · default: `"5m"`
+> Type: <code>Duration</code> · default: `300000`
 >
 > The TTL for new DNS record
 
 
 ##### `pollingInterval`
 
-> Type: <code>Duration</code> · default: `"15s"`
+> Type: <code>Duration</code> · default: `15000`
 >
 > How often to check for DNS records to propagate
 
 
 ##### `propagationTimeout`
 
-> Type: <code>Duration</code> · default: `"1m"`
+> Type: <code>Duration</code> · default: `60000`
 >
 > How long to wait for DNS records to propagate
 
@@ -4684,28 +4684,28 @@ WebSupport DNS server.
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > Request timeout for the DNS server
 
 
 ##### `ttl`
 
-> Type: <code>Duration</code> · default: `"5m"`
+> Type: <code>Duration</code> · default: `300000`
 >
 > The TTL for new DNS record
 
 
 ##### `pollingInterval`
 
-> Type: <code>Duration</code> · default: `"15s"`
+> Type: <code>Duration</code> · default: `15000`
 >
 > How often to check for DNS records to propagate
 
 
 ##### `propagationTimeout`
 
-> Type: <code>Duration</code> · default: `"1m"`
+> Type: <code>Duration</code> · default: `60000`
 >
 > How long to wait for DNS records to propagate
 
@@ -4756,28 +4756,28 @@ Yandex Cloud DNS server.
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"30s"`
+> Type: <code>Duration</code> · default: `30000`
 >
 > Request timeout for the DNS server
 
 
 ##### `ttl`
 
-> Type: <code>Duration</code> · default: `"5m"`
+> Type: <code>Duration</code> · default: `300000`
 >
 > The TTL for new DNS record
 
 
 ##### `pollingInterval`
 
-> Type: <code>Duration</code> · default: `"15s"`
+> Type: <code>Duration</code> · default: `15000`
 >
 > How often to check for DNS records to propagate
 
 
 ##### `propagationTimeout`
 
-> Type: <code>Duration</code> · default: `"1m"`
+> Type: <code>Duration</code> · default: `60000`
 >
 > How long to wait for DNS records to propagate
 

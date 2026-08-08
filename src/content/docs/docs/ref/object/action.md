@@ -71,7 +71,7 @@ DMARC: Troubleshooting
 
 ##### `to`
 
-> Type: <code>EmailAddress[]</code>
+> Type: <code>Set&lt;EmailAddress&gt;</code>
 >
 > RCPT TO addresses provided by the SMTP client, used for DKIM2 envelope verification
 
@@ -120,14 +120,14 @@ DMARC: Troubleshooting
 
 ##### `ipRevPtr`
 
-> Type: <code>String[]</code> · server-set
+> Type: <code>Set&lt;String&gt;</code> · server-set
 >
 > PTR records returned by the reverse DNS lookup for the remote IP address
 
 
 ##### `dkimResults`
 
-> Type: [<code>DmarcTroubleshootAuthResult</code>](#dmarctroubleshootauthresult)<code>[]</code> · server-set
+> Type: <code>List&lt;</code>[<code>DmarcTroubleshootAuthResult</code>](#dmarctroubleshootauthresult)<code>&gt;</code> · server-set
 >
 > Results of the DKIM signature verification checks
 
@@ -183,7 +183,7 @@ DMARC: Troubleshooting
 
 ##### `elapsed`
 
-> Type: <code>Duration</code> · server-set · default: `"0ms"`
+> Type: <code>Duration</code> · server-set · default: `0`
 >
 > Time taken to perform the DMARC troubleshooting
 
@@ -245,7 +245,7 @@ Spam Filter: Classify a message
 
 ##### `envRcptTo`
 
-> Type: <code>EmailAddress[]</code>
+> Type: <code>Set&lt;EmailAddress&gt;</code>
 >
 > List of RCPT TO addresses provided by the SMTP client
 

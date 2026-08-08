@@ -93,7 +93,7 @@ Global settings controlling how tasks are retried are held on the [TaskManager](
 
 - [`maxAttempts`](/docs/ref/object/task-manager#maxattempts): maximum number of attempts for a task before it is marked as permanently failed. Default `3`, minimum `1`.
 - [`strategy`](/docs/ref/object/task-manager#strategy): retry strategy applied to failed tasks. Either the `ExponentialBackoff` variant, configured with a [`factor`](/docs/ref/object/task-manager#taskretrystrategybackoff), an [`initialDelay`](/docs/ref/object/task-manager#taskretrystrategybackoff), a [`maxDelay`](/docs/ref/object/task-manager#taskretrystrategybackoff), and an optional [`jitter`](/docs/ref/object/task-manager#taskretrystrategybackoff) toggle, or the `FixedDelay` variant, configured with a single [`delay`](/docs/ref/object/task-manager#taskretrystrategyfixed).
-- [`totalDeadline`](/docs/ref/object/task-manager#totaldeadline): total time budget across all attempts before a task is marked as failed regardless of remaining attempts. Default `"6h"`.
+- [`totalDeadline`](/docs/ref/object/task-manager#totaldeadline): total time budget in milliseconds across all attempts before a task is marked as failed regardless of remaining attempts. Default `21600000` (six hours).
 
 Example using exponential backoff with jitter:
 
@@ -103,11 +103,11 @@ Example using exponential backoff with jitter:
   "strategy": {
     "@type": "ExponentialBackoff",
     "factor": 2.0,
-    "initialDelay": "1m",
-    "maxDelay": "30m",
+    "initialDelay": 60000,
+    "maxDelay": 1800000,
     "jitter": true
   },
-  "totalDeadline": "6h"
+  "totalDeadline": 21600000
 }
 ```
 

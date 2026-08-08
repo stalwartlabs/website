@@ -275,7 +275,7 @@ PostgreSQL data store.
 
 ##### `timeout`
 
-> Type: <code>Duration?</code> · default: `"15s"`
+> Type: <code>Duration?</code> · default: `15000`
 >
 > Connection timeout to the database
 
@@ -310,7 +310,7 @@ PostgreSQL data store.
 
 ##### `readReplicas`
 
-> Type: [<code>PostgreSqlSettings</code>](#postgresqlsettings)<code>[]</code> · [enterprise](/docs/server/enterprise)
+> Type: <code>List&lt;</code>[<code>PostgreSqlSettings</code>](#postgresqlsettings)<code>&gt;</code> · [enterprise](/docs/server/enterprise)
 >
 > List of read replicas for the store
 
@@ -480,7 +480,7 @@ MySQL data store.
 
 ##### `timeout`
 
-> Type: <code>Duration?</code> · default: `"15s"`
+> Type: <code>Duration?</code> · default: `15000`
 >
 > Connection timeout to the database
 
@@ -522,7 +522,7 @@ MySQL data store.
 
 ##### `readReplicas`
 
-> Type: [<code>MySqlSettings</code>](#mysqlsettings)<code>[]</code> · [enterprise](/docs/server/enterprise)
+> Type: <code>List&lt;</code>[<code>MySqlSettings</code>](#mysqlsettings)<code>&gt;</code> · [enterprise](/docs/server/enterprise)
 >
 > List of read replicas for the store
 
@@ -647,7 +647,7 @@ Sharded in-memory store configuration.
 
 ##### `stores`
 
-> Type: [<code>InMemoryStoreBase</code>](#inmemorystorebase)<code>[]</code> · min items: 2
+> Type: <code>List&lt;</code>[<code>InMemoryStoreBase</code>](#inmemorystorebase)<code>&gt;</code> · min items: 2
 >
 > Stores to use for sharding
 
@@ -682,7 +682,7 @@ Redis/Valkey store.
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"10s"`
+> Type: <code>Duration</code> · default: `10000`
 >
 > Connection timeout to the database
 
@@ -696,21 +696,21 @@ Redis/Valkey store.
 
 ##### `poolTimeoutCreate`
 
-> Type: <code>Duration?</code> · default: `"30s"`
+> Type: <code>Duration?</code> · default: `30000`
 >
 > Timeout for creating a new connection
 
 
 ##### `poolTimeoutWait`
 
-> Type: <code>Duration?</code> · default: `"30s"`
+> Type: <code>Duration?</code> · default: `30000`
 >
 > Timeout for waiting for a connection from the pool
 
 
 ##### `poolTimeoutRecycle`
 
-> Type: <code>Duration?</code> · default: `"30s"`
+> Type: <code>Duration?</code> · default: `30000`
 >
 > Timeout for recycling a connection
 
@@ -726,14 +726,14 @@ Redis Cluster store.
 
 ##### `urls`
 
-> Type: <code>Uri[]</code> · default: `["redis://127.0.0.1"]`
+> Type: <code>Set&lt;Uri&gt;</code> · default: `{"redis://127.0.0.1":true}`
 >
 > URL(s) of the Redis server(s)
 
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"10s"`
+> Type: <code>Duration</code> · default: `10000`
 >
 > Connection timeout to the database
 
@@ -796,21 +796,21 @@ Redis Cluster store.
 
 ##### `poolTimeoutCreate`
 
-> Type: <code>Duration?</code> · default: `"30s"`
+> Type: <code>Duration?</code> · default: `30000`
 >
 > Timeout for creating a new connection
 
 
 ##### `poolTimeoutWait`
 
-> Type: <code>Duration?</code> · default: `"30s"`
+> Type: <code>Duration?</code> · default: `30000`
 >
 > Timeout for waiting for a connection from the pool
 
 
 ##### `poolTimeoutRecycle`
 
-> Type: <code>Duration?</code> · default: `"30s"`
+> Type: <code>Duration?</code> · default: `30000`
 >
 > Timeout for recycling a connection
 
@@ -826,7 +826,7 @@ Redis Sentinel store.
 
 ##### `urls`
 
-> Type: <code>Uri[]</code> · default: `["redis://127.0.0.1:26379"]`
+> Type: <code>Set&lt;Uri&gt;</code> · default: `{"redis://127.0.0.1:26379":true}`
 >
 > Address(es) of the Sentinel node(s)
 
@@ -840,7 +840,7 @@ Redis Sentinel store.
 
 ##### `timeout`
 
-> Type: <code>Duration</code> · default: `"10s"`
+> Type: <code>Duration</code> · default: `10000`
 >
 > Connection timeout to the database
 
@@ -889,21 +889,21 @@ Redis Sentinel store.
 
 ##### `poolTimeoutCreate`
 
-> Type: <code>Duration?</code> · default: `"30s"`
+> Type: <code>Duration?</code> · default: `30000`
 >
 > Timeout for creating a new connection
 
 
 ##### `poolTimeoutWait`
 
-> Type: <code>Duration?</code> · default: `"30s"`
+> Type: <code>Duration?</code> · default: `30000`
 >
 > Timeout for waiting for a connection from the pool
 
 
 ##### `poolTimeoutRecycle`
 
-> Type: <code>Duration?</code> · default: `"30s"`
+> Type: <code>Duration?</code> · default: `30000`
 >
 > Timeout for recycling a connection
 

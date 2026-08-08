@@ -20,7 +20,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `bind`
 
-> Type: <code>SocketAddr[]</code> · min items: 1
+> Type: <code>Set&lt;SocketAddr&gt;</code> · min items: 1
 >
 > The addresses the listener will bind to
 
@@ -34,7 +34,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `overrideProxyTrustedNetworks`
 
-> Type: <code>IpMask[]</code>
+> Type: <code>Set&lt;IpMask&gt;</code>
 >
 > Enable proxy protocol for connections from these networks
 
@@ -104,14 +104,14 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `tlsDisableCipherSuites`
 
-> Type: [<code>TlsCipherSuite</code>](#tlsciphersuite)<code>[]</code>
+> Type: <code>Set&lt;</code>[<code>TlsCipherSuite</code>](#tlsciphersuite)<code>&gt;</code>
 >
 > Which cipher suites to disable
 
 
 ##### `tlsDisableProtocols`
 
-> Type: [<code>TlsVersion</code>](#tlsversion)<code>[]</code>
+> Type: <code>Set&lt;</code>[<code>TlsVersion</code>](#tlsversion)<code>&gt;</code>
 >
 > Which TLS protocols to disable
 
@@ -132,7 +132,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `tlsTimeout`
 
-> Type: <code>Duration?</code> · default: `"1m"`
+> Type: <code>Duration?</code> · default: `60000`
 >
 > TLS handshake timeout
 

@@ -19,9 +19,9 @@ The `Resource` variant downloads CSV data files over HTTP. It exposes the follow
 
 - [`asnUrls`](/docs/ref/object/asn#asnurls): URLs of the CSV files that contain IP-to-ASN mappings.
 - [`geoUrls`](/docs/ref/object/asn#geourls): URLs of the CSV files that contain IP-to-country mappings.
-- [`expires`](/docs/ref/object/asn#expires): refresh interval for downloaded data. Default `"1d"`.
-- [`timeout`](/docs/ref/object/asn#timeout): maximum time to wait for a fetch. Default `"5m"`.
-- [`maxSize`](/docs/ref/object/asn#maxsize): maximum size accepted for a downloaded file. Default `"100mb"`.
+- [`expires`](/docs/ref/object/asn#expires): refresh interval for downloaded data, in milliseconds. Default one day (`86400000`).
+- [`timeout`](/docs/ref/object/asn#timeout): maximum time to wait for a fetch, in milliseconds. Default five minutes (`300000`).
+- [`maxSize`](/docs/ref/object/asn#maxsize): maximum size accepted for a downloaded file, in bytes. Default 100 MiB (`104857600`).
 - [`httpAuth`](/docs/ref/object/asn#httpauth): HTTP authentication method (`Unauthenticated`, `Basic`, or `Bearer`).
 - [`httpHeaders`](/docs/ref/object/asn#httpheaders): additional HTTP headers sent with each request.
 
@@ -30,17 +30,17 @@ For example:
 ```json
 {
   "@type": "Resource",
-  "expires": "1d",
-  "timeout": "5m",
-  "maxSize": "100mb",
-  "asnUrls": [
-    "https://cdn.jsdelivr.net/npm/@ip-location-db/asn/asn-ipv4.csv",
-    "https://cdn.jsdelivr.net/npm/@ip-location-db/asn/asn-ipv6.csv"
-  ],
-  "geoUrls": [
-    "https://cdn.jsdelivr.net/npm/@ip-location-db/geolite2-geo-whois-asn-country/geolite2-geo-whois-asn-country-ipv4.csv",
-    "https://cdn.jsdelivr.net/npm/@ip-location-db/geolite2-geo-whois-asn-country/geolite2-geo-whois-asn-country-ipv6.csv"
-  ],
+  "expires": 86400000,
+  "timeout": 300000,
+  "maxSize": 104857600,
+  "asnUrls": {
+    "https://cdn.jsdelivr.net/npm/@ip-location-db/asn/asn-ipv4.csv": true,
+    "https://cdn.jsdelivr.net/npm/@ip-location-db/asn/asn-ipv6.csv": true
+  },
+  "geoUrls": {
+    "https://cdn.jsdelivr.net/npm/@ip-location-db/geolite2-geo-whois-asn-country/geolite2-geo-whois-asn-country-ipv4.csv": true,
+    "https://cdn.jsdelivr.net/npm/@ip-location-db/geolite2-geo-whois-asn-country/geolite2-geo-whois-asn-country-ipv6.csv": true
+  },
   "httpAuth": {"@type": "Unauthenticated"}
 }
 ```

@@ -13,7 +13,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `dkimSignDomain`
 
-> Type: [<code>Expression</code>](#expression) · default: `{"else":"false","match":[{"if":"is_local_domain(sender_domain) && !is_empty(authenticated_as)","then":"sender_domain"}]}`
+> Type: [<code>Expression</code>](#expression) · default: `{"else":"false"}`
 >
 > Domain to use for DKIM signing
 >
@@ -29,7 +29,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `dkimVerify`
 
-> Type: [<code>Expression</code>](#expression) · default: `{"else":"relaxed","match":[]}`
+> Type: [<code>Expression</code>](#expression) · default: `{"else":"relaxed"}`
 >
 > Whether DKIM verification is strict, relaxed or disabled
 >
@@ -40,7 +40,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `spfEhloVerify`
 
-> Type: [<code>Expression</code>](#expression) · default: `{"else":"disable","match":[{"if":"local_port == 25","then":"relaxed"}]}`
+> Type: [<code>Expression</code>](#expression) · default: `{"else":"disable"}`
 >
 > Whether SPF EHLO verification is strict, relaxed or disabled
 >
@@ -51,7 +51,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `spfFromVerify`
 
-> Type: [<code>Expression</code>](#expression) · default: `{"else":"disable","match":[{"if":"local_port == 25","then":"relaxed"}]}`
+> Type: [<code>Expression</code>](#expression) · default: `{"else":"disable"}`
 >
 > Whether SPF MAIL FROM verification is strict, relaxed or disabled
 >
@@ -62,7 +62,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `arcVerify`
 
-> Type: [<code>Expression</code>](#expression) · default: `{"else":"disable","match":[]}`
+> Type: [<code>Expression</code>](#expression) · default: `{"else":"disable"}`
 >
 > Whether ARC verification is strict, relaxed or disabled.
 >
@@ -73,7 +73,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `dmarcVerify`
 
-> Type: [<code>Expression</code>](#expression) · default: `{"else":"disable","match":[{"if":"local_port == 25","then":"relaxed"}]}`
+> Type: [<code>Expression</code>](#expression) · default: `{"else":"disable"}`
 >
 > Whether DMARC verification is strict, relaxed or disabled
 >
@@ -84,7 +84,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `reverseIpVerify`
 
-> Type: [<code>Expression</code>](#expression) · default: `{"else":"disable","match":[{"if":"local_port == 25","then":"relaxed"}]}`
+> Type: [<code>Expression</code>](#expression) · default: `{"else":"disable"}`
 >
 > How strict to be when verifying the reverse DNS of the client IP
 >
@@ -154,13 +154,7 @@ curl -X POST https://mail.example.com/api \
             "update": {
               "singleton": {
                 "dkimSignDomain": {
-                  "else": "false",
-                  "match": [
-                    {
-                      "if": "is_local_domain(sender_domain) && !is_empty(authenticated_as)",
-                      "then": "sender_domain"
-                    }
-                  ]
+                  "else": "false"
                 }
               }
             }
@@ -193,7 +187,7 @@ stalwart-cli get SenderAuth
 ### Update
 
 ```sh
-stalwart-cli update SenderAuth --field dkimSignDomain='{"else":"false","match":[{"if":"is_local_domain(sender_domain) && !is_empty(authenticated_as)","then":"sender_domain"}]}'
+stalwart-cli update SenderAuth --field dkimSignDomain='{"else":"false"}'
 ```
 
 
@@ -209,7 +203,7 @@ A conditional expression with match rules and a default value.
 
 ##### `match`
 
-> Type: [<code>ExpressionMatch</code>](#expressionmatch)<code>[]</code>
+> Type: <code>List&lt;</code>[<code>ExpressionMatch</code>](#expressionmatch)<code>&gt;</code>
 >
 > List of conditions and their corresponding results
 
