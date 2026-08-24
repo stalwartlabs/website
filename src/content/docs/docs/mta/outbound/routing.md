@@ -92,7 +92,7 @@ Operators can define a Relay MtaRoute for a specific host and an Mx MtaRoute for
 ]
 ```
 
-The route expression on MtaOutboundStrategy then branches on `is_local_domain('', rcpt_domain)` to pick `'relay'` versus `'mx'`.
+The route expression on MtaOutboundStrategy then branches on `is_local_domain(rcpt_domain)` to pick `'relay'` versus `'mx'`.
 
 ### Failover delivery
 

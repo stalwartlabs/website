@@ -243,12 +243,12 @@ Returns the current value of a server metric. The argument must be the string li
 ## Directory functions
 
 ### `is_local_domain`
-- **Description**: Returns `true` when the domain is registered in the server's directory. Uses the default directory.
+- **Description**: Returns `true` when the domain is registered in the server's directory. Uses the default directory. The argument is canonicalised before the lookup, so case and internationalised (Unicode) domain names are handled transparently.
 - **Arguments**: 1 (Domain)
 - **Example**: `is_local_domain(rcpt_domain)` is the usual test for a recipient that this server is authoritative for.
 
 ### `is_local_address`
-- **Description**: Returns `true` when the given email address resolves to a local account or alias. Uses the default directory.
+- **Description**: Returns `true` when the given email address resolves to a local account or alias. Uses the default directory. The argument is canonicalised before the lookup, so an address is matched regardless of the case it was written in.
 - **Arguments**: 1 (Email address)
 - **Example**: `is_local_address(rcpt)` distinguishes deliverable recipients from relay recipients.
 

@@ -97,7 +97,7 @@ For example, the following configuration rewrites `first.last@example.org` to `f
 ```json
 {
   "rewrite": {
-    "match": {"0": {"if": "is_local_domain('', rcpt_domain) & matches('^([^.]+)\\.([^.]+)@(.+)$', rcpt)", "then": "$1 + '+' + $2 + '@' + $3"}},
+    "match": {"0": {"if": "is_local_domain(rcpt_domain) & matches('^([^.]+)\\.([^.]+)@(.+)$', rcpt)", "then": "$1 + '+' + $2 + '@' + $3"}},
     "else": "false"
   }
 }

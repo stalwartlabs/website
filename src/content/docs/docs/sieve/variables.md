@@ -21,6 +21,8 @@ The following environment variables can be accessed from within a Sieve script e
 - `env.arc.result`: The result of the [ARC](/docs/mta/authentication/arc) check.
 - `env.dmarc.result`: The result of the [DMARC](/docs/mta/authentication/dmarc) check.
 - `env.dmarc.policy`: The DMARC policy that was applied.
+- `env.spam.score`: The score calculated by the [spam filter](/docs/spamfilter/), only available at the `DATA` stage when the spam filter is enabled.
+- `env.spam.is_spam`: Whether the spam filter score reached the configured spam threshold.
 - `env.iprev.result`: The result of the [reverse IP](/docs/mta/authentication/iprev) check.
 - `env.iprev.ptr`: The host name returned by the reverse IP check.
 - `env.tls.version`: The TLS version used for the current session.

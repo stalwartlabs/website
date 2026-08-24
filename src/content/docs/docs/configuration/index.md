@@ -11,7 +11,7 @@ The [WebUI](/docs/management/webui/) is the browser-based administration console
 
 The [CLI](/docs/management/cli/) (`stalwart-cli`) calls the same JMAP API from the command line. It is the right tool for scripting, automation, and declarative deployments on platforms such as NixOS, Ansible or Terraform.
 
-This arrangement differs from the traditional model of a Unix daemon driven by a large configuration file. The trade-off is that changes take effect immediately across every node in a cluster, every setting is validated before it is saved, and backing up or cloning a deployment becomes a single operation against the API.
+This arrangement differs from the traditional model of a Unix daemon driven by a large configuration file. The trade-off is that every setting is validated before it is saved, changes propagate across every node in a cluster, and backing up or cloning a deployment becomes a single operation against the API.
 
 ## Configuration file
 
@@ -30,6 +30,20 @@ The file contains a single [DataStore](/docs/ref/object/data-store) object telli
 RocksDB is the default backend variant and works well for most single-node deployments; PostgreSQL, MySQL, SQLite and FoundationDB are also supported. Each variant has its own set of fields, documented on the [DataStore](/docs/ref/object/data-store) reference page.
 
 Once the server is running, `config.json` is rarely touched again. The datastore location is the only setting that cannot be changed through the API, because the API itself is served out of the datastore.
+
+## Applying changes
+
+Not every setting becomes active the moment it is saved.
+
+Directory data (accounts, domains, mailing lists, aliases, group memberships) takes effect immediately. Saving one of these objects invalidates the affected cache entries on the local node and broadcasts the invalidation to the rest of the cluster, so the next lookup already sees the new value.
+
+Server configuration that is compiled into the running core does not. Listeners, MTA rules and expressions (routing, queue and TLS strategies, address rewriting, DKIM signing), directory backends and telemetry settings are parsed once into an in-memory snapshot, and saving the object updates the database without rebuilding that snapshot. The new value applies only after a [ReloadSettings action](/docs/management/tasks-actions/actions), which rebuilds the snapshot and broadcasts the reload to every node:
+
+```sh
+stalwart-cli create Action/ReloadSettings
+```
+
+The same action is available in the WebUI under Management, Actions. TLS certificates, lookup stores and blocked IP lists have their own narrower reload actions, which are cheaper than a full settings reload.
 
 ## Safe defaults
 

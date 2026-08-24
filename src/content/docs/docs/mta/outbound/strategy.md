@@ -29,19 +29,19 @@ Each expression is evaluated for every recipient in a message. They have access 
 
 ## Example
 
-A typical configuration sets each expression to pick a different strategy name based on context: `route` returns `'local'` when the recipient domain is local (`is_local_domain('', rcpt_domain)`) and `'mx'` otherwise; `schedule` returns `'local'` for local recipients, `'dsn'` for delivery-status notifications, `'report'` for aggregate reports, and `'remote'` otherwise; `connection` returns `'long-timeout'` when a previous attempt failed with a connection error and `'default'` otherwise; and `tls` returns `'invalid-tls'` when a previous attempt failed due to a TLS error and `'default'` otherwise. Corresponding [MtaRoute](/docs/ref/object/mta-route), [MtaDeliverySchedule](/docs/ref/object/mta-delivery-schedule), [MtaConnectionStrategy](/docs/ref/object/mta-connection-strategy), and [MtaTlsStrategy](/docs/ref/object/mta-tls-strategy) objects must be defined with the names referenced by the expressions.
+A typical configuration sets each expression to pick a different strategy name based on context: `route` returns `'local'` when the recipient domain is local (`is_local_domain(rcpt_domain)`) and `'mx'` otherwise; `schedule` returns `'local'` for local recipients, `'dsn'` for delivery-status notifications, `'report'` for aggregate reports, and `'remote'` otherwise; `connection` returns `'long-timeout'` when a previous attempt failed with a connection error and `'default'` otherwise; and `tls` returns `'invalid-tls'` when a previous attempt failed due to a TLS error and `'default'` otherwise. Corresponding [MtaRoute](/docs/ref/object/mta-route), [MtaDeliverySchedule](/docs/ref/object/mta-delivery-schedule), [MtaConnectionStrategy](/docs/ref/object/mta-connection-strategy), and [MtaTlsStrategy](/docs/ref/object/mta-tls-strategy) objects must be defined with the names referenced by the expressions.
 
 ```json
 {
   "route": {
     "match": {
-      "0": {"if": "is_local_domain('', rcpt_domain)", "then": "'local'"}
+      "0": {"if": "is_local_domain(rcpt_domain)", "then": "'local'"}
     },
     "else": "'mx'"
   },
   "schedule": {
     "match": {
-      "0": {"if": "is_local_domain('*', rcpt_domain)", "then": "'local'"},
+      "0": {"if": "is_local_domain(rcpt_domain)", "then": "'local'"},
       "1": {"if": "source == 'dsn'", "then": "'dsn'"},
       "2": {"if": "source == 'report'", "then": "'report'"}
     },

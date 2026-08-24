@@ -21,8 +21,8 @@ The following variables are available for use in [MTA expressions](/docs/mta/):
 
 - `sender`: The return path address specified in the MAIL FROM command for inbound sessions and the sender's address for outbound sessions.
 - `sender_domain`: The return path domain name specified in the MAIL FROM command for inbound sessions and the sender's domain name for outbound sessions.
-- `rcpt`: The recipient's address.
-- `rcpt_domain`: The recipient's domain name.
+- `rcpt`: The recipient's address. In inbound session expressions this is the lowercased address; in outbound queue expressions it is the envelope address as received, so the local part keeps its original case while the domain is always lowercased.
+- `rcpt_domain`: The recipient's domain name, always lowercased.
 - `recipients`: An array of recipient addresses.
 - `priority`: The priority provided using the MT-PRIORITY extension.
 - `authenticated_as`: The account name used to authenticate the session for inbound sessions, or an empty value if the session is unauthenticated.
