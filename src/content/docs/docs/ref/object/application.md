@@ -53,6 +53,13 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 > The local path to unpack the application bundle to. If left empty, the application will be unpacked to /tmp.
 
 
+##### `oauthClientId`
+
+> Type: <code>String?</code>
+>
+> The OAuth client identifier that this application uses to start the authorization flow. Only required when the domain is served by an external identity provider, in which case it must match a client registered with that provider.
+
+
 
 ## JMAP API
 

@@ -46,6 +46,13 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 > The default maximum number of contact cards a user can create
 
 
+##### `vCardVersion`
+
+> Type: [<code>VCardVersion</code>](#vcardversion) · default: `"v4"`
+>
+> vCard version used when serializing contact cards for clients that do not request a specific version
+
+
 
 ## JMAP API
 
@@ -141,5 +148,18 @@ stalwart-cli get AddressBook
 stalwart-cli update AddressBook --field defaultDisplayName='updated value'
 ```
 
+
+
+## Enums
+
+
+### VCardVersion
+
+
+
+| Value | Label |
+|---|---|
+| `v4` | vCard 4.0 |
+| `v3` | vCard 3.0 |
 
 

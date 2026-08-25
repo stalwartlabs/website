@@ -71,7 +71,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 > Type: <code>Html?</code> · [enterprise](/docs/server/enterprise)
 >
-> Specifies the HTML template used for rendering HTTP RSVP confirmations.
+> Replaces the built-in HTTP RSVP page. The document is served verbatim and is responsible for calling the /api/calendar/rsvp endpoint itself.
 
 
 

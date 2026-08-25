@@ -69,7 +69,17 @@ This is particularly useful when scheduling with external participants or with c
 
 ### Endpoint
 
-The RSVP endpoint is accessible at `https://<server-host>/calendar/rsvp`, where `<server-host>` is based on the configured [hostname](/docs/server/general#server-hostname). When a participant accesses this URL, Stalwart verifies the request and presents a lightweight RSVP interface.
+The RSVP endpoint is accessible at `https://<server-host>/calendar/rsvp`, where `<server-host>` is based on the configured [hostname](/docs/server/general#server-hostname). Accessing this URL serves a self-contained web page; it never records a response by itself, so link scanners and mail gateways that follow links in messages cannot answer on the attendee's behalf.
+
+The page reads the signed token from the `i` query parameter and calls `POST /api/calendar/rsvp` to do the actual work. That endpoint takes a JSON body and is used twice: first with only the token, to retrieve the invitation details, and then with a participation status, to record the response.
+
+```json
+{ "token": "<signed token>", "partstat": "accepted", "comment": "Bringing dessert" }
+```
+
+`partstat` accepts `accepted`, `declined` or `tentative`, and the optional `comment` is a short note for the organizer. The response is one of `invitation` (the event details), `recorded` (the stored participation status), or `error` together with a localised `message`.
+
+Responses are applied directly to the organizer's calendar and a reply is placed in their Scheduling Inbox, without an intermediate email.
 
 ### Enabling
 
@@ -105,15 +115,17 @@ This feature is available exclusively in the [Enterprise Edition](/docs/server/e
 
 ### Templates
 
-Stalwart ships with built-in default templates for both email and web rendering. Two HTML templates are used in the scheduling system, both set on the CalendarScheduling singleton.
+Stalwart ships with a built-in default for both the scheduling email and the RSVP web page. Both are set on the CalendarScheduling singleton.
 
 #### iMIP email template
 
 The iMIP template renders outbound iMIP scheduling messages (invitations, updates, cancellations). Each message contains a rich HTML MIME part rendered from the template, including event details, sender information, and the RSVP link (if HTTP RSVP is enabled). A custom template can be supplied through [`emailTemplate`](/docs/ref/object/calendar-scheduling#emailtemplate).
 
-#### HTTP RSVP web template
+#### HTTP RSVP web page
 
-The second template is used by the HTTP RSVP endpoint to render the response page shown when a participant follows an RSVP link. This page presents the invitation details and allows the attendee to accept, decline, or respond tentatively. A custom template can be supplied through [`httpRsvpTemplate`](/docs/ref/object/calendar-scheduling#httprsvptemplate).
+The RSVP page is a static HTML document served as-is; it is not rendered from template variables. A replacement page can be supplied through [`httpRsvpTemplate`](/docs/ref/object/calendar-scheduling#httprsvptemplate), and is returned verbatim in place of the built-in one.
+
+A custom page is responsible for the whole flow: read the `i` query parameter, call `POST /api/calendar/rsvp` with the token to load the invitation, render it, and post the chosen participation status back. The endpoint returns localised labels alongside the event data, so a custom page does not need to ship its own translations.
 
 ### Logo
 

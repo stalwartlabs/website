@@ -887,7 +887,7 @@ OpenID Connect directory settings.
 
 ##### `requireAudience`
 
-> Type: <code>String?</code> · default: `"stalwart"`
+> Type: <code>String?</code>
 >
 > If set, Stalwart will reject any token whose aud (audience) claim does not include this value. Set this to the client ID or resource identifier registered for Stalwart in your identity provider to ensure tokens issued for other applications are not accepted.
 
