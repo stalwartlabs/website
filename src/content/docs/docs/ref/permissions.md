@@ -380,6 +380,12 @@ The first section lists the baseline permissions declared in the permission sche
 - **`pop3Dele`**: Mark messages for deletion on disconnect
 
 
+### Scim
+
+
+- **`scimAccess`**: Provision users and groups through the SCIM endpoint
+
+
 ### Sieve
 
 

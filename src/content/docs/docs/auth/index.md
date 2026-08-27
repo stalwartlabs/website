@@ -14,3 +14,5 @@ The information used for both authentication and authorization is stored in [dir
 Directories contain [principals](/docs/auth/principals/), a term that refers to individuals, groups, resources, and other entities represented within the server. Principals form the basis on which the server models different roles and resources.
 
 By default, Stalwart stores directory information internally, in the [built-in directory](/docs/auth/backend/internal). It also supports external directory services such as [LDAP](/docs/auth/backend/ldap) and [SQL](/docs/auth/backend/sql) databases, which allow integration with existing identity infrastructure.
+
+Where the identity provider is the system of record, it can also push the account lifecycle into the server through [SCIM provisioning](/docs/auth/scim/), so that mailboxes are created when an identity is created and suspended or removed when it is withdrawn.

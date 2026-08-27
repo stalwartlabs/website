@@ -263,6 +263,39 @@ pages under `src/content/pages/**` are addressed to buyers and decision
 makers and follow a different register; see "House style for marketing
 pages" below. The em-dash ban is repo-wide and applies to both.
 
+**Invoke the `technical-docs` skill before writing or revising any page
+under `src/content/docs/docs/**`**, and follow it. It carries the
+Diataxis structure rules (name the page type, then headings follow from
+it) and prose rules derived by measuring admired human-written
+documentation (Postfix, PostgreSQL, Django) against AI-drafted pages in
+this repo. Before finishing, run its checker over the files you touched:
+
+```sh
+python3 ~/.claude/skills/technical-docs/scripts/check.py <files>
+```
+
+It reports each marker as a rate per 1000 words against the human band,
+because these constructions are wrong at a rate and not in a single use.
+
+Three findings from that measurement, because they are counterintuitive
+and get "corrected" in the wrong direction otherwise:
+
+- **`rather than` is the dominant AI signature in this repo**, measured at
+  8x to 43x the rate of the human corpora. State the right thing and
+  delete the contrast. Keep it only where the reader's wrong assumption
+  is what you are correcting, and then write it as "X, not Y".
+- **Gerund headings are fine.** Postfix opens 27% of its headings with an
+  -ing verb and Django 23.7%, both above the AI rate. Google advises
+  against them; the writers worth imitating ignore that.
+- **Question-form headings are fine when they serve the reader.** Postfix
+  writes "What domains to receive mail for". The tell is a heading that
+  describes the section's own coverage ("What SCIM adds", "What this
+  does"). Test: would a reader type it into a search box.
+
+The word list below is repo-specific and sits on top of the skill. Note
+that it did not fire on the AI-drafted SCIM section at all, so treat it
+as marketing-speak prevention rather than as an AI-tell detector.
+
 - **No em dashes** (`-`). Replace with comma, semicolon, colon, parentheses,
   or split into two sentences depending on context.
 - **Avoid marketing/AI-speak**: words like *robust*, *seamless(ly)*,

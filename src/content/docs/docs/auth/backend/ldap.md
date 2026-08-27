@@ -9,6 +9,14 @@ Stalwart integrates with LDAP directories for account authentication and lookup.
 
 An LDAP integration is represented by the LDAP variant of the [Directory](/docs/ref/object/directory) object (found in the WebUI under <!-- breadcrumb:Directory --><svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M10 5H3" /><path d="M12 19H3" /><path d="M14 3v4" /><path d="M16 17v4" /><path d="M21 12h-9" /><path d="M21 19h-5" /><path d="M21 5h-7" /><path d="M8 10v4" /><path d="M8 12H3" /></svg> Settings › <svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M12 10a2 2 0 0 0-2 2c0 1.02-.1 2.51-.26 4" /><path d="M14 13.12c0 2.38 0 6.38-1 8.88" /><path d="M17.29 21.02c.12-.6.43-2.3.5-3.02" /><path d="M2 12a10 10 0 0 1 18-6" /><path d="M2 16h.01" /><path d="M21.8 16c.2-2 .131-5.354 0-6" /><path d="M5 19.5C5.5 18 6 15 6 12a6 6 0 0 1 .34-2" /><path d="M8.65 22c.21-.66.45-1.32.57-2" /><path d="M9 6.8a6 6 0 0 1 9 5.2v2" /></svg> Authentication › Directories<!-- /breadcrumb:Directory -->).
 
+## Account provisioning
+
+Accounts are not copied from the directory in advance. Stalwart materialises a local account the first time it needs one, either when the user authenticates or when a message arrives for their address and the directory confirms it as a valid recipient. This second trigger is what makes just-in-time provisioning workable for LDAP: an account that has never signed in can still receive mail, because the directory can be queried for the address on demand.
+
+The gap it leaves is at the other end of the account's life. Just-in-time provisioning never removes anything, because a deleted directory entry simply stops appearing in query results rather than announcing itself. A departed user's mailbox persists, continues to accept mail, and continues to count against licensed mailbox limits until an administrator removes it.
+
+Where that matters, [SCIM provisioning](/docs/auth/scim/) can be enabled per domain so that the identity provider suspends and deletes accounts explicitly. Doing so makes SCIM authoritative for the accounts in that domain and stops just-in-time synchronisation from writing to them. [Provisioning models](/docs/auth/scim/provisioning) compares the two and covers how authority is assigned.
+
 ## Connection details
 
 The minimum required configuration for LDAP is the URL of the directory server. The URL is set through [`url`](/docs/ref/object/directory#url); a typical value is `"ldap://localhost:389"` for an unencrypted connection to a server on the same host.

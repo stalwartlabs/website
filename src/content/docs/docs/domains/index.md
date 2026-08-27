@@ -19,6 +19,12 @@ Recipient resolution for the domain is shaped by three fields. [`catchAllAddress
 
 The [`reportAddressUri`](/docs/ref/object/domain#reportaddressuri) field sets the mailbox that receives DMARC aggregate, TLS-RPT, and CAA incident reports generated for the domain. The default is `mailto:postmaster`; setting the field to null suppresses report generation for the domain.
 
+## Account provisioning
+
+[`allowScimProvisioning`](/docs/ref/object/domain#allowscimprovisioning) opens the domain to an external identity provider that provisions accounts over [SCIM](/docs/auth/scim/), and is disabled by default. Enabling it does two things at once: SCIM clients gain permission to create, update, suspend, and delete accounts in the domain, and just-in-time directory synchronisation stops writing to those accounts, so the identity provider becomes the single authority for them. A user who authenticates before being provisioned is refused rather than having an account created for them.
+
+The field is per domain, so a server can keep some domains on just-in-time provisioning while others are driven by SCIM. [Provisioning models](/docs/auth/scim/provisioning) covers the trade in full.
+
 ## Linked infrastructure
 
 Three fields on the Domain link it to the objects that manage its externally visible infrastructure:

@@ -123,6 +123,13 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 > Email address to receive DMARC, TLS-RPT and CAA reports for this domain, or null to not receive reports
 
 
+##### `allowScimProvisioning`
+
+> Type: <code>Boolean</code> · [enterprise](/docs/server/enterprise) · default: `false`
+>
+> Whether external SCIM clients may provision accounts in this domain. When enabled, SCIM becomes authoritative for accounts in this domain and just-in-time directory provisioning no longer modifies them
+
+
 
 ## JMAP API
 

@@ -27,6 +27,7 @@ import CalendarGridMock from "../components/CalendarGridMock.astro";
 import FileBrowserMock from "../components/FileBrowserMock.astro";
 import TenantsListMock from "../components/TenantsListMock.astro";
 import BrandingMock from "../components/BrandingMock.astro";
+import ScimLifecycleDiagram from "../components/ScimLifecycleDiagram.astro";
 
 export const diagrams: Record<string, any> = {
   architecture: ArchitectureDiagram,
@@ -55,4 +56,5 @@ export const diagrams: Record<string, any> = {
   "file-browser": FileBrowserMock,
   "tenants-list": TenantsListMock,
   branding: BrandingMock,
+  "scim-lifecycle": ScimLifecycleDiagram,
 };

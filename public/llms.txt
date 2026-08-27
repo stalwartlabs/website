@@ -80,6 +80,7 @@ The documentation is versioned; links below point at the current release line. O
 - [Authorization overview](https://stalw.art/docs/auth/authorization/): roles, permissions, quotas, tenants.
 - [Directory backends](https://stalw.art/docs/auth/backend/): SQL, LDAP, OIDC and internal directory.
 - [Principals](https://stalw.art/docs/auth/principals/): accounts, groups, tenants.
+- [SCIM provisioning](https://stalw.art/docs/auth/scim/): SCIM 2.0 account lifecycle from an external identity provider.
 
 ## Storage
 

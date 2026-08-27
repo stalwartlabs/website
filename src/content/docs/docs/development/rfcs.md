@@ -253,6 +253,15 @@ The following RFCs are implemented by Stalwart.
 - [RFC 6352 - CardDAV vCard Extensions to Web Distributed Authoring and Versioning (WebDAV)](https://datatracker.ietf.org/doc/html/rfc6352)
 - [RFC 6764 - Locating Services for Calendaring Extensions to WebDAV (CalDAV) and vCard Extensions to WebDAV (CardDAV)](https://datatracker.ietf.org/doc/html/rfc6764)
 
+## SCIM
+
+- [RFC 7642 - System for Cross-domain Identity Management: Definitions, Overview, Concepts, and Requirements](https://www.rfc-editor.org/rfc/rfc7642)
+- [RFC 7643 - System for Cross-domain Identity Management: Core Schema](https://www.rfc-editor.org/rfc/rfc7643)
+- [RFC 7644 - System for Cross-domain Identity Management: Protocol](https://www.rfc-editor.org/rfc/rfc7644)
+- [RFC 9865 - Cursor-Based Pagination for the System for Cross-domain Identity Management (SCIM)](https://www.rfc-editor.org/rfc/rfc9865)
+- [draft-zollner-scim-interop-profile - SCIM Interoperability Profile](https://datatracker.ietf.org/doc/draft-zollner-scim-interop-profile/)
+- [draft-schreiber-scim-ipsie-profile - SCIM Profile for IPSIE Lifecycle Management](https://datatracker.ietf.org/doc/draft-schreiber-scim-ipsie-profile/)
+
 ## WebSocket
 
 - [RFC 6455 - The WebSocket Protocol](https://www.rfc-editor.org/rfc/rfc6455)

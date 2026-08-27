@@ -15,6 +15,7 @@ The following endpoints are available through the HTTP service:
 - `/dav/*`: The WebDAV endpoint provides access to [WebDAV](/docs/http/webdav/) resources, allowing clients to manage calendar, contact and file resources.
 - `/calendar/rsvp`: The Calendar Scheduling [RSVP page](/docs/collaboration/scheduling#http-rsvp) allows participants to respond to calendar invitations using a simple web interface. The page itself is static; it posts to `/api/calendar/rsvp` to read the invitation and record the response.
 - `/.well-known/*`: The [well-known endpoint](#well-known-resources) provides access to resources that are commonly used by clients to discover service information.
+- `/scim/v2/*`: The [SCIM provisioning endpoint](/docs/auth/scim/) accepts user and group lifecycle operations from an external identity provider. Available in the Enterprise edition.
 - `/api/*`: Provides access to the [HTTP API](/docs/development/api), a small set of endpoints for authentication, account introspection, configuration schema retrieval, and live telemetry. Server configuration and mailbox data are accessed through JMAP, not through this endpoint.
 - `/auth/device`: The device authorization endpoint is used for [OAuth device authorization](/docs/auth/oauth/).
 - `/auth/token`: The token endpoint is used for [OAuth token exchange](/docs/auth/oauth/).

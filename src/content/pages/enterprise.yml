@@ -183,6 +183,37 @@ sections:
       url: account.stalw.art / Masked Addresses
 
   - kind: feature
+    eyebrow: SCIM provisioning
+    title: Let your identity provider open and close the mailbox.
+    body: >-
+      A new hire needs a working mailbox on their first morning, not
+      after their first login, and a departing employee's mailbox
+      should stop accepting mail on the day they leave. Stalwart
+      implements the SCIM 2.0 service provider interface, so the
+      identity provider that already owns your directory creates the
+      account when the identity is created, updates it when the person
+      changes name or group, suspends it the moment access is revoked,
+      and deletes it when policy calls for it.
+
+      It pairs with OpenID Connect: the identity provider owns
+      authentication, SCIM owns the account lifecycle, and no password
+      ever crosses the provisioning interface. Microsoft Entra ID,
+      Okta and Keycloak each have a documented setup procedure, and
+      their default attribute mappings work unmodified. Provisioning
+      is enabled per domain, so older domains can stay on the
+      just-in-time model while new ones move across.
+    learnMore:
+      - label: SCIM provisioning
+        href: /docs/auth/scim/
+      - label: Identity provider setup
+        href: /docs/auth/scim/providers/
+    visual:
+      kind: diagram
+      id: scim-lifecycle
+
+  - kind: feature
+    reverse: true
+    band: alt
     eyebrow: Read replicas and sharded storage
     title: Scale the data plane without rewriting the cluster.
     body: >-
@@ -202,7 +233,6 @@ sections:
       id: read-replicas
 
   - kind: list
-    band: alt
     eyebrow: For mail-hosting providers and MSPs
     title: One deployment, many customers, your brand.
     body: >-
@@ -217,6 +247,7 @@ sections:
       - "**Domain-anchored licensing** ties the Enterprise key to a domain name and keeps the per-server count unlimited under that domain."
 
   - kind: feature
+    band: alt
     eyebrow: Premium Support
     title: Priority Support, included with Enterprise.
     body: >-

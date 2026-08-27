@@ -1,0 +1,126 @@
+---
+---
+<div class="scim">
+  <svg viewBox="0 0 720 470" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="SCIM 2.0 account lifecycle from the identity provider to Stalwart">
+    <defs>
+      <marker id="scim-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0 0 L10 5 L0 10 z" fill="var(--brand)" opacity="0.85"/>
+      </marker>
+    </defs>
+
+    <text x="40" y="34" class="scim__title">SCIM 2.0 account lifecycle</text>
+
+    <g class="scim__node" transform="translate(170 66)">
+      <rect x="-105" y="-22" width="210" height="44" rx="10"/>
+      <text class="scim__node-name">HR system or directory</text>
+    </g>
+
+    <line class="scim__edge" x1="170" y1="88" x2="170" y2="122" marker-end="url(#scim-arrow)"/>
+
+    <g class="scim__node scim__node--brand" transform="translate(170 152)">
+      <rect x="-105" y="-26" width="210" height="52" rx="10"/>
+      <text class="scim__node-name" y="-6">Identity provider</text>
+      <text class="scim__node-sub" y="12">Entra ID · Okta · Keycloak</text>
+    </g>
+
+    <g class="scim__node scim__node--brand" transform="translate(560 152)">
+      <rect x="-105" y="-26" width="210" height="52" rx="10"/>
+      <text class="scim__node-name" y="-6">Stalwart</text>
+      <text class="scim__node-sub" y="12">/scim/v2</text>
+    </g>
+
+    <line class="scim__life" x1="170" y1="178" x2="170" y2="415"/>
+    <line class="scim__life" x1="560" y1="178" x2="560" y2="415"/>
+
+    <line class="scim__edge" x1="170" y1="225" x2="554" y2="225" marker-end="url(#scim-arrow)"/>
+    <text class="scim__op" x="186" y="216">POST /Users</text>
+    <text class="scim__effect" x="186" y="240">mailbox exists before the first login</text>
+
+    <line class="scim__edge" x1="170" y1="280" x2="554" y2="280" marker-end="url(#scim-arrow)"/>
+    <text class="scim__op" x="186" y="271">PATCH /Users/&#123;id&#125;</text>
+    <text class="scim__effect" x="186" y="295">display name, aliases and groups updated</text>
+
+    <line class="scim__edge" x1="170" y1="335" x2="554" y2="335" marker-end="url(#scim-arrow)"/>
+    <text class="scim__op" x="186" y="326">PATCH active: false</text>
+    <text class="scim__effect" x="186" y="350">delivery stops, mailbox contents kept</text>
+
+    <line class="scim__edge" x1="170" y1="390" x2="554" y2="390" marker-end="url(#scim-arrow)"/>
+    <text class="scim__op" x="186" y="381">DELETE /Users/&#123;id&#125;</text>
+    <text class="scim__effect" x="186" y="405">account removed</text>
+
+    <text x="40" y="446" class="scim__foot">No credential crosses the interface: authentication stays with the identity provider.</text>
+  </svg>
+</div>
+
+<style>
+  .scim {
+    width: 100%;
+    aspect-ratio: 720 / 470;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: clamp(0.5rem, 1.5vw, 1rem);
+    box-shadow: var(--shadow-1);
+  }
+  .scim svg { width: 100%; height: 100%; overflow: visible; }
+  .scim__title {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    fill: var(--text-dim);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .scim__node rect {
+    fill: var(--surface-2);
+    stroke: var(--border-strong);
+    stroke-width: 1;
+  }
+  .scim__node-name {
+    fill: var(--text);
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 600;
+    text-anchor: middle;
+    dominant-baseline: middle;
+  }
+  .scim__node-sub {
+    fill: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    text-anchor: middle;
+    dominant-baseline: middle;
+    letter-spacing: 0.04em;
+  }
+  .scim__node--brand rect {
+    fill: var(--brand-soft);
+    stroke: var(--brand);
+  }
+  .scim__node--brand .scim__node-name { fill: var(--brand); }
+  .scim__life {
+    stroke: var(--border-strong);
+    stroke-width: 1;
+    stroke-dasharray: 3 4;
+  }
+  .scim__edge {
+    stroke: var(--brand);
+    stroke-width: 1.5;
+    stroke-opacity: 0.7;
+    fill: none;
+  }
+  .scim__op {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    fill: var(--text);
+    letter-spacing: 0.04em;
+  }
+  .scim__effect {
+    font-family: var(--font-sans);
+    font-size: 10px;
+    fill: var(--text-muted);
+  }
+  .scim__foot {
+    font-family: var(--font-sans);
+    font-size: 10px;
+    fill: var(--text-dim);
+  }
+</style>

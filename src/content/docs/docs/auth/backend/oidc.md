@@ -19,7 +19,19 @@ Validation is performed automatically through the provider's OIDC discovery docu
 
 Stalwart learns about an account only after the first time that account authenticates. OIDC does not provide an offline directory lookup, so an account that exists in the identity provider but has not yet signed in is unknown to the server. Mail addressed to such an account is rejected because the address does not resolve to a local recipient.
 
-To avoid this, create accounts in Stalwart before users sign in for the first time. Accounts can be created through the [WebUI](/docs/management/webui/), the JMAP API, or the [CLI](/docs/management/cli/). Pre-creating the accounts ensures that inbound mail is accepted from the start, even for users who have not yet authenticated via OIDC.
+The account must therefore exist before the user does anything with it. Four mechanisms are available.
+
+[SCIM provisioning](/docs/auth/scim/) is the option that requires no manual step: the identity provider pushes each account to Stalwart as soon as it is created upstream, so the mailbox is ready during onboarding and accepts mail from the start. It is the recommended pairing for an OIDC-backed domain, and it is available in the Enterprise edition. The remaining three create accounts by hand or by script, through the [WebUI](/docs/management/webui/), the JMAP API, or the [CLI](/docs/management/cli/); the CLI's [bulk apply](/docs/management/cli/apply) command is the practical form where accounts are created in batches.
+
+Whichever is used, pre-creating the accounts ensures that inbound mail is accepted from the start, even for users who have not yet authenticated via OIDC.
+
+### No deprovisioning
+
+The same limitation applies at the end of an account's life, and it is the more consequential of the two. Just-in-time synchronisation reacts to what the identity provider returns during a login; it has no way to observe that an account has been deleted upstream, because a deleted account simply stops appearing. A departed user's mailbox therefore persists indefinitely, continues to accept mail, and continues to count against licensed mailbox limits.
+
+An account disabled at the identity provider cannot sign in, since authentication fails there, but its mailbox keeps receiving mail. Suspending or removing it is a manual task unless [SCIM provisioning](/docs/auth/scim/) is configured, in which case the identity provider suspends the account with `PATCH {"active": false}` and removes it with `DELETE`.
+
+[Provisioning models](/docs/auth/scim/provisioning) compares the two approaches in full.
 
 ### `OAUTHBEARER` SASL
 
@@ -52,5 +64,7 @@ Example integration with a Keycloak-style provider that issues `preferred_userna
   "claimGroups": "groups"
 }
 ```
+
+In a domain where [SCIM provisioning](/docs/auth/scim/) is enabled, the claims that write to the account are no longer applied. `claimUsername` still resolves the account on each login, but `claimName` and `claimGroups` are ignored, because SCIM is authoritative for the display name and for group membership in that domain. Leaving them configured is harmless and keeps the directory usable for domains that are not provisioned through SCIM.
 
 Once configured, the Directory object is selected as the active authentication source by setting [`directoryId`](/docs/ref/object/authentication#directoryid) on the [Authentication](/docs/ref/object/authentication) singleton (found in the WebUI under <!-- breadcrumb:Authentication --><svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M10 5H3" /><path d="M12 19H3" /><path d="M14 3v4" /><path d="M16 17v4" /><path d="M21 12h-9" /><path d="M21 19h-5" /><path d="M21 5h-7" /><path d="M8 10v4" /><path d="M8 12H3" /></svg> Settings › <svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M12 10a2 2 0 0 0-2 2c0 1.02-.1 2.51-.26 4" /><path d="M14 13.12c0 2.38 0 6.38-1 8.88" /><path d="M17.29 21.02c.12-.6.43-2.3.5-3.02" /><path d="M2 12a10 10 0 0 1 18-6" /><path d="M2 16h.01" /><path d="M21.8 16c.2-2 .131-5.354 0-6" /><path d="M5 19.5C5.5 18 6 15 6 12a6 6 0 0 1 .34-2" /><path d="M8.65 22c.21-.66.45-1.32.57-2" /><path d="M9 6.8a6 6 0 0 1 9 5.2v2" /></svg> Authentication › General<!-- /breadcrumb:Authentication -->) to its id.

@@ -102,6 +102,13 @@ User account
 > List of email aliases for the account
 
 
+##### `externalId`
+
+> Type: <code>String?</code> · [enterprise](/docs/server/enterprise)
+>
+> Identifier assigned by an external provisioning client such as a SCIM identity provider
+
+
 ##### `description`
 
 > Type: <code>String?</code>
@@ -227,6 +234,13 @@ Group account
 > Preferred time zone for the account
 
 
+##### `externalId`
+
+> Type: <code>String?</code> · [enterprise](/docs/server/enterprise)
+>
+> Identifier assigned by an external provisioning client such as a SCIM identity provider
+
+
 
 
 ## JMAP API
@@ -334,7 +348,7 @@ curl -X POST https://mail.example.com/api \
           {
             "update": {
               "id1": {
-                "description": "updated value"
+                "externalId": "updated value"
               }
             }
           },
@@ -458,7 +472,7 @@ stalwart-cli query Account
 ### Update
 
 ```sh
-stalwart-cli update Account id1 --field description='updated value'
+stalwart-cli update Account id1 --field externalId='updated value'
 ```
 
 

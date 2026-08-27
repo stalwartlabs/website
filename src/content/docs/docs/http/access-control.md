@@ -58,6 +58,23 @@ The rule on the Http singleton:
 }
 ```
 
+### Restriction of the SCIM endpoint
+
+The [SCIM provisioning endpoint](/docs/auth/scim/) is reached by an external identity provider rather than by users, so it is usually served to a small, known set of addresses. The following rule confines `/scim` to one network and leaves every other endpoint unchanged:
+
+```json
+{
+  "allowedEndpoints": {
+    "match": {
+      "0": {"if": "starts_with(url_path, '/scim') && !starts_with(remote_ip, '203.0.113.')", "then": "404"}
+    },
+    "else": "200"
+  }
+}
+```
+
+Responding with `404` rather than `403` keeps the presence of the endpoint from being advertised to callers that are not expected to use it.
+
 ### Restriction by endpoint and method
 
 The following rule disables JMAP access unless the request is an `OPTIONS` request:

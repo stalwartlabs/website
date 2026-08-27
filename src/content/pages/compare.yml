@@ -57,7 +57,7 @@ sections:
           - ["Domain aliases", "yes", "yes"]
           - ["Disk quotas per user and per tenant", "yes", "yes"]
           - ["Auto-configuration and Autodiscover", "yes", "yes"]
-          - ["Masked email addresses (privacy aliases)", "-", "yes"]
+          - ["Masked email addresses (privacy aliases)", "", "yes"]
       - title: MTA
         rows:
           - ["SMTP server with programmable rules", "yes", "yes"]
@@ -95,7 +95,7 @@ sections:
           - ["Greylisting", "yes", "yes"]
           - ["Spam traps", "yes", "yes"]
           - ["ASN and GeoIP blocking, auto-banning", "yes", "yes"]
-          - ["AI / LLM spam classifier", "-", "yes"]
+          - ["AI / LLM spam classifier", "", "yes"]
       - title: Collaboration
         rows:
           - ["CalDAV", "yes", "yes"]
@@ -112,7 +112,7 @@ sections:
           - ["JMAP for File Storage", "yes", "yes"]
           - ["Auto-configuration for CalDAV, CardDAV, WebDAV", "yes", "yes"]
           - ["Calendar localized invite templates and scheduling locales", "yes", "yes"]
-          - ["Branded scheduling and notification emails", "-", "yes"]
+          - ["Branded scheduling and notification emails", "", "yes"]
       - title: Sieve and scripting
         rows:
           - ["Sieve scripting with all IANA-registered extensions", "yes", "yes"]
@@ -120,7 +120,7 @@ sections:
           - ["JMAP for Sieve Scripts", "yes", "yes"]
           - ["Sieve script deactivation without deletion", "yes", "yes"]
           - ["MTA Hooks for Sieve-style upstream filters", "yes", "yes"]
-          - ["AI / LLM Sieve scripting", "-", "yes"]
+          - ["AI / LLM Sieve scripting", "", "yes"]
       - title: Storage backends
         rows:
           - ["RocksDB", "yes", "yes"]
@@ -132,9 +132,9 @@ sections:
           - ["Azure Blob Storage", "yes", "yes"]
           - ["Filesystem blob storage", "yes", "yes"]
           - ["Redis (in-memory store)", "yes", "yes"]
-          - ["Read replicas", "-", "yes"]
-          - ["Sharded blob storage", "-", "yes"]
-          - ["Sharded in-memory data stores", "-", "yes"]
+          - ["Read replicas", "", "yes"]
+          - ["Sharded blob storage", "", "yes"]
+          - ["Sharded in-memory data stores", "", "yes"]
       - title: Full-text search
         rows:
           - ["Internal FTS backend", "yes", "yes"]
@@ -154,7 +154,8 @@ sections:
           - ["Two-factor authentication (TOTP)", "yes", "yes"]
           - ["App passwords with labels, IP restrictions and expiration", "yes", "yes"]
           - ["API keys with labels, IP restrictions and expiration", "yes", "yes"]
-          - ["Per-domain directory backends", "-", "yes"]
+          - ["SCIM 2.0 provisioning (Entra ID, Okta, Keycloak)", "", "yes"]
+          - ["Per-domain directory backends", "", "yes"]
       - title: Security and encryption
         rows:
           - ["Encryption at rest (S/MIME, OpenPGP)", "yes", "yes"]
@@ -182,28 +183,29 @@ sections:
           - ["Web admin", "yes", "yes"]
           - ["Report visualization (DMARC, TLS-RPT, ARF)", "yes", "yes"]
           - ["Declarative IaC", "yes", "yes"]
-          - ["Live telemetry streaming (SSE)", "-", "yes"]
-          - ["Message delivery history", "-", "yes"]
-          - ["Dashboard with real-time statistics", "-", "yes"]
-          - ["Metric alerts (email and webhook)", "-", "yes"]
+          - ["Live telemetry streaming (SSE)", "", "yes"]
+          - ["Message delivery history", "", "yes"]
+          - ["Dashboard with real-time statistics", "", "yes"]
+          - ["Metric alerts (email and webhook)", "", "yes"]
       - title: Enterprise-only
         rows:
-          - ["Multi-tenancy with per-tenant quotas and isolation", "-", "yes"]
-          - ["Per-domain directory backends", "-", "yes"]
-          - ["Branding and customisation", "-", "yes"]
-          - ["Multi-tenant branding", "-", "yes"]
-          - ["Account archiving and un-deletion", "-", "yes"]
-          - ["Restore deleted emails with metadata", "-", "yes"]
-          - ["AI / LLM spam classifier", "-", "yes"]
-          - ["AI / LLM Sieve scripting", "-", "yes"]
-          - ["Read replicas, sharded blob and in-memory stores", "-", "yes"]
+          - ["Multi-tenancy with per-tenant quotas and isolation", "", "yes"]
+          - ["Per-domain directory backends", "", "yes"]
+          - ["Branding and customisation", "", "yes"]
+          - ["Multi-tenant branding", "", "yes"]
+          - ["Account archiving and un-deletion", "", "yes"]
+          - ["Restore deleted emails with metadata", "", "yes"]
+          - ["AI / LLM spam classifier", "", "yes"]
+          - ["AI / LLM Sieve scripting", "", "yes"]
+          - ["SCIM 2.0 provisioning (Entra ID, Okta, Keycloak)", "", "yes"]
+          - ["Read replicas, sharded blob and in-memory stores", "", "yes"]
       - title: Support
         rows:
           - ["Community support (support.stalw.art, free tier)", "yes", "yes"]
-          - ["Premium Support (minimum 150 mailboxes)", "-", "yes"]
-          - ["Dedicated Support Engineer", "-", "On demand"]
-          - ["Custom SLA", "-", "On demand"]
-          - ["Lawful interception", "-", "On demand"]
+          - ["Premium Support (minimum 150 mailboxes)", "", "yes"]
+          - ["Dedicated Support Engineer", "", "On demand"]
+          - ["Custom SLA", "", "On demand"]
+          - ["Lawful interception", "", "On demand"]
     ctas:
       - label: See pricing
         href: /pricing
