@@ -118,7 +118,7 @@ User account
 
 ##### `locale`
 
-> Type: [<code>Locale</code>](/docs/ref/enum/locale) · default: `"en_US"`
+> Type: [<code>Locale</code>](/docs/ref/enum/locale) · default: `"en-US"`
 >
 > Preferred locale for the account
 
@@ -222,7 +222,7 @@ Group account
 
 ##### `locale`
 
-> Type: [<code>Locale</code>](/docs/ref/enum/locale) · default: `"en_US"`
+> Type: [<code>Locale</code>](/docs/ref/enum/locale) · default: `"en-US"`
 >
 > Preferred locale for the group
 

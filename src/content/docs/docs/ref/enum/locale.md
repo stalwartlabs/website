@@ -6,343 +6,329 @@ custom_edit_url: null
 
 
 
-This enumeration defines 336 values.
+This enumeration defines 322 values.
 
 | Value | Label |
 |---|---|
-| `POSIX` | POSIX Standard Locale. |
-| `aa_DJ` | Afar language locale for Djibouti (Cadu/Laaqo Dialects). |
-| `aa_ER` | Afar language locale for Eritrea (Cadu/Laaqo Dialects). |
-| `aa_ER@saaho` | Afar language locale for Eritrea (Saaho Dialect). |
-| `aa_ET` | Afar language locale for Ethiopia (Cadu/Carra Dialects). |
-| `af_ZA` | Afrikaans locale for South Africa. |
-| `agr_PE` | Awajún (agr) locale for Peru. |
-| `ak_GH` | Akan locale for Ghana. |
-| `am_ET` | Amharic language locale for Ethiopia. |
-| `an_ES` | Aragonese locale for Spain. |
-| `anp_IN` | Angika language locale for India. |
-| `ar_AE` | Arabic language locale for United Arab Emirates. |
-| `ar_BH` | Arabic language locale for Bahrain. |
-| `ar_DZ` | Arabic language locale for Algeria. |
-| `ar_EG` | Arabic language locale for Egypt. |
-| `ar_IN` | Arabic language locale for India. |
-| `ar_IQ` | Arabic language locale for Iraq. |
-| `ar_JO` | Arabic language locale for Jordan. |
-| `ar_KW` | Arabic language locale for Kuwait. |
-| `ar_LB` | Arabic language locale for Lebanon. |
-| `ar_LY` | Arabic language locale for Libyan Arab Jamahiriya. |
-| `ar_MA` | Arabic language locale for Morocco. |
-| `ar_OM` | Arabic language locale for Oman. |
-| `ar_QA` | Arabic language locale for Qatar. |
-| `ar_SA` | Arabic locale for Saudi Arabia. |
-| `ar_SD` | Arabic language locale for Sudan. |
-| `ar_SS` | Arabic language locale for South Sudan. |
-| `ar_SY` | Arabic language locale for Syrian Arab Republic. |
-| `ar_TN` | Arabic language locale for Tunisia. |
-| `ar_YE` | Arabic language locale for Yemen. |
-| `as_IN` | Assamese language locale for India. |
-| `ast_ES` | Asturian locale for Spain. |
-| `ayc_PE` | Aymara (ayc) locale for Peru. |
-| `az_AZ` | Azeri language locale for Azerbaijan (latin). |
-| `az_IR` | South Azerbaijani language locale for Iran. |
-| `be_BY` | Belarusian locale for Belarus. |
-| `be_BY@latin` | Belarusian Latin-Script locale for Belarus. |
-| `bem_ZM` | Bemba locale for Zambia. |
-| `ber_DZ` | Berber language locale for Algeria (latin). |
-| `ber_MA` | Berber language locale for Morocco (tifinagh). |
-| `bg_BG` | Bulgarian locale for Bulgaria. |
-| `bhb_IN` | Bhili(devanagari) language locale for India. |
-| `bho_IN` | Bhojpuri language locale for India. |
-| `bho_NP` | Bhojpuri language locale for Nepal. |
-| `bi_VU` | Bislama language locale for Vanuatu. |
-| `bn_BD` | Bangla language locale for Bangladesh. |
-| `bn_IN` | Bangla language locale for India. |
-| `bo_CN` | Tibetan language locale for P.R. of China. |
-| `bo_IN` | Tibetan language locale for India. |
-| `br_FR` | Breton language locale for France. |
-| `br_FR@euro` | Breton locale for France with Euro. |
-| `brx_IN` | Bodo language locale for India. |
-| `bs_BA` | Bosnian language locale for Bosnia and Herzegowina. |
-| `byn_ER` | Blin language locale for Eritrea. |
-| `ca_AD` | Catalan locale for Andorra . |
-| `ca_ES` | Catalan locale for Spain. |
-| `ca_ES@euro` | Catalan locale for Catalonia with Euro. |
-| `ca_ES@valencia` | Valencian (southern Catalan) locale for Spain with Euro. |
-| `ca_FR` | Catalan locale for France . |
-| `ca_IT` | Catalan locale for Italy (L'Alguer) . |
-| `ce_RU` | Chechen locale for RUSSIAN FEDERATION. |
-| `chr_US` | Cherokee language locale for United States. |
-| `cmn_TW` | Mandarin Chinese locale for the Republic of China. |
-| `crh_UA` | Crimean Tatar (Crimean Turkish) language locale for Ukraine. |
-| `cs_CZ` | Czech locale for the Czech Republic. |
-| `csb_PL` | Kashubian locale for Poland. |
-| `cv_RU` | Chuvash locale for Russia. |
-| `cy_GB` | Welsh language locale for Great Britain. |
-| `da_DK` | Danish locale for Denmark. |
-| `de_AT` | German locale for Austria. |
-| `de_AT@euro` | German locale for Austria with Euro. |
-| `de_BE` | German locale for Belgium. |
-| `de_BE@euro` | German locale for Belgium with Euro. |
-| `de_CH` | German locale for Switzerland. |
-| `de_DE` | German locale for Germany. |
-| `de_DE@euro` | German locale for Germany with Euro. |
-| `de_IT` | German language locale for Italy. |
-| `de_LI` | German locale for Liechtenstein. |
-| `de_LU` | German locale for Luxemburg. |
-| `de_LU@euro` | German locale for Luxemburg with Euro. |
-| `doi_IN` | Dogri language locale for India. |
-| `dsb_DE` | Lower Sorbian locale for Germany. |
-| `dv_MV` | Dhivehi Language Locale for Maldives. |
-| `dz_BT` | Dzongkha language locale for Bhutan. |
-| `el_CY` | Greek locale for Cyprus. |
-| `el_GR` | Greek locale for Greece. |
-| `el_GR@euro` | Greek locale for Greece with Euro. |
-| `en_AG` | English language locale for Antigua and Barbuda. |
-| `en_AU` | English locale for Australia. |
-| `en_BW` | English locale for Botswana. |
-| `en_CA` | English locale for Canada. |
-| `en_DK` | English locale for Denmark. |
-| `en_GB` | English locale for Britain. |
-| `en_HK` | English locale for Hong Kong. |
-| `en_IE` | English locale for Ireland. |
-| `en_IE@euro` | English locale for Ireland with Euro. |
-| `en_IL` | English locale for Israel. |
-| `en_IN` | English language locale for India. |
-| `en_NG` | English locale for Nigeria. |
-| `en_NZ` | English locale for New Zealand. |
-| `en_PH` | English language locale for Philippines. |
-| `en_SC` | English locale for the Seychelles. |
-| `en_SG` | English language locale for Singapore. |
-| `en_US` | English locale for the USA. |
-| `en_ZA` | English locale for South Africa. |
-| `en_ZM` | English locale for Zambia. |
-| `en_ZW` | English locale for Zimbabwe. |
+| `en-US` | English locale for the USA. |
+| `aa-DJ` | Afar language locale for Djibouti (Cadu/Laaqo Dialects). |
+| `aa-ER` | Afar language locale for Eritrea (Cadu/Laaqo Dialects). |
+| `ssy-ER` | Afar language locale for Eritrea (Saaho Dialect). |
+| `aa-ET` | Afar language locale for Ethiopia (Cadu/Carra Dialects). |
+| `af-ZA` | Afrikaans locale for South Africa. |
+| `agr-PE` | Awajún (agr) locale for Peru. |
+| `ak-GH` | Akan locale for Ghana. |
+| `am-ET` | Amharic language locale for Ethiopia. |
+| `an-ES` | Aragonese locale for Spain. |
+| `anp-IN` | Angika language locale for India. |
+| `ar-AE` | Arabic language locale for United Arab Emirates. |
+| `ar-BH` | Arabic language locale for Bahrain. |
+| `ar-DZ` | Arabic language locale for Algeria. |
+| `ar-EG` | Arabic language locale for Egypt. |
+| `ar-IN` | Arabic language locale for India. |
+| `ar-IQ` | Arabic language locale for Iraq. |
+| `ar-JO` | Arabic language locale for Jordan. |
+| `ar-KW` | Arabic language locale for Kuwait. |
+| `ar-LB` | Arabic language locale for Lebanon. |
+| `ar-LY` | Arabic language locale for Libyan Arab Jamahiriya. |
+| `ar-MA` | Arabic language locale for Morocco. |
+| `ar-OM` | Arabic language locale for Oman. |
+| `ar-QA` | Arabic language locale for Qatar. |
+| `ar-SA` | Arabic locale for Saudi Arabia. |
+| `ar-SD` | Arabic language locale for Sudan. |
+| `ar-SS` | Arabic language locale for South Sudan. |
+| `ar-SY` | Arabic language locale for Syrian Arab Republic. |
+| `ar-TN` | Arabic language locale for Tunisia. |
+| `ar-YE` | Arabic language locale for Yemen. |
+| `as-IN` | Assamese language locale for India. |
+| `ast-ES` | Asturian locale for Spain. |
+| `ayc-PE` | Aymara (ayc) locale for Peru. |
+| `az-AZ` | Azeri language locale for Azerbaijan (latin). |
+| `az-IR` | South Azerbaijani language locale for Iran. |
+| `be-BY` | Belarusian locale for Belarus. |
+| `be-Latn-BY` | Belarusian Latin-Script locale for Belarus. |
+| `bem-ZM` | Bemba locale for Zambia. |
+| `ber-DZ` | Berber language locale for Algeria (latin). |
+| `ber-MA` | Berber language locale for Morocco (tifinagh). |
+| `bg-BG` | Bulgarian locale for Bulgaria. |
+| `bhb-IN` | Bhili(devanagari) language locale for India. |
+| `bho-IN` | Bhojpuri language locale for India. |
+| `bho-NP` | Bhojpuri language locale for Nepal. |
+| `bi-VU` | Bislama language locale for Vanuatu. |
+| `bn-BD` | Bangla language locale for Bangladesh. |
+| `bn-IN` | Bangla language locale for India. |
+| `bo-CN` | Tibetan language locale for P.R. of China. |
+| `bo-IN` | Tibetan language locale for India. |
+| `br-FR` | Breton language locale for France. |
+| `es-419` | Spanish locale for Latin America. |
+| `brx-IN` | Bodo language locale for India. |
+| `bs-BA` | Bosnian language locale for Bosnia and Herzegowina. |
+| `byn-ER` | Blin language locale for Eritrea. |
+| `ca-AD` | Catalan locale for Andorra . |
+| `ca-ES` | Catalan locale for Spain. |
+| `en-150` | English locale for Europe. |
+| `ca-ES-valencia` | Valencian (southern Catalan) locale for Spain with Euro. |
+| `ca-FR` | Catalan locale for France . |
+| `ca-IT` | Catalan locale for Italy (L'Alguer) . |
+| `ce-RU` | Chechen locale for RUSSIAN FEDERATION. |
+| `chr-US` | Cherokee language locale for United States. |
+| `cmn-TW` | Mandarin Chinese locale for the Republic of China. |
+| `crh-UA` | Crimean Tatar (Crimean Turkish) language locale for Ukraine. |
+| `cs-CZ` | Czech locale for the Czech Republic. |
+| `csb-PL` | Kashubian locale for Poland. |
+| `cv-RU` | Chuvash locale for Russia. |
+| `cy-GB` | Welsh language locale for Great Britain. |
+| `da-DK` | Danish locale for Denmark. |
+| `de-AT` | German locale for Austria. |
+| `de-BE` | German locale for Belgium. |
+| `en-001` | English locale for the world. |
+| `de-CH` | German locale for Switzerland. |
+| `de-DE` | German locale for Germany. |
+| `de-IT` | German language locale for Italy. |
+| `de-LI` | German locale for Liechtenstein. |
+| `de-LU` | German locale for Luxemburg. |
+| `ar-001` | Arabic locale for the world. |
+| `doi-IN` | Dogri language locale for India. |
+| `dsb-DE` | Lower Sorbian locale for Germany. |
+| `dv-MV` | Dhivehi Language Locale for Maldives. |
+| `dz-BT` | Dzongkha language locale for Bhutan. |
+| `el-CY` | Greek locale for Cyprus. |
+| `el-GR` | Greek locale for Greece. |
+| `en-AG` | English language locale for Antigua and Barbuda. |
+| `en-AU` | English locale for Australia. |
+| `en-BW` | English locale for Botswana. |
+| `en-CA` | English locale for Canada. |
+| `en-DK` | English locale for Denmark. |
+| `en-GB` | English locale for Britain. |
+| `en-HK` | English locale for Hong Kong. |
+| `en-IE` | English locale for Ireland. |
+| `en-IL` | English locale for Israel. |
+| `en-IN` | English language locale for India. |
+| `en-NG` | English locale for Nigeria. |
+| `en-NZ` | English locale for New Zealand. |
+| `en-PH` | English language locale for Philippines. |
+| `en-SC` | English locale for the Seychelles. |
+| `en-SG` | English language locale for Singapore. |
+| `en-ZA` | English locale for South Africa. |
+| `en-ZM` | English locale for Zambia. |
+| `en-ZW` | English locale for Zimbabwe. |
 | `eo` | Esperanto language locale. |
-| `es_AR` | Spanish locale for Argentina. |
-| `es_BO` | Spanish locale for Bolivia. |
-| `es_CL` | Spanish locale for Chile. |
-| `es_CO` | Spanish locale for Colombia. |
-| `es_CR` | Spanish locale for Costa Rica. |
-| `es_CU` | Spanish locale for Cuba. |
-| `es_DO` | Spanish locale for Dominican Republic. |
-| `es_EC` | Spanish locale for Ecuador. |
-| `es_ES` | Spanish locale for Spain. |
-| `es_ES@euro` | Spanish locale for Spain with Euro. |
-| `es_GT` | Spanish locale for Guatemala. |
-| `es_HN` | Spanish locale for Honduras. |
-| `es_MX` | Spanish locale for Mexico. |
-| `es_NI` | Spanish locale for Nicaragua. |
-| `es_PA` | Spanish locale for Panama. |
-| `es_PE` | Spanish locale for Peru. |
-| `es_PR` | Spanish locale for Puerto Rico. |
-| `es_PY` | Spanish locale for Paraguay. |
-| `es_SV` | Spanish locale for El Salvador. |
-| `es_US` | Spanish locale for the USA. |
-| `es_UY` | Spanish locale for Uruguay. |
-| `es_VE` | Spanish locale for Venezuela. |
-| `et_EE` | Estonian locale for Estonia. |
-| `eu_ES` | Basque locale for Spain. |
-| `eu_ES@euro` | Basque language locale for Spain with Euro. |
-| `fa_IR` | Persian locale for Iran. |
-| `ff_SN` | Fulah locale for Senegal. |
-| `fi_FI` | Finnish locale for Finland. |
-| `fi_FI@euro` | Finnish locale for Finland with Euro. |
-| `fil_PH` | Filipino language locale for Philippines. |
-| `fo_FO` | Faroese locale for Faroe Islands. |
-| `fr_BE` | French locale for Belgium. |
-| `fr_BE@euro` | French locale for Belgium with Euro. |
-| `fr_CA` | French locale for Canada. |
-| `fr_CH` | French locale for Switzerland. |
-| `fr_FR` | French locale for France. |
-| `fr_FR@euro` | French locale for France with Euro. |
-| `fr_LU` | French locale for Luxemburg. |
-| `fr_LU@euro` | French locale for Luxemburg with Euro. |
-| `fur_IT` | Furlan locale for Italy. |
-| `fy_DE` | Sater Frisian and North Frisian Locale for Germany. |
-| `fy_NL` | Frisian locale for the Netherlands. |
-| `ga_IE` | Irish locale for Ireland. |
-| `ga_IE@euro` | Irish locale for Ireland with Euro. |
-| `gd_GB` | Scots Gaelic language locale for Great Britain. |
-| `gez_ER` | Ge'ez language locale for Eritrea. |
-| `gez_ER@abegede` | Ge'ez language locale for Eritrea With Abegede Collation. |
-| `gez_ET` | Ge'ez language locale for Ethiopia. |
-| `gez_ET@abegede` | Ge'ez language locale for Ethiopia With Abegede Collation. |
-| `gl_ES` | Galician locale for Spain. |
-| `gl_ES@euro` | Galician locale for Spain with Euro. |
-| `gu_IN` | Gujarati Language Locale For India. |
-| `gv_GB` | Manx Gaelic locale for Britain. |
-| `ha_NG` | Hausa locale for Nigeria. |
-| `hak_TW` | Hakka Chinese locale for the Republic of China. |
-| `he_IL` | Hebrew locale for Israel. |
-| `hi_IN` | Hindi language locale for India. |
-| `hif_FJ` | Fiji Hindi (Latin) language locale for Fiji. |
-| `hne_IN` | Chhattisgarhi language locale for India. |
-| `hr_HR` | Croatian locale for Croatia. |
-| `hsb_DE` | Upper Sorbian locale for Germany. |
-| `ht_HT` | Kreyol locale for Haiti. |
-| `hu_HU` | Hungarian locale for Hungary. |
-| `hy_AM` | Armenian language locale for Armenia. |
-| `ia_FR` | Interlingua locale for France. |
-| `id_ID` | Indonesian locale for Indonesia. |
-| `ig_NG` | Igbo locale for Nigeria. |
-| `ik_CA` | Inupiaq locale for Canada. |
-| `is_IS` | Icelandic locale for Iceland. |
-| `it_CH` | Italian locale for Switzerland. |
-| `it_IT` | Italian locale for Italy. |
-| `it_IT@euro` | Italian locale for Italy with Euro. |
-| `iu_CA` | Inuktitut language locale for Nunavut, Canada. |
-| `ja_JP` | Japanese language locale for Japan. |
-| `ka_GE` | Georgian language locale for Georgia. |
-| `kab_DZ` | Kabyle language locale for Algeria. |
-| `kk_KZ` | Kazakh locale for Kazakhstan. |
-| `kl_GL` | Greenlandic locale for Greenland. |
-| `km_KH` | Khmer locale for Cambodia. |
-| `kn_IN` | Kannada language locale for India. |
-| `ko_KR` | Korean locale for Republic of Korea. |
-| `kok_IN` | Konkani language locale for India. |
-| `ks_IN` | Kashmiri language locale for India. |
-| `ks_IN@devanagari` | Kashmiri(devanagari) language locale for India. |
-| `ku_TR` | Kurdish (latin) locale for Turkey. |
-| `kw_GB` | Cornish locale for Britain. |
-| `ky_KG` | Kyrgyz Language Locale for Kyrgyzstan. |
-| `lb_LU` | Luxembourgish locale for Luxembourg. |
-| `lg_UG` | Luganda locale for Uganda. |
-| `li_BE` | Limburgish Language Locale for Belgium. |
-| `li_NL` | Limburgish Language Locale for the Netherlands. |
-| `lij_IT` | Ligurian locale for Italy. |
-| `ln_CD` | Lingala locale for Democratic Republic of the Congo. |
-| `lo_LA` | Lao locale for Laos. |
-| `lt_LT` | Lithuanian locale for Lithuania. |
-| `lv_LV` | Latvian locale for Latvia. |
-| `lzh_TW` | Literary Chinese locale for the Republic of China. |
-| `mag_IN` | Magahi language locale for India. |
-| `mai_IN` | Maithili language locale for India. |
-| `mai_NP` | Maithili language locale for Nepal. |
-| `mfe_MU` | Morisyen locale for Mauritius. |
-| `mg_MG` | Malagasy locale for Madagascar. |
-| `mhr_RU` | Mari locale for Russia. |
-| `mi_NZ` | Maori language locale for New Zealand. |
-| `miq_NI` | Miskito language locale for Nicaragua. |
-| `mjw_IN` | Karbi language locale for India. |
-| `mk_MK` | Macedonian locale for Macedonia. |
-| `ml_IN` | Malayalam language locale for India. |
-| `mn_MN` | Mongolian locale for Mongolia. |
-| `mni_IN` | Manipuri language locale for India. |
-| `mnw_MM` | Mon language locale for Myanmar. |
-| `mr_IN` | Marathi language locale for India. |
-| `ms_MY` | Malay language locale for Malaysia. |
-| `mt_MT` | Maltese language locale for Malta. |
-| `my_MM` | Burmese language locale for Myanmar. |
-| `nan_TW` | Min Nan Chinese locale for the Republic of China. |
-| `nan_TW@latin` | Minnan language locale for Taiwan. |
-| `nb_NO` | Norwegian (Bokmål) locale for Norway. |
-| `nds_DE` | Low(lands) Saxon Language Locale for Germany. |
-| `nds_NL` | Low(lands) Saxon Language Locale for the Netherlands. |
-| `ne_NP` | Nepali language locale for Nepal. |
-| `nhn_MX` | Central Nahuatl for Mexico. |
-| `niu_NU` | Niuean (Vagahau Niue) locale for Niue. |
-| `niu_NZ` | Niuean (Vagahau Niue) locale for New Zealand. |
-| `nl_AW` | Dutch language locale for Aruba. |
-| `nl_BE` | Dutch locale for Belgium. |
-| `nl_BE@euro` | Dutch locale for Belgium with Euro. |
-| `nl_NL` | Dutch locale for the Netherlands. |
-| `nl_NL@euro` | Dutch locale for the Netherlands with Euro. |
-| `nn_NO` | Nynorsk language locale for Norway. |
-| `nr_ZA` | Southern Ndebele locale for South Africa. |
-| `nso_ZA` | Northern Sotho locale for South Africa. |
-| `oc_FR` | Occitan Language Locale for France. |
-| `om_ET` | Oromo language locale for Ethiopia. |
-| `om_KE` | Oromo language locale for Kenya. |
-| `or_IN` | Odia language locale for India. |
-| `os_RU` | Ossetian locale for Russia. |
-| `pa_IN` | Punjabi language locale for Indian Punjabi(Gurmukhi). |
-| `pa_PK` | Punjabi (Shahmukhi) Language Locale for Pakistan. |
-| `pap_AW` | Papiamento Language for Aruba. |
-| `pap_CW` | Papiamento language for Curaçao. |
-| `pl_PL` | Polish locale for Poland. |
-| `ps_AF` | Pashto locale for Afghanistan. |
-| `pt_BR` | Portuguese locale for Brasil. |
-| `pt_PT` | Portuguese locale for Portugal. |
-| `pt_PT@euro` | Portuguese locale for Portugal with Euro. |
-| `quz_PE` | Cusco Quechua locale for Peru. |
-| `raj_IN` | Rajasthani language locale for India. |
-| `ro_RO` | Romanian locale for Romania. |
-| `ru_RU` | Russian locale for Russia. |
-| `ru_UA` | Russian locale for Ukraine. |
-| `rw_RW` | Kinyarwanda language locale for Rwanda. |
-| `sa_IN` | Sanskrit language locale for India. |
-| `sah_RU` | Sakha (Yakut) locale for Russian Federation. |
-| `sat_IN` | Santali language locale for India. |
-| `sc_IT` | Sardinian locale for Italy. |
-| `sd_IN` | Sindhi language locale for India. |
-| `sd_IN@devanagari` | Sindhi language locale for India. |
-| `se_NO` | Northern Saami language locale for Norway. |
-| `sgs_LT` | Samogitian language locale for Lithuania. |
-| `shn_MM` | Shan language locale for Myanmar. |
-| `shs_CA` | Shuswap locale for Canada. |
-| `si_LK` | Sinhala language locale for Sri Lanka. |
-| `sid_ET` | Sidama language locale for Ethiopia. |
-| `sk_SK` | Slovak locale for Slovak. |
-| `sl_SI` | Slovenian locale for Slovenia. |
-| `sm_WS` | Samoan language locale for Samoa. |
-| `so_DJ` | Somali language locale for Djibouti. |
-| `so_ET` | Somali language locale for Ethiopia. |
-| `so_KE` | Somali language locale for Kenya. |
-| `so_SO` | Somali language locale for Somalia. |
-| `sq_AL` | Albanian language locale for Albania. |
-| `sq_MK` | Albanian language locale for Macedonia. |
-| `sr_ME` | Serbian locale for Montenegro. |
-| `sr_RS` | Serbian locale for Serbia. |
-| `sr_RS@latin` | Serbian Latin locale for Serbia. |
-| `ss_ZA` | Swati locale for South Africa. |
-| `st_ZA` | Sotho locale for South Africa. |
-| `sv_FI` | Swedish locale for Finland. |
-| `sv_FI@euro` | Swedish locale for Finland with Euro. |
-| `sv_SE` | Swedish locale for Sweden. |
-| `sw_KE` | Swahili locale for Kenya. |
-| `sw_TZ` | Swahili locale for Tanzania. |
-| `szl_PL` | Silesian locale for Poland. |
-| `ta_IN` | Tamil language locale for India. |
-| `ta_LK` | Tamil language locale for Sri Lanka. |
-| `tcy_IN` | Tulu language locale for India. |
-| `te_IN` | Telugu language locale for India. |
-| `tg_TJ` | Tajik language locale for Tajikistan. |
-| `th_TH` | Thai locale for Thailand. |
-| `the_NP` | Tharu language locale for Nepal. |
-| `ti_ER` | Tigrigna language locale for Eritrea. |
-| `ti_ET` | Tigrigna language locale for Ethiopia. |
-| `tig_ER` | Tigre language locale for Eritrea. |
-| `tk_TM` | Turkmen locale for Turkmenistan. |
-| `tl_PH` | Tagalog language locale for Philippines. |
-| `tn_ZA` | Tswana locale for South Africa. |
-| `to_TO` | Tongan language locale for Tonga. |
-| `tpi_PG` | Tok Pisin language locale for Papua New Guinea. |
-| `tr_CY` | Turkish language locale for Cyprus. |
-| `tr_TR` | Turkish locale for Turkey. |
-| `ts_ZA` | Tsonga locale for South Africa. |
-| `tt_RU` | Tatar language locale for Russia. |
-| `tt_RU@iqtelif` | Tatar language locale using IQTElif alphabet; for Tatarstan, Russian Federation. |
-| `ug_CN` | Uyghur locale for China. |
-| `uk_UA` | Ukrainian Language Locale for Ukraine. |
-| `unm_US` | Unami Delaware locale for the USA. |
-| `ur_IN` | Urdu language locale for India. |
-| `ur_PK` | Urdu Language Locale for Pakistan. |
-| `uz_UZ` | Uzbek (latin) locale for Uzbekistan. |
-| `uz_UZ@cyrillic` | Uzbek (cyrillic) locale for Uzbekistan. |
-| `ve_ZA` | Venda locale for South Africa. |
-| `vi_VN` | Vietnamese language locale for Vietnam. |
-| `wa_BE` | Walloon Language Locale for Belgium. |
-| `wa_BE@euro` | Walloon locale for Belgium with Euro. |
-| `wae_CH` | Walser locale for Switzerland. |
-| `wal_ET` | Walaita language locale for Ethiopia. |
-| `wo_SN` | Wolof locale for Senegal. |
-| `xh_ZA` | Xhosa locale for South Africa. |
-| `yi_US` | Yiddish Language locale for the USA. |
-| `yo_NG` | Yoruba locale for Nigeria. |
-| `yue_HK` | Yue Chinese (Cantonese) language locale for Hong Kong. |
-| `yuw_PG` | YauNungon locale for Papua New Guinea. |
-| `zh_CN` | Chinese locale for Peoples Republic of China. |
-| `zh_HK` | Chinese language locale for Hong Kong. |
-| `zh_SG` | Chinese language locale for Singapore. |
-| `zh_TW` | Chinese locale for Taiwan R.O.C. |
-| `zu_ZA` | Zulu locale for South Africa. |
+| `es-AR` | Spanish locale for Argentina. |
+| `es-BO` | Spanish locale for Bolivia. |
+| `es-CL` | Spanish locale for Chile. |
+| `es-CO` | Spanish locale for Colombia. |
+| `es-CR` | Spanish locale for Costa Rica. |
+| `es-CU` | Spanish locale for Cuba. |
+| `es-DO` | Spanish locale for Dominican Republic. |
+| `es-EC` | Spanish locale for Ecuador. |
+| `es-ES` | Spanish locale for Spain. |
+| `es-GT` | Spanish locale for Guatemala. |
+| `es-HN` | Spanish locale for Honduras. |
+| `es-MX` | Spanish locale for Mexico. |
+| `es-NI` | Spanish locale for Nicaragua. |
+| `es-PA` | Spanish locale for Panama. |
+| `es-PE` | Spanish locale for Peru. |
+| `es-PR` | Spanish locale for Puerto Rico. |
+| `es-PY` | Spanish locale for Paraguay. |
+| `es-SV` | Spanish locale for El Salvador. |
+| `es-US` | Spanish locale for the USA. |
+| `es-UY` | Spanish locale for Uruguay. |
+| `es-VE` | Spanish locale for Venezuela. |
+| `et-EE` | Estonian locale for Estonia. |
+| `eu-ES` | Basque locale for Spain. |
+| `zh-Hans` | Chinese locale in Simplified script. |
+| `fa-IR` | Persian locale for Iran. |
+| `ff-SN` | Fulah locale for Senegal. |
+| `fi-FI` | Finnish locale for Finland. |
+| `fil-PH` | Filipino language locale for Philippines. |
+| `fo-FO` | Faroese locale for Faroe Islands. |
+| `fr-BE` | French locale for Belgium. |
+| `fr-CA` | French locale for Canada. |
+| `fr-CH` | French locale for Switzerland. |
+| `fr-FR` | French locale for France. |
+| `fr-LU` | French locale for Luxemburg. |
+| `zh-Hant` | Chinese locale in Traditional script. |
+| `fur-IT` | Furlan locale for Italy. |
+| `fy-DE` | Sater Frisian and North Frisian Locale for Germany. |
+| `fy-NL` | Frisian locale for the Netherlands. |
+| `ga-IE` | Irish locale for Ireland. |
+| `zh-Hant-HK` | Chinese locale in Traditional script for Hong Kong. |
+| `gd-GB` | Scots Gaelic language locale for Great Britain. |
+| `gez-ER` | Ge'ez language locale for Eritrea. |
+| `sr-Latn-BA` | Serbian Latin-script locale for Bosnia and Herzegovina. |
+| `gez-ET` | Ge'ez language locale for Ethiopia. |
+| `sr-Latn-ME` | Serbian Latin-script locale for Montenegro. |
+| `gl-ES` | Galician locale for Spain. |
+| `az-Latn-AZ` | Azerbaijani Latin-script locale for Azerbaijan. |
+| `gu-IN` | Gujarati Language Locale For India. |
+| `gv-GB` | Manx Gaelic locale for Britain. |
+| `ha-NG` | Hausa locale for Nigeria. |
+| `hak-TW` | Hakka Chinese locale for the Republic of China. |
+| `he-IL` | Hebrew locale for Israel. |
+| `hi-IN` | Hindi language locale for India. |
+| `hif-FJ` | Fiji Hindi (Latin) language locale for Fiji. |
+| `hne-IN` | Chhattisgarhi language locale for India. |
+| `hr-HR` | Croatian locale for Croatia. |
+| `hsb-DE` | Upper Sorbian locale for Germany. |
+| `ht-HT` | Kreyol locale for Haiti. |
+| `hu-HU` | Hungarian locale for Hungary. |
+| `hy-AM` | Armenian language locale for Armenia. |
+| `ia-FR` | Interlingua locale for France. |
+| `id-ID` | Indonesian locale for Indonesia. |
+| `ig-NG` | Igbo locale for Nigeria. |
+| `ik-CA` | Inupiaq locale for Canada. |
+| `is-IS` | Icelandic locale for Iceland. |
+| `it-CH` | Italian locale for Switzerland. |
+| `it-IT` | Italian locale for Italy. |
+| `iu-CA` | Inuktitut language locale for Nunavut, Canada. |
+| `ja-JP` | Japanese language locale for Japan. |
+| `ka-GE` | Georgian language locale for Georgia. |
+| `kab-DZ` | Kabyle language locale for Algeria. |
+| `kk-KZ` | Kazakh locale for Kazakhstan. |
+| `kl-GL` | Greenlandic locale for Greenland. |
+| `km-KH` | Khmer locale for Cambodia. |
+| `kn-IN` | Kannada language locale for India. |
+| `ko-KR` | Korean locale for Republic of Korea. |
+| `kok-IN` | Konkani language locale for India. |
+| `ks-IN` | Kashmiri language locale for India. |
+| `ks-Deva-IN` | Kashmiri(devanagari) language locale for India. |
+| `ku-TR` | Kurdish (latin) locale for Turkey. |
+| `kw-GB` | Cornish locale for Britain. |
+| `ky-KG` | Kyrgyz Language Locale for Kyrgyzstan. |
+| `lb-LU` | Luxembourgish locale for Luxembourg. |
+| `lg-UG` | Luganda locale for Uganda. |
+| `li-BE` | Limburgish Language Locale for Belgium. |
+| `li-NL` | Limburgish Language Locale for the Netherlands. |
+| `lij-IT` | Ligurian locale for Italy. |
+| `ln-CD` | Lingala locale for Democratic Republic of the Congo. |
+| `lo-LA` | Lao locale for Laos. |
+| `lt-LT` | Lithuanian locale for Lithuania. |
+| `lv-LV` | Latvian locale for Latvia. |
+| `lzh-TW` | Literary Chinese locale for the Republic of China. |
+| `mag-IN` | Magahi language locale for India. |
+| `mai-IN` | Maithili language locale for India. |
+| `mai-NP` | Maithili language locale for Nepal. |
+| `mfe-MU` | Morisyen locale for Mauritius. |
+| `mg-MG` | Malagasy locale for Madagascar. |
+| `mhr-RU` | Mari locale for Russia. |
+| `mi-NZ` | Maori language locale for New Zealand. |
+| `miq-NI` | Miskito language locale for Nicaragua. |
+| `mjw-IN` | Karbi language locale for India. |
+| `mk-MK` | Macedonian locale for Macedonia. |
+| `ml-IN` | Malayalam language locale for India. |
+| `mn-MN` | Mongolian locale for Mongolia. |
+| `mni-IN` | Manipuri language locale for India. |
+| `mnw-MM` | Mon language locale for Myanmar. |
+| `mr-IN` | Marathi language locale for India. |
+| `ms-MY` | Malay language locale for Malaysia. |
+| `mt-MT` | Maltese language locale for Malta. |
+| `my-MM` | Burmese language locale for Myanmar. |
+| `nan-TW` | Min Nan Chinese locale for the Republic of China. |
+| `nan-Latn-TW` | Minnan language locale for Taiwan. |
+| `nb-NO` | Norwegian (Bokmål) locale for Norway. |
+| `nds-DE` | Low(lands) Saxon Language Locale for Germany. |
+| `nds-NL` | Low(lands) Saxon Language Locale for the Netherlands. |
+| `ne-NP` | Nepali language locale for Nepal. |
+| `nhn-MX` | Central Nahuatl for Mexico. |
+| `niu-NU` | Niuean (Vagahau Niue) locale for Niue. |
+| `niu-NZ` | Niuean (Vagahau Niue) locale for New Zealand. |
+| `nl-AW` | Dutch language locale for Aruba. |
+| `nl-BE` | Dutch locale for Belgium. |
+| `nl-NL` | Dutch locale for the Netherlands. |
+| `nn-NO` | Nynorsk language locale for Norway. |
+| `nr-ZA` | Southern Ndebele locale for South Africa. |
+| `nso-ZA` | Northern Sotho locale for South Africa. |
+| `oc-FR` | Occitan Language Locale for France. |
+| `om-ET` | Oromo language locale for Ethiopia. |
+| `om-KE` | Oromo language locale for Kenya. |
+| `or-IN` | Odia language locale for India. |
+| `os-RU` | Ossetian locale for Russia. |
+| `pa-IN` | Punjabi language locale for Indian Punjabi(Gurmukhi). |
+| `pa-PK` | Punjabi (Shahmukhi) Language Locale for Pakistan. |
+| `pap-AW` | Papiamento Language for Aruba. |
+| `pap-CW` | Papiamento language for Curaçao. |
+| `pl-PL` | Polish locale for Poland. |
+| `ps-AF` | Pashto locale for Afghanistan. |
+| `pt-BR` | Portuguese locale for Brasil. |
+| `pt-PT` | Portuguese locale for Portugal. |
+| `quz-PE` | Cusco Quechua locale for Peru. |
+| `raj-IN` | Rajasthani language locale for India. |
+| `ro-RO` | Romanian locale for Romania. |
+| `ru-RU` | Russian locale for Russia. |
+| `ru-UA` | Russian locale for Ukraine. |
+| `rw-RW` | Kinyarwanda language locale for Rwanda. |
+| `sa-IN` | Sanskrit language locale for India. |
+| `sah-RU` | Sakha (Yakut) locale for Russian Federation. |
+| `sat-IN` | Santali language locale for India. |
+| `sc-IT` | Sardinian locale for Italy. |
+| `sd-IN` | Sindhi language locale for India. |
+| `sd-Deva-IN` | Sindhi language locale for India. |
+| `se-NO` | Northern Saami language locale for Norway. |
+| `sgs-LT` | Samogitian language locale for Lithuania. |
+| `shn-MM` | Shan language locale for Myanmar. |
+| `shs-CA` | Shuswap locale for Canada. |
+| `si-LK` | Sinhala language locale for Sri Lanka. |
+| `sid-ET` | Sidama language locale for Ethiopia. |
+| `sk-SK` | Slovak locale for Slovak. |
+| `sl-SI` | Slovenian locale for Slovenia. |
+| `sm-WS` | Samoan language locale for Samoa. |
+| `so-DJ` | Somali language locale for Djibouti. |
+| `so-ET` | Somali language locale for Ethiopia. |
+| `so-KE` | Somali language locale for Kenya. |
+| `so-SO` | Somali language locale for Somalia. |
+| `sq-AL` | Albanian language locale for Albania. |
+| `sq-MK` | Albanian language locale for Macedonia. |
+| `sr-ME` | Serbian locale for Montenegro. |
+| `sr-RS` | Serbian locale for Serbia. |
+| `sr-Latn-RS` | Serbian Latin locale for Serbia. |
+| `ss-ZA` | Swati locale for South Africa. |
+| `st-ZA` | Sotho locale for South Africa. |
+| `sv-FI` | Swedish locale for Finland. |
+| `sv-SE` | Swedish locale for Sweden. |
+| `sw-KE` | Swahili locale for Kenya. |
+| `sw-TZ` | Swahili locale for Tanzania. |
+| `szl-PL` | Silesian locale for Poland. |
+| `ta-IN` | Tamil language locale for India. |
+| `ta-LK` | Tamil language locale for Sri Lanka. |
+| `tcy-IN` | Tulu language locale for India. |
+| `te-IN` | Telugu language locale for India. |
+| `tg-TJ` | Tajik language locale for Tajikistan. |
+| `th-TH` | Thai locale for Thailand. |
+| `the-NP` | Tharu language locale for Nepal. |
+| `ti-ER` | Tigrigna language locale for Eritrea. |
+| `ti-ET` | Tigrigna language locale for Ethiopia. |
+| `tig-ER` | Tigre language locale for Eritrea. |
+| `tk-TM` | Turkmen locale for Turkmenistan. |
+| `tl-PH` | Tagalog language locale for Philippines. |
+| `tn-ZA` | Tswana locale for South Africa. |
+| `to-TO` | Tongan language locale for Tonga. |
+| `tpi-PG` | Tok Pisin language locale for Papua New Guinea. |
+| `tr-CY` | Turkish language locale for Cyprus. |
+| `tr-TR` | Turkish locale for Turkey. |
+| `ts-ZA` | Tsonga locale for South Africa. |
+| `tt-RU` | Tatar language locale for Russia. |
+| `tt-Latn-RU` | Tatar language locale using IQTElif alphabet for Russia. |
+| `ug-CN` | Uyghur locale for China. |
+| `uk-UA` | Ukrainian Language Locale for Ukraine. |
+| `unm-US` | Unami Delaware locale for the USA. |
+| `ur-IN` | Urdu language locale for India. |
+| `ur-PK` | Urdu Language Locale for Pakistan. |
+| `uz-UZ` | Uzbek (latin) locale for Uzbekistan. |
+| `uz-Cyrl-UZ` | Uzbek (cyrillic) locale for Uzbekistan. |
+| `ve-ZA` | Venda locale for South Africa. |
+| `vi-VN` | Vietnamese language locale for Vietnam. |
+| `wa-BE` | Walloon Language Locale for Belgium. |
+| `uz-Latn-UZ` | Uzbek Latin-script locale for Uzbekistan. |
+| `wae-CH` | Walser locale for Switzerland. |
+| `wal-ET` | Walaita language locale for Ethiopia. |
+| `wo-SN` | Wolof locale for Senegal. |
+| `xh-ZA` | Xhosa locale for South Africa. |
+| `yi-US` | Yiddish Language locale for the USA. |
+| `yo-NG` | Yoruba locale for Nigeria. |
+| `yue-HK` | Yue Chinese (Cantonese) language locale for Hong Kong. |
+| `yuw-PG` | YauNungon locale for Papua New Guinea. |
+| `zh-CN` | Chinese locale for Peoples Republic of China. |
+| `zh-HK` | Chinese language locale for Hong Kong. |
+| `zh-SG` | Chinese language locale for Singapore. |
+| `zh-TW` | Chinese locale for Taiwan R.O.C. |
+| `zu-ZA` | Zulu locale for South Africa. |

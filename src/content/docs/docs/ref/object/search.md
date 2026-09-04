@@ -20,14 +20,14 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `defaultLanguage`
 
-> Type: [<code>Locale</code>](/docs/ref/enum/locale) · default: `"en_US"`
+> Type: [<code>Locale</code>](/docs/ref/enum/locale) · default: `"en-US"`
 >
 > Default language to use when language detection is not possible
 
 
 ##### `supportedLanguages`
 
-> Type: <code>Set&lt;</code>[<code>Locale</code>](/docs/ref/enum/locale)<code>&gt;</code> · default: `{"en_US":true}`
+> Type: <code>Set&lt;</code>[<code>Locale</code>](/docs/ref/enum/locale)<code>&gt;</code> · default: `{"en-US":true}`
 >
 > List of languages to enable for full-text search
 

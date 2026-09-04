@@ -20,7 +20,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `locale`
 
-> Type: [<code>Locale</code>](/docs/ref/enum/locale) · default: `"en_US"`
+> Type: [<code>Locale</code>](/docs/ref/enum/locale) · default: `"en-US"`
 >
 > Preferred locale for the account
 
