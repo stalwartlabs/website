@@ -146,6 +146,7 @@
   --sl-color-text-invert: var(--bg);
   --sl-color-hairline: var(--border);
   --sl-color-hairline-light: var(--border);
+  --sl-color-bg-inline-code: hsl(276.4deg 13.04% 10.59% / 85%);
 }
 :root[data-theme="light"] {
   --sl-color-bg: var(--bg);
