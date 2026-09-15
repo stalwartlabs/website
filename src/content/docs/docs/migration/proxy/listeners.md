@@ -43,7 +43,7 @@ Every interactive protocol a listener accepts must be declared on the default de
 
 ## Connection limits and timeouts
 
-`max_connections` caps the number of concurrent connections a listener will serve; once the limit is reached, further connections are dropped until existing ones close. `preauth_timeout` bounds the time a client has to authenticate, which limits how long a half-open connection can hold resources before the proxy abandons it. `max_auth_attempts` closes a connection after the configured number of authentication failures, which slows down credential-guessing against the proxy.
+`max_connections` caps the number of concurrent connections a listener will serve; once the limit is reached, further connections are dropped until existing ones close. `preauth_timeout` bounds the time a client has to authenticate, which limits how long a half-open connection can hold resources before the proxy abandons it. `max_auth_attempts` closes a connection after the configured number of authentication failures, counting both the commands the proxy rejects itself and the credentials the backend rejects. This slows down credential-guessing against the proxy and bounds the number of backend connections one client connection can open.
 
 ## Accepting the PROXY protocol
 

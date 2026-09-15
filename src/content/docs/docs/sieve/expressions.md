@@ -33,6 +33,10 @@ let "local" "parts[0]";
 let "domain" "parts[1]";
 ```
 
+<!-- sievepad { "noCapabilityCheck": true } -->
+<p><a href="https://sievepad.com/#w=TY5BagJBEEWv0tTGBAaJ285GEHfuXDoSKj2lNvZUNV2lMchAzpXj5CTpUQR39Xn8X-8KZ_CzBhh7Ag9rw_SFxVwnQb1bXnIh1Sis7u_n162iUcGkDrlzkTu6RN5DAxpKzKbgN9fHUo-RRyKnEsacyFwLuW5rC_XSnKJ9CAd6IT5TkkzTXZG-cZP55LWF95bvlSQB061yK2_etk-wk_HPE53dKQzbBvqqjnsatWpSMqu2NVVHWWDGz1gVvhcHCkfwVk40DP8" target="_blank" rel="noopener">Try this script in Sievepad</a></p>
+<!-- /sievepad -->
+
 ## Literal text in `let` and `eval`
 
 The value assigned by `let`, and the argument of the `eval` test, is a Sieve string whose contents are parsed as an expression. A bare word inside that string is therefore read as a variable or function name rather than as text, and a script such as `let "prompt" "You are an assistant";` fails to compile with `Invalid variable or function name "You"`. Literal text has to carry its own quotes inside the Sieve string:
@@ -40,6 +44,10 @@ The value assigned by `let`, and the argument of the `eval` test, is a Sieve str
 ```sieve
 let "prompt" "'You are an assistant'";
 ```
+
+<!-- sievepad { "noCapabilityCheck": true } -->
+<p><a href="https://sievepad.com/#w=NY09DsIwDEavYnnp0oU1jBUbGxOiDCa1SkT-lLilqKrEuTgOJyEZ2Pxkfe-tOKPatejJMSo8CdknJYEh6KzgsMTEOZvgM3zfHzga4UQWhBcB48GyAPkBeCaLLWadTJSM6rL-hY6Mr58wJV25LnqMKbgoPZazOYcJKHHxAJVUFvLS9LjvPW7XFl3p08hVWiiziPFjoVIIHUW6GWvk1d1ZP1BJmnjbfg" target="_blank" rel="noopener">Try this script in Sievepad</a></p>
+<!-- /sievepad -->
 
 Text spanning several lines uses the Sieve multi-line form, which opens with `text:` and closes with a line containing a single period. The quoted expression string spans the whole block. There is no triple-quote form:
 
@@ -50,6 +58,10 @@ Second line of the prompt."
 .
 ;
 ```
+
+<!-- sievepad { "noCapabilityCheck": true } -->
+<p><a href="https://sievepad.com/#w=bY47TgMxEIavMpp6hURryggqupQxxcQ7JKN4x5Y9uwStVuJcHIeTYIPSpfz0P1dc0D0OqDQxOtwbxQ8qBmMK1cHzNReuVZJW-Pn6hlcxLhTB-GogCpENSEfghSIOWEORbBXdYb0VTiTalTSX0LknPOaSpmwe_4qcV48vUqpBFGVI72Bnhn_Pg9c9h9Q27mnotRmevOL2NuDUrtKJ-36jymaip0btTNpRpqNEsc_dmcMFnZWZt-0X" target="_blank" rel="noopener">Try this script in Sievepad</a></p>
+<!-- /sievepad -->
 
 Two quoting layers are involved, so the delimiters are worth choosing with care:
 
@@ -95,6 +107,10 @@ The `let` instruction evaluates an expression and assigns the result to a variab
 let "from_domain" "to_lowercase(email_part(envelope.from, 'domain'))";
 ```
 
+<!-- sievepad { "noCapabilityCheck": true, "envelopeFrom": "Alice@Example.COM" } -->
+<p><a href="https://sievepad.com/#w=NY7NakIxEIVfJcxGhSB0m24sF7srXRRX3nJJ41SD-SMz_iEXfC4fp0_SSYvLbw7nzHeFI5gnDclGBAMfbMPJVlab7Mio5blUJPI5kfq53dWKfNoq3qEKyMon4npwLDFoIFd9YQKzvj7WovV_ST5U17iVeviuOQ6b3MIehDkPIZ-wOks4RTmHoYjCFNMRQy44bwWtJv-VyWzWw3OfYPzUEEXObrE9FSJkFj8hMcidLfbLB8-XboduD0ZcUcNj9VVGRekleIeL5dnGEnDevb_BOP4C" target="_blank" rel="noopener">Try this script in Sievepad</a></p>
+<!-- /sievepad -->
+
 A common pattern is to compute several intermediate values with `let` and then branch on them with `if eval`:
 
 ```sieve
@@ -117,6 +133,10 @@ while "i > 0" {
 }
 ```
 
+<!-- sievepad { "noCapabilityCheck": true } -->
+<p><a href="https://sievepad.com/#w=TU_BSsVADPyVEDy2YK_7wEsRvIvwwPWwbsNrsN0tm9SnlILf5ef4JaYtgjkEZpJMZhZ8R9dUmMJI6PBRw3ANRaHLURzcf0yFRDgngZ-vb3gSThfQnuDa80DASbTMUW0BK5RYeFJB97z86Y2B90meS9zwQAoe2aP15tbjyadDyUi4A2Ng8QmsQtf1FDoq4IYg29W5ftiJ-mbhdVdo85zUNljg4E7H7f8vDDU0-2T1CdeXCkdLFC60-TQkpGqhDJnp3IYpvPLA-tn2FN_QWTxa118" target="_blank" rel="noopener">Try this script in Sievepad</a></p>
+<!-- /sievepad -->
+
 A `while` loop can be terminated by the `break` instruction, which exits the loop and resumes execution after it:
 
 ```sieve
@@ -130,11 +150,15 @@ while "true" {
 }
 ```
 
+<!-- sievepad { "noCapabilityCheck": true } -->
+<p><a href="https://sievepad.com/#w=TVDLasQwDPwVIXpMYHN12VMo9F4KhboHbaJuxDpOsJ19EAL9rn5Ov6Ry0tLqYDOj0YjRjGc0VYGeekaDT4nchUKCdmiigYfrGDhGGXyEr49PeI7ij5A6hksnjkF8TGFqkgqwwNgEGVNE8zr_-vUka2eYQpOx4wQWxaK-1c7ivfWbk0U1YuVn60Hrv1CghGrV5o68A5_Jrfx-D7u_mVyHwHT6US7bR23bMbUcwDiK2falfFyJ8m6WZV1RD5NPqpAIG6cWOo7LW4G9XoCOnHMpipySHkGRhhxqGukgTtKt7rg5ockpluUb" target="_blank" rel="noopener">Try this script in Sievepad</a></p>
+<!-- /sievepad -->
+
 The `continue` instruction skips the rest of the current iteration and starts the next one:
 
 ```sieve
 let "i" "10";
-while "true" {
+while "i > 0" {
     let "i" "i - 1";
     if eval "contains([1, 3, 5, 7, 9], i)" {
         continue;
@@ -142,3 +166,7 @@ while "true" {
     addheader :last "X-Header-${i}" "Counter is ${i}";
 }
 ```
+
+<!-- sievepad { "noCapabilityCheck": true } -->
+<p><a href="https://sievepad.com/#w=TVDBSsUwEPyVZfGgkIJFRIzgpQjeRRBe3yGma7vYJiVJ31NKwe_yc_wSN62ie0iY2dkZdmc8oC4VOjMQanxIpj-akKDxNmq4exsDxcjeRfj6-ITHyK6F1BEcO-4J2MUUJptEgAqjDTymiHo3__oNhteOn4LNuKcENXKN8pbnNd7UbnMSEm5BGJhrB1L_lQwFlKs4d_gF6GB64a13SQLi6a5UcKHgUsGVguu9Aj77c8qVlewm-rFYts80TUemoQC6NzHnPRX3K1GczLys2ZWfXBIFR9g4sZBxXPYKB7mNaSlvLChSkoxWkKzvKzOaZ-45vVcd2VfUcihalm8" target="_blank" rel="noopener">Try this script in Sievepad</a></p>
+<!-- /sievepad -->

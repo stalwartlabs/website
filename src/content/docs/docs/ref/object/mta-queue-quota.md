@@ -27,7 +27,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `key`
 
-> Type: <code>Set&lt;</code>[<code>MtaQueueQuotaKey</code>](#mtaqueuequotakey)<code>&gt;</code> · min items: 1
+> Type: <code>Set&lt;</code>[<code>MtaQueueQuotaKey</code>](#mtaqueuequotakey)<code>&gt;</code>
 >
 > Optional list of context variables that determine where this quota should be applied
 

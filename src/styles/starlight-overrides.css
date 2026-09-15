@@ -188,3 +188,27 @@ header.header {
   color: var(--sl-color-text-accent, var(--brand));
   flex-shrink: 0;
 }
+
+.sl-markdown-content p:has(> a[href^="https://sievepad.com/#w="]) {
+  margin-top: 0.5rem;
+  text-align: end;
+  font-size: var(--sl-text-sm);
+}
+.sl-markdown-content a[href^="https://sievepad.com/#w="] {
+  text-decoration: none;
+}
+.sl-markdown-content a[href^="https://sievepad.com/#w="]:hover {
+  text-decoration: underline;
+}
+.sl-markdown-content a[href^="https://sievepad.com/#w="]::before {
+  --sievepad-play: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z'/%3E%3C/svg%3E");
+  content: "";
+  display: inline-block;
+  width: 0.9em;
+  height: 0.9em;
+  margin-inline-end: 0.35em;
+  vertical-align: -0.1em;
+  background-color: currentColor;
+  -webkit-mask: var(--sievepad-play) center / contain no-repeat;
+  mask: var(--sievepad-play) center / contain no-repeat;
+}

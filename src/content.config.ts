@@ -143,6 +143,7 @@ const faqSection = z.object({
     z.object({
       question: z.string(),
       answer: z.string(),
+      id: z.string().optional(),
     })
   ),
 });

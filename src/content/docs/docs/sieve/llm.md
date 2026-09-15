@@ -65,6 +65,10 @@ If the category is not clear, respond with Inbox."
 ;
 ```
 
+<!-- sievepad { "noCapabilityCheck": true } -->
+<p><a href="https://sievepad.com/#w=NY-xbsMwDER_heBsBOjqjp4CpFOHDlUGWaZtoTJpiEwdIzDQ7-rn9EsqJ-34eLjj3Q0_sX6qkP1EWOOr-bT4bNBJ0BpOpxc4stGQvUVh-Pn6hrccLfIANhLMWabZsEINOc6mWL_f_qMmH3lX5JLDzokMHD4cDsHoarVjh03yqrFf74ETqfqBILIJCBNIf7_3kjrKCimqUQctJVkOjo8PNfhSUfIKUYHFICTyuYJMOgt3sEQby4xWrgeHjovv2TFu5wr_3u29CynZvqxQGSGNn30bU7S1GSl8YG35Qtv2Cw" target="_blank" rel="noopener">Try this script in Sievepad</a></p>
+<!-- /sievepad -->
+
 The contents of a `text:` block are taken verbatim, so the quote character that delimits the expression string cannot appear inside the prompt: the form above allows apostrophes in the text, while `'...'` allows double quotes. A prompt short enough for a single line can instead use `\n` escapes, as in `let "prompt" "'First line.\nSecond line.'";`. See [literal text in `let` and `eval`](/docs/sieve/expressions#literal-text-in-let-and-eval) for the full quoting rules.
 
 ## Example

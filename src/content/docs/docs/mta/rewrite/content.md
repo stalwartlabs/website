@@ -32,6 +32,10 @@ if not body :text :contains "disclaimer" {
 }
 ```
 
+<!-- sievepad { "noCapabilityCheck": true } -->
+<p><a href="https://sievepad.com/#w=XVDLagMxDPwVIUJPS6FX95Smf9De4hwUW8maeu3U1iYNy0K_q5_TL6l2yQNqjGE0smZGAx7RPDWYqGM0-CYUT1QEfHbVwEv2Z3iApQi5tuMkFX6_f2DpfUh7IHgN1UUKHRdssLoSDlLRrIfruI5CmpjcFzfhwp99KAxri53-stiAxa2KWNw822RT2EHKAlMJjPCXgHE5iY6p2ulvchZhsAn0VJb_jEVri9Vx8_vehgp6Ce5NIC0JnEKMsGUg79mDZK2ySovkDvIO-MjlDLmXfZ7SsoaJ0HGttOfHiwLOricf6rWQk9nzNdONLHyI5FiJxTBR42K4mxnnxtEmHDcNXgSmNSrSdKLiinSneUUH2oYY5Lxq2X2gkdLzOP4B" target="_blank" rel="noopener">Try this script in Sievepad</a></p>
+<!-- /sievepad -->
+
 
 ### Removing Attachments
 
@@ -52,3 +56,25 @@ foreverypart
     }
 }
 ```
+
+<!-- sievepad
+From: Billing <billing@example.net>
+To: Jane Doe <jane@example.org>
+Subject: Your invoice
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="mixed"
+
+--mixed
+Content-Type: text/plain; charset="utf-8"
+
+The invoice is attached.
+--mixed
+Content-Type: application/octet-stream; name="invoice.exe"
+Content-Disposition: attachment; filename="invoice.exe"
+Content-Transfer-Encoding: base64
+
+SGVsbG8sIHdvcmxkIQ==
+--mixed--
+-->
+<p><a href="https://sievepad.com/#w=dVLbbhMxEP2VkR8QoGxCJYQqp0FcGkqQ-gCJKqG6D17vJHFZ24vtTXcVReK7-By-hHE3SRNELD94PDNnZs6ZNVsxftZjVhpknE2jLB-kj1A4FTh8cEULz-B9jFItDdoY4M-v3_ANjVtpuzh0sB4LyuuKXvx2vcMzUtvkcbVXyfb4s9Ye4VYwow0K1gPB5s7jCn1bUeHux2NVSkXuu6Gwwh4F2LWwQEfPQdrWzeF5Z6ezRFmgB56wgStnI7UW24oMHZ7C0hHsY-fOZuQXjD5kVZVayaidHWCTmjuFTI1IkzrXJaZJBTsG50ZGtcSQ5jwu0zsofKlD5YJO9WhScrzsP5aFFx3a-gl0SwjFjBtUdZR5iSD37JOfFMEC8hZCGyIawYZd9kZYumxz12MGQ5ALPBKoJWUybVdOK-yjKQ_F-uSdoR3QZZm0vsi7xztspKlK7FuMb4WdOQ5fpEW4dAgX9_TaBzi_oIBpnd-jihy-Ey5sSwl7PbkeZzfoA03P4az_SthDpjiYuow6KT4wusFiCLmrbSF9O0q7Qz-JdGGzrDP-yY7YxAFxpu0Q1FL6gJHy6jjPzru82RJ3zYAOWy6x6J9EPNwOpyLGLESP0gwhUUngexabx334j8r8QLIh7JbndOrMSxvm6LOxVa4g7jnkMuCb12mA6dVNyK_Ow-RzsVKm-TH5Ohrtm8-yreY0d6RE0ny92fwF" target="_blank" rel="noopener">Try this script in Sievepad</a></p>
+<!-- /sievepad -->

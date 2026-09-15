@@ -108,6 +108,14 @@ sections:
     eyebrow: Frequently asked
     title: Pricing FAQ.
     items:
+      - question: Can I purchase fewer than 25 mailboxes?
+        answer: >-
+          Not at the moment: 25 mailboxes is the smallest Enterprise
+          subscription. If your organisation has fewer users, a
+          25-mailbox license still covers you fully, leaves room to
+          grow, and can be extended with more mailboxes at any time.
+          If you do not need Enterprise features, the Community edition
+          is free, with no mailbox limit.
       - question: Can I move the license to a different server?
         answer: >-
           Yes, as long as the server hostname falls under the licensed

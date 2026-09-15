@@ -27,6 +27,10 @@ require ["editheader"];
 addheader "X-Custom-Header" "Custom Value";
 ```
 
+<!-- sievepad -->
+<p><a href="https://sievepad.com/#w=NY4xDsIwDAC_EnluB9YwIZbuSAip6WA1VonUpBA7MESVeBfP4SWklI539snO8AC9qyCgJ9BwEhyfGEXZqWetGkJLkdXn9VYHa10YNgUVcB_dTRh0m7fcowvLZEqxXzjSPblIqjVA1sn11xro9iagtSsqA5f6mFgmXzf_heJWo844JjJQApi7Cjwx40DL0UJMIuWnQnmevw" target="_blank" rel="noopener">Try this script in Sievepad</a></p>
+<!-- /sievepad -->
+
 ### Deleting Headers
 
 The `deleteheader` command is used to remove a header from the email. In the following example, any existing "X-Custom-Header" is removed:
@@ -35,6 +39,17 @@ The `deleteheader` command is used to remove a header from the email. In the fol
 require ["editheader"];
 deleteheader "X-Custom-Header";
 ```
+
+<!-- sievepad
+From: Alice <alice@example.com>
+To: Jane Doe <jane@example.org>
+Subject: Header rewriting
+X-Custom-Header: Custom Value
+
+This message carries an X-Custom-Header field.
+-->
+<p><a href="https://sievepad.com/#w=XVDNSgMxEH6VYc67C16jiGKR4rUiQtPDmB3blPzUJGuFZcHn8nF8EhN3t2hPk5l8fzM9vqO4qNCRZRS4SmSOFBK0XkUBS6aWQ4Tvzy9YsOGk3XYeYoVRBX1IEcW6nwUsaVd-fBdU6QO_dTowrCVyq9PulytxcyldWwR5nIDE5_qui8nbejlhMgSHTYWWY6Qt_7MZWXXgY9AlVMPW_LW9D94KuDVaMVxRKTf8QfZguFHeXkv36AU8kGNY-IzY59cJ4MM2A1bdy55Vmm8AJyvpzpIKGFt4ItOxdFl8pyNMsUFRCJojkIMzIrxqNm0zrRk5Ffm8Zj8MPw" target="_blank" rel="noopener">Try this script in Sievepad</a></p>
+<!-- /sievepad -->
 
 ### Replacing headers
 
@@ -48,6 +63,17 @@ if header :matches "X-Custom-Header" "*" {
     addheader "X-Custom-Header" "New Value";
 }
 ```
+
+<!-- sievepad
+From: Alice <alice@example.com>
+To: Jane Doe <jane@example.org>
+Subject: Header rewriting
+X-Custom-Header: Custom Value
+
+This message carries an X-Custom-Header field.
+-->
+<p><a href="https://sievepad.com/#w=dVHLSkMxEP2VIbiS20K3qYiiSHHhwooITRfTZNqm5FGT3Fa4XPC7_By_xFxvWrRoFnmcOXNm5qRhO8ZHFXNoiXE2TWj2GBIoLyOHCaGiEOHz_QMeaWtQareCdY-yikUZ9DZFxmfNQcGidl3E10F270CvtQ4EM8FI6dTnClaBYDsMGheGomDzsXB6WZSBW0xyTTFzXgY3dUzeDiYlMWPneW-Eg7wipQx4o57R1PQdPWtGrWDjPq7IUKIi-4daoaFS_3My9kB7KBVyRisca-cVsxQjrujX-L3MINA-6JTNGpI1P-24C95yuDZaElxgd1zRG9qtoaH09lK4J8_hHh3Brc-MTb4dCT6sMmFaLzYk0-Fz4FhKuJPWOfTP0rrL4msdobQNEkPQ2WR0cJIIS01GDcuY2eNOPo_ZtO0X" target="_blank" rel="noopener">Try this script in Sievepad</a></p>
+<!-- /sievepad -->
 
 In this script, the original value of "X-Custom-Header" is first stored in the variable "oldValue". Then, the header is removed and a new header with the same name but a new value "New Value" is added.
 

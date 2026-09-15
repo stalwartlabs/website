@@ -9,6 +9,18 @@ A Sieve script consists of one or more rules, each combining a test and an actio
 
 Stalwart extends the standard Sieve language with its own [expression syntax](/docs/sieve/expressions) and a [rich set of built-in functions](/docs/sieve/reference) for DNS queries, directory lookups, SQL queries, hashing, image and MIME inspection, and more, all accessible from the `eval`, `let`, and `while` instructions.
 
+## Testing scripts
+
+Sieve has no statement for printing a value or writing to a log, and a script installed on the server runs unseen at delivery time, so checking a filter has traditionally meant sending test messages and looking at where they land. [Sievepad](https://sievepad.com) removes that round trip. It is a playground that runs the Stalwart Sieve interpreter in the browser, compiled to WebAssembly, so a script is compiled and executed by the same code the server uses, with no Stalwart installation involved. Scripts, test messages and settings are stored in the browser and are never uploaded.
+
+The editor compiles the script as it is typed and underlines each error at the position reported by the compiler. Running the script against a test message lists the actions it takes, such as `fileinto`, `reject` or a vacation reply, and shows every message it modifies or generates. Envelope addresses, mailboxes, spam and virus scores, the current time and the other values a script can test are set per workspace, and a workspace can be shared as a link that carries its scripts inside the URL.
+
+Sievepad supports the `vnd.stalwart.expressions` and `vnd.stalwart.while` extensions with the functions available to the [untrusted interpreter](/docs/sieve/interpreter/untrusted). Functions restricted to the [trusted interpreter](/docs/sieve/interpreter/trusted), which reach external systems such as DNS, HTTP, SQL, key-value stores and [LLM providers](/docs/sieve/llm), are not available, and a script that calls them fails to compile. A system script that omits `require`, which the trusted interpreter accepts while [`noCapabilityCheck`](/docs/ref/object/sieve-system-interpreter#nocapabilitycheck) is enabled, needs the same setting in Sievepad.
+
+Examples in this documentation that run in Sievepad are followed by a "Try this script in Sievepad" link, which opens the example in Sievepad together with the test message and settings needed to exercise it.
+
+## Supported extensions
+
 The Sieve interpreter included in Stalwart supports the following extensions:
 
 - [RFC 5228 - Sieve: An Email Filtering Language](https://datatracker.ietf.org/doc/html/rfc5228)

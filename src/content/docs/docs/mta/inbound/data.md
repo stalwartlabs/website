@@ -34,6 +34,26 @@ if envelope :domain :is "to" "foobar.net" {
 }
 ```
 
+<!-- sievepad { "envelopeTo": [ "jane@foobar.net" ] }
+From: Alice <alice@example.com>
+To: Jane <jane@foobar.net>
+Subject: Quarterly newsletter
+MIME-Version: 1.0
+Content-Type: multipart/alternative; boundary="alt"
+
+--alt
+Content-Type: text/plain; charset="utf-8"
+
+Welcome to the quarterly newsletter.
+--alt
+Content-Type: text/html; charset="utf-8"
+
+<p>Welcome to the quarterly newsletter.</p>
+--alt--
+-->
+<p><a href="https://sievepad.com/#w=jVPbjtowEP2VkcUjge5bZSha1IvUSlu1ArWV1mhlkgG88iXYDrsoQup39XP6JR1DsoHtRbVQ4snMOTNzZqjZjvGrPrPSIONsFqV-kD5C4fLA4c10PoUQ5Rrh5_cfMFO4Q9ZnIfeqjIHx27oFGqls8rjK58n2uK2UR7gVDO0OtStRsD4ItpNeyaXGcDI9llrmjc8o09xWzlMqvy-pltMXLFTcoCzQN_Zj9DKPkd6CLUbCCqtW0OYCXrhUEnAVKDg6wY6sbin9wCJBoBYW6ASM5MldZWOiprsUbHTynVfRxqdDiU6lAE8lA88doW2Me8qcyI5WlswjYypyuIlGd2nbc9YG8KosifMUf9ewPBXTnkYxCuvV54GHi8hDd00dco12HTcESr3c2cocC-vVTeOXYFkUbX9ahqTPt-wT4bKPlVk2KvXqlukS-7ueXZJOWSqPfuyw6DODIdCCXWzTtiJu9HqfWXwIGkkfP0CjzzfsnXeGw1Qr0mIs0-saH6UpNQ5yZybCzh2HD9KS956e193wyTerlveYRw6f20zQZRL25v3N2-wL-qCc5XA1eCHs62aocxoqB1PpqJIAQ6kJYWVUOxzBkhotpN-_oi3SNLq0lVmWrs_wx42gOSo7gnwjPalGmCquspcn1FfU1AVCdEBrD9s_lDn4F3fatr9Qj8vJ_7CPh-WkyZBlzayIKyq7plnVT3_ruaPJsWcSs8Xh8As" target="_blank" rel="noopener">Try this script in Sievepad</a></p>
+<!-- /sievepad -->
+
 ### Milter
 
 Milter filters are defined as [MtaMilter](/docs/ref/object/mta-milter) objects. Each configured filter can inspect and potentially modify the message, adding, changing, or removing headers, altering the body, or rejecting the message outright. For details see the [Milter](/docs/mta/filter/milter) section.

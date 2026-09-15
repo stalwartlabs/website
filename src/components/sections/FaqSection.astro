@@ -5,6 +5,16 @@ interface Props {
   data: any;
 }
 const { data } = Astro.props;
+
+// Anchor id per question, matching github-slugger output for plain text
+// (so "Why isn't feature X open source?" -> "why-isnt-feature-x-open-source").
+const slugify = (text: string) =>
+  text
+    .toLowerCase()
+    .replace(/[`*_]/g, "")
+    .replace(/[^\p{L}\p{N}\s-]/gu, "")
+    .trim()
+    .replace(/\s/g, "-");
 ---
 <section class={`band ${data.band === "alt" ? "band--alt" : ""}`}>
   <div class="container container-narrow">
@@ -16,7 +26,7 @@ const { data } = Astro.props;
     )}
     <ul class="faq reveal">
       {data.items.map((item: any) => (
-        <li class="faq__item">
+        <li class="faq__item" id={item.id ?? slugify(item.question)}>
           <details>
             <summary>
               <span class="faq__q" set:html={inlineMd(item.question)}></span>
@@ -32,6 +42,21 @@ const { data } = Astro.props;
   </div>
 </section>
 
+<script>
+  // Expand the FAQ entry targeted by the URL hash, on load and on in-page navigation.
+  function openFaqFromHash() {
+    const id = decodeURIComponent(location.hash.slice(1));
+    if (!id) return;
+    const item = document.getElementById(id);
+    if (!item?.classList.contains("faq__item")) return;
+    const details = item.querySelector("details");
+    if (details) details.open = true;
+    item.scrollIntoView({ block: "start" });
+  }
+  openFaqFromHash();
+  window.addEventListener("hashchange", openFaqFromHash);
+</script>
+
 <style>
   .section-head {
     margin-bottom: clamp(2rem, 3vw, 3rem);
@@ -43,6 +68,9 @@ const { data } = Astro.props;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+  }
+  .faq__item {
+    scroll-margin-top: 88px;
   }
   .faq__item details {
     border: 1px solid var(--border);

@@ -28,3 +28,7 @@ if string "${env.remote_ip}" "192.0.2.88" {
     reject "Connection from this IP is not accepted.";
 }
 ```
+
+<!-- sievepad { "environment": [ { "name": "remote_ip", "value": "192.0.2.88" } ] } -->
+<p><a href="https://sievepad.com/#w=TU87bsMwDL0KQXQ0jCZT4o6duhXIGAWFqjApC4tyJdoZBAM9V4_Tk5RG-uNA8PEB71Nxwm7VoPhI2OFOfX_xWeGYQungPolQUCjqzwSf7x-wY5oISsg8KDZ4PQp2-_ojET3LwqQxhwVnehs5E-wdTj6zf-6pOGzAGfNq4g4Pd06c8MlsMsvZmJtKMrWZYlJ64mF2aM_Vdt3etut2szFYnYDNVcLI76ScBE45RdAXLvDwCLYlKfgQaFA6tg7NbHaC86HBSKVYsSW-oUKqZm-ootlzThJJ9H-330RWcPL9uPz-YpnmPH8B" target="_blank" rel="noopener">Try this script in Sievepad</a></p>
+<!-- /sievepad -->

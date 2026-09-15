@@ -152,14 +152,14 @@ curl -sk -X POST -H "Authorization: Bearer $TOKEN" \
 
 ### Connections
 
-`POST /connections/kick?identifier=<id>` disconnects all currently bridged sessions for an account and reports how many were terminated. This is useful to force a migrated account off its old backend immediately, so its next connection re-resolves to the new destination.
+`POST /connections/kick?identifier=<id>` disconnects all currently bridged sessions for an account and reports how many were terminated. A mail session is registered once the backend accepts its authentication, and an HTTP connection once one of its requests identifies an account, which covers JMAP-over-WebSocket sessions after the upgrade. This is useful to force a migrated account off its old backend immediately, so its next connection re-resolves to the new destination.
 
 ```bash
 curl -sk -X POST -H "Authorization: Bearer $TOKEN" \
   "https://127.0.0.1:9443/connections/kick?identifier=alice@example.com"
 ```
 
-`POST /connections/delay?identifier=<id>&seconds=<n>` holds back new logins for an account for the given number of seconds, pausing each new session briefly before it is established. This smooths a cutover by letting in-flight operations settle before the account begins connecting to its new backend.
+`POST /connections/delay?identifier=<id>&seconds=<n>` holds back new logins for an account for the given number of seconds, pausing each new session briefly before it is established. An HTTP connection is held once one of its requests identifies the account. This smooths a cutover by letting in-flight operations settle before the account begins connecting to its new backend.
 
 ```bash
 curl -sk -X POST -H "Authorization: Bearer $TOKEN" \

@@ -51,7 +51,7 @@ src/
 public/                     # copied verbatim to dist/ (img, fonts, llms.txt, robots.txt, _headers, _redirects)
 astro.config.mjs            # all integration + plugin config
 wrangler.toml               # Cloudflare Pages project config
-scripts/                    # build-time scripts run by npm: expand-includes.mjs (auto-runs on dev/build) and inject-breadcrumbs.py (manual: rerun after a jmap-schema cargo run)
+scripts/                    # build-time scripts run by npm: expand-includes.mjs and sievepad-links.mjs (both auto-run on dev/build) and inject-breadcrumbs.py (manual: rerun after a jmap-schema cargo run)
 .scripts/                   # one-off Docusaurus -> Astro migration / cleanup scripts; kept for reference, not part of any pipeline
 ```
 
@@ -178,6 +178,47 @@ reference it from each consumer:
 ancestors looking for the partial, and replaces what's between the
 markers in place. Idempotent; re-run with `npm run includes` (or check
 without writing via `npm run check:includes`).
+
+### Sievepad links
+
+Every `sieve` code block in the current docs and the blog that runs in
+[Sievepad](https://sievepad.com) is followed by a generated "Try this
+script in Sievepad" link. `scripts/sievepad-links.mjs` runs as `predev`
+and `prebuild` (or `npm run sievepad`; `npm run check:sievepad` fails on
+stale links) and maintains a region right after the code block:
+
+```md
+<!-- sievepad { "envelopeFrom": "known_spammer@example.net" }
+From: Known Spammer <known_spammer@example.net>
+Subject: Test
+
+Body of the test message.
+-->
+<p><a href="https://sievepad.com/#w=..." target="_blank" rel="noopener">Try this script in Sievepad</a></p>
+<!-- /sievepad -->
+```
+
+- The opening comment is authored by hand: optional Sievepad settings as
+  JSON on the first line (keys and types must match the Sievepad settings
+  table exactly) and an optional raw test message on the lines after it.
+  Add a message or settings whenever the example needs them to do
+  something visible. The link line is regenerated from the code block and
+  the comment on every run, so never edit it by hand. MDX files use
+  `{/* sievepad ... */}` and `{/* /sievepad */}`.
+- `<!-- sievepad skip -->` (trailing text allowed) opts a block out.
+- Validation needs the Sievepad WebAssembly engine, found in the sieve
+  repository checked out next to this one (`../sieve/web/dist/assets/*/pkg`,
+  built by `web/build.sh`) or in the directory named by `SIEVEPAD_ENGINE`.
+  With the engine, a block without a marker that compiles and runs gets a
+  marker and a link; a block that only compiles with `noCapabilityCheck`
+  (trusted-interpreter snippets that omit `require`) gets that setting
+  added; a linked block that stops compiling or running fails the run.
+  Blocks that call trusted-only functions (DNS, SQL, HTTP, LLM) never get
+  a link. Without the engine, as on Cloudflare, existing links are
+  refreshed and nothing is validated.
+- `node scripts/sievepad-links.mjs --verbose` prints what each linked
+  example does in Sievepad; check it against the surrounding prose after
+  adding or changing an example.
 
 ## Blog conventions
 

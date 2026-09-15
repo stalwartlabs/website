@@ -51,3 +51,7 @@ if envelope :localpart :is "from" "known_spammer" {
     reject "Messages from this sender are not accepted.";
 }
 ```
+
+<!-- sievepad { "envelopeFrom": "known_spammer@example.net" } -->
+<p><a href="https://sievepad.com/#w=VY9BTgMxDEWvYnk9qsQ2bGCDhERXXTYVMhm3BCZOGqdTpNFInIvjcBI8KkUiK3__fPt5whHdTYdCidHhptFwptqgz0EdrO8fn0AbHRi-P79gE3lk0FBjadjhpVB02-maTxRlcfKphkVXPp5iZdh6HKlGehlYPXbgkWXkIRe-qMpvHJrH3a0XL3EPVxvckAMNZWFyUe3rvubk0Yp3yWd51kIpcbXO5AXsXUaZv2ZVI1dYEtBeLa0sPVcgI5LcgELg0rhfebS9sxecdx2m35zdZUq5tSgHU9Mf84MNtOP-AdzxB6Uy8Eq44Tz_AA" target="_blank" rel="noopener">Try this script in Sievepad</a></p>
+<!-- /sievepad -->

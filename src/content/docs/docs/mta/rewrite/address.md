@@ -41,6 +41,10 @@ if allof( envelope :localpart :contains "to" ".",
 }
 ```
 
+<!-- sievepad { "envelopeTo": [ "e.x.a.m.p.l.e@example.org" ] } -->
+<p><a href="https://sievepad.com/#w=RZCxbsMgEIZfBZ0yJKqFlI5k8dKhc7sFD1d6sSxhoEBcSwipz9XH6ZMU4sRmOO7X_d_PiQQTiGMDBkcCAW8R9Tf6yD6tCoK9mIm0dcT-fn7Za2-spzKJARoIyg-udOKcHvCIg6kTe_Wqak9f16EQZwkT-gE_NAUJDZNA99xFeeppltCdpJFmuDDU2l727GFiQluF2tW1hLImlmdCwaKVUC5eQqRh69mwW-5m3POnQ1vLTsKBpYUJFKvRaVS0hJV6K3dql45Zwmlzb9vz1RJtbnfpeTFmaSB3DYwUAvZUv6iogsbB9EWlNeDdlhkQnznykTuuObU04-g0cet76HL-Bw" target="_blank" rel="noopener">Try this script in Sievepad</a></p>
+<!-- /sievepad -->
+
 How the script works:
 
 - The `require` clause declares the Sieve extensions used: `variables` for variable handling, `envelope` for envelope access, and `regex` for pattern matching.
@@ -67,6 +71,10 @@ if envelope :matches "to" "mailer-daemon@*" {
     set "envelope.notify" "NEVER";
 }
 ```
+
+<!-- sievepad { "envelopeTo": [ "mailer-daemon@example.org" ] } -->
+<p><a href="https://sievepad.com/#w=XY7BTsMwDIZfJfIRlUlcw4VLrxwY2mXuwcu8EilxSpJ2Q1UlnovH4UlwEUMIX6z_t7_fnmECe9eAUGSwsK0UzpSrOSZXrGll4pAGNp_vH2brA0s1hzSK4wINFJf9UAvY_XzlI3lZJ2nMbtWZX0ef2ewRJsqeDoELQmMQ-CcaobtHQfEnc7WMjVTdCxddqwlBm-YGzrdH4pjk4Ua9GcVoFa5_wjaSqj-9fSOP7a59QtDwBQWWroHIpVDP68OqlKxeelXzL_-cdPbvGF8oDoE3KffQLcsX" target="_blank" rel="noopener">Try this script in Sievepad</a></p>
+<!-- /sievepad -->
 
 How the script works:
 
