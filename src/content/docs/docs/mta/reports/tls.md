@@ -14,7 +14,7 @@ Stalwart [automatically analyses](/docs/mta/reports/analysis) TLS reports receiv
 - [`subject`](/docs/ref/object/tls-report-settings#subject): expression returning the report subject. Default `'TLS Aggregate Report'`.
 - [`orgName`](/docs/ref/object/tls-report-settings#orgname): expression returning the organisation name included in the report. Default `system('domain')`.
 - [`contactInfo`](/docs/ref/object/tls-report-settings#contactinfo): optional expression returning contact information for the reporting organisation.
-- [`sendFrequency`](/docs/ref/object/tls-report-settings#sendfrequency): expression returning the frequency at which aggregate reports are sent. Supported values are `hourly`, `daily`, `weekly`, and `never`. Default `daily`.
+- [`sendFrequency`](/docs/ref/object/tls-report-settings#sendfrequency): expression returning the frequency at which aggregate reports are sent. Supported values are `hourly`, `daily`, `weekly`, and `disable`. Default `daily`.
 - [`maxReportSize`](/docs/ref/object/tls-report-settings#maxreportsize): expression returning the maximum report size in bytes. Default 5242880 (5 MB).
 - [`dkimSignDomain`](/docs/ref/object/tls-report-settings#dkimsigndomain): expression returning the domain whose [DKIM](/docs/mta/authentication/dkim/) signatures sign the outgoing report. Default `system('domain')`.
 

@@ -42,7 +42,7 @@ Aggregate reports are configured by the following fields:
 - [`aggregateSubject`](/docs/ref/object/dmarc-report-settings#aggregatesubject): expression returning the report subject. Default `'DMARC Aggregate Report'`.
 - [`aggregateOrgName`](/docs/ref/object/dmarc-report-settings#aggregateorgname): expression returning the organisation name included in the report. Default `system('domain')`.
 - [`aggregateContactInfo`](/docs/ref/object/dmarc-report-settings#aggregatecontactinfo): optional expression returning contact information for the reporting organisation.
-- [`aggregateSendFrequency`](/docs/ref/object/dmarc-report-settings#aggregatesendfrequency): expression returning the frequency at which aggregate reports are sent. Supported values are `hourly`, `daily`, `weekly`, and `never`. Default `daily`.
+- [`aggregateSendFrequency`](/docs/ref/object/dmarc-report-settings#aggregatesendfrequency): expression returning the frequency at which aggregate reports are sent. Supported values are `hourly`, `daily`, `weekly`, and `disable`. Default `daily`.
 - [`aggregateMaxReportSize`](/docs/ref/object/dmarc-report-settings#aggregatemaxreportsize): expression returning the maximum size of the aggregate report in bytes. Default 5242880 (5 MB).
 - [`aggregateDkimSignDomain`](/docs/ref/object/dmarc-report-settings#aggregatedkimsigndomain): expression returning the domain whose DKIM signatures sign the outgoing report. Default `system('domain')`.
 
