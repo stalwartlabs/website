@@ -254,11 +254,13 @@ sections:
       Production deployments need a way to reach the people who build
       the server, not just a community forum. Premium Support is
       included at no extra cost with every Enterprise subscription of
-      150 mailboxes or more, and covers priority response and a direct 
-      line to the engineers who write Stalwart.
+      150 mailboxes or more. Tickets get an initial response within 48
+      hours during business hours, and a direct line to the engineers
+      who write Stalwart.
 
-      A **dedicated Support Engineer**, a **custom SLA**, and
-      **lawful-interception assistance** are available as separately
+      A **dedicated Support Engineer**, a **custom SLA** with tighter
+      response targets, and **lawful-interception assistance** are
+      available as separately
       purchasable add-ons on top of Premium Support, for organisations
       that need them.
     learnMore:

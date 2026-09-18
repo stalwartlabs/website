@@ -92,17 +92,18 @@ sections:
     title: Premium Support is included from 150 mailboxes.
     body: >-
       Enterprise subscriptions of 150 mailboxes or more include
-      Premium Support: priority response, 
-      expedited bug fixing and influence on the product roadmap.
+      Premium Support: an initial response within 48 hours during
+      business hours, expedited bug fixing and influence on the
+      product roadmap.
       Smaller Enterprise subscriptions (below 150 mailboxes) get the
       Enterprise feature set only; for help and questions, those
       customers rely on the same community support channels as
       Community-edition users.
 
       On-demand options for Premium Support customers include a
-      dedicated Support Engineer, a custom SLA and lawful
-      interception. The full response-time matrix and the list of
-      on-demand services live on the [Support page](/support).
+      dedicated Support Engineer, a custom SLA with tighter response
+      targets, and lawful interception. The coverage comparison and the
+      list of on-demand services live on the [Support page](/support).
 
   - kind: faq
     eyebrow: Frequently asked

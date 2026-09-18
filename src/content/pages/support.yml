@@ -49,11 +49,12 @@ sections:
       Premium Support is included at no extra cost with every
       Enterprise subscription of 150 mailboxes or more. Once activated,
       customers have access to a private area where tickets are opened
-      directly with Stalwart Labs. Each ticket carries an SLA counter,
-      so the response window against the contracted terms is visible
-      to both sides at all times.
+      directly with Stalwart Labs. Every ticket gets an initial response
+      within 48 hours of receipt during business hours, and carries an
+      SLA counter, so the response window against the contracted terms
+      is visible to both sides at all times.
     bullets:
-      - Priority response on tickets, with severity levels and a per-ticket SLA counter.
+      - Initial response within 48 hours during business hours, with severity levels and a per-ticket SLA counter.
       - Direct escalation path to the engineers who write Stalwart.
       - Access to security advisories ahead of public disclosure where relevant.
       - Optional add-ons (purchased separately) include a dedicated Support Engineer, a custom SLA and lawful-interception assistance.
@@ -67,14 +68,16 @@ sections:
       - Enterprise (Premium)
     legend: >-
       Premium Support is included with Enterprise subscriptions of
-      150 mailboxes or more. Numbers and exact SLA terms are confirmed
-      at contract signing.
+      150 mailboxes or more. The 48-hour initial response is the
+      standard commitment in the licence agreement; tighter targets,
+      including 24x7 paged response, are available as a custom SLA.
+      Exact terms are confirmed at contract signing.
     groups:
       - title: Coverage
         rows:
           - ["Where", "support.stalw.art", "support.stalw.art"]
           - ["Eligibility", "All users", "150 mailboxes or more"]
-          - ["Response time", "Best effort", "Contracted, with per-ticket SLA counter"]
+          - ["Initial response time", "Best effort", "Within 48 hours, business hours"]
           - ["Bug triage", "Public issue tracker", "Prioritised, ticketed"]
           - ["Security advisories", "Public release notes", "Advance notice where relevant"]
           - ["Direct escalation to Stalwart engineers", "-", "yes"]

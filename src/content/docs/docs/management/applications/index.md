@@ -19,7 +19,15 @@ Each Application is mounted at one or more URL path prefixes, listed on the [`ur
 
 Mount paths are local to the server's HTTP namespace and must not collide with the API endpoints used by JMAP, WebDAV, or the `.well-known` URIs. A path collision between two Applications, or between an Application and a server-provided endpoint, is rejected at configuration time.
 
-The unpacked bundle is written to a working directory on the local filesystem. By default this directory is chosen automatically (typically `/tmp`), but it can be pinned through the [`unpackDirectory`](/docs/ref/object/application#unpackdirectory) field when the default temporary location is not suitable, for example on systems where `/tmp` is mounted `noexec` or cleared aggressively between restarts.
+## The unpack directory
+
+The unpacked bundle is written to a working directory on the local filesystem, named by the [`unpackDirectory`](/docs/ref/object/application#unpackdirectory) field. When the field is empty the system temporary directory is used, which on Linux means `/tmp`.
+
+Leaving it empty is a poor choice on any host that sweeps `/tmp`. `systemd-tmpfiles-clean` deletes files by access time, and most of an SPA bundle consists of chunks that are only loaded on particular screens, so they are never read again after the first visit and age out while the entry point and the login page stay fresh. The result is a server that appears to work until an operator opens a section it has not served in a while, and the browser reports that it could not fetch a dynamically imported module. Restarting clears it, because startup unpacks the bundle again, and it comes back on the same schedule. Point `unpackDirectory` at a persistent path, for example `/var/lib/stalwart/webui`, on any deployment where `/tmp` is swept or mounted `noexec`.
+
+The server creates the directory if it is missing, including any missing parents, but it does so as the user the service runs as. On a package installation that user is `stalwart`, so a directory under `/var/lib` that is owned by `root` will fail to unpack until its ownership is corrected.
+
+Within `unpackDirectory` the server keeps one subdirectory per Application record, and one subdirectory below that per unpacked bundle. Files are written under numeric names, and the mapping back to the names in the archive is held in memory only. A bundle extracted by hand into `unpackDirectory` is therefore never served, no matter where under it the files are placed. To install a bundle without outbound access to the publisher, stage the `.zip` on an internal HTTPS server and point [`resourceUrl`](/docs/ref/object/application#resourceurl) at it.
 
 ## Relationship to listeners
 
@@ -29,7 +37,7 @@ When [access control](/docs/http/access-control) rules are in force, requests to
 
 ## Installing an Application
 
-An Application is installed by creating an [Application](/docs/ref/object/application) record with the bundle's download URL in [`resourceUrl`](/docs/ref/object/application#resourceurl), the desired mount paths in [`urlPrefix`](/docs/ref/object/application#urlprefix), and a short [`description`](/docs/ref/object/application#description). The server then fetches the archive on the schedule described on the [Updates](/docs/management/applications/update) page, unpacks it into the working directory, and begins serving the files. The same workflow is exposed through the WebUI, through `stalwart-cli`, and directly over the JMAP API on the `x:Application/set` method.
+An Application is installed by creating an [Application](/docs/ref/object/application) record with the bundle's download URL in [`resourceUrl`](/docs/ref/object/application#resourceurl), the desired mount paths in [`urlPrefix`](/docs/ref/object/application#urlprefix), and a short [`description`](/docs/ref/object/application#description). The server then fetches the archive, unpacks it into the working directory, and begins serving the files; the [Updates](/docs/management/applications/update) page covers how a bundle is refreshed afterwards. The same workflow is exposed through the WebUI, through `stalwart-cli`, and directly over the JMAP API on the `x:Application/set` method.
 
 ## Outbound network requirement
 
