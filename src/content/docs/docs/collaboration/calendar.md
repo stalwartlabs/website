@@ -13,7 +13,7 @@ Unlike CalDAV, which is built on top of WebDAV and uses XML combined with embedd
 
 ## CalDAV
 
-CalDAV is a standardized extension of WebDAV that allows clients to interact with calendar data stored on a server. It is supported by calendar applications on desktops and mobile devices, including Apple Calendar, Thunderbird, and Outlook (with plugins). CalDAV covers creating events, setting recurring appointments, inviting participants, and viewing shared calendars.
+CalDAV is a standardized extension of WebDAV that allows clients to interact with calendar data stored on a server. It is supported by calendar applications on desktops and mobile devices, including Apple Calendar, Thunderbird, Outlook (with plugins), and KashCal on Android. CalDAV covers creating events, setting recurring appointments, inviting participants, and viewing shared calendars.
 
 ### Accessing calendars
 
