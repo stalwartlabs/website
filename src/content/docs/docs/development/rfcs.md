@@ -210,6 +210,8 @@ The following RFCs are implemented by Stalwart.
 - [RFC 9074 - "VALARM" Extensions for iCalendar](https://datatracker.ietf.org/doc/html/rfc9074)
 - [RFC 9253 - Support for iCalendar Relationships](https://datatracker.ietf.org/doc/html/rfc9253)
 - [RFC 7953 - Calendar Availability](https://datatracker.ietf.org/doc/html/rfc7953)
+- [RFC 6868 - Parameter Value Encoding in iCalendar and vCard](https://datatracker.ietf.org/doc/html/rfc6868)
+- [RFC 7529 - Non-Gregorian Recurrence Rules in the Internet Calendaring and Scheduling Core Object Specification (iCalendar)](https://datatracker.ietf.org/doc/html/rfc7529)
 - [draft-ietf-calext-jscalendarbis - JSCalendar: A JSON Representation of Calendar Data](https://datatracker.ietf.org/doc/draft-ietf-calext-jscalendarbis/)
 - [draft-ietf-calext-jscalendar-icalendar - JSCalendar: Converting from and to iCalendar](https://datatracker.ietf.org/doc/draft-ietf-calext-jscalendar-icalendar/)
 - [draft-ietf-calext-icalendar-jscalendar-extensions - iCalendar Format Extensions for JSCalendar](https://datatracker.ietf.org/doc/draft-ietf-calext-icalendar-jscalendar-extensions/)
@@ -217,6 +219,8 @@ The following RFCs are implemented by Stalwart.
 
 ### Contacts
 
+- [RFC 2425 - A MIME Content-Type for Directory Information](https://datatracker.ietf.org/doc/html/rfc2425)
+- [RFC 2426 - vCard MIME Directory Profile](https://datatracker.ietf.org/doc/html/rfc2426)
 - [RFC 6350 - vCard Format Specification](https://datatracker.ietf.org/doc/html/rfc6350)
 - [RFC 6474 - vCard Format Extensions: Place of Birth, Place and Date of Death](https://datatracker.ietf.org/doc/html/rfc6474)
 - [RFC 6715 - vCard Format Extensions: Representing vCard Extensions Defined by the Open Mobile Alliance (OMA) Converged Address Book (CAB) Group](https://datatracker.ietf.org/doc/html/rfc6715)
@@ -236,6 +240,18 @@ The following RFCs are implemented by Stalwart.
 - [RFC 9610 - JMAP for Contacts](https://datatracker.ietf.org/doc/rfc9610/)
 - [draft-ietf-jmap-filenode - JMAP for File Storage](https://datatracker.ietf.org/doc/draft-ietf-jmap-filenode/)
 - [RFC 9670 - JMAP Sharing](https://datatracker.ietf.org/doc/rfc9670/)
+
+### Supporting Specifications
+
+Normative references relied on by the calendaring and contact formats above.
+
+- [RFC 2397 - The "data" URL scheme](https://datatracker.ietf.org/doc/html/rfc2397)
+- [RFC 4122 - A Universally Unique IDentifier (UUID) URN Namespace](https://datatracker.ietf.org/doc/html/rfc4122)
+- [RFC 5870 - A Uniform Resource Identifier for Geographic Locations ('geo' URI)](https://datatracker.ietf.org/doc/html/rfc5870)
+- [RFC 6901 - JavaScript Object Notation (JSON) Pointer](https://datatracker.ietf.org/doc/html/rfc6901)
+- [RFC 7396 - JSON Merge Patch](https://datatracker.ietf.org/doc/html/rfc7396)
+- [RFC 8259 - The JavaScript Object Notation (JSON) Data Interchange Format](https://datatracker.ietf.org/doc/html/rfc8259)
+- [RFC 8288 - Web Linking](https://datatracker.ietf.org/doc/html/rfc8288)
 
 ### WebDAV
 

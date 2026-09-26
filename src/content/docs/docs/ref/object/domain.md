@@ -440,7 +440,7 @@ Automatic DKIM key generation and rotation settings.
 > - `{algorithm}`: signing algorithm in lowercase (`rsa`, `ed25519`)
 > - `{hash}`: hash algorithm (`sha256`)
 > - `{version}`: DKIM version number (`1`)
-> - `{date-<fmt>}`: current UTC date formatted with chrono strftime (e.g. `{date-%Y%m%d}`)
+> - `{date-<fmt>}`: current UTC date formatted with strftime specifiers (e.g. `{date-%Y%m%d}`)
 > - `{epoch}`: current UTC unix timestamp
 > - `{random}`: random 8-character alphanumeric string
 
