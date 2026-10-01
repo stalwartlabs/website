@@ -9,7 +9,7 @@ DATA-stage behaviour is configured on the [MtaStageData](/docs/ref/object/mta-st
 
 ## Message filtering
 
-Once a message has been submitted with `DATA` or `BDAT`, it is possible to run [Sieve scripts](/docs/sieve/), [Milter filters](/docs/mta/filter/milter), or [MTA Hooks](/docs/mta/filter/mtahooks) that accept, reject, or modify the message. When multiple filter types are configured, Stalwart executes Milter filters first, then Sieve scripts, and finally MTA Hooks.
+Once a message has been submitted with `DATA` or `BDAT`, it is possible to run [Sieve scripts](/docs/sieve/), [Milter filters](/docs/mta/filter/milter), or [MTA Hooks](/docs/mta/filter/mtahooks) that accept, reject, or modify the message. When multiple filter types are configured, Stalwart executes Milter filters first, then MTA Hooks, and finally Sieve scripts. The Sieve script receives the message with any changes made by Milter filters and MTA Hooks already applied.
 
 ### Sieve
 

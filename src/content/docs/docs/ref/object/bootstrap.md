@@ -1013,6 +1013,7 @@ Automatic DNS server management.
 - **`Vultr`**: Vultr. Carries the fields of [`DnsServerCloud`](#dnsservercloud).
 - **`WebSupport`**: WebSupport. Carries the fields of [`DnsServerWebSupport`](#dnsserverwebsupport).
 - **`YandexCloud`**: Yandex Cloud. Carries the fields of [`DnsServerYandexCloud`](#dnsserveryandexcloud).
+- **`PowerDns`**: PowerDNS Authoritative. Carries the fields of [`DnsServerPowerDns`](#dnsserverpowerdns).
 
 
 
@@ -4738,6 +4739,85 @@ Yandex Cloud DNS server.
 > Type: <code>String</code> · required
 >
 > Yandex Cloud folder ID that owns the DNS zone
+
+
+##### `description`
+
+> Type: <code>String</code> · required
+>
+> Short description of this DNS server
+
+
+##### `memberTenantId`
+
+> Type: <code>Id&lt;</code>[<code>Tenant</code>](/docs/ref/object/tenant)<code>&gt;?</code>
+>
+> Identifier for the tenant this DNS server belongs to
+
+
+##### `timeout`
+
+> Type: <code>Duration</code> · default: `30000`
+>
+> Request timeout for the DNS server
+
+
+##### `ttl`
+
+> Type: <code>Duration</code> · default: `300000`
+>
+> The TTL for new DNS record
+
+
+##### `pollingInterval`
+
+> Type: <code>Duration</code> · default: `15000`
+>
+> How often to check for DNS records to propagate
+
+
+##### `propagationTimeout`
+
+> Type: <code>Duration</code> · default: `60000`
+>
+> How long to wait for DNS records to propagate
+
+
+##### `propagationDelay`
+
+> Type: <code>Duration?</code>
+>
+> Initial delay before first propagation check (useful for slow providers)
+
+
+
+
+
+#### DnsServerPowerDns
+
+PowerDNS Authoritative HTTP API server.
+
+
+
+##### `apiKey`
+
+> Type: [<code>SecretKey</code>](#secretkey) · required
+>
+> PowerDNS API key
+
+
+##### `endpoint`
+
+> Type: <code>String?</code>
+>
+> Base URL of the PowerDNS HTTP API (defaults to http://localhost:8081)
+
+
+##### `serverId`
+
+> Type: <code>String?</code>
+>
+> PowerDNS server ID used in API paths (defaults to localhost)
 
 
 ##### `description`

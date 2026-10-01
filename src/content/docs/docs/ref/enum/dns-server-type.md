@@ -6,7 +6,7 @@ custom_edit_url: null
 
 
 
-This enumeration defines 70 values.
+This enumeration defines 71 values.
 
 | Value | Label |
 |---|---|
@@ -80,3 +80,4 @@ This enumeration defines 70 values.
 | `Vultr` | Vultr |
 | `WebSupport` | WebSupport |
 | `YandexCloud` | Yandex Cloud |
+| `PowerDns` | PowerDNS Authoritative |
