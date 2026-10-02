@@ -20,7 +20,7 @@ A refresh is forced by triggering the `UpdateApps` variant of the [Action](/docs
 The trigger is exposed through every management surface:
 
 - From the [WebUI](/docs/management/webui/), administrators invoke the action from the management section dedicated to server actions. The interface creates the corresponding `UpdateApps` Action and reports on its outcome.
-- From the [CLI](/docs/management/cli/), the same operation is issued as a standard `stalwart-cli` command against the Action object. `stalwart-cli create action/update-apps` submits the request to the server.
+- From the [CLI](/docs/management/cli/), the same operation is issued as a standard `stalwart-cli` command against the Action object. `stalwart-cli create action/updateapps` submits the request to the server.
 - Over the JMAP API, administrators with the `sysActionCreate` and `actionUpdateApps` [permissions](/docs/ref/permissions) submit an `x:Action/set` call whose `create` entry carries `{"@type": "UpdateApps"}`:
 
 ```json
