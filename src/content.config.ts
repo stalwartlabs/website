@@ -276,8 +276,8 @@ const legal = defineCollection({
 
 const docs = defineCollection({
   // Custom generateId preserves dots in slugs (Astro's default sluggifier
-  // strips them, which would turn /docs/0.15/... into /docs/015/... and
-  // break the URLs preserved from the Docusaurus version of the site).
+  // strips them, which would turn a dotted version segment like /docs/1.0/...
+  // into /docs/10/... and break the URLs of any archived version).
   loader: docsLoader({
     generateId: ({ entry }) => {
       // Strip extension; index.* renders at its parent directory's URL.
@@ -287,9 +287,9 @@ const docs = defineCollection({
         .map((seg) =>
           seg
             .toLowerCase()
-            // Keep dots and dashes (the rest of the project relies on
-            // /docs/0.15/...); collapse anything else to a single dash to
-            // match github-slugger's behaviour for normal segments.
+            // Keep dots and dashes (a future archived version directory
+            // would rely on this); collapse anything else to a single dash
+            // to match github-slugger's behaviour for normal segments.
             .replace(/[^a-z0-9.\-]+/g, "-")
             .replace(/^-+|-+$/g, ""),
         )

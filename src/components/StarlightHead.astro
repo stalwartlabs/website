@@ -14,11 +14,9 @@ if (blogMatch && blogMatch[1] && !/^(authors|tags|\d+)$/.test(blogMatch[1])) {
 }
 
 // Pages that shouldn't be indexed:
-//  - the archived 0.15 docs (current line is canonical)
 //  - blog pagination, tags, authors (low-quality duplicates)
-const isArchived = pathname.startsWith("/docs/0.15/");
 const isBlogPagination = /^\/blog\/(\d+|tags|authors)\b/.test(pathname);
-const noindex = isArchived || isBlogPagination;
+const noindex = isBlogPagination;
 
 // Pull JSON-LD blocks declared in page frontmatter via Starlight's `head`
 // field is awkward; we expose a structured-data attribute on starlightRoute

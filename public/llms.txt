@@ -4,7 +4,7 @@
 
 This file indexes the official Stalwart documentation at https://stalw.art/docs. The documentation is the source of truth for configuration keys, protocol support, deployment topologies, and administration. The server source code lives in a separate repository at https://github.com/stalwartlabs.
 
-The documentation is versioned; links below point at the current release line. Older releases are available under `/docs/<version>/…` (for example `/docs/0.15/…`).
+The documentation is versioned; links below point at the current release line. Older releases, when archived, are available under `/docs/<version>/…`.
 
 ## Installation
 
@@ -164,5 +164,4 @@ The documentation is versioned; links below point at the current release line. O
 - [URN reference](https://stalw.art/docs/development/urn): internal URN scheme.
 - [Client applications](https://stalw.art/docs/management/applications/): recommended client applications.
 - [Blog](https://stalw.art/blog): release announcements and articles.
-- [0.15 documentation](https://stalw.art/docs/0.15/install/get-started): previous release line.
 - [GitHub](https://github.com/stalwartlabs): source code and issue tracker.

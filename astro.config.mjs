@@ -64,12 +64,9 @@ export default defineConfig({
       // Exclude:
       //  - Starlight tag pages (`/tags/*`)
       //  - blog pagination + tag/author listings (low quality / duplicate)
-      //  - the entire 0.15 archive (current line is canonical; archive
-      //    pages also ship with `<meta name="robots" content="noindex">`)
       filter: (page) =>
         !/\/tags\//.test(page) &&
-        !/\/blog\/(?:\d+|tags|authors)\//.test(page) &&
-        !/\/docs\/0\.15\//.test(page),
+        !/\/blog\/(?:\d+|tags|authors)\//.test(page),
     }),
     starlight({
       title: "Stalwart",
@@ -128,34 +125,13 @@ export default defineConfig({
         }),
         starlightLinksValidator({
           errorOnRelativeLinks: false,
-          // Catch new broken anchors in current docs. Pre-existing broken
-          // anchors in the 0.15 archive (and the cross-version anchor
-          // references it inherited from Docusaurus) are listed in
-          // `exclude` below so the build still passes.
           errorOnInvalidHashes: true,
           exclude: [
-            // Archived 0.15 snapshot has pre-existing broken cross-links;
-            // do not block builds on legacy content.
-            "/docs/0.15/**",
             // Marketing + legal pages are served by the custom [...slug].astro
             // route and are not visible to the docs link validator.
             "/legal/**",
             "/contact",
-            // Pre-existing broken anchors that point to current docs from
-            // the 0.15 archive. The target pages (without the anchor) are
-            // valid; the headings these anchors reference were renamed or
-            // never existed. Don't block builds on these.
-            "/docs/auth/backend/sql#lookup-queries",
-            "/docs/auth/backend/ldap#lookup-queries",
-            "/docs/mta/authentication/dkim/sign#generating-dkim-keys",
-            "/docs/sieve/#greylisting",
-            "/docs/configuration/#local-and-database-settings",
-            "/docs/development/rfcs#imap4-and-extensions",
-            "/docs/development/rfcs#smtp-and-extensions",
-            "/docs/auth/authorization/administrator#fallback-administrator",
-            "/docs/auth/authorization/administrator#best-practices",
-            "/docs/mta/reports/dmarc#aggregate",
-            "/docs/mta/reports/dmarc#failures",
+            "http://localhost:8081",
           ],
         }),
       ],

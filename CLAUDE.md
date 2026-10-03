@@ -8,7 +8,7 @@ The Stalwart Labs website (https://stalw.art) and its documentation. A single
 Astro 6 + Starlight project produces:
 
 - the marketing site (`/`, `/pricing`, `/about`, etc.)
-- the documentation (`/docs/...`, current line + archived `/docs/0.15/...`)
+- the documentation (`/docs/...`)
 - the blog (`/blog`, `/blog/<post>`)
 - a sitemap, robots.txt, and curated llms.txt
 
@@ -40,7 +40,6 @@ src/
 ├── content/
 │   ├── docs/
 │   │   ├── docs/           # current docs    -> /docs/...
-│   │   ├── docs/0.15/      # archived 0.15   -> /docs/0.15/...   (frozen)
 │   │   └── blog/           # blog posts      -> /blog/...
 │   ├── pages/*.yml         # marketing pages (typed YAML)
 │   └── legal/*.md          # long-form legal pages
@@ -61,7 +60,7 @@ scripts/                    # build-time scripts run by npm: expand-includes.mjs
 |---|---|
 | `@astrojs/starlight` | The docs/blog framework. Search is Pagefind (built-in, offline, no third-party). |
 | `starlight-blog` | `/blog` index, post layout, RSS, tags, reading time. |
-| `starlight-links-validator` | Fails build on broken internal links (and anchors, with documented exclusions for the 0.15 archive). |
+| `starlight-links-validator` | Fails build on broken internal links (and anchors). |
 | `@astrojs/sitemap` | Generates `sitemap-index.xml`, excludes `/tags/**`. |
 | `astro-og-canvas` | Generates per-blog-post OG images at `/og/blog/<slug>.png`. |
 | `remark-gemoji` | Renders `:emoji_name:` shortcodes (e.g. `:white_check_mark:` -> ✅). |
@@ -83,8 +82,9 @@ Other notable wiring:
   Starlight pages override the `actions` slot with `<Search />` + theme
   toggle. Same component, two consumers.
 - **Sidebar**: custom generator in `src/lib/sidebar.mjs` (see Plugins
-  table). Top-level `v0.15 (archived)` group is appended automatically
-  for any directory matching `\d+\.\d+/` under `src/content/docs/docs/`.
+  table). A top-level `v<version> (archived)` group is appended
+  automatically for any directory matching `\d+\.\d+/` under
+  `src/content/docs/docs/`; there is no such directory at present.
   Auto-generated landing pages (the CardGrid stubs from the migration)
   are detected by their `@astrojs/starlight/components` import and
   excluded from the sidebar; the directory still routes to them.
@@ -115,19 +115,15 @@ Other notable wiring:
   `public/_redirects` mirrors them as proper 301s on Cloudflare Pages.
 ## Versioning
 
-The current docs are v0.16, served at `/docs/...`. The frozen v0.15 snapshot
-lives under `src/content/docs/docs/0.15/` and is served at `/docs/0.15/...`.
-
-**Do not edit `0.15/` for normal doc work**: it is an immutable historical
-snapshot. The 0.15 archive carries pre-existing broken links and anchors
-inherited from Docusaurus that are exempted from validation in
-`astro.config.mjs` (the `/docs/0.15/**` URL exclude plus a few specific
-anchor URLs the archive references in current docs).
+The current docs are v0.16, served at `/docs/...`. There is no archived
+version at present; the previous v0.15 snapshot has been removed.
 
 To cut a new archived version (e.g. when v1.0 ships), copy the current docs
 into `src/content/docs/docs/<old-version>/`. The custom sidebar generator
 will pick it up automatically as a new top-level "v(version) (archived)"
-group, no config change needed.
+group, no config change needed. If the archive carries pre-existing broken
+links or anchors, add exclusions for them in `astro.config.mjs`
+(`starlightLinksValidator`'s `exclude` list), scoped to that version.
 
 ## Doc conventions
 

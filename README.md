@@ -11,9 +11,7 @@ Cloudflare Pages.
   pages driven by YAML/Markdown content collections under
   [src/content/pages/](src/content/pages/) and [src/content/legal/](src/content/legal/).
 - **Documentation** (`/docs/...`) is rendered by Starlight from
-  [src/content/docs/docs/](src/content/docs/docs/). The previous release line
-  lives at [src/content/docs/docs/0.15/](src/content/docs/docs/0.15/) and is
-  served at `/docs/0.15/...`.
+  [src/content/docs/docs/](src/content/docs/docs/).
 - **Blog** (`/blog`, `/blog/<post>`) is the
   [`starlight-blog`](https://starlight-blog-docs.vercel.app/) plugin reading
   posts from [src/content/docs/blog/](src/content/docs/blog/).
@@ -136,7 +134,6 @@ npx wrangler pages deploy dist --project-name stalwart-website
 │   ├── content/
 │   │   ├── docs/
 │   │   │   ├── docs/       # current docs   -> /docs/...
-│   │   │   ├── docs/0.15/  # archived 0.15  -> /docs/0.15/...
 │   │   │   └── blog/       # blog posts     -> /blog/...
 │   │   ├── pages/          # marketing pages (YAML)
 │   │   └── legal/          # long-form legal pages (Markdown)
@@ -156,8 +153,7 @@ npx wrangler pages deploy dist --project-name stalwart-website
 ## Things to know
 
 - The `links-validator` plugin runs at the end of `npm run build` and fails
-  the build on broken internal links. Pre-existing broken links in
-  `/docs/0.15/**` are excluded (see `astro.config.mjs`); fix-forward only.
+  the build on broken internal links; fix-forward only.
 - Mermaid diagrams (`` ```mermaid ``) are converted to client-rendered SVG
   via the `mermaid` npm package; the script is bundled into Starlight pages
   only.

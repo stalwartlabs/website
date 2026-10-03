@@ -91,8 +91,8 @@ function walkDir(dir, slugPrefix) {
       if (!ent.name.startsWith("_meta")) continue;
       continue;
     }
-    // Archived versions (e.g. 0.15) are surfaced as separate top-level
-    // groups appended after the current docs (see buildDocsSidebar).
+    // Archived versions are surfaced as separate top-level groups appended
+    // after the current docs (see buildDocsSidebar).
     if (slugPrefix === "" && /^\d+\.\d+/.test(ent.name) && ent.isDirectory()) {
       continue;
     }
@@ -215,10 +215,10 @@ export function buildDocsSidebar() {
     entries.push(faq);
   }
 
-  // Append archived versions (e.g. 0.15) as a single collapsed top-level
-  // group so readers on a /docs/0.15/* page still see the v0.15 sidebar.
-  // Starlight auto-expands the group that contains the active page, so on
-  // current-version pages the v0.15 group stays collapsed and out of the way.
+  // Append archived versions as a single collapsed top-level group so
+  // readers on an archived page still see that version's sidebar. Starlight
+  // auto-expands the group that contains the active page, so on
+  // current-version pages an archived group stays collapsed and out of the way.
   for (const ent of readdirSync(DOCS_ROOT, { withFileTypes: true })) {
     if (!ent.isDirectory()) continue;
     if (!/^\d+\.\d+/.test(ent.name)) continue;
