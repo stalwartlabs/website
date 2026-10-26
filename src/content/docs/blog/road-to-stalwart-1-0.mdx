@@ -1,0 +1,39 @@
+---
+title: "Zero open bug reports: The road to Stalwart 1.0"
+description: "Today we released Stalwart v0.16.10, a release that closes every single open bug report we have on record, both the legacy issues on GitHub and the reports filed through our new support portal. With the tracker clear of bugs, we want to share where Stalwart stands and what is left before we ship version 1.0."
+authors: [mdecimus]
+tags: [release, jmap, imap, oauth, dane, idn, roadmap, performance]
+excerpt: |
+  Today we released [Stalwart v0.16.10](https://github.com/stalwartlabs/stalwart/releases), a release that closes every single open bug report we have on record: both the legacy issues on [GitHub](https://github.com/stalwartlabs/stalwart/issues) and the reports filed through our new [support portal](https://support.stalw.art). With the tracker clear of bugs, we want to share where Stalwart stands today and what is left before we ship version 1.0.
+date: 2026-06-21
+---
+
+Today we released [Stalwart v0.16.10](https://github.com/stalwartlabs/stalwart/releases), and it comes with a milestone we have been working toward for a while: as of today, there are no open bug reports for Stalwart. This release fixes every reported bug we have on record, both the legacy issues that had accumulated on [GitHub](https://github.com/stalwartlabs/stalwart/issues) and the reports submitted through our new [support portal](https://support.stalw.art).
+
+We want to be precise about what this means, because it is easy to misread. It does not mean Stalwart is bug free. No non-trivial piece of software is, and we would not claim otherwise. What it means is narrower: as of today there are no open bug reports awaiting a fix. Every issue that a user took the time to report has been triaged and resolved. New reports will arrive, and we will keep working through them, but for now the queue is empty.
+
+That leaves 108 issues still open on the [GitHub tracker](https://github.com/stalwartlabs/stalwart/issues). These are not bugs. They are minor feature enhancements and requests: refinements, quality-of-life additions, and ideas worth keeping on the list. We will get to them, but none of them block correct operation today.
+
+## Latest fixes
+
+The headline of this release is RFC conformance. Stalwart v0.16.10 now passes all 309 tests of the [JMAP test suite](https://github.com/jmapio/jmap-test-suite), a shared conformance effort that aims to align the behaviour of Stalwart, Cyrus, and Fastmail so that JMAP clients see consistent semantics regardless of which server they talk to. Reaching full conformance touched many corners of the JMAP implementation. 
+
+Beyond JMAP, this release implements the latest drafts from the IETF [mailmaint](https://datatracker.ietf.org/wg/mailmaint/about/) working group. On the authentication side, Stalwart now supports the [OAuth Profile for Open Public Clients](https://datatracker.ietf.org/doc/draft-ietf-mailmaint-oauth-public/) along with client secret verification for confidential clients. On the IMAP side, it implements the [IMAP Extension for Object Identifiers](https://datatracker.ietf.org/doc/draft-ietf-mailmaint-imap-objectid-bis/) (OBJECTID+) and adds the `GETJMAPACCESS` command so clients can discover the JMAP session resource URL directly from an IMAP connection. We are glad to share that Stalwart Labs is coauthoring the `OBJECTID+` extension together with Fastmail.
+
+For the full list, see the [release notes](https://github.com/stalwartlabs/stalwart/releases). We recommend everyone upgrade.
+
+## Road to 1.0
+
+With the bug queue clear, the path to version 1.0 comes down to two pieces of work: finalizing the database schema and a focused round of performance optimization.
+
+The first is the reason 1.0 matters. The goal is to stabilize and finalize the database schema so that it is flexible enough to avoid migrations after the 1.0 release. Stalwart is already running in production across a wide range of deployments, but committing to a stable on-disk format is a promise we only want to make once we are confident it will hold. We are taking the time now to make the schema general enough that future features can be added without forcing operators through a migration. When 1.0 ships, upgrading should stop being something you schedule a maintenance window for.
+
+The second is performance. Stalwart is already fast, and that is not an accident: over the past year we have made substantial improvements driven directly by reports from users running it at scale, including deployments with thousands of accounts and others delivering hundreds of thousands of emails per day. Those real-world workloads have been the best optimization guide we could ask for. For 1.0 we want to push further in two specific areas.
+
+The first is the internal full-text search engine, which matters most for users who do not run an external Elasticsearch or Meilisearch backend and rely on the built-in indexer instead. We want search to be fast out of the box, without an external dependency. The second is a systematic pass over the hot paths in the codebase: benchmarking the code that runs most often to find concrete optimization opportunities, whether that means vectorizing an inner loop, reworking a data structure, or rewriting a section for better cache behaviour. The point is to let measurements, not guesses, decide where the effort goes.
+
+## ETA
+
+We expect to release Stalwart 1.0.0 this year, most likely around October and hopefully sooner. Schema work and performance work are both the kind that reward patience, so we would rather give a realistic window than a date we cannot keep. We will keep you posted as the schema settles and the benchmarks come in.
+
+In the meantime, v0.16.10 is the most conformant and most thoroughly debugged release we have shipped. Thank you to everyone who filed an issue, opened a ticket on the support portal, or sent us a reproducer. An empty bug queue is your work as much as ours, and it is the best possible foundation to build 1.0 on.

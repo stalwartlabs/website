@@ -1,0 +1,257 @@
+---
+import Icon from "./Icon.astro";
+
+const blob = [
+  { name: "shard 1", sub: "S3" },
+  { name: "shard 2", sub: "S3" },
+  { name: "shard 3", sub: "Azure" },
+  { name: "shard 4", sub: "filesystem" },
+];
+
+const mem = [
+  { name: "R1", sub: "Redis" },
+  { name: "R2", sub: "Redis" },
+  { name: "R3", sub: "Valkey" },
+];
+---
+<div class="rr" role="img" aria-label="Read replicas and sharded storage: the Stalwart node routes writes to the primary data store, which replicates to two read replicas that serve reads. Blob storage is sharded across S3, S3, Azure and filesystem shards, and in-memory storage across Redis, Redis and Valkey shards.">
+  <div class="node">
+    <span class="ic ic--brand"><Icon name="server" size={18} /></span>
+    <span class="txt"><strong>Stalwart node</strong><span class="v">routes reads vs writes</span></span>
+  </div>
+  <div class="db">
+    <div class="col">
+      <span class="route"><Icon name="arrow-down" size={13} />writes</span>
+      <div class="card card--primary">
+        <span class="ic"><Icon name="database" size={16} /></span>
+        <strong>Primary data store</strong>
+      </div>
+    </div>
+    <span class="repl"><span class="v">replicate</span><Icon name="arrow-right" size={14} /></span>
+    <div class="col">
+      <span class="route"><Icon name="arrow-down" size={13} />reads</span>
+      <div class="card">
+        <span class="ic"><Icon name="database" size={16} /></span>
+        <strong>Read replica</strong>
+      </div>
+      <div class="card">
+        <span class="ic"><Icon name="database" size={16} /></span>
+        <strong>Read replica</strong>
+      </div>
+    </div>
+  </div>
+  <div class="shards">
+    <div class="group">
+      <span class="g-label"><Icon name="hard-drive" size={14} />Sharded blob storage</span>
+      <ul class="row">
+        {blob.map((s) => <li><b>{s.name}</b><span class="v">{s.sub}</span></li>)}
+      </ul>
+    </div>
+    <div class="group">
+      <span class="g-label"><Icon name="memory-stick" size={14} />Sharded in-memory</span>
+      <ul class="row">
+        {mem.map((s) => <li><b>{s.name}</b><span class="v">{s.sub}</span></li>)}
+      </ul>
+    </div>
+  </div>
+</div>
+
+<style>
+  .rr {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    container-type: inline-size;
+  }
+
+  .node {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px 14px 14px;
+    border-radius: var(--r-lg);
+    background: var(--rose);
+  }
+
+  .node strong {
+    font-size: 1.0625rem;
+    color: var(--brand-text);
+  }
+
+  .node .v {
+    color: var(--brand-text);
+  }
+
+  .ic {
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    flex: none;
+    border-radius: 10px;
+    background: var(--sand);
+    color: var(--text);
+  }
+
+  .ic--brand {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: var(--brand);
+    color: #fff;
+  }
+
+  .txt {
+    display: grid;
+    gap: 1px;
+    min-width: 0;
+  }
+
+  strong {
+    font-family: var(--font-display);
+    font-size: 0.9375rem;
+    font-weight: 680;
+    line-height: 1.3;
+    color: var(--text);
+  }
+
+  .v {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+
+  .db {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .col {
+    display: grid;
+    align-content: start;
+    gap: 8px;
+  }
+
+  .route {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding-left: 12px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--brand-text);
+  }
+
+  .card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px 10px 10px;
+    border-radius: var(--r-lg);
+    background: var(--tile);
+    box-shadow: var(--shadow-tile);
+  }
+
+  .card--primary .ic {
+    background: var(--rose);
+    color: var(--brand-text);
+  }
+
+  .repl {
+    display: inline-flex;
+    align-items: center;
+    justify-self: center;
+    gap: 6px;
+    padding: 4px 12px;
+    border-radius: var(--r-pill);
+    background: var(--ink);
+    color: var(--on-ink);
+  }
+
+  .repl .v {
+    color: var(--on-ink);
+  }
+
+  .repl :global(svg) {
+    transform: rotate(90deg);
+  }
+
+  .shards {
+    display: grid;
+    gap: 10px;
+    margin-top: 4px;
+  }
+
+  .group {
+    display: grid;
+    gap: 10px;
+    padding: 14px;
+    border-radius: var(--r-lg);
+    background: var(--tile);
+    box-shadow: var(--shadow-tile);
+  }
+
+  .g-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: var(--font-display);
+    font-size: var(--fs-xs);
+    font-weight: 650;
+    color: var(--dim);
+  }
+
+  .row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(84px, 1fr));
+    gap: 6px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .row li {
+    display: grid;
+    gap: 1px;
+    min-width: 0;
+    padding: 8px 10px;
+    border-radius: 12px;
+    background: var(--sand);
+  }
+
+  .row b {
+    font-family: var(--font-display);
+    font-size: var(--fs-xs);
+    font-weight: 680;
+    color: var(--text);
+  }
+
+  .row .v {
+    overflow-wrap: anywhere;
+    font-size: 0.6875rem;
+  }
+
+  @container (min-width: 460px) {
+    .db {
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+      align-items: start;
+    }
+
+    .repl {
+      align-self: center;
+    }
+
+    .repl :global(svg) {
+      transform: none;
+    }
+  }
+
+  @container (min-width: 720px) {
+    .shards {
+      grid-template-columns: minmax(0, 4fr) minmax(0, 3fr);
+    }
+  }
+</style>

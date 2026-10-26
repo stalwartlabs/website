@@ -1,0 +1,335 @@
+---
+import Base from "../layouts/Base.astro";
+import Icon from "../components/Icon.astro";
+
+const links = [
+  { href: "/docs/install/", label: "Getting started", icon: "rocket" },
+  { href: "/docs/storage/", label: "Storage", icon: "database" },
+  { href: "/docs/mta/", label: "MTA", icon: "send-horizontal" },
+  { href: "/docs/collaboration/", label: "Collaboration", icon: "calendar-days" },
+  { href: "/docs/spamfilter/", label: "Spam filter", icon: "shield-check" },
+  { href: "/blog", label: "Blog", icon: "newspaper" },
+];
+---
+<Base
+  title="Page not found - Stalwart"
+  description="The page you were looking for could not be found. Search the Stalwart documentation, blog, and site below."
+  noindex
+>
+  <section class="wrap nf" aria-labelledby="nf-title">
+    <div class="bento nf-grid">
+      <div class="tile nf-main">
+        <span class="nf-code" aria-hidden="true">404</span>
+        <span class="pill">Page not found</span>
+        <h1 id="nf-title" class="display nf-title">We couldn't find <em class="hl">that page.</em></h1>
+        <p class="lead">
+          The link may be out of date, or the page might have moved. Try the
+          search below, or jump to one of the popular destinations.
+        </p>
+        <div class="nf-search">
+          <label class="nf-field">
+            <Icon name="search" size={20} />
+            <input
+              type="search"
+              id="pagefind-search"
+              placeholder="Search the docs, blog, and site..."
+              autocomplete="off"
+              spellcheck="false"
+              aria-label="Search the site"
+            />
+          </label>
+          <div id="pagefind-results" class="nf-results" aria-live="polite"></div>
+        </div>
+      </div>
+
+      <nav class="tile tile--sand nf-links" aria-label="Popular destinations">
+        <p class="nf-links-k">Popular destinations</p>
+        <ul>
+          {links.map((l) => (
+            <li>
+              <a href={l.href}>
+                <span class="nf-ic"><Icon name={l.icon} size={18} /></span>
+                <span>{l.label}</span>
+                <Icon name="arrow-right" size={16} class="nf-arrow" />
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .nf {
+    padding-top: clamp(16px, 2vw, 28px);
+  }
+  .nf-grid {
+    min-height: min(620px, calc(100svh - 160px));
+  }
+  .nf-main {
+    grid-column: span 8;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 22px;
+    padding: clamp(28px, 4.6vw, 64px);
+  }
+  .nf-code {
+    position: absolute;
+    top: clamp(8px, 2vw, 24px);
+    right: clamp(16px, 3vw, 40px);
+    font-family: var(--font-display);
+    font-size: clamp(5rem, 3rem + 7vw, 11rem);
+    font-weight: 800;
+    letter-spacing: -0.06em;
+    line-height: 1;
+    color: var(--sand);
+    pointer-events: none;
+    user-select: none;
+  }
+  .nf-main > :not(.nf-code) {
+    position: relative;
+  }
+  .nf-title {
+    max-width: 14ch;
+  }
+  .nf-search {
+    display: grid;
+    gap: 12px;
+    margin-top: 6px;
+  }
+  .nf-field {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    height: 58px;
+    padding: 0 22px;
+    border-radius: var(--r-pill);
+    background: var(--sand);
+    color: var(--muted);
+    cursor: text;
+    transition: box-shadow var(--t) var(--ease);
+  }
+  .nf-field:focus-within {
+    box-shadow: 0 0 0 2px var(--focus);
+  }
+  #pagefind-search {
+    flex: 1;
+    min-width: 0;
+    height: 100%;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: var(--text);
+    font: inherit;
+    font-size: 1rem;
+  }
+  #pagefind-search::placeholder {
+    color: var(--dim);
+    opacity: 1;
+  }
+  .nf-results {
+    display: grid;
+    gap: 8px;
+  }
+  .nf-results :global(.pf-result) {
+    display: block;
+    padding: 14px 18px;
+    border-radius: var(--r-lg);
+    background: var(--sand);
+    color: var(--text);
+    transition: background-color var(--t) var(--ease);
+  }
+  .nf-results :global(.pf-result:hover) {
+    background: var(--rose);
+  }
+  .nf-results :global(.pf-result strong) {
+    display: block;
+    margin-bottom: 2px;
+    font-family: var(--font-display);
+    font-size: var(--fs-sm);
+    font-weight: 650;
+  }
+  .nf-results :global(.pf-result span) {
+    font-size: var(--fs-xs);
+    line-height: 1.5;
+    color: var(--muted);
+  }
+  .nf-results :global(.pf-result mark) {
+    padding: 0 2px;
+    border-radius: 3px;
+    background: var(--rose-2);
+    color: var(--brand-text);
+  }
+  .nf-results :global(.pf-empty) {
+    font-size: var(--fs-sm);
+    color: var(--dim);
+  }
+  .nf-results :global(.pf-empty code) {
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+  }
+  .nf-links {
+    grid-column: span 4;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 14px;
+    padding: clamp(24px, 3vw, 40px);
+  }
+  .nf-links-k {
+    font-family: var(--font-display);
+    font-size: var(--fs-xs);
+    font-weight: 650;
+    color: var(--dim);
+  }
+  .nf-links ul {
+    display: grid;
+    gap: 8px;
+  }
+  .nf-links a {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 16px 10px 10px;
+    border-radius: var(--r-lg);
+    background: var(--tile);
+    box-shadow: var(--shadow-tile);
+    font-family: var(--font-display);
+    font-weight: 650;
+    transition: transform var(--t) var(--ease), box-shadow var(--t) var(--ease);
+  }
+  .nf-links a:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lift);
+  }
+  .nf-links a > span:nth-child(2) {
+    flex: 1;
+  }
+  .nf-ic {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    flex: none;
+    border-radius: 12px;
+    background: var(--rose);
+    color: var(--brand-text);
+  }
+  .nf-links :global(.nf-arrow) {
+    color: var(--dim);
+    transition: transform var(--t) var(--ease), color var(--t) var(--ease);
+  }
+  .nf-links a:hover :global(.nf-arrow) {
+    color: var(--brand-text);
+    transform: translateX(3px);
+  }
+  @media (max-width: 1023px) {
+    .nf-grid {
+      min-height: 0;
+    }
+    .nf-main,
+    .nf-links {
+      grid-column: 1 / -1;
+    }
+    .nf-links ul {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 560px) {
+    .nf-links ul {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .nf-code {
+      display: none;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .nf-links a:hover {
+      transform: none;
+    }
+  }
+</style>
+
+<script>
+  const input = document.getElementById("pagefind-search") as HTMLInputElement | null;
+  const out = document.getElementById("pagefind-results");
+  if (!input || !out) {
+    /* nothing to do */
+  } else {
+    type PagefindResultDataExcerpt = { excerpt: string };
+    type PagefindResult = {
+      data: () => Promise<{
+        url: string;
+        meta?: { title?: string };
+        excerpt?: string;
+        sub_results?: PagefindResultDataExcerpt[];
+      }>;
+    };
+    type PagefindAPI = {
+      search: (q: string) => Promise<{ results: PagefindResult[] }>;
+    };
+
+    let pagefind: PagefindAPI | null = null;
+    let lastQuery = "";
+
+    async function loadPagefind() {
+      if (pagefind) return pagefind;
+      // Pagefind ships into dist/pagefind/ during `astro build` and isn't
+      // present in `astro dev`. We use `new Function('return import(...)')`
+      // to bypass Vite's static module-graph analysis entirely; otherwise
+      // the dev server fails to resolve the path at compile time.
+      const dynamicImport = new Function(
+        "s",
+        "return import(s)",
+      ) as (s: string) => Promise<unknown>;
+      try {
+        const mod = await dynamicImport("/pagefind/pagefind.js");
+        pagefind = mod as PagefindAPI;
+        return pagefind;
+      } catch {
+        out!.innerHTML =
+          '<p class="pf-empty">Search is only available after <code>npm run build</code> (Pagefind index is generated during the production build).</p>';
+        return null;
+      }
+    }
+
+    function escape(html: string): string {
+      const div = document.createElement("div");
+      div.textContent = html;
+      return div.innerHTML;
+    }
+
+    async function runSearch(query: string) {
+      if (!query.trim()) {
+        out!.innerHTML = "";
+        return;
+      }
+      const pf = await loadPagefind();
+      if (!pf) return;
+      const search = await pf.search(query);
+      if (search.results.length === 0) {
+        out!.innerHTML = '<p class="pf-empty">No results.</p>';
+        return;
+      }
+      const top = await Promise.all(search.results.slice(0, 8).map((r) => r.data()));
+      out!.innerHTML = top
+        .map(
+          (d) =>
+            `<a class="pf-result" href="${escape(d.url)}"><strong>${escape(d.meta?.title ?? d.url)}</strong><span>${d.excerpt ?? ""}</span></a>`,
+        )
+        .join("");
+    }
+
+    let timer: number | undefined;
+    input.addEventListener("input", () => {
+      const q = input.value;
+      if (q === lastQuery) return;
+      lastQuery = q;
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => runSearch(q), 120);
+    });
+    input.focus();
+  }
+</script>

@@ -1,0 +1,16 @@
+/node_modules
+/dist
+/build
+/.astro
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.local
+.*
+!.env.example
+!.gitignore
+!.nvmrc
+!.vscode/
+!.github/
+!.well-known

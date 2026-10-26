@@ -1,0 +1,272 @@
+---
+import VisualBlock from "./VisualBlock.astro";
+import Icon from "./Icon.astro";
+import { inlineMd, withHighlight } from "../lib/md";
+
+interface Props {
+  hero: any;
+}
+const { hero } = Astro.props;
+const titleHtml = hero.titleHighlight ? withHighlight(hero.title.trim(), hero.titleHighlight) : inlineMd(hero.title.trim());
+const stacked = hero.layout === "stacked" && !!hero.visual;
+const side = hero.visual ? "visual" : hero.aside ? "aside" : null;
+---
+<section class="wrap hero" aria-labelledby="hero-title">
+  <div class:list={["bento hero-grid", { "hero-grid--stacked": stacked, "hero-grid--solo": !side, "hero-grid--aside": side === "aside" }]}>
+    <div class="tile hero-copy reveal">
+      {hero.banner && (
+        <p class:list={["hero-banner", `hero-banner--${hero.banner.tone}`]}>
+          <strong>{hero.banner.label}</strong>
+          <span set:html={inlineMd(hero.banner.body)} />
+        </p>
+      )}
+      {hero.eyebrow && <span class="pill">{hero.eyebrow}</span>}
+      <h1 id="hero-title" class="display" set:html={titleHtml} />
+      {hero.lead && <p class="lead" set:html={inlineMd(hero.lead)} />}
+      {hero.ctas?.length > 0 && (
+        <div class="actions">
+          {hero.ctas.map((cta: any, i: number) => (
+            <a
+              href={cta.href}
+              class:list={["btn", cta.primary === false ? "btn-soft" : "btn-primary"]}
+              {...(cta.external ? { target: "_blank", rel: "noopener" } : {})}
+            >
+              {cta.label}
+              {cta.primary !== false && i === 0 && <Icon name="arrow-right" />}
+            </a>
+          ))}
+        </div>
+      )}
+      {hero.meta?.length > 0 && (
+        <ul class="chips chips--meta" aria-label="Highlights">
+          {hero.meta.map((m: string) => (
+            <li><Icon name="check" size={14} />{m}</li>
+          ))}
+        </ul>
+      )}
+    </div>
+
+    {side === "visual" && (
+      <VisualBlock visual={hero.visual} class="hero-visual reveal" full={stacked} loading="eager" />
+    )}
+    {side === "aside" && (
+      <div class="tile tile--rose hero-aside reveal">
+        <p class="aside-k"><span class="badge"><Icon name="infinity" size={22} /></span>{hero.aside.title}</p>
+        <ul class="aside-grid">
+          {hero.aside.items.map((it: any) => (
+            <li><span class="aside-ic"><Icon name={it.icon} size={18} /></span>{it.label}</li>
+          ))}
+        </ul>
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding-top: clamp(16px, 2vw, 28px);
+  }
+  .hero-grid {
+    min-height: min(620px, calc(100svh - 120px));
+  }
+  .hero-copy {
+    grid-column: span 6;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 22px;
+    padding: clamp(28px, 4.6vw, 64px);
+    container-type: inline-size;
+  }
+  .hero-copy h1 {
+    font-size: min(var(--fs-display), 10.5cqi);
+    overflow-wrap: break-word;
+  }
+  .hero-copy .actions {
+    margin-top: 8px;
+  }
+  .hero-grid :global(.hero-visual) {
+    grid-column: span 6;
+    min-height: 460px;
+  }
+  .hero-grid :global(.hero-visual.shot) {
+    --vis: 0.62;
+  }
+
+  .hero-banner {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 10px;
+    width: fit-content;
+    padding: 10px 16px;
+    border-radius: var(--r-lg);
+    background: var(--sand);
+    font-size: var(--fs-sm);
+    color: var(--muted);
+  }
+  .hero-banner strong {
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--brand-text);
+  }
+  .hero-banner--warn {
+    background: var(--rose);
+  }
+  .hero-banner :global(a) {
+    color: var(--brand-text);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .hero-grid--solo {
+    min-height: 0;
+  }
+  .hero-grid--solo .hero-copy {
+    grid-column: 1 / -1;
+  }
+  .hero-grid--solo .hero-copy .lead {
+    max-width: 46em;
+  }
+
+  .hero-grid--aside .hero-copy {
+    grid-column: span 7;
+  }
+  .hero-aside {
+    grid-column: span 5;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+  .aside-k {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-family: var(--font-display);
+    font-size: var(--fs-h3);
+    font-weight: 700;
+    letter-spacing: -0.015em;
+  }
+  .aside-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .aside-grid li {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 18px;
+    border-radius: var(--r-lg);
+    background: var(--tile);
+    box-shadow: var(--shadow-tile);
+    font-family: var(--font-display);
+    font-weight: 650;
+    font-size: 1.0625rem;
+    letter-spacing: -0.01em;
+  }
+  .aside-grid li:first-child {
+    grid-column: 1 / -1;
+    background: var(--brand);
+    color: #fff;
+    box-shadow: none;
+  }
+  .aside-ic {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: var(--rose);
+    color: var(--brand-text);
+  }
+  .aside-grid li:first-child .aside-ic {
+    background: rgb(255 255 255 / 0.18);
+    color: #fff;
+  }
+
+  .hero-grid--stacked {
+    min-height: 0;
+    grid-auto-rows: 1fr;
+  }
+  .hero-grid--stacked .hero-copy {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+    grid-template-rows: auto auto auto 1fr;
+    column-gap: clamp(32px, 5vw, 80px);
+    row-gap: 22px;
+    align-items: start;
+  }
+  .hero-grid--stacked .hero-copy > .pill {
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: start;
+  }
+  .hero-grid--stacked .hero-copy > h1 {
+    grid-column: 1;
+    grid-row: 2 / span 3;
+    font-size: min(var(--fs-display-xl), 9cqi);
+  }
+  @media (max-width: 1023px) {
+    .hero-grid--stacked .hero-copy > h1 {
+      font-size: min(var(--fs-display), 12.5cqi);
+    }
+  }
+  .hero-grid--stacked .hero-copy > .lead {
+    grid-column: 2;
+    grid-row: 2;
+    padding-top: 0.6em;
+  }
+  .hero-grid--stacked .hero-copy > .actions {
+    grid-column: 2;
+    grid-row: 3;
+    margin-top: 0;
+  }
+  .hero-grid--stacked .hero-copy > .chips {
+    grid-column: 2;
+    grid-row: 4;
+  }
+  .hero-grid--stacked :global(.hero-visual) {
+    grid-column: 1 / -1;
+    min-height: 0;
+  }
+
+  @media (max-width: 1023px) {
+    .hero-grid {
+      min-height: 0;
+    }
+    .hero-copy,
+    .hero-aside,
+    .hero-grid--aside .hero-copy,
+    .hero-grid :global(.hero-visual) {
+      grid-column: 1 / -1;
+    }
+    .hero-grid :global(.hero-visual) {
+      min-height: 400px;
+    }
+    .hero-grid--stacked .hero-copy {
+      display: flex;
+    }
+  }
+  @media (max-width: 760px) {
+    .hero-grid :global(.hero-visual) {
+      min-height: 340px;
+    }
+    .hero-grid :global(.hero-visual.shot) {
+      --vis: 0.34;
+    }
+    .hero-grid--stacked {
+      grid-auto-rows: auto;
+    }
+    .hero-grid--stacked :global(.hero-visual) {
+      min-height: 0;
+      aspect-ratio: 4 / 3;
+    }
+    .hero-grid--stacked :global(.hero-visual .shot-frame img) {
+      width: calc(100cqw / 0.5);
+    }
+  }
+</style>

@@ -1,0 +1,44 @@
+---
+title: "Server settings"
+description: "Server-wide settings: network listeners, TLS and ACME, reverse proxies, IP protection, DNS, client discovery, AI models, object metadata and the Enterprise license."
+---
+
+import { LinkCard, CardGrid } from '@astrojs/starlight/components';
+
+Some settings belong to no single protocol and no single domain, because they shape how the whole server behaves. This section collects them. They decide which ports the server listens on and how it secures the connections that arrive there with TLS. They also decide how the server protects itself from clients that abuse it, and which DNS resolver and DNS providers it relies on. Further settings control how mail, calendar and contacts clients discover the server, and the license that enables the Enterprise features.
+
+The pages are grouped by the part of the server they affect.
+
+## Network
+
+<CardGrid>
+<LinkCard title="System settings" description="Hostname, mail exchangers, advertised services, connection limits, the memory budget, trusted proxies." href="/docs/server/general" />
+<LinkCard title="Listeners" description="Ports, protocols, implicit TLS and STARTTLS, connection limits." href="/docs/server/listener" />
+<LinkCard title="TLS" description="Protocol versions, cipher suites, certificates and automatic certificates with ACME." href="/docs/server/tls/" />
+<LinkCard title="Reverse proxy" description="Running behind HAProxy, NGINX, Caddy or Traefik, and preserving client addresses." href="/docs/server/reverse-proxy/" />
+</CardGrid>
+
+## Security
+
+<CardGrid>
+<LinkCard title="Auto-ban" description="Automatic blocking of abusive addresses, and how to clear a ban." href="/docs/server/auto-ban" />
+<LinkCard title="ASN and GeoIP" description="Network operator and country lookups for spam filtering and expressions." href="/docs/server/asn" />
+</CardGrid>
+
+## DNS and client discovery
+
+<CardGrid>
+<LinkCard title="DNS" description="The resolver Stalwart uses and the DNS providers it publishes records through." href="/docs/server/dns/" />
+<LinkCard title="Autoconfiguration" description="Mozilla autoconfig, Outlook Autodiscover and PACC." href="/docs/server/autoconfig" />
+<LinkCard title="Setting up clients" description="Server settings and DAV URLs for mail, calendar and contacts clients." href="/docs/server/clients" />
+</CardGrid>
+
+## Other server-wide features
+
+<CardGrid>
+<LinkCard title="AI models" description="Language model providers used by the AI spam classifier and Sieve." href="/docs/server/ai-models" />
+<LinkCard title="Object metadata" description="Limits for metadata stored through JMAP, IMAP METADATA and WebDAV." href="/docs/server/metadata" />
+<LinkCard title="Enterprise edition" description="License keys, renewal and what the Enterprise edition adds." href="/docs/server/enterprise" />
+</CardGrid>
+
+Cache sizes and memory sizing also apply to the whole server. They have their own section, [Performance tuning](/docs/performance/).

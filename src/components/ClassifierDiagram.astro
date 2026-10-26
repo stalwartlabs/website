@@ -1,0 +1,211 @@
+---
+import Icon from "./Icon.astro";
+
+const steps = [
+  { icon: "mail", name: "Message", sub: "headers + body" },
+  { icon: "whole-word", name: "Tokenise", sub: "words + n-grams" },
+  { icon: "hash", name: "Feature hash", sub: "cuckoo · 524288" },
+  { icon: "brain", name: "FTRL weights", sub: "L1 + L2 sparse", brand: true },
+  { icon: "gauge", name: "Score", sub: "[-5 ... +5]", ink: true },
+];
+---
+<div class="cls" role="img" aria-label="FTRL-Proximal classifier pipeline: a message is tokenised into words and n-grams, feature hashed, scored by sparse FTRL weights into a score from -5 to +5. Senders in the recipient's address book are weighted -2.0 toward ham, and users marking spam or ham retrain the weights online.">
+  <span class="dg-caption">FTRL-Proximal pipeline</span>
+  <div class="grid">
+    {steps.map((s, i) => (
+      <div class:list={["step", { "is-brand": s.brand, "is-ink": s.ink }]} style={`grid-row: ${i + 1}`}>
+        <span class="ic"><Icon name={s.icon} size={17} /></span>
+        <span class="txt"><strong>{s.name}</strong><span class="v">{s.sub}</span></span>
+      </div>
+    ))}
+    <div class="side side--book">
+      <span class="link">
+        <span class="wide"><Icon name="arrow-left" size={14} /></span>
+        <span class="narrow"><Icon name="arrow-up" size={14} /></span>
+        <span class="v">weighted -2.0 toward ham</span>
+      </span>
+      <div class="card">
+        <span class="ic ic--soft"><Icon name="book-user" size={17} /></span>
+        <span class="txt"><strong>Recipient address book</strong><span class="v">known correspondent?</span></span>
+      </div>
+    </div>
+    <div class="side side--user">
+      <span class="link">
+        <Icon name="refresh-cw" size={14} />
+        <span class="v">retrain</span>
+      </span>
+      <div class="card">
+        <span class="ic ic--soft"><Icon name="mouse-pointer-click" size={17} /></span>
+        <span class="txt"><strong>User marks spam / ham</strong><span class="v">retrain online</span></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .cls {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 100%;
+    container-type: inline-size;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .step,
+  .card {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px 10px 10px;
+    border-radius: var(--r-lg);
+    background: var(--tile);
+    box-shadow: var(--shadow-tile);
+  }
+
+  .step {
+    grid-column: 1;
+  }
+
+  .step:not(.is-ink)::after {
+    content: "";
+    position: absolute;
+    left: 27px;
+    top: 100%;
+    width: 2px;
+    height: 10px;
+    background: var(--brand);
+    opacity: 0.3;
+  }
+
+  .ic {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    flex: none;
+    border-radius: 11px;
+    background: var(--sand);
+    color: var(--text);
+  }
+
+  .txt {
+    display: grid;
+    gap: 1px;
+    min-width: 0;
+  }
+
+  strong {
+    font-family: var(--font-display);
+    font-size: 0.9375rem;
+    font-weight: 680;
+    line-height: 1.3;
+    color: var(--text);
+  }
+
+  .v {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+
+  .step.is-brand {
+    background: var(--rose);
+    box-shadow: none;
+  }
+
+  .step.is-brand .ic {
+    background: var(--brand);
+    color: #fff;
+  }
+
+  .step.is-brand strong {
+    color: var(--brand-text);
+  }
+
+  .step.is-ink {
+    background: var(--ink);
+    box-shadow: inset 0 0 0 1px var(--ink-edge);
+  }
+
+  .step.is-ink .ic {
+    background: rgb(255 255 255 / 0.1);
+    color: var(--on-ink);
+  }
+
+  .step.is-ink strong {
+    color: var(--on-ink);
+  }
+
+  .step.is-ink .v {
+    color: var(--on-ink-muted);
+  }
+
+  .side {
+    display: grid;
+    gap: 6px;
+    align-content: center;
+    margin-top: 6px;
+  }
+
+  .ic--soft {
+    background: var(--rose);
+    color: var(--brand-text);
+  }
+
+  .link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding-left: 4px;
+    color: var(--brand-text);
+  }
+
+  .link .v {
+    color: var(--brand-text);
+    font-weight: 600;
+  }
+
+  .wide,
+  .narrow {
+    display: inline-flex;
+  }
+
+  .wide {
+    display: none;
+  }
+
+  @container (min-width: 500px) {
+    .grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      column-gap: 26px;
+    }
+
+    .side {
+      grid-column: 2;
+      margin-top: 0;
+    }
+
+    .side--book {
+      grid-row: 1 / 4;
+    }
+
+    .side--user {
+      grid-row: 4 / 6;
+    }
+
+    .wide {
+      display: inline-flex;
+    }
+
+    .narrow {
+      display: none;
+    }
+  }
+</style>

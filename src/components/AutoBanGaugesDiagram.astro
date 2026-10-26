@@ -1,0 +1,154 @@
+---
+import Icon from "./Icon.astro";
+
+const gauges = [
+  { name: "auth-failure", value: "3 / 5", sub: "in 10 minutes", p: 60 },
+  { name: "abuse", value: "17 / 50", sub: "in 5 minutes", p: 34 },
+  { name: "loiter", value: "3 / 3", sub: "BAN", p: 100, firing: true },
+  { name: "scan", value: "2 / 10", sub: "in 1 minute", p: 20 },
+];
+---
+<div class="ab" role="img" aria-label="Auto-ban thresholds for four abuse categories: auth-failure at 3 of 5 in 10 minutes, abuse at 17 of 50 in 5 minutes, loiter at 3 of 3 which triggers a ban, and scan at 2 of 10 in 1 minute. The ban list shows 203.0.113.42 banned for 1h (loiter).">
+  <span class="dg-caption">Four categories, one ban list</span>
+  <ul class="gauges">
+    {gauges.map((g) => (
+      <li class:list={["cell", { "is-firing": g.firing }]}>
+        <span class="gauge"><span class="ring" style={`--p: ${g.p}`}></span><span class="val">{g.value}</span></span>
+        <strong>{g.name}</strong>
+        <span class="sub">{g.firing && <Icon name="arrow-right" size={12} />}{g.sub}</span>
+      </li>
+    ))}
+  </ul>
+  <div class="ban">
+    <span class="ban-ic"><Icon name="ban" size={16} /></span>
+    <span class="ban-txt">203.0.113.42 banned for 1h (loiter)</span>
+  </div>
+</div>
+
+<style>
+  .ab {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 100%;
+    container-type: inline-size;
+  }
+
+  .gauges {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .cell {
+    display: grid;
+    justify-items: center;
+    gap: 2px;
+    padding: 18px 10px 16px;
+    border-radius: var(--r-lg);
+    background: var(--tile);
+    box-shadow: var(--shadow-tile);
+    text-align: center;
+  }
+
+  .gauge {
+    display: grid;
+    place-items: center;
+    width: 84px;
+    height: 84px;
+    margin-bottom: 10px;
+  }
+
+  .gauge > * {
+    grid-area: 1 / 1;
+  }
+
+  .ring {
+    --track: var(--sand);
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: conic-gradient(var(--brand) calc(var(--p) * 1%), var(--track) 0);
+    -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 7px), black calc(100% - 6px));
+    mask: radial-gradient(farthest-side, transparent calc(100% - 7px), black calc(100% - 6px));
+  }
+
+  .val {
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  strong {
+    font-family: var(--font-display);
+    font-size: 0.9375rem;
+    font-weight: 680;
+    color: var(--text);
+  }
+
+  .sub {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+
+  .cell.is-firing {
+    background: var(--rose);
+    box-shadow: none;
+  }
+
+  .is-firing .ring {
+    --track: var(--rose-2);
+  }
+
+  .is-firing .val,
+  .is-firing strong {
+    color: var(--brand-text);
+  }
+
+  .is-firing .sub {
+    color: var(--brand-text);
+    font-weight: 700;
+  }
+
+  .ban {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px 12px 12px;
+    border-radius: var(--r-lg);
+    background: var(--ink);
+    box-shadow: inset 0 0 0 1px var(--ink-edge);
+  }
+
+  .ban-ic {
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    flex: none;
+    border-radius: 10px;
+    background: var(--brand);
+    color: #fff;
+  }
+
+  .ban-txt {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--on-ink);
+  }
+
+  @container (min-width: 520px) {
+    .gauges {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+</style>

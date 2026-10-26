@@ -1,0 +1,106 @@
+---
+import Icon from "./Icon.astro";
+
+const layers = [
+  {
+    icon: "badge-check",
+    title: "Certificate management",
+    sub: "ACME (every challenge type) · TLSA refresh · external account binding",
+    chips: ["ACME", "HTTP-01", "DNS-01", "TLS-ALPN-01"],
+  },
+  {
+    icon: "network",
+    title: "In transit, between servers",
+    sub: "DANE for TLSA-pinned outbound, MTA-STS policy enforcement, TLS-RPT",
+    chips: ["DANE", "MTA-STS", "TLS-RPT", "STARTTLS"],
+    brand: true,
+  },
+  {
+    icon: "lock-keyhole",
+    title: "At rest, in the mailbox",
+    sub: "Per-mailbox encryption with the user's own S/MIME cert or OpenPGP key",
+    chips: ["S/MIME", "OpenPGP", "disk-access proof"],
+  },
+];
+---
+<div class="dg" role="img" aria-label="Stalwart security stack: certificate management with ACME, encryption in transit between servers with DANE, MTA-STS, TLS-RPT and STARTTLS, and encryption at rest in the mailbox with S/MIME or OpenPGP">
+  <span class="dg-caption">Security from the wire to the mailbox</span>
+  {layers.map((l, i) => (
+    <div class:list={["layer", { "is-brand": l.brand }]} style={`--i: ${i}`}>
+      <span class="ic"><Icon name={l.icon} size={20} /></span>
+      <div class="body">
+        <strong>{l.title}</strong>
+        <span>{l.sub}</span>
+        <ul class="mini-chips">{l.chips.map((c) => <li>{c}</li>)}</ul>
+      </div>
+    </div>
+  ))}
+</div>
+
+<style>
+  .dg {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 100%;
+    container-type: inline-size;
+  }
+  .layer {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    margin-inline: calc(var(--i) * 14px);
+    padding: 20px;
+    border-radius: var(--r-lg);
+    background: var(--tile);
+    box-shadow: var(--shadow-tile);
+  }
+  .ic {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: var(--sand);
+    color: var(--text);
+  }
+  .body {
+    display: grid;
+    gap: 6px;
+    min-width: 0;
+  }
+  strong {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 680;
+    line-height: 1.3;
+  }
+  .body > span {
+    color: var(--muted);
+    font-size: var(--fs-xs);
+    line-height: 1.5;
+  }
+  .mini-chips {
+    margin-top: 6px;
+  }
+  .is-brand {
+    background: var(--rose);
+    box-shadow: none;
+  }
+  .is-brand .ic {
+    background: var(--brand);
+    color: #fff;
+  }
+  .is-brand .mini-chips li {
+    background: var(--tile);
+    color: var(--brand-text);
+  }
+  @container (max-width: 480px) {
+    .layer {
+      margin-inline: 0;
+      padding: 16px;
+      gap: 12px;
+    }
+  }
+</style>

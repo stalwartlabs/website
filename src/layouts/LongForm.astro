@@ -1,0 +1,414 @@
+---
+import Base from "./Base.astro";
+import Icon from "../components/Icon.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  lastUpdated?: string;
+  pdfHref?: string;
+  navIndex: { slug: string; title: string; current: boolean }[];
+}
+
+const { title, description, lastUpdated, pdfHref, navIndex } = Astro.props;
+const current = navIndex.find((e) => e.current);
+---
+<Base title={title} description={description}>
+  <section class="wrap lf" aria-labelledby="lf-title">
+    <div class="lf__layout">
+      <header class="tile lf__header">
+        <a class="lf__back" href="/legal"><Icon name="arrow-left" size={16} />All legal pages</a>
+        <span class="pill lf__pill">Legal</span>
+        <h1 id="lf-title" class="lf__title">{title}</h1>
+        {(lastUpdated || pdfHref) && (
+          <div class="lf__meta-row">
+            {lastUpdated && (
+              <p class="lf__meta"><Icon name="calendar" size={16} />Last updated {lastUpdated}</p>
+            )}
+            {pdfHref && (
+              <a class="btn btn-soft btn-sm lf__pdf" href={pdfHref} download>
+                <Icon name="download" size={16} />Download PDF
+              </a>
+            )}
+          </div>
+        )}
+      </header>
+
+      <details class="tile tile--sand lf__nav lf__nav--compact">
+        <summary>
+          <span><span class="lf__nav-k">Legal pages</span>{current && <span class="lf__nav-cur">{current.title}</span>}</span>
+          <span class="lf__nav-ic" aria-hidden="true"><Icon name="chevron-down" size={18} /></span>
+        </summary>
+        <nav aria-label="Legal pages">
+          <ul class="lf__nav-list">
+            {navIndex.map((entry) => (
+              <li>
+                <a href={`/legal/${entry.slug}`} class:list={["lf__nav-link", { "is-current": entry.current }]} aria-current={entry.current ? "page" : undefined}>{entry.title}</a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </details>
+
+      <aside class="lf__nav lf__nav--side">
+        <nav class="tile tile--sand lf__nav-tile" aria-label="Legal sections">
+          <p class="lf__nav-k">Legal pages</p>
+          <ul class="lf__nav-list">
+            {navIndex.map((entry) => (
+              <li>
+                <a href={`/legal/${entry.slug}`} class:list={["lf__nav-link", { "is-current": entry.current }]} aria-current={entry.current ? "page" : undefined}>{entry.title}</a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </aside>
+
+      <article class="tile lf__article">
+        <div class="lf__body prose-body">
+          <slot />
+        </div>
+      </article>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .lf {
+    padding-top: clamp(16px, 2vw, 28px);
+  }
+  .lf__layout {
+    display: grid;
+    grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+    gap: var(--gap);
+    align-items: start;
+  }
+  .lf__header {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+    padding: clamp(28px, 4.2vw, 56px);
+  }
+  .lf__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-display);
+    font-size: var(--fs-sm);
+    font-weight: 650;
+    color: var(--muted);
+    transition: color var(--t) var(--ease);
+  }
+  .lf__back:hover {
+    color: var(--brand-text);
+  }
+  .lf__back :global(.i) {
+    transition: transform var(--t) var(--ease);
+  }
+  .lf__back:hover :global(.i) {
+    transform: translateX(-3px);
+  }
+  .lf__pill {
+    margin-top: 6px;
+  }
+  .lf__title {
+    max-width: 22ch;
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 1.4rem + 2.8vw, 3.6rem);
+    font-weight: 750;
+    letter-spacing: -0.035em;
+    line-height: 1.05;
+    text-wrap: balance;
+  }
+  .lf__meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 20px;
+  }
+  .lf__meta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: var(--fs-sm);
+    color: var(--muted);
+  }
+  .lf__meta :global(.i) {
+    color: var(--brand-text);
+  }
+
+  .lf__nav--side {
+    position: sticky;
+    top: 96px;
+  }
+  .lf__nav-tile {
+    padding: 24px 16px 16px;
+    max-height: calc(100svh - 120px);
+    overflow-y: auto;
+  }
+  .lf__nav-k {
+    display: block;
+    padding: 0 12px 10px;
+    font-family: var(--font-display);
+    font-size: var(--fs-xs);
+    font-weight: 650;
+    color: var(--dim);
+  }
+  .lf__nav-list {
+    display: grid;
+    gap: 2px;
+  }
+  .lf__nav-link {
+    display: block;
+    padding: 9px 12px;
+    border-radius: var(--r-sm);
+    color: var(--muted);
+    font-family: var(--font-display);
+    font-size: var(--fs-sm);
+    font-weight: 560;
+    line-height: 1.3;
+    transition: background-color var(--t) var(--ease), color var(--t) var(--ease);
+  }
+  .lf__nav-link:hover {
+    background: var(--tile);
+    color: var(--text);
+  }
+  .lf__nav-link.is-current {
+    background: var(--tile);
+    color: var(--brand-text);
+    font-weight: 650;
+    box-shadow: var(--shadow-tile);
+  }
+  .lf__nav--compact {
+    display: none;
+    padding: 0;
+  }
+  .lf__nav--compact summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 16px 18px 16px 22px;
+    cursor: pointer;
+    list-style: none;
+  }
+  .lf__nav--compact summary::-webkit-details-marker {
+    display: none;
+  }
+  .lf__nav--compact summary > span:first-child {
+    display: grid;
+    gap: 2px;
+  }
+  .lf__nav--compact .lf__nav-k {
+    padding: 0;
+  }
+  .lf__nav-cur {
+    font-family: var(--font-display);
+    font-weight: 650;
+  }
+  .lf__nav-ic {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--tile);
+    transition: transform var(--t) var(--ease);
+  }
+  .lf__nav--compact[open] .lf__nav-ic {
+    transform: rotate(180deg);
+  }
+  .lf__nav--compact nav {
+    padding: 0 10px 12px;
+  }
+
+  .lf__article {
+    padding: clamp(28px, 4.4vw, 64px);
+  }
+  .prose-body {
+    max-width: 72ch;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--text);
+  }
+  .prose-body > :global(:first-child) {
+    margin-top: 0;
+  }
+  .prose-body :global(p) {
+    margin: 1em 0;
+    color: var(--muted);
+  }
+  .prose-body :global(strong) {
+    padding: 0;
+    background: none;
+    color: var(--text);
+    font-weight: 650;
+  }
+  .prose-body :global(h2) {
+    margin-top: 2.4em;
+    margin-bottom: 0.7em;
+    font-family: var(--font-display);
+    font-size: clamp(1.35rem, 1.2rem + 0.5vw, 1.6rem);
+    font-weight: 720;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    color: var(--text);
+  }
+  .prose-body :global(h3) {
+    margin-top: 1.9em;
+    margin-bottom: 0.6em;
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 680;
+    letter-spacing: -0.01em;
+    color: var(--text);
+  }
+  .prose-body :global(h4),
+  .prose-body :global(h5),
+  .prose-body :global(h6) {
+    margin-top: 1.6em;
+    margin-bottom: 0.5em;
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 680;
+    color: var(--text);
+  }
+  .prose-body :global(ul),
+  .prose-body :global(ol) {
+    margin: 1em 0 1em 1.4rem;
+    padding: 0;
+    color: var(--muted);
+  }
+  .prose-body :global(ul) {
+    list-style: disc;
+  }
+  .prose-body :global(ol) {
+    list-style: decimal;
+  }
+  .prose-body :global(li) {
+    margin: 0.4em 0;
+    padding-left: 0.25em;
+  }
+  .prose-body :global(li::marker) {
+    color: var(--brand-text);
+  }
+  .prose-body :global(a) {
+    color: var(--brand-text);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    overflow-wrap: anywhere;
+  }
+  .prose-body :global(a:hover) {
+    text-decoration-thickness: 2px;
+  }
+  .prose-body :global(table) {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    margin: 1.5em 0;
+    border-collapse: collapse;
+    font-size: var(--fs-sm);
+  }
+  .prose-body :global(th),
+  .prose-body :global(td) {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--hairline);
+    text-align: left;
+    vertical-align: top;
+  }
+  .prose-body :global(td) {
+    color: var(--muted);
+  }
+  .prose-body :global(thead th) {
+    background: var(--sand);
+    font-family: var(--font-display);
+    font-size: var(--fs-xs);
+    font-weight: 650;
+    color: var(--text);
+    border-bottom: 0;
+  }
+  .prose-body :global(thead th:first-child) {
+    border-radius: var(--r-sm) 0 0 var(--r-sm);
+  }
+  .prose-body :global(thead th:last-child) {
+    border-radius: 0 var(--r-sm) var(--r-sm) 0;
+  }
+  .prose-body :global(blockquote) {
+    margin: 1.4em 0;
+    padding: 16px 20px;
+    border-radius: var(--r-lg);
+    background: var(--rose);
+    color: var(--text);
+  }
+  .prose-body :global(blockquote p) {
+    margin: 0;
+    color: inherit;
+  }
+  .prose-body :global(hr) {
+    margin: 2.4em 0;
+    border: 0;
+    border-top: 1px solid var(--hairline);
+  }
+  .prose-body :global(code) {
+    padding: 0.1em 0.45em;
+    border-radius: 6px;
+    background: var(--sand);
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+  }
+
+  @media (max-width: 1023px) {
+    .lf__layout {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .lf__nav--side {
+      display: none;
+    }
+    .lf__nav--compact {
+      display: block;
+    }
+  }
+
+  @media print {
+    .lf__header,
+    .lf__article {
+      padding: 0;
+      background: none;
+      box-shadow: none;
+      border-radius: 0;
+      overflow: visible;
+    }
+    .lf__header {
+      margin-bottom: 24px;
+    }
+    .lf__pill,
+    .lf__pdf,
+    .lf__meta :global(.i) {
+      display: none;
+    }
+    .lf__title {
+      max-width: none;
+      font-size: 2rem;
+    }
+    .prose-body {
+      max-width: none;
+    }
+    .prose-body :global(thead th) {
+      border-radius: 0;
+    }
+    .prose-body :global(table) {
+      display: table;
+    }
+    .prose-body :global(blockquote) {
+      background: none;
+      padding: 0 0 0 16px;
+      border-left: 2px solid currentColor;
+      border-radius: 0;
+    }
+  }
+</style>

@@ -1,0 +1,340 @@
+---
+title: "DKIM2 and DMARCbis have landed, and Stalwart speaks them first"
+description: "Email authentication just took its biggest step in a decade. DKIM2 (draft -04) rebuilds DKIM around a verifiable chain of custody that survives forwarding, stops replay, and makes bounces provable; DMARCbis (RFC 9989, 9990, 9991) retires the Public Suffix List for a live DNS tree walk and writes a decade of operational lessons back into the spec. Both are now fully implemented in Stalwart v0.16.12, the first mail server to support them, and can be tested from the browser at the mail-auth playground."
+authors: [mdecimus]
+tags: [dkim, dmarc, dkim2, dmarcbis, email, security, rust, server]
+excerpt: |
+  Email authentication just took its biggest step in a decade. [DKIM2](https://datatracker.ietf.org/doc/draft-ietf-dkim-dkim2-spec/) rebuilds DKIM around a verifiable chain of custody that survives forwarding, stops replay, and makes bounces provable, while [DMARCbis](https://www.rfc-editor.org/rfc/rfc9989/) trades the Public Suffix List for a live DNS tree walk and writes a decade of operational lessons back into the spec. Both are now fully implemented in [Stalwart v0.16.12](https://github.com/stalwartlabs/stalwart/releases), the first mail server to support them, and both can be tested straight from the browser at the [mail-auth playground](https://mail-auth.stalw.art).
+date: 2026-07-06
+---
+
+Email authentication has quietly held the internet's mail together for two decades, and it has just taken its biggest step forward yet. Two efforts arrived at once. **DKIM2** (currently at [draft -04](https://datatracker.ietf.org/doc/draft-ietf-dkim-dkim2-spec/)) reworks DKIM so that a signature is no longer a lonely statement about content but one link in a verifiable chain of custody that follows a message from author to final recipient: forwarding stops breaking signatures, replayed mail no longer verifies, and a bounce can prove it is genuine. **DMARCbis** (published in May 2026 as [RFC 9989](https://www.rfc-editor.org/rfc/rfc9989/), [RFC 9990](https://www.rfc-editor.org/rfc/rfc9990/), and [RFC 9991](https://www.rfc-editor.org/rfc/rfc9991/)) is the long-awaited successor to DMARC: it replaces the static Public Suffix List with a live DNS tree walk, retires the tags that never worked, and folds a decade of hard-won operational lessons back into the standard.
+
+Both matter because email authentication is what keeps a phisher from putting your bank's domain in the `From:` line, and until now the machinery that does it has been showing its age. This post walks through what each protocol changes and why it matters.
+
+It is also an announcement. As of [Stalwart v0.16.12](https://github.com/stalwartlabs/stalwart/releases), both DKIM2 and DMARCbis are fully implemented, and Stalwart is the first mail server to support them. Anyone curious can sign and verify DKIM2 messages, and run DMARCbis checks, directly from the browser at the [mail-auth playground](https://mail-auth.stalw.art), no install required. More on that at the end; first, the protocols.
+
+## Meet DKIM2
+
+DKIM (DomainKeys Identified Mail, [RFC 6376](https://www.rfc-editor.org/rfc/rfc6376)) does one deceptively simple thing: it lets a domain take responsibility for a message. The sending server hashes a chosen set of header fields and the body, signs the result with a private key, and staples the outcome to the message in a `DKIM-Signature` header. The matching public key lives in DNS at `selector._domainkey.domain`, so any receiver can fetch it, recompute the hashes, and confirm two things: the message really was authorised by that domain, and nothing covered by the signature changed along the way.
+
+That is the whole promise. A valid signature means "this domain vouches for this content." It says nothing about who the message was for, where it has been, or where it is going next. For nearly twenty years that was enough, and DKIM quietly became one of the load-bearing walls of email authentication.
+
+On its own, a DKIM pass is just a true statement about some domain. [DMARC](https://www.rfc-editor.org/rfc/rfc9989/) is what turns it into a decision. DMARC ties authentication to the domain a human actually sees, the one in the `From:` header, through a rule called **identifier alignment**: a DKIM result only counts toward DMARC if the signing domain (`d=`) lines up with the `From:` domain. Pass alignment on either DKIM or SPF and the message clears DMARC; fail both and it meets the domain's published policy, which can mean quarantine or outright rejection.
+
+This is exactly why a broken DKIM signature is not a cosmetic problem. When DKIM breaks on a message from a domain publishing `p=reject`, and SPF cannot save it either, that message is gone. Which brings us to the reason DKIM2 exists: over two decades of real-world routing, DKIM1 signatures break far more often than anyone would like, and in a few cases they hold when we wish they wouldn't.
+
+### Issues with DKIM1
+
+None of what follows is a knock on the original design. These are the seams that two decades of deployment pulled apart, and they are the exact list DKIM2 sets out to close.
+
+- **Anyone could be the recipient.** A DKIM1 signature is bound to the content, not to a destination. Capture one legitimately signed message and you can replay it to millions of other addresses, unchanged, and every copy still verifies. The replay rides on the original signer's good reputation, which is precisely what makes it valuable to abusers.
+
+- **Forwarding breaks the signature, silently and ambiguously.** The moment a mailing list tags a subject, a gateway rewrites a link, or a forwarder appends a footer, the signed hashes no longer match and the signature fails. Worse, a verifier cannot tell an innocent `[list]` prefix from wholesale replacement by an attacker. Both look identical: broken.
+
+- **There was no record of the road travelled.** DKIM1 leaves no trustworthy trace of the path a message took. The `Received` and `Return-Path` headers are unauthenticated and trivial to forge, so there is no chain of custody to reason about.
+
+- **ARC was a patch that receivers struggle to trust.** [ARC](https://www.rfc-editor.org/rfc/rfc8617) tried to preserve authentication across intermediaries by having each hop attest to what it saw, but it sits alongside DKIM as a separate overlay, and in practice most receivers report that they cannot confidently trust ARC seals.
+
+- **Header signing was inconsistent.** DKIM1 lets the signer choose which headers to cover and offers multiple canonicalization modes, which leaves gaps an attacker can slip unsigned headers through and makes signatures needlessly fragile.
+
+- **Bounces could not be trusted, and hurt bystanders.** Because the return path can name a domain that never handled the message, a Delivery Status Notification (DSN) can land on a forged, innocent third party. This is **backscatter**, and the fear of it is why deferred bounces, the kind a provider would send after deciding a message is spam an hour later, are largely impractical today.
+
+- **Feedback was ad hoc.** Intermediaries and senders exchange informal signals about how mail is performing, but there is no standard for requesting or routing that feedback, so it is inconsistent and often unhelpful.
+
+### DKIM2, in a nutshell
+
+DKIM2 keeps everything that worked and changes the thing that did not. The cryptography is familiar: hash the message, sign it, publish the public key in DNS at the same `_domainkey` location DKIM1 already uses. What changes is that a signature stops being a lonely statement about content and becomes one link in a **verifiable chain of custody** that follows the message from originator to final recipient.
+
+To do that, DKIM2 splits the old single header into two, each with its own job.
+
+The **`Message-Instance`** header describes the message at a point in time. It carries a revision number, a set of cryptographic fingerprints over the headers and body at that revision, and, when a hop has changed something, a compact "recipe" that spells out how to undo the change (the mechanism covered later that makes forwarding survivable).
+
+The **`DKIM2-Signature`** header records the envelope the message actually travelled with, then signs over it. Alongside the familiar DKIM pieces, the signing domain, the selector, the signature itself and a timestamp, it captures the SMTP `MAIL FROM` and `RCPT TO` of that hop, a sequence number so the signatures form an ordered chain, and a small set of flags that a sender or intermediary can raise to forbid fan-out, mark legitimate fan-out, or request feedback. Putting the envelope inside the signature is what lets consecutive hops be checked for consistency; recording who signed and in what order is what turns a pile of signatures into a chain.
+
+Two counters drive everything. One counts signatures, one per hop. The other counts message revisions, incremented only when a hop actually changes the content. A purely transparent forwarder that touches nothing does not even need to be DKIM2-aware.
+
+### One mechanism per broken promise
+
+The elegance of DKIM2 is that a handful of mechanisms retire the whole list above at once.
+
+- **Replay** is answered by putting the envelope inside the signature. Each `DKIM2-Signature` records the `MAIL FROM` (`mf=`) and `RCPT TO` (`rt=`) it was sent with, and consecutive hops must line up: the sending domain of one hop has to match a recipient domain of the previous one. A message replayed to a different recipient no longer forms a valid chain. A sender can add `donotexplode` to forbid fan-out, and a mailing list marks legitimate fan-out with `exploded`.
+
+- **Forwarding breakage** is answered by recipes. A hop that modifies the message records a reversible recipe, so downstream verifiers can undo the change and re-check every earlier signature instead of throwing the whole thing out.
+
+- **The missing chain of custody** is the chain itself: each hop appends its own signature over the current snapshot and all prior signatures, forming a tamper-evident sequence from author to recipient.
+
+- **ARC's role** is absorbed natively. The chain does what ARC attempted, without a parallel set of headers, and DKIM2 explicitly ignores both legacy `DKIM-Signature` and `ARC-*` headers so the two schemes can coexist during migration.
+
+- **Inconsistent header signing** is answered by a single fixed canonicalization and a defined hashing scheme, removing the per-signer guesswork.
+
+- **Backscatter** is answered by routing bounces along the recorded chain, covered next.
+
+- **Feedback** gets a standard channel through the `feedback` and `feedhere` flags.
+
+One caveat, contrary to a common claim: DKIM2 can require *more* signature checks, not fewer. A modified message adds a signature at every hop, and a verifier may need to check the whole chain. What the draft does allow is checking the most recently applied signature first and stopping at the first failure, so an unmodified message can often be cleared with a single verification.
+
+### Recipes: putting a message back the way it was
+
+This is the mechanism that makes forwarding survivable, so it is worth seeing in full.
+
+A **recipe** is a small JSON object, base64-encoded into the `r=` tag, that tells a verifier how to turn the *current* message back into the *previous* one. It has two optional parts, `"h"` for header fields and `"b"` for the body, and each is a list of steps:
+
+- `{"c": [start, end]}` copies a range of lines or header instances from the current message, inclusive.
+- `{"d": ["value", ...]}` inserts literal values that used to be there.
+
+Two numbering rules matter. Header instances are counted **bottom-up** (the last `Subject:` is number 1, the one above it is 2), and body lines are counted **top-down** (the first line is 1). An empty step list `[]` for a header means "remove every instance." A body recipe of `null` is a special case: it means the previous body genuinely cannot be reconstructed, which a verifier may accept from an entity it trusts, for example a contractually arranged redaction service.
+
+#### A message through two hops
+
+Alice sends a note to a mailing list.
+
+**Hop 1, the originator signs.** The message leaves `example.com`:
+
+```text
+From: alice@example.com
+To: list@lists.example.org
+Subject: Trip report
+
+Had a great time.
+See you soon.
+```
+
+She stamps it with the first revision and the first signature (hashes abbreviated):
+
+```text
+Message-Instance: m=1; h=sha256:Hh1...:Bh1...
+DKIM2-Signature: i=1; m=1; t=1782394336; d=example.com;
+  s=ed25519:ed25519-sha256:rDU9v...;
+  mf=PGFsaWNlQGV4YW1wbGUuY29tPg==;
+  rt=PGxpc3RAbGlzdHMuZXhhbXBsZS5vcmc+
+```
+
+The `mf=` value decodes to `<alice@example.com>` and `rt=` to `<list@lists.example.org>`.
+
+**Hop 2, the list revises.** The list software tags the subject and appends an unsubscribe footer, so the message is now:
+
+```text
+From: alice@example.com
+To: list@lists.example.org
+Subject: [list] Trip report
+
+Had a great time.
+See you soon.
+--
+Unsubscribe: https://lists.example.org/u
+```
+
+Two things changed: the subject gained a `[list]` prefix, and two lines were appended. The list computes the recipe that reverses both. The subject (one instance, so number 1) is replaced with its old literal value, and the body copies the two original lines while dropping the footer:
+
+```json
+{"h":{"subject":[{"d":["Trip report"]}]},"b":[{"c":[1,2]}]}
+```
+
+Read the body step as "to rebuild the previous body, copy current lines 1 through 2, and stop." The footer at current lines 3 and 4 simply is not copied, so it disappears on reversal. The list base64-encodes that JSON into `r=`, records a fresh fingerprint, and adds its own signature:
+
+```text
+Message-Instance: m=2; h=sha256:Hh2...:Bh2...;
+  r=eyJoIjp7InN1YmplY3QiOlt7ImQiOlsiVHJpcCByZXBvcnQiXX1dfSwiYiI6W3siYyI6WzEsMl19XX0=
+DKIM2-Signature: i=2; m=2; t=1782394500; d=lists.example.org;
+  s=ed25519:ed25519-sha256:9aBc...;
+  mf=PGJvdW5jZXNAbGlzdHMuZXhhbXBsZS5vcmc+;
+  rt=PGJvYkBleGFtcGxlLm5ldD4=
+```
+
+The chain of custody holds because hop 2's `mf=` domain (`lists.example.org`) matches hop 1's `rt=` domain (`lists.example.org`), and `d=lists.example.org` matches the rightmost labels of that `mf=`.
+
+**Final recipient, Bob, verifies.** His server works backwards:
+
+1. Check the chain lines up: hop 2's sending domain matches hop 1's recipient domain. Good, no replay.
+2. Verify each signature's cryptography over its reconstructed input.
+3. Recompute the `m=2` fingerprint against the message as received. It matches.
+4. Apply the `r=` recipe to rebuild the `m=1` message: restore the subject to `Trip report` and drop the footer.
+5. Recompute the `m=1` fingerprint against that reconstruction. It matches Alice's original signature.
+
+Alice's signature validates even though the list rewrote her subject and appended a footer. And because every change is spelled out, Bob can see *exactly* what the list did. A footer tweak and a malicious body swap no longer look the same.
+
+Bottom-up header numbering is not decoration; it is what keeps duplicated headers unambiguous. A recipe that deletes the middle of three `Subject:` headers, for instance, reads as copy the bottom one, insert the deleted literal, copy the top one:
+
+```json
+{"h":{"subject":[{"c":[1,1]},{"d":["four"]},{"c":[2,2]}]}}
+```
+
+And a hop that redacts content under an arrangement the verifier trusts marks the body as unreconstructable rather than pretending it can be undone:
+
+```json
+{"b":null}
+```
+
+The chain still verifies up to that point; the body just cannot be rewound past it.
+
+### Bounces carry their own proof
+
+The same chain that stops replay also fixes bounces, and this is where DKIM2 quietly closes the backscatter problem for good.
+
+First, DKIM2 stops trusting the headers that lie. `Received` and `Return-Path` are ignored outright. The authoritative return address is reconstructed from the signed `mf=` tags in the chain instead. The rule is blunt: a DSN must be addressed to the `mf=` of the highest-numbered `DKIM2-Signature`, that is, the hop that actually handed the message over, never the visible envelope sender. And if that `mf=` is the null reverse path (`mf=<>`), no DSN is sent at all. Backscatter has nowhere to land.
+
+Better still, a DKIM2 bounce can prove it is genuine. A DSN is itself an ordinary DKIM2 message: a `multipart/report` sent with `MAIL FROM <>`, carrying its own `Message-Instance` and `DKIM2-Signature`, that embeds the original signed message (as a full `message/rfc822` copy or just its `text/rfc822-headers`). Because the original's signature chain travels back inside the bounce, the receiver should re-verify the whole thing:
+
+1. The DSN's own signing domain should align with the recipient recorded in the returned message's last `rt=` tag.
+2. That returned message's last signature should be one this system actually produced, checked against its `d=` and `mf=`.
+3. The embedded message's headers, and its body if present, verify against the `Message-Instance` fingerprints.
+
+Pass all three and the bounce is provably about a message you really sent to a recipient you really handed it to. Fail, and it must not be propagated further. That is what finally makes deferred bounces safe: a provider can accept a message, decide an hour later that it is spam, and send a signed bounce back along the recorded path, with no risk of mailbombing an innocent bystander. As the DSN travels back, each hop peels off the signature it added and forwards the bounce one step further toward the origin, so every party learns only about its own leg of the journey.
+
+A signature that used to vouch only for content now vouches for the entire journey: who sent it, who it was for, what each hop changed, and where a failure is allowed to go.
+
+### ARC steps aside
+
+DKIM2 is not the first attempt to keep authentication alive across forwarders. ARC ([RFC 8617](https://www.rfc-editor.org/rfc/rfc8617)) got there first, and it is worth a moment because it explains a lot about the shape of DKIM2. When an intermediary changed a message and broke DKIM, ARC let that intermediary record what it had seen just before the change and add its own signature. Each hop stamps an ARC set of three headers: `ARC-Authentication-Results` captures the authentication verdict the hop saw on input, `ARC-Message-Signature` signs the message as the hop passed it on, and `ARC-Seal` signs the chain so far. A downstream receiver could confirm the chain was cryptographically intact and read the upstream verdicts.
+
+The catch is that ARC records observations, not changes. A valid chain proves a message was handled, not that the handling was correct, and it never says what was actually modified. To act on an ARC chain a receiver has to decide whether it trusts every signer in it, which in practice means running a reputation system for thousands of forwarders across the open internet. That trust fabric never materialized. A decade on, there is no working internet-scale ARC reputation deployment and no plan for one, so early adopters fell back to hand-maintained allow lists of known intermediaries: useful inside a data center or a consortium, not on the wider internet. Receivers were also left to invent their own policy for how many hops to honor and how to treat partial or broken chains, so behaviour never converged. The IETF's DMARC working group is now moving to reclassify RFC 8617 as Historic and discourage new deployments ([draft-ietf-dmarc-arc-to-historic](https://datatracker.ietf.org/doc/draft-ietf-dmarc-arc-to-historic/)).
+
+DKIM2 removes the very thing that made ARC unworkable: the separate trust fabric. Rather than ask a receiver to trust an intermediary's account of what it saw, DKIM2 has each hop record exactly what it changed as a reversible recipe. The verifier undoes those changes and re-checks the originator's own signature, so trust flows back to the domain that actually authored the message rather than to every forwarder along the way. And because the recipe spells out each modification, a receiver can tell an innocent subject tag from something worth worrying about, the "what changed" question ARC left open. The handling assertions ARC was genuinely good at fold into the same chain, with no parallel reputation system holding them up.
+
+## Meet DMARCbis
+
+After more than a decade of RFC 7489 doing quiet, load-bearing work behind the world's inboxes, DMARC has a proper successor. In May 2026 the IETF published three new Standards Track documents, RFC 9989, RFC 9990, and RFC 9991, collectively known as DMARCbis. They obsolete the original 2015 specification (and fold in the experimental Public Suffix Domain work from RFC 9091).
+
+Nothing about the day-to-day promise of DMARC has changed. What changed is the plumbing underneath it, and a few of those changes are the kind that quietly fix problems operators have lived with for years.
+
+### TL;DR
+
+For anyone who wants the gist before the details:
+
+- The Public Suffix List is gone. Finding the boundary of an organization now happens with a live DNS lookup called the *tree walk*.
+- The `pct` sampling tag is retired. A simpler `t` testing flag takes its place.
+- Two tags graduate from the experimental PSD extension into the core spec: `np` for non-existent subdomains and `psd` for public suffix operators.
+- Reporting moved into its own two documents, gained a new XML schema, and picked up an extensibility slot so future additions no longer require reopening the whole standard.
+- `p=reject` is no longer treated as an unconditional instruction to bounce mail.
+
+Existing DMARC records keep working. The retired tags are simply ignored, so there is no flag day and no forced migration.
+
+### A quick refresher on DMARC
+
+SPF and DKIM both authenticate a domain, but not the one that matters most to a human reading their mail. SPF checks the envelope sender used during the SMTP conversation, and DKIM checks whatever domain signed the message. Neither is required to match the `From:` address the recipient actually sees, which is exactly the address a phisher wants to forge.
+
+DMARC closes that gap. It anchors authentication to the visible `From:` domain, the Author Domain, through a property called *alignment*: a message passes only when SPF or DKIM authenticates a domain that lines up with the Author Domain. The domain owner publishes a policy in DNS stating what receivers should do with mail that fails (`none`, `quarantine`, or `reject`) and where to send reports. That combination, authentication tied to the visible sender plus a published preference plus feedback, is what made DMARC the backbone of email anti-spoofing.
+
+### Issues with DMARC
+
+RFC 7489 aged well, but a handful of design decisions turned into recurring headaches:
+
+- **The Public Suffix List was a soft spot.** To tell where one organization ends and a registrar's namespace begins (so that `mail.example.com` and `example.com` are understood to share an owner, while `example.com` and `example.co.uk` do not), receivers leaned on Mozilla's Public Suffix List. The spec never mandated a specific copy of it, said nothing about how often to refresh it, and openly acknowledged the interoperability risk. A single static file, maintained by volunteers, sat on the critical path of global mail authentication.
+- **The `pct` tag promised more than it delivered.** It was meant to let a domain roll out a policy to a percentage of mail. In practice only two values behaved consistently across receivers: 0 and 100. Worse, `pct=0` had quietly acquired a special meaning of its own, so the tag was really a two-state switch wearing a percentage costume.
+- **Subdomains that did not exist were a spoofing gap.** A domain could set a strict policy for itself, yet an attacker could still forge a plausible looking subdomain that had never been registered. The experimental PSD DMARC work started to address this, but it lived outside the core standard.
+- **Everything was crammed into one document.** Core protocol, aggregate reporting, and failure reporting all shared a single RFC, which meant none of them could evolve without dragging the others along.
+
+### DMARCbis, one specification becomes three
+
+DMARCbis splits the old monolith along its natural seams so each piece can advance on its own schedule:
+
+- **RFC 9989** is the core protocol: alignment, policy, record syntax, and the new discovery mechanism. It obsoletes both RFC 7489 and RFC 9091.
+- **RFC 9990** covers aggregate reporting, the daily domain-level XML summaries that most operators actually rely on.
+- **RFC 9991** covers failure reporting, the detailed per-message reports, and updates the older RFC 6591 reporting format along the way.
+
+The move from a single Informational RFC to three Standards Track documents is not just bookkeeping. It reflects DMARC growing up into a first-class internet standard with the process discipline that implies.
+
+### Climbing the tree instead of trusting a list
+
+The headline change is how a receiver figures out where an organization's authority begins. Instead of consulting a static list, DMARCbis defines the *DNS tree walk*: a live, ordered series of DNS queries that climb from the Author Domain toward the root until they find the records that apply.
+
+The receiver always queries the full Author Domain first, at `_dmarc.<author-domain>`. If nothing definitive turns up there, the walk begins: it drops labels from the left and queries the parent, then that parent's parent, and so on toward the root. To keep a pathologically long domain from turning into a flood of lookups, the algorithm is capped at eight queries. For names of eight labels or fewer it strips one label at a time, but for anything longer it removes several labels at once so that only seven remain, then continues one label at a time from there. Eight was not arbitrary: names of up to seven labels were observed in real use, so the cap clears actual traffic while still bounding the work.
+
+The canonical illustration from the spec makes the cap concrete. For `a.b.c.d.e.f.g.h.i.j.mail.example.com`, a receiver issues exactly eight queries and skips the deep intermediate labels entirely:
+
+```text
+_dmarc.a.b.c.d.e.f.g.h.i.j.mail.example.com
+_dmarc.g.h.i.j.mail.example.com
+_dmarc.h.i.j.mail.example.com
+_dmarc.i.j.mail.example.com
+_dmarc.j.mail.example.com
+_dmarc.mail.example.com
+_dmarc.example.com
+_dmarc.com
+```
+
+For the domains almost everyone actually runs, this is cheap. A name like `mail.marketing.example.com` resolves in a couple of lookups, and DNS caching absorbs most of the cost because the same parent records are queried over and over across many messages.
+
+Once the walk has collected the records that exist along the path, the receiver selects the Organizational Domain with a short, deterministic set of rules, working from the longest name to the shortest:
+
+1. A record that declares `psd=n` marks its own domain as the Organizational Domain. Stop there.
+2. A record that declares `psd=y` (and is not where the walk began) means the Organizational Domain sits one label below it.
+3. Failing both of those, the record with the fewest labels wins.
+
+To make rule 3 concrete: for `a.mail.example.com`, absent any `psd` signals along the way, the walk settles on `example.com` as the Organizational Domain, exactly the answer the Public Suffix List used to hand back, now derived from live DNS instead.
+
+The payoff is that the Organizational Domain is now defined by DNS records that the domain owner controls, rather than inferred from a file the owner has no say over. It refreshes as fast as DNS does, and it removes an entire class of "why is the PSL wrong for my domain" problems.
+
+### Tuning the record: what arrived, what retired
+
+The record itself picked up three new tags and lost three old ones. The valid set in DMARCbis is now `v`, `p`, `sp`, `np`, `adkim`, `aspf`, `fo`, `rua`, `ruf`, `psd`, and `t`.
+
+| Tag | Status in DMARCbis | What it does |
+|---|---|---|
+| `np` | New | Policy for non-existent subdomains of the Organizational Domain |
+| `psd` | New | Declares whether the domain is a public suffix (`y` / `n` / `u`) |
+| `t` | New | Testing flag that softens enforcement without turning it off |
+| `pct` | Removed | Percentage sampling; only 0 and 100 ever worked reliably |
+| `rf` | Removed | Failure report format; only one format was ever deployed |
+| `ri` | Removed | Aggregate report interval; effectively fixed at roughly one day |
+| `v`, `p`, `sp`, `adkim`, `aspf`, `fo`, `rua`, `ruf` | Unchanged | Version, policy, subdomain policy, alignment modes, failure options, report destinations |
+
+A closer look at the newcomers:
+
+**`t` replaces `pct` with something clear.** Rather than pretending to be a dial, the testing flag is a plain switch. The default `t=n` applies the published policy as written. Setting `t=y` signals that the domain is still testing, so compliant receivers step the effective policy down one level: `reject` behaves like `quarantine`, and `quarantine` behaves like `none`, with intermediaries free to apply special handling such as rewriting the `From:` header. Crucially, `t` leaves report generation untouched, so a domain can watch the reports roll in while enforcement stays gentle. It is best understood as analogous to the old `pct=0` and `pct=100` behavior rather than an exact reimplementation of it.
+
+**`np` closes the phantom-subdomain gap.** It sets the policy for subdomains that do not exist at all, identified by an NXDOMAIN response as described in RFC 8020. If a name has never been registered, an attacker should not be able to send convincing mail from it, and `np` lets a domain say exactly that. When `np` is absent the receiver falls back to `sp`, and then to `p`. The mechanism leans on RFC 8020's rule that an NXDOMAIN answer means the name and everything beneath it truly does not exist, so it is only as reliable as the DNS returning that answer as the standard requires.
+
+**`psd` brings public suffix operators into the fold.** Registry-style domains such as a country's `gov` namespace can now declare `psd=y`, which both anchors the tree walk and lets the operator publish a protective default for every registered name underneath. `psd=n` states the opposite, that the domain is its own Organizational Domain, and the default `psd=u` leaves the decision to the tree walk. This is the RFC 9091 experiment, now standardized and freed from its separate registry.
+
+The `sp` tag, meanwhile, keeps its meaning but is redefined in terms of the tree walk: it governs existing subdomains of the Organizational Domain, and it is read only from the record discovered at that Organizational Domain, not from a record sitting on the subdomain itself.
+
+### The p=reject reality check
+
+One change is less about syntax and more about attitude. `p=reject` is no longer treated as an unconditional order to bounce.
+
+The tension is real and was debated at length. Strict rejection is what protects the largest consumer mail platforms and the billions of inboxes behind them, and nobody wanted to weaken that. At the same time, blunt rejection breaks legitimate indirect mail flows, mailing lists and forwarders being the classic casualties, and the damage lands on innocent third parties who never chose the policy.
+
+DMARCbis threads the needle with sharper guidance rather than a weaker mechanism. Three distinct rules do the work:
+
+| Party | Guidance |
+|---|---|
+| Sending domain (general-purpose) | SHOULD NOT publish `p=reject` if users might post to mailing lists; ramp through `none` and `quarantine` first |
+| Sending domain (any `p=reject`) | MUST NOT rely on SPF alone, and MUST apply valid DKIM signatures, since DKIM is what survives forwarding |
+| Receiver | MUST NOT reject solely because a policy says `reject`; weigh other evidence before acting |
+
+The policy became a strong signal to weigh rather than a trigger to pull blindly.
+
+### Reporting grows up
+
+Splitting reporting into its own documents came with real upgrades, not just a new table of contents.
+
+**Aggregate reports (RFC 9990)** move to a new XML namespace, `urn:ietf:params:xml:ns:dmarc-2.0`, and gain an extensibility slot so future data can be added without breaking existing parsers: consumers simply ignore extensions they do not understand. The schema now records how policy was discovered through a `discovery_method` field that distinguishes the old `psl` from the new `treewalk`, reflects the `t` testing flag, and carries the `np` policy. Reporting a DKIM result now requires naming the selector, which makes the reports genuinely more useful for debugging. These reports stay privacy-safe by design: they aggregate domain-level authentication counts and carry no message content and no end-user identifying data such as recipient addresses or the IP addresses of individuals. Transport remains email, with the XML gzipped and delivered as an attachment, and external report destinations still have to prove they consented through a `_report._dmarc` record.
+
+**Failure reports (RFC 9991)** get an honest treatment of why they are used so sparingly. Because they can carry entire messages, headers and body included, they raise real privacy and regulatory concerns, and many large providers disable them outright in favor of aggregate data. The format, updated from RFC 6591, adds a dedicated `dmarc` failure type and a required `Identity-Alignment` field that spells out which mechanisms failed to produce an aligned identifier. Generators must rate-limit what they send, and for public suffix domains they must not act on a `ruf` request at all unless the parties have a specific agreement in place, so a registry operator does not receive a stream of other people's message content by default.
+
+### What stayed exactly the same
+
+For all the moving parts, the fundamentals are untouched, which is worth stating plainly so nobody over-rotates on the release:
+
+- Alignment still works the way it always has, in relaxed and strict flavors selected with `adkim` and `aspf`.
+- The three policies, `none`, `quarantine`, and `reject`, mean what they always meant.
+- DMARC still evaluates only the `From:` header and still builds on SPF and DKIM rather than replacing them.
+- Records written for RFC 7489 remain valid. The retired tags are ignored, not rejected, so there is no urgent rewrite waiting on anyone's to-do list.
+
+DMARCbis is less a reinvention than a long-overdue tidy-up: the same protocol, with its most useful experiments promoted to the core and a decade of operational lessons written back into the spec. The tree walk alone, trading a static list for live DNS, is the kind of change whose absence will not be missed at all.
+
+## Both protocols live in Stalwart today
+
+As of [Stalwart v0.16.12](https://github.com/stalwartlabs/stalwart/releases), DKIM2 (draft -04) and DMARCbis are both fully implemented, and Stalwart is the first mail server to support either of them. Signing, verifying, the chain-of-custody logic, recipe reversal, bounce validation, the DNS tree walk, the new and retired DMARC tags: all of it ships and runs.
+
+We wanted the protocols to be easy to try without setting up a server, so both are exposed in the browser. At the [mail-auth playground](https://mail-auth.stalw.art) anyone can sign a message with DKIM2 and watch it verify, break it and see the chain reject it, or run a message through DMARCbis side by side to see how the tree walk resolves the Organizational Domain. It runs Stalwart's own authentication code compiled to WebAssembly, so what the playground shows is exactly what the server does, no install and nothing to configure.
+
+For Rust developers, the same code is available as a library. DKIM2 and DMARCbis live in the [`mail-auth`](https://github.com/stalwartlabs/mail-auth) crate, the message authentication library Stalwart itself is built on, which also covers DKIM1, SPF, DMARC, and ARC. It is the engine behind both the server and the playground, and it is open source under the same permissive terms as the rest of Stalwart, so any Rust project can add DKIM2 and DMARCbis support by pulling in a single dependency.
+
+## Looking forward
+
+DKIM2 and DMARCbis pull in the same direction. DKIM2 makes a signature vouch for the whole journey rather than a frozen snapshot of content. Forwarding stops breaking authentication, replayed mail no longer verifies on borrowed reputation, and bounces finally carry their own proof. DMARCbis takes the layer that ties all of this to the domain a person actually reads and rests it on live DNS the domain owner controls, retiring the tags that never worked and the static list that sat on the critical path of global mail. Neither demands a flag day: existing DKIM and DMARC records keep working, and the new mechanisms layer in alongside them.
+
+Supporting them first is the part of this that Stalwart cares most about. Being early to a standard is how the standard gets tested against real mail before it hardens, and it is how operators who want the newest protections get them without waiting for the rest of the ecosystem to catch up. Stalwart has made a habit of shipping the latest IETF work as it lands, and DKIM2 and DMARCbis are the newest entries on that list. Try them at the [mail-auth playground](https://mail-auth.stalw.art), read the code in the [`mail-auth`](https://github.com/stalwartlabs/mail-auth) crate, and upgrade to [v0.16.12](https://github.com/stalwartlabs/stalwart/releases) to run them in production.

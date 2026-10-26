@@ -1,0 +1,90 @@
+---
+import { Code } from "astro:components";
+import Icon from "./Icon.astro";
+import { diagrams } from "../lib/diagrams";
+
+interface Props {
+  visual: any;
+  class?: string;
+  full?: boolean;
+  loading?: "eager" | "lazy";
+}
+const { visual, class: cls = "", full = false, loading = "lazy" } = Astro.props;
+const Diagram = visual?.kind === "diagram" ? diagrams[visual.id] : null;
+const placeholderCaption =
+  visual.kind === "placeholder"
+    ? visual.caption
+    : visual.kind === "diagram" && !Diagram
+      ? `Diagram '${visual.id}' is not registered yet`
+      : "";
+---
+{visual.kind === "screenshot" && (
+  <figure class:list={["tile tile--ink shot", { "shot--full": full }, cls]}>
+    <figcaption class="shot-url">
+      <Icon name="lock" size={13} />
+      <span>{visual.url ?? "admin.stalw.art"}</span>
+    </figcaption>
+    <div class="shot-frame">
+      <img src={visual.src} alt={visual.alt} width="1280" height="800" loading={loading} decoding="async" />
+    </div>
+  </figure>
+)}
+{visual.kind === "code" && (
+  <figure class:list={["tile tile--ink code", cls]}>
+    <figcaption class="code-head">
+      <span class="code-file"><Icon name="file-code" size={14} />{visual.filename ?? visual.prompt ?? visual.lang}</span>
+      <span class="code-lang">{visual.lang}</span>
+    </figcaption>
+    <Code code={visual.body.replace(/\n$/, "")} lang={visual.lang as any} theme="github-dark-default" />
+  </figure>
+)}
+{visual.kind === "diagram" && Diagram && (
+  <div class:list={["tile tile--sand visual-dg", cls]}>
+    <Diagram />
+  </div>
+)}
+{placeholderCaption && (
+  <div class:list={["tile tile--sand visual-dg placeholder", cls]} style={visual.aspect ? `aspect-ratio: ${visual.aspect};` : undefined}>
+    <div class="ph-inner">
+      <span class="badge"><Icon name="image" size={22} /></span>
+      <p>{placeholderCaption}</p>
+    </div>
+  </div>
+)}
+
+<style>
+  .code :global(pre.astro-code) {
+    flex: 1;
+    margin: 16px;
+    padding: 22px 24px;
+    overflow: auto;
+    border-radius: var(--r-lg);
+    background: var(--ink-2) !important;
+    font-size: 0.8125rem;
+    line-height: 1.75;
+    tab-size: 2;
+  }
+  .placeholder {
+    align-items: center;
+    min-height: 380px;
+    text-align: center;
+    background-color: var(--sand);
+    background-image: radial-gradient(circle, color-mix(in oklab, var(--dim) 30%, transparent) 1.2px, transparent 1.4px);
+    background-size: 18px 18px;
+  }
+  .ph-inner {
+    display: grid;
+    justify-items: center;
+    gap: 10px;
+    max-width: 420px;
+    padding: 28px;
+    border-radius: var(--r-lg);
+    background: var(--tile);
+    box-shadow: var(--shadow-tile);
+  }
+  .ph-inner p {
+    color: var(--muted);
+    font-size: var(--fs-xs);
+    line-height: 1.55;
+  }
+</style>

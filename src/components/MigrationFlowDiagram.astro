@@ -1,0 +1,234 @@
+---
+import Icon from "./Icon.astro";
+
+const sources = [
+  { name: "Postfix + Dovecot", proto: "on-disk + IMAP" },
+  { name: "Cyrus IMAP", proto: "on-disk + IMAP" },
+  { name: "Microsoft Exchange", proto: "EWS / Graph" },
+  { name: "Zimbra", proto: "IMAP + CalDAV + CardDAV" },
+  { name: "MDaemon · hMailServer", proto: "IMAP + native" },
+  { name: "Generic IMAP / DAV", proto: "protocol-only" },
+];
+const phases = ["dry run", "bulk", "delta", "cutover"];
+const label = `Migration flow. Sources: ${sources.map((s) => `${s.name} (${s.proto})`).join(", ")}. They feed stalwart-cli migrate, which runs in phases: ${phases.join(", ")}. It writes over JMAP to the Stalwart cluster: mailboxes, folders, flags, calendars, contacts and ACLs.`;
+---
+<div class="dg" role="img" aria-label={label}>
+  <span class="dg-caption">Source → tool → JMAP → Stalwart</span>
+  <ul class="sources">
+    {sources.map((s) => (
+      <li><strong>{s.name}</strong><code>{s.proto}</code></li>
+    ))}
+  </ul>
+  <span class="arrow down"><Icon name="arrow-down" size={16} /></span>
+  <div class="pair">
+    <div class="tool">
+      <span class="head"><Icon name="terminal" size={16} /><code>stalwart-cli migrate</code></span>
+      <ol class="phases">
+        {phases.map((p, i) => <li class:list={{ "is-brand": i === phases.length - 1 }}><span>{i + 1}</span>{p}</li>)}
+      </ol>
+    </div>
+    <div class="hop">
+      <span class="arrow"><Icon name="arrow-right" size={16} /></span>
+      <span class="hop-label">write</span>
+    </div>
+    <div class="dst">
+      <span class="ic"><Icon name="server" size={18} /></span>
+      <div class="dst-name"><strong>Stalwart</strong><span>cluster</span></div>
+      <span class="jmap">JMAP</span>
+      <span class="rec">mailboxes · folders · flags</span>
+      <span class="rec">calendars · contacts · ACLs</span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .dg {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    container-type: inline-size;
+  }
+  .sources {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    padding: 0;
+  }
+  .sources li {
+    display: grid;
+    align-content: start;
+    gap: 3px;
+    padding: 12px 14px;
+    border-radius: 16px;
+    background: var(--tile);
+    box-shadow: var(--shadow-tile);
+  }
+  strong {
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    font-weight: 680;
+    line-height: 1.3;
+  }
+  .dg code {
+    padding: 0;
+    background: none;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    line-height: 1.4;
+  }
+  .sources code {
+    color: var(--muted);
+  }
+  .arrow {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--tile);
+    color: var(--brand-text);
+    box-shadow: var(--shadow-tile);
+  }
+  .down {
+    align-self: center;
+  }
+  .pair {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+    gap: 10px;
+  }
+  .tool,
+  .dst {
+    display: grid;
+    align-content: start;
+    align-self: stretch;
+    gap: 12px;
+    padding: 16px;
+    border-radius: var(--r-lg);
+    background: var(--tile);
+    box-shadow: var(--shadow-tile);
+  }
+  .head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--brand-text);
+  }
+  .head code {
+    color: var(--text);
+    font-size: 0.78rem;
+    font-weight: 600;
+  }
+  .phases {
+    display: grid;
+    gap: 6px;
+    padding: 0;
+  }
+  .phases li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 12px 5px 5px;
+    border-radius: var(--r-pill);
+    background: var(--sand);
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+  }
+  .phases li span {
+    display: grid;
+    place-items: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--tile);
+    color: var(--text);
+    font-size: 0.6875rem;
+    font-weight: 600;
+  }
+  .phases .is-brand {
+    background: var(--rose);
+    color: var(--brand-text);
+    font-weight: 600;
+  }
+  .phases .is-brand span {
+    background: var(--brand);
+    color: #fff;
+  }
+  .hop {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  .hop-label {
+    color: var(--dim);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 600;
+  }
+  .dst {
+    gap: 8px;
+    background: var(--rose);
+    box-shadow: none;
+  }
+  .ic {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    margin-bottom: 4px;
+    border-radius: 12px;
+    background: var(--brand);
+    color: #fff;
+  }
+  .dst-name {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+  }
+  .dst-name strong {
+    font-size: 1rem;
+  }
+  .dst-name span {
+    color: var(--brand-text);
+    font-size: var(--fs-xs);
+    font-weight: 600;
+  }
+  .jmap {
+    justify-self: start;
+    margin-bottom: 4px;
+    padding: 3px 12px;
+    border-radius: var(--r-pill);
+    background: var(--ink);
+    color: var(--on-ink);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+  .rec {
+    color: var(--muted);
+    font-size: var(--fs-xs);
+    line-height: 1.4;
+  }
+  @container (max-width: 560px) {
+    .sources {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @container (max-width: 420px) {
+    .pair {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .hop {
+      flex-direction: row;
+      justify-self: center;
+    }
+    .hop .arrow {
+      rotate: 90deg;
+    }
+  }
+</style>

@@ -1,0 +1,147 @@
+---
+const rows = [
+  { name: "Ingress", items: ["Load balancer", "DNS", "PROXY protocol"] },
+  { name: "Listeners", items: ["SMTP", "IMAP", "JMAP", "POP3", "CalDAV", "CardDAV", "DAV"] },
+  { name: "Pipeline", items: ["Authentication", "Sieve", "Anti-spam", "DKIM / SPF", "DMARC"], brand: true },
+  { name: "Storage", items: ["Data store", "Blob store", "Search store", "In-memory"] },
+  { name: "Outbound", items: ["Distributed queue", "Outbound MTA", "Remote MTAs"], flow: true },
+];
+const coord = ["Zenoh", "Kafka", "NATS", "Redis"];
+const label = `Stalwart architecture, top to bottom: ${rows
+  .map((r) => `${r.name} (${r.items.join(", ")})`)
+  .join(", then ")}. Cluster coordination across all layers through ${coord.join(", ")}.`;
+---
+<div class="dg" role="img" aria-label={label}>
+  <span class="dg-caption">Stalwart architecture</span>
+  <div class="layout">
+    <ol class="rows">
+      {rows.map((r) => (
+        <li class:list={["row", { "is-brand": r.brand }]}>
+          <strong>{r.name}</strong>
+          <ul class:list={["mini-chips", { "is-flow": r.flow }]}>
+            {r.items.map((it, i) => <li class:list={{ "is-ext": r.flow && i === r.items.length - 1 }}>{it}</li>)}
+          </ul>
+        </li>
+      ))}
+    </ol>
+    <div class="coord">
+      <strong>Coordination</strong>
+      <ul>{coord.map((c) => <li>{c}</li>)}</ul>
+    </div>
+  </div>
+</div>
+
+<style>
+  .dg {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 100%;
+    container-type: inline-size;
+  }
+  .layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 12px;
+  }
+  .rows {
+    display: grid;
+    gap: 18px;
+    padding: 0;
+  }
+  .row {
+    position: relative;
+    display: grid;
+    grid-template-columns: 6.5em minmax(0, 1fr);
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border-radius: var(--r-lg);
+    background: var(--tile);
+    box-shadow: var(--shadow-tile);
+  }
+  .row + .row::before {
+    content: "";
+    position: absolute;
+    top: -16px;
+    left: 50%;
+    width: 2px;
+    height: 14px;
+    border-radius: 1px;
+    background: var(--brand);
+    opacity: 0.4;
+  }
+  strong {
+    font-family: var(--font-display);
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    color: var(--dim);
+  }
+  .is-brand {
+    background: var(--rose);
+    box-shadow: none;
+  }
+  .is-brand strong {
+    color: var(--brand-text);
+  }
+  .is-brand .mini-chips li {
+    background: var(--tile);
+    color: var(--brand-text);
+  }
+  .is-flow {
+    column-gap: 22px;
+  }
+  .is-flow li {
+    position: relative;
+  }
+  .is-flow li:not(:last-child)::after {
+    content: "→";
+    position: absolute;
+    right: -17px;
+    color: var(--brand-text);
+  }
+  .mini-chips .is-ext {
+    background: transparent;
+    box-shadow: inset 0 0 0 1px var(--hairline);
+  }
+  .coord {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 14px;
+    border-radius: var(--r-lg);
+    background: var(--tile);
+    box-shadow: var(--shadow-tile);
+  }
+  .coord ul {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-around;
+    gap: 8px;
+  }
+  .coord li {
+    padding: 5px 12px;
+    border-radius: var(--r-pill);
+    background: var(--ink);
+    color: var(--on-ink);
+    box-shadow: inset 0 0 0 1px var(--ink-edge);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-align: center;
+  }
+  @container (max-width: 520px) {
+    .layout {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .row {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 8px;
+    }
+    .coord ul {
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+  }
+</style>

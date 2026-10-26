@@ -1,0 +1,90 @@
+---
+import Icon from "../Icon.astro";
+import { inlineMd } from "../../lib/md";
+
+interface Props {
+  data: any;
+}
+const { data } = Astro.props;
+const items: any[] = data.items ?? [];
+const tray = data.band === "alt";
+const headingId = data.title
+  ? `p-${data.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}`
+  : undefined;
+const span = (i: number) => {
+  if (items.length % 2 === 1 && i === items.length - 1) return "c-12";
+  const row = Math.floor(i / 2);
+  const first = i % 2 === 0;
+  return (row % 2 === 0) === first ? "c-7" : "c-5";
+};
+---
+<section class="wrap section" aria-labelledby={headingId}>
+  <div class:list={[{ tray }]}>
+    {(data.eyebrow || data.title) && (
+      <div class:list={["section-head reveal", { "tray-head": tray }]}>
+        {data.eyebrow && <span class="pill">{data.eyebrow}</span>}
+        {data.title && <h2 id={headingId} class="h2" set:html={inlineMd(data.title)}></h2>}
+      </div>
+    )}
+    <ul class="bento pillars">
+      {items.map((item, i) => (
+        <li class:list={["pillar-cell", span(i)]}>
+          <a class:list={["tile tile--link pillar reveal", { "tile--sand": span(i) === "c-5" }]} href={item.href}>
+            <span class="badge"><Icon name={item.icon} size={22} /></span>
+            <h3 class="h3">{item.title}</h3>
+            <p set:html={inlineMd(item.body)}></p>
+            <span class="go" aria-hidden="true"><Icon name="arrow-up-right" size={18} /></span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .pillar-cell {
+    display: grid;
+  }
+  .c-5 {
+    grid-column: span 5;
+  }
+  .c-7 {
+    grid-column: span 7;
+  }
+  .c-12 {
+    grid-column: 1 / -1;
+  }
+  .pillar {
+    min-height: 290px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .pillar .badge {
+    margin-bottom: auto;
+  }
+  .pillar .h3 {
+    margin-top: 36px;
+  }
+  .pillar p {
+    color: var(--muted);
+    max-width: 46ch;
+  }
+  @media (max-width: 1023px) {
+    .pillar {
+      min-height: 0;
+    }
+    .pillar .badge {
+      margin-bottom: 0;
+    }
+    .pillar .h3 {
+      margin-top: 20px;
+    }
+  }
+  @media (max-width: 760px) {
+    .c-5,
+    .c-7 {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

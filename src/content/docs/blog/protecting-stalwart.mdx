@@ -1,0 +1,151 @@
+---
+title: "Private Tests, Public Code: Protecting Stalwart from AI Clones"
+description: "Stalwart is moving its test suites to a private repository and developing new features in private before releasing them under the AGPL. The code stays public and AGPL; only the tests and work in progress move."
+authors: [mdecimus]
+tags: [open-source, agpl, license, enterprise, ietf, stalwart]
+excerpt: |
+  Open source works because it is a relationship that benefits both sides. Lately, a few actors have started treating Stalwart as something to feed on instead. This post explains what has been happening, why our test suites are moving to a private repository, why the license is not changing, and how the Enterprise edition keeps the Community edition alive.
+date: 2026-10-16
+---
+
+Biologists have a word for two species that live together and both come out ahead: **mutualism**. The classic example is the clownfish and the sea anemone. The anemone's stinging tentacles protect the clownfish from predators, and in return the clownfish keeps the anemone clean, chases away fish that would eat it, and feeds it scraps. Neither would do as well alone. Bees and flowers have the same arrangement, and so do we with the bacteria in our gut.
+
+Then there are **parasites**, which take from their host and give nothing back. Most parasites have at least a selfish interest in keeping their host alive: a tick that kills the dog it lives on has also killed its next meal. But nature has a darker category still, the **parasitoid**. A parasitoid wasp lays its eggs inside a living caterpillar. The young wasps grow by feeding on the caterpillar, which carries on with its life for as long as they still need it. Once they are ready, they leave, and the caterpillar does not survive. The relationship is not designed to last. It is designed to end once the host has nothing left to give.
+
+We bring this up because, for five years, Stalwart has lived in a mutualistic relationship with its community, and in the last few months we have started to see the other kinds.
+
+## Open source as mutualism
+
+Stalwart is open source because we believe in it. The Community edition is licensed under the [AGPL-3.0](https://www.gnu.org/licenses/agpl-3.0.html), and it is not a crippled teaser: it is a complete mail and collaboration server with JMAP, IMAP, POP3, SMTP, CalDAV, CardDAV and WebDAV, a spam filter, clustering, and much more.
+
+What we receive in return is just as real. Thousands of people run Stalwart and tell us when something breaks. They report bugs, test release candidates, translate the web interface, write guides, answer each other's questions, and occasionally send a pull request that fixes something we had not even noticed. Some of them sponsor the project. Some of them grow into organizations that need the Enterprise edition, and buy it. That revenue pays the people who write the next release, which goes back to everyone under the AGPL. Each side makes the other stronger. That is the clownfish and the anemone.
+
+The AGPL is what keeps this fair. It says, in short: you can use, study, modify and redistribute this software, and if you run a modified version as a network service, you share your changes with the people who use it. Take freely, and give back what you build on top.
+
+## Two new threats
+
+Over the past few months, two different groups have started to treat Stalwart less like a partner and more like a host. Before we describe them, one thing should be clear: forking Stalwart, or running it commercially, does not make anyone a parasite. Both are rights the AGPL grants, and we welcome them. What follows describes a pattern of behaviour, not a license choice.
+
+The first are **forks built with LLMs**. We have received reports of projects that take Stalwart, then use AI coding tools to rewrite the features of our Enterprise edition and publish the result under the AGPL, apparently out of a belief that we should not be able to make a living from the software we write. This is legal. Forking is a right the AGPL grants, reimplementing a feature is allowed, and we have no quarrel with a fork that goes its own way. These forks are not that. They do not contribute anything back, and they are not really independent projects either: every time we fix a bug, close a security hole or improve performance in the AGPL version, they pull the change in and carry on. The work flows in one direction only. Every hour our engineers spend on Stalwart improves their product, while their only original contribution is a machine-written copy of the part that pays those engineers.
+
+The second are **cloud providers**. We have received emails from companies that run Stalwart as a service and do not like the AGPL's requirement to share their modifications. The message, worded politely, is that if we do not offer them different terms, they will have Stalwart rewritten under a permissive license such as MIT, so they can keep their changes private and owe nothing to anyone. A few years ago that would have been an empty threat, because rewriting a mail server is many years of work. With LLMs, it no longer sounds so absurd, and they know it.
+
+Both are isolated cases so far. We do not expect them to stay isolated. The tools that make this possible get cheaper and more capable every month, and the incentive is obvious: why pay for something, or comply with its license, when you can have a machine regenerate it for you?
+
+## From mutualism to parasitism
+
+It would be easy to frame this as "open source doing what open source does". It is not, and the difference matters.
+
+A healthy fork takes the code somewhere new and brings its own work, its own maintainers and its own ideas. A healthy cloud provider runs Stalwart, shares what it changes, and benefits from everyone else doing the same. Both are mutualism.
+
+What we are seeing instead is a strategy that only works for as long as Stalwart keeps working. The AI forks need our weekly fixes, because they do not have the people to write their own. The cloud providers need our years of protocol work, because that is the thing they are threatening to copy. If either succeeded in cutting off the revenue that funds Stalwart's development, the fixes would stop, and so would the thing they were living on. That is the parasitoid wasp: a relationship that ends when there is nothing left to take.
+
+We are not willing to be the caterpillar. So we spent some time working out what to do about it.
+
+## Weighing our options
+
+The first thing we did was talk to [NLnet](https://nlnet.nl). NLnet has funded Stalwart twice through the European Commission's Next Generation Internet programme: [in 2023](/blog/nlnet-grant-stalwart) for the core mail server, and [in 2025](/blog/nlnet-grant-collaboration) for the collaboration server. They care about open source and they understand the economics of keeping it alive, so we asked them to help us think through the options. We are grateful for their time and their candour.
+
+The most obvious option was a license change. We seriously considered releasing new code under the [PolyForm Shield](https://polyformproject.org/licenses/shield/1.0.0/) license. PolyForm Shield lets anyone use, modify and redistribute the software for any purpose, with one exception: you cannot use it to offer a product that competes with the licensor. It would have stopped this behaviour in its tracks.
+
+It would also have stopped Stalwart being open source. PolyForm Shield is a source-available license, not an open source one: it fails the [Open Source Definition](https://opensource.org/osd), and every Linux distribution, package maintainer and cautious legal department would have treated new Stalwart code accordingly. We have seen what happens to projects that go down that road, and we have told our users more than once that we would not do it. Stalwart was built on an open source foundation and it is staying there. We decided against it, and we are not keeping it in reserve: Stalwart will not move to a source-available license.
+
+## Private tests, public code
+
+The source code of Stalwart stays public and stays AGPL. What changes is **how we develop it and what we publish alongside it**.
+
+**Our test suites are moving to a private repository.** That covers the unit tests, integration tests, protocol conformance tests, stress tests and the fixtures they depend on. As of today they are no longer in the public repository.
+
+**New features will be developed in private repositories.** When a feature is ready, it will be released to the public repository in a single commit, under the AGPL like everything else in the Community edition. Tests are written alongside the code they test, so a feature developed in public would publish its tests one commit at a time, long before it ships. Developing in private and releasing a finished feature in one commit is the only way to keep the answer key private without slowing down the work. The result reaches the public repository under the same license, the same day the release ships.
+
+The idea is not new. [SQLite](https://sqlite.org), arguably the most widely deployed piece of software in the world, has done something similar for years. SQLite's code is in the public domain and some of its tests are public, but its most thorough test suite, [TH3](https://sqlite.org/th3.html), is proprietary and has never been published. SQLite's authors decided long ago to keep this suite to themselves. We are going further than SQLite, since all of our tests move, but the principle is the same, and nobody seriously argues that SQLite is not free software.
+
+It is also not a change to the license, and it does not conflict with it. The AGPL defines the source it requires as "all the source code needed to generate, install, and (for an executable work) run the object code and to modify the work, including scripts to control those activities". Every Stalwart release will keep meeting that definition, and the public repository will keep building on its own. A test suite is not part of it.
+
+## The test suite is the answer key
+
+We are under no illusion that hiding the tests makes Stalwart impossible to copy. AI rewrites of existing software are no longer hypothetical; they are in the news every week:
+
+- In March 2026, the maintainer of `chardet`, a Python library used by millions of projects, released a [ground-up rewrite produced with an AI coding agent](https://lwn.net/Articles/1061534/) and changed its license from LGPL to MIT. The library's original author [objected](https://www.phoronix.com/news/Chardet-LLM-Rewrite-Relicense) that this was not a legitimate way to relicense his work.
+- A service called Malus now [sells "clean room as a service"](https://www.404media.co/this-ai-tool-rips-off-open-source-software-without-violating-copyright/): one set of AI agents writes a specification from an open source package, another writes new code from it, and the customer receives a copy marketed as free of attribution and copyleft obligations.
+- A single Cloudflare engineer [rebuilt most of the Next.js framework with AI in about a week](https://blog.pragmaticengineer.com/the-pulse-cloudflare-rewrites-next-js-as-ai-rewrites-commercial-open-source/), for roughly $1,100 in tokens. The project explicitly credited Next.js's extensive test suite as what made it feasible.
+- Just this month, a developer released [free AI-built clones of Photoshop, Illustrator, Lightroom and Premiere](https://www.vice.com/en/article/everything-we-know-about-the-free-adobe-clones-built-with-ai-do-they-actually-work/), with an AI model credited as co-author on most of the commits. Legal experts [have questioned](https://www.aljazeera.com/news/2026/10/14/how-ai-apps-are-offering-free-substitutes-for-big-tech-software) whether the claimed clean-room process holds up.
+
+Notice the third example. Here is the part that we think is not obvious, and the reason we chose tests over everything else.
+
+An LLM asked to rewrite a mail server from scratch produces something that looks like a mail server. It compiles. It probably handles the common cases. And then it fails in a hundred subtle ways on the edge cases that took us years to discover: a malformed MIME boundary from a client nobody has heard of, an IMAP command sequence that only one mobile app sends, a calendar recurrence rule that only breaks across a daylight-saving change in one specific timezone. Email is forty years of accumulated edge cases, and you do not find them by reading the RFCs.
+
+Our test suite is where those five years of discoveries live. Every test and every fixture in it encodes something we learned the hard way, often from a bug report sent by one of you. For a human, that suite is documentation. For an AI coding agent, it is something far more valuable: **an oracle**. An agent with access to the tests does not need to understand why a behaviour is correct. It can generate code, run the tests, read the failures, and try again, thousands of times, until everything is green. The test suite turns a plausible imitation into a verified clone.
+
+We cannot stop anyone from pointing an LLM at our source code. We can stop handing them the answer key.
+
+We also want to be honest about what this does and does not address. Of the two threats above, it is aimed mainly at the second: a rewrite generated from our code and our tests, then released under a license that lets its owner keep their changes private. The AGPL already keeps anything built on Stalwart's code open; what it cannot stop is a clean-room rewrite that leaves the license behind. That is the case this is meant to make much more expensive.
+
+## We are sorry
+
+We know this decision has a cost, and it does not fall only on the people it is aimed at.
+
+Some of you use our tests for perfectly legitimate reasons: distribution packagers verifying a build on their platform, researchers studying protocol behaviour, contributors checking that a change does not break something, operators validating a deployment. We are taking something useful away from you, and we do not do it lightly. If you were relying on the test suite for something specific, please get in touch and we will do what we can to help.
+
+We are also aware of the irony that many of those tests started life as bug reports from our community. Reporting a bug still works the same way: the fix still gets written, it still gets a regression test, and it is still released publicly under the AGPL.
+
+We could not find a way to keep the tests open to everyone without keeping them open to the people using them to hollow out the project. We chose the option that protects Stalwart while changing as little as possible for everyone else.
+
+## Stalwart stays open
+
+Some will read this as Stalwart becoming less open. It is a fair concern, so here is what stays exactly as it is:
+
+- Stalwart remains licensed under the **AGPL-3.0**. No new license, no relicensing, no fine print.
+- The complete source code of every release is public on the day the release ships.
+- **No existing open source feature will be moved to the Enterprise edition.** We made that promise before, and we are making it again.
+- New features will keep arriving under the AGPL. Most of what we build goes to the Community edition, and only a minority goes to Enterprise.
+- Issues, discussions and community support work exactly as before.
+- The tests are the one thing that moves, and they are not a feature of the software. The software you run, configure and deploy is unchanged.
+
+In fact, we already have two significant features planned for after the v1.0 release, and both will be AGPL. One will make Stalwart work much better with one of the most widely used email and calendaring clients in the corporate world. The other is a calendaring feature that, elsewhere, people pay a monthly subscription to use. We will share more when they are ready.
+
+## Bringing the tests back
+
+We would like to publish the tests again. We will, once there is clear legal protection against using AI to launder open source code into new licenses.
+
+The situation today is strange. LLMs were trained on trillions of lines of code written by open source developers, almost always without asking them, and often in ways that ignore the very licenses that code was published under. Those same models are now being used to regenerate open source projects under different terms, by people who then claim ownership of the output. Even that claim is shaky: the US Copyright Office [concluded in 2025](https://www.copyright.gov/ai/) that prompting a model is not enough to make someone the author of what it produces, and that purely AI-generated material is not protected by copyright at all. We do not believe that code reproduced by a model trained on other people's work should be treated as an original creation that can be relicensed at will.
+
+To be clear, we are not against AI. We use it ourselves, and we have [written openly about how](/blog/how-we-use-ai): mostly to find and fix bugs, never to generate entire features from other people's code. Our objection is not to the tools; it is to using them to strip the license from someone else's work. Governments are starting to look at these questions. When the law catches up, the tests come back. Until then, we will revisit this decision every year and report back publicly.
+
+## The price of keeping Stalwart free
+
+Some people believe all software should be free of charge, and it is fair to ask why all of Stalwart is not. So let us explain where the money goes, and why it matters.
+
+Of the 130 features listed on our [comparison page](https://stalw.art/compare/), 20 are exclusive to the Enterprise edition. That makes about **85% of Stalwart free and open source**. The Enterprise features include multi-tenancy, SCIM provisioning, AI-based spam classification, read replicas and sharded storage, live telemetry and archiving: mostly things that matter to large organizations and hosting providers running Stalwart at scale.
+
+The reason Enterprise exists at all is simple: **Stalwart is built by a professional, full-time team, not as a side project.** Our engineers work on Stalwart full-time, and they need salaries. We are genuinely grateful to every person and organization who sponsors Stalwart. It means a great deal to us that people choose to support the project with their own money. But the total we receive from open source sponsorship each month would not cover a month's rent in a mid-sized European city. It is also unpredictable: sponsorships begin and end for reasons that have nothing to do with us, and a project that depends on them can lose its funding overnight.
+
+Enterprise subscriptions are what make Stalwart sustainable. They pay the salaries, and the salaries produce the Community edition. Here is some of what that money actually buys.
+
+**Experience.** Stalwart is five years old, but some of the people behind it have been writing email software for thirty years. We have seen the mail clients that nobody admits to still running, the servers that interpret the RFCs creatively, and the bugs that only show up on the second Tuesday of a leap year. That knowledge is expensive to accumulate and it goes into every release.
+
+**Independence.** Several venture capital firms have approached us with offers to invest in Stalwart. We have turned them down. Venture funding comes with expectations of rapid growth and an eventual return, and when those expectations collide with the interests of an open source community, the community rarely wins. Enterprise revenue lets us grow at our own pace and answer only to our users.
+
+**Weekly releases.** We release a new version of Stalwart every week. Our aim is that the open bug count goes back to zero every Monday, and most weeks it does.
+
+**Fast security fixes.** Our policy is to ship a fix within 24 hours of a security issue being reported.
+
+**Independent security audits.** Every time a large part of Stalwart is rewritten, we have it audited by an independent security firm. Stalwart has been audited twice so far, in [2023](/blog/security-audit) and [2025](/blog/security-audit-2025). A thorough audit of a mail server takes a team of specialists several weeks.
+
+**Stress testing at scale.** Functional tests show that the server does the right thing, but not how it behaves under heavy load, with millions of messages in a single mailbox, or after hours of continuous use. For that we run intensive stress tests and benchmarks on dozens of cloud servers at a time across many regions, and the programme has already consumed thousands of machine-hours. Renting hardware at that scale is not cheap.
+
+**Free community support.** Anyone, Enterprise customer or not, can ask for help at [support.stalw.art](https://support.stalw.art), and our team answers.
+
+**Internet standards.** The protocols that make email work, SMTP, IMAP, JMAP and almost everything around them, are designed and maintained at the [Internet Engineering Task Force](https://www.ietf.org) (IETF), and Stalwart Labs is an active participant. We are the authors of five Internet-Drafts in progress, four of which have already been adopted by IETF Working Groups, and the fifth proposes a new protocol that will be discussed at IETF 127 next month. None of this is free. Writing a draft takes weeks, revising it takes months, and taking part in the discussions around everyone else's drafts is a steady, ongoing commitment. Attending the meetings in person means registration fees, travel and time away from the code.
+
+**A voice for self-hosters.** Many of the people who shape email at the IETF work for the largest providers in the world. Other open source mail projects take part as well and do valuable work, but when a proposal would only work for the largest providers, we are usually the ones who object, unofficially speaking for everyone who runs their own mail, whatever software they use. The [Email Verification Protocol](https://datatracker.ietf.org/doc/draft-hardt-email-verification/), for example, only works if your mail lives in a webmail account you are permanently signed in to through your browser, which leaves out native mail clients and almost every self-hosted server. And when we tested an early version of the [OAuth Profile for Open Public Clients](https://datatracker.ietf.org/doc/draft-ietf-mailmaint-oauth-public/) and found that none of the identity providers self-hosters actually use could satisfy it, we [proposed changes](https://mailarchive.ietf.org/arch/msg/mailmaint/HoE64VX0cxLUtgytjPQRA32mOlI/) that the next revision [adopted](https://mailarchive.ietf.org/arch/msg/mailmaint/6Tay8jYRxMNgP7Kr9zZHFMqq9yQ/). This work does not show up in a changelog, and every hour of it is paid for by Enterprise subscriptions.
+
+## Back to the anemone
+
+Every one of the things above benefits the whole Stalwart community: the weekly releases, the security fixes and audits, the stress testing, the free support, the standards work that keeps self-hosted email viable for everyone. And every one of them also benefits the AI forks, and the cloud providers that want Stalwart without its license, which take all of it and give nothing back.
+
+That is why the Enterprise edition exists, and why we are protecting it. Not to make Stalwart less open, but to make sure there is still a Stalwart around to be open in five years' time.
+
+If you want to help keep the relationship mutualistic, there are plenty of ways. Use Stalwart, report what breaks, and tell others about it. If you can, [become a sponsor](https://opencollective.com/stalwart). If your organization needs Enterprise features, [buy a license](https://stalw.art/pricing/) and know exactly what it pays for. And if you care about the future of self-hosted email, join us on the IETF mailing lists and say so; the people in that room need to hear from you.
+
+The clownfish and the anemone have been doing this for millions of years. We would like to keep going for a while longer too.

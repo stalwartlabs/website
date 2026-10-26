@@ -1,0 +1,371 @@
+---
+import Icon from "./Icon.astro";
+
+const nav = [
+  { title: "Mail", items: [{ icon: "inbox", name: "Inbox", count: "128" }, { icon: "send", name: "Sent" }, { icon: "archive", name: "Archive" }] },
+  { title: "Files", items: [{ icon: "folder", name: "My files", active: true }, { icon: "users", name: "Shared with me" }, { icon: "clock", name: "Recents" }] },
+  { title: "Calendars", items: [{ icon: "calendar", name: "Personal" }, { icon: "calendar", name: "Team" }] },
+];
+
+const files = [
+  { icon: "folder", name: "Background", size: "--", mod: "2 Mar 2026" },
+  { icon: "file-text", name: "Q1-Summary.pdf", size: "183 KB", mod: "8 Mar 2026", shared: true },
+  { icon: "file-spreadsheet", name: "Forecast.xlsx", size: "412 KB", mod: "12 Mar 2026" },
+  { icon: "image", name: "team-photo.jpg", size: "2.1 MB", mod: "17 Mar 2026" },
+  { icon: "file-type", name: "customer-stories.docx", size: "86 KB", mod: "22 Mar 2026" },
+];
+---
+<div class="fb" role="img" aria-label="File browser next to mail and calendars: My files / Reports / 2026-Q1 holds the Background folder, Q1-Summary.pdf (183 KB, shared), Forecast.xlsx (412 KB), team-photo.jpg (2.1 MB) and customer-stories.docx (86 KB). Storage used is 2.1 GB of 5.0 GB: mail 1.6 GB and files 0.5 GB, one quota for both.">
+  <div class="sheet">
+    <nav class="side" aria-hidden="true">
+      {nav.map((g) => (
+        <div class="group">
+          <span class="g-title">{g.title}</span>
+          <ul>
+            {g.items.map((it) => (
+              <li class:list={{ "is-active": it.active }}>
+                <Icon name={it.icon} size={13} />
+                <span class="n">{it.name}</span>
+                {it.count && <span class="count">{it.count}</span>}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </nav>
+    <div class="main">
+      <span class="crumb">My files / Reports / 2026-Q1</span>
+      <div class="cols" aria-hidden="true">
+        <span>Name</span>
+        <span>Size</span>
+        <span>Modified</span>
+      </div>
+      <ul class="files">
+        {files.map((f) => (
+          <li>
+            <span class="ic"><Icon name={f.icon} size={14} /></span>
+            <span class="name">{f.name}{f.shared && <span class="shared">shared</span>}</span>
+            <span class="size">{f.size}</span>
+            <span class="mod">{f.mod}</span>
+          </li>
+        ))}
+      </ul>
+      <div class="quota">
+        <div class="q-head">
+          <span class="q-label">Storage used</span>
+          <span class="q-value">2.1 GB of 5.0 GB</span>
+        </div>
+        <span class="q-bar"><span class="seg seg--mail"></span><span class="seg seg--files"></span></span>
+        <div class="q-key">
+          <span><i class="dot dot--mail"></i>Mail 1.6 GB</span>
+          <span><i class="dot dot--files"></i>Files 0.5 GB</span>
+          <span class="q-note">one quota for both</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .fb {
+    width: 100%;
+    container-type: inline-size;
+  }
+
+  .sheet {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+    padding: 10px;
+    border-radius: var(--r-lg);
+    background: var(--tile);
+    box-shadow: var(--shadow-tile);
+  }
+
+  .side {
+    display: grid;
+    gap: 8px;
+    padding: 12px 10px;
+    border-radius: 16px;
+    background: var(--sand);
+  }
+
+  .group {
+    display: grid;
+    grid-template-columns: 4.6rem minmax(0, 1fr);
+    align-items: start;
+    gap: 4px;
+    min-width: 0;
+  }
+
+  .g-title {
+    padding: 5px 0 0 8px;
+    font-family: var(--font-display);
+    font-size: 0.6875rem;
+    font-weight: 650;
+    color: var(--dim);
+  }
+
+  .group ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .group li {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    min-width: 0;
+    padding: 4px 8px;
+    border-radius: 8px;
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 560;
+    color: var(--muted);
+  }
+
+  .group li :global(svg) {
+    flex: none;
+  }
+
+  .n {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .count {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--dim);
+  }
+
+  .group li.is-active {
+    background: var(--rose);
+    font-weight: 700;
+    color: var(--brand-text);
+  }
+
+  .main {
+    display: grid;
+    align-content: start;
+    gap: 10px;
+    min-width: 0;
+    padding: 4px 6px 6px;
+  }
+
+  .crumb {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .cols {
+    display: none;
+  }
+
+  .files {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--hairline);
+  }
+
+  .files li,
+  .cols {
+    grid-template-columns: 26px minmax(0, 1fr) 4.2rem 5.6rem;
+    align-items: center;
+    column-gap: 8px;
+  }
+
+  .files li {
+    display: grid;
+    grid-template-columns: 26px minmax(0, 1fr) auto;
+    grid-template-areas:
+      "ic name name"
+      "ic size mod";
+    padding: 7px 0;
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  .ic {
+    grid-area: ic;
+    display: grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 8px;
+    background: var(--sand);
+    color: var(--muted);
+  }
+
+  .name {
+    grid-area: name;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+    font-family: var(--font-display);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--text);
+    overflow-wrap: anywhere;
+  }
+
+  .size,
+  .mod {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--muted);
+  }
+
+  .size {
+    grid-area: size;
+  }
+
+  .mod {
+    grid-area: mod;
+  }
+
+  .shared {
+    flex: none;
+    padding: 1px 8px;
+    border-radius: var(--r-pill);
+    background: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    color: var(--on-ink);
+  }
+
+  .quota {
+    display: grid;
+    gap: 8px;
+    margin-top: 6px;
+    padding: 12px 14px;
+    border-radius: 14px;
+    background: var(--sand);
+  }
+
+  .q-head {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 4px 12px;
+  }
+
+  .q-label {
+    font-family: var(--font-display);
+    font-size: var(--fs-xs);
+    font-weight: 650;
+    color: var(--dim);
+  }
+
+  .q-value {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .q-bar {
+    display: flex;
+    height: 10px;
+    overflow: hidden;
+    border-radius: var(--r-pill);
+    background: var(--tile);
+  }
+
+  .seg--mail {
+    width: 32%;
+    background: var(--brand);
+  }
+
+  .seg--files {
+    width: 10%;
+    background: var(--text);
+  }
+
+  .q-key {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 16px;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--muted);
+  }
+
+  .q-key > span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+  }
+
+  .dot--mail {
+    background: var(--brand);
+  }
+
+  .dot--files {
+    background: var(--text);
+  }
+
+  .q-note {
+    color: var(--brand-text);
+    font-weight: 600;
+  }
+
+  @container (min-width: 560px) {
+    .sheet {
+      grid-template-columns: 9.6rem minmax(0, 1fr);
+    }
+
+    .side {
+      align-content: start;
+      gap: 14px;
+    }
+
+    .group {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .g-title {
+      padding-top: 0;
+    }
+
+    .group ul {
+      display: grid;
+    }
+
+    .cols {
+      display: grid;
+      padding-top: 2px;
+      font-family: var(--font-display);
+      font-size: 0.6875rem;
+      font-weight: 650;
+      color: var(--dim);
+    }
+
+    .cols span:first-child {
+      grid-column: 1 / 3;
+    }
+
+    .files li {
+      grid-template-columns: 26px minmax(0, 1fr) 4.2rem 5.6rem;
+      grid-template-areas: "ic name size mod";
+    }
+  }
+</style>

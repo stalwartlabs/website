@@ -1,0 +1,89 @@
+---
+import Icon from "../Icon.astro";
+import { inlineMd, paragraphMd } from "../../lib/md";
+
+interface Props {
+  data: any;
+}
+const { data } = Astro.props;
+const alt = data.band === "alt";
+const headId = `addr-${(data.title ?? "addresses").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}`;
+const span = data.items.length % 3 === 0 || data.items.length > 4 ? 4 : data.items.length === 4 ? 3 : 12 / data.items.length;
+---
+<section class="wrap section" aria-labelledby={data.title ? headId : undefined}>
+  <div class:list={[{ tray: alt }]}>
+    {(data.eyebrow || data.title || data.body) && (
+      <div class:list={["section-head reveal", { "tray-head": alt }]}>
+        {data.eyebrow && <span class="pill">{data.eyebrow}</span>}
+        {data.title && <h2 id={headId} class="h2" set:html={inlineMd(data.title)} />}
+        {data.body && <div class="section-body" set:html={paragraphMd(data.body)} />}
+      </div>
+    )}
+    <ul class="bento addr-grid" style={`--span: ${span}`}>
+      {data.items.map((item: any) => (
+        <li class:list={["tile addr reveal", { "tile--rose": !!item.email && !item.lines }]}>
+          <span class="badge"><Icon name={item.email && !item.lines ? "mail" : "map-pin"} size={20} /></span>
+          <h3 class="addr-label">{item.label}</h3>
+          {item.lines && (
+            <address>
+              {item.lines.map((line: string, i: number) => (
+                <Fragment>
+                  <span set:html={inlineMd(line)} />
+                  {i < item.lines.length - 1 && <br />}
+                </Fragment>
+              ))}
+            </address>
+          )}
+          {item.email && (
+            <a class="text-link addr-email" href={`mailto:${item.email}`}>{item.email}<Icon name="arrow-right" size={16} /></a>
+          )}
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .addr {
+    grid-column: span var(--span);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: clamp(24px, 2.6vw, 34px);
+  }
+  .addr .badge {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    margin-bottom: 8px;
+  }
+  .addr-label {
+    font-family: var(--font-display);
+    font-size: var(--fs-h3);
+    font-weight: 680;
+    letter-spacing: -0.015em;
+    line-height: 1.25;
+  }
+  .addr address {
+    font-style: normal;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .addr-email {
+    margin-top: auto;
+    overflow-wrap: anywhere;
+  }
+  @media (max-width: 1023px) {
+    .addr {
+      grid-column: span 6;
+    }
+    .addr:last-child:nth-child(odd) {
+      grid-column: 1 / -1;
+    }
+  }
+  @media (max-width: 640px) {
+    .addr {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

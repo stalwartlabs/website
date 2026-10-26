@@ -1,0 +1,167 @@
+---
+import Icon from "../Icon.astro";
+import { inlineMd, paragraphMd } from "../../lib/md";
+
+interface Props {
+  data: any;
+}
+const { data } = Astro.props;
+const items: any[] = data.items ?? [];
+const tray = data.band === "alt";
+const hasHead = !!(data.eyebrow || data.title);
+const headingId = data.title
+  ? `q-${data.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}`
+  : undefined;
+
+// Anchor id per question, matching github-slugger output for plain text
+// (so "Why isn't feature X open source?" -> "why-isnt-feature-x-open-source").
+const slugify = (text: string) =>
+  text
+    .toLowerCase()
+    .replace(/[`*_]/g, "")
+    .replace(/[^\p{L}\p{N}\s-]/gu, "")
+    .trim()
+    .replace(/\s/g, "-");
+---
+<section class="wrap section" aria-labelledby={headingId}>
+  <div class:list={[{ tray }]}>
+    <div class:list={["faq", { "faq--solo": !hasHead }]}>
+      {hasHead && (
+        <div class:list={["section-head faq-head reveal", { "tray-head": tray }]}>
+          {data.eyebrow && <span class="pill">{data.eyebrow}</span>}
+          {data.title && <h2 id={headingId} class="h2" set:html={inlineMd(data.title)}></h2>}
+        </div>
+      )}
+      <ul class="faq-list">
+        {items.map((item, i) => (
+          <li class="faq-item reveal" id={item.id ?? slugify(item.question)}>
+            <details class="tile qa" open={i === 0}>
+              <summary>
+                <span set:html={inlineMd(item.question)}></span>
+                <span class="qa-ic" aria-hidden="true"><Icon name="plus" size={18} /></span>
+              </summary>
+              <div class="qa-a" set:html={paragraphMd(item.answer)}></div>
+            </details>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<script>
+  function openFaqFromHash() {
+    const id = decodeURIComponent(location.hash.slice(1));
+    if (!id) return;
+    const item = document.getElementById(id);
+    if (!item?.classList.contains("faq-item")) return;
+    const details = item.querySelector("details");
+    if (details) details.open = true;
+    item.scrollIntoView({ block: "start" });
+  }
+  openFaqFromHash();
+  window.addEventListener("hashchange", openFaqFromHash);
+</script>
+
+<style>
+  .faq {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: var(--gap) clamp(24px, 4vw, 64px);
+    align-items: start;
+  }
+  .faq--solo {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .faq-head {
+    position: sticky;
+    top: 104px;
+    margin-bottom: 0;
+  }
+  .tray .faq-head {
+    padding-right: 0;
+  }
+  .faq-list {
+    display: grid;
+    gap: 10px;
+  }
+  .faq-item {
+    scroll-margin-top: 96px;
+  }
+  .qa {
+    padding: 0;
+  }
+  .qa summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 22px 24px 22px 28px;
+    cursor: pointer;
+    list-style: none;
+    font-family: var(--font-display);
+    font-weight: 650;
+    font-size: 1.0625rem;
+    letter-spacing: -0.01em;
+    line-height: 1.4;
+    border-radius: var(--r-xl);
+  }
+  .qa summary::-webkit-details-marker {
+    display: none;
+  }
+  .qa summary:focus-visible {
+    outline-offset: -3px;
+  }
+  .qa-ic {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    flex: none;
+    border-radius: 50%;
+    background: var(--sand);
+    color: var(--text);
+    transition: transform var(--t) var(--ease), background-color var(--t) var(--ease), color var(--t) var(--ease);
+  }
+  .qa summary:hover .qa-ic {
+    background: var(--rose);
+    color: var(--brand-text);
+  }
+  .qa[open] .qa-ic {
+    transform: rotate(45deg);
+    background: var(--rose);
+    color: var(--brand-text);
+  }
+  .qa-a {
+    padding: 0 28px 26px;
+    color: var(--muted);
+    max-width: 68ch;
+  }
+  .qa-a :global(p + p) {
+    margin-top: 0.8em;
+  }
+  .qa-a :global(a) {
+    color: var(--brand-text);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+  @media (max-width: 1199px) {
+    .faq {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .faq-head {
+      position: static;
+      margin-bottom: 8px;
+    }
+  }
+  @media (max-width: 760px) {
+    .qa summary {
+      padding: 18px 18px 18px 22px;
+      font-size: 1rem;
+    }
+    .qa-a {
+      padding: 0 22px 22px;
+    }
+  }
+</style>

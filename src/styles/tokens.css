@@ -1,0 +1,78 @@
+:root {
+  color-scheme: light dark;
+
+  --canvas: light-dark(#f5f2ec, #121213);
+  --tray: light-dark(#ebe5da, #19191b);
+  --tile: light-dark(#fffdf9, #1f1f22);
+  --tile-hover: light-dark(#ffffff, #26262a);
+  --sand: light-dark(#efe9df, #2a2a2e);
+  --rose: light-dark(#fbe7ea, #2f1a21);
+  --rose-2: light-dark(#f7d5db, #45212d);
+  --ink: light-dark(#1c1a17, #0b0b0c);
+  --ink-2: light-dark(#2a2723, #1b1b1e);
+
+  --text: light-dark(#1c1a17, #f2f2f3);
+  --muted: light-dark(#5a534b, #b5b5ba);
+  --dim: light-dark(#6b645b, #9e9ea4);
+  --on-ink: light-dark(#f3eee7, #f2f2f3);
+  --on-ink-muted: light-dark(#b9b0a5, #ababb1);
+
+  --brand: #db2d54;
+  --brand-press: light-dark(#c12148, #e8476b);
+  --brand-text: light-dark(#bf1f45, #ff8199);
+  --brand-on-ink: #ff8199;
+
+  --ink-edge: light-dark(rgb(255 255 255 / 0), rgb(255 255 255 / 0.07));
+  --hairline: light-dark(rgb(28 26 23 / 0.09), rgb(255 255 255 / 0.08));
+  --focus: light-dark(#bf1f45, #ff8199);
+
+  --shadow-c: light-dark(rgb(62 44 26 / 0.2), rgb(0 0 0 / 0.72));
+  --shadow-c2: light-dark(rgb(62 44 26 / 0.04), rgb(0 0 0 / 0.3));
+  --hi: light-dark(rgb(255 255 255 / 0), rgb(255 255 255 / 0.045));
+  --shadow-tile: inset 0 1px 0 var(--hi), 0 1px 2px var(--shadow-c2), 0 14px 34px -22px var(--shadow-c);
+  --shadow-lift: inset 0 1px 0 var(--hi), 0 2px 4px var(--shadow-c2), 0 28px 50px -24px var(--shadow-c);
+  --shadow-pop: inset 0 1px 0 var(--hi), 0 2px 6px var(--shadow-c2), 0 30px 60px -18px var(--shadow-c);
+
+  --font-display: "Plus Jakarta Sans Variable", "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter Variable", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: "JetBrains Mono Variable", "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+
+  --fs-display: clamp(2.6rem, 1.4rem + 4.4vw, 4.75rem);
+  --fs-display-xl: clamp(2.6rem, 1.2rem + 4.8vw, 5.5rem);
+  --fs-h2: clamp(1.95rem, 1.35rem + 2.1vw, 3rem);
+  --fs-h2-feature: clamp(1.7rem, 1.3rem + 1.4vw, 2.4rem);
+  --fs-h3: clamp(1.2rem, 1.1rem + 0.4vw, 1.4rem);
+  --fs-lead: clamp(1.075rem, 1rem + 0.3vw, 1.225rem);
+  --fs-body: 1.0625rem;
+  --fs-sm: 0.9375rem;
+  --fs-xs: 0.8125rem;
+
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 24px;
+  --s-6: 32px;
+  --s-7: 48px;
+  --s-8: 64px;
+  --s-9: 96px;
+  --s-10: 128px;
+  --gap: clamp(12px, 1.4vw, 18px);
+  --pad: clamp(24px, 3.2vw, 44px);
+  --section: clamp(72px, 9vw, 128px);
+  --wrap: 1264px;
+  --gutter: clamp(16px, 3vw, 32px);
+
+  --r-sm: 10px;
+  --r-md: 16px;
+  --r-lg: 22px;
+  --r-xl: 30px;
+  --r-tray: 40px;
+  --r-pill: 999px;
+
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --t: 220ms;
+}
+
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"] { color-scheme: dark; }

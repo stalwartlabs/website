@@ -1,0 +1,437 @@
+---
+import Icon from "../Icon.astro";
+import { inlineMd, paragraphMd } from "../../lib/md";
+
+interface Props {
+  data: any;
+  tiers?: any[];
+}
+const { data, tiers = [] } = Astro.props;
+const threshold = data.premiumSupportThreshold ?? 150;
+const minimum = tiers.length ? tiers[0].lower : 1;
+const sliderMax = 100000;
+const fmt = (n: number) => n.toLocaleString("en-US");
+const headId = `calc-${(data.title ?? "estimate").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}`;
+const alt = data.band === "alt";
+---
+<section class="wrap section" aria-labelledby={data.title ? headId : undefined}>
+  <div class:list={[{ tray: alt }]}>
+    {(data.eyebrow || data.title || data.body) && (
+      <div class:list={["section-head reveal", { "tray-head": alt }]}>
+        {data.eyebrow && <span class="pill">{data.eyebrow}</span>}
+        {data.title && <h2 id={headId} class="h2" set:html={inlineMd(data.title)} />}
+        {data.body && <div class="section-body" set:html={paragraphMd(data.body)} />}
+      </div>
+    )}
+    <div
+      class="bento calc"
+      data-calculator
+      data-tiers={JSON.stringify(tiers)}
+      data-premium={String(threshold)}
+      data-min={String(minimum)}
+    >
+      <div class="tile calc-input reveal">
+        <label class="calc-label" for="calc-mailboxes">Number of mailboxes</label>
+        <div class="calc-field">
+          <input
+            id="calc-mailboxes"
+            type="number"
+            inputmode="numeric"
+            min={minimum}
+            max="100000000"
+            step="1"
+            value="500"
+            aria-describedby="calc-min"
+            data-calc-input
+          />
+          <span class="calc-suffix" aria-hidden="true">mailboxes</span>
+        </div>
+        <input
+          type="range"
+          class="range"
+          min={minimum}
+          max={sliderMax}
+          step="25"
+          value="500"
+          aria-label="Mailbox count slider"
+          data-calc-slider
+        />
+        <div class="range-scale" aria-hidden="true"><span>{fmt(minimum)}</span><span>{fmt(sliderMax)}</span></div>
+        <p class="calc-min" id="calc-min" data-calc-min>
+          <Icon name="info" size={16} />
+          <span data-calc-min-text>The smallest subscription is {fmt(minimum)} mailboxes.</span>
+        </p>
+        <div class="calc-premium" data-calc-premium>
+          <span class="tick"><Icon name="check" size={14} /></span>
+          <span data-calc-premium-text>Premium Support included</span>
+        </div>
+      </div>
+
+      <div class="tile tile--ink calc-out reveal">
+        <span class="calc-label" id="calc-total-label">Annual total</span>
+        <p class="calc-total" aria-live="polite" aria-labelledby="calc-total-label" data-calc-total>EUR 0.00</p>
+        <p class="calc-alt">
+          <span data-calc-alt>USD 0.00</span>
+          <span class="dot" aria-hidden="true"></span>
+          <span data-calc-monthly>around EUR 0.00 / month</span>
+        </p>
+        <div class="calc-break">
+          <span class="calc-label">Breakdown by tier</span>
+          <ul data-calc-break></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  type Tier = { lower: number; upper: number | null; eur: number; usd: number };
+  type Cur = "eur" | "usd";
+
+  document.querySelectorAll<HTMLElement>("[data-calculator]").forEach((root) => {
+    const tiers: Tier[] = JSON.parse(root.dataset.tiers || "[]");
+    if (!tiers.length) return;
+    const threshold = parseInt(root.dataset.premium || "150", 10);
+    const minimum = parseInt(root.dataset.min || "1", 10);
+    const q = <T extends Element>(s: string) => root.querySelector<T>(s)!;
+    const input = q<HTMLInputElement>("[data-calc-input]");
+    const slider = q<HTMLInputElement>("[data-calc-slider]");
+    const total = q<HTMLElement>("[data-calc-total]");
+    const alt = q<HTMLElement>("[data-calc-alt]");
+    const monthly = q<HTMLElement>("[data-calc-monthly]");
+    const brk = q<HTMLElement>("[data-calc-break]");
+    const minBox = q<HTMLElement>("[data-calc-min]");
+    const minText = q<HTMLElement>("[data-calc-min-text]");
+    const premium = q<HTMLElement>("[data-calc-premium]");
+    const premiumText = q<HTMLElement>("[data-calc-premium-text]");
+
+    let currency: Cur = document.documentElement.dataset.currency === "usd" ? "usd" : "eur";
+    const other = (): Cur => (currency === "eur" ? "usd" : "eur");
+    const fmt = (n: number) => n.toLocaleString("en-US");
+    const money = (n: number, cur: Cur) =>
+      `${cur.toUpperCase()} ${(Math.round(n * 100) / 100).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    const range = (t: Tier) => (t.upper === null ? `${fmt(t.lower)}+` : `${fmt(t.lower)} to ${fmt(t.upper)}`);
+    const minDefault = minText.textContent ?? "";
+
+    const compute = (count: number) => {
+      const parts: { t: Tier; size: number }[] = [];
+      let eur = 0;
+      let usd = 0;
+      let prevUpper = 0;
+      for (const t of tiers) {
+        const upper = t.upper === null ? Infinity : t.upper;
+        const size = Math.max(0, Math.min(count, upper) - prevUpper);
+        prevUpper = upper;
+        if (!size) continue;
+        eur += size * t.eur;
+        usd += size * t.usd;
+        parts.push({ t, size });
+      }
+      return { eur, usd, parts };
+    };
+
+    const paintSlider = () => {
+      const min = +slider.min;
+      const max = +slider.max;
+      slider.style.setProperty("--p", `${((+slider.value - min) / (max - min)) * 100}%`);
+    };
+
+    const update = () => {
+      const typed = Math.floor(Number(input.value) || 0);
+      const count = Math.max(minimum, typed);
+      const r = compute(count);
+      total.textContent = money(r[currency], currency);
+      alt.textContent = money(r[other()], other());
+      monthly.textContent = `around ${money(r[currency] / 12, currency)} / month`;
+      brk.replaceChildren(
+        ...r.parts.map(({ t, size }) => {
+          const li = document.createElement("li");
+          const label = document.createElement("span");
+          label.textContent = `${fmt(size)} × ${currency.toUpperCase()} ${t[currency].toFixed(2)} `;
+          const small = document.createElement("small");
+          small.textContent = `(${range(t)})`;
+          label.append(small);
+          const amount = document.createElement("b");
+          amount.textContent = money(size * t[currency], currency);
+          li.append(label, amount);
+          return li;
+        }),
+      );
+      const below = typed < minimum;
+      minBox.classList.toggle("is-active", below);
+      minText.textContent = below ? `Below the minimum: priced as ${fmt(minimum)} mailboxes.` : minDefault;
+      if (count >= threshold) {
+        premium.classList.remove("is-off");
+        premiumText.textContent = "Premium Support included";
+      } else {
+        premium.classList.add("is-off");
+        const need = threshold - count;
+        premiumText.textContent = `${fmt(need)} more mailbox${need === 1 ? "" : "es"} for Premium Support`;
+      }
+      paintSlider();
+    };
+
+    input.addEventListener("input", () => {
+      const v = Math.floor(Number(input.value) || 0);
+      slider.value = String(Math.min(Math.max(v, +slider.min), +slider.max));
+      update();
+    });
+    input.addEventListener("blur", () => {
+      if ((Number(input.value) || 0) < minimum) {
+        input.value = String(minimum);
+        update();
+      }
+    });
+    slider.addEventListener("input", () => {
+      input.value = slider.value;
+      update();
+    });
+    document.addEventListener("currencychange", (e) => {
+      currency = (e as CustomEvent).detail === "usd" ? "usd" : "eur";
+      update();
+    });
+    update();
+  });
+</script>
+
+<style>
+  .calc-input {
+    grid-column: span 6;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .calc-out {
+    grid-column: span 6;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .calc-label {
+    font-family: var(--font-display);
+    font-size: var(--fs-xs);
+    font-weight: 650;
+    color: var(--dim);
+  }
+  .calc-out .calc-label {
+    color: var(--on-ink-muted);
+  }
+  .calc-field {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    padding: 14px 22px;
+    border-radius: var(--r-lg);
+    background: var(--sand);
+    transition: box-shadow var(--t) var(--ease);
+  }
+  .calc-field:focus-within {
+    box-shadow: 0 0 0 2px var(--focus);
+  }
+  .calc-field input {
+    flex: 1;
+    min-width: 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: var(--text);
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 1.8rem + 1.6vw, 3.25rem);
+    font-weight: 760;
+    letter-spacing: -0.04em;
+    font-variant-numeric: tabular-nums;
+    -moz-appearance: textfield;
+    appearance: textfield;
+  }
+  .calc-field input::-webkit-outer-spin-button,
+  .calc-field input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  .calc-suffix {
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--muted);
+  }
+  .range {
+    --p: 0%;
+    width: 100%;
+    height: 44px;
+    margin: 0;
+    background: transparent;
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  .range::-webkit-slider-runnable-track {
+    height: 10px;
+    border-radius: var(--r-pill);
+    background: linear-gradient(to right, var(--brand) var(--p), var(--sand) var(--p));
+  }
+  .range::-moz-range-track {
+    height: 10px;
+    border-radius: var(--r-pill);
+    background: var(--sand);
+  }
+  .range::-moz-range-progress {
+    height: 10px;
+    border-radius: var(--r-pill);
+    background: var(--brand);
+  }
+  .range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 28px;
+    height: 28px;
+    margin-top: -9px;
+    border-radius: 50%;
+    background: light-dark(var(--tile-hover), var(--on-ink));
+    box-shadow: 0 0 0 1px var(--hairline), 0 4px 12px var(--shadow-c);
+  }
+  .range::-moz-range-thumb {
+    width: 28px;
+    height: 28px;
+    border: 0;
+    border-radius: 50%;
+    background: light-dark(var(--tile-hover), var(--on-ink));
+    box-shadow: 0 0 0 1px var(--hairline), 0 4px 12px var(--shadow-c);
+  }
+  .range:focus-visible {
+    outline: none;
+  }
+  .range:focus-visible::-webkit-slider-thumb {
+    box-shadow: 0 0 0 3px var(--tile), 0 0 0 5px var(--focus);
+  }
+  .range:focus-visible::-moz-range-thumb {
+    box-shadow: 0 0 0 3px var(--tile), 0 0 0 5px var(--focus);
+  }
+  .range-scale {
+    display: flex;
+    justify-content: space-between;
+    margin-top: -14px;
+    font-size: var(--fs-xs);
+    color: var(--dim);
+    font-variant-numeric: tabular-nums;
+  }
+  .calc-min {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: var(--fs-sm);
+    color: var(--muted);
+    transition: color var(--t) var(--ease);
+  }
+  .calc-min :global(.i) {
+    flex: none;
+    color: var(--dim);
+  }
+  .calc-min.is-active {
+    color: var(--brand-text);
+    font-weight: 600;
+  }
+  .calc-min.is-active :global(.i) {
+    color: var(--brand-text);
+  }
+  .calc-premium {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    align-self: flex-start;
+    margin-top: auto;
+    padding: 8px 14px 8px 8px;
+    border-radius: var(--r-pill);
+    background: var(--rose);
+    color: var(--brand-text);
+    font-family: var(--font-display);
+    font-size: var(--fs-sm);
+    font-weight: 650;
+  }
+  .calc-premium .tick {
+    background: var(--brand);
+    color: #fff;
+  }
+  .calc-premium.is-off {
+    background: var(--sand);
+    color: var(--muted);
+  }
+  .calc-premium.is-off .tick {
+    background: var(--tile);
+    color: var(--dim);
+  }
+  .calc-total {
+    font-family: var(--font-display);
+    font-size: clamp(2.4rem, 1.6rem + 2.6vw, 4rem);
+    font-weight: 780;
+    letter-spacing: -0.045em;
+    line-height: 1.05;
+    font-variant-numeric: tabular-nums;
+    overflow-wrap: anywhere;
+  }
+  .calc-alt {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 12px;
+    color: var(--on-ink-muted);
+    font-size: var(--fs-sm);
+    font-variant-numeric: tabular-nums;
+  }
+  .calc-alt .dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.6;
+  }
+  .calc-break {
+    display: grid;
+    gap: 10px;
+    margin-top: auto;
+    padding-top: 22px;
+  }
+  .calc-break ul {
+    display: grid;
+    gap: 6px;
+  }
+  .calc-break :global(li) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: baseline;
+    gap: 12px;
+    padding: 10px 14px;
+    border-radius: 14px;
+    background: rgb(255 255 255 / 0.06);
+    font-size: var(--fs-sm);
+    font-variant-numeric: tabular-nums;
+  }
+  .calc-break :global(li span) {
+    color: var(--on-ink-muted);
+  }
+  .calc-break :global(li b) {
+    font-weight: 650;
+    color: var(--on-ink);
+  }
+  @media (max-width: 1023px) {
+    .calc-input,
+    .calc-out {
+      grid-column: 1 / -1;
+    }
+  }
+  @media (max-width: 760px) {
+    .calc-alt {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .calc-alt .dot,
+    .calc-break :global(small) {
+      display: none;
+    }
+  }
+  @media (max-width: 420px) {
+    .calc-suffix {
+      display: none;
+    }
+    .calc-field {
+      padding: 12px 18px;
+    }
+  }
+</style>

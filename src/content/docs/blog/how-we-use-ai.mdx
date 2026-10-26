@@ -1,0 +1,85 @@
+---
+title: "How we use AI at Stalwart"
+description: "AI has become part of how most software gets written, and Stalwart is no exception. Here is exactly where we use it, where we deliberately do not, and why a mail server built for clusters handling millions of requests still gets its architecture written by hand."
+authors: [mdecimus]
+tags: [ai, engineering, security, performance, support, process]
+excerpt: |
+  AI has become part of how most software gets written, and Stalwart is no exception. But "we use AI" has become such a vague statement that it says almost nothing. So this post is the specific version: where AI measurably helps us, where we deliberately keep it out of the codebase, and why a server designed to run in large clusters still gets its architecture written by hand.
+date: 2026-08-25
+---
+
+It is difficult to have a conversation about software in 2026 without AI showing up in it. Two years ago the interesting question was whether a model could write a correct function on the first try. Today the question on [Hacker News](https://news.ycombinator.com/) is how many agents you can usefully run at once, how to isolate them from each other, and what to do when your reading capacity becomes the bottleneck instead of your typing speed. Editors have been rebuilt around the idea: [Cursor 3](https://dev.to/onepizzateam/cursor-3-shipped-parallel-agents-and-the-community-cant-agree-on-whether-thats-good-1p3n) shipped a full-screen workspace for managing fleets of agents rather than a chat box beside your file. Teams are running specialized agents for review, test generation, and security scanning in parallel, each in its own git worktree so they do not step on one another.
+
+The models got better, and not in a vague way. The improvement shows up in benchmarks that people take seriously, and it shows up in the day-to-day experience of handing a model a hard problem and getting back something that works.
+
+The vocabulary shifted along with the capability. For a couple of years, the standard reaction to AI-authored code across the internet was to call it *slop*, and we said it too. That word is doing less work now. It has not disappeared, but it has sharpened: a [2026 analysis](https://www.developersdigest.tech/blog/what-hacker-news-gets-right-about-ai-coding-agents-2026) of over a thousand posts across Hacker News and Reddit found that "slop" has narrowed to mean code that compiles, passes tests, and looks tidy while having no coherent intent and no awareness of the system it is being dropped into. That is a much more useful definition than "code a machine wrote", and it happens to describe the exact failure mode we care about most.
+
+So rather than making a general statement about being an AI-forward company, here is the specific version: what we use AI for at Stalwart Labs, what we refuse to use it for, and the reasoning behind each line we have drawn.
+
+## Fixing bugs
+
+This is where AI has changed our work the most, and the reason deserves some precision.
+
+Fixing a bug was never the expensive part. Finding it was. A report like "under a specific sequence of moves, one IMAP client observes duplicate UIDs" used to mean hours of reading, adding trace points, and reconstructing state in your head across several subsystems. The actual patch, once you understood the problem, was often ten lines.
+
+An agent with the entire repository in context collapses the search phase. It reads the relevant call paths in parallel, narrows a vague symptom down to a handful of candidate sites, and usually proposes something close to correct. We still read the diff, still decide whether the proposed fix addresses the cause or just the symptom, and still write the regression test. But an investigation that used to consume an afternoon now takes minutes.
+
+The practical consequence is that we can hold the bug queue at zero. Every week, across the Stalwart server and all of the tools and crates we maintain, open bug reports get triaged and closed. That was the milestone we wrote about in [Zero open bug reports: the road to Stalwart 1.0](/blog/road-to-stalwart-1-0), except it is no longer a milestone. It is the normal state, and AI is a large part of why keeping it there is sustainable.
+
+## Security
+
+In April 2026, Anthropic announced [Project Glasswing](https://www.anthropic.com/glasswing) alongside a preview of a model called Mythos, and the results were remarkable. Run against the OSS-Fuzz corpus, Mythos Preview surfaced [more than 23,000 potential vulnerabilities across over 1,000 open source projects](https://www.securityweek.com/anthropic-mythos-detected-23000-potential-vulnerabilities-across-1000-oss-projects/). Roughly 1,700 have been confirmed through external review so far, over a thousand of them rated high or critical.
+
+The individual findings are the interesting part. Mythos found a 27-year-old flaw in OpenBSD, a project whose entire reputation rests on being the most carefully audited operating system in existence. It found a 16-year-old bug in FFmpeg that had survived roughly five million fuzzing executions without being triggered. These were not vulnerabilities that nobody had looked for. They were vulnerabilities that decades of skilled human attention and industrial-scale fuzzing had both walked straight past. That is a capability to take seriously.
+
+We have used AI-assisted analysis on the Stalwart codebase in the same spirit. It found a handful of minor issues, all of which have been fixed. Nothing serious turned up, which we are glad about but do not intend to oversell: a quiet result is evidence, not proof. It sits alongside our [2023](/blog/security-audit) and [2025](/blog/security-audit-2025) independent security audits as one more angle of attack on our own code, not as a replacement for any of them.
+
+## Performance work
+
+Writing code became cheap, and that changed which experiments make sense to run.
+
+A performance idea used to carry a fixed tax. Before you learned anything, you had to build a harness, generate representative data, wire up measurement, and control for noise. Half a day of setup to test a hunch you might discard in five minutes. In practice that tax meant a lot of ideas never got measured at all. They got argued about instead, and the argument was settled by whoever had the stronger intuition rather than by numbers.
+
+That tax is mostly gone. We now use AI to write benchmark harnesses, and we write a lot of them. Hundreds, at this point, all targeting the `v1.0.0` development branch. Ideas that would previously have been dismissed as too expensive to set up now get measured, and a reasonable share of them turn out to be right.
+
+The clearest result so far is the internal full-text search store, which matters most for operators who do not run an external Elasticsearch or Meilisearch backend. In `v1.0.0`, FTS queries run up to **124 times faster** than on the `v0.16` branch. That number came out of measurement, not inspiration. We tried a lot of things, most of which did not work, and the ones that did survived because a benchmark said so.
+
+Note the division of labour: AI wrote the benchmarks. Humans wrote the optimizations. That is not accidental, and it leads directly to the next section.
+
+## Writing code, and where we draw the line
+
+We do not use AI to make architectural decisions, and we do not let it write or modify large portions of the codebase. Not as a philosophical stance, but for reasons we can point at.
+
+The first is that even the best current models write inefficient Rust. Not incorrect Rust. Inefficient Rust. They allocate where a borrow would do. They `clone()` to get past the borrow checker instead of restructuring. They collect an iterator into a `Vec` in order to iterate it once. They perform a linear lookup inside a loop and turn something linear into something quadratic. Every one of these compiles cleanly, passes the tests, and reads well in a diff. On a developer laptop with a test mailbox, none of it is visible.
+
+Stalwart is designed to run in large clusters handling millions of requests. At that scale, allocation patterns are not a detail; they are the cost model. An unnecessary allocation on a hot path is a change in how many machines an operator has to pay for. We cannot let that class of code into the codebase, and the reason it is dangerous is precisely that it looks fine.
+
+The second reason is that models still make simple mistakes and confident wrong assumptions. They will assume a field is always present, that an error path is unreachable, or that a protocol behaves the way the common case suggests rather than the way the RFC specifies. Most of the time they are right, which is what makes the exceptions expensive to catch.
+
+The third reason is technical debt, and it is the one we weigh most heavily. We need to be able to understand and explain every line of code in Stalwart. Not "understand it if we sit down and study it", but understand it now, when an operator reports something strange at three in the morning. Code that nobody on the team has ever reasoned through is a liability with a delayed fuse, however clean it looks on the day it lands.
+
+So the line we draw is about scope rather than about tooling. Localized, single-purpose changes with AI assistance work well and we use them daily. New features and anything architectural get written the old fashioned way, because reviewing generated code to the standard this project requires consistently takes longer than writing it ourselves.
+
+And there is a last reason, which is less rigorous but matters to us just as much. We write software because we enjoy writing software. Designing a subsystem, finding the shape that makes the hard case fall out for free, getting a data structure exactly right: that is the good part. Handing it to a model returns a diff and takes the pleasure with it. We are not interested in optimizing away the reason we do this.
+
+## Support
+
+Our support portal at [support.stalw.art](https://support.stalw.art) runs an AI assistant we call **helpbot**. It has been given the current source of every Stalwart repository through retrieval, and it performs semantic search across the documentation and the full history of previous forum threads. When a question comes in, helpbot answers first, and a human follows up afterwards.
+
+It works better than we expected. Most user questions are resolved by the bot alone, usually within a minute or two, at any hour and in any timezone. This is largely because a lot of support is not about novel problems. It is about connecting a symptom to the right documentation page or to the thread where somebody hit the same thing last March. That is a retrieval problem, and retrieval is something these systems are very good at.
+
+Two things matter to us about how this is set up. First, helpbot is not a wall between users and people. Every thread stays open, and a human reads it regardless of whether the bot's answer looked right. Second, users can opt out of AI involvement entirely. If you would rather talk to a person from the start, you can say so, and no model will touch your thread. Asking for help should not require accepting an AI intermediary.
+
+## Documentation
+
+Documentation is where gaps are hardest to see from the inside. Once you know how a subsystem works, you cannot easily tell which part of the explanation is missing, because your own knowledge quietly fills it in as you read.
+
+Support traffic solves that problem, and AI helps us read it at scale. Recurring questions are a direct map of where the documentation is thin, ambiguous, or simply absent. We use AI to find those patterns, to draft the missing sections, and to check existing pages for the assumptions they make without stating them. Every change is reviewed and edited by a human before it ships, the same as any other contribution, but the work of noticing what is missing has become far more systematic than it used to be.
+
+## What AI is not
+
+AI has made Stalwart better. Bugs get found and fixed faster, performance ideas get measured instead of argued about, security gets another pair of eyes, and users get answers at three in the morning. None of that is a small thing, and we would not want to go back.
+
+But it has not replaced human judgment anywhere that matters, and we do not expect it to. Everything above describes a tool being used well: an extremely fast, extremely well-read autocomplete that has read the entire codebase and never gets tired. It finds things. It drafts things. It measures things. It does not decide what Stalwart should be, it does not choose the shape of a subsystem, and it does not get the final word on a single line that ships.
+
+That distinction is not a temporary position we are holding until the models improve. The models will keep improving, and we will keep using them for more. But the responsibility for what we ship stays with the people who build it, and writing this software remains something we do because we want to. At Stalwart Labs, AI will not be replacing human developers.

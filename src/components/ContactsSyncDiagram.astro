@@ -1,0 +1,157 @@
+---
+import Icon from "./Icon.astro";
+
+const devices = [
+  { icon: "laptop", name: "Laptop", proto: "CardDAV" },
+  { icon: "smartphone", name: "iPhone", proto: "CardDAV" },
+  { icon: "smartphone", name: "Android", proto: "CardDAV" },
+  { icon: "globe", name: "Web app", proto: "JMAP for Contacts" },
+];
+---
+<div class="dg" role="img" aria-label="One contact card, Alice Example, stored once as vCard 4 and synchronised to a laptop, an iPhone and an Android phone over CardDAV, and to the web app over JMAP for Contacts">
+  <span class="dg-caption">One source of truth, every device</span>
+  <div class="grid">
+    <div class="card">
+      <div class="who">
+        <span class="avatar">A</span>
+        <div><strong>Alice Example</strong><span>Example Corp · Engineering</span></div>
+      </div>
+      <ul class="lines">
+        <li><Icon name="mail" size={14} />alice@example.com</li>
+        <li><Icon name="phone" size={14} />+1 555 0101</li>
+      </ul>
+      <ul class="mini-chips">
+        <li>vCard 4</li>
+        <li>CardDAV</li>
+        <li class="is-brand">JMAP</li>
+      </ul>
+    </div>
+    {devices.map((d, i) => (
+      <div class={`dev d${i}`}>
+        <span class="ic"><Icon name={d.icon} size={18} /></span>
+        <strong>{d.name}</strong>
+        <code>{d.proto}</code>
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+  .dg {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 100%;
+    container-type: inline-size;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.7fr) minmax(0, 1fr);
+    grid-template-areas: "d0 card d1" "d2 card d3";
+    gap: 10px;
+  }
+  .d0 { grid-area: d0; }
+  .d1 { grid-area: d1; }
+  .d2 { grid-area: d2; }
+  .d3 { grid-area: d3; }
+  .card {
+    grid-area: card;
+    display: grid;
+    align-content: center;
+    gap: 14px;
+    padding: 20px;
+    border-radius: var(--r-lg);
+    background: var(--tile);
+    box-shadow: var(--shadow-lift);
+  }
+  .who {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .who div {
+    display: grid;
+    min-width: 0;
+  }
+  strong {
+    font-family: var(--font-display);
+    font-size: 0.9375rem;
+    font-weight: 680;
+    line-height: 1.3;
+  }
+  .who span:not(.avatar) {
+    color: var(--muted);
+    font-size: var(--fs-xs);
+    line-height: 1.4;
+  }
+  .avatar {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--brand);
+    color: #fff;
+    font-family: var(--font-display);
+    font-weight: 700;
+  }
+  .lines {
+    display: grid;
+    gap: 6px;
+    padding-top: 12px;
+    border-top: 1px solid var(--hairline);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text);
+  }
+  .lines li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    overflow-wrap: anywhere;
+  }
+  .lines :global(svg) {
+    flex: none;
+    color: var(--dim);
+  }
+  .mini-chips .is-brand {
+    background: var(--rose);
+    color: var(--brand-text);
+  }
+  .dev {
+    display: grid;
+    align-content: center;
+    justify-items: center;
+    gap: 4px;
+    padding: 16px 12px;
+    border-radius: var(--r-lg);
+    background: var(--tile);
+    box-shadow: var(--shadow-tile);
+    text-align: center;
+  }
+  .ic {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    margin-bottom: 6px;
+    border-radius: 12px;
+    background: var(--rose);
+    color: var(--brand-text);
+  }
+  .dev code {
+    padding: 0;
+    background: none;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    line-height: 1.4;
+  }
+  @container (max-width: 480px) {
+    .grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-areas: "card card" "d0 d1" "d2 d3";
+    }
+  }
+</style>

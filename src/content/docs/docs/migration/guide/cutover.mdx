@@ -1,0 +1,190 @@
+---
+sidebar_position: 6
+title: "Starting the proxy"
+description: "Apply the source's staged settings, start the proxy, repoint the public hostname and test every protocol and split delivery before moving any account."
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+This step puts the proxy into the serving path, in three actions: the source's staged settings are applied, the proxy is started, and the public hostname is repointed from the source to the proxy.
+
+Afterwards, every account is still served by the source. The difference is in the path: every connection now passes through the proxy, and inbound mail passes through the new deployment. Since no account has moved yet, this is the point at which to confirm that every protocol works end to end.
+
+The step causes the only planned interruption of the migration. Its length depends on the source: a Stalwart source is restarted, while a Dovecot and Postfix source is only reloaded. Some clients also take a while to follow the change. Those whose resolvers still hold the old address of the public hostname keep connecting to the source until the record's TTL expires, which is why the TTL was lowered in advance.
+
+## Sequence
+
+<Tabs syncKey="source">
+<TabItem label="Previous Stalwart versions">
+
+A source prepared as described in [Previous Stalwart versions](/docs/migration/guide/configure-source/previous-stalwart) changes its behaviour as soon as it restarts. From then on, its listeners expect a PROXY header on every connection from the proxy's network, while connections from other addresses are served as before. For this reason, perform the following actions in close succession:
+
+1. On a Stalwart 0.16 source, run the commands that disable the inbound authentication checks and the EHLO requirement. When outbound mail is routed through the new deployment, also run the command that changes the routing rule, as described in [Previous Stalwart versions](/docs/migration/guide/configure-source/previous-stalwart#trusting-mail-relayed-from-the-new-deployment). Add `STALWART_INCLUDE_SECRETS=1` to the environment of the service as well, together with `STALWART_PUBLIC_URL` when the source needs it to advertise the public hostname. A Stalwart 0.15 source already holds these settings.
+2. Restart the source, so that the listener settings take effect together with the other settings. A reload is not sufficient for the listener settings.
+3. Start the proxy. It binds the public ports and resolves every account to the source, because the mapping file holds no account entries yet.
+4. Repoint the public hostname to the proxy, either by changing its DNS records or by moving the public address to the proxy host. Clients that still resolve the old address keep reaching the source directly. The source serves them, but they bypass the proxy's routing.
+
+</TabItem>
+<TabItem label="Dovecot and Postfix">
+
+A [Dovecot and Postfix](/docs/migration/guide/configure-source/dovecot-postfix/) source keeps accepting direct connections throughout, so the order of the actions is not time-critical:
+
+1. Apply the staged settings with `doveadm reload` and `postfix reload` (on mailcow, by restarting the `dovecot-mailcow` container). The source keeps serving its clients.
+2. Start the proxy. It binds the public ports and resolves every account to the source, because the mapping file holds no account entries yet.
+3. Repoint the public hostname to the proxy, either by changing its DNS records or by moving the public address to the proxy host. The source still accepts direct connections, so clients that have not picked up the new address yet continue to be served.
+
+</TabItem>
+</Tabs>
+
+From now on, inbound mail on port 25 reaches the new deployment through the proxy. The new deployment delivers locally for moved accounts, and relays everything else to the source. With no account moved, every message is relayed to the source, which is where it would have arrived before.
+
+## Confirming that the proxy is healthy
+
+The first check is that the proxy itself is running and can reach both servers. The proxy's [management API](/docs/migration/proxy/management/api) confirms that the proxy started, and reports the state of both destinations.
+
+Run the following commands on the proxy host. The API listens there, and the token file is readable only by root and the `stalwart-proxy` group:
+
+```bash
+TOKEN=$(sudo cat /etc/proxy/admin.token)
+curl -sk -H "Authorization: Bearer $TOKEN" https://127.0.0.1:9443/destinations
+```
+
+A destination that reports failures or `"down": true` cannot be reached from the proxy. The [proxy troubleshooting](/docs/migration/proxy/management/troubleshooting) page lists the causes. The proxy log also helps, since it records each backend connection and the routing decision behind it.
+
+## Testing each protocol
+
+Each test connects to the public hostname, and therefore exercises the whole path: the client reaches the proxy, and the proxy resolves the account to the source and forwards the session. Use an account that lives on the source, with its real login and password.
+
+To test IMAP over implicit TLS, sign in and list the mailboxes:
+
+```bash
+openssl s_client -quiet -crlf -connect mail.example.org:993 <<'EOF'
+a1 LOGIN alice@example.org "password"
+a2 LIST "" "*"
+a3 LOGOUT
+EOF
+```
+
+POP3 over implicit TLS is tested in the same way, on its own port:
+
+```bash
+openssl s_client -quiet -crlf -connect mail.example.org:995 <<'EOF'
+USER alice@example.org
+PASS password
+STAT
+QUIT
+EOF
+```
+
+To test SMTP submission, negotiate STARTTLS and authenticate. The `AUTH PLAIN` argument is the Base64 encoding of the login and password, which the first command produces:
+
+```bash
+printf '\0alice@example.org\0password' | base64
+openssl s_client -quiet -crlf -starttls smtp -connect mail.example.org:587 <<'EOF'
+EHLO test.example
+AUTH PLAIN <base64 value>
+QUIT
+EOF
+```
+
+ManageSieve is tested with a Sieve client, such as the Sieve settings of a mail client: sign in and list the account's scripts.
+
+<Tabs syncKey="source">
+<TabItem label="Previous Stalwart versions">
+
+To test JMAP, fetch the session object with HTTP Basic authentication. `/.well-known/jmap` redirects to `/jmap/session`, which `-L` follows. A JSON response that names the account shows that the proxy routed the request and that the source answered:
+
+```bash
+curl -sL -u 'alice@example.org:password' https://mail.example.org/.well-known/jmap
+```
+
+To test the WebUI of the source, open the public hostname in a browser and sign in.
+
+</TabItem>
+<TabItem label="Dovecot and Postfix">
+
+Dovecot and Postfix serve no JMAP and no WebUI, so there is no HTTP test at this stage. JMAP and the WebUI are tested once the first account has moved, as part of [validating the account](/docs/migration/guide/migrate-accounts/#validating-the-migrated-account).
+
+</TabItem>
+</Tabs>
+
+## Testing split delivery
+
+Split delivery carries all inbound mail during the migration, so test it before any account depends on it. The test sends a message to port 25 of the public hostname, for an account that still lives on the source, and expects the new deployment to relay it to the source.
+
+On port 25, the proxy passes the connection through to the new deployment without terminating TLS. A STARTTLS negotiation therefore takes place between the sending server and the new deployment, and the test uses `-starttls smtp`:
+
+```bash
+openssl s_client -quiet -crlf -starttls smtp -connect mail.example.org:25 <<'EOF'
+EHLO test.example
+MAIL FROM:<sender@example.com>
+RCPT TO:<alice@example.org>
+DATA
+Subject: Split delivery test
+
+This message should reach alice through the relay.
+.
+QUIT
+EOF
+```
+
+The `-crlf` option is required, because of how the message ends. Stalwart ends the message data only at a line containing a single dot terminated by CRLF, as SMTP specifies, and treats any other line ending around the dot as message content. Without the option, the heredoc's lines end in a bare line feed, so the final dot does not end the message, and the session waits until it times out. A message that contains bare line feeds would also be relayed to the source as received, and Postfix refuses such messages when `smtpd_forbid_bare_newline` is enabled. A dedicated SMTP test tool such as `swaks` produces correct line endings, which avoids both problems.
+
+The new deployment accepts the recipient and finds that it is not an account on the new deployment but belongs to a local domain, so it relays the message to the source. The message then appears in the account's mailbox on the source. Check it with the IMAP test above or with a mail client. A test message sent without the usual authentication of a real sender is often classified as spam, so check the account's junk folder as well.
+
+The test above covers the relayed half of split delivery. When a test account already exists on the new deployment, a second message to it confirms the other half: the new deployment recognises the address and delivers the message locally.
+
+## Testing with real clients
+
+The command-line tests confirm the mail path, but real clients do more than a manual session. They also exercise authentication mechanisms, capability negotiation and TLS settings. Before the first account is moved, confirm with real accounts on the source that the following work through the public hostname:
+
+- A desktop mail client and a mobile mail client, receiving and sending mail
+- Signing in to the WebUI, including through OAuth or OpenID Connect where a Stalwart source uses it
+- Push notifications, where clients use them
+- A CalDAV and a CardDAV client, where the source serves calendars and contacts
+- Automatic account setup in a mail client, where clients use autoconfig or Autodiscover
+
+A protocol problem is best found now. An account move can be reversed, but a problem found after several accounts have moved affects more users and more data than one found now, when the whole change is the repointing of one hostname.
+
+## Rollback
+
+No data has moved at this stage, and the source still holds every account. Rolling back takes the proxy out of the path again.
+
+<Tabs syncKey="source">
+<TabItem label="Previous Stalwart versions">
+
+Repoint the public hostname to the source's address and stop the proxy. Then clear the listener settings that enable the PROXY protocol on the source, and restart it, so that it no longer expects a PROXY header from the proxy's address.
+
+On a Stalwart 0.15 source, the following request clears these settings, with the shell variables defined on the [Previous Stalwart versions](/docs/migration/guide/configure-source/previous-stalwart) page:
+
+```bash
+curl -sk -u "$AUTH" -H 'Content-Type: application/json' "$OLD/api/settings" -d '[
+  {"type":"clear","prefix":"server.listener.imaptls.proxy."},
+  {"type":"clear","prefix":"server.listener.imap.proxy."},
+  {"type":"clear","prefix":"server.listener.pop3s.proxy."},
+  {"type":"clear","prefix":"server.listener.pop3.proxy."},
+  {"type":"clear","prefix":"server.listener.submission.proxy."},
+  {"type":"clear","prefix":"server.listener.submissions.proxy."},
+  {"type":"clear","prefix":"server.listener.sieve.proxy."},
+  {"type":"clear","prefix":"server.listener.https.proxy."},
+  {"type":"clear","prefix":"server.listener.http.proxy."}
+]'
+```
+
+On a Stalwart 0.16 source, set the `overrideProxyTrustedNetworks` field of each listener prepared earlier to an empty set:
+
+```bash
+stalwart-cli update NetworkListener <id> --field 'overrideProxyTrustedNetworks={}'
+```
+
+The other settings disable the inbound authentication checks, set the public URL and route outbound mail through the new deployment. They can be kept while the source runs on its own, or restored as described in the rollback section of the [Previous Stalwart versions](/docs/migration/guide/configure-source/previous-stalwart#rollback) page. Once the source has restarted and the hostname points to it, the system is back in its state before the migration.
+
+</TabItem>
+<TabItem label="Dovecot and Postfix">
+
+Repoint the public hostname to the source's address and stop the proxy. The source never stopped accepting direct connections, so it serves clients as soon as the hostname points to it, without a restart.
+
+The trust and master user settings are harmless once the proxy is gone, so removing them is optional. To restore the original configuration, remove them as described in the rollback section of the [Dovecot and Postfix](/docs/migration/guide/configure-source/dovecot-postfix/#rollback) page.
+
+</TabItem>
+</Tabs>

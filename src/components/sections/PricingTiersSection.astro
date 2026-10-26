@@ -1,0 +1,235 @@
+---
+import Icon from "../Icon.astro";
+import { inlineMd, paragraphMd } from "../../lib/md";
+
+interface Props {
+  data: any;
+}
+const { data } = Astro.props;
+
+const fmt = (n: number) => n.toLocaleString("en-US");
+const fmtRange = (lower: number, upper: number | null) => (upper === null ? `${fmt(lower)}+` : `${fmt(lower)} to ${fmt(upper)}`);
+
+const tiers = data.tiers.map((t: any, i: number) => ({ ...t, n: i + 1 }));
+const visible = tiers.filter((t: any) => t.lower < data.showTableBelow);
+const quoted = tiers.filter((t: any) => t.upper === null || t.lower >= data.showTableBelow);
+const showQuote = !!data.quoteCta && quoted.length > 0;
+const quoteLabel = quoted.length > 1 ? `Tiers ${quoted[0].n} to ${quoted[quoted.length - 1].n}` : quoted.length ? `Tier ${quoted[0].n}` : "";
+const headId = `tiers-${(data.title ?? "rates").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}`;
+---
+<section class="wrap section" aria-labelledby={data.title ? headId : undefined}>
+  <div class="tiers-head reveal">
+    {(data.eyebrow || data.title || data.body) && (
+      <div class="section-head">
+        {data.eyebrow && <span class="pill">{data.eyebrow}</span>}
+        {data.title && <h2 id={headId} class="h2" set:html={inlineMd(data.title)} />}
+        {data.body && <div class="section-body" set:html={paragraphMd(data.body)} />}
+      </div>
+    )}
+    <div class="seg" role="group" aria-label="Currency" data-currency-switch hidden>
+      <button type="button" data-currency="eur" aria-pressed="true">EUR</button>
+      <button type="button" data-currency="usd" aria-pressed="false">USD</button>
+    </div>
+  </div>
+
+  <ol class="bento tiers" aria-label="Annual price per mailbox, by tier">
+    {visible.map((t: any) => (
+      <li class="tile tier reveal">
+        <span class="tier-n">Tier {t.n}</span>
+        <span class="tier-range"><span class="sr-only">Mailboxes: </span>{fmtRange(t.lower, t.upper)}</span>
+        <span class="tier-price">
+          <span class="cur" data-cur>EUR</span>
+          <span class="amt" data-eur={t.eur.toFixed(2)} data-usd={t.usd.toFixed(2)}>{t.eur.toFixed(2)}</span>
+        </span>
+        <span class="tier-unit">per mailbox per year</span>
+      </li>
+    ))}
+    {showQuote && (
+      <li class="tile tile--ink tier tier--quote reveal">
+        <span class="tier-n">{quoteLabel}</span>
+        <span class="tier-range">{fmt(data.showTableBelow)} and beyond</span>
+        <a
+          href={data.quoteCta.href}
+          class="btn btn-primary"
+          {...(data.quoteCta.external ? { target: "_blank", rel: "noopener" } : {})}
+        >{data.quoteCta.label}<Icon name="arrow-right" /></a>
+      </li>
+    )}
+  </ol>
+</section>
+
+<script>
+  const KEY = "stalwart-currency";
+  const switches = document.querySelectorAll<HTMLElement>("[data-currency-switch]");
+  const apply = (cur: string) => {
+    document.documentElement.dataset.currency = cur;
+    document.querySelectorAll("[data-currency-switch] [data-currency]").forEach((b) => b.setAttribute("aria-pressed", String(b.getAttribute("data-currency") === cur)));
+    document.querySelectorAll("[data-cur]").forEach((el) => (el.textContent = cur.toUpperCase()));
+    document.querySelectorAll<HTMLElement>("[data-eur]").forEach((el) => (el.textContent = el.getAttribute(`data-${cur}`)));
+    document.dispatchEvent(new CustomEvent("currencychange", { detail: cur }));
+  };
+  let initial = "eur";
+  try {
+    if (localStorage.getItem(KEY) === "usd") initial = "usd";
+  } catch {}
+  switches.forEach((s) => (s.hidden = false));
+  document.querySelectorAll<HTMLButtonElement>("[data-currency-switch] [data-currency]").forEach((b) =>
+    b.addEventListener("click", () => {
+      const cur = b.getAttribute("data-currency") ?? "eur";
+      try {
+        localStorage.setItem(KEY, cur);
+      } catch {}
+      apply(cur);
+    }),
+  );
+  apply(initial);
+</script>
+
+<style>
+  .tiers-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: clamp(28px, 3.4vw, 44px);
+  }
+  .tiers-head .section-head {
+    margin-bottom: 0;
+  }
+  .seg {
+    display: inline-flex;
+    flex: none;
+    padding: 4px;
+    border-radius: var(--r-pill);
+    background: var(--sand);
+  }
+  .seg[hidden] {
+    display: none;
+  }
+  .seg button {
+    height: 42px;
+    padding: 0 18px;
+    border: 0;
+    border-radius: var(--r-pill);
+    background: transparent;
+    color: var(--muted);
+    font-family: var(--font-display);
+    font-size: var(--fs-sm);
+    font-weight: 650;
+    cursor: pointer;
+    transition: background-color var(--t) var(--ease), color var(--t) var(--ease);
+  }
+  .seg button:hover {
+    color: var(--text);
+  }
+  .seg button[aria-pressed="true"] {
+    background: var(--tile);
+    color: var(--text);
+    box-shadow: var(--shadow-tile);
+  }
+  .tiers {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .tier {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-height: 230px;
+    padding: clamp(22px, 2.4vw, 32px);
+  }
+  .tier:first-child {
+    background: var(--rose);
+    box-shadow: none;
+  }
+  .tier-n {
+    font-family: var(--font-display);
+    font-size: var(--fs-xs);
+    font-weight: 650;
+    color: var(--dim);
+  }
+  .tier:first-child .tier-n {
+    color: var(--brand-text);
+  }
+  .tier-range {
+    margin-bottom: auto;
+    font-family: var(--font-display);
+    font-size: 1.0625rem;
+    font-weight: 650;
+    font-variant-numeric: tabular-nums;
+  }
+  .tier-price {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    margin-top: 28px;
+    font-family: var(--font-display);
+    font-variant-numeric: tabular-nums;
+  }
+  .tier-price .cur {
+    font-size: 0.875rem;
+    font-weight: 650;
+    color: var(--muted);
+  }
+  .tier-price .amt {
+    font-size: clamp(2.2rem, 1.6rem + 1.4vw, 2.9rem);
+    font-weight: 760;
+    letter-spacing: -0.04em;
+    line-height: 1;
+  }
+  .tier-unit {
+    font-size: var(--fs-xs);
+    color: var(--muted);
+  }
+  .tier--quote {
+    grid-column: span 2;
+  }
+  .tier--quote .tier-n {
+    color: var(--on-ink-muted);
+  }
+  .tier--quote .tier-range {
+    margin-top: 12px;
+    font-size: clamp(1.6rem, 1.2rem + 1.2vw, 2.25rem);
+    font-weight: 720;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+  }
+  .tier--quote .btn {
+    align-self: flex-start;
+    margin-top: 24px;
+  }
+  @media (max-width: 1023px) {
+    .tiers {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .tier--quote {
+      grid-column: 1 / -1;
+    }
+  }
+  @media (max-width: 760px) {
+    .tiers-head {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .tier {
+      min-height: 0;
+      padding: 20px;
+    }
+    .tier-price {
+      margin-top: 18px;
+    }
+    .tier-range {
+      font-size: 0.9375rem;
+    }
+  }
+  @media (max-width: 420px) {
+    .tier {
+      padding: 18px;
+    }
+    .tier-price .amt {
+      font-size: 2rem;
+    }
+    .tier-price .cur {
+      font-size: 0.75rem;
+    }
+  }
+</style>

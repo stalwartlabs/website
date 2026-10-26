@@ -1,0 +1,561 @@
+---
+import Logo from "./Logo.astro";
+import Icon from "./Icon.astro";
+import ThemeToggle from "./ThemeToggle.astro";
+
+const platformLinks = [
+  { href: "/mail-server", label: "Mail Server", icon: "mail" },
+  { href: "/collaboration", label: "Collaboration", icon: "users" },
+  { href: "/mta", label: "MTA", icon: "send" },
+  { href: "/anti-spam", label: "Anti-spam", icon: "shield" },
+  { href: "/architecture", label: "Architecture", icon: "layers" },
+  { href: "/integrations", label: "Integrations", icon: "blocks" },
+];
+const solutionLinks = [
+  { href: "/managed-email", label: "Managed e-mail", icon: "cloud" },
+  { href: "/migration", label: "Migration", icon: "arrow-right-left" },
+];
+const editionLinks = [
+  { href: "/enterprise", label: "Enterprise" },
+  { href: "/open-source", label: "Community" },
+  { href: "/compare", label: "Compare" },
+  { href: "/pricing", label: "Pricing" },
+  { href: "https://license.stalw.art/trial", label: "Evaluate", external: true },
+];
+const docsInstall = [
+  { href: "/docs/install/platform/linux", label: "Linux / macOS" },
+  { href: "/docs/install/platform/windows", label: "Windows" },
+  { href: "/docs/install/platform/docker", label: "Docker" },
+];
+const docsOverview = [
+  { href: "/docs/install/", label: "Get started" },
+  { href: "/docs/configuration/", label: "Configuration" },
+  { href: "/docs/management/", label: "Management" },
+  { href: "/docs/development/", label: "Development" },
+  { href: "/docs/faq", label: "FAQ" },
+];
+const docsSettings = [
+  { href: "/docs/server/", label: "Server" },
+  { href: "/docs/storage/", label: "Storage" },
+  { href: "/docs/auth/", label: "Access Control" },
+  { href: "/docs/encryption/", label: "Encryption" },
+  { href: "/docs/mta/", label: "MTA" },
+  { href: "/docs/email/", label: "Email Store" },
+  { href: "/docs/collaboration/", label: "Collaboration" },
+  { href: "/docs/spamfilter/", label: "Spam & Phishing" },
+  { href: "/docs/sieve/", label: "Sieve" },
+  { href: "/docs/cluster/", label: "Clustering" },
+  { href: "/docs/telemetry/", label: "Telemetry" },
+];
+const supportLinks = [
+  { href: "/support", label: "Overview" },
+  { href: "https://support.stalw.art", label: "Support Portal", external: true },
+];
+const companyLinks = [
+  { href: "/about", label: "About" },
+  { href: "/blog", label: "Blog" },
+  { href: "/contact", label: "Contact" },
+  { href: "/legal", label: "Legal" },
+];
+
+const ext = (l: { external?: boolean }) => (l.external ? { target: "_blank", rel: "noopener" } : {});
+const path = Astro.url.pathname.replace(/\/$/, "") || "/";
+const current = (href: string) => (href.replace(/\/$/, "") === path ? { "aria-current": "page" } : {});
+
+const drawerGroups = [
+  { label: "Platform", cols: [{ title: "Platform", links: platformLinks }, { title: "Solutions", links: solutionLinks }] },
+  { label: "Editions", cols: [{ links: editionLinks }] },
+  { label: "Documentation", cols: [{ title: "Overview", links: docsOverview }, { title: "Install", links: docsInstall }] },
+  { label: "Support", cols: [{ links: supportLinks }] },
+  { label: "Company", cols: [{ links: companyLinks }] },
+];
+---
+<header class="site-header" data-site-header>
+  <div class="wrap header-inner">
+    <Logo />
+
+    <nav class="nav" aria-label="Primary">
+      <ul class="nav-list">
+        <li class="nav-item">
+          <button class="nav-trigger" type="button" aria-expanded="false" aria-haspopup="true">Platform<Icon name="chevron-down" size={14} class="caret" /></button>
+          <div class="nav-panel">
+            <div class="menu-grid menu-grid--platform">
+              <div class="menu-col">
+                <span class="menu-title">Platform</span>
+                <ul>
+                  {platformLinks.map((l) => (
+                    <li><a href={l.href} {...current(l.href)}><span class="menu-ic"><Icon name={l.icon} size={16} /></span>{l.label}</a></li>
+                  ))}
+                </ul>
+              </div>
+              <div class="menu-col menu-col--tint">
+                <span class="menu-title">Solutions</span>
+                <ul>
+                  {solutionLinks.map((l) => (
+                    <li><a href={l.href} {...current(l.href)}><span class="menu-ic"><Icon name={l.icon} size={16} /></span>{l.label}</a></li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </li>
+
+        <li class="nav-item">
+          <button class="nav-trigger" type="button" aria-expanded="false" aria-haspopup="true">Editions<Icon name="chevron-down" size={14} class="caret" /></button>
+          <div class="nav-panel">
+            <div class="menu-col">
+              <span class="menu-title">Editions</span>
+              <ul>{editionLinks.map((l) => <li><a href={l.href} {...ext(l)} {...current(l.href)}>{l.label}</a></li>)}</ul>
+            </div>
+          </div>
+        </li>
+
+        <li class="nav-item">
+          <button class="nav-trigger" type="button" aria-expanded="false" aria-haspopup="true">Documentation<Icon name="chevron-down" size={14} class="caret" /></button>
+          <div class="nav-panel">
+            <div class="menu-grid menu-grid--docs">
+              <div class="menu-col">
+                <span class="menu-title">Install</span>
+                <ul>{docsInstall.map((l) => <li><a href={l.href}>{l.label}</a></li>)}</ul>
+              </div>
+              <div class="menu-col">
+                <span class="menu-title">Overview</span>
+                <ul>{docsOverview.map((l) => <li><a href={l.href}>{l.label}</a></li>)}</ul>
+              </div>
+              <div class="menu-col menu-col--tint">
+                <span class="menu-title">Settings</span>
+                <ul class="menu-cols-2">{docsSettings.map((l) => <li><a href={l.href}>{l.label}</a></li>)}</ul>
+              </div>
+            </div>
+          </div>
+        </li>
+
+        <li class="nav-item">
+          <button class="nav-trigger" type="button" aria-expanded="false" aria-haspopup="true">Support<Icon name="chevron-down" size={14} class="caret" /></button>
+          <div class="nav-panel">
+            <div class="menu-col">
+              <span class="menu-title">Support</span>
+              <ul>{supportLinks.map((l) => <li><a href={l.href} {...ext(l)} {...current(l.href)}>{l.label}</a></li>)}</ul>
+            </div>
+          </div>
+        </li>
+
+        <li class="nav-item">
+          <button class="nav-trigger" type="button" aria-expanded="false" aria-haspopup="true">Company<Icon name="chevron-down" size={14} class="caret" /></button>
+          <div class="nav-panel">
+            <div class="menu-col">
+              <span class="menu-title">Company</span>
+              <ul>{companyLinks.map((l) => <li><a href={l.href} {...current(l.href)}>{l.label}</a></li>)}</ul>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="header-end">
+      <slot name="actions">
+        <a class="icon-btn header-gh" href="https://github.com/stalwartlabs/stalwart" target="_blank" rel="noopener" aria-label="Stalwart on GitHub">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 .5C5.7.5.7 5.5.7 11.8c0 5 3.2 9.2 7.7 10.7.6.1.8-.2.8-.6v-2c-3.1.7-3.8-1.3-3.8-1.3-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 1.7 2.7 1.2 3.4.9.1-.7.4-1.2.7-1.5-2.5-.3-5.1-1.2-5.1-5.5 0-1.2.4-2.2 1.2-3-.1-.3-.5-1.5.1-3.1 0 0 .9-.3 3.1 1.2.9-.3 1.9-.4 2.9-.4s2 .1 2.9.4c2.2-1.5 3.1-1.2 3.1-1.2.6 1.6.2 2.8.1 3.1.7.8 1.2 1.8 1.2 3 0 4.3-2.6 5.2-5.1 5.5.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.5-1.5 7.7-5.7 7.7-10.7C23.3 5.5 18.3.5 12 .5z"/>
+          </svg>
+        </a>
+        <ThemeToggle />
+      </slot>
+      <a class="btn btn-primary btn-sm header-cta" href="/docs/install/">Get Stalwart</a>
+      <button class="icon-btn menu-btn" type="button" data-drawer-open aria-label="Open menu" aria-expanded="false" aria-controls="site-drawer"><Icon name="menu" size={20} /></button>
+    </div>
+  </div>
+</header>
+
+<div class="drawer" id="site-drawer" data-drawer hidden>
+  <div class="drawer-sheet" role="dialog" aria-modal="true" aria-label="Menu">
+    <div class="drawer-top">
+      <Logo />
+      <button class="icon-btn" type="button" data-drawer-close aria-label="Close menu"><Icon name="x" size={20} /></button>
+    </div>
+    <div class="drawer-groups">
+      {drawerGroups.map((g, i) => (
+        <details class="drawer-group" open={i === 0}>
+          <summary>{g.label}<Icon name="chevron-down" size={16} class="caret" /></summary>
+          {g.cols.map((c) => (
+            <>
+              {c.title && <span class="menu-title">{c.title}</span>}
+              <ul>{c.links.map((l: any) => <li><a href={l.href} {...ext(l)}>{l.label}</a></li>)}</ul>
+            </>
+          ))}
+        </details>
+      ))}
+    </div>
+    <div class="drawer-foot">
+      <a class="btn btn-soft" href="mailto:hello@stalw.art">Contact</a>
+      <a class="btn btn-primary" href="/docs/install/">Get Stalwart</a>
+    </div>
+  </div>
+</div>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: color-mix(in oklab, var(--canvas) 82%, transparent);
+    -webkit-backdrop-filter: saturate(150%) blur(16px);
+    backdrop-filter: saturate(150%) blur(16px);
+    transition: box-shadow var(--t) var(--ease);
+  }
+  .site-header.is-scrolled {
+    box-shadow: 0 1px 0 var(--hairline);
+  }
+  .site-header ul,
+  .drawer ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .site-header a:not(.btn),
+  .drawer a:not(.btn) {
+    color: inherit;
+    text-decoration: none;
+  }
+  .header-inner {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    height: 72px;
+  }
+  .site-header :global(.logo) {
+    flex: none;
+  }
+
+  .nav {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+  .nav-list {
+    display: flex;
+    gap: 2px;
+    padding: 4px;
+    border-radius: var(--r-pill);
+    background: var(--sand);
+  }
+  .nav-item {
+    position: relative;
+  }
+  .nav-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    height: 36px;
+    padding: 0 14px;
+    border-radius: var(--r-pill);
+    color: var(--muted);
+    font-family: var(--font-display);
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    transition: background-color var(--t) var(--ease), color var(--t) var(--ease);
+  }
+  .nav-trigger :global(.caret) {
+    opacity: 0.7;
+    transition: transform var(--t) var(--ease);
+  }
+  .nav-item:hover .nav-trigger,
+  .nav-item.is-open .nav-trigger,
+  .nav-trigger:focus-visible {
+    background: var(--tile);
+    color: var(--text);
+    box-shadow: var(--shadow-tile);
+  }
+  .nav-item.is-open :global(.caret) {
+    transform: rotate(180deg);
+  }
+  .nav-panel {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 50%;
+    min-width: 220px;
+    padding: 8px;
+    background: var(--tile);
+    border-radius: var(--r-lg);
+    box-shadow: var(--shadow-pop);
+    opacity: 0;
+    visibility: hidden;
+    transform: translate(-50%, -4px);
+    transition: opacity 160ms var(--ease), transform 160ms var(--ease), visibility 0s linear 160ms;
+  }
+  .nav-panel::before {
+    content: "";
+    position: absolute;
+    inset: -12px 0 auto;
+    height: 12px;
+  }
+  .nav-item.is-open .nav-panel {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, 0);
+    transition: opacity 160ms var(--ease), transform 160ms var(--ease), visibility 0s;
+  }
+  @media (hover: hover) and (min-width: 1024px) {
+    .nav-item:hover .nav-panel {
+      opacity: 1;
+      visibility: visible;
+      transform: translate(-50%, 0);
+      transition: opacity 160ms var(--ease), transform 160ms var(--ease), visibility 0s;
+    }
+    .nav-item:hover :global(.caret) {
+      transform: rotate(180deg);
+    }
+  }
+  .menu-col {
+    padding: 10px;
+    border-radius: var(--r-md);
+  }
+  .menu-col--tint {
+    background: var(--sand);
+  }
+  .menu-title {
+    display: block;
+    padding: 4px 10px 8px;
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 650;
+    color: var(--dim);
+    letter-spacing: 0.02em;
+  }
+  .menu-col a,
+  .drawer-group a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    border-radius: var(--r-sm);
+    color: var(--text);
+    font-size: var(--fs-sm);
+    font-weight: 560;
+    white-space: nowrap;
+    transition: background-color var(--t) var(--ease);
+  }
+  .menu-col a:hover {
+    background: var(--sand);
+  }
+  .menu-col--tint a:hover {
+    background: var(--tile);
+  }
+  .menu-col a[aria-current="page"] {
+    color: var(--brand-text);
+  }
+  .menu-ic {
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    flex: none;
+    border-radius: 10px;
+    background: var(--rose);
+    color: var(--brand-text);
+  }
+  .menu-col--tint .menu-ic {
+    background: var(--tile);
+  }
+  .menu-grid {
+    display: grid;
+    gap: 6px;
+  }
+  .menu-grid--platform {
+    grid-template-columns: 1.15fr 1fr;
+    width: 470px;
+  }
+  .menu-grid--docs {
+    grid-template-columns: auto auto auto;
+    width: max-content;
+  }
+  .menu-cols-2 {
+    columns: 2;
+    column-gap: 8px;
+  }
+
+  .header-end {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-left: auto;
+  }
+  .header-cta {
+    margin-left: 8px;
+  }
+  .menu-btn {
+    display: none;
+  }
+
+  .drawer {
+    position: fixed;
+    inset: 0;
+    z-index: 80;
+    background: rgb(0 0 0 / 0.5);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+  }
+  .drawer[hidden] {
+    display: none;
+  }
+  .drawer-sheet {
+    position: absolute;
+    inset: 8px;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 12px;
+    border-radius: var(--r-xl);
+    background: var(--canvas);
+    box-shadow: var(--shadow-pop);
+  }
+  .drawer-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 4px 6px 12px;
+  }
+  .drawer-groups {
+    display: grid;
+    gap: 8px;
+  }
+  .drawer-group {
+    padding: 4px 8px;
+    border-radius: var(--r-lg);
+    background: var(--tile);
+    box-shadow: var(--shadow-tile);
+  }
+  .drawer-group summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    list-style: none;
+    cursor: pointer;
+    padding: 14px 8px;
+    font-family: var(--font-display);
+    font-weight: 650;
+    font-size: 1.0625rem;
+  }
+  .drawer-group summary::-webkit-details-marker {
+    display: none;
+  }
+  .drawer-group[open] summary :global(.caret) {
+    transform: rotate(180deg);
+  }
+  .drawer-group ul {
+    padding-bottom: 8px;
+  }
+  .drawer-group .menu-title {
+    padding: 10px 10px 4px;
+  }
+  .drawer-group a {
+    padding: 10px;
+    font-size: 1rem;
+  }
+  .drawer-foot {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: auto;
+    padding-top: 4px;
+  }
+
+  @media (min-width: 560px) {
+    .drawer-sheet {
+      left: auto;
+      width: 420px;
+    }
+  }
+  @media (pointer: coarse) {
+    .site-header :global(.logo),
+    .drawer :global(.logo) {
+      padding-block: 7px;
+    }
+    .nav-trigger {
+      height: 40px;
+    }
+  }
+  @media (max-width: 1120px) {
+    .nav-trigger {
+      padding: 0 11px;
+    }
+    .header-gh {
+      display: none;
+    }
+  }
+  @media (max-width: 1023px) {
+    .nav,
+    .header-cta {
+      display: none;
+    }
+    .menu-btn {
+      display: inline-grid;
+    }
+  }
+</style>
+
+<script is:inline>
+  (() => {
+    const header = document.querySelector("[data-site-header]");
+    if (header) {
+      const onScroll = () => header.classList.toggle("is-scrolled", window.scrollY > 8);
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+    }
+
+    const items = [...document.querySelectorAll(".site-header .nav-item")];
+    const closeAll = (except) =>
+      items.forEach((it) => {
+        if (it === except) return;
+        it.classList.remove("is-open");
+        it.querySelector(".nav-trigger")?.setAttribute("aria-expanded", "false");
+      });
+    items.forEach((it) => {
+      const trigger = it.querySelector(".nav-trigger");
+      trigger?.addEventListener("click", () => {
+        const open = !it.classList.contains("is-open");
+        closeAll(it);
+        it.classList.toggle("is-open", open);
+        trigger.setAttribute("aria-expanded", String(open));
+      });
+      it.addEventListener("focusout", (e) => {
+        if (!it.contains(e.relatedTarget)) {
+          it.classList.remove("is-open");
+          trigger?.setAttribute("aria-expanded", "false");
+        }
+      });
+    });
+    document.addEventListener("click", (e) => {
+      if (!(e.target instanceof Element) || !e.target.closest(".nav-item")) closeAll();
+    });
+
+    const drawer = document.querySelector("[data-drawer]");
+    const openBtn = document.querySelector("[data-drawer-open]");
+    const setDrawer = (open) => {
+      if (!drawer) return;
+      drawer.hidden = !open;
+      openBtn?.setAttribute("aria-expanded", String(open));
+      document.body.style.overflow = open ? "hidden" : "";
+      if (open) drawer.querySelector("[data-drawer-close]")?.focus();
+      else openBtn?.focus();
+    };
+    openBtn?.addEventListener("click", () => setDrawer(true));
+    drawer?.querySelector("[data-drawer-close]")?.addEventListener("click", () => setDrawer(false));
+    drawer?.addEventListener("click", (e) => {
+      if (e.target === drawer) setDrawer(false);
+    });
+    window.matchMedia("(min-width: 1024px)").addEventListener("change", (e) => {
+      if (e.matches && drawer && !drawer.hidden) setDrawer(false);
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key !== "Escape") return;
+      const open = items.find((it) => it.classList.contains("is-open"));
+      if (open) {
+        closeAll();
+        open.querySelector(".nav-trigger")?.focus();
+      }
+      if (drawer && !drawer.hidden) setDrawer(false);
+    });
+  })();
+</script>

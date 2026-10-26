@@ -1,0 +1,192 @@
+# Stalwart
+
+> Stalwart is an open-source mail and collaboration server written in Rust. A single binary implements JMAP, IMAP4, POP3, SMTP, CalDAV, CardDAV, and WebDAV, covering email, calendaring, contacts, and file storage. It is designed to run from a single-node personal deployment up to a clustered multi-node installation.
+
+This file indexes the official Stalwart documentation at https://stalw.art/docs. The documentation is the source of truth for configuration keys, protocol support, deployment topologies, and administration. The server source code lives in a separate repository at https://github.com/stalwartlabs.
+
+The documentation is versioned; links below point at the current release line. Older releases, when archived, are available under `/docs/<version>/…`.
+
+## Installation
+
+- [Getting started](https://stalw.art/docs/install/): the path from a new host to a server that sends and receives mail.
+- [System requirements](https://stalw.art/docs/install/requirements): platforms, network prerequisites, memory, CPU and outbound connections.
+- [Install on Linux, macOS and FreeBSD](https://stalw.art/docs/install/platform/linux): step-by-step tutorial with the installation script, from host names to a test message.
+- [Install on Docker](https://stalw.art/docs/install/platform/docker): step-by-step tutorial with the container image, from host names to a test message.
+- [Install on Windows](https://stalw.art/docs/install/platform/windows): step-by-step tutorial with an NSSM service, from host names to a test message.
+- [Securing the server](https://stalw.art/docs/install/security): steps to take before production use.
+- [Next steps](https://stalw.art/docs/install/next-steps): domains, accounts, clients, backups and the options a first installation leaves at their defaults.
+- [Setup wizard](https://stalw.art/docs/install/setup-wizard): reference for every field and error of the setup wizard.
+- [Choose a storage backend](https://stalw.art/docs/install/store): the four stores and how to choose their backends.
+- [Choose a directory](https://stalw.art/docs/install/directory): internal vs. external authentication directories.
+- [DNS records](https://stalw.art/docs/install/dns): records required for SPF, DKIM, DMARC, MTA-STS, autoconfig and more.
+- [Troubleshooting installation](https://stalw.art/docs/install/troubleshooting): installation problems by symptom.
+- [Setting up clients](https://stalw.art/docs/server/clients): client settings, DAV and JMAP URLs, and automatic discovery.
+- [Upgrading](https://stalw.art/docs/install/upgrade): upgrading between Stalwart 1.x releases.
+
+## Email and collaboration
+
+- [Email store overview](https://stalw.art/docs/email/): JMAP/IMAP/POP3 mail storage model.
+- [Collaboration overview](https://stalw.art/docs/collaboration/): calendars, contacts, file storage, sharing.
+- [Calendaring (CalDAV)](https://stalw.art/docs/collaboration/calendar): calendar scheduling and CalDAV support.
+- [Contacts (CardDAV)](https://stalw.art/docs/collaboration/contact): address book and CardDAV support.
+- [File storage (WebDAV)](https://stalw.art/docs/collaboration/file-storage): file storage and WebDAV.
+- [Sharing](https://stalw.art/docs/collaboration/sharing): access control across calendars, address books and files.
+- [Scheduling](https://stalw.art/docs/collaboration/scheduling): iTIP/iMIP calendar scheduling.
+- [Notifications](https://stalw.art/docs/collaboration/notifications): push and email notifications.
+- [Free/busy and availability](https://stalw.art/docs/collaboration/availability): free/busy queries over JMAP and CalDAV.
+
+## MTA (SMTP)
+
+- [MTA overview](https://stalw.art/docs/mta/): inbound and outbound SMTP pipeline.
+- [Inbound overview](https://stalw.art/docs/mta/inbound/): inbound session handling (connect, EHLO, MAIL, RCPT, DATA, AUTH).
+- [Outbound strategies](https://stalw.art/docs/mta/outbound/strategy): queue, routing, retry, quotas and rate limits.
+- [Filtering overview](https://stalw.art/docs/mta/filter/): Sieve, milter, MTA-hooks, and spam filtering.
+- [Sender authentication](https://stalw.art/docs/mta/authentication/): SPF, DKIM, DKIM2, DMARC, ARC and reverse DNS checks.
+- [DKIM](https://stalw.art/docs/mta/authentication/dkim/) and [DKIM2](https://stalw.art/docs/mta/authentication/dkim/dkim2): signing and verification.
+- [Reports](https://stalw.art/docs/mta/reports/): DMARC, TLS, and DSN reporting.
+- [Transport security](https://stalw.art/docs/mta/transport-security/): DANE, MTA-STS, and TLS reporting.
+- [Queue management](https://stalw.art/docs/mta/management): operating the outbound queue.
+
+## Spam filter
+
+- [Spam filter overview](https://stalw.art/docs/spamfilter/): architecture of the built-in filter.
+- [Classifier overview](https://stalw.art/docs/spamfilter/classifier/): the linear spam classifier.
+- [AI classifier](https://stalw.art/docs/spamfilter/ai/): classifying spam and phishing with an AI model.
+- [Authentication tags](https://stalw.art/docs/spamfilter/settings/scores#authentication-tags), [DNSBL](https://stalw.art/docs/spamfilter/dnsbl), [Greylisting](https://stalw.art/docs/spamfilter/greylist), [Phishing](https://stalw.art/docs/spamfilter/phishing): individual checks.
+- [Rules](https://stalw.art/docs/spamfilter/rules): custom rule definitions.
+- [Domain lists](https://stalw.art/docs/spamfilter/settings/domain-lists) and [File extensions](https://stalw.art/docs/spamfilter/settings/mime-types): the lookup lists and attachment classifications the filter consults.
+- [Trusted senders](https://stalw.art/docs/spamfilter/trusted) and [Spam traps](https://stalw.art/docs/spamfilter/spamtrap).
+
+## Sieve
+
+- [Sieve overview](https://stalw.art/docs/sieve/): server-side mail filtering language.
+- [User scripts](https://stalw.art/docs/sieve/user-scripts): uploading and managing scripts over ManageSieve and JMAP.
+- [Sieve interpreters](https://stalw.art/docs/sieve/#two-interpreters): trusted and untrusted interpreters.
+- [Reference](https://stalw.art/docs/sieve/reference): supported commands and tests.
+- [Expressions](https://stalw.art/docs/sieve/expressions) and [Variables](https://stalw.art/docs/sieve/variables).
+- [AI models in Sieve](https://stalw.art/docs/sieve/llm): the `llm_prompt` function.
+- [Examples](https://stalw.art/docs/sieve/examples).
+
+## HTTP, JMAP and WebDAV
+
+- [HTTP overview](https://stalw.art/docs/http/): the HTTP service and endpoints.
+- [JMAP overview](https://stalw.art/docs/http/jmap/): JMAP Core and Mail endpoints, push, WebSockets.
+- [JMAP capabilities](https://stalw.art/docs/http/jmap/capabilities): advertised capabilities and their limits.
+- [WebDAV overview](https://stalw.art/docs/http/webdav/): CalDAV, CardDAV, and WebDAV endpoints.
+- [Access control](https://stalw.art/docs/http/access-control): HTTP access control lists.
+- [HTTP server](https://stalw.art/docs/http/settings): response headers, forwarded IPs, HSTS, CORS and request rate limits.
+- [Form submission](https://stalw.art/docs/http/form-submission): contact-form / webhook email submission.
+
+## Authentication and authorization
+
+- [Auth overview](https://stalw.art/docs/auth/): identity model.
+- [Authentication overview](https://stalw.art/docs/auth/authentication/): passwords, app passwords, API keys, 2FA.
+- [OAuth and OpenID Connect](https://stalw.art/docs/auth/oauth/): the built-in authorization server: clients, scopes, consent, tokens and OpenID Connect.
+- [Authorization overview](https://stalw.art/docs/auth/authorization/): roles, permissions, quotas, tenants.
+- [Directory backends](https://stalw.art/docs/auth/backend/): SQL, LDAP, OIDC and internal directory.
+- [Accounts](https://stalw.art/docs/auth/accounts/): user and group accounts.
+- [SCIM provisioning](https://stalw.art/docs/auth/scim/): SCIM 2.0 account lifecycle from an external identity provider.
+
+## Storage
+
+- [Storage overview](https://stalw.art/docs/storage/): data, blob, search and in-memory stores, and lookup lists.
+- [Data store](https://stalw.art/docs/storage/data): metadata and indexes.
+- [Blob store](https://stalw.art/docs/storage/blob): raw message and file blobs.
+- [Full-text search](https://stalw.art/docs/storage/fts): FTS backends.
+- [Search indexing](https://stalw.art/docs/storage/indexing): the index queue and rebuilding the index.
+- [Attachment text extraction](https://stalw.art/docs/storage/text-extraction): document formats indexed for search.
+- [In-memory store](https://stalw.art/docs/storage/in-memory): rate-limit counters, greylisting entries, locks and short-lived tokens; Redis for clusters.
+- [Cache swapping](https://stalw.art/docs/storage/cache-swap): persisted account cache snapshots.
+- [Data retention](https://stalw.art/docs/storage/maintenance): purging deleted and expired data and reclaiming disk space.
+- [Backends overview](https://stalw.art/docs/storage/backends/): RocksDB, FoundationDB, SQL, S3, and others.
+
+## Server
+
+- [General settings](https://stalw.art/docs/server/general): top-level server configuration.
+- [Listeners](https://stalw.art/docs/server/listener): network listeners for each protocol.
+- [TLS overview](https://stalw.art/docs/server/tls/): certificates, ACME, and TLS configuration.
+- [DNS overview](https://stalw.art/docs/server/dns/): DNS resolver and provider integration.
+- [AI models](https://stalw.art/docs/server/ai-models): configuring LLM providers used by the server.
+- [Autoconfig](https://stalw.art/docs/server/autoconfig): autoconfig/autodiscover for mail clients.
+- [Auto-ban](https://stalw.art/docs/server/auto-ban): automatic IP banning.
+- [Reverse proxy](https://stalw.art/docs/server/reverse-proxy/): running behind nginx, HAProxy, Caddy, or Traefik.
+- [ASN](https://stalw.art/docs/server/asn): ASN-based controls.
+- [Object metadata](https://stalw.art/docs/server/metadata): IMAP METADATA, JMAP metadata and WebDAV dead properties.
+- [Enterprise features](https://stalw.art/docs/server/enterprise): features in the commercial edition.
+
+## Configuration
+
+- [Configuration overview](https://stalw.art/docs/configuration/): how configuration works in Stalwart.
+- [Bootstrap mode](https://stalw.art/docs/configuration/bootstrap-mode): first-run bootstrap.
+- [Recovery mode](https://stalw.art/docs/configuration/recovery-mode): recovering from a broken configuration.
+- [Declarative deployments](https://stalw.art/docs/configuration/declarative-deployments): configuration-as-code deployments.
+- [Variables](https://stalw.art/docs/configuration/variables): template variables.
+- [Environment variables](https://stalw.art/docs/configuration/environment-variables): supported environment variables.
+- [Expressions](https://stalw.art/docs/configuration/expressions/): expression language used throughout the configuration.
+- [Object encoding](https://stalw.art/docs/configuration/object-encoding): how configuration values are encoded as JSON (lists, sets, durations, sizes).
+
+## Domains and encryption
+
+- [Domains overview](https://stalw.art/docs/domains/): managing hosted domains.
+- [DNS records](https://stalw.art/docs/domains/dns-records): per-domain DNS records.
+- [TLS certificates](https://stalw.art/docs/domains/tls-certificates): ACME and manual certificates.
+- [DKIM rotation](https://stalw.art/docs/domains/dkim-rotation): rotating DKIM keys.
+- [Encryption overview](https://stalw.art/docs/encryption/): at-rest encryption for mail.
+- [PGP](https://stalw.art/docs/encryption/pgp) and [S/MIME](https://stalw.art/docs/encryption/smime): per-user encryption.
+- [Managing encryption](https://stalw.art/docs/encryption/manage).
+
+## Cluster
+
+- [Cluster overview](https://stalw.art/docs/cluster/): multi-node deployments.
+- [Cluster configuration overview](https://stalw.art/docs/cluster/configuration/): node IDs, roles, and load balancing.
+- [Coordination overview](https://stalw.art/docs/cluster/coordination/): Kafka, NATS, Redis and peer-to-peer coordination.
+- [Orchestration overview](https://stalw.art/docs/cluster/orchestration/): Kubernetes and Docker Swarm.
+- [Deployment overview](https://stalw.art/docs/cluster/deployment/): sizing and storage.
+
+## Management and telemetry
+
+- [Management overview](https://stalw.art/docs/management/): administering a running server.
+- [CLI overview](https://stalw.art/docs/management/cli/): the `stalwart` CLI (get, query, create, update, delete, apply, snapshot).
+- [Web UI overview](https://stalw.art/docs/management/webui/): the admin web interface.
+- [Tasks & Actions](https://stalw.art/docs/management/tasks-actions/): operational actions and background tasks, with [Actions](https://stalw.art/docs/management/tasks-actions/actions) and [Tasks](https://stalw.art/docs/management/tasks-actions/tasks).
+- [Backup and restore](https://stalw.art/docs/management/maintenance/backup), [Recovering deleted items](https://stalw.art/docs/management/maintenance/deleted-items), [Database console](https://stalw.art/docs/management/maintenance/database) and [Database migration](https://stalw.art/docs/management/maintenance/migration) (moving to another data store backend).
+- [Applications](https://stalw.art/docs/management/applications/): web applications served by Stalwart, including the WebUI, and how their bundles are installed and updated.
+- [Troubleshooting](https://stalw.art/docs/management/troubleshoot): diagnostic procedures.
+- [Telemetry overview](https://stalw.art/docs/telemetry/): metrics, traces, events.
+- [Metrics overview](https://stalw.art/docs/telemetry/metrics/), [Tracing overview](https://stalw.art/docs/telemetry/tracing/).
+- [Events](https://stalw.art/docs/telemetry/events), [Webhooks](https://stalw.art/docs/telemetry/webhooks), [Alerts](https://stalw.art/docs/telemetry/alerts), [Live view](https://stalw.art/docs/telemetry/live), [History](https://stalw.art/docs/telemetry/history).
+
+## Performance tuning
+
+- [Performance tuning](https://stalw.art/docs/performance/): diagnosing slowness and choosing what to tune.
+- [Measuring](https://stalw.art/docs/performance/measuring), [Caching](https://stalw.art/docs/performance/caching), [Caches](https://stalw.art/docs/performance/caches), [Memory](https://stalw.art/docs/performance/memory), [Data store](https://stalw.art/docs/performance/data-store), [Search indexing](https://stalw.art/docs/performance/search-indexing), [Mail throughput](https://stalw.art/docs/performance/mail-throughput), [Connections](https://stalw.art/docs/performance/connections), [Cluster](https://stalw.art/docs/performance/cluster) and [CPU instruction sets](https://stalw.art/docs/performance/cpu).
+
+## Migration
+
+- [Migration overview](https://stalw.art/docs/migration/): moving a populated mail system onto Stalwart with the migration proxy and Vandelay.
+- [Migration guide](https://stalw.art/docs/migration/guide/): side-by-side, account-by-account migration from a self-hosted server.
+- [Migrating from hosted services](https://stalw.art/docs/migration/guide/hosted): Google Workspace and Microsoft 365.
+- [Migration proxy](https://stalw.art/docs/migration/proxy/): routing connections between the old and new servers.
+- [Vandelay](https://stalw.art/docs/migration/import-export/): import and export of mailboxes, calendars and contacts.
+
+## FAQ
+
+- [FAQ](https://stalw.art/docs/faq/): frequently asked questions grouped by topic, each linking the page with the full answer.
+
+## Reference
+
+- [Reference index](https://stalw.art/docs/ref): top-level reference index.
+- [Configuration objects](https://stalw.art/docs/ref): JMAP-object schemas for every configurable entity (accounts, domains, DKIM signatures, queues, certificates, and more).
+- [Permissions](https://stalw.art/docs/ref/permissions): all permission names.
+- [Events](https://stalw.art/docs/ref/events): all emitted events.
+- [Metrics](https://stalw.art/docs/ref/metrics): all exported metrics.
+
+## Optional
+
+- [HTTP API](https://stalw.art/docs/http/api): HTTP API reference.
+- [Compiling from source](https://stalw.art/docs/development/compile): building Stalwart from source.
+- [Database internals](https://stalw.art/docs/development/database): on-disk data layout.
+- [Supported RFCs](https://stalw.art/docs/development/rfcs): RFC compliance matrix.
+- [URN reference](https://stalw.art/docs/development/urn): internal URN scheme.
+- [Blog](https://stalw.art/blog): release announcements and articles.
+- [GitHub](https://github.com/stalwartlabs): source code and issue tracker.

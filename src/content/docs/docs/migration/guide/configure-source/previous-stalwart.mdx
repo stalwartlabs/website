@@ -1,0 +1,359 @@
+---
+sidebar_position: 2
+title: "Previous Stalwart versions"
+description: "Stage the settings that let a Stalwart 0.15 or 0.16 server sit behind the migration proxy and accept mail relayed from the new deployment."
+prev:
+  link: /docs/migration/guide/configure-proxy/
+  label: Configuring the proxy
+next:
+  link: /docs/migration/guide/cutover/
+  label: Starting the proxy
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+This page prepares a Stalwart 0.15 or 0.16 deployment as the source of the migration. The source has to accept connections from the proxy, accept mail relayed from the new deployment, and advertise the proxy's URL, and the two releases need the same changes to do so.
+
+They are configured differently, though. Stalwart 0.15 is configured through settings keys, which are kept in its configuration file and its data store and edited through the settings API or the web administration interface. Stalwart 0.16 is configured through objects, which are kept in its data store and edited in the WebUI or with the [command-line interface](/docs/management/cli/). Where the two differ, a tabbed block shows each release.
+
+A Stalwart 0.16 source must run 0.16.27, so upgrade an earlier 0.16 release first. That release brings two things the migration depends on. Its OAuth access tokens carry the account name, which the proxy reads to route the requests that carry them, and it is the 0.16 release that can export password hashes. Before preparing the source, run the checks in [Checking a Stalwart source](/docs/migration/guide/configure-source/#checking-a-stalwart-source).
+
+Releases before 0.15 are not covered here. Such a source is prepared like any other self-hosted server, by meeting the [requirements for every source](/docs/migration/guide/configure-source/) with its own settings.
+
+The changes on this page are prepared now and applied at the cutover, so that the source keeps operating as before until then. When each change takes effect depends on its kind. The listener settings take effect only when the source restarts, and the single restart at the cutover applies them. The other settings take effect when the configuration is reloaded, as described in [Reload versus restart](#reload-versus-restart).
+
+## Connecting to the source
+
+<Tabs syncKey="stalwart-release">
+<TabItem label="Stalwart 0.15">
+
+The examples write each setting through the settings API of the source, with an administrator's credentials. The same keys can also be edited in the web administration interface. This page and the pages that follow use these shell variables:
+
+```bash
+OLD="https://source.internal.example.org"
+AUTH="admin:<administrator password>"
+```
+
+Settings whose keys start with `server.`, which include the listener settings below, are stored in the configuration file of the source, not in its data store. Writing them has a side effect. When the settings API writes such a key, the source rewrites its configuration file as a flat list of `key = "value"` lines, and the comments and section headers in the file are lost. Keep a copy of the configuration file before making these changes.
+
+</TabItem>
+<TabItem label="Stalwart 0.16">
+
+The examples use `stalwart-cli`, which works with Stalwart 0.16 as well as with the new deployment. The same objects can also be edited in the WebUI. These environment variables point the CLI at the source, and the account needs the administrator's permissions:
+
+```bash
+export STALWART_URL="https://source.internal.example.org"
+export STALWART_USER="admin"
+export STALWART_PASSWORD="<administrator password>"
+```
+
+The pages about the new deployment set the same variables to the new deployment's address. Run the commands for the source in a shell of their own, so that the two sets of variables do not mix.
+
+The changes overwrite the current values of several settings. Save those values first, so that the rollback can restore them exactly:
+
+```bash
+stalwart-cli get SenderAuth --json \
+  --fields dkimVerify,arcVerify,spfEhloVerify,spfFromVerify,dmarcVerify,reverseIpVerify \
+  > source-SenderAuth.json
+stalwart-cli get MtaStageEhlo --json --fields rejectNonFqdn > source-MtaStageEhlo.json
+stalwart-cli get MtaOutboundStrategy --json --fields route > source-MtaOutboundStrategy.json
+```
+
+</TabItem>
+</Tabs>
+
+## Accepting the proxy on every listener except port 25
+
+The proxy forwards each connection with a PROXY protocol header, so that the source records the client's address instead of the proxy's. The source accepts the header only from trusted networks, so the proxy's address has to be trusted.
+
+Port 25 is the exception. On that port, the new deployment relays mail for accounts that have not moved to the source as an ordinary SMTP client, without a PROXY header. A listener that trusted the new deployment's network would wait for a header that never arrives. The trusted network is therefore set on each listener except the port 25 listener.
+
+Both releases support this through per-listener lists. A list of trusted networks set on a listener replaces the server-wide list for that listener, while a listener without a list of its own uses the server-wide one. The server-wide list cannot be used for this purpose, because it applies to every listener, including port 25.
+
+<Tabs syncKey="stalwart-release">
+<TabItem label="Stalwart 0.15">
+
+In Stalwart 0.15, the per-listener key `server.listener.<id>.proxy.trusted-networks` replaces the global key `server.proxy.trusted-networks` for that listener. The following call trusts the proxy on the default listeners of a Stalwart 0.15 installation, and leaves the `smtp` listener on port 25 unchanged:
+
+```bash
+curl -sk -u "$AUTH" -H 'Content-Type: application/json' "$OLD/api/settings" -d '[
+  {"type":"insert","assert_empty":false,"values":[
+    ["server.listener.imaptls.proxy.trusted-networks.0","203.0.113.10/32"],
+    ["server.listener.imap.proxy.trusted-networks.0","203.0.113.10/32"],
+    ["server.listener.pop3s.proxy.trusted-networks.0","203.0.113.10/32"],
+    ["server.listener.pop3.proxy.trusted-networks.0","203.0.113.10/32"],
+    ["server.listener.submission.proxy.trusted-networks.0","203.0.113.10/32"],
+    ["server.listener.submissions.proxy.trusted-networks.0","203.0.113.10/32"],
+    ["server.listener.sieve.proxy.trusted-networks.0","203.0.113.10/32"],
+    ["server.listener.https.proxy.trusted-networks.0","203.0.113.10/32"],
+    ["server.listener.http.proxy.trusted-networks.0","203.0.113.10/32"]
+  ]}
+]'
+```
+
+The call uses the default listener identifiers of Stalwart 0.15:
+
+| Listener | Port | Protocol |
+| --- | --- | --- |
+| `smtp` | 25 | SMTP |
+| `submission` | 587 | SMTP submission with STARTTLS |
+| `submissions` | 465 | SMTP submission with implicit TLS |
+| `imap` | 143 | IMAP with STARTTLS |
+| `imaptls` | 993 | IMAP with implicit TLS |
+| `pop3` | 110 | POP3 with STARTTLS |
+| `pop3s` | 995 | POP3 with implicit TLS |
+| `sieve` | 4190 | ManageSieve |
+| `https` | 443 | HTTP with implicit TLS |
+| `http` | 8080 | HTTP |
+
+A deployment with other listener identifiers adjusts the keys accordingly.
+
+</TabItem>
+<TabItem label="Stalwart 0.16">
+
+In Stalwart 0.16, each listener is a [NetworkListener](/docs/ref/object/network-listener) object. Its `overrideProxyTrustedNetworks` field replaces the server-wide `proxyTrustedNetworks` of SystemSettings for that listener. A fresh Stalwart 0.16 installation has these listeners:
+
+| Listener | Port | Protocol |
+| --- | --- | --- |
+| `smtp` | 25 | SMTP |
+| `submissions` | 465 | SMTP submission with implicit TLS |
+| `imaps` | 993 | IMAP with implicit TLS |
+| `pop3s` | 995 | POP3 with implicit TLS |
+| `sieve` | 4190 | ManageSieve |
+| `https` | 443 | HTTP with implicit TLS |
+| `http` | 8080 | HTTP |
+
+A server upgraded from 0.15 does not keep the 0.15 listeners, so it has the same list, unless listeners were added since. Listeners are addressed by their identifier, which the following command lists:
+
+```bash
+stalwart-cli query NetworkListener --fields id,name,protocol,bind
+```
+
+Then set the field on every listener except `smtp`, using the identifiers from the list. The value is a set, written as an object whose keys are the trusted addresses or networks:
+
+```bash
+for id in <imaps-id> <pop3s-id> <submissions-id> <sieve-id> <https-id> <http-id>; do
+  stalwart-cli update NetworkListener "$id" \
+    --field 'overrideProxyTrustedNetworks={"203.0.113.10/32":true}'
+done
+```
+
+Listeners added to the deployment, such as one on port 587, get the same value.
+
+</TabItem>
+</Tabs>
+
+Replace `203.0.113.10/32` with the proxy's address, the same address that is trusted on the new deployment.
+
+A source may already have a server-wide list of trusted networks, for example because it sits behind a load balancer. The port 25 listener inherits that list. In that case, the port 25 listener needs a list of its own that contains neither the new deployment nor any other SMTP client.
+
+The settings take effect only on a restart. From then on, the source expects a PROXY header on these listeners from the proxy's network, and the two releases react differently when it is missing. A Stalwart 0.15 source drops a connection from that network that does not send one. A Stalwart 0.16 source waits for the header without a time limit, so a client that waits for the server's greeting hangs until it gives up. Stalwart 0.16 logs each such connection as a `network.proxy-error` event.
+
+## Trusting mail relayed from the new deployment
+
+A message relayed by the new deployment arrives from the new deployment's address. It carries the authentication results of the original sender, which the new deployment already evaluated as the public mail exchanger.
+
+If the source evaluated SPF, DKIM, DMARC, ARC and reverse DNS again, the checks would see the new deployment as the sending host, and they would frequently fail. The source would then reject or penalise legitimate mail. The source therefore stops performing these checks.
+
+The EHLO greeting needs the same treatment. By default, the source rejects an EHLO greeting with a host name that is not fully qualified on port 25, with `550 5.5.0 Invalid EHLO domain.` The new deployment greets with its own host name, which in many deployments is an internal name, so the source also stops this check.
+
+<Tabs syncKey="stalwart-release">
+<TabItem label="Stalwart 0.15">
+
+```bash
+curl -sk -u "$AUTH" -H 'Content-Type: application/json' "$OLD/api/settings" -d '[
+  {"type":"insert","assert_empty":false,"values":[
+    ["auth.dkim.verify","disable"],
+    ["auth.arc.verify","disable"],
+    ["auth.spf.verify.ehlo","disable"],
+    ["auth.spf.verify.mail-from","disable"],
+    ["auth.dmarc.verify","disable"],
+    ["auth.iprev.verify","disable"],
+    ["session.ehlo.reject-non-fqdn","false"]
+  ]}
+]'
+```
+
+</TabItem>
+<TabItem label="Stalwart 0.16">
+
+In Stalwart 0.16, the checks are expressions in the `SenderAuth` object, and the EHLO requirement is the `rejectNonFqdn` expression of the `MtaStageEhlo` object. Their default values enable the checks for port 25 through a condition on `local_port`.
+
+Disabling them takes care, because an update replaces only the parts of an expression that it names. Each update therefore sets an empty `match` as well. Otherwise the condition for port 25 would remain, and the source would keep checking relayed mail:
+
+```bash
+stalwart-cli update SenderAuth --json '{
+  "dkimVerify": {"else": "disable", "match": {}},
+  "arcVerify": {"else": "disable", "match": {}},
+  "spfEhloVerify": {"else": "disable", "match": {}},
+  "spfFromVerify": {"else": "disable", "match": {}},
+  "dmarcVerify": {"else": "disable", "match": {}},
+  "reverseIpVerify": {"else": "disable", "match": {}}
+}'
+stalwart-cli update MtaStageEhlo --json '{"rejectNonFqdn": {"else": "false", "match": {}}}'
+```
+
+These settings take effect at the next reload of the configuration, and the timing of that reload is not fully under the operator's control. Stalwart 0.16 also reloads its configuration on its own, for example when its spam filter rules are updated or when another node of a cluster reloads. Settings written now could therefore take effect before the cutover, while the source is still the public mail exchanger, and it would then receive mail without these checks. For this reason, run these two commands at the cutover, immediately before the source is restarted, as described in [Starting the proxy](/docs/migration/guide/cutover/).
+
+</TabItem>
+</Tabs>
+
+## Advertising the proxy as the public URL
+
+The source advertises a URL from which clients learn its JMAP, OAuth and WebUI endpoints. Behind the proxy, this URL must be the public hostname. Otherwise, clients that follow it leave the proxy and are no longer routed.
+
+<Tabs syncKey="stalwart-release">
+<TabItem label="Stalwart 0.15">
+
+In Stalwart 0.15, the default value of `http.url` is built from the host name and the local port of the connection. Behind the proxy, the source would therefore advertise its own port. Set the value to the public hostname:
+
+```bash
+curl -sk -u "$AUTH" -H 'Content-Type: application/json' "$OLD/api/settings" -d '[
+  {"type":"insert","assert_empty":false,"values":[
+    ["http.url","'\''https://mail.example.org'\''"]
+  ]}
+]'
+```
+
+The value is an expression, so the URL is a string literal in single quotes inside the JSON string.
+
+</TabItem>
+<TabItem label="Stalwart 0.16">
+
+Stalwart 0.16 builds the URL as `https://` followed by its default host name, the `defaultHostname` field of SystemSettings, unless the `STALWART_PUBLIC_URL` environment variable sets it. When the public hostname is the source's default host name and clients reach it on port 443, the source already advertises the right URL, and nothing needs to change.
+
+Otherwise, set the URL in the environment of the service: in `/etc/stalwart/stalwart.env` for an installation made with the script, or with `-e` for a container:
+
+```bash
+STALWART_PUBLIC_URL=https://mail.example.org
+```
+
+The variable is read when the process starts, so it takes effect with the restart at the cutover.
+
+</TabItem>
+</Tabs>
+
+## Exposing password hashes
+
+The accounts are recreated on the new deployment with their password hashes, so that users keep their passwords, as described in [Creating the account on the new deployment](/docs/migration/guide/migrate-accounts/#creating-the-account-on-the-new-deployment). The hashes have to be readable from the source for this. Stalwart 0.16 masks secrets in its management API, and returns them only when the environment of the service contains:
+
+```bash
+STALWART_INCLUDE_SECRETS=1
+```
+
+Add the variable next to `STALWART_PUBLIC_URL`. Like it, the variable takes effect with the restart at the cutover.
+
+The variable has a wide effect. While it is set, every response of the management API returns secrets, including password hashes, to every caller allowed to read the object. Remove it, followed by a restart, once the last account has moved.
+
+Stalwart 0.15 returns the hashes without this setting.
+
+## Routing outbound mail through the new deployment
+
+This step is optional. While the migration lasts, mail that accounts on the source send to other domains can leave through the new deployment, so that all outgoing mail uses one path and one sending address. The new deployment must then accept relayed mail from the source's address, as described in [Relaying outbound mail for the source](/docs/migration/guide/configure-new/#relaying-outbound-mail-for-the-source).
+
+On the source, the change has two parts: a relay route to the new deployment, and a routing rule that sends mail for remote domains to it. Mail for local domains is still delivered locally.
+
+<Tabs syncKey="stalwart-release">
+<TabItem label="Stalwart 0.15">
+
+```bash
+curl -sk -u "$AUTH" -H 'Content-Type: application/json' "$OLD/api/settings" -d '[
+  {"type":"insert","assert_empty":false,"values":[
+    ["queue.route.smarthost.type","relay"],
+    ["queue.route.smarthost.address","new.internal.example.org"],
+    ["queue.route.smarthost.port","25"],
+    ["queue.route.smarthost.protocol","smtp"],
+    ["queue.route.smarthost.tls.implicit","false"],
+    ["queue.route.smarthost.tls.allow-invalid-certs","true"],
+    ["queue.strategy.route.0.if","is_local_domain('\''*'\'', rcpt_domain)"],
+    ["queue.strategy.route.0.then","'\''local'\''"],
+    ["queue.strategy.route.1.else","'\''smarthost'\''"]
+  ]}
+]'
+```
+
+The `tls.implicit` key is set explicitly for port 25, because in Stalwart 0.15 a relay route uses implicit TLS unless `tls.implicit` is set to `false`.
+
+</TabItem>
+<TabItem label="Stalwart 0.16">
+
+In Stalwart 0.16, the route is an [MtaRoute](/docs/ref/object/mta-route) object of the `Relay` variant. The routing rule is the `route` expression of the `MtaOutboundStrategy` object, which names the route to use for each recipient. Create the route first, because the rule refers to it by name:
+
+```bash
+stalwart-cli create MtaRoute/Relay --json '{
+  "name": "smarthost",
+  "address": "new.internal.example.org",
+  "port": 25,
+  "protocol": "smtp",
+  "allowInvalidCerts": true,
+  "description": "Relay to the new deployment"
+}'
+stalwart-cli update MtaOutboundStrategy --json '{
+  "route": {"else": "'\''smarthost'\''",
+            "match": {"0": {"if": "is_local_domain(rcpt_domain)", "then": "'\''local'\''"}}}
+}'
+```
+
+Route names inside the expression are string literals, in single quotes. Like the authentication settings, the routing rule takes effect at the next reload, so run the second command at the cutover, together with them.
+
+</TabItem>
+</Tabs>
+
+## Reload versus restart
+
+The settings on this page fall into two groups, which take effect in different ways.
+
+The listener settings take effect only when the server process restarts, because listeners are bound at startup. Neither release has a restart call in its API, so the process is restarted through the service manager, for example with `systemctl restart stalwart` or `docker restart`.
+
+The other settings take effect when the configuration is reloaded. A reload does not drop connections, and a restart applies these settings as well.
+
+<Tabs syncKey="stalwart-release">
+<TabItem label="Stalwart 0.15">
+
+Stalwart 0.15 reloads its configuration with `GET $OLD/api/reload`. Nothing is reloaded or restarted in this step, however. The source is restarted once, at the [cutover](/docs/migration/guide/cutover/), which applies all settings together and keeps the interruption to a single window.
+
+</TabItem>
+<TabItem label="Stalwart 0.16">
+
+Stalwart 0.16 reloads its configuration with the `ReloadSettings` action, `stalwart-cli create Action/ReloadSettings`. In this migration, the listener settings and the public URL wait for the restart at the [cutover](/docs/migration/guide/cutover/). The authentication, EHLO and routing commands are run there too, immediately before the restart, which applies all of them together.
+
+</TabItem>
+</Tabs>
+
+## Rollback
+
+<Tabs syncKey="stalwart-release">
+<TabItem label="Stalwart 0.15">
+
+Nothing has been applied yet, so abandoning the migration at this point requires only that the source is not restarted with these settings.
+
+To remove the settings, clear each key with a `clear` operation whose prefix ends in a dot, such as `{"type":"clear","prefix":"server.listener.imaptls.proxy."}`, and reload the source. The trailing dot matters, because the prefix is matched as plain text. A prefix without it also matches longer keys: `server.listener.imap` matches the keys of `imaptls` as well.
+
+</TabItem>
+<TabItem label="Stalwart 0.16">
+
+Nothing has been applied yet, so abandoning the migration at this point requires only that the source is not restarted with these settings.
+
+To remove the listener values, set each of them to an empty set. Each listener then uses the server-wide list again:
+
+```bash
+stalwart-cli update NetworkListener <id> --field 'overrideProxyTrustedNetworks={}'
+```
+
+Restore the authentication, EHLO and routing settings from the values saved before the changes, without the `id` property that the saved files contain, and then run a `ReloadSettings` action:
+
+```bash
+for obj in SenderAuth MtaStageEhlo MtaOutboundStrategy; do
+  jq 'del(.id)' "source-$obj.json" | stalwart-cli update "$obj" --stdin
+done
+stalwart-cli create Action/ReloadSettings
+```
+
+Restoring the saved values matters, because an expression left empty does not return to its documented default. An empty `SenderAuth` expression even enables its check on every port.
+
+Two more changes are undone by hand. A relay route that was created is deleted with `stalwart-cli delete MtaRoute --ids <id>`, once the routing rule no longer refers to it. A `STALWART_PUBLIC_URL` or `STALWART_INCLUDE_SECRETS` that was added is removed from the environment.
+
+</TabItem>
+</Tabs>
+
+If the settings were already applied at the cutover, removing the listener settings and restarting the source returns it to standalone operation, as described in the [cutover rollback](/docs/migration/guide/cutover/#rollback).

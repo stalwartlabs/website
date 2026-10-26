@@ -1,0 +1,453 @@
+---
+import Icon from "../Icon.astro";
+import { inlineMd, paragraphMd } from "../../lib/md";
+
+interface Props {
+  data: any;
+}
+const { data } = Astro.props;
+const hasHead = !!(data.eyebrow || data.title || data.body);
+---
+<section class="wrap section" id="contact-form" aria-labelledby={data.title ? "cf-title" : undefined}>
+  <div class:list={["cf-layout", { "cf-layout--solo": !hasHead }]}>
+    {hasHead && (
+      <div class="section-head cf-head reveal">
+        {data.eyebrow && <span class="pill">{data.eyebrow}</span>}
+        {data.title && <h2 id="cf-title" class="h2" set:html={inlineMd(data.title)} />}
+        {data.body && <div class="section-body" set:html={paragraphMd(data.body)} />}
+      </div>
+    )}
+
+    <div class="cf__shell reveal" data-cf-shell>
+      <form class="tile cf" method="post" action={data.action} novalidate data-contact-form data-cf-support-topic={data.supportRedirectTopic ?? ""}>
+        <div class="cf__honeypot" aria-hidden="true">
+          <label for="cf-subject">Subject</label>
+          <input id="cf-subject" type="text" name="subject" value="" placeholder="Stalwart Inquiry" tabindex="-1" autocomplete="off" />
+        </div>
+
+        <div class="cf__grid">
+          <div class="cf__field">
+            <label for="cf-name" class="cf__label">Full name <span aria-hidden="true">*</span></label>
+            <input id="cf-name" name="name" type="text" placeholder="Jane Doe" required autocomplete="name" class="cf__control" />
+            <span class="cf__feedback">Please enter your full name.</span>
+          </div>
+
+          <div class="cf__field">
+            <label for="cf-email" class="cf__label">Email <span aria-hidden="true">*</span></label>
+            <input id="cf-email" name="email" type="email" placeholder="jane.doe@example.com" required autocomplete="email" class="cf__control" />
+            <span class="cf__feedback">Please provide a valid email address.</span>
+          </div>
+
+          <div class="cf__field">
+            <label for="cf-topic" class="cf__label">Topic <span aria-hidden="true">*</span></label>
+            <div class="cf__select">
+              <select id="cf-topic" name="topic" required class="cf__control" data-cf-topic>
+                <option value="" selected disabled>Select a topic</option>
+                {data.topics.map((t: any) => {
+                  const label = typeof t === "string" ? t : t.label;
+                  const value = typeof t === "string" ? t : (t.value ?? t.label);
+                  return <option value={value}>{label}</option>;
+                })}
+              </select>
+              <Icon name="chevron-down" size={18} class="cf__chev" />
+            </div>
+            <span class="cf__feedback">Please select a topic.</span>
+          </div>
+
+          <div class="cf__field">
+            <label for="cf-mailboxes" class="cf__label">Number of mailboxes <span aria-hidden="true">*</span></label>
+            <div class="cf__select">
+              <select id="cf-mailboxes" name="mailboxes" required class="cf__control">
+                <option value="" selected disabled>Select a range</option>
+                {data.mailboxRanges.map((r: any) => {
+                  const label = typeof r === "string" ? r : r.label;
+                  const value = typeof r === "string" ? r : (r.value ?? r.label);
+                  return <option value={value}>{label}</option>;
+                })}
+              </select>
+              <Icon name="chevron-down" size={18} class="cf__chev" />
+            </div>
+            <span class="cf__feedback">Please pick a range.</span>
+          </div>
+
+          <div class="cf__field cf__field--full">
+            <label for="cf-message" class="cf__label">Message <span aria-hidden="true">*</span></label>
+            <textarea id="cf-message" name="message" rows="6" placeholder="Tell us a bit about your situation" required class="cf__control cf__textarea"></textarea>
+            <span class="cf__feedback">Please enter your message.</span>
+          </div>
+
+          <div class="cf__field cf__field--full cf__error" role="alert" data-cf-error hidden>
+            <Icon name="circle-alert" size={18} />
+            <p data-cf-error-text>Something went wrong. Please try again.</p>
+          </div>
+        </div>
+
+        <div class="cf__footer">
+          <p class="cf__hint"><span aria-hidden="true">*</span> Required fields.</p>
+          <button type="submit" class="btn btn-primary" data-cf-submit>{data.submitLabel}<Icon name="arrow-right" /></button>
+        </div>
+      </form>
+
+      <div class="tile tile--rose cf__success" data-cf-success hidden role="status">
+        <span class="badge"><Icon name="check" size={24} /></span>
+        <h3 class="h3">Message sent.</h3>
+        <p>Thanks for getting in touch. We will reply by email as soon as we can.</p>
+      </div>
+    </div>
+  </div>
+
+  {data.supportRedirectTopic && (
+    <div class="cf__modal" data-cf-modal hidden role="dialog" aria-modal="true" aria-labelledby="cf-modal-title">
+      <div class="cf__modal-backdrop" data-cf-modal-dismiss></div>
+      <div class="tile cf__modal-card">
+        <span class="badge"><Icon name="life-buoy" size={22} /></span>
+        <h3 id="cf-modal-title" class="h3">Use the support portal</h3>
+        <p class="cf__modal-body">
+          This contact form is for sales and partnership enquiries only.
+          For technical questions, configuration help and bug reports,
+          please open a ticket on the Stalwart support portal.
+        </p>
+        <div class="actions">
+          <a class="btn btn-primary" href="https://support.stalw.art" target="_blank" rel="noopener">Open the support portal<Icon name="arrow-up-right" /></a>
+          <button type="button" class="btn btn-soft" data-cf-modal-dismiss>Choose another topic</button>
+        </div>
+      </div>
+    </div>
+  )}
+</section>
+
+<script is:inline>
+  (() => {
+    const forms = document.querySelectorAll("[data-contact-form]");
+    forms.forEach((form) => {
+      const shell = form.closest("[data-cf-shell]");
+      const supportTopic = form.dataset.cfSupportTopic || "";
+      const topic = form.querySelector("[data-cf-topic]");
+      const submitBtn = form.querySelector("[data-cf-submit]");
+      const errorBox = form.querySelector("[data-cf-error]");
+      const errorText = form.querySelector("[data-cf-error-text]");
+      const successBox = shell ? shell.querySelector("[data-cf-success]") : null;
+      const modal = document.querySelector("[data-cf-modal]");
+      const dismissEls = modal ? modal.querySelectorAll("[data-cf-modal-dismiss]") : [];
+
+      function showModal() {
+        if (!modal) return;
+        modal.hidden = false;
+        document.body.style.overflow = "hidden";
+      }
+      function hideModal(resetTopic) {
+        if (!modal) return;
+        modal.hidden = true;
+        document.body.style.overflow = "";
+        if (resetTopic && topic) {
+          topic.value = "";
+        }
+      }
+      dismissEls.forEach((el) => el.addEventListener("click", () => hideModal(true)));
+      document.addEventListener("keydown", (e) => {
+        if (modal && !modal.hidden && e.key === "Escape") hideModal(true);
+      });
+
+      if (topic) {
+        topic.addEventListener("change", () => {
+          if (supportTopic && topic.value === supportTopic) {
+            showModal();
+          }
+        });
+      }
+
+      function showError(message) {
+        if (!errorBox) return;
+        if (errorText && message) errorText.textContent = message;
+        errorBox.hidden = false;
+      }
+      function hideError() {
+        if (errorBox) errorBox.hidden = true;
+      }
+      function setSubmitting(busy) {
+        if (submitBtn) submitBtn.disabled = busy;
+      }
+      function showSuccess() {
+        if (form && successBox) {
+          form.hidden = true;
+          successBox.hidden = false;
+        }
+      }
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        hideError();
+
+        if (supportTopic && topic && topic.value === supportTopic) {
+          showModal();
+          return;
+        }
+        if (!form.checkValidity()) {
+          form.classList.add("cf--validated");
+          const firstInvalid = form.querySelector(".cf__control:invalid");
+          if (firstInvalid) firstInvalid.focus();
+          return;
+        }
+
+        setSubmitting(true);
+        try {
+          const body = new FormData(form);
+          const res = await fetch(form.action, {
+            method: form.method || "post",
+            body,
+            headers: { Accept: "application/json" },
+          });
+
+          let payload = null;
+          try {
+            payload = await res.json();
+          } catch (_) {
+            payload = null;
+          }
+
+          // App-level response: { data: { success, details } } at HTTP 200.
+          if (res.ok && payload && payload.data) {
+            if (payload.data.success === true) {
+              showSuccess();
+              return;
+            }
+            const message = payload.data.details || "Please check your details and try again.";
+            showError(message);
+            setSubmitting(false);
+            return;
+          }
+
+          // Protocol-level error (RFC 7807 problem+json) or other non-2xx.
+          const detail =
+            (payload && (payload.detail || payload.title)) ||
+            res.statusText ||
+            "";
+          showError(detail
+            ? detail
+            : "We could not send your message. Please try again or email us directly at hello@stalw.art.");
+          setSubmitting(false);
+        } catch (err) {
+          showError("We could not reach the server. Check your connection and try again, or email us at hello@stalw.art.");
+          setSubmitting(false);
+        }
+      });
+    });
+  })();
+</script>
+
+<style>
+  .cf-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+    gap: var(--gap) clamp(24px, 4vw, 64px);
+    align-items: start;
+  }
+  .cf-layout--solo {
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 880px;
+    margin-inline: auto;
+  }
+  .cf-head {
+    position: sticky;
+    top: 104px;
+    margin-bottom: 0;
+  }
+  .cf__shell {
+    position: relative;
+  }
+  .cf {
+    padding: clamp(24px, 3.4vw, 44px);
+  }
+  .cf__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px 18px;
+  }
+  .cf__field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+  }
+  .cf__field--full {
+    grid-column: 1 / -1;
+  }
+  .cf__label {
+    font-family: var(--font-display);
+    font-size: var(--fs-xs);
+    font-weight: 650;
+    color: var(--muted);
+  }
+  .cf__label span,
+  .cf__hint span {
+    color: var(--brand-text);
+  }
+  .cf__control {
+    width: 100%;
+    min-height: 52px;
+    padding: 13px 18px;
+    border: 0;
+    border-radius: var(--r-lg);
+    background: var(--sand);
+    color: var(--text);
+    font: inherit;
+    font-size: var(--fs-sm);
+    box-shadow: inset 0 0 0 1px transparent;
+    transition: box-shadow var(--t) var(--ease), background-color var(--t) var(--ease);
+  }
+  .cf__control::placeholder {
+    color: var(--dim);
+    opacity: 1;
+  }
+  .cf__control:hover {
+    box-shadow: inset 0 0 0 1px var(--hairline);
+  }
+  .cf__control:focus,
+  .cf__control:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--focus);
+  }
+  .cf__select {
+    position: relative;
+  }
+  .cf__select select {
+    padding-right: 48px;
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer;
+  }
+  .cf__select select:invalid {
+    color: var(--dim);
+  }
+  .cf__select option {
+    color: var(--text);
+    background: var(--tile);
+  }
+  .cf__select :global(.cf__chev) {
+    position: absolute;
+    top: 50%;
+    right: 18px;
+    transform: translateY(-50%);
+    color: var(--muted);
+    pointer-events: none;
+  }
+  .cf__textarea {
+    min-height: 160px;
+    resize: vertical;
+    line-height: 1.55;
+  }
+  .cf__feedback {
+    display: none;
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    color: var(--brand-text);
+  }
+  .cf--validated .cf__control:invalid {
+    background: var(--rose);
+    box-shadow: inset 0 0 0 1px var(--brand-text);
+  }
+  .cf--validated .cf__field:has(.cf__control:invalid) .cf__feedback {
+    display: block;
+  }
+  .cf__error {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 14px 18px;
+    border-radius: var(--r-lg);
+    background: var(--rose);
+    color: var(--brand-text);
+    font-size: var(--fs-sm);
+    font-weight: 600;
+  }
+  .cf__error :global(.i) {
+    flex: none;
+    margin-top: 2px;
+  }
+  .cf__error[hidden] {
+    display: none;
+  }
+  .cf__footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 28px;
+  }
+  .cf__hint {
+    font-size: var(--fs-xs);
+    color: var(--dim);
+  }
+  .cf__footer .btn:disabled {
+    opacity: 0.6;
+    cursor: progress;
+  }
+  .cf__honeypot {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+  .cf__success {
+    display: grid;
+    justify-items: start;
+    gap: 14px;
+    padding: clamp(28px, 4vw, 52px);
+  }
+  .cf__success[hidden] {
+    display: none;
+  }
+  .cf__success p {
+    max-width: 48ch;
+    color: var(--muted);
+  }
+  .cf__modal {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: grid;
+    place-items: center;
+    padding: var(--gutter);
+  }
+  .cf__modal[hidden] {
+    display: none;
+  }
+  .cf__modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: color-mix(in srgb, var(--ink) 55%, transparent);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+  }
+  .cf__modal-card {
+    position: relative;
+    display: grid;
+    gap: 14px;
+    width: 100%;
+    max-width: 540px;
+    box-shadow: var(--shadow-pop);
+  }
+  .cf__modal-body {
+    margin-bottom: 8px;
+    color: var(--muted);
+  }
+  @media (max-width: 1023px) {
+    .cf-layout {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .cf-head {
+      position: static;
+      margin-bottom: 8px;
+    }
+  }
+  @media (max-width: 640px) {
+    .cf__grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .cf__footer .btn {
+      width: 100%;
+    }
+  }
+</style>

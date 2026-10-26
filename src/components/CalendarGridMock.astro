@@ -1,0 +1,238 @@
+---
+import Icon from "./Icon.astro";
+
+const days = [
+  { label: "Mon 18", col: 2, ncol: 2 },
+  { label: "Tue 19", col: 3, hide: true },
+  { label: "Wed 20", col: 4, ncol: 3 },
+  { label: "Thu 21", col: 5, hide: true },
+  { label: "Fri 22", col: 6, ncol: 4 },
+];
+
+const hours = ["09:00", "10:00", "11:00", "12:00", "13:00"];
+---
+<div class="cal" role="img" aria-label="Calendar week view for May 2026, Monday 18 to Friday 22, 09:00 to 14:00. Sprint plan on Monday from 09:30 to 11:00, Quarterly review on Wednesday from 10:00 to 11:30, shared, and Client demo on Friday from 13:00 to 14:00.">
+  <div class="sheet">
+    <div class="top">
+      <Icon name="calendar-days" size={15} />
+      <strong>May 2026</strong>
+    </div>
+    <div class="grid">
+      {days.map((d) => (
+        <span class:list={["day", { "is-hidden": d.hide }]} style={`--c: ${d.col}; --nc: ${d.ncol ?? d.col}`}>{d.label}</span>
+      ))}
+      {[0, 1, 2, 3, 4].map((i) => <span class:list={["line", { "line--last": i === 4 }]} style={`grid-row: ${2 + i * 2} / span 2`}></span>)}
+      {hours.map((h, i) => (
+        <span class="hour" style={`grid-row: ${2 + i * 2}`}>{h}</span>
+      ))}
+      <span class="hour hour--end">14:00</span>
+      <span class="now"></span>
+      <div class="ev ev--brand" style="--c: 2; --nc: 2; grid-row: 3 / 6">
+        <span class="t">Sprint plan</span>
+        <span class="time">09:30 - 11:00</span>
+        <span class="plus"><Icon name="plus" size={11} /></span>
+      </div>
+      <div class="ev ev--ink" style="--c: 4; --nc: 3; grid-row: 4 / 7">
+        <span class="t">Quarterly review</span>
+        <span class="time">10:00 - 11:30</span>
+        <span class="shared">shared</span>
+      </div>
+      <div class="ev" style="--c: 6; --nc: 4; grid-row: 10 / 12">
+        <span class="t">Client demo</span>
+        <span class="time">13:00 - 14:00</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .cal {
+    width: 100%;
+    container-type: inline-size;
+  }
+
+  .sheet {
+    display: grid;
+    gap: 12px;
+    padding: 16px 16px 20px 10px;
+    border-radius: var(--r-lg);
+    background: var(--tile);
+    box-shadow: var(--shadow-tile);
+  }
+
+  .top {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-left: 8px;
+    color: var(--brand-text);
+  }
+
+  strong {
+    font-family: var(--font-display);
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .grid {
+    --row: 26px;
+    display: grid;
+    grid-template-columns: 2.9rem repeat(5, minmax(0, 1fr));
+    grid-template-rows: auto repeat(10, minmax(var(--row), auto));
+    column-gap: 4px;
+  }
+
+  .day {
+    grid-row: 1;
+    grid-column: var(--c);
+    padding-bottom: 8px;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    color: var(--muted);
+  }
+
+  .line {
+    grid-column: 2 / -1;
+    border-top: 1px solid var(--hairline);
+  }
+
+  .line--last {
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  .hour {
+    grid-column: 1;
+    align-self: start;
+    transform: translateY(-50%);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--dim);
+  }
+
+  .hour--end {
+    grid-row: 11;
+    align-self: end;
+    transform: translateY(50%);
+  }
+
+  .now {
+    position: relative;
+    grid-row: 5;
+    grid-column: 2 / -1;
+    align-self: start;
+    height: 2px;
+    margin-top: -1px;
+    background: var(--brand);
+    opacity: 0.85;
+  }
+
+  .now::before {
+    content: "";
+    position: absolute;
+    left: -4px;
+    top: -3px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--brand);
+  }
+
+  .ev {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    grid-column: var(--c);
+    margin: 2px 0;
+    padding: 6px 8px;
+    border-radius: 10px;
+    border-left: 3px solid var(--dim);
+    background: var(--sand);
+    z-index: 1;
+  }
+
+  .t {
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 680;
+    line-height: 1.25;
+    color: var(--text);
+  }
+
+  .time {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--muted);
+  }
+
+  .ev--brand {
+    border-left-color: var(--brand);
+    background: var(--rose);
+  }
+
+  .ev--brand .t {
+    padding-right: 20px;
+    color: var(--brand-text);
+  }
+
+  .ev--ink {
+    border-left-color: var(--text);
+  }
+
+  .plus {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    display: grid;
+    place-items: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--brand);
+    color: #fff;
+  }
+
+  .shared {
+    margin-top: auto;
+    padding: 1px 8px;
+    border-radius: var(--r-pill);
+    background: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--on-ink);
+  }
+
+  @container (max-width: 459px) {
+    .grid {
+      --row: 30px;
+      grid-template-columns: 2.9rem repeat(3, minmax(0, 1fr));
+    }
+
+    .day,
+    .ev {
+      grid-column: var(--nc);
+    }
+
+    .day.is-hidden {
+      display: none;
+    }
+
+    .ev {
+      padding: 5px 6px;
+    }
+
+    .plus {
+      top: auto;
+      bottom: 5px;
+      right: 5px;
+    }
+
+    .ev--brand .t {
+      padding-right: 0;
+    }
+  }
+</style>

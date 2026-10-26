@@ -1,0 +1,199 @@
+---
+import Icon from "./Icon.astro";
+
+const providers = [
+  { icon: "cloud", name: "OpenAI", sub: "api.openai.com/v1" },
+  { icon: "cloud", name: "Anthropic", sub: "OpenAI-compat shim" },
+  { icon: "server", name: "vLLM / LocalAI", sub: "self-hosted Llama" },
+  { icon: "plug", name: "Any OpenAI-compat", sub: "/v1/chat/completions" },
+];
+
+const consumers = [
+  { icon: "gauge", name: "Spam classifier", sub: "auto-call on uncertain messages" },
+  { icon: "scroll-text", name: "Sieve scripts", sub: "operator-defined ai.classify(...)" },
+];
+---
+<div class="byom" role="img" aria-label="Bring your own AI model: OpenAI (api.openai.com/v1), Anthropic (through an OpenAI-compatible shim), self-hosted Llama on vLLM or LocalAI, or any OpenAI-compatible /v1/chat/completions server plug into one AiModel endpoint, one shape for any backend. The spam classifier calls it automatically on uncertain messages, and Sieve scripts call it through operator-defined ai.classify(...).">
+  <span class="dg-caption">Bring your own model · use it everywhere</span>
+  <ul class="grid grid--4">
+    {providers.map((p) => (
+      <li class="cell">
+        <span class="ic"><Icon name={p.icon} size={16} /></span>
+        <strong>{p.name}</strong>
+        <span class="v">{p.sub}</span>
+      </li>
+    ))}
+  </ul>
+  <span class="join" aria-hidden="true"><Icon name="arrow-down" size={15} /></span>
+  <div class="endpoint">
+    <span class="ic ic--brand"><Icon name="sparkles" size={18} /></span>
+    <span class="txt"><strong>AiModel endpoint</strong><span class="v">one shape, any backend</span></span>
+  </div>
+  <span class="join" aria-hidden="true"><Icon name="arrow-down" size={15} /></span>
+  <ul class="grid">
+    {consumers.map((c) => (
+      <li class="cell cell--row">
+        <span class="ic ic--soft"><Icon name={c.icon} size={16} /></span>
+        <span class="txt"><strong>{c.name}</strong><span class="v">{c.sub}</span></span>
+      </li>
+    ))}
+  </ul>
+</div>
+
+<style>
+  .byom {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    container-type: inline-size;
+  }
+
+  .byom > .dg-caption {
+    margin-bottom: 4px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .grid--4 .cell {
+    grid-template-columns: 32px minmax(0, 1fr);
+    column-gap: 12px;
+    align-items: center;
+    padding: 12px 14px 12px 10px;
+  }
+
+  .grid--4 .ic {
+    grid-row: 1 / 3;
+    margin-bottom: 0;
+  }
+
+  .cell {
+    display: grid;
+    align-content: start;
+    justify-items: start;
+    gap: 2px;
+    padding: 14px;
+    border-radius: var(--r-lg);
+    background: var(--tile);
+    box-shadow: var(--shadow-tile);
+  }
+
+  .cell .ic {
+    margin-bottom: 6px;
+  }
+
+  .cell--row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px 12px 10px;
+  }
+
+  .cell--row .ic {
+    margin-bottom: 0;
+  }
+
+  .ic {
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    flex: none;
+    border-radius: 10px;
+    background: var(--sand);
+    color: var(--text);
+  }
+
+  .ic--soft {
+    background: var(--rose);
+    color: var(--brand-text);
+  }
+
+  .ic--brand {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: var(--brand);
+    color: #fff;
+  }
+
+  .txt {
+    display: grid;
+    gap: 1px;
+    min-width: 0;
+  }
+
+  strong {
+    font-family: var(--font-display);
+    font-size: 0.9375rem;
+    font-weight: 680;
+    line-height: 1.3;
+    color: var(--text);
+  }
+
+  .v {
+    overflow-wrap: anywhere;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+
+  .join {
+    display: grid;
+    place-items: center;
+    align-self: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--tile);
+    color: var(--brand-text);
+  }
+
+  .endpoint {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 18px 16px 14px;
+    border-radius: var(--r-lg);
+    background: var(--rose);
+  }
+
+  .endpoint strong {
+    font-size: 1.0625rem;
+    color: var(--brand-text);
+  }
+
+  .endpoint .v {
+    color: var(--brand-text);
+  }
+
+  @container (min-width: 420px) {
+    .grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .grid--4 .cell {
+      grid-template-columns: minmax(0, 1fr);
+      align-items: start;
+      padding: 14px;
+    }
+
+    .grid--4 .ic {
+      grid-row: auto;
+      margin-bottom: 6px;
+    }
+  }
+
+  @container (min-width: 720px) {
+    .grid--4 {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+</style>

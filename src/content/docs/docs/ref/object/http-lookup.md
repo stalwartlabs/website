@@ -1,0 +1,492 @@
+---
+title: "HttpLookup"
+description: "Defines an HTTP-based lookup list."
+custom_edit_url: null
+---
+
+Defines an HTTP-based lookup list.
+
+This object can be configured from the [WebUI](/docs/management/webui/) under <span data-target="HttpLookup"><svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M10 5H3" /><path d="M12 19H3" /><path d="M14 3v4" /><path d="M16 17v4" /><path d="M21 12h-9" /><path d="M21 19h-5" /><path d="M21 5h-7" /><path d="M8 10v4" /><path d="M8 12H3" /></svg> Settings › <svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" /></svg> Lookups › HTTP Lists</span>
+
+## Fields
+
+
+##### `namespace`
+
+> Type: <code>String</code> · read-only
+>
+> Unique identifier for this store when used in lookups
+
+
+##### `enable`
+
+> Type: <code>Boolean</code> · default: `true`
+>
+> Whether to enable this HTTP list
+
+
+##### `format`
+
+> Type: [<code>HttpLookupFormat</code>](#httplookupformat) · required
+>
+> Format of the list
+
+
+##### `isGzipped`
+
+> Type: <code>Boolean</code> · default: `false`
+>
+> Whether to use gzip compression when downloading the list
+
+
+##### `maxEntries`
+
+> Type: <code>UnsignedInt</code> · default: `100000` · max: 1048576 · min: 1
+>
+> Maximum number of entries allowed in the list. The list is truncated if it exceeds this limit.
+
+
+##### `maxEntrySize`
+
+> Type: <code>Size</code> · default: `512` · max: 1048576 · min: 1
+>
+> Maximum length of an entry in the list.
+
+
+##### `maxSize`
+
+> Type: <code>Size</code> · default: `104857600` · max: 1073741824 · min: 10
+>
+> Maximum size of the downloaded list and of each of its lines. A download exceeding this size is rejected and the previously loaded list is kept; lines exceeding it are skipped.
+
+
+##### `refreshInterval`
+
+> Type: <code>Duration</code> · default: `43200000`
+>
+> How often to refresh the list
+
+
+##### `retry`
+
+> Type: <code>Duration</code> · default: `3600000`
+>
+> How long to wait before retrying to download the list in case of failure.
+
+
+##### `url`
+
+> Type: <code>Uri</code> · required
+>
+> URL of the list
+
+
+##### `timeout`
+
+> Type: <code>Duration</code> · default: `30000`
+>
+> Timeout for HTTP requests
+
+
+##### `allowInvalidCerts`
+
+> Type: <code>Boolean</code> · default: `false`
+>
+> Whether to allow invalid SSL certificates
+
+
+##### `httpAuth`
+
+> Type: [<code>HttpAuth</code>](#httpauth) · default: `{"@type":"Unauthenticated"}`
+>
+> The type of HTTP authentication to use
+
+
+##### `httpHeaders`
+
+> Type: <code>Map&lt;String, String&gt;</code>
+>
+> Additional headers to include in HTTP requests
+
+
+
+## JMAP API
+
+The HttpLookup object is available via the `urn:stalwart:jmap` capability.
+
+
+### `x:HttpLookup/get`
+
+This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.1) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.1), Section 5.1.
+
+
+This method requires the `sysHttpLookupGet` [permission](/docs/ref/permissions).
+
+```bash
+curl -X POST https://mail.example.com/jmap/ \
+  -H 'Authorization: Bearer $TOKEN' \
+  -H 'Content-Type: application/json' \
+  -d '{
+      "methodCalls": [
+        [
+          "x:HttpLookup/get",
+          {
+            "ids": [
+              "id1"
+            ]
+          },
+          "c1"
+        ]
+      ],
+      "using": [
+        "urn:ietf:params:jmap:core",
+        "urn:stalwart:jmap"
+      ]
+    }'
+```
+
+
+
+### `x:HttpLookup/set`
+
+This is a standard [`Foo/set`](https://www.rfc-editor.org/rfc/rfc8620#section-5.3) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.3), Section 5.3.
+
+Supports the following operations in a single call: create, update, destroy.
+
+
+
+#### Create
+
+This operation requires the `sysHttpLookupCreate` [permission](/docs/ref/permissions).
+
+```bash
+curl -X POST https://mail.example.com/jmap/ \
+  -H 'Authorization: Bearer $TOKEN' \
+  -H 'Content-Type: application/json' \
+  -d '{
+      "methodCalls": [
+        [
+          "x:HttpLookup/set",
+          {
+            "create": {
+              "new1": {
+                "format": {
+                  "@type": "Csv"
+                },
+                "httpAuth": {
+                  "@type": "Unauthenticated"
+                },
+                "httpHeaders": {},
+                "url": "https://example.com"
+              }
+            }
+          },
+          "c1"
+        ]
+      ],
+      "using": [
+        "urn:ietf:params:jmap:core",
+        "urn:stalwart:jmap"
+      ]
+    }'
+```
+
+
+#### Update
+
+This operation requires the `sysHttpLookupUpdate` [permission](/docs/ref/permissions).
+
+```bash
+curl -X POST https://mail.example.com/jmap/ \
+  -H 'Authorization: Bearer $TOKEN' \
+  -H 'Content-Type: application/json' \
+  -d '{
+      "methodCalls": [
+        [
+          "x:HttpLookup/set",
+          {
+            "update": {
+              "id1": {
+                "enable": true
+              }
+            }
+          },
+          "c1"
+        ]
+      ],
+      "using": [
+        "urn:ietf:params:jmap:core",
+        "urn:stalwart:jmap"
+      ]
+    }'
+```
+
+
+#### Destroy
+
+This operation requires the `sysHttpLookupDestroy` [permission](/docs/ref/permissions).
+
+```bash
+curl -X POST https://mail.example.com/jmap/ \
+  -H 'Authorization: Bearer $TOKEN' \
+  -H 'Content-Type: application/json' \
+  -d '{
+      "methodCalls": [
+        [
+          "x:HttpLookup/set",
+          {
+            "destroy": [
+              "id1"
+            ]
+          },
+          "c1"
+        ]
+      ],
+      "using": [
+        "urn:ietf:params:jmap:core",
+        "urn:stalwart:jmap"
+      ]
+    }'
+```
+
+
+
+
+### `x:HttpLookup/query`
+
+This is a standard [`Foo/query`](https://www.rfc-editor.org/rfc/rfc8620#section-5.5) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.5), Section 5.5.
+
+
+This method requires the `sysHttpLookupQuery` [permission](/docs/ref/permissions).
+
+```bash
+curl -X POST https://mail.example.com/jmap/ \
+  -H 'Authorization: Bearer $TOKEN' \
+  -H 'Content-Type: application/json' \
+  -d '{
+      "methodCalls": [
+        [
+          "x:HttpLookup/query",
+          {
+            "filter": {}
+          },
+          "c1"
+        ]
+      ],
+      "using": [
+        "urn:ietf:params:jmap:core",
+        "urn:stalwart:jmap"
+      ]
+    }'
+```
+
+
+
+
+## CLI
+
+`stalwart-cli` wraps the same JMAP calls. See the [CLI reference](/docs/management/cli/) for installation, authentication, and general usage.
+
+
+### Fetch
+
+```sh
+stalwart-cli get HttpLookup id1
+```
+
+
+### Create
+
+```sh
+stalwart-cli create HttpLookup \
+  --field 'format={"@type":"Csv"}' \
+  --field url=https://example.com \
+  --field 'httpAuth={"@type":"Unauthenticated"}' \
+  --field 'httpHeaders={}'
+```
+
+
+### Query
+
+```sh
+stalwart-cli query HttpLookup
+```
+
+
+### Update
+
+```sh
+stalwart-cli update HttpLookup id1 --field enable=true
+```
+
+
+### Delete
+
+```sh
+stalwart-cli delete HttpLookup --ids id1
+```
+
+
+
+## Nested types
+
+
+### HttpLookupFormat
+
+Format of HTTP lookup lists.
+
+
+- **`Csv`**: CSV. Carries the fields of [`HttpLookupCsv`](#httplookupcsv).
+- **`List`**: List. No additional fields.
+
+
+
+
+#### HttpLookupCsv
+
+CSV parsing settings for HTTP lookup lists.
+
+
+
+##### `indexKey`
+
+> Type: <code>UnsignedInt</code> · default: `0`
+>
+> The position of the key field in the HTTP List.
+
+
+##### `indexValue`
+
+> Type: <code>UnsignedInt?</code>
+>
+> The position of the value field in the HTTP List.
+
+
+##### `separator`
+
+> Type: <code>String</code> · default: `","`
+>
+> The separator character used to parse the HTTP list.
+
+
+##### `skipFirst`
+
+> Type: <code>Boolean</code> · default: `false`
+>
+> Whether to skip the first line of the list
+
+
+
+
+
+### HttpAuth
+
+Defines the HTTP authentication method to use for HTTP requests.
+
+
+- **`Unauthenticated`**: Anonymous. No additional fields.
+- **`Basic`**: Basic Authentication. Carries the fields of [`HttpAuthBasic`](#httpauthbasic).
+- **`Bearer`**: Bearer Token. Carries the fields of [`HttpAuthBearer`](#httpauthbearer).
+
+
+
+
+#### HttpAuthBasic
+
+HTTP Basic authentication credentials.
+
+
+
+##### `username`
+
+> Type: <code>String</code> · required
+>
+> Username for HTTP Basic Authentication
+
+
+##### `secret`
+
+> Type: [<code>SecretKey</code>](#secretkey) · required
+>
+> Password for HTTP Basic Authentication
+
+
+
+
+
+##### SecretKey
+
+A secret value provided directly, from an environment variable, or from a file.
+
+
+- **`Value`**: Secret value. Carries the fields of [`SecretKeyValue`](#secretkeyvalue).
+- **`EnvironmentVariable`**: Secret read from environment variable. Carries the fields of [`SecretKeyEnvironmentVariable`](#secretkeyenvironmentvariable).
+- **`File`**: Secret read from file. Carries the fields of [`SecretKeyFile`](#secretkeyfile).
+
+
+
+
+##### SecretKeyValue
+
+A secret value provided directly.
+
+
+
+##### `secret`
+
+> Type: <code>String</code> · required · secret
+>
+> Password or secret value
+
+
+
+
+
+##### SecretKeyEnvironmentVariable
+
+A secret value read from an environment variable.
+
+
+
+##### `variableName`
+
+> Type: <code>String</code> · required
+>
+> Environment variable name to read the secret from
+
+
+
+
+
+##### SecretKeyFile
+
+A secret value read from a file.
+
+
+
+##### `filePath`
+
+> Type: <code>String</code> · required
+>
+> File path to read the secret from
+
+
+
+
+
+#### HttpAuthBearer
+
+HTTP Bearer token authentication.
+
+
+
+##### `bearerToken`
+
+> Type: [<code>SecretKey</code>](#secretkey) · required
+>
+> Bearer token for HTTP Bearer Authentication
+
+
+
+
+

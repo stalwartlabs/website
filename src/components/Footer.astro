@@ -1,0 +1,332 @@
+---
+import Logo from "./Logo.astro";
+import Icon from "./Icon.astro";
+
+interface Props {
+  cta?: string;
+  ctaSub?: string;
+  ctaButton?: string;
+  ctaLink?: string;
+  hideCta?: boolean;
+}
+
+const {
+  cta = "Ready to run a modern mail and collaboration server?",
+  ctaSub = "Install Stalwart in minutes, then keep it running for years.",
+  ctaButton = "Get Stalwart",
+  ctaLink = "/docs/install/",
+  hideCta = false,
+} = Astro.props;
+
+const platform = [
+  { href: "/mail-server", label: "Mail Server" },
+  { href: "/collaboration", label: "Collaboration" },
+  { href: "/mta", label: "MTA" },
+  { href: "/anti-spam", label: "Anti-spam" },
+  { href: "/architecture", label: "Architecture" },
+  { href: "/integrations", label: "Integrations" },
+];
+const editions = [
+  { href: "/enterprise", label: "Enterprise" },
+  { href: "/open-source", label: "Community" },
+  { href: "/compare", label: "Compare" },
+  { href: "/pricing", label: "Pricing" },
+];
+const solutions = [
+  { href: "/managed-email", label: "Managed e-mail" },
+  { href: "/migration", label: "Migration" },
+];
+const company = [
+  { href: "/about", label: "About" },
+  { href: "/blog", label: "Blog" },
+  { href: "/support", label: "Support" },
+  { href: "/contact", label: "Contact" },
+  { href: "/legal", label: "Legal" },
+];
+
+const socials = [
+  { href: "https://github.com/stalwartlabs/stalwart", label: "GitHub", path: "M12 .5C5.7.5.7 5.5.7 11.8c0 5 3.2 9.2 7.7 10.7.6.1.8-.2.8-.6v-2c-3.1.7-3.8-1.3-3.8-1.3-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 1.7 2.7 1.2 3.4.9.1-.7.4-1.2.7-1.5-2.5-.3-5.1-1.2-5.1-5.5 0-1.2.4-2.2 1.2-3-.1-.3-.5-1.5.1-3.1 0 0 .9-.3 3.1 1.2.9-.3 1.9-.4 2.9-.4s2 .1 2.9.4c2.2-1.5 3.1-1.2 3.1-1.2.6 1.6.2 2.8.1 3.1.7.8 1.2 1.8 1.2 3 0 4.3-2.6 5.2-5.1 5.5.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.5-1.5 7.7-5.7 7.7-10.7C23.3 5.5 18.3.5 12 .5z" },
+  { href: "https://twitter.com/stalwartlabs/", label: "Twitter", path: "M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.16 17.52h1.833L7.084 4.126H5.117z" },
+  { href: "https://mastodon.social/@stalwartlabs", label: "Mastodon", path: "M21.58 13.913c-.29 1.469-2.592 3.121-5.238 3.428-1.379.16-2.737.307-4.185.241-2.366-.107-4.234-.55-4.234-.55 0 .224.014.439.042.64.305 2.265 2.31 2.4 4.21 2.461 1.917.061 3.624-.45 3.624-.45l.079 1.671s-1.342.703-3.733.834c-1.318.07-2.955-.034-4.862-.526C3.143 20.583.43 17.866.013 14.514c-.13-.99-.196-2.046-.213-3.108C-.2 7.12 1.32 3.86 4.116 2.7 7.04 1.49 12.42 1.5 12.42 1.5h.012s5.378-.01 8.302 1.2c2.797 1.16 4.317 4.42 4.317 8.706 0 1.062-.066 2.118-.197 3.108-.05.394-.49 4.401-.49 4.401" },
+  { href: "https://discord.gg/vhqRgdhguq", label: "Discord", path: "M20.317 4.37a19.79 19.79 0 0 0-4.885-1.515.07.07 0 0 0-.074.035c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.075-.035 19.74 19.74 0 0 0-4.886 1.515.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.91 19.91 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.331c-1.183 0-2.157-1.085-2.157-2.42 0-1.333.956-2.418 2.157-2.418 1.21 0 2.176 1.094 2.157 2.418 0 1.336-.956 2.42-2.157 2.42zm7.975 0c-1.183 0-2.157-1.085-2.157-2.42 0-1.333.955-2.418 2.157-2.418 1.21 0 2.176 1.094 2.157 2.418 0 1.336-.946 2.42-2.157 2.42z" },
+  { href: "https://www.reddit.com/r/stalwartlabs", label: "Reddit", path: "M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.337-1.01 1.605a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z" },
+  { href: "https://matrix.to/#/#stalwart:matrix.org", label: "Matrix", path: "M.632.55v22.9H2.28V24H0V0h2.28v.55zm7.043 7.26v1.157h.033c.309-.443.683-.784 1.117-1.024.433-.245.936-.365 1.5-.365.54 0 1.033.107 1.481.314.448.208.785.582 1.02 1.108.254-.374.6-.706 1.034-.992.434-.287.95-.43 1.546-.43.453 0 .872.056 1.26.167.388.11.716.286.993.53.276.245.489.559.646.951.156.392.234.863.234 1.418v5.144H15.6V11.4c0-.302-.012-.586-.039-.853-.025-.266-.059-.5-.103-.7a1.45 1.45 0 0 0-.198-.515 1.04 1.04 0 0 0-.331-.331 1.69 1.69 0 0 0-.493-.166 4.31 4.31 0 0 0-.78-.06c-.453 0-.794.044-1.018.13-.226.087-.402.211-.529.376a1.27 1.27 0 0 0-.262.572 5.22 5.22 0 0 0-.066.886v4.661h-2.21v-4.515c0-.343-.013-.633-.04-.872a2.05 2.05 0 0 0-.106-.582.89.89 0 0 0-.245-.4c-.115-.097-.272-.166-.47-.21a3.4 3.4 0 0 0-.776-.066c-.4 0-.732.06-.992.18-.262.118-.467.288-.616.508-.149.222-.252.49-.31.808-.06.318-.09.679-.09 1.082v4.067H4.733V7.81H7.6zm14.094 17.34V.55h-1.65V0h2.282v24h-2.281v-.55h1.649z" },
+];
+---
+<footer class={`site-footer${hideCta ? " site-footer--no-cta" : ""}`}>
+  <div class="wrap">
+    {!hideCta && (
+      <section class="tile tile--ink cta reveal" aria-labelledby="footer-cta-title">
+        <div class="cta-copy">
+          <h2 id="footer-cta-title" class="h-cta">{cta}</h2>
+          <p class="cta-sub">{ctaSub}</p>
+          <div class="actions"><a class="btn btn-on-ink" href="/pricing">See pricing</a></div>
+        </div>
+        <a class="cta-go" href={ctaLink} {...(ctaLink.startsWith("http") ? { target: "_blank", rel: "noopener" } : {})}>
+          <span class="cta-go-ic"><Icon name="arrow-up-right" size={24} /></span>
+          <span class="cta-go-label">{ctaButton}</span>
+        </a>
+      </section>
+    )}
+    <div class="tile tile--sand foot">
+      <div class="foot-brand">
+        <Logo />
+        <address>
+          128 City Road<br/>
+          London, UK
+        </address>
+        <a class="text-link" href="mailto:hello@stalw.art">hello@stalw.art</a>
+        <ul class="socials">
+          {socials.map((s) => (
+            <li>
+              <a href={s.href} target="_blank" rel="noopener" aria-label={s.label}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d={s.path}/>
+                </svg>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <nav class="foot-cols" aria-label="Footer">
+        {[
+          { title: "Platform", links: platform },
+          { title: "Editions", links: editions },
+          { title: "Solutions", links: solutions },
+          { title: "Company", links: company },
+        ].map((col) => (
+          <div>
+            <h2 class="foot-title">{col.title}</h2>
+            <ul>{col.links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}</ul>
+          </div>
+        ))}
+      </nav>
+      <div class="foot-bottom">
+        <span>&copy; {new Date().getFullYear()} Stalwart Labs. All rights reserved.</span>
+        <a href="/legal">Legal</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-top: var(--section);
+    padding-bottom: var(--gutter);
+  }
+  .site-footer ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .site-footer a:not(.btn, .cta-go) {
+    color: inherit;
+    text-decoration: none;
+  }
+  .site-footer .wrap {
+    display: grid;
+    gap: var(--gap);
+  }
+
+  .cta {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 32px;
+    padding: clamp(32px, 5.4vw, 76px);
+    isolation: isolate;
+  }
+  .cta::before {
+    content: "";
+    position: absolute;
+    inset: -40% -10% auto auto;
+    width: 70%;
+    height: 140%;
+    z-index: -1;
+    background: radial-gradient(closest-side, rgb(219 45 84 / 0.24), transparent);
+  }
+  .cta-copy {
+    display: grid;
+    gap: 16px;
+    max-width: 640px;
+  }
+  .h-cta {
+    font-size: var(--fs-h2);
+    line-height: 1.06;
+    letter-spacing: -0.032em;
+    font-weight: 740;
+    color: var(--on-ink);
+  }
+  .cta-sub {
+    color: var(--on-ink-muted);
+    font-size: var(--fs-lead);
+  }
+  .cta .actions {
+    margin-top: 10px;
+  }
+  .cta-go {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 40px;
+    width: clamp(220px, 22vw, 290px);
+    aspect-ratio: 1;
+    padding: 28px;
+    border-radius: var(--r-xl);
+    background: var(--brand);
+    color: #fff;
+    box-shadow: 0 24px 50px -20px rgb(219 45 84 / 0.75);
+    transition: background-color var(--t) var(--ease), transform var(--t) var(--ease), box-shadow var(--t) var(--ease);
+  }
+  .cta-go:hover {
+    background: var(--brand-press);
+    transform: translateY(-3px);
+    box-shadow: 0 30px 60px -20px rgb(219 45 84 / 0.85);
+  }
+  .cta-go-ic {
+    display: grid;
+    place-items: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    align-self: flex-end;
+    background: rgb(255 255 255 / 0.18);
+    transition: transform var(--t) var(--ease);
+  }
+  .cta-go:hover .cta-go-ic {
+    transform: rotate(45deg);
+  }
+  .cta-go-label {
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 1.2rem + 1.2vw, 2.25rem);
+    font-weight: 750;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+  }
+
+  .foot {
+    display: grid;
+    grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+    gap: 32px clamp(24px, 4vw, 64px);
+    padding: clamp(28px, 4vw, 52px);
+  }
+  .foot-brand {
+    display: grid;
+    gap: 14px;
+    align-content: start;
+    justify-items: start;
+    color: var(--muted);
+    font-size: var(--fs-sm);
+  }
+  .socials {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 4px;
+  }
+  .socials a {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--tile);
+    color: var(--muted);
+    transition: color var(--t) var(--ease), background-color var(--t) var(--ease);
+  }
+  .socials a:hover {
+    color: #fff;
+    background: var(--brand);
+  }
+  .foot-cols {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 24px;
+  }
+  .foot-title {
+    margin-bottom: 12px;
+    font-size: var(--fs-xs);
+    font-weight: 650;
+    color: var(--dim);
+    letter-spacing: 0.01em;
+  }
+  .foot-cols ul {
+    display: grid;
+    gap: 8px;
+  }
+  .foot-cols a {
+    color: var(--text);
+    font-size: var(--fs-sm);
+    font-weight: 520;
+  }
+  .foot-cols a:hover {
+    color: var(--brand-text);
+  }
+  .foot-bottom {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding-top: 24px;
+    margin-top: 8px;
+    box-shadow: inset 0 1px 0 var(--hairline);
+    color: var(--dim);
+    font-size: var(--fs-xs);
+  }
+  .foot-bottom a:hover {
+    color: var(--text);
+  }
+
+  @media (pointer: coarse) {
+    .foot-cols ul {
+      gap: 0;
+    }
+    .foot-cols a,
+    .foot-brand > :global(a),
+    .foot-bottom a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 40px;
+    }
+  }
+  @media (max-width: 1023px) {
+    .foot {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 760px) {
+    .cta {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    .cta-copy {
+      display: contents;
+    }
+    .cta-go {
+      order: 2;
+      width: 100%;
+      aspect-ratio: auto;
+      flex-direction: row-reverse;
+      align-items: center;
+      gap: 16px;
+      margin-top: 12px;
+      padding: 18px 18px 18px 26px;
+    }
+    .cta-go-ic {
+      width: 48px;
+      height: 48px;
+      flex: none;
+    }
+    .cta-go-label {
+      font-size: 1.375rem;
+    }
+    .cta .actions {
+      order: 3;
+      margin-top: 0;
+    }
+    .foot-cols {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>

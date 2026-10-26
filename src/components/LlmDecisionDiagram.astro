@@ -1,0 +1,263 @@
+---
+import Icon from "./Icon.astro";
+---
+<div class="llm" role="img" aria-label="LLM-assisted spam decision flow: inbound messages go to the classifier (FTRL plus features). High-ham scores go to the inbox and high-spam scores are rejected. Scores within plus or minus 1.0 go to an LLM endpoint (OpenAI, Anthropic, vLLM or LocalAI), whose verdict feeds back into the classifier or sends the message to quarantine.">
+  <span class="dg-caption">Spam decision flow</span>
+  <div class="head">
+    <span class="out out--in"><Icon name="mail" size={15} />Message<span class="v">inbound</span></span>
+    <div class="card card--cls">
+      <span class="ic"><Icon name="gauge" size={17} /></span>
+      <span class="txt"><strong>Classifier</strong><span class="v">FTRL + features</span></span>
+    </div>
+  </div>
+  <ul class="branches">
+    <li class="br">
+      <span class="cond">high ham</span>
+      <span class="out"><Icon name="inbox" size={15} />Inbox</span>
+    </li>
+    <li class="br">
+      <span class="cond">high spam</span>
+      <span class="out out--reject"><Icon name="ban" size={15} />Reject</span>
+    </li>
+    <li class="br br--llm">
+      <span class="cond cond--brand">score within ±1.0</span>
+      <div class="card card--brand">
+        <div class="llm-head">
+          <span class="ic ic--brand"><Icon name="sparkles" size={17} /></span>
+          <strong>LLM endpoint</strong>
+        </div>
+        <ul class="mini-chips">
+          <li>OpenAI</li>
+          <li>Anthropic</li>
+          <li>vLLM</li>
+          <li>LocalAI</li>
+        </ul>
+        <div class="returns">
+          <span class="out"><Icon name="undo-2" size={15} /><span class="v v--brand">verdict</span>Classifier</span>
+          <span class="out"><Icon name="shield-alert" size={15} />Quarantine</span>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
+
+<style>
+  .llm {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 100%;
+    container-type: inline-size;
+  }
+
+  .head {
+    display: grid;
+    justify-items: start;
+    gap: 12px;
+  }
+
+  .head::before {
+    content: "";
+    grid-row: 2;
+    grid-column: 1;
+    align-self: start;
+    margin: -12px 0 0 27px;
+    width: 2px;
+    height: 12px;
+    background: var(--brand);
+    opacity: 0.3;
+  }
+
+  .card--cls {
+    grid-row: 2;
+    grid-column: 1;
+    padding-right: 22px;
+  }
+
+  .out--in .v {
+    margin-left: 2px;
+  }
+
+  .card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px 10px 10px;
+    border-radius: var(--r-lg);
+    background: var(--tile);
+    box-shadow: var(--shadow-tile);
+    min-width: 0;
+  }
+
+  .ic {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    flex: none;
+    border-radius: 11px;
+    background: var(--sand);
+    color: var(--text);
+  }
+
+  .ic--brand {
+    background: var(--brand);
+    color: #fff;
+  }
+
+  .txt {
+    display: grid;
+    gap: 1px;
+    min-width: 0;
+  }
+
+  strong {
+    font-family: var(--font-display);
+    font-size: 0.9375rem;
+    font-weight: 680;
+    line-height: 1.3;
+    color: var(--text);
+  }
+
+  .v {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+
+  .branches {
+    position: relative;
+    display: grid;
+    gap: 10px;
+    margin: -4px 0 0 27px;
+    padding: 0 0 0 22px;
+    list-style: none;
+  }
+
+  .br::after {
+    content: "";
+    position: absolute;
+    left: -22px;
+    top: 0;
+    width: 2px;
+    height: calc(100% + 10px);
+    background: var(--brand);
+    opacity: 0.3;
+  }
+
+  .br:first-child::after {
+    top: -10px;
+    height: calc(100% + 10px);
+  }
+
+  .br:last-child::after {
+    height: 18px;
+  }
+
+  .br {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 12px;
+  }
+
+  .br::before {
+    content: "";
+    position: absolute;
+    left: -22px;
+    top: 17px;
+    width: 16px;
+    height: 2px;
+    background: var(--brand);
+    opacity: 0.3;
+  }
+
+  .cond {
+    min-width: 8.5em;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--muted);
+  }
+
+  .cond--brand {
+    color: var(--brand-text);
+  }
+
+  .out {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 14px 7px 11px;
+    border-radius: var(--r-pill);
+    background: var(--tile);
+    box-shadow: var(--shadow-tile);
+    font-family: var(--font-display);
+    font-size: var(--fs-xs);
+    font-weight: 650;
+    color: var(--text);
+  }
+
+  .out :global(svg) {
+    color: var(--dim);
+  }
+
+  .out--reject {
+    background: var(--ink);
+    box-shadow: none;
+    color: var(--on-ink);
+  }
+
+  .out--reject :global(svg) {
+    color: var(--brand-on-ink);
+  }
+
+  .br--llm {
+    align-items: flex-start;
+  }
+
+  .br--llm .cond {
+    padding-top: 9px;
+  }
+
+  .card--brand {
+    flex: 1 1 260px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 14px;
+    background: var(--rose);
+    box-shadow: none;
+  }
+
+  .llm-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .llm-head strong {
+    color: var(--brand-text);
+  }
+
+  .card--brand .mini-chips li {
+    background: var(--tile);
+    color: var(--brand-text);
+  }
+
+  .returns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .returns .out {
+    box-shadow: none;
+  }
+
+  .v--brand {
+    color: var(--brand-text);
+    font-weight: 600;
+  }
+</style>

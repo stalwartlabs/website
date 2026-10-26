@@ -1,0 +1,151 @@
+---
+sidebar_position: 4
+title: "Configuring the proxy"
+description: "Write the migration proxy's configuration for the source and the new deployment, its initial mapping file, its certificate and its management API."
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+To clients, the proxy makes the source and the new deployment appear as one server. It accepts every protocol on the public ports, identifies the account behind each connection, and forwards the session to the server that holds the account. This step writes the proxy's configuration but does not start the proxy, so it has no effect on clients.
+
+The proxy is configured with a TOML file. This format belongs to the proxy alone; Stalwart itself is configured through objects. The proxy's [configuration](/docs/migration/proxy/configuration/) section is the general reference for every setting.
+
+Writing the file from scratch is not necessary. The proxy repository contains a sample configuration for each kind of source, and the values to edit in it are marked `CHANGE ME`:
+
+<Tabs syncKey="source">
+<TabItem label="Previous Stalwart versions">
+
+The sample for a [Stalwart 0.15 or 0.16](/docs/migration/guide/configure-source/previous-stalwart) source ships as [`resources/config.stalwart-upgrade.toml`](https://github.com/stalwartlabs/proxy/blob/main/resources/config.stalwart-upgrade.toml). The [Migrating between Stalwart servers](/docs/migration/proxy/examples/stalwart) example explains it, and lists the differences for a Stalwart 0.16 source. Its destinations are named `old` (the source) and `new` (the new deployment).
+
+</TabItem>
+<TabItem label="Dovecot and Postfix">
+
+The sample for a [Dovecot and Postfix](/docs/migration/guide/configure-source/dovecot-postfix/) source ships as [`resources/config.dovecot-postfix.toml`](https://github.com/stalwartlabs/proxy/blob/main/resources/config.dovecot-postfix.toml), and the [Migrating from Dovecot](/docs/migration/proxy/examples/dovecot) example explains it. Its destinations are named `legacy` (the source) and `stalwart` (the new deployment).
+
+</TabItem>
+</Tabs>
+
+## Shape of the configuration
+
+Three settings define the migration topology:
+
+- **The default destination is the source.** The mapping table lists only the accounts that have moved. An account without an entry resolves to the default destination, set by `routing.default_destination`. At the start the table holds no accounts, so every account resolves to the source, which is where every account still lives.
+- **The pass-through destination is the new deployment.** Inbound SMTP on port 25 carries no login, so the proxy cannot route it per account. It passes the whole session to the destination set by `routing.smtp_passthrough_destination` instead. Sending that traffic to the new deployment is what makes split delivery work.
+- **Each destination announces the client in the way its server expects.** The servers need to know the real client address, and they learn it in different ways. With `forwarding = "proxy"`, the proxy starts each connection with a PROXY protocol header, which Stalwart reads. With `forwarding = "xclient"`, it announces the client with the XCLIENT command and the IMAP `ID` command, which Dovecot and Postfix read. The setting must match the trust configured on each server.
+
+What remains to edit is specific to each installation: the host names of the two destinations, the public hostname in `server.hostname`, the certificate paths, the path of the mapping file and the path of the management token.
+
+A Stalwart destination receives submission on port 465 with implicit TLS, a listener that Stalwart 0.15, 0.16 and 1.0 have by default. Stalwart 0.16 and 1.0 have no submission listener on port 587. The proxy keeps accepting submission from clients on both ports, 587 and 465.
+
+<Tabs syncKey="source">
+<TabItem label="Previous Stalwart versions">
+
+Both destinations use `forwarding = "proxy"`, which also applies to the HTTP connections. They also use `forwarded = true`, which adds the client address to the `Forwarded` and `X-Forwarded-For` headers of HTTP requests. A Stalwart server, however, ignores these headers while the `clientIpSource` setting of [Http](/docs/ref/object/http) keeps its default, {/* default:Http.clientIpSource */}`peer`{/* /default */}, and takes the client address from the PROXY header instead.
+
+HTTP needs more care, because both servers serve it, and many HTTP routes exist on both. Examples are `/jmap`, `/dav`, `/.well-known/*`, `/auth/token` and the autoconfig and Autodiscover documents. A route that exists on both servers cannot be routed by its path, so the proxy routes such requests by the account they identify. That account is either the login of HTTP Basic authentication, or the account name that the proxy reads from an OAuth bearer token issued by the new deployment.
+
+A request that identifies no account goes to the rule's fallback destination, which in the sample is the source. The source therefore receives every request made before sign-in: the login pages, the OAuth and OpenID Connect discovery documents, and the autoconfig and Autodiscover documents.
+
+Routes that exist on only one of the two servers are simpler. The sample pins each of them to its server:
+
+| Route | Destination | Served by |
+| --- | --- | --- |
+| `/api/oauth`, `/authorize`, `/authorize/**` | `old` | The sign-in of the Stalwart 0.15 web administration interface |
+| `/api/auth`, `/api/auth/**`, `/api/discover/**` | `new` | The sign-in of the new deployment's WebUI |
+| `/admin`, `/admin/**`, `/account`, `/account/**` | `new` | The new deployment's WebUI |
+| `/login`, `/device` | `new` | The new deployment's sign-in and device authorisation pages |
+
+The web administration interface of Stalwart 0.15 also uses the `/login` and `/account` paths, but the sample pins those to the new deployment. Through the proxy, the 0.15 interface is therefore reached at the public hostname's root, `https://mail.example.org/`.
+
+The OAuth token endpoint, `/auth/token`, needs a rule of its own. It exists on both servers, and a token request carries no account. The sample routes it through the mapping table instead, by the `client_id` in the request body. The 0.15 web administration interface uses the client identifier `webadmin`, which is mapped to `old`. The new deployment's WebUI uses the URL of its client metadata document, for example `https://mail.example.org/admin/oauth-client.json`, which is mapped to `new`. Token requests from other clients go to the fallback destination.
+
+OAuth clients other than the WebUI stay on the source. OAuth access tokens issued by Stalwart 0.15 do not contain the account name, so the proxy cannot route requests that carry them, and such requests go to the fallback destination, the source. The discovery documents, `/authorize` and token requests from clients other than the WebUI also reach the source. An OAuth client of a moved account therefore obtains its tokens from the source, and its HTTP requests keep reaching the source for as long as the source is the fallback destination.
+
+Sessions, OAuth tokens and ACME challenges belong to the server that created them. After an account moves, its users sign in to the WebUI again, and its OAuth clients authorise again.
+
+</TabItem>
+<TabItem label="Dovecot and Postfix">
+
+The new deployment uses `forwarding = "proxy"` and `forwarded = true`. The source uses `forwarding = "xclient"`, because Dovecot and Postfix learn the client address from the XCLIENT and IMAP `ID` commands, and a PROXY header sent to them breaks the connection.
+
+Dovecot and Postfix serve no HTTP, so all HTTP requests belong to the new deployment. The new deployment advertises the public hostname as its URL. Vandelay and every JMAP, CalDAV, CardDAV and WebUI client of a moved account therefore reach it through the proxy's HTTP listener.
+
+The sample configuration has no HTTP listener, so add one on port 443, with a single route that sends every request to the new deployment:
+
+```toml
+[listener.https]
+protocol = "http"
+bind = ["[::]:443"]
+tls = "implicit"
+forwarded = "off"
+
+[destination.stalwart.protocol.http]
+port = 443
+tls = "implicit"
+
+[[http.route]]
+match = "/**"
+destination = "stalwart"
+```
+
+The route is required, because the proxy answers requests that match no route with `404 Not Found`.
+
+Some source stacks also serve HTTP on the public hostname, for example a SOGo or Roundcube installation. In that case, route by account instead, as in the Stalwart example: `extract = { from = "authorization" }`, with `fallback` set to a destination for the existing web server. This routing needs a proxy release later than 1.0.4, because releases up to 1.0.4 ignore `fallback` and send such requests to the default destination.
+
+On mailcow, the web server serves the mailcow administration interface under `/admin` and SOGo under `/SOGo`. Routing by account sends a moved account's requests to the new deployment whatever their path. CalDAV and CardDAV clients configured with a SOGo URL, such as `/SOGo/dav/alice@example.org/Calendar/personal/`, therefore receive `404 Not Found` after the account moves. They are reconfigured as described in [Login names after migration](/docs/migration/guide/migrate-accounts/#login-names-after-migration).
+
+A route that pins `/admin` to the new deployment, for its WebUI, has a cost on mailcow: it makes the mailcow administration interface unreachable through the proxy. That interface is then opened at the source's internal address.
+
+</TabItem>
+</Tabs>
+
+## Mapping file
+
+The mapping file is the record of which accounts have moved. Each line holds an identifier and a destination name, separated by white space, and lines starting with `#` are comments.
+
+Accounts are added to the file as they move, either by editing it or through the management API; the [account migration step](/docs/migration/guide/migrate-accounts/) describes both. When the management API changes a mapping, the proxy rewrites the whole file, sorted and without comments. Keep a backup of the file, because it is the authoritative list of what has moved.
+
+The initial content depends on the source:
+
+<Tabs syncKey="source">
+<TabItem label="Previous Stalwart versions">
+
+The file starts with the entries that route the token requests of the two WebUIs:
+
+```text
+webadmin                                             old
+https://mail.example.org/admin/oauth-client.json     new
+https://mail.example.org/account/oauth-client.json   new
+```
+
+The identifiers of the new WebUI are the URLs of its client metadata documents under the public hostname, one for each of its two paths. A WebUI that is configured with a fixed OAuth client identifier uses that identifier instead.
+
+</TabItem>
+<TabItem label="Dovecot and Postfix">
+
+The file starts empty, so every account resolves to the source until it moves:
+
+```text
+# identifier              destination
+```
+
+</TabItem>
+</Tabs>
+
+## Certificate for the public hostname
+
+The proxy presents the certificate of the public hostname to clients, both for implicit TLS and for STARTTLS. Place the certificate and key for that hostname where the configuration expects them. Reusing the certificate that the source presents today means that clients see no change.
+
+Port 25 is the exception. The proxy passes it through, so there the new deployment presents its own certificate, as described in [Configuring the new deployment](/docs/migration/guide/configure-new/#preparing-signing-keys-certificates-and-dns).
+
+Do not repoint the public hostname to the proxy yet. The repoint happens at the cutover, so that the switch from the source to the proxy is one deliberate action.
+
+## Management API
+
+The proxy's [management API](/docs/migration/proxy/management/api) changes mappings, clears the mapping cache, and disconnects or holds an account's sessions. The account migration step uses it for every account.
+
+The API is served over TLS and bound to the address in `admin.bind`, which in the samples is `127.0.0.1:9443`. Requests are authenticated with a bearer token of at least 32 characters, read from the file named in the configuration. Keep the API on a loopback or management-only address.
+
+## Rollback
+
+The proxy has only been configured, not started, and the public hostname still resolves to the source, so nothing serves clients through the proxy yet. Abandoning the migration at this point leaves the configuration unused. The rollback of a running proxy is described in [Starting the proxy](/docs/migration/guide/cutover/#rollback).

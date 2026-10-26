@@ -1,0 +1,307 @@
+---
+import Icon from "../Icon.astro";
+import { inlineMd, paragraphMd } from "../../lib/md";
+
+interface Props {
+  data: any;
+}
+const { data } = Astro.props;
+
+const kindOf = (cell: string) => {
+  const v = (cell ?? "").trim();
+  if (v === "yes") return "yes";
+  if (v === "" || v === "-") return "no";
+  return v.length <= 12 ? "tag" : "text";
+};
+const compact = data.groups.every((g: any) => g.rows.every((r: string[]) => kindOf(r[1]) !== "text" && kindOf(r[2]) !== "text"));
+const cellKind = (cell: string) => {
+  const k = kindOf(cell);
+  return !compact && k === "tag" ? "text" : k;
+};
+const alt = data.band === "alt";
+const headId = `cmp-${(data.title ?? "compare").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}`;
+---
+<section class="wrap section" aria-labelledby={data.title ? headId : undefined}>
+  <div class:list={[{ tray: alt }]}>
+    {(data.eyebrow || data.title || data.body || data.legend) && (
+      <div class:list={["section-head reveal", { "tray-head": alt }]}>
+        {data.eyebrow && <span class="pill">{data.eyebrow}</span>}
+        {data.title && <h2 id={headId} class="h2" set:html={inlineMd(data.title)} />}
+        {data.body && <div class="section-body" set:html={paragraphMd(data.body)} />}
+        {data.legend && <p class="cmp-legend" set:html={inlineMd(data.legend)} />}
+      </div>
+    )}
+    <div class:list={["cmp-groups", { "cmp-groups--cols": compact }]}>
+      {data.groups.map((group: any, gi: number) => (
+        <div class="tile cmp-group reveal">
+          <table class="cmp-table" role="table" aria-labelledby={`${headId}-g${gi}`}>
+            <caption class="h3" id={`${headId}-g${gi}`}>{group.title}</caption>
+            <thead role="rowgroup">
+              <tr role="row">
+                <th scope="col" role="columnheader"><span class="sr-only">Feature</span></th>
+                <th scope="col" role="columnheader">{data.columns[0]}</th>
+                <th scope="col" role="columnheader">{data.columns[1]}</th>
+              </tr>
+            </thead>
+            <tbody role="rowgroup">
+              {group.rows.map((row: string[]) => (
+                <tr role="row">
+                  <th scope="row" role="rowheader" set:html={inlineMd(row[0])} />
+                  {[row[1], row[2]].map((cell, ci) => {
+                    const k = cellKind(cell);
+                    return (
+                      <td role="cell" class={`cmp-cell cmp-cell--${k}`}>
+                        <span class="cmp-col" aria-hidden="true">{data.columns[ci]}</span>
+                        {k === "yes" && <span class="cmp-mark cmp-mark--yes"><Icon name="check" size={14} /><span class="sr-only">Included</span></span>}
+                        {k === "no" && <span class="cmp-mark cmp-mark--no"><Icon name="minus" size={14} /><span class="sr-only">Not included</span></span>}
+                        {k === "tag" && <span class="cmp-tag" set:html={inlineMd(cell)} />}
+                        {k === "text" && <span set:html={inlineMd(cell)} />}
+                      </td>
+                    );
+                  })}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ))}
+    </div>
+    {data.ctas?.length > 0 && (
+      <div class="actions cmp-ctas reveal">
+        {data.ctas.map((cta: any, i: number) => (
+          <a
+            href={cta.href}
+            class:list={["btn", cta.primary === false ? "btn-soft" : "btn-primary"]}
+            {...(cta.external ? { target: "_blank", rel: "noopener" } : {})}
+          >
+            {cta.label}
+            {cta.primary !== false && i === 0 && <Icon name="arrow-right" />}
+          </a>
+        ))}
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  .cmp-legend {
+    max-width: 64ch;
+    font-size: var(--fs-sm);
+    color: var(--dim);
+  }
+  .cmp-groups {
+    display: grid;
+    gap: var(--gap);
+  }
+  .cmp-groups--cols {
+    display: block;
+    columns: 2;
+    column-gap: var(--gap);
+  }
+  .cmp-groups--cols .cmp-group {
+    break-inside: avoid;
+    margin-bottom: var(--gap);
+  }
+  .cmp-group {
+    padding: clamp(20px, 2.6vw, 34px);
+  }
+  .tray .cmp-group {
+    box-shadow: var(--shadow-tile);
+  }
+  .cmp-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    font-size: var(--fs-sm);
+  }
+  .cmp-table caption {
+    text-align: left;
+    margin-bottom: 14px;
+  }
+  .cmp-table thead th {
+    padding: 0 0 10px;
+    font-family: var(--font-display);
+    font-size: var(--fs-xs);
+    font-weight: 650;
+    color: var(--dim);
+    text-align: center;
+    vertical-align: bottom;
+    line-height: 1.3;
+  }
+  .cmp-table thead th:first-child {
+    width: auto;
+  }
+  .cmp-table thead th:not(:first-child) {
+    width: 24%;
+  }
+  .cmp-groups:not(.cmp-groups--cols) .cmp-table thead th:not(:first-child) {
+    width: 28%;
+  }
+  .cmp-table tbody th,
+  .cmp-table tbody td {
+    padding: 11px 0;
+    border-top: 1px solid var(--hairline);
+    vertical-align: middle;
+    line-height: 1.45;
+  }
+  .cmp-table tbody th {
+    padding-right: 12px;
+    text-align: left;
+    font-weight: 500;
+    color: var(--text);
+  }
+  .cmp-table tbody th :global(code) {
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+  }
+  .cmp-cell {
+    text-align: center;
+  }
+  .cmp-groups:not(.cmp-groups--cols) .cmp-cell,
+  .cmp-groups:not(.cmp-groups--cols) .cmp-table thead th {
+    padding-inline: 8px;
+    text-align: left;
+  }
+  .cmp-cell--text {
+    color: var(--muted);
+    text-align: left;
+    overflow-wrap: anywhere;
+  }
+  .cmp-mark {
+    display: inline-grid;
+    place-items: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+  }
+  .cmp-mark :global(.i) {
+    stroke-width: 3;
+  }
+  .cmp-mark--yes {
+    background: var(--rose);
+    color: var(--brand-text);
+  }
+  .cmp-mark--no {
+    background: var(--sand);
+    color: var(--dim);
+  }
+  .cmp-tag {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: var(--r-pill);
+    background: var(--sand);
+    color: var(--text);
+    font-family: var(--font-display);
+    font-size: var(--fs-xs);
+    font-weight: 650;
+    white-space: nowrap;
+  }
+  .cmp-ctas {
+    justify-content: center;
+    margin-top: clamp(24px, 3vw, 40px);
+  }
+  .tray .cmp-ctas {
+    margin-bottom: clamp(12px, 2vw, 24px);
+  }
+  @media (max-width: 1120px) {
+    .cmp-groups--cols {
+      display: grid;
+      columns: auto;
+    }
+    .cmp-groups--cols .cmp-group {
+      margin-bottom: 0;
+    }
+  }
+  .cmp-col {
+    display: none;
+  }
+  @media (max-width: 640px) {
+    .cmp-table,
+    .cmp-table tbody {
+      display: block;
+    }
+    .cmp-table caption {
+      display: block;
+    }
+    .cmp-table thead {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+    .cmp-table tbody tr {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px 12px;
+      padding: 12px 0;
+      border-top: 1px solid var(--hairline);
+    }
+    .cmp-table tbody th,
+    .cmp-table tbody td,
+    .cmp-groups:not(.cmp-groups--cols) .cmp-cell {
+      display: flex;
+      padding: 0;
+      border-top: 0;
+    }
+    .cmp-table tbody th {
+      grid-column: 1 / -1;
+      padding-right: 0;
+      font-weight: 600;
+    }
+    .cmp-cell,
+    .cmp-groups:not(.cmp-groups--cols) .cmp-cell {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+      text-align: left;
+    }
+    .cmp-col {
+      display: block;
+      font-family: var(--font-display);
+      font-size: var(--fs-xs);
+      font-weight: 650;
+      color: var(--dim);
+      line-height: 1.3;
+    }
+    .cmp-groups--cols .cmp-cell {
+      flex-direction: row;
+      align-items: center;
+      gap: 8px;
+    }
+    .cmp-groups--cols .cmp-col {
+      order: 2;
+      min-width: 0;
+    }
+    .cmp-groups--cols .cmp-tag {
+      white-space: nowrap;
+    }
+    .cmp-groups--cols .cmp-cell--tag {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+    }
+    .cmp-groups--cols .cmp-cell--tag .cmp-col {
+      order: 0;
+    }
+    .cmp-mark {
+      width: 22px;
+      height: 22px;
+    }
+  }
+  @media (min-width: 641px) and (max-width: 760px) {
+    .cmp-table thead th:not(:first-child) {
+      width: 30%;
+    }
+    .cmp-groups:not(.cmp-groups--cols) .cmp-table thead th:not(:first-child) {
+      width: 33%;
+    }
+    .cmp-groups:not(.cmp-groups--cols) .cmp-table {
+      font-size: var(--fs-xs);
+    }
+    .cmp-tag {
+      white-space: normal;
+    }
+  }
+</style>

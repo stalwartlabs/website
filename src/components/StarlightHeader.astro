@@ -1,0 +1,110 @@
+---
+import Header from "./Header.astro";
+import ReadingProgress from "./ReadingProgress.astro";
+import ThemeToggle from "./ThemeToggle.astro";
+import Search from "@astrojs/starlight/components/Search.astro";
+---
+<Header>
+  <Fragment slot="actions">
+    <Search />
+    <ThemeToggle />
+  </Fragment>
+</Header>
+<ReadingProgress />
+
+<script>
+  const root = document.documentElement;
+
+  new MutationObserver(() => {
+    const theme = root.dataset.theme;
+    if (theme !== "light" && theme !== "dark") return;
+    try {
+      if (localStorage.getItem("stalwart-theme")) localStorage.setItem("starlight-theme", theme);
+    } catch {}
+  }).observe(root, { attributes: true, attributeFilter: ["data-theme"] });
+
+  let mermaidPromise: Promise<typeof import("mermaid").default> | null = null;
+  function loadMermaid() {
+    if (!mermaidPromise) {
+      mermaidPromise = import("mermaid").then((m) => m.default);
+    }
+    return mermaidPromise;
+  }
+
+  function tokenColors(names: string[]): Record<string, string> {
+    const probe = document.createElement("span");
+    probe.style.display = "none";
+    document.body.append(probe);
+    const out: Record<string, string> = {};
+    for (const name of names) {
+      probe.style.color = `var(--${name})`;
+      out[name] = getComputedStyle(probe).color;
+    }
+    probe.remove();
+    return out;
+  }
+
+  function themeVariables() {
+    const c = tokenColors(["tile", "sand", "tray", "rose", "text", "muted", "dim", "brand", "brand-text"]);
+    return {
+      darkMode: root.dataset.theme === "dark",
+      fontFamily: getComputedStyle(root).getPropertyValue("--font-sans").trim() || "sans-serif",
+      fontSize: "15px",
+      background: c.sand,
+      primaryColor: c.tile,
+      primaryTextColor: c.text,
+      primaryBorderColor: c.brand,
+      secondaryColor: c.rose,
+      secondaryTextColor: c.text,
+      secondaryBorderColor: c["brand-text"],
+      tertiaryColor: c.tray,
+      tertiaryTextColor: c.text,
+      tertiaryBorderColor: c.dim,
+      lineColor: c.muted,
+      textColor: c.text,
+      mainBkg: c.tile,
+      nodeBorder: c.brand,
+      nodeTextColor: c.text,
+      clusterBkg: c.tray,
+      clusterBorder: c.dim,
+      titleColor: c.text,
+      edgeLabelBackground: c.sand,
+      noteBkgColor: c.rose,
+      noteTextColor: c.text,
+      noteBorderColor: c["brand-text"],
+    };
+  }
+
+  async function render() {
+    const targets = document.querySelectorAll<HTMLElement>("pre.mermaid");
+    if (targets.length === 0) return;
+    const mermaid = await loadMermaid();
+    mermaid.initialize({ startOnLoad: false, theme: "base", themeVariables: themeVariables() });
+    targets.forEach((el) => {
+      if (!el.dataset.mermaidSource) {
+        el.dataset.mermaidSource = (el.textContent ?? "").trim();
+      }
+    });
+    await mermaid.run({ querySelector: "pre.mermaid" });
+  }
+
+  async function rerender() {
+    const targets = document.querySelectorAll<HTMLElement>("pre.mermaid");
+    if (targets.length === 0) return;
+    targets.forEach((el) => {
+      const src = el.dataset.mermaidSource ?? (el.textContent ?? "").trim();
+      el.removeAttribute("data-processed");
+      el.innerHTML = src;
+    });
+    await render();
+  }
+
+  render();
+
+  let lastTheme = root.dataset.theme;
+  new MutationObserver(() => {
+    if (root.dataset.theme === lastTheme) return;
+    lastTheme = root.dataset.theme;
+    rerender();
+  }).observe(root, { attributes: true, attributeFilter: ["data-theme"] });
+</script>

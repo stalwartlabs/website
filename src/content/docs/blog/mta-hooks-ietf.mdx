@@ -1,0 +1,62 @@
+---
+title: "MTA Hooks at the IETF"
+description: "Two years after we introduced MTA Hooks in Stalwart Mail Server, the protocol is on its way to becoming an IETF standard. Here is where we are, what it means, and how you can help shape it."
+authors: [mdecimus]
+tags: [mta-hooks, ietf, standards, milter, smtp, mail, server]
+excerpt: |
+  Two years ago we [shipped MTA Hooks](https://stalw.art/blog/webhooks/) in Stalwart Mail Server as a modern, HTTP-based alternative to Milter. In the time since, it has gone from a Stalwart feature to a protocol used across thousands of deployments worldwide, with implementations being built by third parties and interest from major players in the mail filtering ecosystem. We are now taking the next step: standardizing MTA Hooks at the IETF, so that it stops being "the Stalwart way of doing things" and becomes an open protocol that any MTA and any filter can speak.
+date: 2026-05-21
+---
+
+### What is MTA Hooks
+
+If you have been running Stalwart for a while you have probably already met MTA Hooks. We [introduced it in version 0.8.2](https://stalw.art/blog/webhooks/), alongside Webhooks, as part of our broader effort to make Stalwart's filtering and observability layer feel like the rest of modern infrastructure rather than like 1998.
+
+MTA Hooks is an HTTP-based protocol that lets a mail server delegate per-stage decisions to external services. At each SMTP stage (connect, ehlo, mail, rcpt, data on the inbound side; delivery, defer, and DSN on the outbound side), the MTA sends an HTTP POST to a registered scanner. The scanner gets the envelope, the parsed message, the raw message, authentication results, TLS state and connection context, and replies with an action (accept, reject, quarantine, and so on) plus optional modifications expressed as JSON Pointer patches. Multiple scanners can be chained. Serialization is JSON or CBOR. Everything is just HTTP over TLS with a documented schema, which means any language with an HTTP library can implement either side without a binary protocol parser in sight.
+
+### Why it was built
+
+Most mail filtering today still rides on Milter, the protocol Sendmail introduced around the year 2000. Milter does its job, but it carries a number of design choices that have aged poorly. There is no formal specification: the protocol is defined by `libmilter`, a C library whose wire semantics are documented only by reading the source. The two MTAs that support Milter (Sendmail and Postfix) have behaviourally divergent implementations, so a filter that works against one cannot always be relied on to behave identically against the other. Milter has no concept of outbound or post-delivery hooks, which means an entire category of use cases (delivery logging, compliance, DSN policy) sits outside its scope. And because the protocol is binary and C-centric, implementing a Milter filter in Go, Rust, Python, or whatever language your team actually uses is more painful than it should be in 2026.
+
+MTA Hooks addresses these specifically. It has a written specification. It covers the full SMTP lifecycle, inbound and outbound. It speaks HTTP, so every HTTP load balancer, reverse proxy, observability stack, and auth middleware you already run works out of the box. It has explicit capability negotiation, so a scanner that does not understand a new stage simply will not subscribe to it, and the MTA and the scanner can evolve independently without breaking each other.
+
+### Why standardization matters
+
+We could have kept MTA Hooks as a Stalwart-only feature and called it done. We deliberately did not, for two reasons.
+
+The first reason is that a protocol that only one mail server speaks is not a protocol, it is an API. If you want filter authors to invest real engineering effort into supporting it, they need confidence that the wire format will not shift under them at our convenience, and that other mail servers will speak it too. Standardization is how you give them that confidence.
+
+The second reason is the larger one. Email filtering is critical infrastructure for the internet. The mechanism by which a substantial fraction of the world's mail gets inspected for spam, viruses, and policy violations should not be controlled by a single vendor's source tree, no matter how friendly the vendor. The right home for a protocol of this scope is an open standards body, and for internet protocols the open standards body that matters is the IETF.
+
+Standardization also forces a kind of rigour that internal development simply does not. Every assumption gets challenged, every edge case gets named, every security consideration gets cross-examined by people whose job is to find the corner you missed. The current draft is already noticeably better than what we shipped, precisely because reviewers have pushed back on parts we had taken for granted.
+
+### How the IETF actually works, briefly
+
+If you have never been near the IETF, the process is shorter to describe than it looks. Someone writes an Internet-Draft, a versioned document describing a proposed protocol. Drafts are individual submissions until a Working Group adopts them, at which point they become Working Group documents. The WG iterates on the document in public, on a mailing list and in meetings, until it reaches consensus. At that point the draft enters Working Group Last Call, then goes to the Internet Engineering Steering Group, and if approved becomes an RFC on the Standards Track.
+
+For a Working Group to be chartered, the IETF needs to see two things: a clear problem that justifies dedicated effort, and a community of people prepared to actually do the work and use the result. This is established through a Birds of a Feather session, universally abbreviated to BOF. A BOF is a one-time meeting at an IETF where the proponents make the case for the work and the room either does or does not show enough interest to justify forming a Working Group. You get one BOF. If it does not go well, the work does not die exactly, but it loses a substantial amount of momentum and may take a long time to recover.
+
+### Where MTA Hooks is right now
+
+The current draft is [draft-degennaro-mta-hooks-01](https://datatracker.ietf.org/doc/draft-degennaro-mta-hooks/). It has been presented twice at IETF meetings: at MAILMAINT at IETF 123 in Madrid, and at DISPATCH at IETF 125. Both sessions encouraged us to proceed toward a BOF. We have submitted the BOF request, and the responsible Area Director has asked us, very reasonably, to spend the time before the BOF building visible community engagement and a worked-out Working Group charter.
+
+To support that, a dedicated mailing list now exists for the work:
+
+- **List**: mtahooks@ietf.org
+- **Subscribe**: [https://mailman3.ietf.org/mailman3/lists/mtahooks.ietf.org/](https://mailman3.ietf.org/mailman3/lists/mtahooks.ietf.org/)
+
+On the ecosystem side, [Rspamd](https://rspamd.com/) plans to implement MTA Hooks support on the scanner side. [Fastmail](https://fastmail.com) and [Heinlein](https://heinlein-support.de) are also involved in the proposal. And of course MTA Hooks is in production today in every Stalwart deployment that uses it.
+
+### How you can help
+
+The single most useful thing a Stalwart user can do right now is post to the mailing list. Not a long technical review, not a polished position paper, just a short message saying that you exist, that you are interested in MTA Hooks becoming a standard, and (if applicable) a sentence or two about how you use it or plan to use it. That kind of post takes five minutes to write and is worth a surprising amount when the IETF is deciding whether to charter a Working Group. The IESG and the chairs look very hard at who is going to use the result; visible, named interest from real operators and real integrators is the most persuasive signal there is.
+
+You do not need to be an IETF regular. You do not need to have read the entire 60-page draft. You do not need to have an opinion on every design decision. If you read this far and the idea of an open standard for MTA filtering matters to you, even passively, please join the list and say so. If you have time to read the draft and push back on anything in it, even better, but the bar for being useful is low and the impact is real.
+
+### What is next
+
+The proximate milestone is the BOF, currently targeting IETF 126 if charter discussion converges in time, with a virtual interim BOF as the fallback. Between now and then, the work happens on the mailing list: refining the charter, gathering implementation reports, and addressing reviewer comments on the draft. If the BOF goes well, a Working Group gets chartered, the draft becomes a WG document, and the path to an RFC opens up.
+
+If it goes really well, the next time we write a blog post about MTA Hooks, we will be linking to an RFC number rather than a draft number. That is the goal. We would like as many of you as possible to be part of getting there.
+
+See you on the list.

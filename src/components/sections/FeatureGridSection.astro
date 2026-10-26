@@ -1,0 +1,175 @@
+---
+import Icon from "../Icon.astro";
+import { inlineMd, paragraphMd } from "../../lib/md";
+
+interface Props {
+  data: any;
+}
+const { data } = Astro.props;
+const items: any[] = data.items ?? [];
+const tray = data.band === "alt";
+const hasLead = !!(data.eyebrow || data.title || data.body);
+const headingId = data.title
+  ? `g-${data.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}`
+  : undefined;
+const beside = hasLead && items.length === 4;
+const cols = beside ? 2 : items.length % 3 === 0 ? 3 : items.length === 1 ? 1 : items.length === 2 ? 2 : 4;
+---
+<section class="wrap section" aria-labelledby={headingId}>
+  <div class:list={[{ tray }]}>
+    <div class:list={["bento fgrid", beside ? "is-beside" : `is-cols-${cols}`]}>
+      {hasLead && (
+        <div class="tile tile--rose fgrid-lead reveal">
+          {data.eyebrow && <span class="pill">{data.eyebrow}</span>}
+          {data.title && <h2 id={headingId} class="h2" set:html={inlineMd(data.title)}></h2>}
+          {data.body && <div class="section-body" set:html={paragraphMd(data.body)}></div>}
+        </div>
+      )}
+      <ul class="fgrid-items">
+        {items.map((item) => (
+          <li class="fgrid-cell">
+            <a class="tile tile--link fgrid-item reveal" href={item.href}>
+              <h3 class="h3">{item.title}</h3>
+              <p set:html={inlineMd(item.body)}></p>
+              <span class="go" aria-hidden="true"><Icon name="arrow-up-right" size={18} /></span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .fgrid-items {
+    display: contents;
+  }
+  .fgrid-cell {
+    display: grid;
+  }
+  .fgrid-lead {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+  }
+  .fgrid-lead .section-body {
+    max-width: 64ch;
+  }
+  .fgrid-item {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-height: 250px;
+    padding-top: calc(var(--pad) + 52px);
+  }
+  .fgrid-item p {
+    color: var(--muted);
+    font-size: var(--fs-sm);
+  }
+  .is-cols-1 .fgrid-cell {
+    grid-column: 1 / -1;
+  }
+  .is-cols-2 .fgrid-cell {
+    grid-column: span 6;
+  }
+  .is-cols-3 .fgrid-cell {
+    grid-column: span 4;
+  }
+  .is-cols-4 .fgrid-cell {
+    grid-column: span 3;
+  }
+  .fgrid-cell:nth-child(4n + 2) .fgrid-item,
+  .fgrid-cell:nth-child(4n + 3) .fgrid-item {
+    background: var(--sand);
+    box-shadow: none;
+  }
+  .fgrid-cell:nth-child(4n + 2) .go,
+  .fgrid-cell:nth-child(4n + 3) .go {
+    background: var(--tile);
+  }
+  .is-beside .fgrid-lead {
+    grid-column: span 6;
+    grid-row: span 2;
+  }
+  .is-beside .fgrid-cell {
+    grid-column: span 3;
+  }
+  .is-beside .fgrid-cell:nth-child(n) .fgrid-item {
+    background: var(--tile);
+    box-shadow: var(--shadow-tile);
+  }
+  .is-beside .fgrid-cell:nth-child(n) .go {
+    background: var(--sand);
+  }
+  .is-beside .fgrid-cell:nth-child(1) .fgrid-item,
+  .is-beside .fgrid-cell:nth-child(4) .fgrid-item {
+    background: var(--sand);
+    box-shadow: none;
+  }
+  .is-beside .fgrid-cell:nth-child(1) .go,
+  .is-beside .fgrid-cell:nth-child(4) .go {
+    background: var(--tile);
+  }
+  .tray .fgrid-cell:nth-child(n) .fgrid-item {
+    background: var(--tile);
+    box-shadow: var(--shadow-tile);
+  }
+  .tray .fgrid-cell:nth-child(n) .go {
+    background: var(--sand);
+  }
+
+  @media (max-width: 1120px) {
+    .is-beside .fgrid-lead {
+      grid-column: 1 / -1;
+      grid-row: auto;
+    }
+    .is-beside .fgrid-cell,
+    .is-cols-4 .fgrid-cell {
+      grid-column: span 6;
+    }
+    .is-cols-3 .fgrid-cell {
+      grid-column: span 6;
+    }
+    .is-beside .fgrid-item {
+      min-height: 0;
+    }
+    .is-beside .fgrid-cell:nth-child(n) .fgrid-item {
+      background: var(--tile);
+      box-shadow: var(--shadow-tile);
+    }
+    .is-beside .fgrid-cell:nth-child(n) .go {
+      background: var(--sand);
+    }
+    .is-beside .fgrid-cell:nth-child(2) .fgrid-item,
+    .is-beside .fgrid-cell:nth-child(3) .fgrid-item {
+      background: var(--sand);
+      box-shadow: none;
+    }
+    .is-beside .fgrid-cell:nth-child(2) .go,
+    .is-beside .fgrid-cell:nth-child(3) .go {
+      background: var(--tile);
+    }
+  }
+  @media (max-width: 760px) {
+    .fgrid .fgrid-cell {
+      grid-column: 1 / -1;
+    }
+    .fgrid-item {
+      min-height: 0;
+      padding-top: var(--pad);
+      padding-right: 76px;
+    }
+    .fgrid .fgrid-cell:nth-child(n) .fgrid-item {
+      background: var(--tile);
+      box-shadow: var(--shadow-tile);
+    }
+    .fgrid .fgrid-cell:nth-child(n) .go {
+      background: var(--sand);
+    }
+  }
+  .fgrid .fgrid-cell:nth-child(n) .fgrid-item:hover {
+    box-shadow: var(--shadow-lift);
+  }
+</style>

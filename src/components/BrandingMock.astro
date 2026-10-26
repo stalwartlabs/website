@@ -1,0 +1,210 @@
+---
+import Icon from "./Icon.astro";
+
+const panes = [
+  { key: "a", host: "admin.acme.com", name: "Acme", users: "1,420", domains: "3", path: "2,58 8,38 14,52 20,26 26,34 32,12 38,20 44,0 50,6" },
+  { key: "b", host: "admin.foobar.org", name: "Foobar", users: "820", domains: "1", path: "2,62 8,36 14,52 20,28 26,38 32,14 38,26 44,0 50,12" },
+];
+
+const nav = ["Dashboard", "Accounts", "Domains", "Spam", "Reports"];
+---
+<div class="brand" role="img" aria-label="The same WebUI under two tenant brands: admin.acme.com with the Acme logo and a red accent, and admin.foobar.org with the Foobar logo and a dark accent. Both show the Dashboard, Accounts, Domains, Spam and Reports navigation, user and domain counts (1,420 users and 3 domains for Acme, 820 users and 1 domain for Foobar) and a messages-today chart.">
+  <div class="panes">
+  {panes.map((p) => (
+    <div class:list={["pane", `pane--${p.key}`]}>
+      <span class="host"><Icon name="globe" size={12} />{p.host}</span>
+      <div class="bar">
+        <span class="logo"><span class="mark"></span>{p.name}</span>
+        <span class="cta"><Icon name="plus" size={12} />New</span>
+      </div>
+      <div class="body">
+        <ul class="nav">
+          {nav.map((n, i) => <li class:list={{ "is-active": i === 0 }}>{n}</li>)}
+        </ul>
+        <div class="main">
+          <div class="stat"><span class="lbl">Users</span><span class="num">{p.users}</span></div>
+          <div class="stat"><span class="lbl">Domains</span><span class="num">{p.domains}</span></div>
+          <div class="stat stat--chart">
+            <span class="lbl">Messages today</span>
+            <svg viewBox="0 -4 52 70" preserveAspectRatio="none" aria-hidden="true">
+              <polyline points={p.path} vector-effect="non-scaling-stroke" />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  ))}
+  </div>
+</div>
+
+<style>
+  .brand {
+    width: 100%;
+    container-type: inline-size;
+  }
+
+  .panes {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .pane {
+    --acc: var(--brand);
+    --acc-soft: var(--rose);
+    --acc-text: var(--brand-text);
+    --acc-on: #fff;
+    display: grid;
+    gap: 10px;
+    padding: 12px;
+    border-radius: var(--r-lg);
+    background: var(--tile);
+    box-shadow: var(--shadow-tile);
+  }
+
+  .pane--b {
+    --acc: var(--text);
+    --acc-soft: var(--sand);
+    --acc-text: var(--text);
+    --acc-on: var(--tile);
+  }
+
+  .host {
+    display: inline-flex;
+    align-items: center;
+    justify-self: start;
+    gap: 6px;
+    padding: 3px 10px;
+    border-radius: var(--r-pill);
+    background: var(--sand);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--muted);
+  }
+
+  .bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 2px 2px 10px;
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-display);
+    font-size: 0.9375rem;
+    font-weight: 750;
+    color: var(--text);
+  }
+
+  .mark {
+    width: 18px;
+    height: 18px;
+    border-radius: 5px;
+    background: var(--acc);
+  }
+
+  .pane--b .mark {
+    border-radius: 50%;
+  }
+
+  .cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px 4px 8px;
+    border-radius: var(--r-pill);
+    background: var(--acc);
+    font-family: var(--font-display);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    color: var(--acc-on);
+  }
+
+  .body {
+    display: grid;
+    grid-template-columns: 5.6rem minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .nav {
+    display: grid;
+    align-content: start;
+    gap: 2px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .nav li {
+    padding: 5px 8px;
+    border-radius: 8px;
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 560;
+    color: var(--muted);
+  }
+
+  .nav li.is-active {
+    background: var(--acc-soft);
+    font-weight: 700;
+    color: var(--acc-text);
+  }
+
+  .main {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+  }
+
+  .stat {
+    display: grid;
+    gap: 2px;
+    padding: 8px 10px;
+    border-radius: 12px;
+    background: var(--sand);
+  }
+
+  .lbl {
+    font-family: var(--font-display);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    color: var(--dim);
+  }
+
+  .num {
+    font-family: var(--font-mono);
+    font-size: 1.0625rem;
+    font-weight: 700;
+    color: var(--acc-text);
+  }
+
+  .stat--chart {
+    grid-column: 1 / -1;
+  }
+
+  .stat--chart svg {
+    width: 100%;
+    height: 54px;
+    margin-top: 4px;
+    overflow: visible;
+  }
+
+  .stat--chart polyline {
+    fill: none;
+    stroke: var(--acc);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  @container (min-width: 540px) {
+    .panes {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>

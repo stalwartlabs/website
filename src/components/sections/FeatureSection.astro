@@ -1,0 +1,233 @@
+---
+import VisualBlock from "../VisualBlock.astro";
+import Icon from "../Icon.astro";
+import { inlineMd, paragraphMd } from "../../lib/md";
+
+interface Props {
+  data: any;
+}
+const { data } = Astro.props;
+const bullets: string[] = data.bullets ?? [];
+const learnMore: any[] = data.learnMore ?? [];
+const hasVisual = !!data.visual;
+const isShot = data.visual?.kind === "screenshot";
+const layout = hasVisual
+  ? bullets.length === 0
+    ? "is-pair"
+    : bullets.length > 4
+      ? "is-wide"
+      : "is-compact"
+  : bullets.length === 0
+    ? "is-solo"
+    : bullets.length > 4
+      ? "is-stack"
+      : "is-side";
+const splitCopy = layout === "is-solo" || layout === "is-stack";
+const tray = data.band === "alt" && layout !== "is-solo";
+const sandCopy = data.band === "alt" && layout === "is-solo";
+const colBullets = layout === "is-wide" || layout === "is-stack";
+const headingId = `f-${data.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}`;
+---
+<section class="wrap section section--feature" aria-labelledby={headingId}>
+  <div class:list={[{ tray }]}>
+    <div class:list={["bento feature", layout, { "is-reverse": data.reverse, "v-shot": isShot }]}>
+      <div class:list={["tile feature-copy reveal", { "is-split": splitCopy, "tile--sand": sandCopy }]}>
+        <div class="feature-head">
+          {data.eyebrow && <span class="pill">{data.eyebrow}</span>}
+          <h2 id={headingId} class="h2 h2--feature" set:html={inlineMd(data.title)}></h2>
+        </div>
+        {(data.body || learnMore.length > 0) && (
+          <div class="feature-text">
+            {data.body && <div class="section-body" set:html={paragraphMd(data.body)}></div>}
+            {learnMore.length > 0 && (
+              <p class="more">
+                {learnMore.map((cta: any) => (
+                  <a
+                    class="text-link"
+                    href={cta.href}
+                    {...(cta.external ? { target: "_blank", rel: "noopener" } : {})}
+                  >{cta.label}<Icon name={cta.external ? "arrow-up-right" : "arrow-right"} size={16} /></a>
+                ))}
+              </p>
+            )}
+          </div>
+        )}
+      </div>
+      {hasVisual && <VisualBlock visual={data.visual} class="feature-visual reveal" />}
+      {bullets.length > 0 && (
+        <div class="tile tile--sand bullets reveal">
+          <ul class:list={["checks", { "checks--cols": colBullets }]}>
+            {bullets.map((b) => (
+              <li><span class="tick"><Icon name="check" size={13} /></span><span set:html={inlineMd(b)}></span></li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+  .section--feature + .section--feature {
+    margin-top: clamp(56px, 7vw, 104px);
+  }
+  .feature-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .feature-head,
+  .feature-text {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .more {
+    margin-top: 4px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 24px;
+  }
+  .feature .feature-copy,
+  .feature .bullets,
+  .feature :global(.feature-visual) {
+    grid-column: 1 / -1;
+    min-width: 0;
+  }
+  .feature .feature-copy {
+    order: 1;
+  }
+  .feature :global(.feature-visual) {
+    order: 2;
+    min-height: 100%;
+  }
+  .feature :global(.feature-visual.shot) {
+    min-height: 340px;
+  }
+  .feature .bullets {
+    order: 3;
+    padding: clamp(22px, 2.6vw, 34px);
+  }
+  .bullets :global(a) {
+    color: var(--brand-text);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+  .feature-copy.is-split {
+    padding: clamp(28px, 4.4vw, 60px);
+  }
+  .is-split .section-body {
+    font-size: var(--fs-body);
+  }
+
+  @media (min-width: 761px) {
+    .feature :global(.feature-visual.shot) {
+      min-height: 400px;
+    }
+  }
+
+  @media (min-width: 761px) and (max-width: 1199px) {
+    .feature-text {
+      max-width: 68ch;
+    }
+    .feature .bullets .checks {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px 28px;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .feature :global(.feature-visual.shot) {
+      min-height: 500px;
+    }
+
+    .is-compact .feature-copy,
+    .is-compact .bullets {
+      grid-column: 1 / span 5;
+    }
+    .is-compact .feature-copy {
+      grid-row: 1;
+    }
+    .is-compact .bullets {
+      grid-row: 2;
+    }
+    .is-compact :global(.feature-visual) {
+      grid-column: 6 / span 7;
+      grid-row: 1 / span 2;
+    }
+    .is-compact.is-reverse .feature-copy,
+    .is-compact.is-reverse .bullets {
+      grid-column: 8 / span 5;
+    }
+    .is-compact.is-reverse :global(.feature-visual) {
+      grid-column: 1 / span 7;
+    }
+
+    .is-wide .feature-copy,
+    .is-pair .feature-copy {
+      grid-column: 1 / span 5;
+      grid-row: 1;
+    }
+    .is-wide :global(.feature-visual),
+    .is-pair :global(.feature-visual) {
+      grid-column: 6 / span 7;
+      grid-row: 1;
+    }
+    .is-wide.is-reverse .feature-copy,
+    .is-pair.is-reverse .feature-copy {
+      grid-column: 8 / span 5;
+    }
+    .is-wide.is-reverse :global(.feature-visual),
+    .is-pair.is-reverse :global(.feature-visual) {
+      grid-column: 1 / span 7;
+    }
+    .is-wide .bullets {
+      grid-column: 1 / -1;
+      grid-row: 2;
+    }
+
+    .is-side .feature-copy {
+      grid-column: 1 / span 7;
+      grid-row: 1;
+    }
+    .is-side .bullets {
+      grid-column: 8 / span 5;
+      grid-row: 1;
+      display: grid;
+      align-content: center;
+    }
+    .is-side.is-reverse .feature-copy {
+      grid-column: 6 / span 7;
+    }
+    .is-side.is-reverse .bullets {
+      grid-column: 1 / span 5;
+    }
+
+    .feature-copy.is-split {
+      display: grid;
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      gap: 18px clamp(24px, 5vw, 80px);
+    }
+  }
+  @media (min-width: 1400px) {
+    .v-shot.is-compact .feature-copy,
+    .v-shot.is-compact .bullets,
+    .v-shot.is-wide .feature-copy {
+      grid-column: 1 / span 4;
+    }
+    .v-shot.is-compact :global(.feature-visual),
+    .v-shot.is-wide :global(.feature-visual) {
+      grid-column: 5 / span 8;
+    }
+    .v-shot.is-compact.is-reverse .feature-copy,
+    .v-shot.is-compact.is-reverse .bullets,
+    .v-shot.is-wide.is-reverse .feature-copy {
+      grid-column: 9 / span 4;
+    }
+    .v-shot.is-compact.is-reverse :global(.feature-visual),
+    .v-shot.is-wide.is-reverse :global(.feature-visual) {
+      grid-column: 1 / span 8;
+    }
+  }
+</style>

@@ -1,0 +1,169 @@
+---
+import Icon from "../Icon.astro";
+import { inlineMd, paragraphMd } from "../../lib/md";
+
+interface Props {
+  data: any;
+}
+const { data } = Astro.props;
+const ctas: any[] = data.ctas ?? [];
+const goIndex = ctas.findIndex((c) => c.primary !== false);
+const go = goIndex >= 0 ? ctas[goIndex] : null;
+const rest = ctas.filter((_, i) => i !== goIndex);
+const tray = data.band === "alt";
+const headingId = `c-${data.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}`;
+const ext = (c: any) => (c.external ? { target: "_blank", rel: "noopener" } : {});
+---
+<section class="wrap section" aria-labelledby={headingId}>
+  <div class:list={[{ tray }]}>
+    <div class:list={["tile tile--ink cta reveal", { "cta--solo": !go }]}>
+      <div class="cta-copy">
+        <h2 id={headingId} class="h-cta" set:html={inlineMd(data.title)}></h2>
+        {data.body && <div class="cta-sub" set:html={paragraphMd(data.body)}></div>}
+        {rest.length > 0 && (
+          <div class="actions">
+            {rest.map((c) => (
+              <a class="btn btn-on-ink" href={c.href} {...ext(c)}>{c.label}</a>
+            ))}
+          </div>
+        )}
+      </div>
+      {go && (
+        <a class="cta-go" href={go.href} {...ext(go)}>
+          <span class="cta-go-ic"><Icon name="arrow-up-right" size={24} /></span>
+          <span class="cta-go-label">{go.label}</span>
+        </a>
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 32px;
+    padding: clamp(32px, 5.4vw, 76px);
+    isolation: isolate;
+  }
+  .cta--solo {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .cta::before {
+    content: "";
+    position: absolute;
+    inset: -40% -10% auto auto;
+    width: 70%;
+    height: 140%;
+    z-index: -1;
+    background: radial-gradient(closest-side, rgb(219 45 84 / 0.24), transparent);
+  }
+  .cta-copy {
+    display: grid;
+    gap: 16px;
+    max-width: 640px;
+  }
+  .h-cta {
+    font-family: var(--font-display);
+    font-size: var(--fs-h2);
+    line-height: 1.06;
+    letter-spacing: -0.032em;
+    font-weight: 740;
+    color: var(--on-ink);
+  }
+  .h-cta :global(strong),
+  .h-cta :global(.hl) {
+    color: var(--brand-on-ink);
+  }
+  .cta-sub {
+    color: var(--on-ink-muted);
+    font-size: var(--fs-lead);
+  }
+  .cta-sub :global(p + p) {
+    margin-top: 0.8em;
+  }
+  .cta-sub :global(a) {
+    color: var(--on-ink);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .cta .actions {
+    margin-top: 10px;
+  }
+  .cta-go {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 40px;
+    width: clamp(220px, 22vw, 290px);
+    aspect-ratio: 1;
+    padding: 28px;
+    border-radius: var(--r-xl);
+    background: var(--brand);
+    color: #fff;
+    box-shadow: 0 24px 50px -20px rgb(219 45 84 / 0.75);
+    transition: background-color var(--t) var(--ease), transform var(--t) var(--ease), box-shadow var(--t) var(--ease);
+  }
+  .cta-go:hover {
+    background: var(--brand-press);
+    transform: translateY(-3px);
+    box-shadow: 0 30px 60px -20px rgb(219 45 84 / 0.85);
+  }
+  .cta-go:focus-visible {
+    outline: 3px solid var(--on-ink);
+    outline-offset: 4px;
+  }
+  .cta-go-ic {
+    display: grid;
+    place-items: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    align-self: flex-end;
+    background: rgb(255 255 255 / 0.18);
+    transition: transform var(--t) var(--ease);
+  }
+  .cta-go:hover .cta-go-ic {
+    transform: rotate(45deg);
+  }
+  .cta-go-label {
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 1.2rem + 1.2vw, 2.25rem);
+    font-weight: 750;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+  }
+  @media (max-width: 760px) {
+    .cta {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    .cta-copy {
+      display: contents;
+    }
+    .cta-go {
+      order: 2;
+      width: 100%;
+      aspect-ratio: auto;
+      flex-direction: row-reverse;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 18px 18px 26px;
+    }
+    .cta-go-ic {
+      width: 48px;
+      height: 48px;
+      flex: none;
+    }
+    .cta .actions {
+      order: 3;
+      margin-top: 0;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cta-go:hover {
+      transform: none;
+    }
+  }
+</style>

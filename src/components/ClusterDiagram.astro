@@ -1,0 +1,269 @@
+---
+const clientX = [115, 280, 445];
+const storeX = [100, 280, 460, 640];
+const clients = ["JMAP", "IMAP", "SMTP"];
+const nodes = ["Node 1", "Node 2", "Node N"];
+const coord = ["P2P", "Kafka", "Redis"];
+const stores = [
+  { name: "Data store", sub: "FoundationDB" },
+  { name: "Blob store", sub: "S3 / Azure" },
+  { name: "Search store", sub: "Elasticsearch" },
+  { name: "In-memory store", sub: "Redis / Valkey" },
+];
+const label = "Stalwart cluster topology: JMAP, IMAP and SMTP clients reach any of N nodes, each serving every protocol; the nodes share a data store (FoundationDB), blob store (S3 or Azure), search store (Elasticsearch) and in-memory store (Redis or Valkey); coordination is peer to peer, or through Kafka or Redis";
+---
+<div class="dg" role="img" aria-label={label}>
+  <span class="dg-caption">Clients, nodes, storage</span>
+  <svg class="wide" viewBox="0 0 720 470" aria-hidden="true">
+    <g class="lines" fill="none">
+      {clientX.map((a) => clientX.map((b) => <path d={`M${a} 92 C ${a} 140, ${b} 150, ${b} 196`} />))}
+      {clientX.map((a) => storeX.map((b) => <path d={`M${a} 266 C ${a} 312, ${b} 318, ${b} 362`} />))}
+    </g>
+    <text class="label" x="20" y="24">Clients</text>
+    {clients.map((c, i) => (
+      <g class="cpill-ink" transform={`translate(${clientX[i]} 70)`}>
+        <rect x="-58" y="-21" width="116" height="42" rx="21" />
+        <text y="1">{c}</text>
+      </g>
+    ))}
+    <rect class="plate" x="20" y="160" width="540" height="142" rx="26" />
+    <text class="plate-label" x="42" y="186">Stalwart cluster (any node serves any protocol)</text>
+    {nodes.map((n, i) => (
+      <g class="node" transform={`translate(${clientX[i]} 240)`}>
+        <rect x="-72" y="-38" width="144" height="76" rx="18" />
+        <circle class="dot" cx="-50" cy="-16" r="4" />
+        <text class="name" y="-2">{n}</text>
+        <text class="sub" y="18">all protocols</text>
+      </g>
+    ))}
+    <rect class="coord" x="580" y="160" width="120" height="142" rx="22" />
+    <text class="label" x="640" y="150" text-anchor="middle">Coordination</text>
+    {coord.map((c, i) => (
+      <g class:list={["cpill", { "is-brand": i === 0 }]} transform={`translate(640 ${196 + i * 36})`}>
+        <rect x="-40" y="-13" width="80" height="26" rx="13" />
+        <text y="1">{c}</text>
+      </g>
+    ))}
+    <g class="link">
+      <path d="M560 216 H580" />
+      <path d="M560 248 H580" />
+    </g>
+    {stores.map((s, i) => (
+      <g class="node" transform={`translate(${storeX[i]} 398)`}>
+        <rect x="-78" y="-36" width="156" height="72" rx="16" />
+        <text class="name" y="-4">{s.name}</text>
+        <text class="sub" y="16">{s.sub}</text>
+      </g>
+    ))}
+    <text class="label" x="20" y="460">Storage</text>
+  </svg>
+  <div class="narrow" aria-hidden="true">
+    <span class="nlabel">Clients</span>
+    <ul class="npills">{clients.map((c) => <li>{c}</li>)}</ul>
+    <span class="arrow" />
+    <div class="nplate">
+      <span class="nplate-label">Stalwart cluster (any node serves any protocol)</span>
+      <ul class="nnodes">
+        {nodes.map((n) => <li><strong>{n}</strong><span>all protocols</span></li>)}
+      </ul>
+      <div class="ncoord">
+        <span class="nlabel">Coordination</span>
+        <ul class="mini-chips">{coord.map((c, i) => <li class:list={{ "is-on": i === 0 }}>{c}</li>)}</ul>
+      </div>
+    </div>
+    <span class="arrow" />
+    <span class="nlabel">Storage</span>
+    <ul class="nstores">
+      {stores.map((s) => <li><strong>{s.name}</strong><span>{s.sub}</span></li>)}
+    </ul>
+  </div>
+</div>
+
+<style>
+  .dg {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 100%;
+    container-type: inline-size;
+  }
+  .wide {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 720 / 470;
+    overflow: visible;
+  }
+  .lines path {
+    stroke: var(--brand);
+    stroke-opacity: 0.22;
+    stroke-width: 1.2;
+  }
+  .label {
+    fill: var(--dim);
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 650;
+  }
+  .cpill-ink rect {
+    fill: var(--ink);
+  }
+  .cpill-ink text {
+    fill: var(--on-ink);
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 600;
+    text-anchor: middle;
+    dominant-baseline: middle;
+  }
+  .plate {
+    fill: var(--rose);
+  }
+  .plate-label {
+    fill: var(--brand-text);
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 650;
+  }
+  .node rect {
+    fill: var(--tile);
+    filter: drop-shadow(0 6px 10px var(--shadow-c2));
+  }
+  .dot {
+    fill: var(--brand);
+  }
+  .name {
+    fill: var(--text);
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 700;
+    text-anchor: middle;
+  }
+  .sub {
+    fill: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    text-anchor: middle;
+  }
+  .coord {
+    fill: var(--tile);
+  }
+  .cpill rect {
+    fill: var(--sand);
+  }
+  .cpill text {
+    fill: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    text-anchor: middle;
+    dominant-baseline: middle;
+  }
+  .cpill.is-brand rect {
+    fill: var(--brand);
+  }
+  .cpill.is-brand text {
+    fill: #fff;
+    font-weight: 600;
+  }
+  .link path {
+    fill: none;
+    stroke: var(--brand);
+    stroke-width: 2;
+    stroke-linecap: round;
+  }
+  .narrow {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .nlabel,
+  .nplate-label {
+    font-family: var(--font-display);
+    font-size: var(--fs-xs);
+    font-weight: 650;
+    color: var(--dim);
+  }
+  .nplate-label {
+    color: var(--brand-text);
+  }
+  .npills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .npills li {
+    padding: 7px 16px;
+    border-radius: var(--r-pill);
+    background: var(--ink);
+    color: var(--on-ink);
+    box-shadow: inset 0 0 0 1px var(--ink-edge);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: 600;
+  }
+  .arrow {
+    align-self: center;
+    width: 2px;
+    height: 18px;
+    border-radius: 1px;
+    background: var(--brand);
+    opacity: 0.35;
+  }
+  .nplate {
+    display: grid;
+    gap: 10px;
+    padding: 14px;
+    border-radius: var(--r-lg);
+    background: var(--rose);
+  }
+  .nnodes,
+  .nstores {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .nstores {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .nnodes li,
+  .nstores li {
+    display: grid;
+    gap: 2px;
+    padding: 10px 12px;
+    border-radius: 14px;
+    background: var(--tile);
+    box-shadow: var(--shadow-tile);
+  }
+  .narrow strong {
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    font-weight: 700;
+  }
+  .narrow li span {
+    color: var(--muted);
+    line-height: 1.35;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+  }
+  .ncoord {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 12px;
+    padding: 10px 12px;
+    border-radius: 14px;
+    background: var(--tile);
+  }
+  .ncoord .is-on {
+    background: var(--brand);
+    color: #fff;
+    font-weight: 600;
+  }
+  @container (max-width: 520px) {
+    .wide {
+      display: none;
+    }
+    .narrow {
+      display: flex;
+    }
+  }
+</style>

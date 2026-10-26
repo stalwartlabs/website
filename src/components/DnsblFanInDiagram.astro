@@ -1,0 +1,172 @@
+---
+import Icon from "./Icon.astro";
+
+const providers = [
+  { icon: "network", name: "Spamhaus ZEN", sub: "IP lookup", tag: "RBL_SPAMHAUS" },
+  { icon: "link", name: "SURBL multi", sub: "URL lookup", tag: "RBL_SURBL" },
+  { icon: "globe", name: "Spamhaus DBL", sub: "domain lookup", tag: "RBL_DBL" },
+  { icon: "fingerprint", name: "Pyzor", sub: "content-hash digest", tag: "PYZOR_LISTED", alt: true },
+];
+---
+<div class="rbl" role="img" aria-label="DNSBL multi-source fan-in: the connecting IP, body URLs and content hash of an inbound message are checked in parallel against Spamhaus ZEN (IP lookup, RBL_SPAMHAUS), SURBL multi (URL lookup, RBL_SURBL), Spamhaus DBL (domain lookup, RBL_DBL) and Pyzor (content-hash digest, PYZOR_LISTED). The results converge into one aggregated score.">
+  <span class="dg-caption">Many sources, one decision</span>
+  <div class="card msg">
+    <span class="ic"><Icon name="mail" size={17} /></span>
+    <span class="txt">
+      <strong>Inbound message</strong>
+      <ul class="mini-chips">
+        <li>connecting IP</li>
+        <li>body URLs</li>
+        <li>content hash</li>
+      </ul>
+    </span>
+  </div>
+  <span class="join" aria-hidden="true"><Icon name="arrow-down" size={15} /></span>
+  <ul class="providers">
+    {providers.map((p) => (
+      <li class:list={["card cell", { "is-alt": p.alt }]}>
+        <span class="ic ic--soft"><Icon name={p.icon} size={16} /></span>
+        <strong>{p.name}</strong>
+        <span class="v">{p.sub}</span>
+        <span class="tag">{p.tag}</span>
+      </li>
+    ))}
+  </ul>
+  <span class="join" aria-hidden="true"><Icon name="arrow-down" size={15} /></span>
+  <div class="score">
+    <Icon name="gauge" size={17} />
+    <span>Aggregated score</span>
+  </div>
+</div>
+
+<style>
+  .rbl {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    width: 100%;
+    container-type: inline-size;
+  }
+
+  .rbl > .dg-caption {
+    margin-bottom: 4px;
+  }
+
+  .card {
+    border-radius: var(--r-lg);
+    background: var(--tile);
+    box-shadow: var(--shadow-tile);
+  }
+
+  .msg {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px 12px 10px;
+  }
+
+  .txt {
+    display: grid;
+    gap: 6px;
+    min-width: 0;
+  }
+
+  .ic {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    flex: none;
+    border-radius: 11px;
+    background: var(--sand);
+    color: var(--text);
+  }
+
+  .ic--soft {
+    width: 32px;
+    height: 32px;
+    margin-bottom: 6px;
+    background: var(--rose);
+    color: var(--brand-text);
+  }
+
+  strong {
+    font-family: var(--font-display);
+    font-size: 0.9375rem;
+    font-weight: 680;
+    line-height: 1.3;
+    color: var(--text);
+  }
+
+  .v {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+
+  .join {
+    display: grid;
+    place-items: center;
+    align-self: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--tile);
+    color: var(--brand-text);
+  }
+
+  .providers {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .cell {
+    display: grid;
+    align-content: start;
+    justify-items: start;
+    gap: 2px;
+    padding: 14px;
+  }
+
+  .tag {
+    margin-top: 8px;
+    padding: 2px 9px;
+    border-radius: var(--r-pill);
+    background: var(--sand);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    color: var(--muted);
+  }
+
+  .cell.is-alt .tag {
+    background: var(--rose);
+    color: var(--brand-text);
+  }
+
+  .score {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    align-self: center;
+    padding: 10px 22px;
+    border-radius: var(--r-pill);
+    background: var(--brand);
+    color: #fff;
+    font-family: var(--font-display);
+    font-size: var(--fs-sm);
+    font-weight: 700;
+  }
+
+  @container (min-width: 600px) {
+    .providers {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+</style>

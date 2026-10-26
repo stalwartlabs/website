@@ -1,0 +1,300 @@
+---
+title: "Search"
+description: "Configures full-text search indexing for emails, calendars, contacts, files, and tracing."
+custom_edit_url: null
+---
+
+Configures full-text search indexing for emails, calendars, contacts, files, and tracing.
+
+This object can be configured from the [WebUI](/docs/management/webui/) under <span data-target="Search"><svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M10 5H3" /><path d="M12 19H3" /><path d="M14 3v4" /><path d="M16 17v4" /><path d="M21 12h-9" /><path d="M21 19h-5" /><path d="M21 5h-7" /><path d="M8 10v4" /><path d="M8 12H3" /></svg> Settings › <svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="m13 13.5 2-2.5-2-2.5" /><path d="m21 21-4.3-4.3" /><path d="M9 8.5 7 11l2 2.5" /><circle cx="11" cy="11" r="8" /></svg> Search</span>
+
+## Fields
+
+
+##### `indexBatchSize`
+
+> Type: <code>UnsignedInt</code> · default: `100` · min: 1
+>
+> Number of items to process in each batch during indexing operations
+
+
+##### `defaultLanguage`
+
+> Type: [<code>Locale</code>](/docs/ref/enum/locale) · default: `"en-US"`
+>
+> Default language to use when language detection is not possible
+
+
+##### `supportedLanguages`
+
+> Type: <code>Set&lt;</code>[<code>Locale</code>](/docs/ref/enum/locale)<code>&gt;</code> · default: `{"en-US":true}`
+>
+> List of languages to enable for full-text search
+
+
+##### `indexCalendar`
+
+> Type: <code>Boolean</code> · default: `true`
+>
+> Enable full-text search indexing for calendar data
+
+
+##### `indexCalendarFields`
+
+> Type: <code>Set&lt;</code>[<code>SearchCalendarField</code>](#searchcalendarfield)<code>&gt;</code> · default: `{"attendee":true,"description":true,"location":true,"owner":true,"title":true}`
+>
+> List of calendar fields to index
+
+
+##### `indexContacts`
+
+> Type: <code>Boolean</code> · default: `true`
+>
+> Enable full-text search indexing for contacts data
+
+
+##### `indexContactFields`
+
+> Type: <code>Set&lt;</code>[<code>SearchContactField</code>](#searchcontactfield)<code>&gt;</code> · default: `{"address":true,"email":true,"kind":true,"member":true,"name":true,"nickname":true,"note":true,"onlineService":true,"organization":true,"phone":true}`
+>
+> List of contact fields to index
+
+
+##### `indexEmail`
+
+> Type: <code>Boolean</code> · default: `true`
+>
+> Enable full-text search indexing for email content and metadata
+
+
+##### `indexEmailFields`
+
+> Type: <code>Set&lt;</code>[<code>SearchEmailField</code>](#searchemailfield)<code>&gt;</code> · default: `{"attachment":true,"bcc":true,"body":true,"cc":true,"from":true,"subject":true,"to":true}`
+>
+> List of email fields to index
+
+
+##### `indexTelemetry`
+
+> Type: <code>Boolean</code> · [enterprise](/docs/server/enterprise) · default: `true`
+>
+> Enable full-text search indexing for tracing data
+
+
+##### `maxConcurrentIndexTasks`
+
+> Type: <code>UnsignedInt</code> · default: `5` · min: 1
+>
+> Maximum number of indexing tasks that run at the same time
+
+
+##### `indexFiles`
+
+> Type: <code>Boolean</code> · default: `true`
+>
+> Enable full-text search indexing for file storage content (file names are always searchable)
+
+
+##### `maxExtractDocumentSize`
+
+> Type: <code>Size</code> · default: `67108864` · min: 1
+>
+> Maximum size in bytes of a document (file or email attachment) from which text is extracted for indexing
+
+
+##### `maxExtractTextSize`
+
+> Type: <code>Size</code> · default: `4194304` · min: 1
+>
+> Maximum amount of text in bytes extracted from a single document for indexing
+
+
+##### `maxExtractDecompressedSize`
+
+> Type: <code>Size</code> · default: `268435456` · min: 1
+>
+> Maximum number of bytes decompressed while extracting text from a single document
+
+
+##### `maxExtractPartSize`
+
+> Type: <code>Size</code> · default: `67108864` · min: 1
+>
+> Maximum decompressed size in bytes of a single part (XML part, EPUB chapter or PDF stream) inside a document
+
+
+##### `maxExtractParts`
+
+> Type: <code>UnsignedInt</code> · default: `10000` · min: 1
+>
+> Maximum number of parts (XML parts, slides, sheets or chapters) read from a single document
+
+
+##### `maxExtractArchiveEntries`
+
+> Type: <code>UnsignedInt</code> · default: `10000` · min: 1
+>
+> Maximum number of ZIP entries accepted in an Office, OpenDocument or EPUB file
+
+
+##### `maxExtractPdfObjects`
+
+> Type: <code>UnsignedInt</code> · default: `1048576` · min: 1
+>
+> Maximum number of objects in a PDF cross-reference table
+
+
+##### `maxExtractRtfDepth`
+
+> Type: <code>UnsignedInt</code> · default: `256` · min: 1
+>
+> Maximum group nesting depth of an RTF document
+
+
+
+## JMAP API
+
+The Search singleton is available via the `urn:stalwart:jmap` capability.
+
+
+### `x:Search/get`
+
+This is a standard [`Foo/get`](https://www.rfc-editor.org/rfc/rfc8620#section-5.1) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.1), Section 5.1.
+
+For singletons, the `ids` argument should be the literal `singleton` (or `null` to return the single instance).
+
+
+This method requires the `sysSearchGet` [permission](/docs/ref/permissions).
+
+```bash
+curl -X POST https://mail.example.com/jmap/ \
+  -H 'Authorization: Bearer $TOKEN' \
+  -H 'Content-Type: application/json' \
+  -d '{
+      "methodCalls": [
+        [
+          "x:Search/get",
+          {
+            "ids": [
+              "singleton"
+            ]
+          },
+          "c1"
+        ]
+      ],
+      "using": [
+        "urn:ietf:params:jmap:core",
+        "urn:stalwart:jmap"
+      ]
+    }'
+```
+
+
+
+### `x:Search/set`
+
+This is a standard [`Foo/set`](https://www.rfc-editor.org/rfc/rfc8620#section-5.3) method as defined in [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.3), Section 5.3.
+
+For singletons, only the `update` argument with id `singleton` is accepted; `create` and `destroy` arguments are rejected.
+
+
+This method requires the `sysSearchUpdate` [permission](/docs/ref/permissions).
+
+```bash
+curl -X POST https://mail.example.com/jmap/ \
+  -H 'Authorization: Bearer $TOKEN' \
+  -H 'Content-Type: application/json' \
+  -d '{
+      "methodCalls": [
+        [
+          "x:Search/set",
+          {
+            "update": {
+              "singleton": {
+                "indexBatchSize": 100
+              }
+            }
+          },
+          "c1"
+        ]
+      ],
+      "using": [
+        "urn:ietf:params:jmap:core",
+        "urn:stalwart:jmap"
+      ]
+    }'
+```
+
+
+
+
+## CLI
+
+`stalwart-cli` wraps the same JMAP calls. See the [CLI reference](/docs/management/cli/) for installation, authentication, and general usage.
+
+
+### Fetch
+
+```sh
+stalwart-cli get Search
+```
+
+
+### Update
+
+```sh
+stalwart-cli update Search --field indexBatchSize=100
+```
+
+
+
+## Enums
+
+
+### SearchCalendarField
+
+
+
+| Value | Label |
+|---|---|
+| `title` | Event Title |
+| `description` | Event Description |
+| `location` | Event Location |
+| `owner` | Event Owner |
+| `attendee` | Event Attendee |
+
+
+### SearchContactField
+
+
+
+| Value | Label |
+|---|---|
+| `member` | Group Member |
+| `kind` | Contact Kind |
+| `name` | Contact Name |
+| `nickname` | Contact Nickname |
+| `organization` | Contact Organization |
+| `email` | Contact Email |
+| `phone` | Contact Phone |
+| `onlineService` | Contact Online Service |
+| `address` | Contact Address |
+| `note` | Contact Note |
+
+
+### SearchEmailField
+
+
+
+| Value | Label |
+|---|---|
+| `from` | From Address |
+| `to` | To Address |
+| `cc` | Cc Address |
+| `bcc` | Bcc Address |
+| `subject` | Subject |
+| `body` | Body Content |
+| `attachment` | Attachment Content |
+| `headers` | Email Headers |
+
+

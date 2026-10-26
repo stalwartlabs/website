@@ -1,0 +1,203 @@
+---
+import Icon from "./Icon.astro";
+---
+<div class="dg" role="img" aria-label="Envelope rewriting by a Stalwart filter. Before: From alice@old.example.com, To customer@partner.com, Subject Quarterly invoice, no disclaimer header, attachment invoice.exe (application/x-msdownload, 1.2 MB). After: From rewritten to alice@new.example.com, X-Disclaimer header added, the executable attachment invoice.exe stripped.">
+  <span class="dg-caption">Envelope rewriting</span>
+  <div class="flow">
+    <div class="card">
+      <span class="tag">Before</span>
+      <dl>
+        <dt>From:</dt><dd>alice@old.example.com</dd>
+        <dt>To:</dt><dd>customer@partner.com</dd>
+        <dt>Subject:</dt><dd>Quarterly invoice</dd>
+        <dt>Headers:</dt><dd class="dim">(no disclaimer)</dd>
+      </dl>
+      <div class="att">
+        <span class="ic"><Icon name="paperclip" size={16} /></span>
+        <div><strong>invoice.exe</strong><span>application/x-msdownload · 1.2&nbsp;MB</span></div>
+      </div>
+    </div>
+    <div class="filter">
+      <span class="arrow"><Icon name="arrow-right" size={16} /></span>
+      <span class="fpill"><Icon name="filter" size={14} />filter</span>
+      <span class="arrow"><Icon name="arrow-right" size={16} /></span>
+    </div>
+    <div class="card is-after">
+      <span class="tag">After</span>
+      <dl>
+        <dt>From:</dt><dd><mark>alice@new.example.com</mark></dd>
+        <dt>To:</dt><dd>customer@partner.com</dd>
+        <dt>Subject:</dt><dd>Quarterly invoice</dd>
+        <dt>Headers:</dt><dd><mark>+ X-Disclaimer</mark></dd>
+      </dl>
+      <div class="att is-stripped">
+        <span class="ic"><Icon name="file-x" size={16} /></span>
+        <div><strong><s>invoice.exe</s></strong><span>stripped (executable)</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .dg {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 100%;
+    container-type: inline-size;
+  }
+  .flow {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+    gap: 10px;
+  }
+  .card {
+    display: grid;
+    gap: 14px;
+    align-self: stretch;
+    padding: 18px;
+    border-radius: var(--r-lg);
+    background: var(--tile);
+    box-shadow: var(--shadow-tile);
+  }
+  .tag {
+    justify-self: start;
+    padding: 3px 10px;
+    border-radius: var(--r-pill);
+    background: var(--sand);
+    color: var(--muted);
+    font-family: var(--font-display);
+    font-size: var(--fs-xs);
+    font-weight: 650;
+  }
+  .is-after .tag {
+    background: var(--brand);
+    color: #fff;
+  }
+  dl {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 7px 10px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    line-height: 1.5;
+  }
+  dt {
+    color: var(--dim);
+  }
+  dd {
+    margin: 0;
+    color: var(--text);
+    overflow-wrap: anywhere;
+  }
+  .dim {
+    color: var(--muted);
+  }
+  mark {
+    padding: 1px 6px;
+    margin-left: -6px;
+    border-radius: 6px;
+    background: var(--rose);
+    color: var(--brand-text);
+    font-weight: 600;
+  }
+  .att {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 14px;
+    background: var(--sand);
+  }
+  .att div {
+    display: grid;
+    min-width: 0;
+  }
+  .att strong {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: 600;
+  }
+  .att span:not(.ic) {
+    color: var(--muted);
+    font-size: 0.6875rem;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+  }
+  .ic {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    background: var(--tile);
+    color: var(--muted);
+  }
+  .is-stripped {
+    background: var(--rose);
+  }
+  .is-stripped .ic {
+    background: var(--brand);
+    color: #fff;
+  }
+  .is-stripped strong {
+    color: var(--muted);
+  }
+  .is-stripped s {
+    text-decoration-color: var(--brand);
+    text-decoration-thickness: 2px;
+  }
+  .is-stripped span:not(.ic) {
+    color: var(--brand-text);
+    font-weight: 600;
+  }
+  .filter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  .filter .arrow:first-child {
+    display: none;
+  }
+  .arrow {
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--tile);
+    color: var(--brand-text);
+    box-shadow: var(--shadow-tile);
+  }
+  .fpill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: var(--r-pill);
+    background: var(--ink);
+    color: var(--on-ink);
+    box-shadow: inset 0 0 0 1px var(--ink-edge);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+  @container (max-width: 600px) {
+    .flow {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .filter {
+      flex-direction: row;
+      justify-content: center;
+    }
+    .filter .arrow:first-child {
+      display: grid;
+    }
+    .arrow {
+      transform: rotate(90deg);
+    }
+  }
+</style>

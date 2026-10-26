@@ -1,0 +1,92 @@
+# Cloudflare Pages redirects (https://developers.cloudflare.com/pages/configuration/redirects/)
+# Format: <source> <destination> <status>
+# 301 = permanent (default), 302 = temporary, 200 = rewrite (no client redirect).
+
+# Docusaurus auto-generated category pages -> canonical landing pages.
+/docs/category/installation              /docs/install/                  301
+/docs/category/sender-authentication     /docs/mta/authentication/       301
+/docs/category/development               /docs/development/              301
+/docs/category/server-settings           /docs/server/                   301
+
+# /docs root and the long-published /docs/install/get-started URL both
+# now point at the renamed install landing page (Welcome to Stalwart).
+/docs                                    /docs/install/                  301
+/docs/install/get-started                /docs/install/                  301
+
+# Section overview pages were renamed to index.md; redirect old URLs.
+/docs/storage/overview                   /docs/storage/                  301
+/docs/auth/overview                      /docs/auth/                     301
+/docs/encryption/overview                /docs/encryption/               301
+/docs/mta/overview                       /docs/mta/                      301
+/docs/email/overview                     /docs/email/                    301
+/docs/collaboration/overview             /docs/collaboration/            301
+/docs/spamfilter/overview                /docs/spamfilter/               301
+/docs/sieve/overview                     /docs/sieve/                    301
+/docs/cluster/overview                   /docs/cluster/                  301
+/docs/telemetry/overview                 /docs/telemetry/                301
+/docs/management/overview                /docs/management/               301
+/docs/configuration/overview             /docs/configuration/            301
+/docs/server/overview                    /docs/server/                   301
+/docs/development/overview               /docs/development/              301
+
+# Tasks & Actions moved under their own subdirectory.
+/docs/management/tasks                    /docs/management/tasks-actions/tasks     301
+/docs/management/actions                  /docs/management/tasks-actions/actions   301
+
+# Applications moved under Management.
+/docs/applications                        /docs/management/applications/           301
+/docs/applications/update                 /docs/management/applications/update     301
+
+# Wildcard fallback: any nested `/docs/.../overview` path now lives at
+# `/docs/.../`. Cloudflare splat matching keeps anchors and query strings.
+/docs/*/overview                         /docs/:splat/                   301
+/docs/*/overview/                        /docs/:splat/                   301
+
+# Old blog post URL shape (/blog/<slug>) is unchanged; no redirect needed.
+
+# v1.0 documentation reorganisation: moved, merged and removed pages.
+/docs/install/performance                            /docs/performance/                                        301
+/docs/server/cache                                   /docs/performance/caching                                 301
+/docs/spamfilter/llm                                 /docs/spamfilter/ai/                                      301
+/docs/auth/principals                                /docs/auth/accounts/                                      301
+/docs/auth/principals/individual                     /docs/auth/accounts/user                                  301
+/docs/auth/principals/group                          /docs/auth/accounts/group                                 301
+/docs/auth/oauth/oauth-client                        /docs/auth/oauth/clients                                  301
+/docs/auth/oauth/client-registration                 /docs/auth/oauth/register-client                          301
+/docs/auth/oauth/flows                               /docs/auth/oauth/authorization                            301
+/docs/auth/oauth/interoperability                    /docs/auth/oauth/mail-clients                             301
+/docs/auth/openid                                    /docs/auth/oauth/openid-connect                           301
+/docs/auth/openid/provider                           /docs/auth/oauth/openid-connect#signing                  301
+/docs/auth/openid/id-tokens                          /docs/auth/oauth/openid-connect#id-tokens                 301
+/docs/auth/openid/endpoints                          /docs/auth/oauth/endpoints                                301
+/docs/http/security                                  /docs/http/settings#security                              301
+/docs/http/ratelimit                                 /docs/http/settings#rate-limiting                         301
+/docs/development/api                                /docs/http/api                                            301
+/docs/mta/filter/spam                                /docs/mta/filter/                                         301
+/docs/mta/filter/sieve                               /docs/mta/filter/                                         301
+/docs/mta/outbound                                   /docs/mta/outbound/strategy                               301
+/docs/sieve/interpreter                              /docs/sieve/#two-interpreters                             301
+/docs/sieve/jmap                                     /docs/sieve/user-scripts#jmap-for-sieve                   301
+/docs/sieve/managesieve                              /docs/sieve/user-scripts#managesieve                      301
+/docs/spamfilter/dmarc                               /docs/spamfilter/settings/scores#authentication-tags      301
+/docs/spamfilter/settings/domain_lists               /docs/spamfilter/settings/domain-lists                    301
+/docs/spamfilter/settings/mime_types                 /docs/spamfilter/settings/mime-types                      301
+/docs/storage/backends/composite/sharded-blob        /docs/storage/backends/composite#sharded-blob-store       301
+/docs/storage/backends/composite/sharded-in-memory   /docs/storage/backends/composite#sharded-in-memory-store  301
+/docs/storage/backends/composite/sql-replica         /docs/storage/backends/composite#sql-read-replicas        301
+/docs/storage/lookup                                 /docs/configuration/expressions/lookup/                   301
+/docs/storage/lookup/local                           /docs/configuration/expressions/lookup/local              301
+/docs/storage/lookup/remote                          /docs/configuration/expressions/lookup/remote             301
+/docs/cluster/deployment/topology                    /docs/cluster/configuration/roles#planning-node-roles     301
+/docs/cluster/orchestration/apache-mesos             /docs/cluster/orchestration/                              301
+/docs/telemetry/tracing/console                      /docs/telemetry/tracing/tracers#console                   301
+/docs/telemetry/tracing/log                          /docs/telemetry/tracing/tracers#log-file                  301
+/docs/telemetry/tracing/journal                      /docs/telemetry/tracing/tracers#journal                   301
+/docs/migration/guide/configure-source/stalwart-old  /docs/migration/guide/configure-source/previous-stalwart      301
+/docs/migration/proxy/examples/stalwart-upgrade      /docs/migration/proxy/examples/stalwart                   301
+/docs/migration/proxy/examples                       /docs/migration/proxy/#examples                           301
+/docs/migration/proxy/mappings/file                  /docs/migration/proxy/mappings/#file-source               301
+/docs/migration/proxy/mappings/redis                 /docs/migration/proxy/mappings/#redis-source              301
+/docs/migration/proxy/mappings/sql                   /docs/migration/proxy/mappings/#sql-source                301
+/docs/migration/proxy/routing/pop3                   /docs/migration/proxy/routing/imap#pop3                   301
+/docs/migration/proxy/routing/managesieve            /docs/migration/proxy/routing/imap#managesieve            301

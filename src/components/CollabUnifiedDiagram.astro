@@ -1,0 +1,109 @@
+---
+import Icon from "./Icon.astro";
+
+const cells = [
+  { icon: "mail", name: "Mail", sub: "JMAP · IMAP · POP3" },
+  { icon: "calendar", name: "Calendar", sub: "CalDAV · JMAP for Calendars" },
+  { icon: "contact", name: "Contacts", sub: "CardDAV · JMAP for Contacts" },
+  { icon: "folder", name: "Files", sub: "WebDAV · JMAP for Files" },
+];
+---
+<div class="dg" role="img" aria-label="One identity, alice@example.com, reaching mail over JMAP, IMAP and POP3, calendars over CalDAV and JMAP for Calendars, contacts over CardDAV and JMAP for Contacts, and files over WebDAV and JMAP for Files">
+  <span class="dg-caption">One identity, every collaboration surface</span>
+  <div class="identity">
+    <span class="avatar">A</span>
+    <div><strong>alice@example.com</strong><span>one identity</span></div>
+  </div>
+  <div class="grid">
+    {cells.map((c) => (
+      <div class="cell">
+        <span class="ic"><Icon name={c.icon} size={18} /></span>
+        <strong>{c.name}</strong>
+        <span>{c.sub}</span>
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+  .dg {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 100%;
+    container-type: inline-size;
+  }
+  strong {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 680;
+    line-height: 1.3;
+  }
+  .identity {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 18px;
+    border-radius: var(--r-lg);
+    background: var(--ink);
+    color: var(--on-ink);
+    box-shadow: inset 0 0 0 1px var(--ink-edge);
+  }
+  .identity div {
+    display: grid;
+    min-width: 0;
+  }
+  .identity strong {
+    overflow-wrap: anywhere;
+  }
+  .identity span:not(.avatar) {
+    color: var(--on-ink-muted);
+    font-size: var(--fs-xs);
+  }
+  .avatar {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--brand);
+    color: #fff;
+    font-family: var(--font-display);
+    font-weight: 700;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .cell {
+    display: grid;
+    align-content: start;
+    gap: 4px;
+    padding: 16px;
+    border-radius: var(--r-lg);
+    background: var(--tile);
+    box-shadow: var(--shadow-tile);
+  }
+  .cell > span:not(.ic) {
+    color: var(--muted);
+    font-size: var(--fs-xs);
+    line-height: 1.45;
+  }
+  .ic {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    margin-bottom: 8px;
+    border-radius: 12px;
+    background: var(--rose);
+    color: var(--brand-text);
+  }
+  @container (max-width: 300px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

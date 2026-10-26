@@ -1,0 +1,76 @@
+---
+title: "Vandelay: the JMAP importer-exporter"
+description: "Many Stalwart users are stuck on older versions because they cannot afford the downtime an upgrade and schema migration would cost. Today we ship the first piece of our zero-downtime migration story: Vandelay, a JMAP migration and backup CLI that also imports from IMAP, CalDAV, CardDAV, WebDAV, ManageSieve, Maildir, Google Takeout, and Microsoft Exchange."
+authors: [mdecimus]
+tags: [vandelay, migration, backup, jmap, imap, caldav, carddav, exchange, server]
+excerpt: |
+  Many Stalwart deployments are running an older version not because the operators want to, but because upgrading across a major release can mean migrating off an older database schema, and that means downtime. We promised a zero-downtime migration path built from two parts, a proxy and a transfer tool, and the question we hear most is when it will arrive. Today we are shipping the first part: [Vandelay](https://github.com/stalwartlabs/vandelay/), a one-shot account migration and backup utility for JMAP that also imports from IMAP, CalDAV, CardDAV, WebDAV, ManageSieve, Maildir, Google Takeout, and (experimentally) Microsoft Exchange.
+date: 2026-05-29
+---
+
+A good number of Stalwart deployments are running an older version not because the operators want to be, but because they cannot afford the disruption. Upgrading across a major release sometimes means migrating off an older on-disk schema, and migrating data means downtime, and downtime on a mail server is the one thing nobody wants to schedule. So the upgrade gets postponed, again, and a deployment that should be on the current line stays where it is. The question we get asked most often is when we will ship something to fix exactly this.
+
+We have said before that the right answer is a zero-downtime migration path, built from two parts: a proxy that sits in front of both the old and the new server so that clients keep working throughout, and a transfer tool that moves account data from one to the other. Today we are shipping the first of those two parts.
+
+It is called [Vandelay](https://github.com/stalwartlabs/vandelay/), and it is a one-shot account migration and backup utility for JMAP. Yes, it is named after Art Vandelay, the importer-exporter George Costanza made up as a cover story on Seinfeld. The tool imports and it exports, so the reference wrote itself.
+
+### What Vandelay does
+
+Vandelay is the JMAP analogue of [imapsync](https://github.com/imapsync/imapsync), generalized from mail to every JMAP data type: mail, contacts, calendars, identities, sieve scripts, and file storage. It works in two stages that never talk to each other directly. An import reads a source account into a local SQLite file that Vandelay calls an *archive*; one archive holds exactly one account and fully describes it on its own. An export then pushes an archive into a target JMAP server. Because import and export only ever touch the archive, never each other, the two halves are completely decoupled: you can import today and export next week, import from one protocol and export to JMAP, or keep the archive around and do nothing with it at all.
+
+A few properties make it pleasant to operate at scale. Both halves are convergent, so re-running an interrupted import or export simply picks up where it left off, with no bookkeeping flags to reset and no half-finished state to clean up; re-running an import later also catches anything new since the last snapshot. Every command takes `--dry-run`, which computes the full plan without writing anything, so you can see exactly what a run would do before it does it. Emails, sieve scripts, and file payloads are content-addressed, stored once by their hash and deduplicated across the archive. Work runs multi-threaded across a worker pool sized to your CPUs, with per-server connection caps respected automatically and no async runtime involved. And each archive remembers which account filled it, so pointing it at a different one by mistake fails unless you explicitly allow it.
+
+A typical migration is two commands:
+
+```sh
+# 1. Import an IMAP mailbox into a fresh archive.
+export VANDELAY_PASSWORD='source-app-password'
+vandelay import imap \
+  --url imaps://imap.example.com \
+  --auth-basic alice@example.com \
+  alice.sqlite
+
+# 2. Push the archive into a target JMAP server.
+export VANDELAY_PASSWORD='target-password'
+vandelay export \
+  --url https://jmap.example.org \
+  --auth-basic alice@example.org \
+  --account-name alice@example.org \
+  alice.sqlite
+```
+
+There is also an `inspect` command that dumps any object type from an archive (mailbox tree, message list, contacts, calendar events, and so on) without ever opening a network connection, which is handy for verifying a capture before you push it anywhere.
+
+### Account backup tool
+
+Migrating between Stalwart versions over JMAP is what prompted Vandelay, but it is far from all it does. The first thing that falls out of the design is backup. Because an archive is a self-contained SQLite file that fully describes one account, you can treat it as a per-account backup in its own right. Run an import on a schedule to capture a fresh snapshot, keep the resulting file, and restore it later by running an export against any JMAP target. Since imports are convergent, each scheduled run only has to fetch what changed rather than re-reading the whole account every time.
+
+### Migrating from legacy servers and formats
+
+Vandelay reads from a wide range of sources, not just JMAP, which makes it a practical way off an older self-hosted stack. Over IMAP it imports mail from any server, with folder selection by regex, exact name, or SPECIAL-USE role. Over CalDAV and CardDAV it imports calendars and events, address books and contacts, and over WebDAV it imports a file collection as a JMAP `FileNode` tree. ManageSieve brings across sieve scripts and records which one is active. It can also read a local Maildir++ tree straight off disk, with no network involved at all.
+
+In practice this means Vandelay is a path off Dovecot, Cyrus, Radicale, Baikal, Apache `mod_dav`, and similar servers, and onto a JMAP server such as Stalwart, with mail, calendars, contacts, files, and filters all moving through the same tool.
+
+### Moving off Google and Microsoft Exchange
+
+For accounts that live on a proprietary platform, Vandelay can pull data out of the two big ones. Google data exported through Takeout imports directly: Vandelay scans a directory tree for `.mbox`, `.ics`, and `.vcf` files and brings in the mail, calendars, and contacts it finds. It is tuned to the Takeout layout but works on any such tree.
+
+For Microsoft Exchange, Vandelay can read mailboxes two ways. Over EWS it works against either on-premises Exchange Server or Exchange Online, with autodiscover, Basic auth, pre-acquired bearer tokens, interactive device-code OAuth, and app-only client-credentials OAuth. Over Microsoft Graph it reads Exchange Online mailboxes, using the interactive device-code flow by default.
+
+One clear caveat: Exchange support is experimental. So far it has only been tested against a mock server, not a real Exchange deployment. The code paths are there and they pass against the mock, but Exchange is a large and quirky target, and we would not feel right calling this production-ready until it has met real mailboxes. If you have an Exchange tenant or an on-prem server and some appetite for testing, this is exactly the kind of help that moves a feature from experimental to supported. Please [open an issue](https://github.com/stalwartlabs/vandelay/) with what you find.
+
+### Sovereignty over your data
+
+There is a bigger reason we built the importers as broadly as we did, and it is not only about Stalwart upgrades.
+
+A lot of email, calendar, and contact data lives today on platforms where the operator, not the user, holds the keys. Getting your own data out of Google or Microsoft in a form you can actually use somewhere else is harder than it should be, and that friction is not accidental. It is what keeps people on a platform long after the reasons for choosing it have faded.
+
+Owning your data means being able to leave. Vandelay is meant to make leaving straightforward: pull a full account out of a proprietary platform, hold it in an open, inspectable SQLite file that you control, and push it into a modern open-source JMAP server that you run yourself. No lock-in on the way in, and an open format in the middle that you can read with `sqlite3` if you ever want to. Self-hosting is the part of the privacy conversation that is easy to agree with and hard to act on, and a migration tool that actually works is one of the things that makes acting on it realistic.
+
+### What is next
+
+Vandelay is the first installment, not the whole story. The zero-downtime migration path we described still needs its second half, the migration proxy that lets clients keep talking to a single endpoint while accounts move from the old server to the new one behind it. That work is underway now, and we expect to release it in about two to three weeks.
+
+When the proxy ships, we will also publish proper documentation covering the full migration workflow end to end, including how to use Vandelay as part of it. For now, the [README](https://github.com/stalwartlabs/vandelay/) is the documentation, and it covers every importer, every flag, and the quick-start path in detail.
+
+If you have been putting off an upgrade, or you have data sitting on a platform you would rather not be on, [Vandelay](https://github.com/stalwartlabs/vandelay/) is ready to try today. We would love to hear how it goes, and if you can help us test the Exchange importers against the real thing, even better.

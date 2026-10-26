@@ -1,0 +1,14 @@
+---
+title: "Installation"
+description: "Step-by-step installation of Stalwart with the installation script on Linux, macOS and FreeBSD, with the container image, or as a Windows service."
+---
+
+import { LinkCard, CardGrid } from '@astrojs/starlight/components';
+
+Each page in this group is a complete tutorial for one platform. It installs the server, runs the setup wizard, publishes the DNS records, creates a user account and ends with a test message sent to and received from another provider. The steps after the installation are the same on every platform.
+
+<CardGrid>
+<LinkCard title="Linux, macOS and FreeBSD" description="Installation script with a systemd, SysV init, launchd or rc.d service." href="/docs/install/platform/linux" />
+<LinkCard title="Docker" description="Container image for Docker, Docker Compose and other OCI runtimes." href="/docs/install/platform/docker" />
+<LinkCard title="Windows" description="Binary run as a service under NSSM." href="/docs/install/platform/windows" />
+</CardGrid>

@@ -1,0 +1,223 @@
+---
+import Icon from "../Icon.astro";
+import { inlineMd, paragraphMd } from "../../lib/md";
+
+interface Props {
+  data: any;
+}
+const { data } = Astro.props;
+const bullets: string[] = data.bullets ?? [];
+const learnMore: any[] = data.learnMore ?? [];
+const tray = data.band === "alt";
+const headingId = `l-${data.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}`;
+const isLead = (b: string) => /^\*\*[^*]+\*\*/.test(b);
+const leads = bullets.filter(isLead);
+const notes = bullets.filter((b) => !isLead(b));
+const steps = leads.length >= 3 && notes.length <= 1;
+const stepSpan = (i: number, n: number) => {
+  if (n === 4) return "s-3";
+  if (n % 3 === 1 && i >= n - 4) return "s-3";
+  if (n % 3 === 2 && i >= n - 2) return "s-3";
+  return "s-2";
+};
+const maxLen = Math.max(0, ...bullets.map((b) => b.length));
+const cols = bullets.length >= 5 && maxLen <= 110;
+---
+<section class="wrap section" aria-labelledby={headingId}>
+  <div class:list={[{ tray }]}>
+    {steps ? (
+      <>
+        <div class:list={["section-head reveal", { "tray-head": tray }]}>
+          {data.eyebrow && <span class="pill">{data.eyebrow}</span>}
+          <h2 id={headingId} class="h2" set:html={inlineMd(data.title)}></h2>
+          {data.body && <div class="section-body" set:html={paragraphMd(data.body)}></div>}
+          {learnMore.length > 0 && (
+            <p class="more">
+              {learnMore.map((cta: any) => (
+                <a
+                  class="text-link"
+                  href={cta.href}
+                  {...(cta.external ? { target: "_blank", rel: "noopener" } : {})}
+                >{cta.label}<Icon name={cta.external ? "arrow-up-right" : "arrow-right"} size={16} /></a>
+              ))}
+            </p>
+          )}
+        </div>
+        <ul class="bento steps">
+          {leads.map((b, i) => (
+            <li class:list={["tile step reveal", stepSpan(i, leads.length)]}>
+              <span class="step-dot" aria-hidden="true"></span>
+              <p set:html={inlineMd(b)}></p>
+            </li>
+          ))}
+        </ul>
+        {notes.map((n) => (
+          <p class="list-note reveal">
+            <Icon name="info" size={18} />
+            <span set:html={inlineMd(n)}></span>
+          </p>
+        ))}
+      </>
+    ) : (
+      <div class="bento list-split">
+        <div class:list={["list-head reveal", { "tray-head": tray }]}>
+          {data.eyebrow && <span class="pill">{data.eyebrow}</span>}
+          <h2 id={headingId} class="h2 h2--feature" set:html={inlineMd(data.title)}></h2>
+          {data.body && <div class="section-body" set:html={paragraphMd(data.body)}></div>}
+          {learnMore.length > 0 && (
+            <p class="more">
+              {learnMore.map((cta: any) => (
+                <a
+                  class="text-link"
+                  href={cta.href}
+                  {...(cta.external ? { target: "_blank", rel: "noopener" } : {})}
+                >{cta.label}<Icon name={cta.external ? "arrow-up-right" : "arrow-right"} size={16} /></a>
+              ))}
+            </p>
+          )}
+        </div>
+        <div class="tile tile--sand list-tile reveal">
+          <ul class:list={["checks", { "checks--cols": cols }]}>
+            {bullets.map((b) => (
+              <li><span class="tick"><Icon name="check" size={13} /></span><span set:html={inlineMd(b)}></span></li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  .more {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 24px;
+  }
+  .section-head.tray-head {
+    margin-bottom: 0;
+  }
+  .steps {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+  .step {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: clamp(22px, 2.6vw, 32px);
+  }
+  .s-2 {
+    grid-column: span 2;
+  }
+  .s-3 {
+    grid-column: span 3;
+  }
+  .step p {
+    color: var(--muted);
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+  .step p :global(strong) {
+    color: var(--text);
+    font-family: var(--font-display);
+    font-weight: 680;
+    letter-spacing: -0.01em;
+  }
+  .step-dot {
+    flex: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin: 6px;
+    background: var(--brand);
+    box-shadow: 0 0 0 6px var(--rose);
+  }
+  .tile--rose .step-dot,
+  .tile--sand .step-dot {
+    box-shadow: 0 0 0 6px var(--tile);
+  }
+  .step p :global(a),
+  .list-tile :global(a),
+  .list-note :global(a) {
+    color: var(--brand-text);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+  .list-note {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    margin-top: var(--gap);
+    padding: 18px clamp(20px, 2.6vw, 32px);
+    border-radius: var(--r-xl);
+    background: var(--rose);
+    color: var(--text);
+    font-size: var(--fs-sm);
+    line-height: 1.55;
+  }
+  .list-note :global(.i) {
+    flex: none;
+    margin-top: 2px;
+    color: var(--brand-text);
+  }
+
+  .list-head {
+    grid-column: 1 / span 5;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-self: start;
+  }
+  .list-head:not(.tray-head) {
+    padding-top: clamp(8px, 1.4vw, 20px);
+    padding-right: clamp(0px, 2vw, 24px);
+  }
+  .list-head.tray-head {
+    padding-bottom: clamp(8px, 1.4vw, 20px);
+  }
+  .list-tile {
+    grid-column: 6 / span 7;
+    display: grid;
+    align-content: center;
+    padding: clamp(24px, 3vw, 40px);
+  }
+
+  @media (max-width: 1199px) {
+    .list-head,
+    .list-tile {
+      grid-column: 1 / -1;
+    }
+    .list-head {
+      max-width: 760px;
+    }
+    .list-head:not(.tray-head) {
+      padding: 0 0 clamp(4px, 1vw, 12px);
+    }
+  }
+  @media (max-width: 1023px) {
+    .steps {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .step.s-2,
+    .step.s-3 {
+      grid-column: span 1;
+    }
+    .steps:has(.step:nth-child(odd):last-child) .step:last-child {
+      grid-column: 1 / -1;
+    }
+  }
+  @media (max-width: 760px) {
+    .steps .step:nth-child(n) {
+      grid-column: 1 / -1;
+    }
+    .step {
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .step-dot {
+      margin: 6px 6px 0;
+    }
+  }
+</style>

@@ -1,0 +1,218 @@
+---
+import Icon from "./Icon.astro";
+
+const probes = [
+  { host: "autoconfig.example.com", sub: "Mozilla autoconfig" },
+  { host: "autoconfig-v1.1", sub: "UA Autoconfig (modern)", brand: true },
+  { host: "autodiscover.example.com", sub: "Microsoft Autodiscover v1+v2" },
+];
+---
+<div class="dg" role="img" aria-label="Account autoconfiguration: a client's Add account form for alice@example.com probes autoconfig.example.com (Mozilla autoconfig), autoconfig-v1.1 (UA Autoconfig) and autodiscover.example.com (Microsoft Autodiscover v1 and v2), and gets back IMAP, SMTP, CalDAV and CardDAV settings for example.com.">
+  <span class="dg-caption">Three probes, one good answer</span>
+  <div class="flow">
+    <div class="phone">
+      <strong class="title">Add account</strong>
+      <span class="lbl">Email</span>
+      <span class="input is-set">alice@example.com<Icon name="check" size={13} /></span>
+      <span class="lbl">Password</span>
+      <span class="input dots">••••••••••</span>
+      <span class="cta">Continue</span>
+      <span class="found"><Icon name="circle-check" size={14} />Settings found for example.com</span>
+    </div>
+    <ul class="probes">
+      {probes.map((p) => (
+        <li class:list={{ "is-brand": p.brand }}>
+          <span class="arrow"><Icon name="arrow-right" size={14} /></span>
+          <div class="target">
+            <code>{p.host}</code>
+            <span>{p.sub}</span>
+          </div>
+        </li>
+      ))}
+    </ul>
+    <div class="answer">
+      <Icon name="corner-down-left" size={15} />
+      <span>IMAP · SMTP · CalDAV · CardDAV settings</span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .dg {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 100%;
+    container-type: inline-size;
+  }
+  .flow {
+    display: grid;
+    grid-template-columns: minmax(170px, 0.8fr) minmax(0, 1.4fr);
+    grid-template-areas: "phone probes" "phone answer";
+    gap: 14px 18px;
+    align-items: center;
+  }
+  .phone {
+    grid-area: phone;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 22px 16px 18px;
+    border-radius: 28px;
+    background: var(--tile);
+    box-shadow: var(--shadow-lift), inset 0 0 0 5px var(--sand);
+  }
+  .title {
+    margin-bottom: 8px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--hairline);
+    font-family: var(--font-display);
+    font-size: 0.9375rem;
+    font-weight: 700;
+    text-align: center;
+  }
+  .lbl {
+    margin-top: 4px;
+    color: var(--dim);
+    font-size: 0.6875rem;
+    font-weight: 600;
+  }
+  .input {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    min-height: 30px;
+    padding: 5px 10px;
+    border-radius: 10px;
+    background: var(--sand);
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    overflow-wrap: anywhere;
+  }
+  .is-set {
+    box-shadow: inset 0 0 0 1.5px var(--brand);
+    background: var(--rose);
+  }
+  .is-set :global(svg) {
+    flex: none;
+    color: var(--brand-text);
+  }
+  .dots {
+    color: var(--dim);
+    letter-spacing: 0.1em;
+  }
+  .cta {
+    margin-top: 10px;
+    padding: 7px;
+    border-radius: var(--r-pill);
+    background: var(--brand);
+    color: #fff;
+    font-family: var(--font-display);
+    font-size: var(--fs-xs);
+    font-weight: 650;
+    text-align: center;
+  }
+  .found {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 6px;
+    color: var(--brand-text);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-align: center;
+  }
+  .found :global(svg) {
+    flex: none;
+  }
+  .probes {
+    grid-area: probes;
+    display: grid;
+    gap: 10px;
+    padding: 0;
+  }
+  .probes li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .arrow {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--tile);
+    color: var(--brand-text);
+    box-shadow: var(--shadow-tile);
+  }
+  .target {
+    display: grid;
+    gap: 2px;
+    flex: 1;
+    min-width: 0;
+    padding: 12px 14px;
+    border-radius: var(--r-lg);
+    background: var(--tile);
+    box-shadow: var(--shadow-tile);
+  }
+  .target code {
+    padding: 0;
+    background: none;
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+  }
+  .target span {
+    color: var(--muted);
+    font-size: var(--fs-xs);
+    line-height: 1.4;
+  }
+  .is-brand .target {
+    background: var(--rose);
+    box-shadow: none;
+  }
+  .is-brand .target code {
+    color: var(--brand-text);
+  }
+  .is-brand .arrow {
+    background: var(--brand);
+    color: #fff;
+  }
+  .answer {
+    grid-area: answer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    border-radius: var(--r-pill);
+    background: var(--ink);
+    color: var(--on-ink);
+    box-shadow: inset 0 0 0 1px var(--ink-edge);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+  }
+  .answer :global(svg) {
+    flex: none;
+    color: var(--brand-on-ink);
+  }
+  @container (max-width: 520px) {
+    .flow {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-areas: "phone" "probes" "answer";
+    }
+    .phone {
+      justify-self: center;
+      width: min(100%, 250px);
+    }
+    .answer {
+      border-radius: var(--r-lg);
+    }
+  }
+</style>

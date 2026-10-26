@@ -1,0 +1,212 @@
+---
+const rows = [
+  { axis: "IP", id: "203.0.113.42", pos: 83, score: "+2.4", verdict: "spam", tone: "spam" },
+  { axis: "ASN", id: "AS15169 (Google)", pos: 17, score: "-3.1", verdict: "ham", tone: "ham" },
+  { axis: "domain", id: "marketing.acme.example", pos: 58, score: "+0.4", verdict: "neutral", tone: "neutral" },
+  { axis: "email", id: "no-reply@acme.example", pos: 30, score: "-1.8", verdict: "ham", tone: "ham" },
+  { axis: "greylist", id: "198.51.100.7", pos: 50, score: "held", verdict: "hold", tone: "hold" },
+];
+---
+<div class="rep" role="img" aria-label="Sender reputation table. IP 203.0.113.42 scores +2.4, spam. ASN AS15169 (Google) scores -3.1, ham. Domain marketing.acme.example scores +0.4, neutral. Email no-reply@acme.example scores -1.8, ham. Greylisted IP 198.51.100.7 is held.">
+  <span class="dg-caption">Sender reputation</span>
+  <div class="head" aria-hidden="true">
+    <span>Axis</span>
+    <span>Identifier</span>
+    <span class="scale-head"><span>ham</span><span>spam</span></span>
+    <span>Score</span>
+    <span>Verdict</span>
+  </div>
+  <ul class="rows">
+    {rows.map((r) => (
+      <li class:list={["row", `is-${r.tone}`]}>
+        <span class="axis">{r.axis}</span>
+        <span class="id">{r.id}</span>
+        <span class="scale"><span class="mark" style={`--x: ${r.pos}%`}></span></span>
+        <span class="score">{r.score}</span>
+        <span class="verdict">{r.verdict}</span>
+      </li>
+    ))}
+  </ul>
+</div>
+
+<style>
+  .rep {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    container-type: inline-size;
+  }
+
+  .rep > .dg-caption {
+    margin-bottom: 4px;
+  }
+
+  .head,
+  .row {
+    display: grid;
+    grid-template-columns: 4.8rem minmax(0, 1fr) minmax(5.5rem, 7.5rem) 2.9rem 4.6rem;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .head {
+    display: none;
+    padding: 0 14px;
+    font-family: var(--font-display);
+    font-size: 0.6875rem;
+    font-weight: 650;
+    color: var(--dim);
+  }
+
+  .scale-head {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-weight: 500;
+  }
+
+  .rows {
+    display: grid;
+    gap: 6px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .row {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas:
+      "axis id verdict"
+      "scale scale score";
+    row-gap: 10px;
+    padding: 11px 14px;
+    border-radius: 14px;
+    background: var(--tile);
+    box-shadow: var(--shadow-tile);
+  }
+
+  .axis {
+    grid-area: axis;
+    justify-self: start;
+    padding: 2px 9px;
+    border-radius: var(--r-pill);
+    background: var(--sand);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--muted);
+  }
+
+  .id {
+    grid-area: id;
+    min-width: 0;
+    overflow-wrap: anywhere;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--text);
+  }
+
+  .scale {
+    grid-area: scale;
+    position: relative;
+    height: 6px;
+    border-radius: var(--r-pill);
+    background: linear-gradient(90deg, var(--sand), var(--sand) 45%, var(--rose-2));
+  }
+
+  .scale::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: -4px;
+    bottom: -4px;
+    width: 1px;
+    background: var(--dim);
+    opacity: 0.5;
+  }
+
+  .mark {
+    position: absolute;
+    left: var(--x);
+    top: 50%;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--text);
+    box-shadow: 0 0 0 2px var(--tile);
+    transform: translate(-50%, -50%);
+  }
+
+  .score {
+    grid-area: score;
+    justify-self: end;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .verdict {
+    grid-area: verdict;
+    justify-self: end;
+    padding: 2px 10px;
+    border-radius: var(--r-pill);
+    background: var(--sand);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    color: var(--muted);
+  }
+
+  .is-spam .mark {
+    background: var(--brand);
+  }
+
+  .is-spam .score {
+    color: var(--brand-text);
+  }
+
+  .is-spam .verdict {
+    background: var(--brand);
+    color: #fff;
+  }
+
+  .is-neutral .mark {
+    background: var(--dim);
+  }
+
+  .is-hold .mark {
+    background: var(--tile);
+    box-shadow: inset 0 0 0 2px var(--dim), 0 0 0 2px var(--tile);
+  }
+
+  .is-hold .score {
+    color: var(--muted);
+  }
+
+  .is-hold .verdict {
+    background: var(--ink);
+    color: var(--on-ink);
+  }
+
+  @container (min-width: 540px) {
+    .head {
+      display: grid;
+    }
+
+    .row {
+      grid-template-columns: 4.8rem minmax(0, 1fr) minmax(5.5rem, 7.5rem) 2.9rem 4.6rem;
+      grid-template-areas: "axis id scale score verdict";
+    }
+
+    .verdict {
+      justify-self: start;
+    }
+
+    .id {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  }
+</style>

@@ -1,0 +1,41 @@
+---
+import Icon from "./Icon.astro";
+---
+<button class="icon-btn theme-toggle" type="button" aria-label="Toggle color theme" data-theme-toggle>
+  <Icon name="sun" class="icon-sun" />
+  <Icon name="moon" class="icon-moon" />
+</button>
+
+<style>
+  .theme-toggle {
+    position: relative;
+  }
+  .theme-toggle :global(.icon-sun),
+  .theme-toggle :global(.icon-moon) {
+    position: absolute;
+    transition: opacity var(--t) var(--ease), transform var(--t) var(--ease);
+  }
+  :global([data-theme="dark"]) .theme-toggle :global(.icon-moon),
+  :global([data-theme="light"]) .theme-toggle :global(.icon-sun) {
+    opacity: 0;
+    transform: rotate(-30deg) scale(0.8);
+  }
+</style>
+
+<script is:inline>
+  (() => {
+    const KEY = "stalwart-theme";
+    const root = document.documentElement;
+    const stored = localStorage.getItem(KEY);
+    const initial = stored || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    root.setAttribute("data-theme", initial);
+
+    document.addEventListener("click", (e) => {
+      const target = e.target instanceof Element ? e.target.closest("[data-theme-toggle]") : null;
+      if (!target) return;
+      const next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+      root.setAttribute("data-theme", next);
+      localStorage.setItem(KEY, next);
+    });
+  })();
+</script>

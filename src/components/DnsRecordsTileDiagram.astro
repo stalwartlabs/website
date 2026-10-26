@@ -1,0 +1,133 @@
+---
+import Icon from "./Icon.astro";
+
+const records = [
+  { n: "@", t: "MX", v: "10 mail.example.com." },
+  { n: "@", t: "TXT", v: '"v=spf1 mx ~all"', tag: "SPF" },
+  { n: "2026e._domainkey", t: "TXT", v: '"v=DKIM1; k=ed25519; p=MCo..."', tag: "DKIM" },
+  { n: "_dmarc", t: "TXT", v: '"v=DMARC1; p=quarantine; rua=..."', tag: "DMARC" },
+  { n: "_25._tcp.mail", t: "TLSA", v: "3 1 1 a3b1...c4f9" },
+  { n: "_mta-sts", t: "TXT", v: '"v=STSv1; id=20260301T000000Z"', tag: "MTA-STS" },
+  { n: "_smtp._tls", t: "TXT", v: '"v=TLSRPTv1; rua=mailto:..."', tag: "TLS-RPT" },
+  { n: "autoconfig", t: "CNAME", v: "mail.example.com.", tag: "autoconfig" },
+];
+---
+<div class="dg" role="img" aria-label="DNS zone for example.com with MX, SPF, DKIM, DMARC, TLSA, MTA-STS, TLS-RPT and autoconfig records managed by Stalwart">
+  <div class="head">
+    <code>$ORIGIN example.com.</code>
+    <span class="mini-chip is-brand"><Icon name="refresh-cw" size={12} />managed by Stalwart</span>
+  </div>
+  <ul class="rows">
+    {records.map((r) => (
+      <li>
+        <code class="n">{r.n}</code>
+        <code class="t">{r.t}</code>
+        <code class="v">{r.v}</code>
+        <span class="tag">{r.tag}</span>
+        <span class="ok"><Icon name="check" size={14} /></span>
+      </li>
+    ))}
+  </ul>
+</div>
+
+<style>
+  .dg {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    container-type: inline-size;
+  }
+  .head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 0 4px 6px;
+  }
+  .dg code {
+    padding: 0;
+    border-radius: 0;
+    background: none;
+    font-family: var(--font-mono);
+  }
+  .head code {
+    color: var(--text);
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+  .rows {
+    display: grid;
+    gap: 6px;
+  }
+  .rows li {
+    display: grid;
+    grid-template-columns: 10.5em 4em minmax(0, 1fr) 6.2em 22px;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 14px;
+    border-radius: 14px;
+    background: var(--tile);
+    box-shadow: var(--shadow-tile);
+    font-size: 0.78rem;
+  }
+  .rows code {
+    overflow: hidden;
+    font-size: inherit;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .n {
+    color: var(--text);
+  }
+  .t {
+    color: var(--brand-text);
+    font-weight: 600;
+  }
+  .v {
+    color: var(--muted);
+  }
+  .tag:not(:empty) {
+    justify-self: start;
+    padding: 2px 9px;
+    border-radius: var(--r-pill);
+    background: var(--sand);
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+  }
+  .ok {
+    display: grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--rose);
+    color: var(--brand-text);
+  }
+  @container (max-width: 560px) {
+    .rows li {
+      grid-template-columns: auto minmax(0, 1fr) 22px;
+      grid-template-areas: "n n ok" "t tag ok" "v v ok";
+      gap: 4px 10px;
+    }
+    .n {
+      grid-area: n;
+    }
+    .t {
+      grid-area: t;
+    }
+    .tag {
+      grid-area: tag;
+    }
+    .rows .v {
+      grid-area: v;
+      overflow-wrap: anywhere;
+      white-space: normal;
+    }
+    .ok {
+      grid-area: ok;
+    }
+  }
+</style>

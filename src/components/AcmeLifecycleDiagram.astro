@@ -1,0 +1,163 @@
+---
+import Icon from "./Icon.astro";
+
+const steps = [
+  { label: "Cert issued", sub: "Let's Encrypt / ZeroSSL / ...", brand: true },
+  { label: "60 days...", sub: "cert in service" },
+  { label: "30 days left", sub: "renewal triggered", brand: true },
+  { label: "Renewed", sub: "no manual step", brand: true },
+  { label: "TLSA refresh", sub: "DANE keeps validating", brand: true },
+  { label: "Served", sub: "loop continues" },
+];
+---
+<div class="dg" role="img" aria-label="ACME certificate lifecycle, a loop handled by Stalwart: 1, certificate issued (Let's Encrypt, ZeroSSL and others); 2, 60 days in service; 3, at 30 days left renewal is triggered; 4, renewed with no manual step; 5, TLSA records refreshed so DANE keeps validating; 6, served, and the loop continues.">
+  <span class="dg-caption">Certificate lifecycle, owned by Stalwart</span>
+  <ol class="loop">
+    {steps.map((s, i) => (
+      <li class:list={["step", `s${i + 1}`, { "is-brand": s.brand }]}>
+        <span class="num">{i + 1}</span>
+        <div><strong>{s.label}</strong><span>{s.sub}</span></div>
+        <span class="next"><Icon name="arrow-right" size={14} /></span>
+      </li>
+    ))}
+  </ol>
+  <span class="foot"><Icon name="refresh-cw" size={14} />Stalwart handles every step</span>
+</div>
+
+<style>
+  .dg {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 100%;
+    container-type: inline-size;
+  }
+  .loop {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 34px;
+    padding: 0;
+  }
+  .s1 { grid-area: 1 / 1; --rot: 0deg; }
+  .s2 { grid-area: 1 / 2; --rot: 0deg; }
+  .s3 { grid-area: 1 / 3; --rot: 90deg; }
+  .s4 { grid-area: 2 / 3; --rot: 180deg; }
+  .s5 { grid-area: 2 / 2; --rot: 180deg; }
+  .s6 { grid-area: 2 / 1; --rot: -90deg; }
+  .step {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 16px;
+    border-radius: var(--r-lg);
+    background: var(--tile);
+    box-shadow: var(--shadow-tile);
+  }
+  .step div {
+    display: grid;
+    gap: 2px;
+  }
+  strong {
+    font-family: var(--font-display);
+    font-size: 0.9375rem;
+    font-weight: 680;
+    line-height: 1.3;
+  }
+  .step span:not(.num):not(.next) {
+    color: var(--muted);
+    font-size: var(--fs-xs);
+    line-height: 1.45;
+  }
+  .num {
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--sand);
+    color: var(--text);
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    font-weight: 700;
+  }
+  .is-brand .num {
+    background: var(--brand);
+    color: #fff;
+  }
+  .next {
+    position: absolute;
+    display: grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--tile);
+    color: var(--brand-text);
+    box-shadow: var(--shadow-tile);
+    rotate: var(--rot);
+  }
+  .s1 .next,
+  .s2 .next {
+    top: 50%;
+    right: -30px;
+    margin-top: -13px;
+  }
+  .s3 .next {
+    bottom: -30px;
+    left: 50%;
+    margin-left: -13px;
+  }
+  .s4 .next,
+  .s5 .next {
+    top: 50%;
+    left: -30px;
+    margin-top: -13px;
+  }
+  .s6 .next {
+    top: -30px;
+    left: 50%;
+    margin-left: -13px;
+  }
+  .foot {
+    display: inline-flex;
+    align-self: center;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: var(--r-pill);
+    background: var(--ink);
+    color: var(--on-ink);
+    box-shadow: inset 0 0 0 1px var(--ink-edge);
+    font-family: var(--font-display);
+    font-size: var(--fs-xs);
+    font-weight: 650;
+  }
+  .foot :global(svg) {
+    color: var(--brand-on-ink);
+  }
+  @container (max-width: 500px) {
+    .loop {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 30px;
+    }
+    .step {
+      grid-area: auto;
+      flex-direction: row;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 16px;
+    }
+    .num {
+      flex: none;
+    }
+    .step .next {
+      inset: auto auto -28px 50%;
+      margin: 0 0 0 -13px;
+      rotate: 90deg;
+    }
+    .s6 .next {
+      display: none;
+    }
+  }
+</style>

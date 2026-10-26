@@ -1,0 +1,205 @@
+---
+import Icon from "./Icon.astro";
+
+const ops = [
+  { icon: "user-round-plus", op: "POST /Users", effect: "mailbox exists before the first login" },
+  { icon: "user-round-pen", op: "PATCH /Users/{id}", effect: "display name, aliases and groups updated" },
+  { icon: "pause", op: "PATCH active: false", effect: "delivery stops, mailbox contents kept" },
+  { icon: "trash-2", op: "DELETE /Users/{id}", effect: "account removed" },
+];
+---
+<div class="scim" role="img" aria-label="SCIM 2.0 account lifecycle: an HR system or directory feeds the identity provider (Entra ID, Okta or Keycloak), which calls Stalwart at /scim/v2. POST /Users creates the mailbox before the first login; PATCH /Users/{id} updates display name, aliases and groups; PATCH active: false stops delivery and keeps the mailbox contents; DELETE /Users/{id} removes the account. No credential crosses the interface: authentication stays with the identity provider.">
+  <span class="dg-caption">SCIM 2.0 account lifecycle</span>
+  <div class="flow">
+    <div class="card">
+      <span class="ic"><Icon name="building-2" size={16} /></span>
+      <strong>HR system or directory</strong>
+    </div>
+    <span class="arrow"><Icon name="arrow-right" size={15} /></span>
+    <div class="card">
+      <span class="ic"><Icon name="key-round" size={16} /></span>
+      <strong>Identity provider</strong>
+      <ul class="mini-chips">
+        <li>Entra ID</li>
+        <li>Okta</li>
+        <li>Keycloak</li>
+      </ul>
+    </div>
+    <span class="arrow"><Icon name="arrow-right" size={15} /></span>
+    <div class="card card--brand">
+      <span class="ic"><Icon name="mail" size={16} /></span>
+      <strong>Stalwart</strong>
+      <span class="v">/scim/v2</span>
+    </div>
+  </div>
+  <ol class="ops">
+    {ops.map((o) => (
+      <li>
+        <span class="op"><Icon name={o.icon} size={14} />{o.op}</span>
+        <span class="effect">{o.effect}</span>
+      </li>
+    ))}
+  </ol>
+  <p class="foot"><Icon name="lock" size={14} />No credential crosses the interface: authentication stays with the identity provider.</p>
+</div>
+
+<style>
+  .scim {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    container-type: inline-size;
+  }
+
+  .flow {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+  }
+
+  .card {
+    display: grid;
+    align-content: start;
+    justify-items: start;
+    gap: 4px;
+    padding: 14px;
+    border-radius: var(--r-lg);
+    background: var(--tile);
+    box-shadow: var(--shadow-tile);
+  }
+
+  .card .ic {
+    margin-bottom: 4px;
+  }
+
+  .card .mini-chips {
+    margin-top: 4px;
+  }
+
+  .card--brand {
+    background: var(--rose);
+    box-shadow: none;
+  }
+
+  .card--brand .ic {
+    background: var(--brand);
+    color: #fff;
+  }
+
+  .card--brand strong,
+  .card--brand .v {
+    color: var(--brand-text);
+  }
+
+  .arrow {
+    display: inline-flex;
+    justify-self: center;
+    align-self: center;
+    color: var(--brand-text);
+    transform: rotate(90deg);
+  }
+
+  .ic {
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    flex: none;
+    border-radius: 10px;
+    background: var(--sand);
+    color: var(--text);
+  }
+
+  strong {
+    font-family: var(--font-display);
+    font-size: 0.9375rem;
+    font-weight: 680;
+    line-height: 1.3;
+    color: var(--text);
+  }
+
+  .v {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--muted);
+  }
+
+  .ops {
+    display: grid;
+    gap: 6px;
+    margin: 4px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .ops li {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: center;
+    gap: 6px 14px;
+    padding: 10px 12px;
+    border-radius: 14px;
+    background: var(--tile);
+    box-shadow: var(--shadow-tile);
+  }
+
+  .op {
+    display: inline-flex;
+    align-items: center;
+    justify-self: start;
+    gap: 7px;
+    padding: 4px 11px 4px 9px;
+    border-radius: var(--r-pill);
+    background: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+    color: var(--on-ink);
+  }
+
+  .op :global(svg) {
+    color: var(--brand-on-ink);
+  }
+
+  .effect {
+    font-size: var(--fs-xs);
+    line-height: 1.45;
+    color: var(--muted);
+  }
+
+  .foot {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin: 2px 0 0;
+    padding: 0 4px;
+    font-family: var(--font-display);
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    line-height: 1.45;
+    color: var(--dim);
+  }
+
+  .foot :global(svg) {
+    flex: none;
+    margin-top: 2px;
+    color: var(--brand-text);
+  }
+
+  @container (min-width: 500px) {
+    .flow {
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1.2fr) auto minmax(0, 1fr);
+    }
+
+    .arrow {
+      transform: none;
+    }
+
+    .ops li {
+      grid-template-columns: 11.5rem minmax(0, 1fr);
+    }
+  }
+</style>
