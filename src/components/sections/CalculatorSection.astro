@@ -9,7 +9,11 @@ interface Props {
 const { data, tiers = [] } = Astro.props;
 const threshold = data.premiumSupportThreshold ?? 150;
 const minimum = tiers.length ? tiers[0].lower : 1;
-const sliderMax = 100000;
+const sliderMax = 10000000;
+// The slider moves on a log scale so small and large deployments both get room.
+const sliderSteps = 1000;
+const initial = 500;
+const initialPos = Math.round((Math.log(initial / minimum) / Math.log(sliderMax / minimum)) * sliderSteps);
 const fmt = (n: number) => n.toLocaleString("en-US");
 const headId = `calc-${(data.title ?? "estimate").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}`;
 const alt = data.band === "alt";
@@ -49,12 +53,15 @@ const alt = data.band === "alt";
         <input
           type="range"
           class="range"
-          min={minimum}
-          max={sliderMax}
-          step="25"
-          value="500"
+          min="0"
+          max={sliderSteps}
+          step="1"
+          value={initialPos}
           aria-label="Mailbox count slider"
+          aria-valuetext={`${fmt(initial)} mailboxes`}
           data-calc-slider
+          data-min={String(minimum)}
+          data-max={String(sliderMax)}
         />
         <div class="range-scale" aria-hidden="true"><span>{fmt(minimum)}</span><span>{fmt(sliderMax)}</span></div>
         <p class="calc-min" id="calc-min" data-calc-min>
@@ -113,6 +120,25 @@ const alt = data.band === "alt";
     const range = (t: Tier) => (t.upper === null ? `${fmt(t.lower)}+` : `${fmt(t.lower)} to ${fmt(t.upper)}`);
     const minDefault = minText.textContent ?? "";
 
+    const sliderMin = Number(slider.dataset.min) || minimum;
+    const sliderMax = Number(slider.dataset.max) || 100000;
+    const steps = +slider.max;
+    const span = Math.log(sliderMax / sliderMin);
+    // Two significant digits, so the slider lands on 1,200 rather than 1,187.
+    const nice = (n: number) => {
+      const step = Math.pow(10, Math.max(0, Math.floor(Math.log10(n)) - 1));
+      return Math.round(n / step) * step;
+    };
+    const toCount = (pos: number) => {
+      if (pos <= 0) return sliderMin;
+      if (pos >= steps) return sliderMax;
+      return Math.max(sliderMin, nice(sliderMin * Math.exp((pos / steps) * span)));
+    };
+    const toPos = (count: number) => {
+      const c = Math.min(Math.max(count, sliderMin), sliderMax);
+      return Math.round((Math.log(c / sliderMin) / span) * steps);
+    };
+
     const compute = (count: number) => {
       const parts: { t: Tier; size: number }[] = [];
       let eur = 0;
@@ -168,12 +194,12 @@ const alt = data.band === "alt";
         const need = threshold - count;
         premiumText.textContent = `${fmt(need)} more mailbox${need === 1 ? "" : "es"} for Premium Support`;
       }
+      slider.setAttribute("aria-valuetext", `${fmt(count)} mailboxes`);
       paintSlider();
     };
 
     input.addEventListener("input", () => {
-      const v = Math.floor(Number(input.value) || 0);
-      slider.value = String(Math.min(Math.max(v, +slider.min), +slider.max));
+      slider.value = String(toPos(Math.floor(Number(input.value) || 0)));
       update();
     });
     input.addEventListener("blur", () => {
@@ -183,7 +209,7 @@ const alt = data.band === "alt";
       }
     });
     slider.addEventListener("input", () => {
-      input.value = slider.value;
+      input.value = String(toCount(+slider.value));
       update();
     });
     document.addEventListener("currencychange", (e) => {
