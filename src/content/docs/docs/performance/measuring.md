@@ -14,7 +14,7 @@ Stalwart provides two kinds of signal, which differ in cost and in detail. Metri
 
 The server makes its metrics available in two ways. A [Prometheus](/docs/telemetry/metrics/prometheus) server can scrape them from an endpoint that Stalwart exposes, or Stalwart can push them to an [OpenTelemetry](/docs/telemetry/metrics/opentelemetry) collector. Both exporters are configured on the [Metrics](/docs/ref/object/metrics) singleton, and a change to the exporter settings takes effect after a settings reload (see [Applying a change](/docs/performance/#applying-a-change)).
 
-Prometheus does not allow dots or dashes in metric names, so every dot and dash becomes `_` in the scraped name. The metric `cache.hit`, for example, is scraped as `cache_hit`, and the queries on these pages use the scraped names.
+The exporters publish each metric under a name derived from its identifier, as described in [Exported names](/docs/telemetry/metrics/#exported-names). The counter `cache.hit`, for example, is scraped by Prometheus as `stalwart_cache_hit_total`, and the queries on these pages use the scraped names. The tables on these pages list the identifiers, which are also the names that alerts and the WebUI dashboard use.
 
 The following metrics are the ones the pages in this section refer to. The complete list is on the [Metrics](/docs/ref/metrics) reference page.
 
@@ -106,7 +106,7 @@ Events for the directory and access token caches carry less: only the key and an
 The hit rate is the share of lookups served from memory over a time window. A high rate means that most requests avoid the data store, and a falling rate means that more requests have to build or rebuild cached data. The following Prometheus query computes the overall rate over five minutes:
 
 ```text
-rate(cache_hit[5m]) / (rate(cache_hit[5m]) + rate(cache_miss[5m]) + rate(cache_stale[5m]))
+rate(stalwart_cache_hit_total[5m]) / (rate(stalwart_cache_hit_total[5m]) + rate(stalwart_cache_miss_total[5m]) + rate(stalwart_cache_stale_total[5m]))
 ```
 
 The counters include all account, token and directory caches. A falling rate therefore shows that some cache is missing more often, but not which one, and the events from the dedicated tracer then show which cache and which accounts are involved.

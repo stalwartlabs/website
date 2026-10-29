@@ -201,7 +201,7 @@ Open Telemetry (HTTP)
 
 > Type: <code>Uri</code> · required
 >
-> URL of the OpenTelemetry collector
+> Base URL of the OpenTelemetry collector; /v1/traces and /v1/logs are appended
 
 
 ##### `allowInvalidCerts`
@@ -229,7 +229,7 @@ Open Telemetry (HTTP)
 
 > Type: <code>Duration</code> · default: `1000`
 >
-> The minimum amount of time that must pass between each request to the OpenTelemetry endpoint
+> Maximum amount of time that events are held before they are sent to the OpenTelemetry endpoint
 
 
 ##### `timeout`
@@ -298,7 +298,14 @@ Open Telemetry (gRPC)
 
 > Type: <code>Uri?</code>
 >
-> URL of the OpenTelemetry collector
+> URL of the OpenTelemetry collector, defaults to http://localhost:4317
+
+
+##### `allowInvalidCerts`
+
+> Type: <code>Boolean</code> · default: `false`
+>
+> Whether to allow invalid TLS certificates when connecting to the OpenTelemetry collector
 
 
 ##### `enableLogExporter`
@@ -319,7 +326,7 @@ Open Telemetry (gRPC)
 
 > Type: <code>Duration</code> · default: `1000`
 >
-> The minimum amount of time that must pass between each request to the OpenTelemetry endpoint
+> Maximum amount of time that events are held before they are sent to the OpenTelemetry endpoint
 
 
 ##### `timeout`

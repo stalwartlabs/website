@@ -38,6 +38,8 @@ A tenant sets the most that its members may hold, through its own `roles` and `p
 
 The ceiling is chosen in the same way as an account's permissions. With `roles` set to `Default`, it is the roles in `defaultTenantRoleIds`. `Custom` selects other roles. `permissions` then adjusts the result with the `Inherit`, `Merge` and `Replace` modes.
 
+The `impersonate` permission is the exception: tenant members never receive it, even when their roles, their own permissions or the tenant's settings grant it. Impersonation reaches every account on the server, across tenant boundaries, so it is reserved for the server administrator ([Impersonation](/docs/auth/authorization/administrator#impersonation)). The server also refuses to add `impersonate` to a tenant's `permissions`. A tenant administrator therefore cannot act on another member's account through its `accountId`, for example to create an app password on the member's behalf.
+
 ## Quotas
 
 Account quotas limit each member on its own. A tenant's `quotas` map adds a second limit, on what the tenant may consume in total:

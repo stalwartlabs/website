@@ -4,22 +4,31 @@ description: "The consent screen, verified and unverified applications, and how 
 sidebar_position: 7
 ---
 
-Before an application receives access to an account, the account owner approves the request on a consent screen. Each approval is recorded as a grant, which the owner can review and revoke later.
+The first time an application requests access to an account, the account owner approves the request on a consent screen. Each authorization is recorded as a grant, which the owner can review and revoke later, and which tells the server on later sign-ins that the owner has already approved the application.
 
 Consent and grants serve two different purposes. Consent prevents an application that merely knows the server's address from obtaining tokens silently: a person always decides. The list of grants, shown to users as Connected Applications, is how a user signs an application out of every device it runs on.
 
 ## Consent screen
 
-The consent screen appears at the start of the authorization, before the sign-in form. It is shown for every client except installed web applications such as the WebUI:
+In the authorization code flow, the consent screen follows the sign-in form: the server first verifies the user's password and second factor, and only then decides whether to ask. It asks for every client except installed web applications such as the WebUI:
 
 - Dynamically registered clients
 - Clients identified by a metadata document
 - Clients registered by an administrator
 - OAuthClients marked as first party
 
-The screen appears in the authorization code flow and in the device flow alike. Installed applications skip it, and show their name and logo in the "Sign in to ..." header of the sign-in form instead.
+Installed applications never show the screen. Their name and logo appear in the "Sign in to ..." header of the sign-in form instead.
 
-Consent is not remembered. The screen therefore appears at every authorization, including when an application signs the user in again.
+For the other clients, the screen appears only when the account has not yet authorized the application. The server looks for a grant of the account with the same client id and the same kind of client, used within the refresh token idle timeout ([`refreshTokenExpiry`](/docs/ref/object/oidc-provider#refreshtokenexpiry)), that covers every service the request asks for. When such a grant exists, the server skips the screen and sends the browser straight back to the application. The screen therefore appears in these cases:
+
+- The user signs in to the application for the first time.
+- The application asks for a service that its grant does not include.
+- The grant has ended, for example because the user deleted it in Connected Applications or the application revoked its tokens when it signed out.
+- The authorization request contains `prompt=consent`.
+
+Grants record only the service scopes, so `openid` and `offline_access` play no part in this comparison. A first-party OAuthClient receives full access whatever it requests, so any of its grants counts.
+
+The device flow works differently. Its consent screen comes before the sign-in form and appears at every authorization, because it is also how the user confirms that the code being authorized belongs to the user's own device.
 
 The screen names the application, lists the requested access in plain language, and shows the host to which the browser will be redirected. Each scope is described as follows:
 
@@ -34,7 +43,7 @@ The screen names the application, lists the requested access in plain language, 
 
 A first-party OAuthClient receives the account's full permissions, so the screen shows `Full access to your account` in place of the scope list.
 
-The user then decides. **Allow** continues to the sign-in form. **Deny** redirects the browser to the application with the error `access_denied`.
+The user then decides. **Allow** returns the browser to the application with an authorization code. **Deny** redirects the browser to the application with the error `access_denied`. Both happen after the sign-in, so the server never sends the browser to an application on behalf of someone who has not authenticated.
 
 ## Verified and unverified applications
 
@@ -56,7 +65,7 @@ Each authorization creates one grant, an [OAuthGrant](/docs/ref/object/o-auth-gr
 - The IP address from which access was granted
 - The date of the grant, and the date the application last renewed its access (`lastUsedAt`)
 
-Because each authorization creates its own grant, signing in with the same application on two devices creates two grants. Each device can then be signed out separately.
+Because each authorization creates its own grant, signing in with the same application on two devices creates two grants, even when the second sign-in skips the consent screen. Each device can then be signed out separately.
 
 Users find their grants in the [Account Manager](/docs/management/webui/account-manager) under <!-- breadcrumb:OAuthGrant --><svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10" /><circle cx="12" cy="10" r="3" /><path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662" /></svg> Account › <svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z" /><circle cx="16.5" cy="7.5" r=".5" fill="currentColor" /></svg> Credentials › Connected Applications<!-- /breadcrumb:OAuthGrant -->. Entries for dynamically registered clients and metadata document clients are labelled as unverified. Grants issued through a first-party OAuthClient are labelled "Web application of this server".
 

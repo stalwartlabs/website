@@ -66,6 +66,8 @@ Without `--no-default-features` and `--features`, the build includes only `rocks
 
 The `enterprise` feature includes the features of the [Enterprise edition](/docs/server/enterprise). These features are activated by a subscription rather than by a separate build, so the Community and Enterprise editions are the same binary.
 
+A build without the `enterprise` feature contains only AGPL-3.0 code, and it stores its data in a different format: the Enterprise code adds fields and object types to the stored data, which this build cannot read. The server therefore records in the data store which kind of build created it, and refuses to start on a store created by the other kind with `The data store was created by the Stalwart AGPL3-only edition and cannot be opened by this edition` (or `AGPL3/SEL` in the opposite case). The choice between the two must be made before the data store is created, since no tool converts a store from one to the other. Upgrades from 0.16 use the matching build of the [migration tool](/docs/migration/upgrade-0-16/installation).
+
 ## Available features
 
 The following features can be passed to `--features`, grouped by the store they provide.

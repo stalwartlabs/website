@@ -85,7 +85,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 > Type: <code>Boolean</code> · default: `false`
 >
-> Trusted application. Tokens issued to it carry the account's full permissions instead of being limited to the requested scopes; the user is still asked for consent. At least one redirect URI is required. Only a superuser can enable it. Stalwart's own web applications do not need this setting: they are recognized from their installed bundle.
+> Trusted application. Tokens issued to it carry the account's full permissions instead of being limited to the requested scopes; the user is still asked for consent until the account has authorized the client. At least one redirect URI is required. Only a superuser can enable it. Stalwart's own web applications do not need this setting: they are recognized from their installed bundle.
 
 
 ##### `scopes`

@@ -23,6 +23,27 @@ Metrics are configured on the [Metrics](/docs/ref/object/metrics) object (found 
 
 In a cluster, each node exports its own metrics, and the monitoring system sums or compares them across nodes. Only nodes whose [cluster role](/docs/cluster/configuration/roles) includes the `metricsPush` task push metrics to an OpenTelemetry collector. Metrics that require queries against the stores are calculated every five minutes by the nodes with the `metricsCalculate` task.
 
+## Exported names
+
+Inside Stalwart, each metric is known by its identifier, such as `delivery.attempt-time`. Alerts, the `metric` expression function, the WebUI dashboard and the [metrics reference](/docs/ref/metrics) all use these identifiers. Monitoring systems have naming conventions of their own, however, so the exporters do not send the identifiers unchanged. Each exporter derives the name of a metric from its identifier by fixed rules, which means that a metric always has the same exported name and the name can be worked out from the reference.
+
+OpenTelemetry names follow the OpenTelemetry semantic conventions. The exporter prepends `stalwart.` to the identifier and replaces each hyphen with an underscore, so `delivery.attempt-time` is exported as `stalwart.delivery.attempt_time`. The unit is not part of the name: it travels in a separate field, written in the UCUM notation that OpenTelemetry uses, such as `By` for bytes, `s` for seconds, and a word in braces for counted items, such as `{connection}` or `{message}`. Event counters have the unit `{event}`.
+
+Prometheus names carry the unit in the name instead. Starting from the OpenTelemetry name, every dot becomes an underscore, a unit suffix is appended (`_bytes` for bytes and `_seconds` for durations), and counters end in `_total`. Units written in braces are annotations, and add no suffix. These are the names that Prometheus itself produces when it receives OpenTelemetry metrics through its OTLP receiver with the default translation, so a metric keeps its name whether Prometheus scrapes it or receives it from a collector.
+
+Both exporters report durations in seconds, the base unit that both ecosystems expect. The server records durations in milliseconds, which is the unit the metrics reference lists, and the exporters convert them: a delivery attempt of 250 milliseconds is exported as 0.25.
+
+The following examples show one metric of each kind:
+
+| Identifier | Kind | OpenTelemetry name and unit | Prometheus name |
+|---|---|---|---|
+| `cache.hit` | counter | `stalwart.cache.hit`, `{event}` | `stalwart_cache_hit_total` |
+| `server.memory` | gauge | `stalwart.server.memory`, `By` | `stalwart_server_memory_bytes` |
+| `imap.active-connections` | gauge | `stalwart.imap.active_connections`, `{connection}` | `stalwart_imap_active_connections` |
+| `delivery.attempt-time` | histogram | `stalwart.delivery.attempt_time`, `s` | `stalwart_delivery_attempt_time_seconds` |
+
+Three gauges are exceptions to these rules. Their names would end in `_count`, a suffix that Prometheus reserves for the sample count of histograms, so they are exported under different names: `queue.count` as `stalwart.queue.messages` (`stalwart_queue_messages`), `user.count` as `stalwart.users` (`stalwart_users`) and `domain.count` as `stalwart.domains` (`stalwart_domains`).
+
 ## Selecting metrics
 
 [`metrics`](/docs/ref/object/metrics#metrics) and [`metricsPolicy`](/docs/ref/object/metrics#metricspolicy) restrict the metrics exported, for example to keep unneeded series out of the monitoring system. With `metricsPolicy` set to `exclude`, the listed metrics are omitted and all others are exported. With `include`, only the listed metrics are exported. The policy is <!-- default:Metrics.metricsPolicy -->`exclude`<!-- /default --> by default, so every metric is exported until some are listed.

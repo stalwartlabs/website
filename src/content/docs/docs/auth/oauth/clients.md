@@ -30,7 +30,7 @@ A client without a secret has nothing with which to prove its identity at the to
 
 Two terms in the table are easy to confuse:
 
-- "First party" refers to access, not to consent. A first-party client receives an unscoped token, which carries every permission of the account, including management permissions where the account holds them. A first-party OAuthClient still shows the consent screen, which asks for `Full access to your account`. The consent screen is skipped only for installed applications, because the bundle installed on the server establishes their identity.
+- "First party" refers to access, not to consent. A first-party client receives an unscoped token, which carries every permission of the account, including management permissions where the account holds them. A first-party OAuthClient still shows the consent screen until the user has authorized it, and the screen asks for `Full access to your account`. Only installed applications never show the consent screen, because the bundle installed on the server establishes their identity.
 - "Verified" means that an administrator registered the client. The name and logo shown on the consent screen therefore come from the OAuthClient object, not from the client itself.
 
 ### Dynamic clients
@@ -48,6 +48,8 @@ Some clients need more than dynamic registration allows: https redirect URIs, a 
 The WebUI, and any other web application installed as an [Application](/docs/management/applications/), is first party through its bundle. The server reads the application's `oauth-client.json` from the installed bundle, never over the network, and accepts its client id on the server's own hosts. [Applications](/docs/management/applications/) describes the bundle document and the hosts on which it is recognised.
 
 A trusted application that is not installed on the server can be made first party with an OAuthClient that has `firstParty` enabled. Examples are a web application hosted elsewhere and a development build of the WebUI. Only a superuser can enable the setting, and the client must list at least one redirect URI.
+
+First-party clients are also exempt from the refusal that follows an [expired password](/docs/auth/authentication/password#password-policy). The user can still sign in through them, because a first-party application may be the place where the password is changed. The token they receive is restricted until then: it allows the password to be changed and nothing else, so mail, calendars, contacts and files stay out of reach. An application that cannot offer a password change, such as a webmail or an identity broker, is better registered without `firstParty`, so that the sign-in is refused with a message that the password has expired.
 
 ### Metadata document clients
 

@@ -20,7 +20,7 @@ This page describes the rules the server applies to each of these requests. They
 Every kind of client uses the authorization code flow: native mail applications, browser-based applications and server-side services. The flow runs in four stages:
 
 1. The client sends the user's browser to the authorization endpoint `/login`.
-2. The server shows the consent screen and the sign-in form.
+2. The server shows the sign-in form, then the consent screen unless the user has already authorized the client.
 3. The server redirects the browser to the client's redirect URI, with an authorization code.
 4. The client exchanges the code at the token endpoint for an access token and a refresh token.
 
@@ -49,6 +49,7 @@ The endpoint recognises the following parameters and ignores any other:
 | `scope` | Optional. Space-separated; every scope must be allowed for the client ([Scopes](/docs/auth/oauth/scopes)). |
 | `resource` | Optional, up to 16 values. Each must identify a service of this server. |
 | `nonce` | Optional. Copied into the ID token. |
+| `prompt` | Optional. When it contains `consent`, the consent screen is shown even if the user has already authorized the client. Other values are ignored. |
 
 `state` is a value the client chooses and checks when the response arrives, which protects it against forged responses. `code_challenge` is the hash half of PKCE: the client keeps the original value, the verifier, and presents it later at the token endpoint.
 
@@ -67,7 +68,7 @@ The server validates resources but does not bind them into the tokens. A token t
 
 ### Responses and errors
 
-When the user allows the request and signs in, the browser is redirected to the redirect URI with three parameters: `code`, `state`, and `iss`, the issuer identifier of the server. The code is valid for the time set in [`authCodeExpiry`](/docs/ref/object/oidc-provider#authcodeexpiry), can be used once, and is bound to the client and the redirect URI of the request.
+When the user signs in and the request is allowed, on the consent screen or by an earlier authorization ([Consent and connected applications](/docs/auth/oauth/consent#consent-screen)), the browser is redirected to the redirect URI with three parameters: `code`, `state`, and `iss`, the issuer identifier of the server. The code is valid for the time set in [`authCodeExpiry`](/docs/ref/object/oidc-provider#authcodeexpiry), can be used once, and is bound to the client and the redirect URI of the request.
 
 The server reports errors in one of two ways, depending on whether it can trust the redirect URI. It cannot trust it in these cases:
 

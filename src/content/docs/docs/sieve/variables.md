@@ -58,6 +58,6 @@ The envelope is the addressing information that the SMTP client gives, as distin
 
 Some envelope variables defined by the Sieve extensions are never set: the `NOTIFY` parameter (`envelope.notify`), the deliver-by time values (`envelope.by_time_absolute` and `envelope.by_time_relative`) and the trace flag (`envelope.by_trace`).
 
-A user script runs for a single recipient, so its view of the envelope is narrower. It sees three envelope parts. `from` is the return path of the message. `to` is the address of the recipient whose script is running. `orcpt` is the original recipient, when the sender supplied one.
+A user script runs for a single recipient, so its view of the envelope is narrower. It sees three envelope parts. `from` is the return path of the message. `to` is the address of the recipient whose script is running. `orcpt` is the original recipient: the address as it was written before Stalwart rewrote it, for instance by removing a sub-address or expanding a mailing list, or otherwise the `ORCPT` parameter supplied by the sending server. It is prefixed with the address type, as in `rfc822;jane+shop@example.org`, and is absent when neither applies.
 
 A user script cannot change the envelope sender. Setting `envelope.from` has no effect on the message, or on any reply the script sends.

@@ -371,6 +371,8 @@ Metrics reported alongside events are listed on the [Metrics](/docs/ref/metrics)
 | `jmap.account-not-found` | `debug` | JMAP account not found | The account ID supplied in the JMAP request does not exist or is not accessible to the authenticated user. |
 | `jmap.account-not-supported-by-method` | `debug` | JMAP account not supported by method | The requested JMAP method is not available for the specified account type. |
 | `jmap.account-read-only` | `debug` | JMAP account is read-only | The client attempted a write operation on an account that only allows read access. |
+| `jmap.from-account-not-found` | `debug` | JMAP source account not found | The fromAccountId supplied in a JMAP copy request does not exist or is not accessible to the authenticated user. |
+| `jmap.from-account-not-supported-by-method` | `debug` | JMAP source account not supported by method | The fromAccountId supplied in a JMAP copy request is accessible, but the data type being copied is not shared with the authenticated user. |
 | `jmap.not-found` | `debug` | JMAP resource not found | The requested object ID does not exist in the account or has been destroyed. |
 | `jmap.cannot-calculate-changes` | `debug` | Cannot calculate JMAP changes | The server cannot compute the change delta since the client's state token; the client must perform a full resync. |
 | `jmap.unknown-data-type` | `debug` | Unknown JMAP data type | The client referenced a data type that is not supported or not enabled via the session capabilities. |

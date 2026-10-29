@@ -23,7 +23,7 @@ The effective permissions of an account are the set the server actually checks. 
 
 1. The permissions of the account's roles are combined. Roles can include other roles, and the permissions of those are included too.
 2. The account's own `permissions` field is applied according to its mode.
-3. In the Enterprise edition, the result is restricted to the permissions of the account's tenant.
+3. In the Enterprise edition, the result is restricted to the permissions of the account's tenant, and `impersonate` is removed from members of a tenant.
 4. Every permission disabled at any of these levels is removed.
 
 The second step depends on a decision made for each account: how its own permissions relate to those of its roles. The `permissions` field of an [Account](/docs/ref/object/account), and of a [Tenant](/docs/ref/object/tenant), records that decision as one of three modes:

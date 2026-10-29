@@ -211,23 +211,17 @@ Forwarding has a known weakness with sender authentication. The forwarded copy k
 Many users give out addresses with a sub-address, such as `jane+shop@example.org`, to see who uses which address and to sort the replies. The following script files messages sent to such an address into a folder named after the sub-address:
 
 ```sieve
-require ["fileinto", "mailbox", "variables", "subaddress"];
+require ["envelope", "envelope-dsn", "fileinto", "mailbox", "variables", "subaddress"];
 
-if address :detail :matches ["to", "cc"] "*" {
+if envelope :detail :matches "orcpt" "*" {
     if not string :is "${1}" "" {
         fileinto :create "${1}";
     }
 }
 ```
 
-<!-- sievepad
-From: Shop <orders@shop.example.com>
-To: Jane <jane+shop@example.org>
-Subject: Your order has shipped
+<!-- sievepad skip: needs an original recipient, which Sievepad cannot set -->
 
-Your order is on its way.
--->
-<p><a href="https://sievepad.com/#w=VVC7bsMwDPwVQujU2gayKkGRpRm6uksRZZBlJlZgSa4k5wHDQL-rn9MvKR3bbUoIEige73js2InxRcKsNMg4y6Osz9JHKJ0KHF4u0jQ1Bvj-_IKNrhGKK4S2SGVZegyBJSwor5sYGN92M4mR2g4V13o15B4_Wu0RtoLtiUPb6ARLQAzAunCXMTlJr2VBYmNKKpOIYLulsMLqPUw_wEuM1AvcyKgqmo-oZ1KlqIHeR8GgExYoqNO6CCF6bQ_AdaDyQ7foCSHYH2yIeUDgyqOM-ItcjpheWDqs3yXM0CTygP-sX8lz6nyJPq1kSEOlmwbLDE19v5CNd4ZDXrkGVjdwWAdKMhzXnSlnnoV9cxxepUVYHel-GhDrGeH8gRB5WxxRRQ7vxAw3JiBZmGSHpd1VyLazoGOAs7xmk4mAMdJSyETX9z8" target="_blank" rel="noopener">Try this script in Sievepad</a></p>
-<!-- /sievepad -->
+The script does not test the `to` envelope part, because Stalwart removes the sub-address from the recipient when it accepts the message, as described in [Addresses, aliases and catch-all](/docs/domains/addresses). Stalwart keeps the address as the sender wrote it, in lower case, as the original recipient of the delivery, and a user script reads it through the `orcpt` envelope part, which requires the `envelope-dsn` extension. The value carries an address type prefix (`rfc822;jane+shop@example.org`), and the `:detail` argument extracts the sub-address after that prefix. When a message reaches the user through a mailing list, the original recipient is the list address, so the script files it by the sub-address the sender added to the list address.
 
-The script tests the `To` and `Cc` headers rather than the envelope. The envelope recipient cannot be used for this, because Stalwart removes the sub-address from the recipient when it accepts the message, as described in [Addresses, aliases and catch-all](/docs/domains/addresses).
+Testing the envelope rather than the `To` and `Cc` headers matters when the address does not appear in the headers at all, as with a blind copy (`Bcc`) or a message that reaches the user through a mailing list. When the recipient address was accepted unchanged, the delivery has no original recipient (unless the sending server supplied one), and the test does not match.

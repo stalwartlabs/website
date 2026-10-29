@@ -86,7 +86,7 @@ The sign-in and device pages call these two endpoints from the browser. Neither 
 
 `GET /api/auth/client`, with the query of an authorization request, returns the client's display name, logo, verification status, and whether consent is required. With `?user_code=<code>`, it returns the client that requested that device code. It is anonymous and rate limited.
 
-`POST /api/auth` submits the credentials and the consent decision.
+`POST /api/auth` submits the credentials. When the server answers that consent is required, the page shows the consent screen and submits the decision in a second request to the same endpoint.
 
 ## Discovery documents
 

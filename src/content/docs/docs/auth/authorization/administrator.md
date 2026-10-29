@@ -52,3 +52,5 @@ Master-user sign-in works only under these conditions:
 - An impersonating account with [two-factor authentication](/docs/auth/authentication/2fa) cannot use master-user sign-in, because these sign-ins cannot carry the one-time code.
 
 The System Administrator role holds the `impersonate` permission. The permission gives access to every mailbox, so grant it to further accounts only for tasks that require it, such as migrations or incident response.
+
+Impersonation is reserved for server administrators. In deployments with [tenants](/docs/auth/authorization/tenants), the server removes `impersonate` from every member of a tenant, tenant administrators included, so it cannot be used to cross tenant boundaries.

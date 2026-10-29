@@ -28,9 +28,9 @@ Any other client id is refused with `invalid_client`, so tokens are never issued
 
 ## User consent
 
-When an application requests access, the user's browser opens the server's sign-in page. For every application except installed web applications such as the WebUI, the page first shows a consent screen. The screen names the application and the access it requests, and the user signs in only after allowing it.
+When an application requests access, the user's browser opens the server's sign-in page. After the user signs in, the page shows a consent screen for every application except installed web applications such as the WebUI. The screen names the application and the access it requests, and the application receives access only after the user allows it.
 
-Each approval creates a grant, the server's record that this user allowed this application. Users review their grants in the Account Manager under Connected Applications, and revoking a grant there signs the application out. [Consent and connected applications](/docs/auth/oauth/consent) describes the consent screen and the grants.
+Each authorization creates a grant, the server's record that this user allowed this application. While a grant covers what the application asks for, later sign-ins skip the consent screen. Users review their grants in the Account Manager under Connected Applications, and revoking a grant there signs the application out. [Consent and connected applications](/docs/auth/oauth/consent) describes the consent screen and the grants.
 
 ## Settings
 

@@ -14,7 +14,7 @@ Only one of the two is needed. Windows is not supported natively, so Windows hos
 The build to choose depends on the data store. The standard build supports every data store and blob store except FoundationDB. Deployments on FoundationDB install the `-fdb` build instead, which adds FoundationDB to the standard build. It is available for Linux on x86_64 and aarch64 with glibc 2.34 or later, and it requires the FoundationDB 7.4 client library (`libfdb_c.so`) on the host. The `-fdb` image already contains the library.
 
 :::note
-A Stalwart server compiled without the `enterprise` feature is migrated with the `-oss` version of the tool: the `--oss` option of the install script, the `stalwart-migrate-oss-<target>.tar.xz` archives, or the image tags ending in `-oss`.
+The standard build is the right one for the official Stalwart binaries and Docker images, whether or not an Enterprise license is installed. Only a Stalwart server compiled from source without the `enterprise` feature needs the `-oss` version of the tool instead (the `--oss` option of the install script, the `stalwart-migrate-oss-<target>.tar.xz` archives, or the image tags ending in `-oss`).
 :::
 
 ## Installing the binary

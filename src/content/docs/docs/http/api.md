@@ -210,7 +210,7 @@ Besides `/api` and `/jmap`, the server answers the following routes:
 |---|---|
 | `GET /healthz/live` | Returns `200` while the process is running. Anonymous. See [liveness and readiness endpoints](/docs/cluster/orchestration/kubernetes#liveness-and-readiness-endpoints). |
 | `GET /healthz/ready` | Returns `200` when the data store is available, otherwise `503`. Anonymous. |
-| `GET /metrics/prometheus` | Prometheus metrics, when the Prometheus exporter is enabled on the [Metrics](/docs/ref/object/metrics) object; protected with HTTP Basic authentication when credentials are configured there. See [Prometheus](/docs/telemetry/metrics/prometheus). |
+| `GET /metrics/prometheus` | Prometheus metrics, when the Prometheus exporter is enabled on the [Metrics](/docs/ref/object/metrics) object; protected with HTTP Basic authentication when credentials are configured there, and subject to the anonymous rate limit otherwise. The `Accept` header selects the Prometheus text or OpenMetrics format. See [Prometheus](/docs/telemetry/metrics/prometheus). |
 | `GET /calendar/rsvp` | The RSVP page for calendar invitations, while HTTP RSVP is enabled. |
 | `/auth/*`, `/login`, `/device` | OAuth and OpenID Connect endpoints and the sign-in pages; see [OAuth endpoints](/docs/auth/oauth/endpoints). |
 | `/.well-known/*`, `/mail/config-v1.1.xml`, `/autodiscover/*` | Service discovery for JMAP, CalDAV and CardDAV, OAuth metadata, MTA-STS, ACME challenges and client autoconfiguration; see [Autoconfig](/docs/server/autoconfig). |

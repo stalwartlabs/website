@@ -39,6 +39,27 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 > How to interpret the metrics list
 
 
+##### `serviceName`
+
+> Type: <code>String</code> · default: `"stalwart"`
+>
+> Service name reported to OpenTelemetry collectors by the metrics exporter and the OpenTelemetry tracers
+
+
+##### `serviceNamespace`
+
+> Type: <code>String?</code>
+>
+> Optional service namespace reported to OpenTelemetry collectors by the metrics exporter and the OpenTelemetry tracers
+
+
+##### `resourceAttributes`
+
+> Type: <code>Map&lt;String, String&gt;</code>
+>
+> Additional resource attributes reported to OpenTelemetry collectors by the metrics exporter and the OpenTelemetry tracers
+
+
 
 ## JMAP API
 
@@ -99,9 +120,7 @@ curl -X POST https://mail.example.com/jmap/ \
           {
             "update": {
               "singleton": {
-                "openTelemetry": {
-                  "@type": "Disabled"
-                }
+                "serviceName": "updated value"
               }
             }
           },
@@ -133,7 +152,7 @@ stalwart-cli get Metrics
 ### Update
 
 ```sh
-stalwart-cli update Metrics --field openTelemetry='{"@type":"Disabled"}'
+stalwart-cli update Metrics --field serviceName='updated value'
 ```
 
 
@@ -163,7 +182,7 @@ OpenTelemetry HTTP metrics exporter.
 
 > Type: <code>Uri</code> · required
 >
-> URL of the OpenTelemetry collector
+> Base URL of the OpenTelemetry collector; /v1/metrics is appended
 
 
 ##### `interval`
@@ -325,7 +344,7 @@ OpenTelemetry gRPC metrics exporter.
 
 > Type: <code>Uri?</code>
 >
-> URL of the OpenTelemetry collector
+> URL of the OpenTelemetry collector, defaults to http://localhost:4317
 
 
 ##### `interval`
@@ -340,6 +359,27 @@ OpenTelemetry gRPC metrics exporter.
 > Type: <code>Duration</code> · default: `10000`
 >
 > Maximum amount of time that Stalwart will wait for a response from the OpenTelemetry collector
+
+
+##### `allowInvalidCerts`
+
+> Type: <code>Boolean</code> · default: `false`
+>
+> Whether to allow invalid SSL certificates
+
+
+##### `httpAuth`
+
+> Type: [<code>HttpAuth</code>](#httpauth) · default: `{"@type":"Unauthenticated"}`
+>
+> The type of HTTP authentication to use
+
+
+##### `httpHeaders`
+
+> Type: <code>Map&lt;String, String&gt;</code>
+>
+> Additional headers to include in HTTP requests
 
 
 

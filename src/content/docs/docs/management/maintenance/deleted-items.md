@@ -30,7 +30,15 @@ Deleted accounts have a similar setting. [`archiveDeletedAccountsFor`](/docs/ref
 
 Each archived item is an [ArchivedItem](/docs/ref/object/archived-item) object of the account it belongs to. The object records two times: when the item was archived (`archivedAt`), and when it will be deleted permanently (`archivedUntil`).
 
-Users and administrators reach the archive in different ways. Users see the archived items of their own account in the [Account Manager](/docs/management/webui/account-manager), under <!-- breadcrumb:ArchivedItem --><svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10" /><circle cx="12" cy="10" r="3" /><path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662" /></svg> Account › <svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><rect width="20" height="5" x="2" y="3" rx="1" /><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8" /><path d="M10 12h4" /></svg> Archived Items<!-- /breadcrumb:ArchivedItem -->. Administrators can reach the items of every account they manage.
+Users see the archived items of their own account in the [Account Manager](/docs/management/webui/account-manager), under <!-- breadcrumb:ArchivedItem --><svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10" /><circle cx="12" cy="10" r="3" /><path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662" /></svg> Account › <svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><rect width="20" height="5" x="2" y="3" rx="1" /><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8" /><path d="M10 12h4" /></svg> Archived Items<!-- /breadcrumb:ArchivedItem -->. Administrators use the same list, which shows one account at a time: their own, unless they choose another account in the Account filter. Over JMAP, the same filter is an `accountId` condition in `x:ArchivedItem/query`:
+
+```json
+["x:ArchivedItem/query", {
+  "filter": {"accountId": "b"}
+}, "0"]
+```
+
+The filter is honoured only for administrators with the [`impersonate`](/docs/ref/permissions) permission. For anyone else the server ignores it and lists the items of their own account.
 
 To restore an item, set its `status` to `requestRestore`, either in the WebUI or with an `x:ArchivedItem/set` update. The server then creates a `RestoreArchivedItem` task, which puts the item back into the account ([Tasks](/docs/management/tasks-actions/tasks)). The following update requests the restoration of the item with id `e`:
 

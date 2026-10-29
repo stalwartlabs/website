@@ -121,7 +121,7 @@ stalwart-cli create AppPassword \
   --field 'permissions={"@type":"Inherit"}'
 ```
 
-An administrator can create an app password or API key for another user, with a JMAP call whose `accountId` argument is the id of the target account. This requires three permissions: `impersonate`, and `sysAppPasswordCreate` or `sysApiKeyCreate`. The default System Administrator role holds all three. Because the call acts on the target account, the target's `maxAppPasswords` or `maxApiKeys` quota applies. The secret is returned to the administrator, who passes it on to the user. The following call creates an app password for the account `c`:
+An administrator can create an app password or API key for another user, with a JMAP call whose `accountId` argument is the id of the target account. This requires three permissions: `impersonate`, and `sysAppPasswordCreate` or `sysApiKeyCreate`. The default System Administrator role holds all three; members of a [tenant](/docs/auth/authorization/tenants#permissions) never hold `impersonate`, so tenant administrators cannot make this call. Because the call acts on the target account, the target's `maxAppPasswords` or `maxApiKeys` quota applies. The secret is returned to the administrator, who passes it on to the user. The following call creates an app password for the account `c`:
 
 ```bash
 curl -X POST https://mail.example.com/jmap/ \
