@@ -57,7 +57,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `clientIpSource`
 
-> Type: [<code>ClientIpSource</code>](#clientipsource) · default: `"peer"`
+> Type: [<code>ClientIpSource</code>](#clientipsource-1) · default: `"peer"`
 >
 > Specifies where the client's IP address is obtained from. When a forwarding header is selected, the listener must only be reachable through the trusted proxies, since any client that connects directly can claim an arbitrary address.
 
