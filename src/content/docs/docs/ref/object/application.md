@@ -60,6 +60,13 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 > Client identifier used when the domain is served by an external identity provider that does not support OAuth Client ID Metadata Documents. It must match a client registered with that provider. When the provider supports them, the application's metadata document URL is used instead.
 
 
+##### `oauthScopes`
+
+> Type: <code>Set&lt;String&gt;</code> · max length: 128 · max items: 16
+>
+> Additional OAuth scopes the application requests when signing in, appended to the ones it requests by default. Used with an external identity provider that releases a claim, such as the one named in the OIDC directory's username claim, only with a scope of its own.
+
+
 
 ## JMAP API
 
@@ -122,6 +129,7 @@ curl -X POST https://mail.example.com/jmap/ \
             "create": {
               "new1": {
                 "description": "Example",
+                "oauthScopes": {},
                 "resourceUrl": "Example",
                 "urlPrefix": {}
               }
@@ -247,7 +255,8 @@ stalwart-cli get Application id1
 stalwart-cli create Application \
   --field description=Example \
   --field resourceUrl=Example \
-  --field 'urlPrefix={}'
+  --field 'urlPrefix={}' \
+  --field 'oauthScopes={}'
 ```
 
 

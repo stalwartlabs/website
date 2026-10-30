@@ -124,12 +124,16 @@ If the provider does not support Client ID Metadata Documents, register a public
 The WebUI requests only the scopes it needs for the configured claims, and each one only when the provider lists it in `scopes_supported`:
 
 - `openid`
-- The scope that carries the `claimUsername` claim
+- The standard scope that carries the `claimUsername` claim: `email` for `email` and `email_verified`, `profile` for `preferred_username`, `name`, `given_name`, `family_name` and `nickname`
 - `email`, when `claimUsername` is not `email` and `usernameDomain` is not set
 - `profile`, for `claimName`
 - `groups`, for `claimGroups`
 
 When the provider publishes no `scopes_supported`, the standard `email` and `profile` scopes are assumed.
+
+The WebUI also requests every scope listed in [`oauthScopes`](/docs/ref/object/application#oauthscopes) on its [Application](/docs/management/applications/), whether or not the provider advertises it. This is the way to sign in with a custom claim, one that the provider releases only with a scope of its own: without that scope, the claim is missing, and the server uses the `email` claim instead, or rejects the token when that is missing too. For example, when `claimUsername` is `mail_account` and the provider releases it with a scope named `mail_account`, add `mail_account` to `oauthScopes`.
+
+The WebUI is not the only client that has to receive the claim, though. Mail, calendar and contacts applications that follow the OAuth Profile for Open Public Clients request only `openid` and the interoperable scopes, and they cannot be told to request a provider-specific one. If users sign in from such applications, the claim named in `claimUsername` must be one that the provider includes in every access token, or that it releases with the scopes these applications request.
 
 The WebUI never requests `offline_access` or the interoperable scopes. This matters for providers that issue refresh tokens only when `offline_access` is requested: with such a provider, the WebUI session ends when the access token expires, and the user signs in again.
 
