@@ -27,7 +27,7 @@ The `files` scope is advertised in the server metadata (`scopes_supported`) only
 
 ## Allowed scopes per client
 
-Each client has a set of scopes it may request, and the set depends on the kind of client. A request for any scope outside the set is refused with `invalid_scope`:
+Each client has a set of scopes it may request, and the set depends on the kind of client. A request for a scope outside the set is refused with `invalid_scope`. Scope values the server does not know, such as the OpenID Connect `email` and `profile` scopes, are ignored and left out of the granted scope; the claims they stand for are already returned with `openid`:
 
 - A registered client may request the scopes in its `scopes` field. With an empty field, it can request only `openid`.
 - A dynamically registered client may request the scopes it named in its registration.

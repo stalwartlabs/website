@@ -46,7 +46,7 @@ The endpoint recognises the following parameters and ignores any other:
 | `response_type` | Required. Only `code` is supported. |
 | `state` | Required and non-empty. Returned unchanged on the redirect. |
 | `code_challenge`, `code_challenge_method` | Required unless the client has a secret. The method must be `S256` and the challenge 43 base64url characters. |
-| `scope` | Optional. Space-separated; every scope must be allowed for the client ([Scopes](/docs/auth/oauth/scopes)). |
+| `scope` | Optional. Space-separated; every scope the server knows must be allowed for the client, and unknown values are ignored ([Scopes](/docs/auth/oauth/scopes)). |
 | `resource` | Optional, up to 16 values. Each must identify a service of this server. |
 | `nonce` | Optional. Copied into the ID token. |
 | `prompt` | Optional. When it contains `consent`, the consent screen is shown even if the user has already authorized the client. Other values are ignored. |
