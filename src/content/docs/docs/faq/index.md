@@ -71,4 +71,4 @@ For planning, the sizing pages give estimates per connection and per login, labe
 
 Yes, per account. A user registers an OpenPGP public key or an S/MIME certificate and enables encryption at rest. From then on, the server encrypts each incoming message with that key before it stores the message.
 
-The matching private key never reaches the server, so only its holder can read the contents of those messages. The encryption covers the contents only: header fields such as the sender, the recipients and the subject remain readable. See [Encryption at rest](/docs/encryption/#scope-of-protection).
+The matching private key never reaches the server, so only its holder can read the contents of those messages. The encryption covers the contents only: header fields such as the sender, the recipients and the subject remain readable. See [Encryption at rest](/docs/encryption/at-rest#scope-of-protection).

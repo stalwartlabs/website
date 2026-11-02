@@ -21,7 +21,9 @@ rewrite is idempotent: running the script again after a schema change
 updates every consumer page in one go.
 
 `Name` may also be `Object/View` (e.g. `MemoryLookupKey/SpamTrap`) to insert
-only the path of that view.
+only the path of that view, or `Object/` (e.g. `ExternalPublicKey/`) to insert
+only the object's own list when it also has views. A bare `Object` inserts
+every location.
 
 When the consumer file is `.mdx` the script also rewrites the SVG attributes
 inside the breadcrumb HTML to camelCase (`stroke-width` -> `strokeWidth`)
@@ -142,6 +144,8 @@ def load_breadcrumbs() -> dict[str, str]:
             for target, html in spans:
                 if "/" in target:
                     mapping[target] = html.strip()
+                elif target == name:
+                    mapping[f"{name}/"] = html.strip()
         else:
             parts = [p.strip() for p in INTER_BREADCRUMB_RE.split(raw) if p.strip()]
         mapping[name] = BREADCRUMB_SEPARATOR.join(parts)

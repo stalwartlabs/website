@@ -19,11 +19,17 @@ const layers = [
     icon: "lock-keyhole",
     title: "At rest, in the mailbox",
     sub: "Per-mailbox encryption with the user's own S/MIME cert or OpenPGP key",
-    chips: ["S/MIME", "OpenPGP", "disk-access proof"],
+    chips: ["S/MIME", "OpenPGP", "ML-KEM", "disk-access proof"],
+  },
+  {
+    icon: "send",
+    title: "On the way out, to each recipient",
+    sub: "Encryption gateway with key discovery over WKD, keyservers and DNSSEC",
+    chips: ["OpenPGP", "S/MIME", "header protection"],
   },
 ];
 ---
-<div class="dg" role="img" aria-label="Stalwart security stack: certificate management with ACME, encryption in transit between servers with DANE, MTA-STS, TLS-RPT and STARTTLS, and encryption at rest in the mailbox with S/MIME or OpenPGP">
+<div class="dg" role="img" aria-label="Stalwart security stack: certificate management with ACME, encryption in transit between servers with DANE, MTA-STS, TLS-RPT and STARTTLS, encryption at rest in the mailbox with S/MIME or OpenPGP including post-quantum ML-KEM, and an encryption gateway that encrypts outgoing mail for each recipient">
   <span class="dg-caption">Security from the wire to the mailbox</span>
   {layers.map((l, i) => (
     <div class:list={["layer", { "is-brand": l.brand }]} style={`--i: ${i}`}>

@@ -64,7 +64,7 @@ Each key is a [DkimSignature](/docs/ref/object/dkim-signature) (found in the Web
 | `Dkim1RsaSha256` | DKIM | RSA with SHA-256 ([RFC 6376](https://www.rfc-editor.org/rfc/rfc6376)) |
 | `Dkim2Ed25519Sha256` | DKIM2 | Ed25519 with SHA-256 |
 | `Dkim2RsaSha256` | DKIM2 | RSA with SHA-256 |
-| `Dkim2MlDsa44Ed25519Sha512` | DKIM2 | ML-DSA-44 and Ed25519 composite with SHA-512 (post-quantum) |
+| `Dkim2MlDsa44` | DKIM2 | ML-DSA-44 (post-quantum) |
 
 RSA-SHA1 is not available for signing, because [RFC 8301](https://www.rfc-editor.org/rfc/rfc8301) prohibits it. Use RSA keys of at least 2048 bits. Receivers ignore RSA signatures made with keys shorter than 1024 bits, as RFC 8301 requires. Signing with both Ed25519 and RSA lets receivers that do not support Ed25519 verify the RSA signature. The DKIM2 variants, their fields and the choice between their algorithms are described in [DKIM2](/docs/mta/authentication/dkim/dkim2).
 
@@ -80,7 +80,7 @@ A key is created by hand in two cases: when `dkimManagement` is set to `Manual`,
 |---|---|
 | [`domainId`](/docs/ref/object/dkim-signature#domainid) | Required. The domain the key belongs to. |
 | [`selector`](/docs/ref/object/dkim-signature#selector) | Required. The selector, which names the DNS record of the public key, `<selector>._domainkey.<domain>`. |
-| [`privateKey`](/docs/ref/object/dkim-signature#privatekey) | Required. The private key, given directly, from an environment variable or from a file. RSA keys must be in PEM (PKCS#1 or PKCS#8), and Ed25519 keys may be in PEM or bare base64 PKCS#8, as may the composite keys of DKIM2 ([DNS records](/docs/mta/authentication/dkim/dkim2#dns-records)). |
+| [`privateKey`](/docs/ref/object/dkim-signature#privatekey) | Required. The private key, given directly, from an environment variable or from a file. RSA keys must be in PEM (PKCS#1 or PKCS#8), and Ed25519 keys may be in PEM or bare base64 PKCS#8, as may the ML-DSA-44 keys of DKIM2 ([DNS records](/docs/mta/authentication/dkim/dkim2#dns-records)). |
 | [`stage`](/docs/ref/object/dkim-signature#stage) | Only `active` keys sign. `pending`, `retiring` and `retired` are rotation stages. |
 | [`headers`](/docs/ref/object/dkim-signature#headers) | The header fields covered by the signature, by default <!-- default:DkimSignature.headers -->`Date`, `From`, `Message-ID`, `Subject` and `To`<!-- /default -->. |
 | [`canonicalization`](/docs/ref/object/dkim-signature#canonicalization) | How headers and body are normalised before hashing. |

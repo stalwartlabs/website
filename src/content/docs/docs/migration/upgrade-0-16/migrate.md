@@ -127,4 +127,4 @@ Throughput depends mostly on the target backend, and on how many accounts are co
 
 Accounts with the most pending changes are copied first, so large mailboxes start at the beginning of a run instead of finishing alone at its end. Once fewer accounts than write slots remain, the remaining large accounts write their emails through the idle slots, up to `--account-split` each. An account takes extra slots only when no waiting account needs them. Other collections, such as calendars, contacts and files, are written by one writer per account, one collection after another.
 
-`run` and `rollback` print a progress line every 15 seconds. `--progress-interval` changes the interval, and 0 disables it.
+`run`, `verify` and `rollback` print a progress line every 15 seconds. `--progress-interval` changes the interval, and 0 disables it.

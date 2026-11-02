@@ -93,7 +93,7 @@ The `duplicate` extension lets a script recognise a message it has already seen,
 
 Messages that a user script sends must pass the receivers' authentication checks like any other mail. Vacation replies and the other messages a user script sends are therefore DKIM-signed, according to [`dkimSignDomain`](/docs/ref/object/sieve-user-interpreter#dkimsigndomain).
 
-For these messages, the `sender` and `sender_domain` variables of the expression refer to the address of the account whose script sends the message. The envelope sender of the reply is empty (`<>`), as [RFC 5230 section 5.1](https://www.rfc-editor.org/rfc/rfc5230#section-5.1) recommends for vacation replies. The default expression signs with the account's domain when it is a domain hosted on the server, and does not sign otherwise. The signature therefore aligns with the domain in the `From` header of the reply, which is the condition receivers check under [DMARC](/docs/mta/authentication/dmarc).
+For these messages, the `sender` and `sender_domain` variables of the expression refer to the address of the account whose script sends the message. The envelope sender of the reply is empty (`<>`), as [RFC 5230](https://www.rfc-editor.org/rfc/rfc5230) recommends for vacation replies. The default expression signs with the account's domain when it is a domain hosted on the server, and does not sign otherwise. The signature therefore aligns with the domain in the `From` header of the reply, which is the condition receivers check under [DMARC](/docs/mta/authentication/dmarc).
 
 ## Interaction with the spam filter
 

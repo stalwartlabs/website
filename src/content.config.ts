@@ -17,11 +17,11 @@ const visualSchema = z.discriminatedUnion("kind", [
   z.object({
     kind: z.literal("screenshot"),
     src: z.string(),
+    srcDark: z.string().optional(),
+    width: z.number().default(1180),
+    height: z.number().default(844),
     alt: z.string(),
     url: z.string().optional(),
-    glow: z.boolean().default(false),
-    tilt: z.boolean().default(false),
-    frame: z.boolean().default(true),
   }),
   z.object({
     kind: z.literal("diagram"),
@@ -70,6 +70,7 @@ const ctaCardSchema = z.object({
   ctaSub: z.string(),
   ctaButton: z.string(),
   ctaLink: z.string(),
+  secondary: ctaSchema.optional(),
 });
 
 // ----- Section kinds -----

@@ -1,0 +1,136 @@
+---
+import Icon from "./Icon.astro";
+
+const families = [
+  {
+    name: "OpenPGP",
+    sub: "v4 and v6 keys, RFC 9580",
+    groups: [
+      { label: "Key types", chips: ["RSA", "ECDH P-256 · P-384 · P-521", "Curve25519", "X25519", "X448"] },
+      { label: "Encryption", chips: ["AES-OCB", "AES-GCM", "AES-CFB"] },
+    ],
+  },
+  {
+    name: "S/MIME",
+    sub: "X.509 certificates, CMS",
+    groups: [
+      { label: "Key types", chips: ["RSA", "RSA-OAEP", "ECDH P-256 · P-384 · P-521", "X25519", "X448"] },
+      { label: "Encryption", chips: ["AES-256-GCM", "AES-256-CBC"] },
+    ],
+  },
+];
+---
+<div class="dg" role="img" aria-label="Encryption algorithms supported by Stalwart. OpenPGP v4 and v6 keys with RSA, ECDH on NIST P-256, P-384 and P-521, Curve25519, X25519 and X448, encrypting with AES-OCB, AES-GCM or AES-CFB. S/MIME certificates with RSA, RSA-OAEP, ECDH on P-256, P-384 and P-521, X25519 and X448, encrypting with AES-256-GCM or AES-256-CBC. Post-quantum ML-KEM for both: ML-KEM-768 with X25519 and ML-KEM-1024 with X448 for OpenPGP, and ML-KEM-512, ML-KEM-768 and ML-KEM-1024 certificates for S/MIME.">
+  <span class="dg-caption">Whatever key the user already has</span>
+  <div class="cols">
+    {families.map((f) => (
+      <div class="fam">
+        <strong>{f.name}</strong>
+        <span class="sub">{f.sub}</span>
+        {f.groups.map((g) => (
+          <div class="grp">
+            <span class="lbl">{g.label}</span>
+            <ul class="mini-chips">{g.chips.map((c) => <li>{c}</li>)}</ul>
+          </div>
+        ))}
+      </div>
+    ))}
+  </div>
+  <div class="pq">
+    <span class="ic"><Icon name="atom" size={20} /></span>
+    <div class="body">
+      <strong>Post-quantum, on both</strong>
+      <span>ML-KEM (FIPS 203), the NIST standard for key exchange that resists quantum computers</span>
+      <ul class="mini-chips">
+        <li>ML-KEM-768 + X25519</li>
+        <li>ML-KEM-1024 + X448</li>
+        <li>S/MIME ML-KEM-512 · 768 · 1024</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<style>
+  .dg {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 100%;
+    container-type: inline-size;
+  }
+  .cols {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+  .fam {
+    display: grid;
+    align-content: start;
+    gap: 6px;
+    padding: 20px;
+    border-radius: var(--r-lg);
+    background: var(--tile);
+    box-shadow: var(--shadow-tile);
+  }
+  strong {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 680;
+    line-height: 1.3;
+  }
+  .sub,
+  .body > span {
+    color: var(--muted);
+    font-size: var(--fs-xs);
+    line-height: 1.5;
+  }
+  .grp {
+    display: grid;
+    gap: 4px;
+    margin-top: 8px;
+  }
+  .lbl {
+    color: var(--dim);
+    font-size: 0.6875rem;
+    font-weight: 600;
+  }
+  .pq {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 20px;
+    border-radius: var(--r-lg);
+    background: var(--rose);
+  }
+  .pq .ic {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: var(--brand);
+    color: #fff;
+  }
+  .body {
+    display: grid;
+    gap: 6px;
+    min-width: 0;
+  }
+  .pq .mini-chips {
+    margin-top: 6px;
+  }
+  .pq .mini-chips li {
+    background: var(--tile);
+    color: var(--brand-text);
+  }
+  @container (max-width: 520px) {
+    .cols {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .fam,
+    .pq {
+      padding: 16px;
+    }
+  }
+</style>

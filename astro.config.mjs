@@ -33,6 +33,7 @@ export default defineConfig({
   redirects: {
     "/docs": "/docs/install/",
     "/docs/install/get-started": "/docs/install/",
+    "/docs/install/setup-wizard": "/docs/install/platform/",
     "/docs/management/tasks": "/docs/management/tasks-actions/tasks",
     "/docs/management/actions": "/docs/management/tasks-actions/actions",
     "/docs/applications": "/docs/management/applications/",

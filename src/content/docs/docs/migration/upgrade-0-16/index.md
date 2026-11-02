@@ -31,6 +31,7 @@ Users notice little of the switch, because the tool keeps the identifiers that c
 A few effects do remain visible:
 
 - OAuth tokens issued by 0.16 are not migrated, so users sign in again in OAuth clients.
+- A server that signs in through an external OpenID Connect provider without Client ID Metadata Document support must [set a client id for the WebUI](/docs/migration/upgrade-0-16/troubleshooting#webui-sign-in-through-an-external-provider).
 - CalDAV, CardDAV and WebDAV clients fetch their calendars, contacts and files once more, because the entity tags change. Their synchronisation tokens stay valid.
 - The full-text search index is not copied. Stalwart 1.0 rebuilds it after it starts, and searches return incomplete results until the rebuild finishes.
 - Every message carries one of the keywords `$hasattachment` and `$hasnoattachment`, which Stalwart 1.0 sets from the message's content. IMAP clients list them with the other keywords of a message and cannot set or remove them.

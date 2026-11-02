@@ -129,6 +129,6 @@ The following responses are returned to clients by specific checks. Each link le
 | "You are not allowed to change the $deleted keyword." | [Shared mailboxes](/docs/email/#shared-mailboxes) |
 | "URL prefixes must be a single non-empty path segment ..." or "This URL prefix is reserved for a built-in server endpoint" when saving an Application | [Mount paths](/docs/management/applications/#mount-paths) |
 | "A cluster coordinator requires a Redis in-memory store, configure one first." and related errors | [Order of configuration](/docs/cluster/configuration/coordination#order-of-configuration) |
-| "The selected data store has already been initialized." in the setup wizard | [Step 2: Storage](/docs/install/setup-wizard#step-2-storage) |
+| "The selected data store has already been initialized." in the setup wizard | [Setup wizard reports an error](/docs/install/troubleshooting#setup-wizard-reports-an-error) |
 
 Short answers to frequent questions, each with a link to the page that covers it, are collected in the [FAQ](/docs/faq/).

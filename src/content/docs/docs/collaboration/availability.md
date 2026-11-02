@@ -12,9 +12,9 @@ This page explains which calendars and events contribute to the answer, who may 
 
 Clients ask for free/busy time in three ways. JMAP clients call `Principal/getAvailability`, part of the `urn:ietf:params:jmap:principals:availability` capability defined by [JMAP for Calendars](https://datatracker.ietf.org/doc/draft-ietf-jmap-calendars/). The response lists the busy periods for the requested time range.
 
-CalDAV scheduling clients send a free/busy request, an iTIP `VFREEBUSY` request ([RFC 6638](https://www.rfc-editor.org/rfc/rfc6638) section 5), to their scheduling outbox, usually while the user composes an invitation. The request follows the rules of [calendar scheduling](/docs/collaboration/scheduling), and it can ask about several attendees at once.
+CalDAV scheduling clients send a free/busy request, an iTIP `VFREEBUSY` request ([RFC 6638](https://www.rfc-editor.org/rfc/rfc6638)), to their scheduling outbox, usually while the user composes an invitation. The request follows the rules of [calendar scheduling](/docs/collaboration/scheduling), and it can ask about several attendees at once.
 
-CalDAV clients can also run a `free-busy-query` REPORT ([RFC 4791](https://www.rfc-editor.org/rfc/rfc4791) section 7.10) on a single calendar collection. This requires the `davCalFreeBusyQuery` [permission](/docs/auth/authorization/permissions).
+CalDAV clients can also run a `free-busy-query` REPORT ([RFC 4791](https://www.rfc-editor.org/rfc/rfc4791)) on a single calendar collection. This requires the `davCalFreeBusyQuery` [permission](/docs/auth/authorization/permissions).
 
 The JMAP method and the scheduling request apply the same rules, described in the next two sections. `Principal/getAvailability` requires the `jmapPrincipalGetAvailability` permission, and `Principal/get` reports `mayGetAvailability` as `true` for the principals the requester may query. The `free-busy-query` REPORT works differently, as described in [Free/busy over CalDAV](#freebusy-over-caldav).
 

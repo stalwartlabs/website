@@ -235,6 +235,13 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 > How long a recipient resolved against an external directory is trusted before the directory is queried again
 
 
+##### `externalPublicKeys`
+
+> Type: <code>Size</code> · default: `16777216` · min: 2048
+>
+> Maximum size of the cache of parsed recipient keys used by the encryption gateway
+
+
 ##### `swap`
 
 > Type: [<code>CacheSwap</code>](#cacheswap) · default: `{"@type":"Disabled"}`

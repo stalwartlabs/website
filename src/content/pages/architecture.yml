@@ -5,6 +5,7 @@ description: >-
 slug: /architecture
 
 hero:
+  layout: stacked
   eyebrow: Architecture
   title: Deploy how you want, scale when you need
   titleHighlight: scale when you need
@@ -22,7 +23,7 @@ hero:
     - Cluster-ready
   visual:
     kind: diagram
-    id: architecture
+    id: cluster
 
 sections:
   - kind: list
@@ -57,7 +58,7 @@ sections:
       - Optional message-bus integration (Apache Kafka, Redpanda, NATS, Redis) for teams that already run one.
     visual:
       kind: diagram
-      id: cluster
+      id: architecture
 
   - kind: list
     eyebrow: Storage tier
@@ -76,7 +77,7 @@ sections:
   - kind: feature
     band: alt
     eyebrow: Full-text search
-    title: Search that grows with the deployment.
+    title: Full-text search at any scale.
     body: >-
       Full-text search can run inside Stalwart or be delegated to a
       dedicated engine. The internal engine indexes 17 languages and
@@ -108,9 +109,10 @@ sections:
   - kind: list
     band: alt
     eyebrow: Security
-    title: Security applies to every component, not just the perimeter.
+    title: Security in every component.
     bullets:
-      - "**Encryption at rest**: per-mailbox encryption with S/MIME or OpenPGP."
+      - "**Encryption at rest**: per-mailbox encryption with S/MIME or OpenPGP, including post-quantum ML-KEM keys; the server holds only public keys. See [encryption at rest](/docs/encryption/at-rest)."
+      - "**Encryption gateway**: outgoing mail encrypted for each remote recipient whose key is discovered or harvested. See [encryption gateway](/docs/encryption/gateway)."
       - "**Transport security**: ACME, DANE, MTA-STS and TLS reporting."
       - "**Network defence**: rate limiting, automated banning, ASN and GeoIP blocking, ACLs and per-account IP restrictions."
       - "**Memory safety**: the server is written in Rust. The codebase has been independently security-audited; the report is published in the [Stalwart blog](/blog/security-audit)."

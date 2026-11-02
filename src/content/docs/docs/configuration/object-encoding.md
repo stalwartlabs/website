@@ -75,7 +75,7 @@ Some objects and fields come in several variants, such as the different backends
 
 ## Changing one element of a list or set
 
-An update that sets a list or set field replaces the whole field. To change one element only, the update addresses it with a path made of the field name, a `/` and the element's key, as in JMAP patches ([RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-5.3)). Each kind of field has its own form:
+An update that sets a list or set field replaces the whole field. To change one element only, the update addresses it with a path made of the field name, a `/` and the element's key, as in JMAP patches ([RFC 8620](https://www.rfc-editor.org/rfc/rfc8620)). Each kind of field has its own form:
 
 | Field | Add or replace | Remove |
 |---|---|---|

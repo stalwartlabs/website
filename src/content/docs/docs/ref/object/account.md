@@ -717,14 +717,11 @@ Defines an email alias for an account or mailing list.
 
 ### EncryptionAtRest
 
-Encryption-at-rest algorithm selection.
+Encryption-at-rest configuration for an account.
 
 
 - **`Disabled`**: Disabled. No additional fields.
-- **`Aes128`**: AES-128. Carries the fields of [`EncryptionSettings`](#encryptionsettings).
-- **`Aes256`**: AES-256. Carries the fields of [`EncryptionSettings`](#encryptionsettings).
-- **`Aes256Gcm`**: AES-256-GCM (S/MIME only). Carries the fields of [`EncryptionSettings`](#encryptionsettings).
-- **`ChaCha20Poly1305`**: ChaCha20-Poly1305 (S/MIME only). Carries the fields of [`EncryptionSettings`](#encryptionsettings).
+- **`Enabled`**: Enabled. Carries the fields of [`EncryptionSettings`](#encryptionsettings).
 
 
 
@@ -740,6 +737,13 @@ Encryption-at-rest settings for an account.
 > Type: <code>Id&lt;</code>[<code>PublicKey</code>](/docs/ref/object/public-key)<code>&gt;</code> · required
 >
 > Public key used for encrypting emails
+
+
+##### `headerProtection`
+
+> Type: [<code>HeaderProtection</code>](#headerprotection) · default: `"noConfidentiality"`
+>
+> Whether message headers are also protected inside the encrypted part (Subject hiding is not available at rest)
 
 
 ##### `encryptOnAppend`
@@ -798,5 +802,16 @@ Role assignment for groups and tenants.
 | `maxApiKeys` | Maximum number of API keys |
 | `maxPublicKeys` | Maximum number of public keys |
 | `maxDiskQuota` | Maximum disk space allocated (bytes) |
+
+
+### HeaderProtection
+
+
+
+| Value | Label |
+|---|---|
+| `none` | None |
+| `noConfidentiality` | Protected, headers visible |
+| `baseline` | Protected, Subject hidden |
 
 

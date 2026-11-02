@@ -5,6 +5,7 @@ description: >-
 slug: /mail-server
 
 hero:
+  layout: stacked
   eyebrow: Mail server
   title: Mail server fluent in every protocol
   titleHighlight: every protocol
@@ -23,8 +24,11 @@ hero:
     - Scalable
   visual:
     kind: screenshot
-    src: /images/webadmin/dashboard-connections.png
-    alt: Stalwart network dashboard showing per-protocol active and total connection counters and an SMTP connections chart
+    src: /images/webadmin/dashboard-network-light.webp
+    srcDark: /images/webadmin/dashboard-network-dark.webp
+    width: 1440
+    height: 900
+    alt: Stalwart network dashboard with active and total connections per protocol and an inbound and outbound SMTP connections chart
     url: admin.stalw.art / Dashboard / Network
 
 sections:
@@ -126,13 +130,15 @@ sections:
         href: /docs/domains/dkim-rotation
     visual:
       kind: screenshot
-      src: /images/webadmin/tasks-scheduled.png
-      alt: Stalwart scheduled tasks list showing pending DKIM key rotations, ACME certificate renewals and outbound DMARC and TLS reports
-      url: admin.stalw.art / Tasks / Scheduled
+      src: /images/webadmin/dkim-signatures-light.webp
+      srcDark: /images/webadmin/dkim-signatures-dark.webp
+      width: 940
+      alt: Stalwart DKIM signatures list with RSA and Ed25519 keys per domain and their rotation stage
+      url: admin.stalw.art / Domains / DKIM Signatures
 
   - kind: feature
     eyebrow: ACME and TLS
-    title: Certificates that renew themselves.
+    title: Automatic TLS certificates with ACME.
     body: >-
       Expired TLS certificates are a routine cause of avoidable outages.
       Stalwart implements ACME directly so renewals run well before
@@ -154,8 +160,68 @@ sections:
   - kind: feature
     reverse: true
     band: alt
+    eyebrow: Encryption at rest
+    title: Mailbox encryption with each user's own key.
+    body: >-
+      A stolen disk, a leaked backup or a curious administrator should
+      not expose anyone's mail. Each user can register their own
+      OpenPGP key or S/MIME certificate, and Stalwart encrypts every
+      incoming message with it before the message is stored. The
+      server only ever holds the public half of the key; the private
+      key that opens the mail stays on the user's devices, so the
+      stored mailbox cannot be read on the server by anyone, including
+      the people who run it. Users manage their own keys from the
+      self-service portal, and their usual OpenPGP- or S/MIME-capable
+      mail client decrypts the messages.
+    bullets:
+      - OpenPGP v4 and v6 keys (RFC 9580) and S/MIME certificates.
+      - Post-quantum ML-KEM keys for OpenPGP (RFC 9980) and S/MIME (RFC 9936).
+      - Header protection (RFC 9788) for tamper-evident Subject, From and To.
+      - Optional encryption of sent copies and drafts uploaded by clients.
+      - Per-user choice to keep spam-filter training private.
+    learnMore:
+      - label: Read encryption at rest
+        href: /docs/encryption/at-rest
+      - label: Read the encryption overview
+        href: /docs/encryption/
+    visual:
+      kind: diagram
+      id: encryption-algorithms
+
+  - kind: feature
+    eyebrow: Encryption gateway
+    title: Outbound encryption, with nothing to install for the sender.
+    body: >-
+      End-to-end encryption usually fails on logistics: senders need
+      the right software, and they need the recipient's key. The
+      Stalwart encryption gateway takes both off their hands. When a
+      message leaves for another domain, the server looks up each
+      recipient's public key, encrypts a separate copy for every
+      recipient that has one, and signs it again with DKIM so it still
+      passes authentication. Policies decide whether a missing key
+      means sending the message as is or refusing it, and the Subject
+      can be hidden from every server along the way.
+    bullets:
+      - Opportunistic or required encryption, decided per recipient, domain or sender.
+      - Key discovery over Web Key Directory, keys.openpgp.org and HKP keyservers.
+      - DNSSEC-validated OPENPGPKEY (RFC 7929) and SMIMEA (RFC 8162) records.
+      - Keys harvested from S/MIME signatures and Autocrypt headers of DMARC-authenticated mail.
+      - S/MIME certificate validation with revocation checks.
+      - Subject hiding through header protection (RFC 9788).
+    learnMore:
+      - label: Read the encryption gateway
+        href: /docs/encryption/gateway
+      - label: Read key discovery
+        href: /docs/encryption/external-keys
+    visual:
+      kind: diagram
+      id: encryption-gateway
+
+  - kind: feature
+    reverse: true
+    band: alt
     eyebrow: Autoconfig and Autodiscover
-    title: Clients configure themselves.
+    title: Automatic client configuration.
     body: >-
       Helpdesk tickets that begin "I can't get my email set up"
       disappear when a client can fetch its own settings from the
@@ -193,8 +259,10 @@ sections:
       - Disk quotas per user and per tenant.
     visual:
       kind: screenshot
-      src: /images/webadmin/accounts-list.png
-      alt: Stalwart accounts directory listing user accounts with email, full name and creation date
+      src: /images/webadmin/accounts-list-light.webp
+      srcDark: /images/webadmin/accounts-list-dark.webp
+      width: 940
+      alt: Stalwart accounts directory listing users across several domains with full name and creation date
       url: admin.stalw.art / Directory / Accounts
 
   - kind: feature
@@ -253,9 +321,10 @@ sections:
       - Configuration of every server object from a single web admin.
     visual:
       kind: screenshot
-      src: /images/webadmin/network-settings.png
-      alt: Stalwart network settings
-      url: admin.stalw.art / Settings / Network
+      src: /images/webadmin/network-settings-light.webp
+      srcDark: /images/webadmin/network-settings-dark.webp
+      alt: Stalwart network settings form with default hostname, default domain, TLS certificate and connection limits
+      url: admin.stalw.art / Settings / Network / General
 
 footerCta:
   cta: Modern mail, ready in minutes.

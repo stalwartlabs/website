@@ -415,10 +415,10 @@
   margin: 0;
   padding: 0;
   min-height: 460px;
-  background: #0a0a0b;
-  --vis: 0.66;
-  --cx: 0.212;
-  --cy: 0.072;
+  background: var(--sand);
+  box-shadow: none;
+  --inset: clamp(20px, 2.8vw, 40px);
+  --z: 0.8;
 }
 
 .shot-frame {
@@ -428,38 +428,42 @@
   overflow: hidden;
 }
 
-.shot-frame img {
-  --w: max(calc(100cqw / var(--vis)), calc(100cqh / (0.625 * (1 - var(--cy)))));
+.shot-img {
   position: absolute;
+  left: var(--inset);
+  top: var(--inset);
   max-width: none;
   height: auto;
-  width: var(--w);
-  left: calc(var(--w) * var(--cx) * -1 + 8px);
-  top: calc(var(--w) * 0.625 * var(--cy) * -1 + 8px);
+  width: max(calc(100cqw - var(--inset)), calc(var(--cw) * var(--z)), calc((100cqh - var(--inset)) * var(--ar)));
+  border-radius: var(--r-md);
+  box-shadow: 0 0 0 1px var(--hairline), var(--shadow-pop);
 }
 
-.shot--full .shot-frame img {
-  width: 100%;
-  left: 0;
-  top: 0;
+.shot--full .shot-img {
+  width: calc(100cqw - 2 * var(--inset));
+}
+
+:root[data-theme="dark"] .shot-img--light,
+:root:not([data-theme="dark"]) .shot-img--dark {
+  display: none;
 }
 
 .shot-url {
   position: absolute;
   z-index: 1;
-  left: 14px;
+  left: calc(var(--inset) + 14px);
   bottom: 14px;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  max-width: calc(100% - 28px);
+  max-width: calc(100% - var(--inset) - 28px);
   padding: 7px 12px;
   border-radius: var(--r-pill);
-  background: rgb(20 20 22 / 0.78);
-  color: #d6d6db;
+  background: color-mix(in oklab, var(--tile) 84%, transparent);
+  color: var(--muted);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
-  box-shadow: 0 0 0 1px rgb(255 255 255 / 0.08);
+  box-shadow: 0 0 0 1px var(--hairline), var(--shadow-tile);
   font-family: var(--font-mono);
   font-size: 0.75rem;
   letter-spacing: 0.01em;
@@ -629,7 +633,10 @@
   }
   .shot {
     min-height: 360px;
-    --vis: 0.34;
+    --z: 0.5;
+  }
+  .shot--full .shot-img {
+    width: max(calc(100cqw - var(--inset)), calc(var(--cw) * var(--z)), calc((100cqh - var(--inset)) * var(--ar)));
   }
   .actions .btn {
     flex: 1 1 auto;

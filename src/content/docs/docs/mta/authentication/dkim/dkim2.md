@@ -1,6 +1,6 @@
 ---
 title: "DKIM2"
-description: "DKIM2 signatures: what they add over DKIM, the RSA, Ed25519 and post-quantum ML-DSA-44 and Ed25519 algorithms, how Stalwart signs and verifies them, their DNS records, and how DKIM2 protects against forged delivery status notifications."
+description: "DKIM2 signatures: what they add over DKIM, the RSA, Ed25519 and post-quantum ML-DSA-44 algorithms, how Stalwart signs and verifies them, their DNS records, and how DKIM2 protects against forged delivery status notifications and passes them back along the chain."
 sidebar_position: 4
 ---
 
@@ -27,13 +27,13 @@ DKIM2 keys are [DkimSignature](/docs/ref/object/dkim-signature) objects. They ar
 |---|---|---|
 | `Dkim2RsaSha256` | `rsa-sha256` | `rsa` |
 | `Dkim2Ed25519Sha256` | `ed25519-sha256` | `ed25519` |
-| `Dkim2MlDsa44Ed25519Sha512` | `mldsa44-ed25519-sha512` | `mldsa44-ed25519-sha512` |
+| `Dkim2MlDsa44` | `mldsa44` | `mldsa44` |
 
 The variants share the fields `domainId`, `selector`, `privateKey` and `stage` with DKIM keys ([Signing](/docs/mta/authentication/dkim/sign#defining-a-key-manually)). [Choosing an algorithm](#choosing-an-algorithm) compares the three algorithms.
 
-All active DKIM2 keys of the signing domain sign a message together. Stalwart adds a single `DKIM2-Signature`, and its `s=` tag holds one entry for each key, with the key's selector, algorithm and signature value. The specification calls this mechanism algorithmic dexterity. A verifier checks every entry whose algorithm it implements. A signature that combines a widely supported algorithm with a newer one can therefore still be verified by receivers that lack the newer one.
+All active DKIM2 keys of the signing domain sign a message together. Stalwart adds a single `DKIM2-Signature`, and its `s=` tag holds one entry for each key, with the key's selector, algorithm and signature value. The specification calls this mechanism algorithmic agility. It also defines how the entries combine: entries separated by `|` are alternatives, and the signature passes when any one of them verifies, while entries joined by `,` form a group that passes only when all of its members verify. Stalwart separates the entries of its keys with `|`, so each key is an alternative to the others. A verifier that does not implement an algorithm counts the entries that use it as not passing, and passes the signature on another entry. A signature that combines a widely supported algorithm with a newer one can therefore still be verified by receivers that lack the newer one.
 
-The specification limits what one signature may hold: at most two entries with the same algorithm, and no selector twice. A domain with three active keys of the same variant therefore gets no DKIM2 signature. The failure is logged as `dkim2.signing-failed`, with the reason `DKIM2-Signature i=<n> has more selectors than allowed`. The DKIM signatures of the domain are not affected.
+The specification forbids the same selector twice in one signature, and Stalwart accepts at most eight entries in one `s=` tag. A domain with more than eight active DKIM2 keys therefore gets no DKIM2 signature. The failure is logged as `dkim2.signing-failed`, with the reason `DKIM2-Signature i=<n> has more selectors than allowed`. The DKIM signatures of the domain are not affected.
 
 Two fields are specific to DKIM2 keys. The first, [`instanceHashes`](/docs/ref/object/dkim-signature#instancehashes), selects the hash algorithms of the `Message-Instance` header fields that Stalwart adds: SHA-256, SHA-512 or both, by default <!-- default:DkimSignature.instanceHashes -->`sha256`<!-- /default -->. A message receives one `Message-Instance` for all keys, so it carries every hash algorithm configured on any active DKIM2 key of the domain. The choice is independent of the signature algorithm. Verifiers are required to implement both hash algorithms, so either choice can be verified.
 
@@ -54,7 +54,7 @@ The following object defines an Ed25519 DKIM2 key whose `Message-Instance` heade
 
 ### Automatic key management
 
-[Automatic key management](/docs/mta/authentication/dkim/sign#automatic-key-management) does not create DKIM2 keys on its own. It creates them only when their types are listed in the domain's [`algorithms`](/docs/ref/object/domain#algorithms), which by default contains only <!-- default:Domain.algorithms -->`Dkim1Ed25519Sha256` and `Dkim1RsaSha256`<!-- /default -->. Adding `Dkim2Ed25519Sha256`, `Dkim2RsaSha256` or `Dkim2MlDsa44Ed25519Sha512` to the list makes Stalwart generate, publish and rotate a key of each listed type, in the same way as the DKIM keys ([DKIM key rotation](/docs/domains/dkim-rotation)). With the default selector template, the selectors read `v2-ed25519-<date>`, `v2-rsa-<date>` and `v2-mldsa44-ed25519-<date>`.
+[Automatic key management](/docs/mta/authentication/dkim/sign#automatic-key-management) does not create DKIM2 keys on its own. It creates them only when their types are listed in the domain's [`algorithms`](/docs/ref/object/domain#algorithms), which by default contains only <!-- default:Domain.algorithms -->`Dkim1Ed25519Sha256` and `Dkim1RsaSha256`<!-- /default -->. Adding `Dkim2Ed25519Sha256`, `Dkim2RsaSha256` or `Dkim2MlDsa44` to the list makes Stalwart generate, publish and rotate a key of each listed type, in the same way as the DKIM keys ([DKIM key rotation](/docs/domains/dkim-rotation)). With the default selector template, the selectors read `v2-ed25519-<date>`, `v2-rsa-<date>` and `v2-mldsa44-<date>`.
 
 ## Choosing an algorithm
 
@@ -64,17 +64,15 @@ The three algorithms differ in how widely verifiers implement them, in what they
 |---|---|
 | RSA-SHA256, 2048-bit key | 344 base64 characters |
 | Ed25519-SHA256 | 88 base64 characters |
-| MLDSA44-Ed25519-SHA512 | About 3,300 base64 characters |
+| ML-DSA-44 | 3,228 base64 characters |
 
-Support among verifiers is still settling. RSA-SHA256 is the only algorithm that the [DKIM2 DNS specification](https://datatracker.ietf.org/doc/draft-ietf-dkim-dkim2-dns/) currently requires every verifier to implement. Ed25519 has much shorter keys and signatures. The DNS specification asks verifiers to implement it, and announces that it will become mandatory once DKIM2 is complete. The DKIM2 specification itself requires verifiers to implement all three algorithms. Until that requirement holds for every deployed verifier, an Ed25519 key together with an RSA key gives signatures that every DKIM2 verifier can check.
+Support among verifiers is still settling. The DKIM2 specification requires verifiers to implement all three algorithms, but the [DKIM2 DNS specification](https://datatracker.ietf.org/doc/draft-ietf-dkim-dkim2-dns/) still requires only RSA-SHA256 and asks verifiers to implement Ed25519, which it announces will become mandatory once DKIM2 is complete. Ed25519 has much shorter keys and signatures than RSA. Until every deployed verifier implements all three algorithms, an Ed25519 key together with an RSA key gives signatures that every DKIM2 verifier can check.
 
-MLDSA44-Ed25519-SHA512 is a post-quantum composite algorithm, defined in [draft-ietf-lamps-pq-composite-sigs](https://datatracker.ietf.org/doc/draft-ietf-lamps-pq-composite-sigs/). It signs the message with two algorithms at once. The first is ML-DSA-44, the module-lattice signature scheme standardised in FIPS 204. The second is Ed25519. Both sign a SHA-512 hash of the `Message-Instance` and `DKIM2-Signature` header fields that every DKIM2 signature covers. The signature value is the ML-DSA-44 signature followed by the Ed25519 signature, and it verifies only when both parts do.
+ML-DSA-44 is a post-quantum signature algorithm: the smallest parameter set of ML-DSA, the module-lattice signature scheme standardised in [FIPS 204](https://csrc.nist.gov/pubs/fips/204/final). RSA and Ed25519 signatures could be forged by a quantum computer large enough to break them, and ML-DSA is designed to resist one. DKIM2 uses it in its pure form: the `Message-Instance` and `DKIM2-Signature` header fields that every DKIM2 signature covers are signed directly, without being hashed first, with the string `DKIM2` as the signature context. Because no separate hash is involved, the algorithm name carries no hash, and the choice does not affect the `Message-Instance` hashes, which `instanceHashes` selects.
 
-Each half protects against a different threat. ML-DSA protects against a quantum computer able to break RSA and elliptic-curve signatures. The Ed25519 half protects against a weakness yet to be found in ML-DSA. A forger therefore has to break both algorithms. The SHA-512 in the name is the hash used by the signature. It does not change the `Message-Instance` hashes, which `instanceHashes` selects.
+The cost of ML-DSA-44 is size. Its signature value is about 37 times that of Ed25519, and it is repeated in every `DKIM2-Signature` that uses it: once for each hop that signs with it, and once in the copy for each Bcc recipient ([Recipients and copies](#recipients-and-copies)). Its public key record is about 1,780 characters long.
 
-The cost of the composite algorithm is size. Its signature value is almost forty times that of Ed25519, and it is repeated in every `DKIM2-Signature` that uses it: once for each hop that signs with it, and once in the copy for each Bcc recipient ([Recipients and copies](#recipients-and-copies)). Its public key record is about 1,830 characters long.
-
-A verifier that does not implement an algorithm disregards the entries that use it. A signature whose only entry uses the composite algorithm therefore cannot be verified by such a receiver, and the message reaches it without a valid chain. For this reason, a composite key belongs next to an Ed25519 or RSA key of the same domain. Each signature then carries both entries. Verifiers that implement the composite algorithm check both, and the others check the classical entry. Choose the composite key when signatures must remain unforgeable against quantum attacks on RSA and Ed25519, and the larger messages and DNS record are acceptable. For other domains, Ed25519 and RSA are enough.
+A signature whose only entry uses ML-DSA-44 cannot be verified by a receiver that does not implement the algorithm, and the message reaches it without a valid chain. For this reason, an ML-DSA-44 key belongs next to an Ed25519 or RSA key of the same domain. Each signature then carries both entries as alternatives: verifiers that implement ML-DSA-44 can check that entry, and the others check the classical one. The alternatives also mean that a forger who breaks the classical algorithm, with a quantum computer for example, can produce a passing signature with it alone. The ML-DSA-44 key protects signatures against quantum attacks only once its domain stops signing with RSA and Ed25519. Choose it to prepare for that transition, or for domains whose receivers all implement it, when the larger messages and DNS record are acceptable. For other domains, Ed25519 and RSA are enough.
 
 ## Signing
 
@@ -98,7 +96,7 @@ Sometimes Stalwart extends a chain for a message that was changed on the server,
 
 Stalwart changes the DKIM2 header fields of a message only when DKIM2 keys sign it. Without a DKIM2 key for the message, its `DKIM2-Signature` and `Message-Instance` header fields are passed on unchanged, whether the chain is valid or broken. This is how a server that does not implement DKIM2 would pass them on. It applies to relayed messages, to messages that Sieve scripts redirect, and to messages whose envelope or content was changed on the server.
 
-When DKIM2 keys do sign the message, the specification constrains what Stalwart may send. Section 13 forbids a signer to send a message that carries DKIM2 header fields but is not Validly Signed to another system, unless the two systems have a prior arrangement. The reason is that the receiver can see that the chain is broken, and that this was already apparent to the previous hop.
+When DKIM2 keys do sign the message, the specification constrains what Stalwart may send. It forbids a signer to send a message that carries DKIM2 header fields but is not a Fully Verified DKIM2 Message to another system, unless the two systems have a prior arrangement. The reason is that the receiver can see that the chain is broken, and that this was already apparent to the previous hop.
 
 Stalwart therefore removes a broken chain when DKIM2 keys sign the message and at least one recipient is on another system. A chain counts as broken in three situations:
 
@@ -110,11 +108,11 @@ Every `DKIM2-Signature` and `Message-Instance` header field is removed once, bef
 
 What Stalwart sends next depends on the `From` header field. When it is Authentic for the signing domain, Stalwart signs the copies it relays as a new message, with `i=1` and `m=1`, and a new chain of custody starts at Stalwart. Otherwise the copies are sent with no DKIM2 header fields at all. No setting provides for an out-of-band arrangement that would allow the broken chain to be passed on.
 
-A message whose recipients are all local is not relayed, so it keeps its DKIM2 header fields unchanged. A broken chain is not a reason to refuse the message at SMTP, because section 13 leaves the decision to accept it to local policy.
+A message whose recipients are all local is not relayed, so it keeps its DKIM2 header fields unchanged. A broken chain is not a reason to refuse the message at SMTP, because the specification leaves the decision to accept it to local policy.
 
 A temporary failure needs separate treatment. When a public key lookup fails temporarily, the chain cannot be verified and has the result `temperror`, and Stalwart cannot tell whether to extend it or remove it. How it proceeds depends on the [`dkimVerify`](/docs/ref/object/sender-auth#dkimverify) mode, the same setting that decides whether DKIM failures refuse a message:
 
-- When `dkimVerify` is `strict`, DKIM2 keys sign the message and at least one recipient is on another system, Stalwart replies `451 4.7.5 Unable to verify DKIM2 signatures, try again later.` at DATA. The sender then retries once the lookup can succeed, as section 13.2 recommends. The reply is decided before the spam filter, milters and Sieve scripts run, so a retried message never repeats their actions, such as a redirect.
+- When `dkimVerify` is `strict`, DKIM2 keys sign the message and at least one recipient is on another system, Stalwart replies `451 4.7.5 Unable to verify DKIM2 signatures, try again later.` at DATA. The sender then retries once the lookup can succeed, with the reply code that the specification recommends for this case. The reply is decided before the spam filter, milters and Sieve scripts run, so a retried message never repeats their actions, such as a redirect.
 - Otherwise the message is accepted, and the spam filter adds the `DKIM2_TEMPFAIL` tag. When DKIM2 keys sign the message, the chain is then treated as broken, as described above. When none do, the header fields are passed on unchanged.
 
 ### Redirected messages
@@ -123,7 +121,13 @@ A message that a Sieve script redirects is relayed like any other message with a
 
 ### Reports and notifications
 
-Reports and delivery status notifications that Stalwart generates are new messages. The message they concern is only attached as a MIME part, so they carry no chain of their own. They are signed with `i=1` by the domain that their own `dkimSignDomain` setting selects ([Signing domain](/docs/mta/authentication/dkim/sign#signing-domain)), and only when their `From` header field is Authentic for that domain. Otherwise they are sent without DKIM2 header fields.
+Reports and delivery status notifications that Stalwart generates are new messages. The message they concern is only attached as a MIME part, so they carry no chain of their own. Reports, such as DMARC and TLS reports, are signed with `i=1` by the domain that their own `dkimSignDomain` setting selects ([Signing domain](/docs/mta/authentication/dkim/sign#signing-domain)), and only when their `From` header field is Authentic for that domain. Otherwise they are sent without DKIM2 header fields.
+
+Delivery status notifications (DSNs) follow an extra rule when the message they report arrived with a DKIM2 chain. The specification requires the signing domain of such a DSN to match a recipient of the reported message, so that the system that sent it can check the DSN ([Delivery status notifications](#delivery-status-notifications)). Stalwart starts from the domain that the [`dkimSignDomain`](/docs/ref/object/dsn-report-settings#dkimsigndomain) setting of DSNs selects. When that domain, or a subdomain of it, is the domain of a recipient in the `rt=` tag of the last signature the message carried on arrival, the DSN is signed by that domain as for any other report. Otherwise Stalwart looks for another domain among those recipients: each recipient's domain and then its parent domains, at most eight candidates in all. A candidate qualifies when it is hosted on the server, has an active DKIM2 key, and is also the domain, or a parent domain, of a recipient whose delivery the DSN reports. The first that qualifies signs the DSN with its DKIM and DKIM2 keys, and the DSN's `From` address keeps its local part but takes that domain, so that it is Authentic.
+
+When no domain qualifies, the DSN is signed with the DKIM keys of the configured domain only, without a DKIM2 signature, and the `dkim2.dsn-not-aligned` event records the configured domain. A DSN about a message without a DKIM2 chain on arrival, including every message that Stalwart itself originated, is signed by the configured domain as before.
+
+The DSN also returns the reported message differently when that message carries DKIM2 header fields. Instead of the start of the message, it returns only its header fields, in a `text/rfc822-headers` part, as they were when the message arrived: the signatures and `Message-Instance` header fields that Stalwart added are removed, and the changes that Stalwart recorded are undone. Header fields that DKIM2 does not sign, such as `Received` and `Authentication-Results`, are left out. The previous hop can then verify that the returned header fields are those of a message it sent.
 
 ### Recipients and copies
 
@@ -140,21 +144,21 @@ DKIM2 public keys are published in the same place and format as DKIM keys: a TXT
 ```text
 v2-rsa-20260101._domainkey.example.org.              IN TXT "v=DKIM1; k=rsa; h=sha256; p=<base64 key>"
 v2-ed25519-20260101._domainkey.example.org.          IN TXT "v=DKIM1; k=ed25519; h=sha256; p=<base64 key>"
-v2-mldsa44-ed25519-20260101._domainkey.example.org.  IN TXT "v=DKIM1; k=mldsa44-ed25519-sha512; p=<base64 key>"
+v2-mldsa44-20260101._domainkey.example.org.          IN TXT "v=DKIM1; k=mldsa44; p=<base64 key>"
 ```
 
-The `k=` tag names the key type. A verifier checks it against the algorithm of the signature entry, and a mismatch fails with `DKIM2-Signature i=<n> public key <selector> algorithm mismatch`. The `h=` tag on the RSA and Ed25519 records is retired in DKIM2, and DKIM2 verifiers ignore it.
+The `k=` tag names the key type. A verifier checks it against the algorithm of the signature entry, and a mismatch fails with `DKIM2-Signature i=<n> public key <selector> algorithm mismatch`. The `h=` tag on the RSA and Ed25519 records is retired in DKIM2, and DKIM2 verifiers ignore it. The DKIM2 DNS specification does not yet list the `mldsa44` key type, which DKIM2 introduced after it; Stalwart publishes ML-DSA-44 keys with `k=mldsa44`, the name of the algorithm in the signature.
 
-The composite key needs more room than the others. Its `p=` value is the 1,312-byte ML-DSA-44 public key followed by the 32-byte Ed25519 public key, in base64. The record is about 1,830 characters long, so it must be published as several strings of at most 255 characters within one TXT record, as the RSA record is. The zone file in `dnsZoneFile` lists it already split.
+The ML-DSA-44 key needs more room than the others. Its `p=` value is the 1,312-byte public key in base64, exactly 1,752 characters; a key of any other length is malformed. The record is about 1,780 characters long, so it must be published as several strings of at most 255 characters within one TXT record, as the RSA record is. The zone file in `dnsZoneFile` lists it already split.
 
 :::caution
-Not every DNS provider accepts a TXT record of this length. Before adding a composite key, check that the provider of the zone supports it, including when the records are published through [automatic DNS management](/docs/domains/dns-records).
+Not every DNS provider accepts a TXT record of this length. Before adding an ML-DSA-44 key, check that the provider of the zone supports it, including when the records are published through [automatic DNS management](/docs/domains/dns-records).
 :::
 
-[Automatic key management](#automatic-key-management) generates composite keys. A composite key defined by hand needs its private key in the PKCS#8 form that draft-ietf-lamps-pq-composite-sigs defines for the algorithm, in PEM or bare base64, and OpenSSL is the recommended tool to create one. OpenSSL has no composite algorithm, but it does not need one. This PKCS#8 key is a fixed 19-byte header followed by the 32-byte ML-DSA-44 seed and the 32-byte Ed25519 seed, and any random seeds form a valid key. The following command writes a key in bare base64 to `composite.key`:
+[Automatic key management](#automatic-key-management) generates ML-DSA-44 keys. A key defined by hand needs its private key in PKCS#8, in PEM or bare base64, in one of the two forms that [RFC 9881](https://www.rfc-editor.org/rfc/rfc9881) defines that contain the 32-byte seed: the seed alone, or the seed together with the expanded key. A key holding only the expanded key has no seed and is refused with `Not an ML-DSA-44 PKCS #8 key with a seed`. OpenSSL 3.5 and later implement ML-DSA, and the PEM key that the following command writes to `mldsa44.key` contains both forms, which Stalwart accepts:
 
 ```sh
-{ printf '3051020100300a06082b060105050706270440' | xxd -r -p; openssl rand 64; } | openssl base64 -A > composite.key
+openssl genpkey -algorithm ML-DSA-44 -out mldsa44.key
 ```
 
 As for the other types, the server derives the public key from the private key and shows it in [`publicKey`](/docs/ref/object/dkim-signature#publickey), so the public key needs no command of its own.
@@ -163,26 +167,26 @@ As for the other types, the server derives the public key from the private key a
 
 DKIM2 signatures are verified at the [DATA stage](/docs/mta/inbound/data#order-of-processing), after DKIM and ARC. Verification runs when the message carries DKIM2 header fields, including malformed ones, and one of the following holds: [`dkimVerify`](/docs/ref/object/sender-auth#dkimverify) is enabled, [`dmarcVerify`](/docs/ref/object/sender-auth#dmarcverify) is enabled, or DKIM2 keys sign the message. Stalwart needs the result to decide whether to extend a chain or remove it. A message that DKIM2 keys sign is therefore verified even when DKIM and DMARC verification are disabled.
 
-Verification determines whether the message is Validly Signed in the sense of the specification. It checks the following, in order, and stops at the first failure:
+Verification determines whether the message is a Fully Verified DKIM2 Message in the sense of the specification. It checks the following, in order, and stops at the first failure:
 
 1. Every `DKIM2-Signature` and `Message-Instance` header field is well formed, and both are numbered without gaps.
 2. No signature is more than 14 days old or more than one day in the future.
 3. The `MAIL FROM` of the session equals the `mf=` of the most recent signature, and every `RCPT TO` appears in its `rt=`, so a message replayed to recipients that the last signer did not address fails.
 4. The signing domain of every signature matches its `mf=`, and each hop received the message from the previous one: its `mf=`, or its signing domain, matches a recipient of the signature before it.
-5. Every signature entry whose algorithm Stalwart implements verifies with its public key. Stalwart implements all three algorithms. An entry with an algorithm it does not implement is skipped, and a signature with no other entry fails with `DKIM2-Signature i=<n> has no valid signature algorithms`.
+5. Every signature verifies with its public keys: at least one `|` alternative of its `s=` tag passes, which for a `,` group means every entry of the group. Stalwart implements all three algorithms. An entry with any other algorithm does not pass, with the reason `DKIM2-Signature i=<n> selector <selector> algorithm unknown`. When several entries were tried and none passed, the reason is `DKIM2-Signature i=<n> no group of signatures passed`.
 6. The hashes of the message match the most recent `Message-Instance`, and the recipes of each instance recreate an earlier version whose hashes match the instance before it.
 7. Every `From` header field, current or recreated, is Authentic.
 
 Verification has four possible results:
 
 - `pass`: every check succeeded.
-- `fail`: a signature or hash does not match.
-- `permerror`: a header field, the chain or a public key record is invalid or missing.
+- `fail`: verification completed, but the message is not a Fully Verified DKIM2 Message. A signature or hash does not match, a signature is expired or from the future, the envelope or the chain of custody does not match, a `From` header field is not Authentic, or an earlier version of the message cannot be recreated.
+- `permerror`: a header field or a public key record is invalid or missing, or the numbering of the chain has a gap.
 - `temperror`: a public key could not be fetched.
 
 The result is recorded in the `Authentication-Results` header as a `dkim2` entry. A failure carries its reason as a comment, in the wording that the specification recommends, for example `DKIM2-Signature i=2 signature expired`. Verification is logged as `smtp.dkim2-pass` or `smtp.dkim2-fail` ([SMTP events](/docs/ref/events#smtp)). A failure also carries a nested event from the [DKIM2 events](/docs/ref/events#dkim2), such as `dkim2.timestamp-invalid` or `dkim2.custody-broken`, whose details hold the reason in the same wording as the `Authentication-Results` comment.
 
-A passing chain contributes to DMARC. The signing domain of its first signature, that of the originator, is passed to [DMARC](/docs/mta/authentication/dmarc) together with the DKIM results, and it counts for alignment like the domain of a passing DKIM signature. A chain that fails does not by itself cause the message to be refused, because section 13 of the specification leaves acceptance to local policy. The result decides instead how the message is relayed, and in `strict` mode a `temperror` can defer it ([Broken chains](#broken-chains)). DKIM2 signatures do not count towards the passing DKIM signature that the `strict` mode of `dkimVerify` requires ([Verifying](/docs/mta/authentication/dkim/verify)).
+A passing chain contributes to DMARC. The signing domain of its first signature, that of the originator, is passed to [DMARC](/docs/mta/authentication/dmarc) together with the DKIM results, and it counts for alignment like the domain of a passing DKIM signature. A chain that fails does not by itself cause the message to be refused, because the specification leaves acceptance to local policy. The result decides instead how the message is relayed, and in `strict` mode a `temperror` can defer it ([Broken chains](#broken-chains)). DKIM2 signatures do not count towards the passing DKIM signature that the `strict` mode of `dkimVerify` requires ([Verifying](/docs/mta/authentication/dkim/verify)).
 
 ## Delivery status notifications
 
@@ -195,9 +199,26 @@ When `dkimVerify` is enabled, as it is with its default of <!-- default:SenderAu
 - The signing domain of the DSN is not the domain of a recipient of the returned message, or a parent domain of it.
 - The last signature of the returned message was not made by the domain of the address that receives the DSN, or by a parent domain of it.
 
-A public key lookup may fail temporarily, so that the verification cannot be completed. The outcome then follows the mode of `dkimVerify`. In `strict` mode, the DSN is refused with `451 4.7.5 Unable to verify DKIM2 DSN, try again later.`, so that the sender retries. Both this reply and the `550` are those that section 16.3 of the specification recommends. In `relaxed` mode, the DSN is accepted, and its `temperror` is logged as `smtp.dkim2-fail` like that of any other message.
+A public key lookup may fail temporarily, so that the verification cannot be completed. The outcome then follows the mode of `dkimVerify`. In `strict` mode, the DSN is refused with `451 4.7.5 Unable to verify DKIM2 DSN, try again later.`, so that the sender retries. Both this reply and the `550` are the ones the specification recommends. In `relaxed` mode, the DSN is accepted, and its `temperror` is logged as `smtp.dkim2-fail` like that of any other message.
 
 Each refusal, with either reply, is logged as `smtp.dkim2-dsn-rejected` ([SMTP events](/docs/ref/events#smtp)), whose details hold the reason.
+
+### Propagation to the previous hop
+
+When a message passes through several systems, a DSN about a failure further along the chain reaches the system that forwarded it, not the original sender. The specification asks that system to pass the DSN back along the chain, to the hop it received the message from, without revealing where it forwarded the message. Stalwart does this in two cases.
+
+The first is a DSN that Stalwart receives. It is passed back when all of the following hold:
+
+- `dkimVerify` is enabled and the DSN passed the checks above.
+- The DSN has a single recipient.
+- The last signatures of the returned message were made by domains hosted on the server, and at least one earlier signature was not. When every signature is Stalwart's own, Stalwart originated the message, and the DSN is delivered to the local recipient as usual.
+- The returned message names the previous hop: the `mf=` of the last signature before Stalwart's own is an address, not empty.
+
+Stalwart then queues a new DSN to that address instead of delivering the one it received, and replies `250 2.0.0 DSN forwarded to the previous hop.` When the DSN cannot be queued, the reply is `451 4.3.5 Unable to forward DSN, try again later.`, or `452 4.3.1 Mail system full, try again later.` when the cause is a quota. When one of the conditions does not hold, the DSN is delivered locally like any other message.
+
+The second case is a DSN that Stalwart generates itself for a message it forwarded, such as a relayed message or a Sieve redirect that cannot be delivered. Such a DSN goes to the previous hop in the same way, instead of to the envelope sender of the forwarded message, when Stalwart signed the message with DKIM2 on its way out, the message arrived with an earlier signature, and all of its recipients are on other systems. Otherwise, or when the DSN for the previous hop cannot be built, the DSN goes to the envelope sender as usual.
+
+The DSN that Stalwart sends back is a new message with an empty envelope sender, signed as described in [Reports and notifications](#reports-and-notifications). Its human-readable part states that the message was forwarded and that the details of the forwarding destination have been removed. Its delivery status part keeps only the reporting server, the original envelope ID, and for each recipient the address the previous hop sent the message to, with the action and status code; the forwarding address, the remote server and the diagnostic text are dropped. The returned header fields are those of the message as it arrived, as described above. Each DSN passed back is logged as `dkim2.dsn-propagated`, with the address of the previous hop.
 
 ## Testing
 

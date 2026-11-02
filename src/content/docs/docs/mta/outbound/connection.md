@@ -53,7 +53,7 @@ A remote server that stops answering would hold a delivery open indefinitely, so
 | [`rcptToTimeout`](/docs/ref/object/mta-connection-strategy#rcpttotimeout) | <!-- default:MtaConnectionStrategy.rcptToTimeout -->5 minutes<!-- /default --> | Reply to `RCPT TO`. |
 | [`dataTimeout`](/docs/ref/object/mta-connection-strategy#datatimeout) | <!-- default:MtaConnectionStrategy.dataTimeout -->10 minutes<!-- /default --> | Reply after the message data. |
 
-The defaults for the greeting, `MAIL FROM`, `RCPT TO` and the data are the timeouts that [RFC 5321](https://www.rfc-editor.org/rfc/rfc5321#section-4.5.3.2) recommends. The RFC sets no timeout for opening the connection or for the reply to `EHLO`.
+The defaults for the greeting, `MAIL FROM`, `RCPT TO` and the data are the timeouts that [RFC 5321](https://www.rfc-editor.org/rfc/rfc5321) recommends. The RFC sets no timeout for opening the connection or for the reply to `EHLO`.
 
 Changing the timeouts is a trade-off. Shorter timeouts release delivery threads sooner when remote servers are slow or unreachable. They also risk abandoning deliveries to servers that are slow but working, such as servers that delay their greeting deliberately. The following object body shortens the connection and greeting timeouts to two minutes:
 

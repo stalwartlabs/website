@@ -83,7 +83,7 @@ Without it, delivery problems caused by TLS are visible only to the senders. See
 
 ## SRV records
 
-SRV records tell mail, calendar and contacts clients which host and port serve each protocol ([RFC 6186](https://www.rfc-editor.org/rfc/rfc6186), [RFC 6764](https://www.rfc-editor.org/rfc/rfc6764), [RFC 8314](https://www.rfc-editor.org/rfc/rfc8314#section-5.1) for `_submissions` and [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620#section-2.2) for `_jmap`). Stalwart generates one per protocol in [`SystemSettings.services`](/docs/ref/object/system-settings#services), on the implicit-TLS ports of the [default listeners](/docs/server/listener#default-listeners):
+SRV records tell mail, calendar and contacts clients which host and port serve each protocol ([RFC 6186](https://www.rfc-editor.org/rfc/rfc6186), [RFC 6764](https://www.rfc-editor.org/rfc/rfc6764), [RFC 8314](https://www.rfc-editor.org/rfc/rfc8314) for `_submissions` and [RFC 8620](https://www.rfc-editor.org/rfc/rfc8620) for `_jmap`). Stalwart generates one per protocol in [`SystemSettings.services`](/docs/ref/object/system-settings#services), on the implicit-TLS ports of the [default listeners](/docs/server/listener#default-listeners):
 
 ```
 _jmap._tcp.example.org.	SRV	0 1 443 mail.example.org.

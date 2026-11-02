@@ -6,7 +6,7 @@ description: "How to choose the storage backends in the setup wizard: the defaul
 
 A mail server stores several kinds of data with different needs. Account records, mailbox structure and settings are small and change constantly, message contents and attachments are large and never change once written, the full-text index is derived from the messages, and counters such as rate limits matter only briefly. Stalwart therefore keeps them in four stores, each of which can use the backend that suits it: the data store for all structured data and the configuration, the blob store for messages and attachments, the search store for the full-text index, and the in-memory store for short-lived data such as rate-limit counters. [Storage](/docs/storage/) describes each store.
 
-The administrator chooses the backends on the storage screen of the [setup wizard](/docs/install/setup-wizard#step-2-storage). Most of these choices are easy to revisit, but the data store is expensive to change later, because moving to another data store requires a data migration. This page explains how to choose it, and when the other stores are worth separating.
+The administrator chooses the backends on the storage screen of the setup wizard, described in Step 3 of the [installation tutorials](/docs/install/platform/). Most of these choices are easy to revisit, but the data store is expensive to change later, because moving to another data store requires a data migration. This page explains how to choose it, and when the other stores are worth separating.
 
 ## Single server
 

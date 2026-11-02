@@ -11,6 +11,7 @@ interface Props {
   ctaSub?: string;
   ctaButton?: string;
   ctaLink?: string;
+  ctaSecondary?: { label: string; href: string; external?: boolean };
   /** Override the default site-wide social card. */
   ogImage?: string;
   /** Add `<meta name="robots" content="noindex">` (used by 404, etc.). */
@@ -27,6 +28,7 @@ const {
   ctaSub,
   ctaButton,
   ctaLink,
+  ctaSecondary,
   ogImage = "/img/stalwart-social-card.jpg",
   noindex = false,
   jsonLd,
@@ -95,7 +97,7 @@ const ldBlocks = jsonLd
     <main id="main" data-pagefind-body>
       <slot />
     </main>
-    <Footer cta={cta} ctaSub={ctaSub} ctaButton={ctaButton} ctaLink={ctaLink} />
+    <Footer cta={cta} ctaSub={ctaSub} ctaButton={ctaButton} ctaLink={ctaLink} ctaSecondary={ctaSecondary} />
     <script is:inline>
       // Reveal-on-scroll
       (() => {

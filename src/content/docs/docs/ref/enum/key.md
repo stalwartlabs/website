@@ -6,7 +6,7 @@ custom_edit_url: null
 
 
 
-This enumeration defines 96 values.
+This enumeration defines 97 values.
 
 | Value | Label |
 |---|---|
@@ -106,3 +106,4 @@ This enumeration defines 96 values.
 | `probability` | Probability |
 | `confidence` | Confidence |
 | `tier` | Tier |
+| `fingerprint` | Fingerprint |

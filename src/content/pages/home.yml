@@ -24,14 +24,17 @@ hero:
     - Rust-native
   visual:
     kind: screenshot
-    src: /images/webadmin/dashboard-delivery.png
-    alt: Stalwart admin dashboard showing user, domain and message counters with a 24-hour message volume chart
+    src: /images/webadmin/dashboard-overview-light.webp
+    srcDark: /images/webadmin/dashboard-overview-dark.webp
+    width: 1440
+    height: 900
+    alt: Stalwart admin dashboard overview with received, sent and pending messages, server memory, a 24-hour message chart, clean mail ratio and rejection ranking
     url: admin.stalw.art / Dashboard / Overview
 
 sections:
   - kind: pillar-grid
     eyebrow: Stalwart at a glance
-    title: What used to take five servers, now takes one.
+    title: One server instead of five.
     items:
       - icon: mail
         title: Email
@@ -105,11 +108,15 @@ sections:
       Security is a default in Stalwart, not an add-on. Mail in transit
       between servers stays encrypted and verified end to end, with
       DANE, MTA-STS and TLS reporting; TLS certificates renew themselves
-      over ACME so nothing breaks at expiry; and mailboxes at rest can
-      be encrypted with the user's own S/MIME certificate or OpenPGP
-      key, so even an operator with disk access cannot read them.
+      over ACME so nothing breaks at expiry; mailboxes at rest can be
+      encrypted with the user's own S/MIME certificate or OpenPGP key,
+      so even an operator with disk access cannot read them; and the
+      encryption gateway encrypts outgoing mail for every recipient
+      whose key it can find, with post-quantum algorithms when the key
+      supports them.
     bullets:
-      - Encryption at rest with S/MIME or OpenPGP.
+      - Encryption at rest with S/MIME or OpenPGP, including post-quantum ML-KEM keys.
+      - Encryption gateway with automatic recipient key discovery.
       - Strong transport security through DANE, MTA-STS, and TLS reporting.
       - Automatic TLS provisioning over ACME.
       - Automated DKIM key generation, rotation, and DNS publication.
@@ -124,7 +131,7 @@ sections:
     reverse: true
     band: alt
     eyebrow: Fits the stack you already run
-    title: Adapts to your environment, not the other way round.
+    title: Works with the infrastructure you already run.
     body: >-
       From a single-node setup to a multi-tenant hosting platform,
       Stalwart fits the storage, search, external directory and DNS
@@ -140,8 +147,9 @@ sections:
       - Web administration plus a CLI.
     visual:
       kind: screenshot
-      src: /images/webadmin/dashboard-storage.png
-      alt: Stalwart storage dashboard showing data store and blob store latency
+      src: /images/webadmin/dashboard-storage-light.webp
+      srcDark: /images/webadmin/dashboard-storage-dark.webp
+      alt: Stalwart storage dashboard with data store and blob store read and write latency over the last 24 hours
       url: admin.stalw.art / Dashboard / Storage
 
   - kind: feature
@@ -167,7 +175,7 @@ sections:
     reverse: true
     band: alt
     eyebrow: Spam & phishing filter
-    title: Defence built in, not bolted on.
+    title: Built-in protection against attacks.
     body: >-
       The spam and phishing filter ships inside the same product as
       the SMTP server, so unwanted mail is scored and rejected before
@@ -186,8 +194,9 @@ sections:
       - Milter and HTTP-based MTA Hooks for SpamAssassin, RSPAMD, and external scanners.
     visual:
       kind: screenshot
-      src: /images/webadmin/dashboard-security-home.png
-      alt: Stalwart security dashboard showing spam and phishing filter status
+      src: /images/webadmin/dashboard-threats-light.webp
+      srcDark: /images/webadmin/dashboard-threats-dark.webp
+      alt: Stalwart security dashboard with blocked threats, banned IPs, authentication failures and a fail-to-ban chart
       url: admin.stalw.art / Dashboard / Security
 
   - kind: feature

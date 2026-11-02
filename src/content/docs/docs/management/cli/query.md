@@ -130,7 +130,7 @@ stalwart-cli query log --fields id --json | wc -l
 
 ## Pagination
 
-The server returns query results in pages, and the CLI walks through them on its own. It uses the `anchor` argument of JMAP `/query` ([RFC 8620, section 5.5](https://www.rfc-editor.org/rfc/rfc8620#section-5.5)), which starts each page after the last id of the previous one. One JMAP page returns up to the server's `maxObjectsInGet` limit of rows.
+The server returns query results in pages, and the CLI walks through them on its own. It uses the `anchor` argument of JMAP `/query` ([RFC 8620](https://www.rfc-editor.org/rfc/rfc8620)), which starts each page after the last id of the previous one. One JMAP page returns up to the server's `maxObjectsInGet` limit of rows.
 
 How the rows are shown depends on where the output goes. When stdout is a terminal, the CLI displays them ten at a time and prompts between batches:
 

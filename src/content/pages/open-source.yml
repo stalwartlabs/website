@@ -122,3 +122,6 @@ footerCta:
   ctaSub: Sponsor at $5 per month and receive an Enterprise key in return.
   ctaButton: Become a sponsor
   ctaLink: https://opencollective.com/stalwart
+  secondary:
+    label: Contact us
+    href: /contact

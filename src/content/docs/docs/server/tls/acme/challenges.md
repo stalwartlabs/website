@@ -30,7 +30,7 @@ A TCP proxy that passes the connection through unchanged does not interfere. Fai
 
 ## HTTP-01
 
-HTTP-01 is defined in [RFC 8555](https://www.rfc-editor.org/rfc/rfc8555#section-8.3). The certificate authority requests `http://<name>/.well-known/acme-challenge/<token>` on port 80, and Stalwart answers with the key authorization for the token. Any HTTP listener serves the challenge path, and a request for a token that Stalwart does not know is answered with 404.
+HTTP-01 is defined in [RFC 8555](https://www.rfc-editor.org/rfc/rfc8555). The certificate authority requests `http://<name>/.well-known/acme-challenge/<token>` on port 80, and Stalwart answers with the key authorization for the token. Any HTTP listener serves the challenge path, and a request for a token that Stalwart does not know is answered with 404.
 
 No default listener uses port 80. HTTP-01 therefore needs one of two arrangements:
 
@@ -41,7 +41,7 @@ HTTP-01 is the usual choice when a reverse proxy terminates TLS on port 443 but 
 
 ## DNS-01
 
-DNS-01 is defined in [RFC 8555](https://www.rfc-editor.org/rfc/rfc8555#section-8.4). It proves control of a name through its DNS zone. For each name, Stalwart takes these steps:
+DNS-01 is defined in [RFC 8555](https://www.rfc-editor.org/rfc/rfc8555). It proves control of a name through its DNS zone. For each name, Stalwart takes these steps:
 
 1. It creates a TXT record at `_acme-challenge.<name>`, through the domain's DNS provider.
 2. It waits until the record is visible.

@@ -4,7 +4,7 @@ title: "Reverse DNS"
 description: "Forward-confirmed reverse DNS verification of SMTP clients: how the check works, its modes and replies, and how its result is used."
 ---
 
-Legitimate mail servers almost always have a PTR record for their IP address, and the name in that record resolves back to the same address. This property is called forward-confirmed reverse DNS. Hosts that send spam from compromised machines or from dynamic address ranges often lack it, so its absence is a useful signal about a client. Stalwart checks the property for each SMTP client. RFC 8601 (section 2.7.3) calls this check `iprev`, and it proceeds in three steps:
+Legitimate mail servers almost always have a PTR record for their IP address, and the name in that record resolves back to the same address. This property is called forward-confirmed reverse DNS. Hosts that send spam from compromised machines or from dynamic address ranges often lack it, so its absence is a useful signal about a client. Stalwart checks the property for each SMTP client. RFC 8601 calls this check `iprev`, and it proceeds in three steps:
 
 1. Look up the PTR records of the client's IP address.
 2. Look up the addresses of the names found, at most the first two.

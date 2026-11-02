@@ -22,7 +22,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 > Type: <code>Text</code> · required
 >
-> OpenPGP or S/MIME public key data
+> OpenPGP key or S/MIME certificate, armored, PEM, or binary encoded as base64
 
 
 ##### `description`
@@ -30,6 +30,20 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 > Type: <code>String</code> · required
 >
 > Description of the public key
+
+
+##### `strictKeyWrapEncoding`
+
+> Type: <code>Boolean</code> · default: `false`
+>
+> Use the RFC 5753 key wrap encoding for elliptic-curve S/MIME certificates; required by gpgsm and KMail, may not be readable by Microsoft Outlook
+
+
+##### `authenticatedEncryption`
+
+> Type: <code>Boolean</code> · default: `false`
+>
+> All mail clients holding the private key can read AES-GCM with RSA-OAEP. Applies to S/MIME RSA and elliptic-curve keys. Apple Mail and Thunderbird ESR cannot read it.
 
 
 ##### `createdAt`
@@ -41,16 +55,51 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `expiresAt`
 
-> Type: <code>UTCDateTime?</code>
+> Type: <code>UTCDateTime?</code> · server-set
 >
-> Expiration date of the public key
+> Expiration date of the key, taken from the key itself
 
 
 ##### `emailAddresses`
 
-> Type: <code>Set&lt;EmailAddress&gt;</code>
+> Type: <code>Set&lt;EmailAddress&gt;</code> · server-set
 >
-> Email addresses associated with the public key
+> Email addresses bound to the key, taken from the key itself
+
+
+##### `kind`
+
+> Type: [<code>PublicKeyKind</code>](#publickeykind)<code>?</code> · server-set
+>
+> Type of key, taken from the key itself
+
+
+##### `keyType`
+
+> Type: <code>String?</code> · server-set
+>
+> Type of key and its encryption algorithms, taken from the key itself
+
+
+##### `fingerprints`
+
+> Type: <code>Set&lt;String&gt;</code> · server-set
+>
+> Fingerprints of the keys or certificates used for encryption
+
+
+##### `capabilities`
+
+> Type: <code>Set&lt;</code>[<code>PublicKeyCapability</code>](#publickeycapability)<code>&gt;</code> · server-set
+>
+> Encryption features supported by the key
+
+
+##### `warnings`
+
+> Type: <code>Set&lt;</code>[<code>PublicKeyWarning</code>](#publickeywarning)<code>&gt;</code> · server-set
+>
+> Issues detected in the key that may affect security or compatibility
 
 
 
@@ -115,7 +164,6 @@ curl -X POST https://mail.example.com/jmap/ \
             "create": {
               "new1": {
                 "description": "Example",
-                "emailAddresses": {},
                 "key": "Example"
               }
             }
@@ -247,8 +295,7 @@ stalwart-cli get PublicKey id1
 ```sh
 stalwart-cli create PublicKey \
   --field key=Example \
-  --field description=Example \
-  --field 'emailAddresses={}'
+  --field description=Example
 ```
 
 
@@ -273,5 +320,42 @@ stalwart-cli update PublicKey id1 --field key='updated value'
 stalwart-cli delete PublicKey --ids id1
 ```
 
+
+
+## Enums
+
+
+### PublicKeyKind
+
+
+
+| Value | Label |
+|---|---|
+| `openPgp` | OpenPGP |
+| `smime` | S/MIME |
+
+
+### PublicKeyCapability
+
+
+
+| Value | Label |
+|---|---|
+| `aead` | Authenticated encryption |
+| `postQuantum` | Post-quantum |
+
+
+### PublicKeyWarning
+
+
+
+| Value | Label |
+|---|---|
+| `weakRsa` | RSA key shorter than 3072 bits |
+| `noKnownDecryptor` | No common mail client can decrypt messages for this key type |
+| `postQuantumOnly` | Only post-quantum keys, some clients cannot decrypt |
+| `expiresSoon` | Expires within 14 days |
+| `addressMismatch` | None of the key's addresses belong to this account |
+| `unusable` | The key cannot be used for encryption |
 
 

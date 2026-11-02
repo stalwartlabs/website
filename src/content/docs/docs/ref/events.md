@@ -226,6 +226,8 @@ Metrics reported alongside events are listed on the [Metrics](/docs/ref/metrics)
 | `dkim2.hash-mismatch` | `debug` | DKIM2 hash mismatch | The header or body hash of the message does not match the DKIM2 Message-Instance; the message was modified without a new instance. The details hold the exact error. |
 | `dkim2.recipe-error` | `debug` | DKIM2 recipe error | A DKIM2 Message-Instance recipe is invalid JSON, does not follow the recipe schema, cannot record a changed header field or declares the previous body unreconstructable; the details hold the exact error. |
 | `dkim2.signing-failed` | `warn` | DKIM2 signing failed | A configured DKIM2 signer could not sign an outgoing message, for example because of an invalid selector, signing domain or key; the message is sent without a DKIM2 signature and the cause holds the exact error. |
+| `dkim2.dsn-not-aligned` | `info` | DKIM2 DSN signer not aligned | No local domain with a DKIM2 key matches a recipient in the rt= tag of the reported message, so the delivery status notification is sent with DKIM1 signatures only; the domain holds the configured DSN signing domain. |
+| `dkim2.dsn-propagated` | `info` | DKIM2 DSN propagated | A delivery status notification about a message this server forwarded was rewritten without the forwarding destination and sent to the previous hop named in the DKIM2 chain, instead of to the forwarding address. |
 
 
 ## Dmarc
@@ -250,6 +252,23 @@ Metrics reported alongside events are listed on the [Metrics](/docs/ref/metrics)
 | `dns.record-lookup-failed` | `debug` | DNS record lookup failed | A DNS lookup performed during propagation polling returned an error; check DNS resolver connectivity. |
 | `dns.record-propagated` | `info` | DNS record propagated | The DNS record is now visible on the authoritative nameservers; propagation polling has completed successfully. |
 | `dns.record-propagation-timeout` | `warn` | DNS record propagation timeout | The configured propagation timeout elapsed before the record became visible; the dependent operation (e.g. ACME challenge) may fail. |
+
+
+## Encryption
+
+| Event | Level | Short | Long |
+|---|---|---|---|
+| `encryption.encryption-skipped` | `info` | Encryption skipped | A message that would have been encrypted at rest was stored unencrypted because the account's key could not be used; the details hold the reason. |
+| `encryption.at-rest-encrypted` | `info` | Message encrypted at rest | A message was encrypted with the account's public key before it was stored. |
+| `encryption.gateway-encrypted` | `info` | Gateway encrypted message | The encryption gateway encrypted a message copy for a recipient using a stored, discovered or harvested key. |
+| `encryption.gateway-plaintext` | `info` | Gateway sent plaintext | The encryption gateway delivered a message in plaintext in opportunistic mode; the details hold the reason. |
+| `encryption.gateway-bounced` | `warn` | Gateway bounced message | The encryption gateway rejected a recipient, for example because required mode found no usable key or the policy could not be evaluated; the recipient bounces on the first queue run and the details hold the reason. |
+| `encryption.key-lookup` | `debug` | Key lookup | A recipient key lookup against a discovery source completed; the details hold the source, result and latency. |
+| `encryption.key-harvested` | `info` | Key harvested | A recipient key was learned from a signed message or an Autocrypt header from an authenticated sender. |
+| `encryption.key-change` | `warn` | Key change pending approval | A newly discovered or harvested key differs from the active key for an address and is held as its replacement key; the active key stays in use until the replacement is approved or, for an address that is not pinned, the active key expires. |
+| `encryption.crl-fetch-failed` | `warn` | CRL download failed | A certificate revocation list could not be downloaded; a verified certificate keeps its trust for up to 11 days after its last successful check, then drops to unverified. |
+| `encryption.dnssec-bogus` | `warn` | DNSSEC validation failed | A key lookup over DNS returned a bogus or indeterminate DNSSEC answer; the lookup is treated as a temporary failure. |
+| `encryption.key-unusable` | `trace` | Encryption key unusable | An account's stored encryption-at-rest key could not be used when its settings were loaded, for example because it expired or no longer passes validation; new messages are stored unencrypted. The details hold the reason. |
 
 
 ## Eval
@@ -1054,3 +1073,4 @@ Events carry structured key/value pairs. The recognised keys are listed below.
 | `probability` | Probability |
 | `confidence` | Confidence |
 | `tier` | Tier |
+| `fingerprint` | Fingerprint |

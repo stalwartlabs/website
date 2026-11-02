@@ -344,7 +344,7 @@ OpenTelemetry gRPC metrics exporter.
 
 > Type: <code>Uri?</code>
 >
-> URL of the OpenTelemetry collector, defaults to http://localhost:4317
+> URL of the OpenTelemetry collector; when unset, the collector on localhost port 4317 is used
 
 
 ##### `interval`

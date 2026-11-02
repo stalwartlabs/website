@@ -204,7 +204,7 @@ Is Monday still good for the review?
 
 The `:copy` argument makes the difference between forwarding a copy and moving the message. Without it, the message is forwarded and not stored. The number of forwards per message is limited by [`maxRedirects`](/docs/ref/object/sieve-user-interpreter#maxredirects), <!-- default:SieveUserInterpreter.maxRedirects -->1<!-- /default --> by default.
 
-Forwarding has a known weakness with sender authentication. The forwarded copy keeps the original sender, and Stalwart does not rewrite it with the Sender Rewriting Scheme (SRS), a technique that replaces the envelope sender with an address of the forwarding server. The receiving server may therefore find that Stalwart is not authorised by the sender's SPF record. When the sender's domain also enforces DMARC, and the message carries no valid aligned DKIM signature, the receiving server may reject the copy.
+Forwarding has a known weakness with sender authentication. Stalwart sends the forwarded copy with the address of the account running the script as its envelope sender, and by default signs it with DKIM for that account's domain ([`dkimSignDomain`](/docs/ref/object/sieve-user-interpreter#dkimsigndomain)). The `From` header stays unchanged. The receiving server therefore checks SPF against the account's domain, and delivery status notifications return to the account, not to the original sender. DMARC needs SPF or DKIM to align with the `From` domain, which neither of these does when the original sender is on another domain, so the copy passes DMARC only through the original sender's DKIM signature. When the sender's domain enforces DMARC, and the message carries no valid aligned DKIM signature, the receiving server may reject the copy.
 
 ### File by sub-address
 

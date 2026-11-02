@@ -59,4 +59,4 @@ Detection does not always succeed, for example when the text is too short. The l
 
 ## Encrypted messages
 
-When [encryption at rest](/docs/encryption/) is enabled for an account, messages are encrypted before they are stored, and the index is built from the encrypted form. Only the parts that remain readable can be indexed. The sender and recipient addresses and the subject stay unencrypted in the outer message, so they are searchable. The other unencrypted header fields are searchable too when `headers` is indexed. The body and the attachments are not searchable.
+When [encryption at rest](/docs/encryption/at-rest) is enabled for an account, messages are encrypted before they are stored, and the index is built from the encrypted form. Only the parts that remain readable can be indexed. The sender and recipient addresses and the subject stay unencrypted in the outer message, so they are searchable. The other unencrypted header fields are searchable too when `headers` is indexed. The body and the attachments are not searchable.

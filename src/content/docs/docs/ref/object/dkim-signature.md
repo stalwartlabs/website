@@ -387,9 +387,9 @@ DKIM2 (RSA SHA-256)
 
 
 
-### `@type: "Dkim2MlDsa44Ed25519Sha512"`
+### `@type: "Dkim2MlDsa44"`
 
-DKIM2 (ML-DSA-44 + Ed25519, SHA-512)
+DKIM2 (ML-DSA-44)
 
 
 ##### `flags`

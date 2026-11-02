@@ -51,7 +51,7 @@ sections:
 
   - kind: prose
     eyebrow: Track record
-    title: Young product, broad adoption.
+    title: Broad adoption in a few years.
     body: >-
       Stalwart Labs was founded in July 2019. Work on the Stalwart
       server began in September 2021, and the first public release
@@ -70,7 +70,7 @@ sections:
   - kind: prose
     band: alt
     eyebrow: The team
-    title: Distributed team, global product.
+    title: A distributed team.
     body: >-
       Stalwart Labs is incorporated in both the United States and the
       United Kingdom. The team works remotely, distributed across

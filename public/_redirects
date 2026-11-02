@@ -12,11 +12,13 @@
 # now point at the renamed install landing page (Welcome to Stalwart).
 /docs                                    /docs/install/                  301
 /docs/install/get-started                /docs/install/                  301
+/docs/install/setup-wizard               /docs/install/platform/         301
 
 # Section overview pages were renamed to index.md; redirect old URLs.
 /docs/storage/overview                   /docs/storage/                  301
 /docs/auth/overview                      /docs/auth/                     301
 /docs/encryption/overview                /docs/encryption/               301
+/docs/encryption/manage                  /docs/encryption/at-rest        301
 /docs/mta/overview                       /docs/mta/                      301
 /docs/email/overview                     /docs/email/                    301
 /docs/collaboration/overview             /docs/collaboration/            301

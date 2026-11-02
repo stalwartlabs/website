@@ -6,7 +6,7 @@ description: "Internal or external directory: who owns accounts and passwords in
 
 Every mail server needs to know who its users are: which names and passwords may sign in, and which addresses belong to whom. Stalwart calls the source of this information the directory. A directory supplies the accounts that can sign in to Stalwart and the addresses for which it accepts mail.
 
-Stalwart can keep this information itself, in its internal directory, or ask an identity system that the organisation already runs. The administrator makes the choice in the [setup wizard](/docs/install/setup-wizard#step-3-account-directory), and it decides where accounts are created, where passwords are checked, and which system administrators work in for day-to-day account management. The installation tutorials use the internal directory, and this page explains when an external one is the better choice.
+Stalwart can keep this information itself, in its internal directory, or ask an identity system that the organisation already runs. The administrator makes the choice in the setup wizard, described in Step 3 of the [installation tutorials](/docs/install/platform/), and it decides where accounts are created, where passwords are checked, and which system administrators work in for day-to-day account management. The installation tutorials use the internal directory, and this page explains when an external one is the better choice.
 
 ## Internal and external directories
 

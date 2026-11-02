@@ -40,7 +40,7 @@ The fields of aggregate reports decide how often they are sent, how large they m
 
 The default sender addresses, organisation name and signing domains are built from `system('report_domain')`. This expression returns the [report domain](/docs/mta/reports/#shared-settings) shared by all reports, or the default domain unless the report domain is set.
 
-The subject of an aggregate report is not configurable. [RFC 9990, section 3.5.2](https://www.rfc-editor.org/rfc/rfc9990#section-3.5.2) requires a fixed format, `Report Domain: <domain> Submitter: <submitter> Report-ID: <<id>>`. In it, `<domain>` is the domain the report is about and `<submitter>` is the [`outboundReportSubmitter`](/docs/ref/object/report-settings#outboundreportsubmitter) host name.
+The subject of an aggregate report is not configurable. [RFC 9990](https://www.rfc-editor.org/rfc/rfc9990) requires a fixed format, `Report Domain: <domain> Submitter: <submitter> Report-ID: <<id>>`. In it, `<domain>` is the domain the report is about and `<submitter>` is the [`outboundReportSubmitter`](/docs/ref/object/report-settings#outboundreportsubmitter) host name.
 
 The frequency values are constants, so they are written without quotes: `daily`, not `'daily'`. This matters because a mistake goes unnoticed. A quoted value, or any other value, is not a valid frequency, and it disables aggregate reporting for the messages it applies to without a warning.
 

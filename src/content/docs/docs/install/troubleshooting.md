@@ -22,9 +22,9 @@ After the setup, the WebUI is at `https://<hostname>/admin`, and sign-in works o
 
 The wizard refuses a hostname or domain that does not end in a public suffix such as `.com`, or in one of the reserved test domains, with `Invalid server hostname` or `Invalid default domain`. It checks both names only when **Finish setup** is pressed on the last screen: it then returns to the first screen with the error, and saves nothing.
 
-The wizard writes nothing when the directory or database already holds the data of a Stalwart server, and reports `The selected data store has already been initialized.` Do not complete the wizard for a server that already has data. Restore its `config.json` instead, as described in [Setup wizard on an existing server](/docs/configuration/bootstrap-mode#setup-wizard-on-an-existing-server).
+The wizard writes nothing when the directory or database already holds the data of a Stalwart server, and reports `The selected data store has already been initialized.` Do not complete the wizard for a server that already has data. Restore its `config.json` instead, as described in [Setup wizard on an existing server](/docs/configuration/bootstrap-mode#setup-wizard-on-an-existing-server). A data store created by an older Stalwart version is refused in the same way.
 
-[Setup wizard](/docs/install/setup-wizard) lists every field and error of the wizard.
+The wizard connects to the selected data store before it accepts the form. When the store does not answer, it reports `Timed out probing the data store after 30 seconds.`, followed by hints for the selected backend. Check the host, port, credentials and network path to the database, then submit the form again.
 
 ## Setup wizard appears again
 

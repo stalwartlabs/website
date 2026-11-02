@@ -10,7 +10,7 @@ This feature is available in the [Enterprise edition](/docs/server/enterprise) o
 
 SCIM leaves many parts of the protocol optional, and identity providers differ in which parts they use. This page describes what Stalwart implements: the endpoints it serves, the protocol features it supports and the errors it returns. It is the reference to consult when reading a provisioning log, or when writing a provisioning script against the endpoint.
 
-Every endpoint is served under `/scim/v2` on the HTTP listeners. Requests and responses, error responses included, use the `application/scim+json` media type that [RFC 7644](https://www.rfc-editor.org/rfc/rfc7644) section 3.1 specifies. Some clients send a preflight `OPTIONS` request before their first call, and the server answers such a request to any path under the base with `204 No Content`.
+Every endpoint is served under `/scim/v2` on the HTTP listeners. Requests and responses, error responses included, use the `application/scim+json` media type that [RFC 7644](https://www.rfc-editor.org/rfc/rfc7644) specifies. Some clients send a preflight `OPTIONS` request before their first call, and the server answers such a request to any path under the base with `204 No Content`.
 
 ## Endpoints
 
@@ -31,11 +31,11 @@ The server serves the following endpoints:
 | `/scim/v2/Schemas`, `/scim/v2/Schemas/{urn}` | `GET` | None |
 | `/scim/v2/Me` | any | Returns `501` |
 
-`/ServiceProviderConfig`, `/ResourceTypes` and `/Schemas` are the discovery endpoints, which describe the service to a client. They can be read without authentication, because clients read them before credentials have been configured. [RFC 7643](https://www.rfc-editor.org/rfc/rfc7643) section 5 recommends in particular that the authentication schemes be readable without prior authentication. The discovery endpoints expose no account data. To hide them as well, restrict the path by address ([Restricting network access](/docs/auth/scim/configuration#restricting-network-access)).
+`/ServiceProviderConfig`, `/ResourceTypes` and `/Schemas` are the discovery endpoints, which describe the service to a client. They can be read without authentication, because clients read them before credentials have been configured. [RFC 7643](https://www.rfc-editor.org/rfc/rfc7643) recommends in particular that the authentication schemes be readable without prior authentication. The discovery endpoints expose no account data. To hide them as well, restrict the path by address ([Restricting network access](/docs/auth/scim/configuration#restricting-network-access)).
 
-A discovery endpoint cannot be filtered. A `filter` parameter on one is refused with `403 Forbidden`, as RFC 7644 section 4 recommends, so that a client cannot wrongly assume that the filter matched.
+A discovery endpoint cannot be filtered. A `filter` parameter on one is refused with `403 Forbidden`, as RFC 7644 recommends, so that a client cannot wrongly assume that the filter matched.
 
-`/Me` is defined in RFC 7644 section 3.11 as an alias for the resource of the authenticated subject. It serves end-user self-service. A SCIM client, however, authenticates as the provisioning account, which is not a resource it provisions. The server therefore returns `501 Not Implemented`, the response the specification recommends for a server that does not support the endpoint.
+`/Me` is defined in RFC 7644 as an alias for the resource of the authenticated subject. It serves end-user self-service. A SCIM client, however, authenticates as the provisioning account, which is not a resource it provisions. The server therefore returns `501 Not Implemented`, the response the specification recommends for a server that does not support the endpoint.
 
 A request to an unknown path under `/scim/v2` returns `404 Not Found`. A known path called with an unsupported method returns `405 Method Not Allowed`, with an `Allow` header that names the accepted methods.
 
@@ -61,7 +61,7 @@ A client learns what the server supports from `GET /scim/v2/ServiceProviderConfi
 
 `GET /scim/v2/Schemas` returns the definitions of the attributes the server stores. [Attribute mapping](/docs/auth/scim/mapping) describes what each of them does.
 
-Requests may contain more than that set, and the standard expects this. RFC 7643 section 4.1 defines a User resource far larger than a mail server stores. RFC 7644 section 3.1 states that a client does not need to remove read-only attributes from a `PUT` request, which the server ignores, and that a client "SHOULD NOT expect a service provider to return SCIM resources with exactly the same schema and values as submitted". Identity providers rely on this, and they do not shape their requests from the `/Schemas` document.
+Requests may contain more than that set, and the standard expects this. RFC 7643 defines a User resource far larger than a mail server stores. RFC 7644 states that a client does not need to remove read-only attributes from a `PUT` request, which the server ignores, and that a client "SHOULD NOT expect a service provider to return SCIM resources with exactly the same schema and values as submitted". Identity providers rely on this, and they do not shape their requests from the `/Schemas` document.
 
 Stalwart therefore accepts the attributes that it does not store, as long as they belong to a schema it knows. These are the attributes of the core RFC 7643 User and Group schemas and those of the enterprise user extension. The server accepts them in `POST`, `PUT` and `PATCH` requests alike, and it neither stores nor returns them.
 
@@ -69,7 +69,7 @@ The structured name is the exception. When both `displayName` and `name.formatte
 
 Anything else is refused with `400 Bad Request` and the `scimType` `invalidSyntax`. This covers an attribute that belongs to no schema the server knows, a misspelled attribute such as `dispalyName`, an unknown schema URI, a duplicated attribute and a missing `schemas` value.
 
-Section 5.3 of the [SCIM interoperability profile](https://datatracker.ietf.org/doc/draft-zollner-scim-interop-profile/) requires every undefined attribute to be rejected. Where the two disagree, Stalwart follows RFC 7644, and it therefore reports `interopProfileConformant` as `false`. Every other requirement of the profile is met ([Undefined attributes](/docs/auth/scim/provisioning#undefined-attributes)).
+The [SCIM interoperability profile](https://datatracker.ietf.org/doc/draft-zollner-scim-interop-profile/) requires every undefined attribute to be rejected. Where the two disagree, Stalwart follows RFC 7644, and it therefore reports `interopProfileConformant` as `false`. Every other requirement of the profile is met ([Undefined attributes](/docs/auth/scim/provisioning#undefined-attributes)).
 
 ## Filtering
 
@@ -94,7 +94,7 @@ Most filters are answered from an index, but some attributes are evaluated more 
 
 Large result sets are returned in pages, and both pagination styles that SCIM defines are available:
 
-- Index-based pagination follows RFC 7644 section 3.4.2.4. The client sends `startIndex` and `count`, and the response reports `totalResults`, `startIndex` and `itemsPerPage`.
+- Index-based pagination follows RFC 7644. The client sends `startIndex` and `count`, and the response reports `totalResults`, `startIndex` and `itemsPerPage`.
 - Cursor-based pagination follows [RFC 9865](https://www.rfc-editor.org/rfc/rfc9865). The client sends `cursor`, and the response returns `nextCursor` until the results are exhausted. A cursor is bound to the query that produced it, so presenting it with a different filter or sort order is refused.
 
 A page holds 100 resources, unless `count` sets another size, up to 200.
@@ -122,7 +122,7 @@ Each operation reports its own status, and a failed operation does not undo the 
 
 `POST /scim/v2/Users/.search` and `POST /scim/v2/Groups/.search` accept the same parameters as a `GET` query. The parameters travel in a `SearchRequest` body instead of the query string. `POST /scim/v2/.search` runs the query across both resource types and returns a single combined `ListResponse`.
 
-Moving the query into the body keeps personal data out of request URIs. RFC 7644 section 7.5.2 advises this, because proxies and web servers commonly log URIs. Stalwart's own `scim.query` event records the filter in both cases.
+Moving the query into the body keeps personal data out of request URIs. RFC 7644 advises this, because proxies and web servers commonly log URIs. Stalwart's own `scim.query` event records the filter in both cases.
 
 ## Errors
 

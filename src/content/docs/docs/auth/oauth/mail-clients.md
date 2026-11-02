@@ -58,7 +58,7 @@ A version 1 header, or a version 2 header without the TLV, makes the connection 
 
 A token used on IMAP, POP3, SMTP or ManageSieve must carry the `urn:ietf:params:oauth:scope:mail` scope. API keys have no scopes, so they are not subject to this check.
 
-When a bearer mechanism fails, the server does not simply reject the attempt. It answers as RFC 7628 sections 3.2.2 and 3.2.3 describe, in three steps:
+When a bearer mechanism fails, the server does not simply reject the attempt. It answers as RFC 7628 describes, in three steps:
 
 1. The server sends a JSON error document as a SASL challenge, which tells the client what went wrong.
 2. The client replies with a single `%x01` byte (`AQ==` in base64) to acknowledge it.

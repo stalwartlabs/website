@@ -6,7 +6,7 @@ description: "The mode in which a server without a configuration file starts: th
 
 A newly installed server has no configuration, so it does not yet know where to store its data or which services to offer. Bootstrap mode is the state in which such a server waits to be configured.
 
-The server enters bootstrap mode whenever the configuration file named by `--config` or `CONFIG_PATH` does not exist at startup. In this mode it starts no mail services. It serves only the [setup wizard](/docs/install/setup-wizard), which creates the configuration file and the initial configuration.
+The server enters bootstrap mode whenever the configuration file named by `--config` or `CONFIG_PATH` does not exist at startup. In this mode it starts no mail services. It serves only the setup wizard, described in Step 3 of the [installation tutorials](/docs/install/platform/), which creates the configuration file and the initial configuration.
 
 ## Services in bootstrap mode
 
@@ -18,7 +18,7 @@ No configuration file was found. Port <port> is open for initial setup.
 
 The listener has no protection against password guessing. Auto-ban, rate limits and HTTP access control rules are not applied, and permissive CORS headers are sent. The port must therefore stay unreachable from the internet while the server is in bootstrap mode, as described in [Protect the setup listener](/docs/install/security#protect-the-setup-listener).
 
-The WebUI and the API are available on the listener, but only for the setup. The configuration API accepts only the [Bootstrap](/docs/ref/object/bootstrap) object. It refuses requests for any other object with the following error, which reads `can be accessed` in place of `can be modified` for reads:
+The WebUI and the API are available on the listener, but only for the setup. The configuration API accepts only the [Bootstrap](/docs/ref/object/bootstrap) object, whose fields are those of the setup wizard, so a deployment tool can configure a new server by submitting this object instead of completing the wizard. The API refuses requests for any other object with the following error, which reads `can be accessed` in place of `can be modified` for reads:
 
 ```text
 The server is in bootstrap mode. Only the 'Bootstrap' object type can be modified until the bootstrap process is complete.

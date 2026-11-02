@@ -111,7 +111,7 @@ The script sees the envelope sender, the recipient and the original recipient. I
 
 Use `redirect :copy` in the user's Sieve script. It forwards a copy and keeps the message in the mailbox, whereas `redirect` without `:copy` forwards the message without storing it.
 
-Expect some forwarded mail to be rejected by the receiving server. Stalwart does not rewrite the envelope sender, so the forwarded message keeps its original sender, which can fail that server's checks. See [Forward a copy](/docs/sieve/examples#forward-a-copy).
+Expect some forwarded mail to be rejected by the receiving server. The forwarded message keeps its `From` header, so a sender's domain that enforces DMARC can fail that server's checks when the message carries no valid aligned DKIM signature. See [Forward a copy](/docs/sieve/examples#forward-a-copy).
 
 ### How do I add a disclaimer to outgoing mail?
 

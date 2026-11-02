@@ -13,7 +13,7 @@ interface Props {
 const { title, description, lastUpdated, pdfHref, navIndex } = Astro.props;
 const current = navIndex.find((e) => e.current);
 ---
-<Base title={title} description={description}>
+<Base title={title} description={description} ctaSecondary={{ label: "Contact us", href: "/contact" }}>
   <section class="wrap lf" aria-labelledby="lf-title">
     <div class="lf__layout">
       <header class="tile lf__header">

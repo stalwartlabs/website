@@ -44,8 +44,50 @@ The tool has the following limitations:
 - 0.16 stores a trace when it ends, under an identifier taken when it started. Each run therefore reads traces again from six hours before the newest trace it has seen, and copies the ones it has not seen yet. A trace that 0.16 stores more than six hours after it started is not copied, and the verification after the final run reports it as missing. Metrics are read again from ten minutes back, for the same reason.
 - Copied metrics are stored as written by node 0. 0.16 records the writing node in the metric identifier, but the 1.0 cluster may number its nodes differently.
 
+## Missing spam training sample blobs
+
+A 0.16 store can hold a spam training sample whose message blob no longer exists. The tool cannot copy such a sample, so it reports a `skipped` error with the message `blob <hash> is missing in the source; the object was not copied`. Samples only feed the spam classifier, so the loss does not affect mailboxes. `run --final --allow-errors` accepts these errors, and verification then counts the matching `the converted source object is missing in the target` rows as explained.
+
+## Open file limit
+
+RocksDB keeps every table file of a store open, and a RocksDB deployment has one such store on each side of the migration. A large store can therefore exhaust the limit on open files of the process, and the run fails with `Too many open files`. The tool raises its soft limit to the hard limit when it starts, so this error means the hard limit is too low. The `--concurrency` option has no effect on it. Raise the hard limit of the process that starts the tool, for example with `ulimit -Hn 65536` as root, or with `--ulimit nofile=65536:65536` when the tool runs in Docker, and then repeat the command with the same state directory.
+
 ## WebUI bundle
 
 Stalwart 1.0 loads a WebUI bundle only when it contains an application manifest. The 2.x bundles have one, and the 1.x bundles lack it. A 0.16 deployment that still named a 1.x bundle would therefore answer `404 Not Found` on `/admin` and `/account` after the switch.
 
 The migration handles the official bundle on its own: it replaces the URL of the official 1.x bundle in the `resourceUrl` field of each [Application](/docs/ref/object/application) with the official 2.x bundle. A custom bundle URL is kept, and the report lists it with the warning `custom WebUI bundle URL kept; v1 requires a WebUI v2 bundle (manifest major version 2), otherwise /admin and /account are not served`. Before the switch, point `resourceUrl` at a 2.x build of the custom bundle, or at the official bundle.
+
+## WebUI sign-in through an external provider
+
+The WebUI has no built-in client id. On a server that signs users in through an [OpenID Connect directory](/docs/auth/backend/oidc), when the provider does not advertise Client ID Metadata Document support and the Application has no `oauthClientId`, the sign-in page shows:
+
+```text
+Sign-in is not configured: the identity provider does not support client metadata documents and no OAuth client id is configured for this application.
+```
+
+The repair gives the WebUI a static client id. It must be set in the right order, because the WebUI uses a static id for every sign-in, including those of the recovery administrator and of other accounts that sign in through Stalwart's own authorization server. That server answers `Unknown client id` until a first-party [OAuthClient](/docs/auth/oauth/clients) with the same id exists.
+
+1. Make sure the provider has a public client for the WebUI, as listed in the [provider checklist](/docs/auth/backend/oidc#provider-checklist).
+2. Create the first-party OAuthClient with that client id. The command below runs as the [recovery administrator](/docs/configuration/recovery-mode#recovery-administrator), because only a superuser can enable `firstParty`, and the WebUI has no secret, so the object has none either.
+3. Set the id as `oauthClientId` on each [Application](/docs/ref/object/application) that serves the WebUI.
+
+```sh
+stalwart-cli create OAuthClient --json '{
+  "clientId": "mail-webui",
+  "description": "Stalwart WebUI",
+  "firstParty": true,
+  "redirectUris": {
+    "https://mail.example.org/admin/oauth/callback": true,
+    "https://mail.example.org/account/oauth/callback": true
+  },
+  "postLogoutRedirectUris": {
+    "https://mail.example.org/admin/login": true,
+    "https://mail.example.org/account/login": true
+  }
+}'
+
+stalwart-cli update Application <application id> --field oauthClientId=mail-webui
+```
+
+The WebUI client is separate from the client in `introspectionClientId` of the directory, which only exists when `opaqueTokenValidation` uses introspection. The WebUI runs in the browser and cannot keep a secret, so its client stays public, while the introspection client is a confidential client of its own.

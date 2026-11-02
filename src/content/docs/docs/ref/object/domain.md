@@ -433,8 +433,8 @@ Automatic DKIM key generation and rotation settings.
 > Type: <code>String</code> · default: `"v{version}-{algorithm}-{date-%Y%m%d}"`
 >
 > Template for generating DKIM selectors during key rotation. Supported variables:
-> - `{algorithm}`: signing algorithm in lowercase (`rsa`, `ed25519`, `mldsa44-ed25519`)
-> - `{hash}`: hash algorithm (`sha256`, `sha512`)
+> - `{algorithm}`: signing algorithm in lowercase (`rsa`, `ed25519`, `mldsa44`)
+> - `{hash}`: hash algorithm (`sha256`, or `none` for ML-DSA-44)
 > - `{version}`: DKIM version number (`1`, `2`)
 > - `{date-<fmt>}`: current UTC date formatted with strftime specifiers (e.g. `{date-%Y%m%d}`)
 > - `{epoch}`: current UTC unix timestamp
@@ -595,7 +595,7 @@ A single condition-result pair in an expression.
 | `Dkim1RsaSha256` | DKIM1 (RSA SHA-256) |
 | `Dkim2Ed25519Sha256` | DKIM2 (Ed25519 SHA-256) |
 | `Dkim2RsaSha256` | DKIM2 (RSA SHA-256) |
-| `Dkim2MlDsa44Ed25519Sha512` | DKIM2 (ML-DSA-44 + Ed25519, SHA-512) |
+| `Dkim2MlDsa44` | DKIM2 (ML-DSA-44) |
 
 
 ### DnsRecordType

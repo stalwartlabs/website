@@ -5,6 +5,7 @@ description: >-
 slug: /enterprise
 
 hero:
+  layout: stacked
   eyebrow: Enterprise edition
   title: Stalwart at enterprise scale
   titleHighlight: enterprise scale
@@ -28,9 +29,12 @@ hero:
     - Per-mailbox tiered pricing
   visual:
     kind: screenshot
-    src: /images/webadmin/dashboard-performance.png
-    alt: Stalwart performance dashboard with ingestion time, indexing time, DNS lookup time and server memory, plus an ingest pipeline chart
-    url: admin.stalw.art / Dashboard / Performance
+    src: /images/webadmin/dashboard-authentication-light.webp
+    srcDark: /images/webadmin/dashboard-authentication-dark.webp
+    width: 1440
+    height: 900
+    alt: Stalwart message authentication dashboard with SPF, DKIM and DMARC failure counters and pass/fail charts
+    url: admin.stalw.art / Dashboard / Message Authentication
 
 sections:
   - kind: feature
@@ -98,8 +102,9 @@ sections:
         href: /docs/storage/
     visual:
       kind: screenshot
-      src: /images/webadmin/undelete.png
-      alt: Stalwart undelete interface
+      src: /images/webadmin/archived-items-light.webp
+      srcDark: /images/webadmin/archived-items-dark.webp
+      alt: Stalwart archived email with its original sender, subject, received date and raw message, ready to restore
       url: admin.stalw.art / Account / Archived Items
 
   - kind: feature
@@ -126,14 +131,14 @@ sections:
         href: /docs/telemetry/alerts
     visual:
       kind: screenshot
-      src: /images/webadmin/live-tracing.png
-      alt: Stalwart live tracing pane streaming SMTP connection and command events as they happen
+      src: /images/webadmin/live-tracing-light.webp
+      srcDark: /images/webadmin/live-tracing-dark.webp
+      alt: Stalwart live tracing streaming TLSA match and DANE authentication events as they happen
       url: admin.stalw.art / Observability / Live Tracing
-      glow: true
 
   - kind: feature
     eyebrow: AI-assisted spam filtering and Sieve scripting
-    title: AI in the spam filter, not just on the side.
+    title: AI inside the spam filter.
     body: >-
       The Enterprise spam classifier can call out to a large language
       model alongside the statistical classifier, the blocklist
@@ -166,7 +171,7 @@ sections:
     reverse: true
     band: alt
     eyebrow: Masked email
-    title: Disposable addresses for users who care about privacy.
+    title: Masked email addresses for privacy.
     body: >-
       Privacy-conscious users want a different email address for every
       site they sign up to, so a leak at one site does not become spam
@@ -184,13 +189,15 @@ sections:
         href: /docs/email/management/masked-email
     visual:
       kind: screenshot
-      src: /images/webadmin/masked-email.png
-      alt: Stalwart Account Manager masked email page listing disposable addresses with description and enabled toggle
-      url: account.stalw.art / Masked Addresses
+      src: /images/webadmin/masked-email-light.webp
+      srcDark: /images/webadmin/masked-email-dark.webp
+      width: 940
+      alt: Stalwart masked addresses list with generated addresses, descriptions, target domains and enabled state
+      url: admin.stalw.art / Account / Masked Addresses
 
   - kind: feature
     eyebrow: SCIM provisioning
-    title: Let your identity provider open and close the mailbox.
+    title: Mailbox provisioning from your identity provider.
     body: >-
       A new hire needs a working mailbox on their first morning, not
       after their first login, and a departing employee's mailbox
@@ -240,7 +247,7 @@ sections:
 
   - kind: list
     eyebrow: For mail-hosting providers and MSPs
-    title: One deployment, many customers, your brand.
+    title: Multi-tenant hosting under your brand.
     body: >-
       For ISPs, MSPs and white-label hosters, the operational features
       above combine into a single hosting platform.
@@ -278,3 +285,6 @@ footerCta:
   ctaSub: Full feature set, no commitment, instant key issuance.
   ctaButton: Start a trial
   ctaLink: https://license.stalw.art/trial
+  secondary:
+    label: See pricing
+    href: /pricing

@@ -7,6 +7,7 @@ interface Props {
   ctaSub?: string;
   ctaButton?: string;
   ctaLink?: string;
+  ctaSecondary?: { label: string; href: string; external?: boolean };
   hideCta?: boolean;
 }
 
@@ -15,6 +16,7 @@ const {
   ctaSub = "Install Stalwart in minutes, then keep it running for years.",
   ctaButton = "Get Stalwart",
   ctaLink = "/docs/install/",
+  ctaSecondary = { label: "Documentation", href: "/docs/" },
   hideCta = false,
 } = Astro.props;
 
@@ -60,7 +62,7 @@ const socials = [
         <div class="cta-copy">
           <h2 id="footer-cta-title" class="h-cta">{cta}</h2>
           <p class="cta-sub">{ctaSub}</p>
-          <div class="actions"><a class="btn btn-on-ink" href="/pricing">See pricing</a></div>
+          <div class="actions"><a class="btn btn-on-ink" href={ctaSecondary.href} {...(ctaSecondary.external ? { target: "_blank", rel: "noopener" } : {})}>{ctaSecondary.label}</a></div>
         </div>
         <a class="cta-go" href={ctaLink} {...(ctaLink.startsWith("http") ? { target: "_blank", rel: "noopener" } : {})}>
           <span class="cta-go-ic"><Icon name="arrow-up-right" size={24} /></span>

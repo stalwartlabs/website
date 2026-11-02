@@ -5,6 +5,7 @@ description: >-
 slug: /collaboration
 
 hero:
+  layout: stacked
   eyebrow: Collaboration
   title: Collaboration, included with your mail
   titleHighlight: included with your mail
@@ -22,9 +23,12 @@ hero:
     - DAV and JMAP
   visual:
     kind: screenshot
-    src: /images/webadmin/calendar-edit.png
-    alt: Stalwart calendar settings
-    url: admin.stalw.art / Calendars
+    src: /images/webadmin/calendar-edit-light.webp
+    srcDark: /images/webadmin/calendar-edit-dark.webp
+    width: 1440
+    height: 900
+    alt: Stalwart calendar editor with name, description, colour and display settings
+    url: admin.stalw.art / Account / Calendars
 
 sections:
   - kind: feature
@@ -141,9 +145,10 @@ sections:
       - Standard sharing protocols on both DAV and JMAP clients.
     visual:
       kind: screenshot
-      src: /images/webadmin/calendar-share.png
-      alt: Stalwart calendar sharing settings
-      url: admin.stalw.art / Calendars
+      src: /images/webadmin/calendar-share-light.webp
+      srcDark: /images/webadmin/calendar-share-dark.webp
+      alt: Stalwart calendar sharing with per-account rights for free/busy, reading, writing, RSVP and sharing
+      url: admin.stalw.art / Account / Calendars
   
   - kind: feature
     reverse: true

@@ -523,6 +523,7 @@ Details of a delivery error including the triggering command.
 | `rateLimited` | Delivery delayed due to rate limiting |
 | `concurrencyLimited` | Delivery delayed due to connection limits |
 | `io` | Network I/O error occurred |
+| `encryptionError` | The encryption gateway rejected the recipient: no usable key where encryption is required, a policy that could not be evaluated, or a message that could not be encrypted |
 
 
 ### RecipientFlag

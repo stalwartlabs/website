@@ -89,9 +89,6 @@ const side = hero.visual ? "visual" : hero.aside ? "aside" : null;
     grid-column: span 6;
     min-height: 460px;
   }
-  .hero-grid :global(.hero-visual.shot) {
-    --vis: 0.62;
-  }
 
   .hero-banner {
     display: inline-flex;
@@ -189,7 +186,6 @@ const side = hero.visual ? "visual" : hero.aside ? "aside" : null;
 
   .hero-grid--stacked {
     min-height: 0;
-    grid-auto-rows: 1fr;
   }
   .hero-grid--stacked .hero-copy {
     grid-column: 1 / -1;
@@ -229,9 +225,16 @@ const side = hero.visual ? "visual" : hero.aside ? "aside" : null;
     grid-column: 2;
     grid-row: 4;
   }
-  .hero-grid--stacked :global(.hero-visual) {
+  .hero-grid.hero-grid--stacked :global(.hero-visual) {
     grid-column: 1 / -1;
     min-height: 0;
+  }
+  .hero-grid--stacked :global(.hero-visual.shot) {
+    aspect-ratio: 16 / 9;
+  }
+  .hero-grid--stacked :global(.hero-visual.visual-dg svg) {
+    max-width: 860px;
+    margin-inline: auto;
   }
 
   @media (max-width: 1023px) {
@@ -255,18 +258,8 @@ const side = hero.visual ? "visual" : hero.aside ? "aside" : null;
     .hero-grid :global(.hero-visual) {
       min-height: 340px;
     }
-    .hero-grid :global(.hero-visual.shot) {
-      --vis: 0.34;
-    }
-    .hero-grid--stacked {
-      grid-auto-rows: auto;
-    }
-    .hero-grid--stacked :global(.hero-visual) {
-      min-height: 0;
+    .hero-grid--stacked :global(.hero-visual.shot) {
       aspect-ratio: 4 / 3;
-    }
-    .hero-grid--stacked :global(.hero-visual .shot-frame img) {
-      width: calc(100cqw / 0.5);
     }
   }
 </style>

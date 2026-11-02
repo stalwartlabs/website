@@ -163,9 +163,26 @@ sections:
           - ["SCIM 2.0 provisioning (Entra ID, Okta, Keycloak)", "", "yes"]
           - ["Per-domain directory backends", "", "yes"]
           - ["LDAP failover to secondary servers", "", "yes"]
-      - title: Security and encryption
+      - title: Encryption
         rows:
-          - ["Encryption at rest (S/MIME, OpenPGP)", "yes", "yes"]
+          - ["Encryption at rest with each user's OpenPGP key or S/MIME certificate", "yes", "yes"]
+          - ["Encryption of sent copies and drafts uploaded by clients", "yes", "yes"]
+          - ["Encryption gateway for outbound mail (opportunistic or required)", "yes", "yes"]
+          - ["Per-recipient encrypted copies with DKIM and DKIM2 re-signing", "yes", "yes"]
+          - ["Header protection with Subject hiding (RFC 9788)", "yes", "yes"]
+          - ["Recipient key discovery (Web Key Directory, keys.openpgp.org, HKP)", "yes", "yes"]
+          - ["DNSSEC-validated OPENPGPKEY and SMIMEA records", "yes", "yes"]
+          - ["Key harvesting from S/MIME signatures and Autocrypt headers", "yes", "yes"]
+          - ["Key trust levels, pinning, approval and blocked fingerprints", "yes", "yes"]
+          - ["S/MIME certificate validation (bundled roots, custom trust anchors, revocation lists)", "yes", "yes"]
+          - ["OpenPGP v4 and v6 keys (RSA, ECDH on NIST curves, Curve25519, X25519, X448)", "yes", "yes"]
+          - ["OpenPGP authenticated encryption (AES-OCB, AES-GCM)", "yes", "yes"]
+          - ["S/MIME with RSA, RSA-OAEP, ECDH on NIST curves, X25519 and X448", "yes", "yes"]
+          - ["S/MIME authenticated encryption (AES-256-GCM)", "yes", "yes"]
+          - ["Post-quantum OpenPGP (ML-KEM-768 + X25519, ML-KEM-1024 + X448)", "yes", "yes"]
+          - ["Post-quantum S/MIME (ML-KEM-512, ML-KEM-768, ML-KEM-1024)", "yes", "yes"]
+      - title: Security
+        rows:
           - ["Self-service portal for password reset and encryption key management", "yes", "yes"]
           - ["Roles, permissions and ACLs", "yes", "yes"]
           - ["Password strength enforcement (zxcvbn) and rotation policies", "yes", "yes"]
@@ -211,6 +228,7 @@ sections:
         rows:
           - ["Community support (support.stalw.art, free tier)", "yes", "yes"]
           - ["Premium Support (minimum 150 mailboxes)", "", "yes"]
+          - ["Email support at support@stalw.art (minimum 150 mailboxes)", "", "yes"]
           - ["Dedicated Support Engineer", "", "On demand"]
           - ["Custom SLA", "", "On demand"]
           - ["Lawful interception", "", "On demand"]
@@ -325,3 +343,6 @@ footerCta:
   ctaSub: Start a 30-day trial with full access to every Enterprise feature, or talk to us about your deployment.
   ctaButton: Start a 30-day trial
   ctaLink: https://license.stalw.art/trial
+  secondary:
+    label: See pricing
+    href: /pricing

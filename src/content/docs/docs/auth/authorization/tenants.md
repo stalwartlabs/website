@@ -63,4 +63,4 @@ Tenant administrators are not trusted with the server's network position. An obj
 - URLs configured on tenant-owned objects, such as DNS server endpoints, ACME directories and domain logos, must use https, must not contain credentials and must resolve to public IP addresses.
 - Secrets of tenant-owned objects must be given as values. The `File` and `EnvironmentVariable` sources, which would read from the server's file system or environment, are rejected.
 - OAuth clients owned by a tenant are shown as unverified on the consent screen, and they sign in only accounts of that tenant. Any other account receives `access_denied` ([OAuth clients](/docs/auth/oauth/clients#tenant-owned-clients)).
-- An OpenID Connect directory owned by a tenant contacts its identity provider only on public IP addresses ([OpenID Connect directory](/docs/auth/backend/oidc)).
+- An OpenID Connect directory owned by a tenant contacts its identity provider only on public IP addresses, unless a superuser has marked the directory as a trusted provider ([OpenID Connect directory](/docs/auth/backend/oidc)).

@@ -1,0 +1,182 @@
+---
+import Icon from "./Icon.astro";
+
+const sources = ["Web Key Directory", "keys.openpgp.org", "HKP", "OPENPGPKEY", "SMIMEA", "Harvested"];
+
+const copies = [
+  { to: "bob@partner.org", sub: "OpenPGP · ML-KEM-768 + X25519", icon: "lock-keyhole", brand: true },
+  { to: "carol@other.net", sub: "S/MIME · AES-256-GCM", icon: "lock-keyhole" },
+  { to: "dave@nokey.com", sub: "No key: sent as is, or bounced when required", icon: "mail-warning", muted: true },
+];
+---
+<div class="dg" role="img" aria-label="Encryption gateway: a plain message from alice@example.com to three recipients enters Stalwart, which looks up each recipient's key in Web Key Directory, keys.openpgp.org, HKP keyservers, DNSSEC-signed OPENPGPKEY and SMIMEA records or keys harvested from earlier mail, then sends one encrypted copy per recipient: OpenPGP with ML-KEM-768 and X25519 to bob@partner.org, S/MIME with AES-256-GCM to carol@other.net, and for dave@nokey.com, which has no key, the message is sent unencrypted or bounced when encryption is required.">
+  <span class="dg-caption">One message in, one encrypted copy per recipient</span>
+  <div class="flow">
+    <div class="msg">
+      <span class="hd"><Icon name="mail" size={15} />Plain message</span>
+      <span class="row"><b>From</b> alice@example.com</span>
+      <span class="row"><b>To</b> bob, carol, dave</span>
+      <span class="row"><b>Subject</b> Q3 contract</span>
+    </div>
+    <span class="arrow"><Icon name="arrow-right" size={14} /></span>
+    <div class="gw">
+      <span class="hd"><Icon name="key-round" size={15} />Stalwart gateway</span>
+      <span class="sub">Finds each recipient's public key</span>
+      <ul class="mini-chips">{sources.map((s) => <li>{s}</li>)}</ul>
+    </div>
+    <span class="arrow"><Icon name="arrow-right" size={14} /></span>
+    <ul class="copies">
+      {copies.map((c) => (
+        <li class:list={{ "is-brand": c.brand, "is-muted": c.muted }}>
+          <span class="ic"><Icon name={c.icon} size={15} /></span>
+          <div class="target">
+            <code>{c.to}</code>
+            <span>{c.sub}</span>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</div>
+
+<style>
+  .dg {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 100%;
+    container-type: inline-size;
+  }
+  .flow {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) auto minmax(0, 1fr) auto minmax(0, 1.3fr);
+    gap: 10px;
+    align-items: center;
+  }
+  .msg,
+  .gw {
+    display: grid;
+    gap: 6px;
+    padding: 16px;
+    border-radius: var(--r-lg);
+    background: var(--tile);
+    box-shadow: var(--shadow-tile);
+  }
+  .gw {
+    background: var(--rose);
+    box-shadow: none;
+  }
+  .hd {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 4px;
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    font-weight: 680;
+  }
+  .hd :global(svg) {
+    flex: none;
+    color: var(--brand-text);
+  }
+  .row {
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    overflow-wrap: anywhere;
+  }
+  .row b {
+    color: var(--text);
+    font-weight: 600;
+  }
+  .sub {
+    color: var(--muted);
+    font-size: var(--fs-xs);
+    line-height: 1.4;
+  }
+  .gw .mini-chips li {
+    background: var(--tile);
+    color: var(--brand-text);
+  }
+  .arrow {
+    display: grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--brand);
+    color: #fff;
+  }
+  .copies {
+    display: grid;
+    gap: 8px;
+    padding: 0;
+  }
+  .copies li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .ic {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 10px;
+    background: var(--sand);
+    color: var(--text);
+  }
+  .target {
+    display: grid;
+    gap: 2px;
+    flex: 1;
+    min-width: 0;
+    padding: 10px 12px;
+    border-radius: var(--r-lg);
+    background: var(--tile);
+    box-shadow: var(--shadow-tile);
+  }
+  .target code {
+    padding: 0;
+    background: none;
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+  }
+  .target span {
+    color: var(--muted);
+    font-size: 0.6875rem;
+    line-height: 1.4;
+  }
+  .is-brand .ic {
+    background: var(--brand);
+    color: #fff;
+  }
+  .is-brand .target {
+    background: var(--rose);
+    box-shadow: none;
+  }
+  .is-brand .target code {
+    color: var(--brand-text);
+  }
+  .is-muted .target {
+    background: none;
+    box-shadow: inset 0 0 0 1px var(--hairline);
+  }
+  .is-muted .ic {
+    color: var(--dim);
+  }
+  @container (max-width: 640px) {
+    .flow {
+      grid-template-columns: minmax(0, 1fr);
+      justify-items: stretch;
+    }
+    .arrow {
+      justify-self: center;
+      transform: rotate(90deg);
+    }
+  }
+</style>

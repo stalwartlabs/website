@@ -106,11 +106,11 @@ The data is divided into categories. They are selected in `prepare`, and the sel
 | `reports` | Received DMARC, TLS and ARF reports | On |
 | `archive` | Archived items | On |
 | `spam_model` | Learned spam filter models; final run only | On |
-| `queue` | The outbound queue and the aggregation of outbound DMARC and TLS reports; final run only | Off |
-| `tasks` | Scheduled tasks; final run only | Off |
-| `telemetry` | Stored traces and metrics | Off |
+| `queue` | The outbound queue and the aggregation of outbound DMARC and TLS reports; final run only | On |
+| `tasks` | Scheduled tasks; final run only | On |
+| `telemetry` | Stored traces and metrics | On |
 
-The queue and the scheduled tasks are off by default. While both servers run, copying them would deliver the same messages and perform the same work twice. Including the queue in the final run, on the other hand, hands every queued message over to 1.0, with its due times and recipient states, and 1.0 continues the delivery.
+The queue and the scheduled tasks are copied only by the final run. While both servers run, copying them would deliver the same messages and perform the same work twice. Once 0.16 is stopped, the final run hands every queued message over to 1.0, with its due times and recipient states, and 1.0 continues the delivery. It also hands over the scheduled tasks, such as certificate renewals and DKIM key rotations, which 1.0 runs when they are due. Excluding `tasks` from the final run leaves 1.0 without them.
 
 Categories marked "final run only" are skipped by incremental runs even when selected. They are copied only by `run --final`, when 0.16 is stopped. A single run can override the selection, as described in [Selecting categories for one run](/docs/migration/upgrade-0-16/migrate#selecting-categories-for-one-run).
 

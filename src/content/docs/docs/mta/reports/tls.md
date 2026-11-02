@@ -41,7 +41,7 @@ The fields decide how often reports are sent, how large they may be, and how the
 
 The default sender address, organisation name and signing domain are built from `system('report_domain')`. This expression returns the [report domain](/docs/mta/reports/#shared-settings) shared by all reports, or the default domain unless the report domain is set.
 
-The subject of a report sent by mail is not configurable, because it follows the format that [RFC 8460, section 5.3](https://www.rfc-editor.org/rfc/rfc8460#section-5.3) recommends: `Report Domain: <domain> Submitter: <submitter> Report-ID: <<id>>`. In it, `<domain>` is the domain the report is about and `<submitter>` is the [`outboundReportSubmitter`](/docs/ref/object/report-settings#outboundreportsubmitter) host name. The report identifier lets the receiving domain discard duplicate reports.
+The subject of a report sent by mail is not configurable, because it follows the format that [RFC 8460](https://www.rfc-editor.org/rfc/rfc8460) recommends: `Report Domain: <domain> Submitter: <submitter> Report-ID: <<id>>`. In it, `<domain>` is the domain the report is about and `<submitter>` is the [`outboundReportSubmitter`](/docs/ref/object/report-settings#outboundreportsubmitter) host name. The report identifier lets the receiving domain discard duplicate reports.
 
 The following object body sends weekly reports with a contact address:
 

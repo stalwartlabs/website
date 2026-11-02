@@ -12,8 +12,8 @@ hero:
       We are taking expressions of interest now; the
       service goes live in 2027.
   eyebrow: Managed service
-  title: Run Stalwart without running Stalwart
-  titleHighlight: without running Stalwart
+  title: Stalwart, operated by us
+  titleHighlight: operated by us
   lead: >-
     We host, cluster and operate the same mail and collaboration server we
     ship to self-hosters (JMAP, IMAP, POP3, SMTP, CalDAV, CardDAV, WebDAV)
@@ -123,7 +123,7 @@ sections:
 
   - kind: prose
     eyebrow: SLAs
-    title: Contracted, not aspirational.
+    title: Availability and support targets in the contract.
     body: >-
       Standard tiers include a service-credit-backed availability SLA on
       the mail and collaboration endpoints, plus targets for support
@@ -158,3 +158,6 @@ footerCta:
   ctaSub: Stalwart Managed Email goes live in 2027. Tell us about your deployment and we will keep you posted.
   ctaButton: Register interest
   ctaLink: /contact
+  secondary:
+    label: See pricing
+    href: /pricing

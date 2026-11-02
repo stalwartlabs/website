@@ -95,7 +95,7 @@ Clients do not need to guess which extensions they may use. The capability list 
 
 The Sieve engine of this release differs from earlier releases in some details, and these can change the result of an existing script:
 
-- A variable set inside a block, for example inside an `if`, keeps its value after the block ends, as RFC 5229 section 4 scopes variables to the whole script.
+- A variable set inside a block, for example inside an `if`, keeps its value after the block ends, as RFC 5229 scopes variables to the whole script.
 - `body :content "message/rfc822"` tests the decoded attached message, also when the attachment uses base64 or quoted-printable transfer encoding.
 - `replace` inside `foreverypart` no longer shifts the identifiers of the parts that follow the replaced part.
 - `replace` and `convert` on a single-part message keep every header field of the message except the `Content-*` fields, including `Message-ID`.

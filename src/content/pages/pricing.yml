@@ -102,9 +102,11 @@ sections:
     title: Premium Support is included from 150 mailboxes.
     body: >-
       Enterprise subscriptions of 150 mailboxes or more include
-      Premium Support: an initial response within 48 hours during
-      business hours, expedited bug fixing and influence on the
-      product roadmap.
+      Premium Support: email support at
+      [support@stalw.art](mailto:support@stalw.art) alongside the
+      Priority Support area on the portal, an initial response within
+      48 hours during business hours, expedited bug fixing and
+      influence on the product roadmap.
       Smaller Enterprise subscriptions (below 150 mailboxes) get the
       Enterprise feature set only; for help and questions, those
       customers rely on the same community support channels as
@@ -172,3 +174,7 @@ footerCta:
   ctaSub: Buy a license now, start a 30-day trial, or talk to sales for custom requirements.
   ctaButton: Buy now
   ctaLink: https://license.stalw.art/buy
+  secondary:
+    label: Start a 30-day trial
+    href: https://license.stalw.art/trial
+    external: true

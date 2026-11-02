@@ -759,6 +759,13 @@ The first section lists the baseline permissions declared in the permission sche
 - **`sysEmailUpdate`**: Update Email settings
 
 
+### sysEncryption
+
+
+- **`sysEncryptionGet`**: Get Encryption settings
+- **`sysEncryptionUpdate`**: Update Encryption settings
+
+
 ### sysEnterprise
 
 
@@ -774,6 +781,16 @@ The first section lists the baseline permissions declared in the permission sche
 - **`sysEventTracingLevelUpdate`**: Update events
 - **`sysEventTracingLevelDestroy`**: Destroy events
 - **`sysEventTracingLevelQuery`**: Query events
+
+
+### sysExternalPublicKey
+
+
+- **`sysExternalPublicKeyGet`**: Get external public keys
+- **`sysExternalPublicKeyCreate`**: Create external public keys
+- **`sysExternalPublicKeyUpdate`**: Update external public keys
+- **`sysExternalPublicKeyDestroy`**: Destroy external public keys
+- **`sysExternalPublicKeyQuery`**: Query external public keys
 
 
 ### sysFileStorage
@@ -1221,6 +1238,16 @@ The first section lists the baseline permissions declared in the permission sche
 - **`sysSieveUserScriptQuery`**: Query scripts
 
 
+### sysSmimeTrustAnchor
+
+
+- **`sysSmimeTrustAnchorGet`**: Get trust anchors
+- **`sysSmimeTrustAnchorCreate`**: Create trust anchors
+- **`sysSmimeTrustAnchorUpdate`**: Update trust anchors
+- **`sysSmimeTrustAnchorDestroy`**: Destroy trust anchors
+- **`sysSmimeTrustAnchorQuery`**: Query trust anchors
+
+
 ### sysSpamAi
 
 
@@ -1350,6 +1377,7 @@ The first section lists the baseline permissions declared in the permission sche
 - **`taskShareRevokeCleanup`**: Task: Remove per-user data left behind by a revoked share
 - **`taskDmarcReportWindow`**: Task: Create the DMARC aggregate reports of an ended window
 - **`taskTlsReportWindow`**: Task: Create the TLS aggregate reports of an ended window
+- **`taskExternalPublicKeyMaintenance`**: Task: Fetch external public keys and recheck S/MIME certificates
 - **`sysTaskGet`**: Get tasks
 - **`sysTaskCreate`**: Create tasks
 - **`sysTaskUpdate`**: Update tasks

@@ -54,9 +54,11 @@ For telemetry data and permission identifiers referenced from this documentation
 | [DnsServer](/docs/ref/object/dns-server) | Object | Defines a DNS server for automatic record management. |
 | [Domain](/docs/ref/object/domain) | Object | Defines an email domain and its DNS, DKIM, and TLS certificate settings. |
 | [DsnReportSettings](/docs/ref/object/dsn-report-settings) | Singleton | Configures Delivery Status Notification (DSN) report generation. |
-| [Email](/docs/ref/object/email) | Singleton | Configures email message limits, encryption, compression, and default folder settings. |
+| [Email](/docs/ref/object/email) | Singleton | Configures email message limits, compression, and default folder settings. |
+| [Encryption](/docs/ref/object/encryption) | Singleton | Configures encryption at rest and the encryption gateway. |
 | [Enterprise](/docs/ref/object/enterprise) | Singleton | Configures enterprise licensing and branding settings. |
 | [EventTracingLevel](/docs/ref/object/event-tracing-level) | Object | Defines a custom logging level override for a specific event type. |
+| [ExternalPublicKey](/docs/ref/object/external-public-key) | Object | Public key of a remote recipient used by the encryption gateway, entered manually, kept up to date from a discovery method or learned from received mail. |
 | [FileStorage](/docs/ref/object/file-storage) | Singleton | Configures file storage limits. |
 | [Http](/docs/ref/object/http) | Singleton | Configures HTTP server settings including rate limiting, CORS, and security headers. |
 | [HttpForm](/docs/ref/object/http-form) | Singleton | Configures the contact form submission endpoint. |
@@ -111,6 +113,7 @@ For telemetry data and permission identifiers referenced from this documentation
 | [SieveSystemScript](/docs/ref/object/sieve-system-script) | Object | Defines a system Sieve script executed by the server. |
 | [SieveUserInterpreter](/docs/ref/object/sieve-user-interpreter) | Singleton | Configures the user-level Sieve script interpreter settings and limits. |
 | [SieveUserScript](/docs/ref/object/sieve-user-script) | Object | Defines a global Sieve script available for user imports. |
+| [SmimeTrustAnchor](/docs/ref/object/smime-trust-anchor) | Object | Additional certificate authority trusted when validating recipient S/MIME certificates. |
 | [SpamAi](/docs/ref/object/spam-ai) | Singleton <sup>\*</sup> | Configures the AI spam classifier. |
 | [SpamClassifier](/docs/ref/object/spam-classifier) | Singleton | Configures the spam classifier model, training parameters, and auto-learning settings. |
 | [SpamDnsblServer](/docs/ref/object/spam-dnsbl-server) | Object | Defines a DNSBL server used for spam filtering lookups. |

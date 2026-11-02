@@ -5,6 +5,7 @@ description: >-
 slug: /anti-spam
 
 hero:
+  layout: stacked
   eyebrow: Anti-spam & phishing
   title: Stop spam before it reaches the mailbox
   titleHighlight: before it reaches the mailbox
@@ -23,14 +24,17 @@ hero:
     - AI-powered
   visual:
     kind: screenshot
-    src: /images/webadmin/dashboard-security.png
-    alt: Stalwart security dashboard with fail-to-ban categories (auth, blocked, brute, loiter) and inbound report warnings
+    src: /images/webadmin/dashboard-security-light.webp
+    srcDark: /images/webadmin/dashboard-security-dark.webp
+    width: 1440
+    height: 900
+    alt: Stalwart security dashboard with blocked threats, banned IPs, authentication failures, blocked spam and a fail-to-ban chart
     url: admin.stalw.art / Dashboard / Security
 
 sections:
   - kind: feature
     eyebrow: Statistical classifier
-    title: Spam filtering that learns from your users.
+    title: Spam classifier trained by your users.
     body: >-
       The classifier learns continuously from what your users do. Every
       time a recipient marks a message as spam, marks it as ham, or moves
@@ -55,7 +59,7 @@ sections:
     reverse: true
     band: alt
     eyebrow: LLM-driven analysis
-    title: AI for the messages that need a second look.
+    title: AI classification for borderline messages.
     body: >-
       Some phishing and social-engineering messages slip through any
       classifier that only counts patterns. The AI classifier sends
@@ -121,7 +125,9 @@ sections:
         href: /docs/spamfilter/settings/scores#authentication-tags
     visual:
       kind: screenshot
-      src: /images/webadmin/dmarc-reports-list.png
+      src: /images/webadmin/dmarc-reports-list-light.webp
+      srcDark: /images/webadmin/dmarc-reports-list-dark.webp
+      width: 940
       alt: Stalwart inbound DMARC reports list with sender, subject and received timestamp columns
       url: admin.stalw.art / Reports / Inbox / DMARC
 
@@ -149,7 +155,7 @@ sections:
     reverse: true
     band: alt
     eyebrow: Sender reputation
-    title: Reputation built from your own traffic.
+    title: Sender reputation from your own traffic.
     body: >-
       A sender's reputation should reflect how they have behaved in
       your traffic, not just what a public list says. Stalwart tracks

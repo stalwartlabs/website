@@ -177,6 +177,8 @@ A histogram appears in Prometheus as three series that start with the listed nam
 | `dkim2.hash-mismatch` | `count` | `stalwart.dkim2.hash_mismatch` (`{event}`) | `stalwart_dkim2_hash_mismatch_total` | DKIM2 hash mismatch |
 | `dkim2.recipe-error` | `count` | `stalwart.dkim2.recipe_error` (`{event}`) | `stalwart_dkim2_recipe_error_total` | DKIM2 recipe error |
 | `dkim2.signing-failed` | `count` | `stalwart.dkim2.signing_failed` (`{event}`) | `stalwart_dkim2_signing_failed_total` | DKIM2 signing failed |
+| `dkim2.dsn-not-aligned` | `count` | `stalwart.dkim2.dsn_not_aligned` (`{event}`) | `stalwart_dkim2_dsn_not_aligned_total` | DKIM2 DSN signer not aligned |
+| `dkim2.dsn-propagated` | `count` | `stalwart.dkim2.dsn_propagated` (`{event}`) | `stalwart_dkim2_dsn_propagated_total` | DKIM2 DSN propagated |
 
 
 ## Dmarc
@@ -206,6 +208,23 @@ A histogram appears in Prometheus as three series that start with the listed nam
 | Metric | Unit | OpenTelemetry | Prometheus | Description |
 |---|---|---|---|---|
 | `domain.count` | `domains` | `stalwart.domains` (`{domain}`) | `stalwart_domains` | Total number of domains |
+
+
+## Encryption
+
+| Metric | Unit | OpenTelemetry | Prometheus | Description |
+|---|---|---|---|---|
+| `encryption.key-lookup-time` | `milliseconds` | `stalwart.encryption.key_lookup_time` (`s`) | `stalwart_encryption_key_lookup_time_seconds` | Recipient key discovery lookup time |
+| `encryption.encryption-skipped` | `count` | `stalwart.encryption.encryption_skipped` (`{event}`) | `stalwart_encryption_encryption_skipped_total` | Encryption skipped |
+| `encryption.at-rest-encrypted` | `count` | `stalwart.encryption.at_rest_encrypted` (`{event}`) | `stalwart_encryption_at_rest_encrypted_total` | Message encrypted at rest |
+| `encryption.gateway-encrypted` | `count` | `stalwart.encryption.gateway_encrypted` (`{event}`) | `stalwart_encryption_gateway_encrypted_total` | Gateway encrypted message |
+| `encryption.gateway-plaintext` | `count` | `stalwart.encryption.gateway_plaintext` (`{event}`) | `stalwart_encryption_gateway_plaintext_total` | Gateway sent plaintext |
+| `encryption.gateway-bounced` | `count` | `stalwart.encryption.gateway_bounced` (`{event}`) | `stalwart_encryption_gateway_bounced_total` | Gateway bounced message |
+| `encryption.key-lookup` | `count` | `stalwart.encryption.key_lookup` (`{event}`) | `stalwart_encryption_key_lookup_total` | Key lookup |
+| `encryption.key-harvested` | `count` | `stalwart.encryption.key_harvested` (`{event}`) | `stalwart_encryption_key_harvested_total` | Key harvested |
+| `encryption.key-change` | `count` | `stalwart.encryption.key_change` (`{event}`) | `stalwart_encryption_key_change_total` | Key change pending approval |
+| `encryption.crl-fetch-failed` | `count` | `stalwart.encryption.crl_fetch_failed` (`{event}`) | `stalwart_encryption_crl_fetch_failed_total` | CRL download failed |
+| `encryption.dnssec-bogus` | `count` | `stalwart.encryption.dnssec_bogus` (`{event}`) | `stalwart_encryption_dnssec_bogus_total` | DNSSEC validation failed |
 
 
 ## Eval

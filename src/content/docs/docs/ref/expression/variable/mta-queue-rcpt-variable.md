@@ -20,7 +20,7 @@ Variables available in expression contexts that reference `MtaQueueRcptVariable`
 | `notify_num` | Number of delay notifications sent so far for the recipient |
 | `expires_in` | Seconds until the message expires, or remaining attempts when expiry is set by attempt count; 0 once expired |
 | `last_status` | Delivery status of the recipient: Scheduled, Delivered, Temporary Failure or Permanent Failure, followed by details |
-| `last_error` | Type of the last error: none, dns, unexpected-reply, connection, tls, dane, mta-sts, rate, concurrency or io |
+| `last_error` | Type of the last error: none, dns, unexpected-reply, connection, tls, dane, encryption, mta-sts, rate, concurrency or io |
 | `queue_name` | Name of the queue holding the message |
 | `queue_age` | Seconds since the message entered the queue |
 | `received_from_ip` | IP address the message was received from |

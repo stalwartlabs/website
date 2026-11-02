@@ -26,7 +26,7 @@ The following object body enables verification for all messages:
 }
 ```
 
-ARC signatures take their `a=` tag from DKIM, and with it their algorithms ([RFC 8617](https://www.rfc-editor.org/rfc/rfc8617), section 4.1.3). Stalwart verifies chains signed with RSA-SHA256 and with Ed25519. It also verifies chains signed with RSA-SHA1, because some intermediaries still use it. ARC verification runs at the [DATA stage](/docs/mta/inbound/data#order-of-processing), after DKIM.
+ARC signatures take their `a=` tag from DKIM, and with it their algorithms ([RFC 8617](https://www.rfc-editor.org/rfc/rfc8617)). Stalwart verifies chains signed with RSA-SHA256 and with Ed25519. It also verifies chains signed with RSA-SHA1, because some intermediaries still use it. ARC verification runs at the [DATA stage](/docs/mta/inbound/data#order-of-processing), after DKIM.
 
 ## Sealing
 

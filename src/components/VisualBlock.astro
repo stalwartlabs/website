@@ -19,13 +19,16 @@ const placeholderCaption =
       : "";
 ---
 {visual.kind === "screenshot" && (
-  <figure class:list={["tile tile--ink shot", { "shot--full": full }, cls]}>
+  <figure class:list={["tile shot", { "shot--full": full }, cls]} style={`--cw: ${visual.width}px; --ar: ${visual.width / visual.height};`}>
     <figcaption class="shot-url">
       <Icon name="lock" size={13} />
       <span>{visual.url ?? "admin.stalw.art"}</span>
     </figcaption>
     <div class="shot-frame">
-      <img src={visual.src} alt={visual.alt} width="1280" height="800" loading={loading} decoding="async" />
+      <img class:list={["shot-img", { "shot-img--light": visual.srcDark }]} src={visual.src} alt={visual.alt} width={visual.width} height={visual.height} loading={loading} decoding="async" />
+      {visual.srcDark && (
+        <img class="shot-img shot-img--dark" src={visual.srcDark} alt={visual.alt} width={visual.width} height={visual.height} loading={loading} decoding="async" />
+      )}
     </div>
   </figure>
 )}

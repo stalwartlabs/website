@@ -408,6 +408,13 @@ OpenID Connect
 > Ignore a trailing slash difference between the configured issuer URL and the issuer reported by the provider and found in tokens
 
 
+##### `trustedProvider`
+
+> Type: <code>Boolean</code> · [enterprise](/docs/server/enterprise) · default: `false`
+>
+> Let a directory owned by a tenant contact its provider on private networks and over plain HTTP, as a directory owned by the server does. Only a superuser can save a directory with this setting enabled, so a tenant administrator cannot change a trusted directory afterwards.
+
+
 
 
 ## JMAP API

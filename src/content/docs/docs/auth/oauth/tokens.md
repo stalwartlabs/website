@@ -118,7 +118,7 @@ curl -X POST https://mail.example.com/auth/revoke \
 
 A successful revocation deletes the whole grant, with the same effect as deleting the application in Connected Applications: every access and refresh token of the grant stops working. The response is `200 OK` with an empty body.
 
-The same response is returned for a token that cannot be decoded, belongs to another client or has no grant, as RFC 7009 section 2.2 requires. The response therefore reveals nothing about tokens the caller does not own. Two kinds of request are refused:
+The same response is returned for a token that cannot be decoded, belongs to another client or has no grant, as RFC 7009 requires. The response therefore reveals nothing about tokens the caller does not own. Two kinds of request are refused:
 
 - A request without `token`, or with Basic credentials and a different client in the body, is refused with `invalid_request`.
 - A request without a `client_id`, or whose client authentication fails, is refused with `invalid_client`.

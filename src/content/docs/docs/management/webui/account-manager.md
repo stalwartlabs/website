@@ -22,7 +22,7 @@ The Enterprise edition adds Masked Addresses and Archived Items.
 
 The Settings screen edits the [AccountSettings](/docs/ref/object/account-settings) of the account. These cover its description, which is the display name, its locale and time zone, and encryption at rest.
 
-When encryption at rest is enabled, new messages are stored encrypted with one of the user's public keys, so their content cannot be read from the server's storage. The keys are managed on the Public Keys screen as [PublicKey](/docs/ref/object/public-key) objects. Each key is OpenPGP or S/MIME, and lists the addresses it applies to and an optional expiry date.
+When encryption at rest is enabled, new messages are stored encrypted with one of the user's public keys, so their content cannot be read from the server's storage. The keys are managed on the Public Keys screen as [PublicKey](/docs/ref/object/public-key) objects. Each key is OpenPGP or S/MIME, and lists the addresses it applies to and an optional expiry date. [Encryption at rest](/docs/encryption/at-rest) describes the settings and how to enable them.
 
 ## Password and two-factor authentication
 

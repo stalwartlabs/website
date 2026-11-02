@@ -25,7 +25,7 @@ The "junk" and "not junk" buttons of most mail clients perform one of these acti
 
 The model is shared by all users of the server, with an additional component for each account ([Classification model](/docs/spamfilter/classifier/#classification-model)). A sample created by one user therefore influences, to a lesser degree, the classification of messages for every other user. Users who never mark messages still benefit from those who do.
 
-Two cases deserve attention. Uploading a mailbox into the Inbox over IMAP, as migration tools do, also creates a ham sample for each message, so a migration trains the classifier as a side effect. For accounts that use [encryption at rest](/docs/encryption), messages delivered by SMTP become samples only when the user has allowed it in the encryption settings, because a sample keeps a copy of the message.
+Two cases deserve attention. Uploading a mailbox into the Inbox over IMAP, as migration tools do, also creates a ham sample for each message, so a migration trains the classifier as a side effect. For accounts that use [encryption at rest](/docs/encryption/at-rest), messages delivered by SMTP become samples only when the user has allowed it in the encryption settings, because a sample keeps a copy of the message.
 
 ## Uploading samples
 

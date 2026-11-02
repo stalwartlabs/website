@@ -8,6 +8,7 @@ hero:
   eyebrow: SMTP server
   title: Programmable, distributed MTA
   titleHighlight: distributed MTA
+  layout: stacked
   lead: >-
     Stalwart's MTA delivers your outbound mail and accepts the inbound
     traffic for it, with sender authentication, transport-layer
@@ -23,8 +24,11 @@ hero:
     - Distributed
   visual:
     kind: screenshot
-    src: /images/webadmin/dashboard-delivery.png
-    alt: Stalwart delivery dashboard showing messages sent (DSNs, messages, reports) and delivery time over the last 24 hours
+    src: /images/webadmin/dashboard-delivery-light.webp
+    srcDark: /images/webadmin/dashboard-delivery-dark.webp
+    width: 1440
+    height: 900
+    alt: Stalwart delivery dashboard with queued messages, session and delivery times, sent DSNs and reports, and a received messages chart
     url: admin.stalw.art / Dashboard / Delivery
 
 sections:
@@ -49,8 +53,9 @@ sections:
       - Automatic ingestion of received DMARC, TLS-RPT and ARF reports.
     visual:
       kind: screenshot
-      src: /images/webadmin/dmarc-report-detail.png
-      alt: Stalwart DMARC report detail with policy domain, alignment, disposition and per-source records
+      src: /images/webadmin/dmarc-report-detail-light.webp
+      srcDark: /images/webadmin/dmarc-report-detail-dark.webp
+      alt: Stalwart DMARC aggregate report from Microsoft with sender, subject and reporting period
       url: admin.stalw.art / Reports / Inbox / DMARC
 
   - kind: feature
@@ -73,12 +78,40 @@ sections:
       - Automatic TLSA refresh with ACME certificate rotation.
     visual:
       kind: screenshot
-      src: /images/webadmin/delivery-test-trace.png
-      alt: Stalwart delivery test trace showing MX, MTA-STS, TLS-RPT, TLSA, DANE, IP, TCP and STARTTLS stages with timings
+      src: /images/webadmin/delivery-test-light.webp
+      srcDark: /images/webadmin/delivery-test-dark.webp
+      alt: Stalwart delivery test to mailbox.org passing MX, MTA-STS, TLS-RPT, DANE, STARTTLS and SMTP stages with timings
       url: admin.stalw.art / Emails / Delivery tests
-      glow: true
 
   - kind: feature
+    eyebrow: Encryption gateway
+    title: Outbound encryption with each recipient's public key.
+    body: >-
+      Transport security protects a message between two servers; the
+      encryption gateway protects it all the way to the recipient's
+      mailbox. Before delivery to another domain, Stalwart finds each
+      recipient's OpenPGP key or S/MIME certificate, encrypts a
+      separate copy for every recipient that has one, and signs each
+      copy again with DKIM and DKIM2 so DMARC still passes. A policy
+      expression decides, per recipient, whether encryption is skipped,
+      opportunistic or required; a required recipient without a usable
+      key gets a bounce instead of a plaintext message.
+    bullets:
+      - Key discovery over Web Key Directory, keys.openpgp.org, HKP and DNSSEC-validated OPENPGPKEY and SMIMEA records.
+      - Key harvesting from signed, DMARC-authenticated incoming mail.
+      - Trust levels, key pinning and administrator approval of new keys.
+      - Post-quantum ML-KEM for OpenPGP (RFC 9980) and S/MIME (RFC 9936).
+      - Subject hiding through header protection (RFC 9788).
+    learnMore:
+      - label: Read the encryption gateway
+        href: /docs/encryption/gateway
+    visual:
+      kind: diagram
+      id: encryption-gateway
+
+  - kind: feature
+    reverse: true
+    band: alt
     eyebrow: Distributed virtual queues
     title: Advanced queue management for efficient delivery.
     body: >-
@@ -100,13 +133,12 @@ sections:
         href: /docs/mta/outbound/queue
     visual:
       kind: screenshot
-      src: /images/webadmin/queue-delivery-detail.png
-      alt: Stalwart outbound delivery detail showing the queue ID, attempts, MX lookup, MTA-STS check and per-stage timings for a single message
-      url: admin.stalw.art / Emails / Queued / History
+      src: /images/webadmin/queue-message-detail-light.webp
+      srcDark: /images/webadmin/queue-message-detail-dark.webp
+      alt: Stalwart queued message with envelope sender, recipients, next retry and notification schedule
+      url: admin.stalw.art / Emails / Queued
 
   - kind: feature
-    reverse: true
-    band: alt
     eyebrow: Filter pipeline
     title: Programmable filtering, at every SMTP stage.
     body: >-
@@ -133,8 +165,10 @@ sections:
       id: smtp-pipeline
 
   - kind: feature
+    reverse: true
+    band: alt
     eyebrow: Envelope and message rewriting
-    title: Enforce policy on every message that passes through.
+    title: Policy enforcement on every message.
     body: >-
       Compliance disclaimers, address normalisation and attachment
       policy should be enforced by the server, not asked of every user.
@@ -155,8 +189,6 @@ sections:
       id: envelope-rewrite
 
   - kind: feature
-    reverse: true
-    band: alt
     eyebrow: Web admin
     title: Queue, reports and live tracing in a browser.
     body: >-
@@ -172,11 +204,14 @@ sections:
       - Log viewer with search and filtering.
     visual:
       kind: screenshot
-      src: /images/webadmin/live-tracing.png
-      alt: Stalwart live tracing
+      src: /images/webadmin/live-tracing-light.webp
+      srcDark: /images/webadmin/live-tracing-dark.webp
+      alt: Stalwart live tracing streaming TLSA match and DANE authentication events for an outbound delivery
       url: admin.stalw.art / Observability / Live Tracing
 
   - kind: feature
+    reverse: true
+    band: alt
     eyebrow: High availability
     title: Seamless failover with distributed queues.
     body: >-

@@ -1219,3 +1219,8 @@ starlight-tabs .tab > [role="tab"]:focus-visible {
     padding-inline: 9px;
   }
 }
+
+.sl-markdown-content img.screenshot {
+  border-radius: var(--r-md);
+  box-shadow: 0 0 0 1px var(--hairline), var(--shadow-tile);
+}

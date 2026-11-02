@@ -730,6 +730,26 @@ Create the TLS aggregate reports of an ended window
 
 
 
+### `@type: "ExternalPublicKeyMaintenance"`
+
+Fetch external public keys and recheck S/MIME certificates
+
+
+##### `status`
+
+> Type: [<code>TaskStatus</code>](#taskstatus) · required
+>
+> Current status of the task
+
+
+##### `due`
+
+> Type: <code>UTCDateTime?</code> · server-set
+>
+> Due date and time for the task
+
+
+
 
 ## JMAP API
 

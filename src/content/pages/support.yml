@@ -13,8 +13,9 @@ hero:
     [support.stalw.art](https://support.stalw.art), where any user can
     file a bug, suggest a new feature or get help from the community.
     Enterprise customers with Premium Support also have access to a
-    private area on the same portal for opening tickets directly with
-    Stalwart Labs.
+    private Priority Support area on the same portal for opening
+    tickets directly with Stalwart Labs, and can also reach the support
+    team by email at [support@stalw.art](mailto:support@stalw.art).
   ctas:
     - label: Open the support portal
       href: https://support.stalw.art
@@ -48,12 +49,15 @@ sections:
     body: >-
       Premium Support is included at no extra cost with every
       Enterprise subscription of 150 mailboxes or more. Once activated,
-      customers have access to a private area where tickets are opened
-      directly with Stalwart Labs. Every ticket gets an initial response
+      customers have access to a private Priority Support area on the
+      portal where tickets are opened directly with Stalwart Labs, and
+      can also email [support@stalw.art](mailto:support@stalw.art).
+      Every ticket gets an initial response
       within 48 hours of receipt during business hours, and carries an
       SLA counter, so the response window against the contracted terms
       is visible to both sides at all times.
     bullets:
+      - Email support at support@stalw.art, alongside the Priority Support area on the portal.
       - Initial response within 48 hours during business hours, with severity levels and a per-ticket SLA counter.
       - Direct escalation path to the engineers who write Stalwart.
       - Access to security advisories ahead of public disclosure where relevant.
@@ -75,11 +79,12 @@ sections:
     groups:
       - title: Coverage
         rows:
-          - ["Where", "support.stalw.art", "support.stalw.art"]
+          - ["Where", "support.stalw.art", "support.stalw.art (Priority Support) and support@stalw.art"]
           - ["Eligibility", "All users", "150 mailboxes or more"]
           - ["Initial response time", "Best effort", "Within 48 hours, business hours"]
           - ["Bug triage", "Public issue tracker", "Prioritised, ticketed"]
           - ["Security advisories", "Public release notes", "Advance notice where relevant"]
+          - ["Email support (support@stalw.art)", "-", "yes"]
           - ["Direct escalation to Stalwart engineers", "-", "yes"]
       - title: Optional add-ons (purchased separately)
         rows:
@@ -92,3 +97,6 @@ footerCta:
   ctaSub: Tell us about your deployment and we will recommend the right tier.
   ctaButton: Talk to sales
   ctaLink: /contact
+  secondary:
+    label: See pricing
+    href: /pricing
