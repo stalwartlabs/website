@@ -66,17 +66,17 @@ The WebUI has no built-in client id. On a server that signs users in through an 
 Sign-in is not configured: the identity provider does not support client metadata documents and no OAuth client id is configured for this application.
 ```
 
-The repair gives the WebUI a static client id. It must be set in the right order, because the WebUI uses a static id for every sign-in, including those of the recovery administrator and of other accounts that sign in through Stalwart's own authorization server. That server answers `Unknown client id` until a first-party [OAuthClient](/docs/auth/oauth/clients) with the same id exists.
+The repair gives the WebUI a static client id. It must be set in the right order, because the WebUI uses a static id for every sign-in, including those of the recovery administrator and of other accounts that sign in through Stalwart's own authorization server. That server answers `Unknown client id` until an [OAuthClient](/docs/auth/oauth/clients) with the same id exists, and the WebUI keeps full access there only when it requests the `full` scope and that client allows it.
 
 1. Make sure the provider has a public client for the WebUI, as listed in the [provider checklist](/docs/auth/backend/oidc#provider-checklist).
-2. Create the first-party OAuthClient with that client id. The command below runs as the [recovery administrator](/docs/configuration/recovery-mode#recovery-administrator), because only a superuser can enable `firstParty`, and the WebUI has no secret, so the object has none either.
-3. Set the id as `oauthClientId` on each [Application](/docs/ref/object/application) that serves the WebUI.
+2. Create the OAuthClient with that client id, allowing the `full` scope. The command below runs as the [recovery administrator](/docs/configuration/recovery-mode#recovery-administrator), because only a superuser can allow `full`, and the WebUI has no secret, so the object has none either.
+3. Set the id as `oauthClientId` on each [Application](/docs/ref/object/application) that serves the WebUI, and add `urn:stalwart:oauth:scope:full` to its `oauthScopes`, so that the WebUI requests full access.
 
 ```sh
 stalwart-cli create OAuthClient --json '{
   "clientId": "mail-webui",
   "description": "Stalwart WebUI",
-  "firstParty": true,
+  "scopes": {"full": true},
   "redirectUris": {
     "https://mail.example.org/admin/oauth/callback": true,
     "https://mail.example.org/account/oauth/callback": true
@@ -87,7 +87,10 @@ stalwart-cli create OAuthClient --json '{
   }
 }'
 
-stalwart-cli update Application <application id> --field oauthClientId=mail-webui
+stalwart-cli update Application <application id> --json '{
+  "oauthClientId": "mail-webui",
+  "oauthScopes": {"urn:stalwart:oauth:scope:full": true}
+}'
 ```
 
 The WebUI client is separate from the client in `introspectionClientId` of the directory, which only exists when `opaqueTokenValidation` uses introspection. The WebUI runs in the browser and cannot keep a secret, so its client stays public, while the introspection client is a confidential client of its own.

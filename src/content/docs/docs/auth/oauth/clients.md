@@ -8,7 +8,7 @@ An OAuth client is an application that requests tokens from the authorization se
 
 - A client that an administrator registered is shown to the user as verified.
 - A client that registered itself is shown as unverified.
-- Only a client that an administrator has designated as first party receives tokens with the account's full permissions.
+- Only an installed application, or a client that a superuser has allowed the `full` scope and that the user has granted it, receives tokens with the account's full permissions.
 
 The client id presented in the authorization request determines which of these rules applies. A client id that matches none of the kinds described below is refused with `invalid_client`.
 
@@ -22,7 +22,6 @@ The server records the kind of client in every grant it creates, as the `clientK
 |---|---|---|---|---|---|---|---|
 | Dynamic | `dynamic` | `swc1.` id returned by the registration endpoint | No | Loopback or private-use scheme | Never | Registered scopes | Shown, unverified |
 | Registered | `registered` | Set by the administrator | OAuthClient | Any listed URI | Optional | `scopes` of the OAuthClient | Shown, verified |
-| First-party registered | `firstParty` | Set by a superuser | OAuthClient with `firstParty` | Any listed URI, at least one | Optional | Full account permissions | Shown, verified |
 | Installed application | `firstParty` | `https://<host>/<prefix>/oauth-client.json` | Application bundle | From the bundle document | Never | Full account permissions | Not shown |
 | Metadata document | `metadataDocument` | https URL of the document | No (cached) | From the fetched document | Never | Scopes in the document, all four if none | Shown, unverified |
 
@@ -30,7 +29,7 @@ A client without a secret has nothing with which to prove its identity at the to
 
 Two terms in the table are easy to confuse:
 
-- "First party" refers to access, not to consent. A first-party client receives an unscoped token, which carries every permission of the account, including management permissions where the account holds them. A first-party OAuthClient still shows the consent screen until the user has authorized it, and the screen asks for `Full access to your account`. Only installed applications never show the consent screen, because the bundle installed on the server establishes their identity.
+- "First party" refers to installed applications only. They receive an unscoped token, which carries every permission of the account, including management permissions where the account holds them, and they never show the consent screen, because the bundle installed on the server establishes their identity. A registered client can receive the same access through the `full` scope, but it still shows the consent screen until the user has authorized it.
 - "Verified" means that an administrator registered the client. The name and logo shown on the consent screen therefore come from the OAuthClient object, not from the client itself.
 
 ### Dynamic clients
@@ -45,11 +44,13 @@ Some clients need more than dynamic registration allows: https redirect URIs, a 
 
 ### First-party clients
 
-The WebUI, and any other web application installed as an [Application](/docs/management/applications/), is first party through its bundle. The server reads the application's `oauth-client.json` from the installed bundle, never over the network, and accepts its client id on the server's own hosts. [Applications](/docs/management/applications/) describes the bundle document and the hosts on which it is recognised.
+The WebUI, and any other web application installed as an [Application](/docs/management/applications/), is first party through its bundle. The server reads the application's `oauth-client.json` from the installed bundle, never over the network, and accepts its client id on the server's own hosts. [Applications](/docs/management/applications/) describes the bundle document and the hosts on which it is recognised. Its grants record the `full` scope, which it receives without requesting it.
 
-A trusted application that is not installed on the server can be made first party with an OAuthClient that has `firstParty` enabled. Examples are a web application hosted elsewhere and a development build of the WebUI. Only a superuser can enable the setting, and the client must list at least one redirect URI.
+A trusted application that is not installed on the server, such as a web application hosted elsewhere or a development build of the WebUI, receives the same access through a registered OAuthClient whose `scopes` include `full`, provided that it requests `urn:stalwart:oauth:scope:full` and the user grants it. Only a superuser can allow `full` on a client ([Full access](/docs/auth/oauth/scopes#full-access) explains why).
 
-First-party clients are also exempt from the refusal that follows an [expired password](/docs/auth/authentication/password#password-policy). The user can still sign in through them, because a first-party application may be the place where the password is changed. The token they receive is restricted until then: it allows the password to be changed and nothing else, so mail, calendars, contacts and files stay out of reach. An application that cannot offer a password change, such as a webmail or an identity broker, is better registered without `firstParty`, so that the sign-in is refused with a message that the password has expired.
+### Expired passwords
+
+A sign-in with an [expired password](/docs/auth/authentication/password#password-policy) is normally refused, with a message that the password has expired. The exception is a client that can be the place where the password is changed: an installed application, or a client that requests the `security` or `full` scope. The user can sign in through such a client, but the token is restricted until the password is changed: it allows the password to be changed and nothing else, so mail, calendars, contacts and files stay out of reach. Refreshes and token introspection follow the same rule, based on the scopes recorded in the grant.
 
 ### Metadata document clients
 
@@ -59,7 +60,7 @@ Because anyone can publish such a document, the server accepts these clients onl
 
 ## OAuthClient object
 
-Registered and first-party registered clients are OAuthClient objects (found in the WebUI under <!-- breadcrumb:OAuthClient --><svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><rect width="20" height="14" x="2" y="3" rx="2" /><line x1="8" x2="16" y1="21" y2="21" /><line x1="12" x2="12" y1="17" y2="21" /></svg> Management › <svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><path d="M16 3.128a4 4 0 0 1 0 7.744" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><circle cx="9" cy="7" r="4" /></svg> Directory › OAuth Clients<!-- /breadcrumb:OAuthClient -->). Creating, changing and deleting them requires the `sysOAuthClientCreate`, `sysOAuthClientUpdate` and `sysOAuthClientDestroy` permissions. The default roles grant these permissions to superusers and tenant administrators. The fields that require a decision are described below, and the [reference page](/docs/ref/object/o-auth-client) lists all of them.
+Registered clients are OAuthClient objects (found in the WebUI under <!-- breadcrumb:OAuthClient --><svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><rect width="20" height="14" x="2" y="3" rx="2" /><line x1="8" x2="16" y1="21" y2="21" /><line x1="12" x2="12" y1="17" y2="21" /></svg> Management › <svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><path d="M16 3.128a4 4 0 0 1 0 7.744" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><circle cx="9" cy="7" r="4" /></svg> Directory › OAuth Clients<!-- /breadcrumb:OAuthClient -->). Creating, changing and deleting them requires the `sysOAuthClientCreate`, `sysOAuthClientUpdate` and `sysOAuthClientDestroy` permissions. The default roles grant these permissions to superusers and tenant administrators. The fields that require a decision are described below, and the [reference page](/docs/ref/object/o-auth-client) lists all of them.
 
 ### Identity
 
@@ -89,7 +90,7 @@ Each entry must be an absolute URI of at most 2048 bytes. It must not contain a 
 
 ### Access
 
-[`scopes`](/docs/ref/object/o-auth-client#scopes) limits the services the client may request: `mail`, `contacts`, `calendars` and `files`. When the set is empty, the client can request only two scopes. `openid` signs the user in without access to any service, and `offline_access` is always allowed. The setting is ignored for first-party clients, which receive full access. [Scopes](/docs/auth/oauth/scopes) lists what each scope gives access to.
+[`scopes`](/docs/ref/object/o-auth-client#scopes) limits the scopes the client may request: the services `mail`, `contacts`, `calendars` and `files`, the account scopes `security` and `settings`, and `full`. When the set is empty, the client can request only two scopes. `openid` signs the user in without access to any service, and `offline_access` is always allowed. Only a superuser can include `full`, and it has no effect on a client owned by a tenant. [Scopes](/docs/auth/oauth/scopes) lists what each scope gives access to.
 
 [`grantTypes`](/docs/ref/object/o-auth-client#granttypes) lists the grants the client may use, that is, the ways in which it may obtain tokens. A new client may use <!-- default:OAuthClient.grantTypes -->`authorizationCode` and `refreshToken`<!-- /default -->. The device authorization grant, which serves devices without a browser, is therefore available only once `deviceCode` is added.
 
@@ -111,13 +112,11 @@ The following object registers a confidential web application that may access ma
 }
 ```
 
-Grants issued through a first-party OAuthClient appear in Connected Applications as "Web application of this server", which is the label of the `firstParty` kind.
-
 ## Changing or removing a client
 
 A change to an OAuthClient takes effect at the client's next authorization request or token refresh. At each refresh, the server resolves the client again and compares it with the grant. Two kinds of change invalidate the grant:
 
-- The client's kind has changed, for example because `firstParty` was enabled or disabled.
+- The client's kind has changed. Grants created through an OAuthClient that had the retired `firstParty` setting carry the kind `firstParty`, so they end at their next refresh and the user authorizes the application again.
 - The grant holds a scope that the client's `scopes` no longer allows.
 
 In either case the server deletes the grant and the refresh fails with `invalid_grant`, so the user must authorize the application again. Deleting an OAuthClient, or letting it expire, has a different result: every refresh by that client fails with `invalid_client`.

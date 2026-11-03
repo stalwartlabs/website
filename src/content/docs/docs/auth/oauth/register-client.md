@@ -1,7 +1,7 @@
 ---
 sidebar_position: 3
 title: "Registering an application"
-description: "Register OAuth clients with Stalwart: dynamic registration for mail applications, confidential clients, administrator-created clients, metadata documents and first-party applications."
+description: "Register OAuth clients with Stalwart: dynamic registration for mail applications, confidential clients, administrator-created clients, metadata documents and applications with full access."
 ---
 
 An application must be known to the authorization server before it can obtain tokens. How it becomes known depends on the kind of application, and this page gives the procedure for each path:
@@ -100,7 +100,7 @@ The secret is returned only in this response. The server stores it hashed, so it
 
 The registration members become fields of the stored client. `scope`, `grant_types` and `contacts` are stored as the client's `scopes`, `grantTypes` and `contacts`. A client registered without `grant_types` may use the authorization code grant and refresh tokens, and an unknown grant type is refused with `Unsupported grant type.`. Unlike a public client, a confidential client may register the device grant, `urn:ietf:params:oauth:grant-type:device_code`.
 
-`logo_uri` is stored as well. The consent screen, however, displays only `data:image/` logos, so a logo URL registered this way is never shown. Clients registered through this endpoint are never first party.
+`logo_uri` is stored as well. The consent screen, however, displays only `data:image/` logos, so a logo URL registered this way is never shown. The `full` scope is kept only when a superuser registers the client; for anyone else the registration is refused. An anonymous registration that asks for `full` has it removed, and the response leaves it out of `scope`.
 
 In the Enterprise edition, a request from a tenant administrator creates a client of that tenant. Once the tenant's `maxOauthClients` quota is used up, the request fails with `The tenant has reached its OAuth client quota.`.
 
@@ -160,18 +160,18 @@ The client then works whatever the `clientMetadataDocuments` policy says. The co
 }
 ```
 
-## Trust a first-party application
+## Grant full access to a trusted application
 
-A first-party application receives unscoped tokens, which carry the account's full permissions. This is meant for a trusted application that is not installed on the server as an [Application](/docs/management/applications/), for example an in-house portal or a WebUI build hosted elsewhere. To make an application first party, create an OAuthClient with `firstParty` set to `true` and at least one redirect URI. Only a superuser can set the flag.
+A trusted application that is not installed on the server as an [Application](/docs/management/applications/), for example an in-house portal or a WebUI build hosted elsewhere, can receive unscoped tokens, which carry the account's full permissions. To allow it, a superuser creates an OAuthClient whose `scopes` include `full`; the application then requests `urn:stalwart:oauth:scope:full`. Only a superuser can allow the scope, for the reasons given in [Full access](/docs/auth/oauth/scopes#full-access).
 
-First party does not remove consent. The user is still asked for consent at every sign-in, and the request is shown as `Full access to your account`. The following object creates such a client:
+Full access does not remove consent. The user is asked for consent as for any other registered client, and the request is shown as `Full access to your account`. The following object creates such a client:
 
 ```json
 {
   "clientId": "it-portal",
   "description": "IT Portal",
   "redirectUris": {"https://portal.example.com/oauth/callback": true},
-  "firstParty": true
+  "scopes": {"full": true}
 }
 ```
 

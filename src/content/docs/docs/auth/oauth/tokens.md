@@ -93,7 +93,7 @@ A token stops working when its grant is deleted. The grant is deleted in these c
 
 Other changes stop a client's refreshes: deleting or expiring the [OAuthClient](/docs/ref/object/o-auth-client), uninstalling the Application, or changing `clientMetadataDocuments` so that the client is no longer allowed.
 
-An expired password has a similar effect. When the account's password has [expired](/docs/auth/authentication/password#password-policy), refreshes by clients other than first-party clients fail with `invalid_grant` until the password is changed.
+An expired password has a similar effect. When the account's password has [expired](/docs/auth/authentication/password#password-policy), refreshes fail with `invalid_grant` until the password is changed, except for grants of installed applications and grants that hold the `security` or `full` scope ([Expired passwords](/docs/auth/oauth/clients#expired-passwords)).
 
 Nothing else revokes tokens. The following changes leave access and refresh tokens valid:
 

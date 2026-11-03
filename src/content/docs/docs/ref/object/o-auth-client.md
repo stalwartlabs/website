@@ -81,18 +81,11 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 > URL or base64-encoded image representing the OAuth client
 
 
-##### `firstParty`
-
-> Type: <code>Boolean</code> · default: `false`
->
-> Trusted application. Tokens issued to it carry the account's full permissions instead of being limited to the requested scopes; the user is still asked for consent until the account has authorized the client. At least one redirect URI is required. Only a superuser can enable it. Stalwart's own web applications do not need this setting: they are recognized from their installed bundle.
-
-
 ##### `scopes`
 
 > Type: <code>Set&lt;</code>[<code>OAuthScope</code>](#oauthscope)<code>&gt;</code>
 >
-> Services the client may request access to. Ignored for first-party clients. When empty, the client can only request sign-in (openid).
+> Scopes the client may request. When empty, the client can only request sign-in (openid).
 
 
 ##### `grantTypes`
@@ -343,6 +336,9 @@ stalwart-cli delete OAuthClient --ids id1
 | `contacts` | Contacts (CardDAV, JMAP Contacts) |
 | `calendars` | Calendars (CalDAV, JMAP Calendars) |
 | `files` | Files (WebDAV, JMAP File Storage) |
+| `full` | Full access (everything the account is allowed to do, including administration) |
+| `security` | Security (password, two-factor authentication, app passwords, API keys, connected applications) |
+| `settings` | Settings (account settings, encryption, public keys, masked addresses) |
 
 
 ### OAuthGrantType

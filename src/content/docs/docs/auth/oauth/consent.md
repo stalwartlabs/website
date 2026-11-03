@@ -14,8 +14,7 @@ In the authorization code flow, the consent screen follows the sign-in form: the
 
 - Dynamically registered clients
 - Clients identified by a metadata document
-- Clients registered by an administrator
-- OAuthClients marked as first party
+- Clients registered by an administrator, including those granted the `full` scope
 
 Installed applications never show the screen. Their name and logo appear in the "Sign in to ..." header of the sign-in form instead.
 
@@ -26,7 +25,7 @@ For the other clients, the screen appears only when the account has not yet auth
 - The grant has ended, for example because the user deleted it in Connected Applications or the application revoked its tokens when it signed out.
 - The authorization request contains `prompt=consent`.
 
-Grants record only the service scopes, so `openid` and `offline_access` play no part in this comparison. A first-party OAuthClient receives full access whatever it requests, so any of its grants counts.
+Grants record only the service, account and `full` scopes, so `openid` and `offline_access` play no part in this comparison.
 
 The device flow works differently. Its consent screen comes before the sign-in form and appears at every authorization, because it is also how the user confirms that the code being authorized belongs to the user's own device.
 
@@ -40,8 +39,9 @@ The screen names the application, lists the requested access in plain language, 
 | `urn:ietf:params:oauth:scope:contacts` | Read and manage your contacts |
 | `urn:ietf:params:oauth:scope:calendars` | Read and manage your calendars |
 | `urn:ietf:params:oauth:scope:files` | Read and manage your files |
-
-A first-party OAuthClient receives the account's full permissions, so the screen shows `Full access to your account` in place of the scope list.
+| `urn:stalwart:oauth:scope:security` | Manage your passwords, 2FA, API keys and connected apps |
+| `urn:stalwart:oauth:scope:settings` | Manage your account settings and encryption keys |
+| `urn:stalwart:oauth:scope:full` | Full access to your account |
 
 The user then decides. **Allow** returns the browser to the application with an authorization code. **Deny** redirects the browser to the application with the error `access_denied`. Both happen after the sign-in, so the server never sends the browser to an application on behalf of someone who has not authenticated.
 

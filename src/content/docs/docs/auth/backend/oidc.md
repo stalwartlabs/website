@@ -81,8 +81,16 @@ The value that the provider puts in `aud` is configured at the provider. Dependi
 What a valid token may do depends on its client and its scopes, in three cases:
 
 - A token whose client claim equals the [`oauthClientId`](/docs/ref/object/application#oauthclientid) of an installed Application, or identifies the Client ID Metadata Document of an installed Application such as the WebUI, receives the account's full permissions.
-- A token that carries interoperable scopes is limited to them ([Scopes](/docs/auth/oauth/scopes)).
+- A token that carries interoperable or Stalwart scopes is limited to them ([Scopes](/docs/auth/oauth/scopes)). A token carrying `urn:stalwart:oauth:scope:full` is not limited at all and receives the account's full permissions.
 - A token that carries none is handled by [`unscopedTokens`](/docs/ref/object/directory#unscopedtokens), which is <!-- default:Directory.unscopedTokens -->`reject`<!-- /default --> unless changed, so such tokens are rejected.
+
+Mail applications that follow the OAuth Profile for Open Public Clients request only the interoperable scopes, so their tokens never reach the account's own objects. An application that also manages the account, for example a webmail that offers app passwords or encryption settings, needs the [Stalwart scopes](/docs/auth/oauth/scopes#stalwart-scopes) as well. Stalwart does not issue tokens for this directory, so the provider decides who receives these scopes. To make them available:
+
+1. Create the scopes `urn:stalwart:oauth:scope:security`, `urn:stalwart:oauth:scope:settings` and, if needed, `urn:stalwart:oauth:scope:full` at the provider (in Keycloak, client scopes; in Authentik, scope mappings). Each must appear in the token's `scope` or `scp` claim under exactly this name.
+2. Assign them to the client of that application, as optional scopes the client may request. The provider's consent screen, if it shows one, then lists them.
+3. Make sure the provider lists them in its `scopes_supported` metadata. Some applications request only the scopes an issuer advertises.
+
+Assign `full` only to clients that are trusted with everything the user may do, because on an administrator's account it includes administering the server. Stalwart accepts `full` from any token that passes the issuer and audience checks, whatever client it was issued to, so it must be an optional scope of the trusted clients only, never a default scope of the realm or of every client. With `skipAudienceValidation` enabled, a token the provider issued to any of its clients is accepted, and so is the `full` scope it carries.
 
 ### Opaque tokens
 
@@ -116,7 +124,7 @@ The provider has to know the WebUI as a client, and the client id the WebUI pres
 There is no built-in client id. If no static id is set and the provider does not advertise `client_id_metadata_document_supported` in its metadata, the WebUI shows a configuration error.
 
 :::note
-If the provider does not support Client ID Metadata Documents, register a public client for the WebUI at the provider and set its client id as the Application's `oauthClientId`. Set it only in that case, because the WebUI then uses the static id for every sign-in. On a server where some domains sign in through Stalwart's own authorization server, that server answers `Unknown client id` unless a first-party [OAuthClient](/docs/auth/oauth/clients) with the same client id exists. That client lists the same redirect URIs as the [provider checklist](#provider-checklist) and has no secret. Create it before setting `oauthClientId`, so that the recovery administrator can still sign in.
+If the provider does not support Client ID Metadata Documents, register a public client for the WebUI at the provider and set its client id as the Application's `oauthClientId`. Set it only in that case, because the WebUI then uses the static id for every sign-in. On a server where some domains sign in through Stalwart's own authorization server, that server answers `Unknown client id` unless an [OAuthClient](/docs/auth/oauth/clients) with the same client id exists. That client lists the same redirect URIs as the [provider checklist](#provider-checklist), has no secret and allows the `full` scope, and the Application lists `urn:stalwart:oauth:scope:full` in [`oauthScopes`](/docs/ref/object/application#oauthscopes) so that the WebUI requests it there. Create the OAuthClient before setting `oauthClientId`, so that the recovery administrator can still sign in.
 :::
 
 ### Scopes requested
@@ -208,7 +216,7 @@ The server logs the reason for every rejected token. Each message below names th
 |---|---|
 | `Failed to decode token ... configured as the default directory under the Authentication object` | The token was not issued by Stalwart, and no OpenID Connect directory handles it. Set the directory as `directoryId` of the Authentication singleton or of the domain. |
 | `Token audience ... matches neither a resource identifier of this server nor acceptedAudiences` | Add the token's `aud` value to `acceptedAudiences`. |
-| `Token carries none of the urn:ietf:params:oauth:scope:{mail,contacts,calendars,files} scopes and unscopedTokens is set to reject` | The provider does not issue the interoperable scopes. Configure them at the provider, or set `unscopedTokens`. |
+| `Token carries none of the urn:ietf:params:oauth:scope:{mail,contacts,calendars,files} or urn:stalwart:oauth:scope:{full,security,settings} scopes and unscopedTokens is set to reject` | The provider issues neither the interoperable nor the Stalwart scopes. Configure them at the provider, or set `unscopedTokens`. |
 | `Opaque access tokens are not accepted, only JWT access tokens are validated` | Configure the provider to issue JWT access tokens, or set `opaqueTokenValidation`. |
 | `ID and refresh tokens are not accepted as access tokens` | The client sent an ID or refresh token instead of the access token. |
 | `Token carries ID token claims (nonce or at_hash), enable allowIdTokenClaims ...` | The provider copies the ID token into the access token. Enable `allowIdTokenClaims`. |

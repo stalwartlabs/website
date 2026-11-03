@@ -16,11 +16,10 @@ The server works without any configuration. Its defaults implement the [OAuth Pr
 
 ## Clients
 
-Every application that requests tokens is an OAuth client, and each client is identified by a client id. Stalwart issues tokens only to clients it can identify. It recognises a client id in one of five forms:
+Every application that requests tokens is an OAuth client, and each client is identified by a client id. Stalwart issues tokens only to clients it can identify. It recognises a client id in one of four forms:
 
 - A dynamically registered client, whose id starts with `swc1.`. Mail applications obtain such an id from the registration endpoint without any credentials, and the server stores nothing for it.
-- A registered client. This is an [OAuthClient](/docs/ref/object/o-auth-client) object that an administrator has created, for example for a third-party web application that authenticates with a client secret.
-- A first-party registered client. This is an OAuthClient that a superuser has marked as first party, and its tokens carry the account's full permissions. A superuser is an administrator outside any tenant who holds the `impersonate` permission.
+- A registered client. This is an [OAuthClient](/docs/ref/object/o-auth-client) object that an administrator has created, for example for a third-party web application that authenticates with a client secret. When a superuser allows it the `full` scope, its tokens can carry the account's full permissions; a superuser is an administrator outside any tenant who holds the `impersonate` permission.
 - An installed web application, such as the WebUI. The server recognises it from the `oauth-client.json` document in its bundle.
 - A Client ID Metadata Document. This is an https URL that serves a description of the client, and the server accepts it when its policy allows.
 

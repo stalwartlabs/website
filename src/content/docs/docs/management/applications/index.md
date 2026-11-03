@@ -93,7 +93,7 @@ When the bundle is unpacked, the server adjusts `index.html` to the mount path. 
 
 The server also fills the placeholder `<meta name="oauth-client-id" content="">` in `index.html` with the Application's [`oauthClientId`](/docs/ref/object/application#oauthclientid). This decides which OAuth client id the application uses. An application that finds a value there uses it as its static OAuth client id. Otherwise, it uses the URL of its client document, described below.
 
-Set `oauthClientId` only when the application signs in through an external OpenID Connect provider that does not support Client ID Metadata Documents ([Client id of the WebUI](/docs/auth/backend/oidc#client-id-of-the-webui)). The application then uses the static id for every sign-in, including sign-ins through Stalwart's own authorization server. That server answers "Unknown client id" for the static id unless a first-party [OAuthClient](/docs/auth/oauth/clients) with that id exists.
+Set `oauthClientId` only when the application signs in through an external OpenID Connect provider that does not support Client ID Metadata Documents ([Client id of the WebUI](/docs/auth/backend/oidc#client-id-of-the-webui)). The application then uses the static id for every sign-in, including sign-ins through Stalwart's own authorization server. That server answers "Unknown client id" for the static id unless an [OAuthClient](/docs/auth/oauth/clients) with that id exists. Because that OAuthClient is a registered client rather than the installed application, its tokens are limited to the scopes the application requests: the OAuthClient must allow the `full` scope, and the Application must list `urn:stalwart:oauth:scope:full` in `oauthScopes`, so that the application keeps full access when it signs in through Stalwart's own server.
 
 ### OAuth client document
 
@@ -142,6 +142,6 @@ This trust is limited to known hostnames. The document is served, and the applic
 - The host of the server's public https URL, port included
 - The hostnames of the configured JMAP, CalDAV, CardDAV and WebDAV services
 
-Hosts are matched exactly. On any other host, the document returns `404` and the application is not a first-party client. To use another hostname, either add it as a service hostname, or register an OAuthClient with `firstParty` enabled and explicit redirect URIs.
+Hosts are matched exactly. On any other host, the document returns `404` and the application is not a first-party client. To use another hostname, either add it as a service hostname, or register an OAuthClient with explicit redirect URIs that allows the `full` scope, and add `urn:stalwart:oauth:scope:full` to the Application's [`oauthScopes`](/docs/ref/object/application#oauthscopes) so that the application requests it.
 
 Bootstrap and recovery mode relax this rule. There, any origin is accepted, including `http://`, IP addresses and ports, provided it is the origin on which the sign-in request arrived.

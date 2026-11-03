@@ -29,7 +29,7 @@ Yes, for the users of a domain served by an [OpenID Connect directory](/docs/aut
 - By default, with the URL of its Client ID Metadata Document, a document that describes the client and that the provider fetches instead of requiring a registration.
 - With the static `oauthClientId` of its Application, when one is set.
 
-A provider that does not support Client ID Metadata Documents needs a public client registered for the WebUI, with PKCE and the WebUI's redirect URIs. The id of that client is then set as `oauthClientId`. Set it only in that case, because while it is set, sign-in through Stalwart's own authorization server fails with `Unknown client id` unless a first-party [OAuthClient](/docs/auth/oauth/clients) with the same client id exists.
+A provider that does not support Client ID Metadata Documents needs a public client registered for the WebUI, with PKCE and the WebUI's redirect URIs. The id of that client is then set as `oauthClientId`. Set it only in that case, because while it is set, sign-in through Stalwart's own authorization server fails with `Unknown client id` unless an [OAuthClient](/docs/auth/oauth/clients) with the same client id exists. That OAuthClient must allow the `full` scope, and the Application must list `urn:stalwart:oauth:scope:full` in `oauthScopes`.
 
 The provider's audience must also match the server or be listed in `acceptedAudiences`. See [Signing in to the WebUI](/docs/auth/backend/oidc#signing-in-to-the-webui) and the [provider checklist](/docs/auth/backend/oidc#provider-checklist).
 

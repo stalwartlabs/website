@@ -231,5 +231,8 @@ stalwart-cli delete OAuthGrant --ids id1
 | `contacts` | Contacts (CardDAV, JMAP Contacts) |
 | `calendars` | Calendars (CalDAV, JMAP Calendars) |
 | `files` | Files (WebDAV, JMAP File Storage) |
+| `full` | Full access (everything the account is allowed to do, including administration) |
+| `security` | Security (password, two-factor authentication, app passwords, API keys, connected applications) |
+| `settings` | Settings (account settings, encryption, public keys, masked addresses) |
 
 
