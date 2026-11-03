@@ -16,6 +16,8 @@ For Exchange Online, the [Microsoft Graph importer](/docs/migration/import-expor
 
 `--mailbox` gives the mailbox's address. Vandelay can do without it only when the address follows from the credentials, that is, when the Basic user name is an address, or the token names the user. Autodiscover and the application-only flow described below always need it. When the address cannot be resolved, the run ends with exit code 3 and `could not resolve mailbox SMTP; pass --mailbox`.
 
+`--mailbox` can also name a mailbox other than the signed-in user's own, provided that user holds Full Access permission on it; this is how an administrator imports a colleague's mailbox with Basic authentication or a delegated token. Vandelay then addresses every folder in the named mailbox, which Exchange calls explicit access, so the archive holds that mailbox and not the administrator's. Versions of Vandelay before 1.0.15 ignored `--mailbox` here and read the signed-in user's own mailbox.
+
 ## Mailbox stores
 
 `--mailbox-kind` selects the store to read:
