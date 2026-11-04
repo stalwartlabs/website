@@ -43,7 +43,14 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 > Type: [<code>CompressionAlgo</code>](#compressionalgo) · default: `"lz4"`
 >
-> Algorithm to use to compress e-mail data
+> Algorithm to use to compress email and Sieve script data
+
+
+##### `blobEncryptionKey`
+
+> Type: <code>Id&lt;</code>[<code>SymmetricKey</code>](/docs/ref/object/symmetric-key)<code>&gt;?</code>
+>
+> Key used to encrypt new email and Sieve script blobs; when empty, they are stored unencrypted
 
 
 ##### `defaultFolders`
@@ -278,6 +285,7 @@ Defines a default email folder configuration.
 |---|---|
 | `lz4` | LZ4 |
 | `none` | None |
+| `zstd` | Zstandard |
 
 
 ### SpecialUse

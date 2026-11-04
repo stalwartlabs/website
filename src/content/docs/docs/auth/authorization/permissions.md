@@ -51,7 +51,7 @@ The following value gives an account the permissions of its roles plus `imperson
 A single request can carry fewer permissions than its account. This happens in three cases, each of which can narrow the permissions but never extend them:
 
 - [App passwords](/docs/auth/authentication/app-password) and [API keys](/docs/auth/authentication/api-key) have their own mode, `Inherit`, `Disable` or `Replace`, which can remove permissions but never add any.
-- A token issued to an OAuth application other than a first-party client is limited to the permissions mapped to its [scopes](/docs/auth/oauth/scopes). These never include management (`sys*`), telemetry, SCIM or administration.
+- A token issued to an OAuth application other than an installed application is limited to the permissions mapped to its [scopes](/docs/auth/oauth/scopes), unless it was granted the `full` scope. Apart from the account's own security and settings objects, these never include management (`sys*`), telemetry, SCIM or administration.
 - A token of an external identity provider that carries scopes is limited in the same way.
 
 Changes to roles, permissions, group memberships or the tenant take effect without a new sign-in ([Roles](/docs/auth/authorization/roles#propagation-of-changes)).
@@ -114,3 +114,17 @@ The rule has these consequences in practice:
 Permissions decide which kinds of actions an account may perform. They do not decide which mailboxes, calendars, address books or folders of other accounts it may reach. That is decided by access control lists, which the owner of each resource sets when sharing it, through IMAP ACL, JMAP sharing or WebDAV ACL ([Sharing](/docs/collaboration/sharing)).
 
 An account needs both kinds of authorization. Opening a mailbox that another account owns over IMAP requires the `imapSelect` permission, which is needed to open any mailbox, and an access control entry on that mailbox.
+
+## Default roles on upgraded servers
+
+The server creates the default roles only on first start and does not change them afterwards. A permission that a later release introduces is therefore part of the default roles on a new installation but missing from them on a server installed with an earlier release. Until the permission is added, accounts that rely on the default roles cannot use the feature it controls, and the WebUI does not show it to them.
+
+The missing permissions can be added to a [Role](/docs/ref/object/role) by hand, in the WebUI or through the API. The server can also add them itself: set the environment variable `STALWART_UPDATE_ROLE_PERMISSIONS` to `true` and restart the server. At startup, the server then compares each default role with the permissions a new installation would give it and adds those the role lacks, within these limits:
+
+- Only the roles listed in the default role sets of the [Authentication](/docs/ref/object/authentication) singleton change. A role that appears in several sets is treated as the least privileged of them, so the User role, which both administrator sets include, receives no administrator permissions.
+- Only permissions introduced after the first stable release are added. A permission that already existed in that release and was removed from a default role stays removed.
+- A permission listed in the role's `disabledPermissions` is never added.
+
+The server logs each role it changes, together with the permissions it added. A role that already holds every permission is not written, so a further restart with the variable set changes nothing.
+
+Remove the variable after that restart. The server cannot tell a permission that is missing because the role predates it from one that an administrator removed on purpose, so while the variable is set, every start adds back a permission introduced after the first stable release that was removed from a default role. Listing such a permission in the role's `disabledPermissions` keeps it out for good. In a cluster, set the variable on one node only. Nodes that are already running keep the roles they have cached until they restart or an [InvalidateCaches action](/docs/management/tasks-actions/actions) clears their caches.

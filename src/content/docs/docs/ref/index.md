@@ -59,7 +59,7 @@ For telemetry data and permission identifiers referenced from this documentation
 | [Enterprise](/docs/ref/object/enterprise) | Singleton | Configures enterprise licensing and branding settings. |
 | [EventTracingLevel](/docs/ref/object/event-tracing-level) | Object | Defines a custom logging level override for a specific event type. |
 | [ExternalPublicKey](/docs/ref/object/external-public-key) | Object | Public key of a remote recipient used by the encryption gateway, entered manually, kept up to date from a discovery method or learned from received mail. |
-| [FileStorage](/docs/ref/object/file-storage) | Singleton | Configures file storage limits. |
+| [FileStorage](/docs/ref/object/file-storage) | Singleton | Configures file storage limits, compression and encryption. |
 | [Http](/docs/ref/object/http) | Singleton | Configures HTTP server settings including rate limiting, CORS, and security headers. |
 | [HttpForm](/docs/ref/object/http-form) | Singleton | Configures the contact form submission endpoint. |
 | [HttpLookup](/docs/ref/object/http-lookup) | Object | Defines an HTTP-based lookup list. |
@@ -126,6 +126,7 @@ For telemetry data and permission identifiers referenced from this documentation
 | [SpamTrainingSample](/docs/ref/object/spam-training-sample) | Object | Stores an email sample used for spam classifier training. |
 | [SpfReportSettings](/docs/ref/object/spf-report-settings) | Singleton | Configures SPF authentication failure report generation. |
 | [StoreLookup](/docs/ref/object/store-lookup) | Object | Defines an external store used for lookups. |
+| [SymmetricKey](/docs/ref/object/symmetric-key) | Object | Defines a symmetric key used to encrypt blobs at rest. |
 | [SystemSettings](/docs/ref/object/system-settings) | Singleton | Configures core server settings including hostname and network services. |
 | [Task](/docs/ref/object/task) | Object | Represents a background task scheduled for execution. |
 | [TaskManager](/docs/ref/object/task-manager) | Singleton | Configures how background tasks are retried after transient failures. |

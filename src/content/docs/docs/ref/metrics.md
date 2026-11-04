@@ -634,6 +634,7 @@ A histogram appears in Prometheus as three series that start with the listed nam
 | `store.pool-error` | `count` | `stalwart.store.pool_error` (`{event}`) | `stalwart_store_pool_error_total` | Connection pool error |
 | `store.data-corruption` | `count` | `stalwart.store.data_corruption` (`{event}`) | `stalwart_store_data_corruption_total` | Data corruption detected |
 | `store.decompress-error` | `count` | `stalwart.store.decompress_error` (`{event}`) | `stalwart_store_decompress_error_total` | Decompression error |
+| `store.decrypt-error` | `count` | `stalwart.store.decrypt_error` (`{event}`) | `stalwart_store_decrypt_error_total` | Decryption error |
 | `store.deserialize-error` | `count` | `stalwart.store.deserialize_error` (`{event}`) | `stalwart_store_deserialize_error_total` | Deserialization error |
 | `store.not-found` | `count` | `stalwart.store.not_found` (`{event}`) | `stalwart_store_not_found_total` | Record not found in database |
 | `store.not-configured` | `count` | `stalwart.store.not_configured` (`{event}`) | `stalwart_store_not_configured_total` | Store not configured |

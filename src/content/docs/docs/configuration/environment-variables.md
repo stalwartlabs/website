@@ -1,7 +1,7 @@
 ---
 sidebar_position: 4
 title: "Environment variables"
-description: "The environment variables Stalwart reads at startup: configuration file, recovery and bootstrap mode, public URL, cluster identity, privilege dropping, worker threads, exports and the container health check."
+description: "The environment variables Stalwart reads at startup: configuration file, recovery and bootstrap mode, default role permissions, public URL, cluster identity, privilege dropping, worker threads, exports and the container health check."
 ---
 
 Almost all of Stalwart's configuration lives in its data store, but a few settings are needed before the data store can be read, or describe the environment the process runs in. Stalwart reads these from environment variables when it starts.
@@ -21,6 +21,7 @@ The server reads the following variables:
 | `STALWART_RECOVERY_MODE_PORT` | `8080` | Port of the plain HTTP listener used in recovery and [bootstrap mode](/docs/configuration/bootstrap-mode). The listener always binds all interfaces, as explained in [Protect the setup listener](/docs/install/security#protect-the-setup-listener). |
 | `STALWART_RECOVERY_MODE_LOG_LEVEL` | `info` | Level of the console log in recovery and bootstrap mode. |
 | `STALWART_RECOVERY_ADMIN` | none | The [recovery administrator](/docs/configuration/recovery-mode#recovery-administrator), as `username:password`. Accepted in every mode while set. |
+| `STALWART_UPDATE_ROLE_PERMISSIONS` | off | `1` or `true` adds missing permissions to the default roles at startup; see [Default role permissions](#default-role-permissions). |
 | `STALWART_PUBLIC_URL` | built from the hostname | Base URL published in discovery documents; see [Public URLs](#public-urls). |
 | `STALWART_HTTPS_PORT` | none | Port for the public URL when `STALWART_PUBLIC_URL` is not set; see [Public URLs](#public-urls). |
 | `STALWART_HOSTNAME` | the machine's host name | Name of the node, used for its cluster [node id](/docs/cluster/configuration/node-id) and proposed as server hostname by the setup wizard. |
@@ -36,6 +37,10 @@ The server reads the following variables:
 Four variables control [recovery mode](/docs/configuration/recovery-mode) and [bootstrap mode](/docs/configuration/bootstrap-mode): `STALWART_RECOVERY_MODE`, `STALWART_RECOVERY_MODE_PORT`, `STALWART_RECOVERY_MODE_LOG_LEVEL` and `STALWART_RECOVERY_ADMIN`.
 
 One of them needs particular care. `STALWART_RECOVERY_ADMIN` is also accepted in normal operation, where it acts as a full-access credential. It must therefore be removed from the environment once it is no longer needed, as described in [Retire the recovery administrator](/docs/install/security#retire-the-recovery-administrator).
+
+## Default role permissions
+
+The default roles are created on first start and never updated, so a server upgraded from an earlier release lacks the permissions that newer releases add to them. `STALWART_UPDATE_ROLE_PERMISSIONS` lets such a server catch up: with `1` or `true`, the server adds those permissions to the default roles at startup, leaving out any permission a role lists in `disabledPermissions`. The variable is meant for a single restart after an upgrade and must be removed afterwards, for the reasons given in [Default roles on upgraded servers](/docs/auth/authorization/permissions#default-roles-on-upgraded-servers).
 
 ## Clustering
 

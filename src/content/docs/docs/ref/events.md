@@ -866,6 +866,7 @@ Metrics reported alongside events are listed on the [Metrics](/docs/ref/metrics)
 | `store.pool-error` | `error` | Connection pool error | A database connection pool error occurred; the pool may be exhausted or the backend may be unreachable. |
 | `store.data-corruption` | `error` | Data corruption detected | A stored value failed integrity checks; the record may be unreadable and manual recovery may be required. |
 | `store.decompress-error` | `error` | Decompression error | A stored blob or record could not be decompressed; the data may be corrupt. |
+| `store.decrypt-error` | `error` | Decryption error | A stored blob could not be decrypted; its encryption key may be missing or changed, or the data may be corrupt. |
 | `store.deserialize-error` | `error` | Deserialization error | A stored record could not be deserialized; it may have been written by an incompatible version of the server. |
 | `store.not-found` | `debug` | Record not found in database | A lookup for a specific record returned no result; the caller will handle this as an expected miss. |
 | `store.not-configured` | `error` | Store not configured | An operation was attempted on a store backend that has not been configured; check the server configuration. |
@@ -885,6 +886,7 @@ Metrics reported alongside events are listed on the [Metrics](/docs/ref/metrics)
 | `store.http-store-fetch` | `debug` | HTTP store updated | An HTTP lookup list was successfully downloaded and the in-memory store has been updated with its contents. |
 | `store.auto-expunge` | `debug` | Auto-expunge executed | Scheduled cleanup ran and deleted expired messages from Trash and Junk folders per the configured retention policy. |
 | `store.blob-store-purged` | `info` | Blob store purge completed | The scheduled blob store purge finished, removing orphaned or expired blobs to reclaim storage space. |
+| `store.blob-store-recoded` | `info` | Blob store shard recoded | A blob recode task finished one shard, rewriting blobs with the requested compression and encryption. |
 | `store.data-store-purged` | `info` | Data store purge completed | The scheduled data store purge finished, removing expired records and compacting the database. |
 
 

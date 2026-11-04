@@ -51,6 +51,8 @@ stalwart-cli create Task/AccountMaintenance \
 | `removeLockQueueMessage`, `removeLockTask`, `removeLockDav` | Delete stale locks of the outbound queue, the task manager or WebDAV |
 | `removeGreylist` | Delete every greylisting entry |
 
+`BlobRecode` rewrites the stored blobs with a chosen compression and encryption, for example after [blob encryption](/docs/storage/blob-encryption) is enabled or a key is rotated. It takes `compression` and `encryption` instead of `maintenanceType`, and is described in [Re-encode stored blobs](/docs/storage/blob-encryption#re-encode-stored-blobs).
+
 `SpamFilterMaintenance` operates on the spam filter and its classifier:
 
 | `maintenanceType` | Operation |

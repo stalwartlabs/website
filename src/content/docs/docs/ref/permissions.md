@@ -1349,6 +1349,16 @@ The first section lists the baseline permissions declared in the permission sche
 - **`sysStoreLookupQuery`**: Query lookups
 
 
+### sysSymmetricKey
+
+
+- **`sysSymmetricKeyGet`**: Get keys
+- **`sysSymmetricKeyCreate`**: Create keys
+- **`sysSymmetricKeyUpdate`**: Update keys
+- **`sysSymmetricKeyDestroy`**: Destroy keys
+- **`sysSymmetricKeyQuery`**: Query keys
+
+
 ### sysSystemSettings
 
 
@@ -1378,6 +1388,7 @@ The first section lists the baseline permissions declared in the permission sche
 - **`taskDmarcReportWindow`**: Task: Create the DMARC aggregate reports of an ended window
 - **`taskTlsReportWindow`**: Task: Create the TLS aggregate reports of an ended window
 - **`taskExternalPublicKeyMaintenance`**: Task: Fetch external public keys and recheck S/MIME certificates
+- **`taskBlobRecode`**: Task: Rewrite stored blobs with new compression and encryption settings
 - **`sysTaskGet`**: Get tasks
 - **`sysTaskCreate`**: Create tasks
 - **`sysTaskUpdate`**: Update tasks

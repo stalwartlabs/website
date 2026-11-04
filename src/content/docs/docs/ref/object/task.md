@@ -750,6 +750,47 @@ Fetch external public keys and recheck S/MIME certificates
 
 
 
+### `@type: "BlobRecode"`
+
+Rewrite stored blobs with new compression and encryption settings
+
+
+##### `compression`
+
+> Type: [<code>TaskBlobRecodeCompression</code>](#taskblobrecodecompression) · read-only · default: `"keep"`
+>
+> Compression to apply to each blob
+
+
+##### `encryption`
+
+> Type: [<code>TaskBlobRecodeEncryption</code>](#taskblobrecodeencryption) · read-only · default: `{"@type":"Keep"}`
+>
+> Encryption to apply to each blob
+
+
+##### `shardIndex`
+
+> Type: <code>UnsignedInt?</code>
+>
+> Index of the blob shard to recode; when empty, the task schedules one task per shard
+
+
+##### `status`
+
+> Type: [<code>TaskStatus</code>](#taskstatus) · required
+>
+> Current status of the task
+
+
+##### `due`
+
+> Type: <code>UTCDateTime?</code> · server-set
+>
+> Due date and time for the task
+
+
+
 
 ## JMAP API
 
@@ -1141,6 +1182,34 @@ Contents of an iTIP message to be delivered.
 
 
 
+### TaskBlobRecodeEncryption
+
+Encryption to apply to each blob.
+
+
+- **`Keep`**: Leave as is. No additional fields.
+- **`Disable`**: Disable encryption. No additional fields.
+- **`Encrypt`**: Encrypt with a key. Carries the fields of [`TaskBlobRecodeKey`](#taskblobrecodekey).
+
+
+
+
+#### TaskBlobRecodeKey
+
+Encrypts each blob with a symmetric key.
+
+
+
+##### `keyId`
+
+> Type: <code>Id&lt;</code>[<code>SymmetricKey</code>](/docs/ref/object/symmetric-key)<code>&gt;</code> · required
+>
+> Key used to encrypt each blob
+
+
+
+
+
 ## Enums
 
 
@@ -1254,5 +1323,17 @@ Contents of an iTIP message to be delivered.
 | `calendar` | Calendar |
 | `addressBook` | Address Book |
 | `fileNode` | File Node |
+
+
+### TaskBlobRecodeCompression
+
+
+
+| Value | Label |
+|---|---|
+| `keep` | Leave as is |
+| `disable` | Disable compression |
+| `lz4` | LZ4 |
+| `zstd` | Zstandard |
 
 

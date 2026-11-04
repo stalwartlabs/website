@@ -1,10 +1,10 @@
 ---
 title: "FileStorage"
-description: "Configures file storage limits."
+description: "Configures file storage limits, compression and encryption."
 custom_edit_url: null
 ---
 
-Configures file storage limits.
+Configures file storage limits, compression and encryption.
 
 This object can be configured from the [WebUI](/docs/management/webui/) under <span data-target="FileStorage"><svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M10 5H3" /><path d="M12 19H3" /><path d="M14 3v4" /><path d="M16 17v4" /><path d="M21 12h-9" /><path d="M21 19h-5" /><path d="M21 5h-7" /><path d="M8 10v4" /><path d="M8 12H3" /></svg> Settings › <svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z" /></svg> Files & Sharing › File Storage</span>
 
@@ -30,6 +30,20 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 > Type: <code>UnsignedInt?</code> · min: 1
 >
 > The default maximum number of file folders a user can create
+
+
+##### `compressionAlgorithm`
+
+> Type: [<code>CompressionAlgo</code>](#compressionalgo) · default: `"lz4"`
+>
+> Algorithm to use to compress file data
+
+
+##### `blobEncryptionKey`
+
+> Type: <code>Id&lt;</code>[<code>SymmetricKey</code>](/docs/ref/object/symmetric-key)<code>&gt;?</code>
+>
+> Key used to encrypt new file blobs; when empty, they are stored unencrypted
 
 
 
@@ -127,5 +141,19 @@ stalwart-cli get FileStorage
 stalwart-cli update FileStorage --field maxSize=26214400
 ```
 
+
+
+## Enums
+
+
+### CompressionAlgo
+
+
+
+| Value | Label |
+|---|---|
+| `lz4` | LZ4 |
+| `none` | None |
+| `zstd` | Zstandard |
 
 
