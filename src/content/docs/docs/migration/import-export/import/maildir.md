@@ -32,7 +32,9 @@ Subfolders follow the Maildir++ convention. They are directories next to `cur/`,
 └── .Archive.2025/       folder "2025" inside "Archive"
 ```
 
-Each folder has a canonical name, which is used as its name, for its position in the tree, and for folder selection. It is `INBOX` for the root, and the directory name without its leading dot for every subfolder: `.Sent` becomes `Sent`, and `.Archive.2025` becomes `Archive.2025`.
+Each folder has a canonical name, which determines its position in the tree. It is `INBOX` for the root, and the directory name without its leading dot for every subfolder: `.Sent` becomes `Sent`, and `.Archive.2025` becomes `Archive.2025`.
+
+Dovecot and Courier store folder names in modified UTF-7, the IMAP encoding for non-ASCII characters and `&`, so a folder named `été` is kept on disk as `.&AOk-t&AOk-`, and `R&D` as `.R&-D`. The importer decodes each level of the canonical name, and the decoded name is the folder's name on the target and the one that folder selection and role guessing compare with. A level that is not valid modified UTF-7, such as a name already stored in UTF-8 or one with a literal `&`, is kept as it is.
 
 Only the Maildir++ layout is supported. Dovecot's `LAYOUT=fs`, which nests subfolders as real directories, is rejected with an error.
 
