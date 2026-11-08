@@ -397,6 +397,7 @@ Automatic TLS certificate management settings using an ACME provider.
 >
 > Additional hostnames to include in the certificate as Subject Alternative Names (SANs).
 > Enter hostnames only (e.g. `mta-sts`, `autoconfig`), the domain is appended automatically.
+> Entries containing a dot are used as written.
 > To include the apex domain, enter it in full (e.g. `example.org`).
 > Leave empty to request a wildcard certificate when possible, or to use the default SANs.
 
