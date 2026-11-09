@@ -356,7 +356,7 @@ Where account cache snapshots are persisted.
 
 - **`Disabled`**: Disabled. No additional fields.
 - **`LocalFile`**: Node-local file. Carries the fields of [`LocalFileSwap`](#localfileswap).
-- **`Redis`**: In-memory store (Redis only). Carries the fields of [`RedisSwap`](#redisswap).
+- **`InMemory`**: In-memory store (Stalwart Keep or Redis). Carries the fields of [`InMemorySwap`](#inmemoryswap).
 - **`BlobStore`**: Blob store. Carries the fields of [`BlobStoreSwap`](#blobstoreswap).
 
 
@@ -406,31 +406,31 @@ Cache snapshots stored on this node's filesystem.
 
 
 
-#### RedisSwap
+#### InMemorySwap
 
-Cache snapshots stored in Redis, shared across all nodes in the cluster.
+Cache snapshots stored in Stalwart Keep or Redis, shared across all nodes in the cluster.
 
 
 
 ##### `store`
 
-> Type: [<code>RedisSwapStore</code>](#redisswapstore) · default: `{"@type":"Default"}`
+> Type: [<code>InMemorySwapStore</code>](#inmemoryswapstore) · default: `{"@type":"Default"}`
 >
-> Redis deployment in which cache snapshots are stored
+> Stalwart Keep or Redis deployment in which cache snapshots are stored
 
 
 ##### `chunkSize`
 
-> Type: <code>Size</code> · default: `1048576` · min: 65536
+> Type: <code>Size</code> · default: `262144` · min: 65536 · max: 1048576
 >
-> Size of each snapshot chunk written to Redis
+> Size of each snapshot chunk, stored as one value. Smaller chunks hold up other requests to the store for less time
 
 
 ##### `retention`
 
 > Type: <code>Duration</code> · default: `604800000`
 >
-> How long a snapshot survives in Redis without being rewritten before it expires
+> How long a snapshot survives in Stalwart Keep or Redis without being rewritten before it expires. Loading a snapshot does not extend it, so the deployment holds the snapshots of every account written within this period, which can need far more memory than the rest of the in-memory data
 
 
 ##### `flushChanges`
@@ -464,15 +464,16 @@ Cache snapshots stored in Redis, shared across all nodes in the cluster.
 
 
 
-##### RedisSwapStore
+##### InMemorySwapStore
 
-Redis deployment used to store cache snapshots.
+Stalwart Keep or Redis deployment used to store cache snapshots.
 
 
-- **`Default`**: Use in-memory store (Redis only). No additional fields.
+- **`Default`**: Use in-memory store (Stalwart Keep or Redis). No additional fields.
 - **`Redis`**: Redis/Valkey. Carries the fields of [`RedisStore`](#redisstore).
 - **`RedisCluster`**: Redis Cluster. Carries the fields of [`RedisClusterStore`](#redisclusterstore).
 - **`RedisSentinel`**: Redis Sentinel. Carries the fields of [`RedisSentinelStore`](#redissentinelstore).
+- **`Keep`**: Stalwart Keep. Carries the fields of [`KeepStore`](#keepstore).
 
 
 
@@ -803,6 +804,157 @@ Redis Sentinel store.
 
 
 
+##### KeepStore
+
+Stalwart Keep store.
+
+
+
+##### `hosts`
+
+> Type: <code>Set&lt;String&gt;</code> · default: `{"127.0.0.1:7000":true}` · min items: 1
+>
+> Stalwart Keep servers to connect to, as host:port pairs. With cluster discovery these are the seeds from which the members are learned; without it only the first one is used
+
+
+##### `clusterDiscovery`
+
+> Type: <code>Boolean</code> · default: `false`
+>
+> Learn the members of a Stalwart Keep cluster from the servers listed and place each key on the member that owns it. Requires the cluster secret
+
+
+##### `secret`
+
+> Type: [<code>SecretKeyOptional</code>](#secretkeyoptional) · default: `{"@type":"None"}`
+>
+> Cluster secret, as 32 hexadecimal digits. Required for cluster discovery and for connections without TLS. When set, each request is sent directly to the shard that owns its key
+
+
+##### `tls`
+
+> Type: [<code>KeepTls</code>](#keeptls) · default: `{"@type":"Disabled"}`
+>
+> How connections to Stalwart Keep are protected and authenticated
+
+
+##### `connections`
+
+> Type: <code>UnsignedInt</code> · default: `16` · min: 1 · max: 1024
+>
+> Number of connections per server when no cluster secret is set
+
+
+##### `shardConnections`
+
+> Type: <code>UnsignedInt</code> · default: `2` · min: 1 · max: 8
+>
+> Number of connections per server shard when the cluster secret is set
+
+
+##### `streamMode`
+
+> Type: [<code>KeepStreamMode</code>](#keepstreammode) · default: `"everywhere"`
+>
+> Which servers carry cluster events when this store is the cluster coordinator
+
+
+##### `connectTimeout`
+
+> Type: <code>Duration</code> · default: `5000`
+>
+> Maximum time to wait for the servers when the store is opened, and for a connection to be established
+
+
+##### `attemptTimeout`
+
+> Type: <code>Duration</code> · default: `1000`
+>
+> Maximum time to wait for the reply to one attempt of a request
+
+
+##### `deadline`
+
+> Type: <code>Duration</code> · default: `5000`
+>
+> Maximum time a request may take over all its attempts. Must not be shorter than the attempt timeout
+
+
+
+
+
+##### KeepTls
+
+How connections to Stalwart Keep are protected and authenticated.
+
+
+- **`Disabled`**: Plaintext, authenticated with the cluster secret. No additional fields.
+- **`RawPublicKeys`**: Mutual TLS with raw public keys. Carries the fields of [`KeepTlsRawPublicKeys`](#keeptlsrawpublickeys).
+- **`Authority`**: Mutual TLS with certificates from a cluster CA. Carries the fields of [`KeepTlsAuthority`](#keeptlsauthority).
+
+
+
+
+##### KeepTlsRawPublicKeys
+
+Mutual TLS 1.3 with raw public keys. Files are read from each node's filesystem when the store is opened, so every node can have its own key at the same path.
+
+
+
+##### `keyPath`
+
+> Type: <code>String</code> · required
+>
+> Path of this node's private key file, in PEM or DER format
+
+
+##### `serverKeysPath`
+
+> Type: <code>String</code> · required
+>
+> Path of the PEM file listing the public keys of the Stalwart Keep servers to accept
+
+
+
+
+
+##### KeepTlsAuthority
+
+Mutual TLS 1.3 with certificates from a cluster CA. Files are read from each node's filesystem when the store is opened, so every node can have its own certificate at the same path.
+
+
+
+##### `caPath`
+
+> Type: <code>String</code> · required
+>
+> Path of the cluster CA certificate file
+
+
+##### `certPath`
+
+> Type: <code>String</code> · required
+>
+> Path of this node's certificate chain file
+
+
+##### `keyPath`
+
+> Type: <code>String</code> · required
+>
+> Path of this node's private key file
+
+
+##### `serverName`
+
+> Type: <code>String?</code>
+>
+> Name the server certificates must carry. Leave empty to use the host of each server
+
+
+
+
+
 #### BlobStoreSwap
 
 Cache snapshots stored in a blob store, shared across all nodes in the cluster.
@@ -820,7 +972,7 @@ Cache snapshots stored in a blob store, shared across all nodes in the cluster.
 
 > Type: <code>Duration</code> · default: `604800000`
 >
-> How long a snapshot survives in the blob store without being rewritten before the cleanup task removes it
+> Minimum time a snapshot survives in the blob store without being rewritten. Expiry times are rounded up to a multiple of this period, so the cleanup task removes a snapshot between one and two periods after its last write
 
 
 ##### `flushChanges`
@@ -862,7 +1014,6 @@ Blob store used to store cache snapshots.
 - **`Default`**: Use blob store. No additional fields.
 - **`S3`**: S3-compatible. Carries the fields of [`S3Store`](#s3store).
 - **`Azure`**: Azure blob storage. Carries the fields of [`AzureStore`](#azurestore).
-- **`FileSystem`**: Filesystem. Carries the fields of [`FileSystemStore`](#filesystemstore).
 - **`FoundationDb`**: FoundationDB. Carries the fields of [`FoundationDbStore`](#foundationdbstore).
 - **`PostgreSql`**: PostgreSQL. Carries the fields of [`PostgreSqlStore`](#postgresqlstore).
 - **`MySql`**: mySQL. Carries the fields of [`MySqlStore`](#mysqlstore).
@@ -1259,29 +1410,6 @@ Microsoft Entra Workload ID authentication using a federated token file.
 
 
 
-##### FileSystemStore
-
-Filesystem blob store.
-
-
-
-##### `path`
-
-> Type: <code>String</code> · required
->
-> Where to store the data in the server's filesystem
-
-
-##### `depth`
-
-> Type: <code>UnsignedInt</code> · default: `2` · max: 5
->
-> Maximum depth of nested directories
-
-
-
-
-
 ##### FoundationDbStore
 
 FoundationDB data store.
@@ -1344,6 +1472,13 @@ PostgreSQL data store.
 > Type: <code>Duration?</code> · default: `15000`
 >
 > Maximum time to wait for a connection to the database server to be established
+
+
+##### `responseTimeout`
+
+> Type: <code>Duration?</code> · default: `120000`
+>
+> Maximum time to wait for the database server to start answering a request before the connection is closed and the request fails. When unset, requests wait indefinitely.
 
 
 ##### `useTls`
@@ -1625,6 +1760,16 @@ MySQL connection settings.
 |---|---|
 | `resp2` | RESP2 |
 | `resp3` | RESP3 |
+
+
+### KeepStreamMode
+
+
+
+| Value | Label |
+|---|---|
+| `everywhere` | Subscribe on every server and publish on one |
+| `owner` | Subscribe and publish on one server chosen per cluster |
 
 
 ### AzureEnvironment

@@ -84,18 +84,20 @@ sections:
 
   - kind: list
     eyebrow: Cluster coordination
-    title: Coordinator-less or one of four backends.
+    title: Stalwart Keep and alternative coordination backends.
     body: >-
       Coordination synchronises state across cluster nodes (mailbox events,
-      blocked IPs, certificate renewals, push notifications). Stalwart can
-      run coordinator-less with peer-to-peer Zenoh or use one of four
-      message backends.
+      blocked IPs, certificate renewals, push notifications). Stalwart Keep is
+      the recommended coordinator, and also serves as the in-memory store.
+      Stalwart can also use one of four message backends, or peer-to-peer
+      Zenoh.
     bullets:
-      - "Peer-to-peer over Eclipse [Zenoh](/docs/cluster/coordination/peer-to-peer), with no external coordinator."
-      - Apache Kafka.
-      - Redpanda (Kafka-compatible).
+      - "[Stalwart Keep](/docs/cluster/keep/), which replaces Redis and a message broker with one service."
       - NATS.
       - Redis.
+      - Apache Kafka.
+      - Redpanda (Kafka-compatible).
+      - "Peer-to-peer over Eclipse [Zenoh](/docs/cluster/coordination/peer-to-peer), with no coordination server."
 
   - kind: list
     band: alt

@@ -79,7 +79,6 @@
 /docs/storage/lookup                                 /docs/configuration/expressions/lookup/                   301
 /docs/storage/lookup/local                           /docs/configuration/expressions/lookup/local              301
 /docs/storage/lookup/remote                          /docs/configuration/expressions/lookup/remote             301
-/docs/cluster/deployment/topology                    /docs/cluster/configuration/roles#planning-node-roles     301
 /docs/cluster/orchestration/apache-mesos             /docs/cluster/orchestration/                              301
 /docs/telemetry/tracing/console                      /docs/telemetry/tracing/tracers#console                   301
 /docs/telemetry/tracing/log                          /docs/telemetry/tracing/tracers#log-file                  301

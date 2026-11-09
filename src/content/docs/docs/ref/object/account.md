@@ -495,6 +495,7 @@ Defines an authentication credential for an account.
 - **`Password`**: Password for authenticating to the account. Carries the fields of [`PasswordCredential`](#passwordcredential).
 - **`AppPassword`**: App password for third-party applications. Carries the fields of [`SecondaryCredential`](#secondarycredential).
 - **`ApiKey`**: API key for programmatic access. Carries the fields of [`SecondaryCredential`](#secondarycredential).
+- **`Passkey`**: Passkey for passwordless sign-in. Carries the fields of [`PasskeyCredential`](#passkeycredential).
 
 
 
@@ -610,6 +611,36 @@ List of permissions to assign to a credential.
 > Type: <code>Set&lt;</code>[<code>Permission</code>](/docs/ref/permissions)<code>&gt;</code>
 >
 > List of permissions to assign.
+
+
+
+
+
+#### PasskeyCredential
+
+Passkey (WebAuthn public key credential) for passwordless sign-in.
+
+
+
+##### `algorithm`
+
+> Type: [<code>PasskeyAlgorithm</code>](#passkeyalgorithm) · read-only · server-set
+>
+> Signature algorithm of the credential public key
+
+
+##### `description`
+
+> Type: <code>String</code> · required · max length: 64
+>
+> Name of the passkey
+
+
+##### `createdAt`
+
+> Type: <code>UTCDateTime</code> · read-only · server-set
+>
+> Creation date of the passkey
 
 
 
@@ -777,6 +808,17 @@ Role assignment for groups and tenants.
 ## Enums
 
 
+### PasskeyAlgorithm
+
+
+
+| Value | Label |
+|---|---|
+| `es256` | ECDSA P-256 with SHA-256 |
+| `ed25519` | Ed25519 |
+| `rs256` | RSASSA-PKCS1-v1_5 with SHA-256 |
+
+
 ### StorageQuota
 
 
@@ -802,6 +844,7 @@ Role assignment for groups and tenants.
 | `maxApiKeys` | Maximum number of API keys |
 | `maxPublicKeys` | Maximum number of public keys |
 | `maxDiskQuota` | Maximum disk space allocated (bytes) |
+| `maxPasskeys` | Maximum number of passkeys |
 
 
 ### HeaderProtection

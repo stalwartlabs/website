@@ -8,4 +8,4 @@ A cluster is planned before it is built, and the plan comes down to three decisi
 
 - [Storage](/docs/cluster/deployment/storage): the backends that can be shared by the nodes, and the requirements of each store.
 - [Sizing](/docs/cluster/deployment/sizing): what determines the number and size of the nodes.
-- [Planning node roles](/docs/cluster/configuration/roles#planning-node-roles): the distribution of listeners and background tasks across groups of nodes.
+- [Topologies](/docs/cluster/deployment/topology): common ways to distribute listeners and background tasks across the nodes, from identical nodes to deployments across several sites.

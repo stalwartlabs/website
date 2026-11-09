@@ -10,11 +10,12 @@ Authentication answers only the question of who the client is. The account model
 
 ## Credentials
 
-The server accepts five kinds of credential, which fall into two families. Passwords and app passwords are presented together with an account name. API keys and access tokens are bearer credentials: whoever holds one is treated as its owner, and no account name accompanies it. The table compares them:
+The server accepts five kinds of credential on the protocols, which fall into two families. Passwords and app passwords are presented together with an account name. API keys and access tokens are bearer credentials: whoever holds one is treated as its owner, and no account name accompanies it. A sixth credential, the passkey, is used only to sign in on the OAuth sign-in page, which then issues an access token. The table compares them:
 
 | Credential | Presented as | Accepted on |
 |---|---|---|
 | [Password](/docs/auth/authentication/password) | Account name and password | Every protocol |
+| [Passkey](/docs/auth/authentication/passkeys) | WebAuthn signature from the user's authenticator | OAuth sign-in page only |
 | [App password](/docs/auth/authentication/app-password) | Account name and a password of the form `app_...` | Every protocol |
 | [API key](/docs/auth/authentication/api-key) | Bearer token of the form `API_...` | HTTP; `OAUTHBEARER` and `XOAUTH2` on the mail protocols |
 | [OAuth access token](/docs/auth/oauth/tokens) | Bearer token | HTTP; `OAUTHBEARER` and `XOAUTH2` on the mail protocols |
@@ -64,13 +65,15 @@ When a bearer mechanism fails, the server tells the client why before it rejects
 
 An account with [two-factor authentication](/docs/auth/authentication/2fa) needs a one-time code in addition to its password. Only the sign-in form of the OAuth server has a field for that code. Once two-factor authentication is enabled, a password alone therefore no longer works on IMAP, POP3, SMTP, ManageSieve or HTTP Basic, and applications must sign in through OAuth or use an app password. Two-factor authentication is available for accounts of the internal directory only.
 
+A [passkey](/docs/auth/authentication/passkeys) sign-in replaces both the password and the code. Passkeys are also limited to accounts of the internal directory and to the OAuth sign-in page.
+
 ## Authentication policy
 
 The settings that apply to every sign-in are kept on one object, the [Authentication](/docs/ref/object/authentication) singleton (found in the WebUI under <!-- breadcrumb:Authentication --><svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M10 5H3" /><path d="M12 19H3" /><path d="M14 3v4" /><path d="M16 17v4" /><path d="M21 12h-9" /><path d="M21 19h-5" /><path d="M21 5h-7" /><path d="M8 10v4" /><path d="M8 12H3" /></svg> Settings › <svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M12 10a2 2 0 0 0-2 2c0 1.02-.1 2.51-.26 4" /><path d="M14 13.12c0 2.38 0 6.38-1 8.88" /><path d="M17.29 21.02c.12-.6.43-2.3.5-3.02" /><path d="M2 12a10 10 0 0 1 18-6" /><path d="M2 16h.01" /><path d="M21.8 16c.2-2 .131-5.354 0-6" /><path d="M5 19.5C5.5 18 6 15 6 12a6 6 0 0 1 .34-2" /><path d="M8.65 22c.21-.66.45-1.32.57-2" /><path d="M9 6.8a6 6 0 0 1 9 5.2v2" /></svg> Authentication › General<!-- /breadcrumb:Authentication -->). It decides:
 
 - Which directory verifies passwords by default (`directoryId`). The internal directory is used when the field is empty.
 - The [password policy](/docs/auth/authentication/password#password-policy).
-- The default limits on app passwords and API keys.
+- The default limits on app passwords, API keys and passkeys.
 - The default roles assigned to users, groups, tenant administrators and administrators ([Roles](/docs/auth/authorization/roles)).
 
 In the Enterprise edition, a domain can name its own directory, which then takes precedence over the default ([Directories](/docs/auth/backend/)).

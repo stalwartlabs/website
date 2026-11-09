@@ -20,6 +20,33 @@ Every message follows the same path through the MTA, from the connection that br
 
 Messages submitted over JMAP follow the same path. They have no network connection, so they enter at the MAIL FROM stage of step 2.
 
+The following diagram shows this path, from the client connection to the delivery of each recipient's copy:
+
+```mermaid
+flowchart TB
+    C(["SMTP or LMTP client"]):::ink
+    J(["JMAP submission"]):::ink
+    subgraph S["SMTP session"]
+        direction LR
+        CO[Connect] --> EH[EHLO] --> AU[AUTH] --> MF[MAIL FROM] --> RC[RCPT TO] --> DA[DATA]
+    end
+    F["Sieve, milters, MTA hooks"]:::muted
+    CK["Message checks<br/><small>authentication, spam filter, filters, DKIM signing</small>"]
+    Q["Queue<br/><small>client receives 250 after the write</small>"]:::brand
+    OS["Outbound strategy<br/><small>per recipient</small>"]
+    L["Local mailbox"]
+    MX["MX hosts"]
+    R["Relay"]
+    D["DSN to sender"]:::muted
+    C -->|listener| S
+    J -->|enters at MAIL FROM| S
+    F -.->|inspect, reject| S
+    S --> CK --> Q --> OS
+    OS --> L & MX & R
+    OS -.->|failed attempt,<br/>retried per schedule| Q
+    OS -.->|undeliverable| D
+```
+
 ## Submission and relay
 
 The same SMTP server handles two kinds of traffic. They differ in who the client is and in what the client may do.

@@ -20,7 +20,7 @@ The absolute URLs in these documents are built from the server's public URL. Tha
 
 The public URL has a second role. Together with the host names of the JMAP, CalDAV, CardDAV and WebDAV entries in [`SystemSettings.services`](/docs/server/general#mail-exchangers-and-advertised-services), also determines the host names for which the server accepts OAuth sign-in.
 
-Behind a proxy, the URL derived from the server's own settings may not be the one users reach. Set `STALWART_PUBLIC_URL` to the URL users type in the browser, for example `https://mail.example.com`, or `https://mail.example.com:8443` for a proxy on another port. The proxy must serve that URL over HTTPS, because Stalwart accepts sign-in only for HTTPS origins.
+Behind a proxy, the URL derived from the server's own settings may not be the one users reach. Set `STALWART_PUBLIC_URL` to the URL users type in the browser, for example `https://mail.example.com`, or `https://mail.example.com:8443` for a proxy on another port. The proxy must serve that URL over HTTPS, because Stalwart accepts sign-in only for HTTPS origins. [Passkey](/docs/auth/authentication/passkeys#public-url-and-relying-party) sign-in is stricter still and works only when the browser's origin is exactly the public URL.
 
 Some applications rebuild their URLs from headers such as `X-Forwarded-Proto` or `X-Forwarded-Host`. Stalwart's documents do not depend on these headers, so the proxy does not need to send them.
 
@@ -33,6 +33,23 @@ The proxy can reach Stalwart in two ways, which differ in where TLS ends.
 With **TLS termination at the proxy**, the proxy decrypts HTTPS and forwards plain HTTP to an HTTP listener of Stalwart. That can be the default `http` listener on port 8080, or a dedicated listener bound to a private address. The TLS certificates are managed at the proxy. For the mail protocols, a proxy that terminates TLS must also tell Stalwart that the client used TLS, through the PROXY protocol, as described in [PROXY protocol](/docs/server/reverse-proxy/proxy-protocol#tls-detection).
 
 With **TCP passthrough**, the proxy forwards the TCP connection unchanged, usually choosing the backend from the TLS server name. Stalwart terminates TLS itself, with its own certificates, including ACME certificates obtained through the TLS-ALPN-01 challenge.
+
+The two patterns differ in what the proxy sends to Stalwart and which listener receives it:
+
+```mermaid
+flowchart LR
+    subgraph Pass["TCP passthrough"]
+        direction LR
+        C2([Client]):::ink -->|TLS| P2["Proxy<br/><small>routes by TLS server name</small>"]
+        P2 -->|"PROXY header,<br/>TLS bytes unchanged"| L2["imaps-proxy<br/><small>implicitTls: true</small>"]:::brand
+    end
+    subgraph Term["TLS termination"]
+        direction LR
+        C1([Client]):::ink -->|TLS| P1["Proxy<br/><small>holds the certificates</small>"]
+        P1 -->|plain HTTP| H["HTTP listener<br/><small>forwarding headers</small>"]:::brand
+        P1 -->|"PROXY v2 header,<br/>plain TCP"| L1["imap-proxy-plain<br/><small>useTls: false</small>"]:::brand
+    end
+```
 
 Both patterns produce the same discovery documents, so the choice rests on other grounds. TCP passthrough keeps encryption end to end and works for every protocol. TLS termination fits deployments where the proxy already holds the certificates for the domain.
 

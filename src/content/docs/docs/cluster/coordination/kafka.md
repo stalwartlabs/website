@@ -6,7 +6,7 @@ description: "Use Apache Kafka or Redpanda as the cluster coordinator in a custo
 
 [Apache Kafka](https://kafka.apache.org/) is a distributed event streaming platform, and [Redpanda](https://www.redpanda.com/) is a Kafka-compatible implementation. Either can serve as the [coordinator](/docs/cluster/coordination/) of a cluster. This suits organisations that already operate Kafka as their messaging infrastructure.
 
-Kafka support is not part of the official binaries. Using it requires [compiling Stalwart](/docs/development/compile) with the `kafka` feature, and an official binary on which Kafka is selected logs `Binary was not compiled with the selected coordinator backend`. Kafka also does not replace Redis. A cluster coordinated through Kafka still requires a Redis-based [in-memory store](/docs/storage/in-memory), configured before the coordinator as described in [Coordination mechanism](/docs/cluster/configuration/coordination#order-of-configuration).
+Kafka support is not part of the official binaries. Using it requires [compiling Stalwart](/docs/development/compile) with the `kafka` feature, and an official binary on which Kafka is selected logs `Binary was not compiled with the selected coordinator backend`. Kafka also does not replace the shared in-memory store. A cluster coordinated through Kafka still requires a [Stalwart Keep](/docs/cluster/keep/) or Redis [in-memory store](/docs/storage/in-memory), configured before the coordinator as described in [Coordination mechanism](/docs/cluster/configuration/coordination#order-of-configuration).
 
 ## Configuration
 

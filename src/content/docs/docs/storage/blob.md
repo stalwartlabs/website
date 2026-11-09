@@ -36,7 +36,7 @@ The backend is selected by the `@type` of the [BlobStore](/docs/ref/object/blob-
 
 The `Default` variant is the simplest choice. Blobs then share the data store's backups, replication and scaling, and no other service is needed. A separate blob store becomes worthwhile in two situations. The first is when the volume of message contents makes the data store too large to back up or replicate within the available time. The second is when object storage costs less than database storage. The fields of each variant are described on its backend page and in the [BlobStore reference](/docs/ref/object/blob-store).
 
-One combination needs care. The `FileSystem` backend cannot hold cache swap snapshots, so a server whose blob store is `FileSystem` uses the `LocalFile` or `Redis` swap backend instead.
+One combination needs care. The `FileSystem` backend cannot hold cache swap snapshots, so a server whose blob store is `FileSystem` uses the `LocalFile` or `InMemory` swap backend instead.
 
 ## Changing the blob store
 

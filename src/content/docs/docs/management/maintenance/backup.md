@@ -79,7 +79,7 @@ Do not use the built-in export on the running database as the backup, because it
 
 In a [cluster](/docs/cluster/), all nodes share the data store and the blob store. These are therefore backed up once for the whole cluster, as in the SQL procedure. Every node's `config.json` points to the same data store.
 
-The nodes hold no state of their own apart from `config.json`, the environment and rebuildable cache files. Redis, Kafka and NATS hold nothing that needs a backup.
+The nodes hold no state of their own apart from `config.json`, the environment and rebuildable cache files. Stalwart Keep, Redis, Kafka and NATS hold nothing that needs a backup.
 
 To restore a cluster, follow these steps in order:
 

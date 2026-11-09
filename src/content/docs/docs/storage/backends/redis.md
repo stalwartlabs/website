@@ -6,8 +6,8 @@ description: "Use Redis, Valkey, Redis Cluster or Redis Sentinel as the in-memor
 
 [Redis](https://redis.io/) and its open-source fork [Valkey](https://valkey.io/) are in-memory key-value servers. Stalwart uses them for three purposes:
 
-- As the [in-memory store](/docs/storage/in-memory), which holds rate-limit counters, greylisting entries, locks and short-lived tokens. In a cluster, a Redis-based in-memory store is required.
-- As the [cluster coordinator](/docs/cluster/coordination/redis), which carries cache invalidations and change notifications between nodes. The coordinator's `Default` variant reuses the in-memory store's Redis connection.
+- As the [in-memory store](/docs/storage/in-memory), which holds rate-limit counters, greylisting entries, locks and short-lived tokens. A cluster requires a shared in-memory store, and [Stalwart Keep](/docs/storage/backends/keep) is the recommended one, with Redis as the alternative.
+- As the [cluster coordinator](/docs/cluster/coordination/redis), which carries cache invalidations and change notifications between nodes. With a Redis in-memory store, the coordinator's `Default` variant reuses its connection.
 - As the tier of the [cache swap](/docs/storage/cache-swap) feature, which keeps snapshots of account caches.
 
 Redis cannot serve as the data store, the blob store or the search store.
@@ -89,4 +89,4 @@ The other policies have drawbacks for this workload:
 
 Even under the recommended policies, an eviction has a cost, and the cost depends on the key. A lost lock can let two nodes deliver the same message or run the same task. A lost greylisting entry defers the sender once more. A lost authorisation code fails that sign-in, while a lost cache snapshot is only rebuilt from the data store.
 
-Cache swapping adds pressure on memory when it keeps its snapshots in Redis. Each snapshot can reach the size set in the cache's `maxAccountSize`, and the snapshots compete for memory with the locks and counters. A separate Redis deployment for the snapshots avoids this. It is configured as the swap tier's own `store`, with `allkeys-lru`. The in-memory store's Redis then keeps `volatile-lru`, or `noeviction` with generous memory.
+Cache swapping adds pressure on memory when it keeps its snapshots in Redis. Each snapshot can reach the size set in the cache's `maxAccountSize`, and the snapshots compete for memory with the locks and counters. A separate Redis deployment for the snapshots avoids this. It is configured as the swap tier's own `store`, with `allkeys-lru`. The in-memory store's Redis then keeps `volatile-lru`, or `noeviction` with generous memory. In either arrangement, the snapshots of every account written within the retention period stay in Redis, which can need far more memory than the locks and counters; [Memory for in-memory snapshots](/docs/storage/cache-swap#memory-for-in-memory-snapshots) explains how much, and the alternatives.

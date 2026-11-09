@@ -90,7 +90,7 @@ destination = "stalwart"
 
 The route is required, because the proxy answers requests that match no route with `404 Not Found`.
 
-Some source stacks also serve HTTP on the public hostname, for example a SOGo or Roundcube installation. In that case, route by account instead, as in the Stalwart example: `extract = { from = "authorization" }`, with `fallback` set to a destination for the existing web server. This routing needs a proxy release later than 1.0.4, because releases up to 1.0.4 ignore `fallback` and send such requests to the default destination.
+Some source stacks also serve HTTP on the public hostname, for example a SOGo or Roundcube installation. In that case, route by account instead, as in the Stalwart example: `extract = { from = "authorization" }`, with `fallback` set to a destination for the existing web server.
 
 On mailcow, the web server serves the mailcow administration interface under `/admin` and SOGo under `/SOGo`. Routing by account sends a moved account's requests to the new deployment whatever their path. CalDAV and CardDAV clients configured with a SOGo URL, such as `/SOGo/dav/alice@example.org/Calendar/personal/`, therefore receive `404 Not Found` after the account moves. They are reconfigured as described in [Login names after migration](/docs/migration/guide/migrate-accounts/#login-names-after-migration).
 

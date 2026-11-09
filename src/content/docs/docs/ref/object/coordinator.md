@@ -21,7 +21,7 @@ Disabled
 
 ### `@type: "Default"`
 
-Use in-memory store (Redis only)
+Use in-memory store (Stalwart Keep or Redis only)
 
 
 
@@ -446,6 +446,82 @@ Redis Sentinel
 
 
 
+### `@type: "Keep"`
+
+Stalwart Keep
+
+
+##### `hosts`
+
+> Type: <code>Set&lt;String&gt;</code> · default: `{"127.0.0.1:7000":true}` · min items: 1
+>
+> Stalwart Keep servers to connect to, as host:port pairs. With cluster discovery these are the seeds from which the members are learned; without it only the first one is used
+
+
+##### `clusterDiscovery`
+
+> Type: <code>Boolean</code> · default: `false`
+>
+> Learn the members of a Stalwart Keep cluster from the servers listed and place each key on the member that owns it. Requires the cluster secret
+
+
+##### `secret`
+
+> Type: [<code>SecretKeyOptional</code>](#secretkeyoptional) · default: `{"@type":"None"}`
+>
+> Cluster secret, as 32 hexadecimal digits. Required for cluster discovery and for connections without TLS. When set, each request is sent directly to the shard that owns its key
+
+
+##### `tls`
+
+> Type: [<code>KeepTls</code>](#keeptls) · default: `{"@type":"Disabled"}`
+>
+> How connections to Stalwart Keep are protected and authenticated
+
+
+##### `connections`
+
+> Type: <code>UnsignedInt</code> · default: `16` · min: 1 · max: 1024
+>
+> Number of connections per server when no cluster secret is set
+
+
+##### `shardConnections`
+
+> Type: <code>UnsignedInt</code> · default: `2` · min: 1 · max: 8
+>
+> Number of connections per server shard when the cluster secret is set
+
+
+##### `streamMode`
+
+> Type: [<code>KeepStreamMode</code>](#keepstreammode) · default: `"everywhere"`
+>
+> Which servers carry cluster events when this store is the cluster coordinator
+
+
+##### `connectTimeout`
+
+> Type: <code>Duration</code> · default: `5000`
+>
+> Maximum time to wait for the servers when the store is opened, and for a connection to be established
+
+
+##### `attemptTimeout`
+
+> Type: <code>Duration</code> · default: `1000`
+>
+> Maximum time to wait for the reply to one attempt of a request
+
+
+##### `deadline`
+
+> Type: <code>Duration</code> · default: `5000`
+>
+> Maximum time a request may take over all its attempts. Must not be shorter than the attempt timeout
+
+
+
 
 ## JMAP API
 
@@ -636,6 +712,78 @@ A secret text value provided directly.
 
 
 
+### KeepTls
+
+How connections to Stalwart Keep are protected and authenticated.
+
+
+- **`Disabled`**: Plaintext, authenticated with the cluster secret. No additional fields.
+- **`RawPublicKeys`**: Mutual TLS with raw public keys. Carries the fields of [`KeepTlsRawPublicKeys`](#keeptlsrawpublickeys).
+- **`Authority`**: Mutual TLS with certificates from a cluster CA. Carries the fields of [`KeepTlsAuthority`](#keeptlsauthority).
+
+
+
+
+#### KeepTlsRawPublicKeys
+
+Mutual TLS 1.3 with raw public keys. Files are read from each node's filesystem when the store is opened, so every node can have its own key at the same path.
+
+
+
+##### `keyPath`
+
+> Type: <code>String</code> · required
+>
+> Path of this node's private key file, in PEM or DER format
+
+
+##### `serverKeysPath`
+
+> Type: <code>String</code> · required
+>
+> Path of the PEM file listing the public keys of the Stalwart Keep servers to accept
+
+
+
+
+
+#### KeepTlsAuthority
+
+Mutual TLS 1.3 with certificates from a cluster CA. Files are read from each node's filesystem when the store is opened, so every node can have its own certificate at the same path.
+
+
+
+##### `caPath`
+
+> Type: <code>String</code> · required
+>
+> Path of the cluster CA certificate file
+
+
+##### `certPath`
+
+> Type: <code>String</code> · required
+>
+> Path of this node's certificate chain file
+
+
+##### `keyPath`
+
+> Type: <code>String</code> · required
+>
+> Path of this node's private key file
+
+
+##### `serverName`
+
+> Type: <code>String?</code>
+>
+> Name the server certificates must carry. Leave empty to use the host of each server
+
+
+
+
+
 ## Enums
 
 
@@ -647,5 +795,15 @@ A secret text value provided directly.
 |---|---|
 | `resp2` | RESP2 |
 | `resp3` | RESP3 |
+
+
+### KeepStreamMode
+
+
+
+| Value | Label |
+|---|---|
+| `everywhere` | Subscribe on every server and publish on one |
+| `owner` | Subscribe and publish on one server chosen per cluster |
 
 

@@ -71,7 +71,7 @@ After an import from a database export, however, nothing was queued, because the
 
 ### Why do rate limits and greylisting reset after a restart?
 
-On a single server, the default in-memory store keeps its data inside the server process, so it is empty after every restart. Rate-limit windows and counters start again, and senders are greylisted once more. To keep this state across restarts, use a Redis in-memory store. See [Local store](/docs/storage/in-memory#local-store).
+On a single server, the default in-memory store keeps its data inside the server process, so it is empty after every restart. Rate-limit windows and counters start again, and senders are greylisted once more. To keep this state across restarts of the server, use a Stalwart Keep or Redis in-memory store. See [Local store](/docs/storage/in-memory#local-store).
 
 ### Which Redis eviction policy should I use?
 
@@ -113,13 +113,13 @@ The dashboard reads its history from the metrics store, so when the MetricsStore
 
 ### Can I run a cluster on RocksDB or SQLite? Do I need Redis?
 
-No to the first, yes to the second. All nodes need a shared data store, PostgreSQL, MySQL or FoundationDB, and RocksDB and SQLite cannot be shared because they are local files.
+No to both. All nodes need a shared data store, PostgreSQL, MySQL or FoundationDB, and RocksDB and SQLite cannot be shared because they are local files.
 
-A cluster also needs a Redis-based in-memory store. The local in-memory store cannot be shared between nodes either, and the server refuses it when a coordinator is configured. See [Storage](/docs/cluster/deployment/storage).
+A cluster also needs a shared in-memory store: [Stalwart Keep](/docs/cluster/keep/), the recommended choice, or Redis. The local in-memory store cannot be shared between nodes either, and the server refuses it when a coordinator is configured. See [Storage](/docs/cluster/deployment/storage).
 
 ### Which coordinator should I use?
 
-The coordinator distributes setting reloads and cache invalidations between the nodes of a cluster. Redis, Redis Cluster, Redis Sentinel and NATS are included in the official binaries, and the `Default` coordinator reuses the Redis of the in-memory store, so a cluster that already runs Redis needs no further service. Kafka and Zenoh require a custom build. See [Choosing a coordinator](/docs/cluster/configuration/coordination#choosing-a-coordinator).
+The coordinator distributes setting reloads and cache invalidations between the nodes of a cluster. Stalwart Keep is the recommended coordinator. Keep, Redis, Redis Cluster, Redis Sentinel and NATS are included in the official binaries, and the `Default` coordinator reuses the Keep or Redis connection of the in-memory store, so a cluster that runs either needs no further service. Kafka and Zenoh require a custom build. See [Choosing a coordinator](/docs/cluster/configuration/coordination#choosing-a-coordinator).
 
 ### How many nodes can a cluster have?
 

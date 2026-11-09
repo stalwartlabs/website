@@ -763,7 +763,7 @@ h1#_top {
 
 .sl-markdown-content pre.mermaid {
   display: flex;
-  justify-content: center;
+  justify-content: safe center;
   overflow-x: auto;
   padding: clamp(1.25rem, 3vw, 2rem);
   border: 0;
@@ -779,7 +779,15 @@ h1#_top {
   justify-content: flex-start;
 }
 .sl-markdown-content pre.mermaid svg {
+  flex: none;
+  width: 100%;
+  min-width: min(var(--mermaid-min, 560px), 100%);
   height: auto;
+}
+@media (max-width: 640px) {
+  .sl-markdown-content pre.mermaid svg {
+    min-width: 560px;
+  }
 }
 
 

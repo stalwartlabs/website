@@ -257,6 +257,13 @@ PostgreSQL
 > Maximum time to wait for a connection to the database server to be established
 
 
+##### `responseTimeout`
+
+> Type: <code>Duration?</code> · default: `120000`
+>
+> Maximum time to wait for the database server to start answering a request before the connection is closed and the request fails. When unset, requests wait indefinitely.
+
+
 ##### `useTls`
 
 > Type: <code>Boolean</code> · default: `false`
@@ -1075,6 +1082,13 @@ PostgreSQL data store.
 > Type: <code>Duration?</code> · default: `15000`
 >
 > Maximum time to wait for a connection to the database server to be established
+
+
+##### `responseTimeout`
+
+> Type: <code>Duration?</code> · default: `120000`
+>
+> Maximum time to wait for the database server to start answering a request before the connection is closed and the request fails. When unset, requests wait indefinitely.
 
 
 ##### `useTls`

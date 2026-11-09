@@ -6,7 +6,7 @@ const rows = [
   { name: "Storage", items: ["Data store", "Blob store", "Search store", "In-memory"] },
   { name: "Outbound", items: ["Distributed queue", "Outbound MTA", "Remote MTAs"], flow: true },
 ];
-const coord = ["Zenoh", "Kafka", "NATS", "Redis"];
+const coord = ["Keep", "NATS", "Redis", "Kafka", "Zenoh"];
 const label = `Stalwart architecture, top to bottom: ${rows
   .map((r) => `${r.name} (${r.items.join(", ")})`)
   .join(", then ")}. Cluster coordination across all layers through ${coord.join(", ")}.`;

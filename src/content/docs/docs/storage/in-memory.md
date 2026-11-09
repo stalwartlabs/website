@@ -1,7 +1,7 @@
 ---
 sidebar_position: 5
 title: "In-memory store"
-description: "The in-memory store holds rate-limit counters, greylisting entries, locks and short-lived tokens. The local default for single nodes, Redis for clusters, and what is lost on restart."
+description: "The in-memory store holds rate-limit counters, greylisting entries, locks and short-lived tokens. The local default for single nodes, Stalwart Keep or Redis for clusters, and what is lost on restart."
 ---
 
 Some of the data a server works with is written often, read often and needed only briefly: a counter that tracks how many messages a client sent in the last minute, or a lock that stops two tasks from processing the same message. The in-memory store holds this kind of data. The entries the server writes there carry an expiry, and they disappear once they have served their purpose.
@@ -31,12 +31,13 @@ The backend is selected by the `@type` of the [InMemoryStore](/docs/ref/object/i
 | `@type` | Backend | Use |
 |---|---|---|
 | `Default` | A local store in the memory of the server process | Single nodes; the default |
+| `Keep` | A [Stalwart Keep](/docs/storage/backends/keep) server or cluster | Clusters; the recommended choice |
 | `Redis` | A standalone [Redis or Valkey](/docs/storage/backends/redis) server | Clusters, or single nodes that keep state across restarts |
 | `RedisCluster` | A Redis Cluster deployment | Clusters |
 | `RedisSentinel` | A Redis deployment managed by Redis Sentinel | Clusters |
 | `Sharded` | Several Redis, Redis Cluster or Redis Sentinel deployments, with keys distributed among them ([composite stores](/docs/storage/backends/composite#sharded-in-memory-store), Enterprise) | Large clusters |
 
-The fields of the Redis variants are described on the [Redis](/docs/storage/backends/redis) page.
+The fields of the `Keep` variant are described in [Connecting Stalwart](/docs/cluster/keep/stalwart), and those of the Redis variants on the [Redis](/docs/storage/backends/redis) page.
 
 ### Local store
 
@@ -46,17 +47,17 @@ The local store is visible only to its own process, and every restart empties it
 
 ## Single node or cluster
 
-In a cluster, the nodes must share their rate-limit counters and locks, and a store that lives inside one process cannot provide that. The local store can therefore not be used in a cluster. When the [Coordinator](/docs/ref/object/coordinator), which connects the nodes of a cluster, is set to anything other than `Disabled`, the in-memory store must be `Redis`, `RedisCluster`, `RedisSentinel` or `Sharded`.
+In a cluster, the nodes must share their rate-limit counters and locks, and a store that lives inside one process cannot provide that. The local store can therefore not be used in a cluster. When the [Coordinator](/docs/ref/object/coordinator), which connects the nodes of a cluster, is set to anything other than `Disabled`, the in-memory store must be `Keep`, `Redis`, `RedisCluster`, `RedisSentinel` or `Sharded`.
 
 The server enforces this rule by refusing any change that would combine a coordinator with the `Default` store. The two settings are therefore changed in the order described in [Order of configuration](/docs/cluster/configuration/coordination#order-of-configuration). The [cluster overview](/docs/cluster/) lists the other stores that every node of a cluster must share.
 
-Changes to the in-memory store take effect after a restart. Switching from the local store to Redis does not carry over the entries the local store held. They are rebuilt as traffic arrives.
+Changes to the in-memory store take effect after a restart. Switching from the local store to Keep or Redis does not carry over the entries the local store held. They are rebuilt as traffic arrives.
 
 ## Persistence
 
-Redis can persist its data to disk, and a Redis server used as the in-memory store mostly does not need this. Every entry that Stalwart writes itself is either short-lived or can be rebuilt, so the server works correctly without persistence. Persistence only spares the effects listed under [Local store](#local-store) when Redis restarts.
+Stalwart Keep keeps nothing on disk, by design. Redis can persist its data to disk, and a Redis server used as the in-memory store mostly does not need this. Every entry that Stalwart writes itself is either short-lived or can be rebuilt, so the server works correctly without persistence. Persistence only spares the effects listed under [Local store](#local-store) when Redis restarts.
 
-Keys written by expressions and Sieve scripts are the exception. A Redis restart without persistence loses them, so persistence has to be enabled when they must survive. The memory limit and the eviction policy that Redis should use are described in [Redis](/docs/storage/backends/redis#memory-limit-and-eviction-policy).
+Keys written by expressions and Sieve scripts are the exception. A Keep crash, or a Redis restart without persistence, loses them, so they need Redis with persistence enabled when they must survive. The memory limit and the eviction policy that Redis should use are described in [Redis](/docs/storage/backends/redis#memory-limit-and-eviction-policy).
 
 ## Lookup lists
 

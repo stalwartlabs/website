@@ -134,6 +134,7 @@ sections:
           - ["Azure Blob Storage (shared key, SAS, managed and workload identity)", "yes", "yes"]
           - ["Filesystem blob storage", "yes", "yes"]
           - ["Built-in in-memory store for single-node deployments", "yes", "yes"]
+          - ["Stalwart Keep (in-memory store)", "yes", "yes"]
           - ["Redis (in-memory store)", "yes", "yes"]
           - ["Read replicas", "", "yes"]
           - ["Sharded blob storage", "", "yes"]
@@ -158,6 +159,7 @@ sections:
           - ["OpenID Connect", "yes", "yes"]
           - ["Third-party OIDC providers", "yes", "yes"]
           - ["Two-factor authentication (TOTP)", "yes", "yes"]
+          - ["Passkeys (WebAuthn) for passwordless sign-in", "yes", "yes"]
           - ["App passwords with labels, IP restrictions and expiration", "yes", "yes"]
           - ["API keys with labels, IP restrictions and expiration", "yes", "yes"]
           - ["SCIM 2.0 provisioning (Entra ID, Okta, Keycloak)", "", "yes"]
@@ -165,6 +167,7 @@ sections:
           - ["LDAP failover to secondary servers", "", "yes"]
       - title: Encryption
         rows:
+          - ["Blob store encryption with server-held keys (AES-256-GCM, ChaCha20-Poly1305) and key rotation", "yes", "yes"]
           - ["Encryption at rest with each user's OpenPGP key or S/MIME certificate", "yes", "yes"]
           - ["Encryption of sent copies and drafts uploaded by clients", "yes", "yes"]
           - ["Encryption gateway for outbound mail (opportunistic or required)", "yes", "yes"]
@@ -183,7 +186,7 @@ sections:
           - ["Post-quantum S/MIME (ML-KEM-512, ML-KEM-768, ML-KEM-1024)", "yes", "yes"]
       - title: Security
         rows:
-          - ["Self-service portal for password reset and encryption key management", "yes", "yes"]
+          - ["Self-service portal for password reset, passkeys and encryption key management", "yes", "yes"]
           - ["Roles, permissions and ACLs", "yes", "yes"]
           - ["Password strength enforcement (zxcvbn) and rotation policies", "yes", "yes"]
           - ["IP restrictions on accounts, app passwords and API keys", "yes", "yes"]
@@ -193,7 +196,7 @@ sections:
           - ["Independent security audit", "yes", "yes"]
       - title: Cluster and HA
         rows:
-          - ["Cluster coordination (Zenoh peer-to-peer, Kafka, Redpanda, NATS, Redis)", "yes", "yes"]
+          - ["Cluster coordination (Stalwart Keep, NATS, Redis, Kafka, Redpanda, Zenoh peer-to-peer)", "yes", "yes"]
           - ["Automatic node ID generation and management", "yes", "yes"]
           - ["Outbound MTA cluster role", "yes", "yes"]
           - ["Fault tolerance and high availability", "yes", "yes"]

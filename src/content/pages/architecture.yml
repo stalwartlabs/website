@@ -14,7 +14,7 @@ hero:
     need (SMTP, IMAP, JMAP, POP3, ManageSieve, CalDAV, CardDAV, WebDAV)
     and stores data in the storage backends
     you already run. The same product scales from a single node to a
-    multi-region cluster, with no external coordinator required.
+    multi-region cluster, with Stalwart Keep for coordination and short-lived state.
   ctas:
     - label: Read the cluster docs
       href: /docs/cluster/
@@ -54,8 +54,8 @@ sections:
       - Load balancing and fault tolerance built into the cluster.
       - Node autodiscovery for streamlined network expansion.
       - Network partition-tolerant failure detection.
-      - Simplified architecture without external coordinators or proxies.
-      - Optional message-bus integration (Apache Kafka, Redpanda, NATS, Redis) for teams that already run one.
+      - Stalwart Keep for coordination, locks and counters in one service.
+      - Optional message-bus integration (NATS, Redis, Apache Kafka, Redpanda) for teams that already run one, or peer-to-peer Zenoh.
     visual:
       kind: diagram
       id: architecture
@@ -72,7 +72,7 @@ sections:
       - "**Data store** for structured metadata: RocksDB, [FoundationDB](/docs/storage/backends/foundationdb), [PostgreSQL or AlloyDB](/docs/storage/backends/postgresql), [MySQL or MariaDB](/docs/storage/backends/mysql), [SQLite](/docs/storage/backends/sqlite)."
       - "**Blob store** for message bodies, attachments, Sieve scripts and WebDAV files: S3-compatible, Azure Blob, or filesystem."
       - "**Search store** for full-text indexes across message content, headers, attachments and stored files."
-      - "**In-memory store** for ephemeral state such as rate-limit counters and session data: Redis, Valkey, the primary data store, or a built-in local store on single-node deployments."
+      - "**In-memory store** for ephemeral state such as rate-limit counters and session data: Stalwart Keep, Redis, Valkey, the primary data store, or a built-in local store on single-node deployments."
 
   - kind: feature
     band: alt
@@ -113,6 +113,8 @@ sections:
     bullets:
       - "**Encryption at rest**: per-mailbox encryption with S/MIME or OpenPGP, including post-quantum ML-KEM keys; the server holds only public keys. See [encryption at rest](/docs/encryption/at-rest)."
       - "**Encryption gateway**: outgoing mail encrypted for each remote recipient whose key is discovered or harvested. See [encryption gateway](/docs/encryption/gateway)."
+      - "**Blob encryption**: messages and files encrypted with server-held AES-256-GCM or ChaCha20-Poly1305 keys before they reach the blob store, so an S3 or Azure provider holds only ciphertext; keys rotate without downtime. See [blob encryption](/docs/storage/blob-encryption)."
+      - "**Sign-in security**: passkeys for passwordless, phishing-resistant sign-in, two-factor authentication, and app passwords and API keys with their own IP restrictions and expiry. See [passkeys](/docs/auth/authentication/passkeys)."
       - "**Transport security**: ACME, DANE, MTA-STS and TLS reporting."
       - "**Network defence**: rate limiting, automated banning, ASN and GeoIP blocking, ACLs and per-account IP restrictions."
       - "**Memory safety**: the server is written in Rust. The codebase has been independently security-audited; the report is published in the [Stalwart blog](/blog/security-audit)."

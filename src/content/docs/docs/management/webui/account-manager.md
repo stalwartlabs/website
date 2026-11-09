@@ -1,7 +1,7 @@
 ---
 sidebar_position: 2
 title: "Account Manager"
-description: "The self-service part of the WebUI at /account: settings, password and two-factor authentication, app passwords, API keys, connected applications and the account's data."
+description: "The self-service part of the WebUI at /account: settings, password and two-factor authentication, passkeys, app passwords, API keys, connected applications and the account's data."
 ---
 
 Many routine requests to a mail administrator concern a single account: a new password, an app password for a mail client, a vacation response. The Account Manager lets users handle these themselves. It is the part of the [WebUI](/docs/management/webui/) in which users manage their own account, served at `/account`.
@@ -13,7 +13,7 @@ The Account Manager is what an account without administrative permissions sees a
 The screens shown depend on the permissions of the account: a screen appears only when the account may read the object behind it. With the default User role, the Account Manager contains these screens:
 
 - Settings
-- The Credentials screens: Password, App Passwords, API Keys and Connected Applications
+- The Credentials screens: Password, Passkeys, App Passwords, API Keys and Connected Applications
 - Mailboxes, Calendars, Address Books, Sieve Scripts, Vacation Response, Spam Samples and Public Keys
 
 The Enterprise edition adds Masked Addresses and Archived Items.
@@ -43,6 +43,19 @@ Two-factor authentication has a consequence for mail clients. Once it is enabled
 The Password screen is available only to accounts whose password is stored on the server. For an account whose domain is served by an LDAP, SQL or OpenID Connect directory, the password belongs to the directory, so password changes are made there. The server withholds the permissions of the AccountPassword object from such an account, and the screen is not shown. Two-factor authentication is not available for these accounts either.
 
 A password or two-factor change attempted through the API fails in that case with `forbidden` and `Operation not allowed.`. When the account has no password credential at all, it fails with `Your account does not support password changes`.
+
+## Passkeys
+
+The Passkeys screen, under <!-- breadcrumb:Passkey --><svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10" /><circle cx="12" cy="10" r="3" /><path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662" /></svg> Account › <svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z" /><circle cx="16.5" cy="7.5" r=".5" fill="currentColor" /></svg> Credentials › Passkeys<!-- /breadcrumb:Passkey -->, registers and removes the account's [passkeys](/docs/auth/authentication/passkeys), with which the user signs in on the WebUI sign-in page without a password or one-time code. Registering a passkey takes four steps:
+
+1. The user creates a new entry and names it after the device or security key.
+2. The user confirms the current password, and the current one-time code when two-factor authentication is enabled.
+3. The user selects Create passkey and completes the browser's prompt, which verifies the user with a PIN or biometrics.
+4. The user saves the form, which stores the passkey.
+
+The screen lists each passkey with its name and the date it was added. Only the name can be changed afterwards. Deleting a passkey needs no password and takes effect at the next sign-in.
+
+Like the Password screen, the Passkeys screen is available only to accounts of the internal directory, and only when the WebUI runs on the host of the server's public URL or one of its subdomains ([Public URL and relying party](/docs/auth/authentication/passkeys#public-url-and-relying-party)).
 
 ## App passwords and API keys
 

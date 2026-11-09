@@ -71,7 +71,6 @@ export default defineConfig({
     "/docs/storage/lookup": "/docs/configuration/expressions/lookup/",
     "/docs/storage/lookup/local": "/docs/configuration/expressions/lookup/local",
     "/docs/storage/lookup/remote": "/docs/configuration/expressions/lookup/remote",
-    "/docs/cluster/deployment/topology": "/docs/cluster/configuration/roles#planning-node-roles",
     "/docs/cluster/orchestration/apache-mesos": "/docs/cluster/orchestration/",
     "/docs/telemetry/tracing/console": "/docs/telemetry/tracing/tracers#console",
     "/docs/telemetry/tracing/log": "/docs/telemetry/tracing/tracers#log-file",
@@ -91,6 +90,11 @@ export default defineConfig({
   },
   devToolbar: {
     enabled: false,
+  },
+  vite: {
+    optimizeDeps: {
+      include: ["mermaid"],
+    },
   },
   markdown: {
     shikiConfig: {

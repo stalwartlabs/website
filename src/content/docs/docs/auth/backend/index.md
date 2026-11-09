@@ -23,7 +23,7 @@ The choice follows from where the accounts are managed today. The directories al
 
 Two of these differences decide the choice more often than the others.
 
-The first is two-factor authentication. The internal directory is the only one that supports [two-factor authentication](/docs/auth/authentication/2fa), so accounts of LDAP and SQL directories are never asked for a one-time code.
+The first is two-factor authentication. The internal directory is the only one that supports [two-factor authentication](/docs/auth/authentication/2fa), so accounts of LDAP and SQL directories are never asked for a one-time code. The same applies to [passkeys](/docs/auth/authentication/passkeys), which only accounts of the internal directory can register.
 
 The second is the recipient lookup. An OpenID Connect directory cannot be queried for an address, which means that its accounts exist on the server only after they have signed in once. Mail for an account that has never signed in is therefore rejected.
 

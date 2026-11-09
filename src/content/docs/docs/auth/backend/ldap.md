@@ -84,6 +84,10 @@ With bind authentication, the directory decides whether the password is correct.
 
 Bind mode has one drawback. Since no hash is read, the server cannot tell from the password itself that it has changed. It detects a change through [`attrSecretChanged`](/docs/ref/object/directory#attrsecretchanged), an attribute whose value changes whenever the password does, and then signs out the user's OAuth applications. If the attribute is not configured, or not present on the directory entries, OAuth tokens stay valid after a password change in the directory.
 
+The server reads `attrSecretChanged` only when it synchronises the account from the directory, which happens when the user signs in and when a lookup in the directory, such as one for an incoming message, refreshes the account. Refreshing an OAuth token does not query the directory, so after a password reset an application holding a refresh token keeps working until the account is next synchronised. To end these sessions at once, an administrator deletes the account's grants, as described in [Revocation](/docs/auth/oauth/tokens#revocation).
+
+HTTP clients that send the password with Basic authentication, such as JMAP, CalDAV, CardDAV and WebDAV clients, do not cause a bind on every request. After a successful bind, the server caches the result under the exact credentials for up to [`accessTokenExpiry`](/docs/ref/object/oidc-provider#accesstokenexpiry), or until the account changes, so an old password can keep working over HTTP for that long after a reset. The cache is held in memory and a restart clears it. IMAP, POP3, ManageSieve and SMTP authentication bind on every sign-in.
+
 ### Password comparison
 
 When `bindAuthentication` is set to `false`, the server uses password comparison instead. It reads the password hash with the service account, from the attribute named in [`attrSecret`](/docs/ref/object/directory#attrsecret), and verifies the supplied password against it. Two conditions follow: the hash must be in one of the [supported formats](/docs/auth/authentication/password#supported-hash-formats), and the service account must be allowed to read it.

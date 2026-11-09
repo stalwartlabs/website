@@ -58,6 +58,8 @@ The server takes the base URL from the first of these sources that is available:
 2. When `STALWART_HTTPS_PORT` is set, `https://<host>:<port>`, where the host is `STALWART_HOSTNAME` or the machine's host name.
 3. `https://` followed by the host name of the JMAP entry in [`SystemSettings.services`](/docs/server/general#mail-exchangers-and-advertised-services) when it has one, or by [`SystemSettings.defaultHostname`](/docs/ref/object/system-settings#defaulthostname).
 
+The host of the same URL is the relying party ID of [passkeys](/docs/auth/authentication/passkeys#public-url-and-relying-party): passkey sign-in works only at this URL, and changing its host makes every registered passkey unusable.
+
 Set `STALWART_PUBLIC_URL` when clients reach the server at a URL other than `https://<hostname>`, for example through a reverse proxy or on another port. [Reverse proxy](/docs/server/reverse-proxy/#public-url) explains the consequences.
 
 The variable changes only the published URLs. The ports the server listens on are set by its [listeners](/docs/server/listener), and the server hostname keeps its other uses, such as the SMTP greeting and certificate requests.

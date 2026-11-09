@@ -8,6 +8,8 @@ Email is well protected while it travels between servers: TLS encrypts each conn
 
 Message encryption closes this gap. Instead of protecting the connection, it protects the message itself, so that the message stays unreadable wherever it is stored and only its intended reader can open it. Stalwart offers two features built on message encryption: **encryption at rest**, which protects the mail stored on this server for its own users, and the **encryption gateway**, which protects mail that this server sends to remote recipients.
 
+Both are separate from [blob encryption](/docs/storage/blob-encryption), which encrypts the contents of the blob store with symmetric keys held by the server. Blob encryption protects stored messages and files from whoever can read the storage backend, such as a cloud storage provider, while the server itself can still read them; it needs no keys from users and works with every client.
+
 ## Public-key encryption
 
 Both features rely on public-key encryption, which works with a pair of keys that belong together. A useful picture is a padlock and its key. The **public key** is like an open padlock: its owner can hand out copies to anyone, and anyone holding one can lock a box with it. The **private key** is the only key that opens those padlocks, and its owner keeps it to themselves. To send a protected message, the sender locks it with the recipient's public key; from then on, only the recipient's private key can unlock it. Publishing the public key is safe, because it can only lock, never unlock.

@@ -14,15 +14,15 @@ Each node has its own caches, and nodes do not share cached entries. An account 
 
 The cached copies stay consistent through two mechanisms. A change made on one node reaches the cached copies on the other nodes through the change log, within the five-second freshness window described in [How caching works](/docs/performance/caching). Directory changes, such as an updated account or role, travel a different way: the cluster [coordinator](/docs/cluster/configuration/coordination) sends them to the other nodes, which then remove the affected cache entries.
 
-Because each node caches the accounts it serves, the way connections are distributed affects memory. Routing each user's connections to the same node, for example by account at the load balancer, keeps an account in one node's cache instead of several, and therefore lowers the memory needed per node. [Load balancing](/docs/cluster/configuration/load-balancing) describes how to configure it.
+Because each node caches the accounts it serves, the way connections are distributed affects memory. Routing each user's connections to the same node keeps an account in one node's cache instead of several, and therefore lowers the memory needed per node. [Account affinity](/docs/cluster/deployment/topology#account-affinity) describes how to do it with the migration proxy, and its cost.
 
-[Cache swapping](/docs/storage/cache-swap) needs a shared backend to help across nodes. With Redis or the blob store, which every node can read, any node can restore the snapshot of a large account written by another. A node-local file helps only the node that wrote it. The tuning of snapshots is described in [Tune cache swapping](/docs/performance/caches#tune-cache-swapping).
+[Cache swapping](/docs/storage/cache-swap) needs a shared backend to help across nodes. With Stalwart Keep, Redis or the blob store, which every node can read, any node can restore the snapshot of a large account written by another. A node-local file helps only the node that wrote it. Snapshots in Keep or Redis take memory for every account written within the retention period, as [Memory for in-memory snapshots](/docs/storage/cache-swap#memory-for-in-memory-snapshots) explains. The tuning of snapshots is described in [Tune cache swapping](/docs/performance/caches#tune-cache-swapping).
 
 ## Shared in-memory data
 
-The in-memory store holds short-lived data such as rate limit counters, and in a cluster every node must see the same values. The `Default` in-memory store keeps its data inside one node, so it is refused when a coordinator is configured. A cluster therefore needs a Redis in-memory store, as described in [In-memory store](/docs/storage/in-memory).
+The in-memory store holds short-lived data such as rate limit counters, and in a cluster every node must see the same values. The `Default` in-memory store keeps its data inside one node, so it is refused when a coordinator is configured. A cluster therefore needs a [Stalwart Keep](/docs/cluster/keep/) or Redis in-memory store, as described in [In-memory store](/docs/storage/in-memory).
 
-Rate limit counters are kept in that store, and each node updates them in batches rather than on every request. This makes a limit shared by several nodes approximate: it can be exceeded briefly. The pool and memory settings for Redis are described in [Tuning the data store](/docs/performance/data-store#in-memory-store).
+Rate limit counters are kept in that store, and each node updates them in batches rather than on every request. This makes a limit shared by several nodes approximate: it can be exceeded briefly. The pool and memory settings for Redis are described in [Tuning the data store](/docs/performance/data-store#in-memory-store), and those for Keep in [Tuning](/docs/cluster/keep/tuning).
 
 ## Assign work to nodes
 

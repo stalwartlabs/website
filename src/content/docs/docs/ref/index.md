@@ -100,6 +100,7 @@ For telemetry data and permission identifiers referenced from this documentation
 | [OAuthClient](/docs/ref/object/o-auth-client) | Object | Defines a registered OAuth client application. |
 | [OAuthGrant](/docs/ref/object/o-auth-grant) | Object | Authorization granted by an account to an OAuth application. |
 | [OidcProvider](/docs/ref/object/oidc-provider) | Singleton | Configures the OAuth and OpenID Connect provider settings. |
+| [Passkey](/docs/ref/object/passkey) | Object | Passkey for passwordless sign-in to the account. |
 | [PublicKey](/docs/ref/object/public-key) | Object | Defines a public key for email encryption (OpenPGP or S/MIME). |
 | [QueuedMessage](/docs/ref/object/queued-message) | Object | Represents a queued email message pending delivery. |
 | [ReportSettings](/docs/ref/object/report-settings) | Singleton | Configures inbound report analysis and outbound report settings. |

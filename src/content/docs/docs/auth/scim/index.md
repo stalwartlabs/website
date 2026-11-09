@@ -20,11 +20,11 @@ A deployment with SCIM involves three parties, shown in the following diagram:
 
 ```mermaid
 flowchart LR
-  HR[HR system or<br/>corporate directory] --> IDP[Identity provider<br/>SCIM client]
-  IDP -->|SCIM 2.0 over HTTPS<br/>POST, PATCH, DELETE| SW[Stalwart<br/>SCIM service provider]
-  USER[Mail client] -->|OAUTHBEARER access token| SW
-  USER -.->|authenticates| IDP
+  HR["HR system or<br/>corporate directory"] --> IDP["Identity provider<br/><small>SCIM client</small>"]
+  IDP -->|"SCIM 2.0 over HTTPS<br/>POST, PATCH, DELETE"| SW["Stalwart<br/><small>SCIM service provider</small>"]:::brand
   SW -.->|validates token| IDP
+  USER([Mail client]):::ink -.->|authenticates| IDP
+  USER -->|OAUTHBEARER access token| SW
 ```
 
 The identity provider is the SCIM client and the source of truth for identities. Examples are Microsoft Entra ID, Okta, and Keycloak with a SCIM extension. Stalwart holds the mailboxes and the data that belongs to each account.

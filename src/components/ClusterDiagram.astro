@@ -3,14 +3,14 @@ const clientX = [115, 280, 445];
 const storeX = [100, 280, 460, 640];
 const clients = ["JMAP", "IMAP", "SMTP"];
 const nodes = ["Node 1", "Node 2", "Node N"];
-const coord = ["P2P", "Kafka", "Redis"];
+const coord = ["Keep", "Redis", "Kafka", "P2P"];
 const stores = [
   { name: "Data store", sub: "FoundationDB" },
   { name: "Blob store", sub: "S3 / Azure" },
   { name: "Search store", sub: "Elasticsearch" },
-  { name: "In-memory store", sub: "Redis / Valkey" },
+  { name: "In-memory store", sub: "Keep / Redis" },
 ];
-const label = "Stalwart cluster topology: JMAP, IMAP and SMTP clients reach any of N nodes, each serving every protocol; the nodes share a data store (FoundationDB), blob store (S3 or Azure), search store (Elasticsearch) and in-memory store (Redis or Valkey); coordination is peer to peer, or through Kafka or Redis";
+const label = "Stalwart cluster topology: JMAP, IMAP and SMTP clients reach any of N nodes, each serving every protocol; the nodes share a data store (FoundationDB), blob store (S3 or Azure), search store (Elasticsearch) and in-memory store (Stalwart Keep or Redis); coordination is through Stalwart Keep, or alternatively Redis, Kafka or peer to peer";
 ---
 <div class="dg" role="img" aria-label={label}>
   <span class="dg-caption">Clients, nodes, storage</span>
@@ -36,7 +36,7 @@ const label = "Stalwart cluster topology: JMAP, IMAP and SMTP clients reach any 
         <text class="sub" y="18">all protocols</text>
       </g>
     ))}
-    <rect class="coord" x="580" y="160" width="120" height="142" rx="22" />
+    <rect class="coord" x="580" y="160" width="120" height="168" rx="22" />
     <text class="label" x="640" y="150" text-anchor="middle">Coordination</text>
     {coord.map((c, i) => (
       <g class:list={["cpill", { "is-brand": i === 0 }]} transform={`translate(640 ${196 + i * 36})`}>

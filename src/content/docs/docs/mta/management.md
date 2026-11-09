@@ -59,6 +59,8 @@ stalwart-cli create Action/PauseMtaQueue
 stalwart-cli create Action/ResumeMtaQueue
 ```
 
+The paused state is kept in the memory of each node and is not stored. A node that starts while the rest of the cluster is paused, whether it was restarted or has just joined, therefore comes up with its queue running and begins delivering the messages that are due, while the other nodes remain paused. After restarting a node during maintenance, send `PauseMtaQueue` again to stop it as well. Deliveries can begin within seconds of startup, so messages that were already due may leave from that node before the action arrives.
+
 ## Received reports
 
 Other organisations send reports about the mail they receive from the local domains. Stalwart keeps these reports for review for the period set by [`holdMtaReportsFor`](/docs/ref/object/data-retention#holdmtareportsfor) on the [DataRetention](/docs/ref/object/data-retention) singleton, which is <!-- default:DataRetention.holdMtaReportsFor -->30 days<!-- /default --> unless changed. When the field is not set, received reports are not kept. Three kinds of report are stored:

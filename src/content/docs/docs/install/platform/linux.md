@@ -80,7 +80,7 @@ Leave the four fields on this screen at their defaults. The **Main Data Storage*
 
 The wizard refuses a data store that already holds the data of a Stalwart server, as described in [Setup wizard reports an error](/docs/install/troubleshooting#setup-wizard-reports-an-error).
 
-A server that may later become part of a cluster needs shared storage from the start, because changing the data store later requires a data migration. For the same reason, such a server needs Redis under **Cache & Temporary Data**, because the default in-process store is local to one node. Besides RocksDB, the screen offers PostgreSQL, MySQL and SQLite as the [data store](/docs/storage/data), object storage such as S3 for the [blob store](/docs/storage/blob) and a dedicated [search store](/docs/storage/fts). [Choosing a database](/docs/install/store) explains the options.
+A server that may later become part of a cluster needs shared storage from the start, because changing the data store later requires a data migration. For the same reason, such a server needs Stalwart Keep or Redis under **Cache & Temporary Data**, because the default in-process store is local to one node. Besides RocksDB, the screen offers PostgreSQL, MySQL and SQLite as the [data store](/docs/storage/data), object storage such as S3 for the [blob store](/docs/storage/blob) and a dedicated [search store](/docs/storage/fts). [Choosing a database](/docs/install/store) explains the options.
 
 ### Screen 3: Account directory
 

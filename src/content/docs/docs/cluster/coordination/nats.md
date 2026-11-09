@@ -6,7 +6,7 @@ description: "Use a NATS messaging server or cluster as the cluster coordinator.
 
 [NATS](https://nats.io/) is a lightweight publish and subscribe messaging system. It can serve as the [coordinator](/docs/cluster/coordination/) of a cluster in two situations: when coordination traffic should run on a dedicated messaging service, and when NATS is already operated. NATS support is included in the official binaries. Stalwart uses only core NATS publish and subscribe, so JetStream, the persistence layer of NATS, is not required.
 
-Choosing NATS for coordination does not remove the need for Redis. A cluster coordinated through NATS still requires a Redis-based [in-memory store](/docs/storage/in-memory), which must be configured before the coordinator, as described in [Coordination mechanism](/docs/cluster/configuration/coordination#order-of-configuration).
+Choosing NATS for coordination does not remove the need for a shared in-memory store. A cluster coordinated through NATS still requires a [Stalwart Keep](/docs/cluster/keep/) or Redis [in-memory store](/docs/storage/in-memory), which must be configured before the coordinator, as described in [Coordination mechanism](/docs/cluster/configuration/coordination#order-of-configuration).
 
 ## Configuration
 

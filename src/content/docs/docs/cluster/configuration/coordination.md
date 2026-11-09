@@ -15,7 +15,8 @@ The available coordinators differ in the service they need and in whether the of
 | `@type` | Service | In the official binaries | Notes |
 |---|---|---|---|
 | `Disabled` | None | Yes | Single node only. |
-| `Default` | The Redis server of the in-memory store | Yes | No additional service. Requires the in-memory store to be `Redis`, `RedisCluster`, `RedisSentinel` or `Sharded`. A sharded store uses its first member. |
+| `Default` | The Keep or Redis server of the in-memory store | Yes | The recommended choice. No additional service. Requires the in-memory store to be `Keep`, `Redis`, `RedisCluster`, `RedisSentinel` or `Sharded`. A sharded store uses its first member. |
+| `Keep` | A [Stalwart Keep](/docs/cluster/coordination/keep) deployment | Yes | A separate connection, for example to a different Keep deployment. |
 | `Redis` | A standalone [Redis](/docs/cluster/coordination/redis) or Valkey server | Yes | A separate connection, for example to a different Redis deployment. |
 | `RedisCluster` | A Redis Cluster | Yes | |
 | `RedisSentinel` | Redis managed by Sentinel | Yes | |
@@ -23,26 +24,26 @@ The available coordinators differ in the service they need and in whether the of
 | `Kafka` | [Apache Kafka or Redpanda](/docs/cluster/coordination/kafka) | No | Requires a custom build. |
 | `Zenoh` | [Eclipse Zenoh](/docs/cluster/coordination/peer-to-peer), peer to peer | No | Requires a custom build. |
 
-A cluster always needs a Redis-based in-memory store, which makes `Default` the simplest choice. It reuses that Redis server, so it adds no service and needs no further settings.
+A cluster always needs a shared in-memory store, and [Stalwart Keep](/docs/cluster/keep/) is the recommended one. It carries cluster events as well, which makes `Default` the simplest choice: it reuses the connection of the in-memory store, so it adds no service and needs no further settings. `Default` works in the same way with a Redis in-memory store.
 
-A separate Redis connection or NATS is chosen in two situations. The first is when the coordination traffic should not share the Redis deployment that holds the locks and counters. The second is when NATS is already operated.
+A separate Keep or Redis connection, or NATS, is chosen in two situations. The first is when the coordination traffic should not share the deployment that holds the locks and counters. The second is when NATS is already operated.
 
 Kafka and Zenoh are not part of the official binaries. They are available only in binaries [compiled](/docs/development/compile) with the `kafka` or `zenoh` feature. When either is selected, an official binary logs `Binary was not compiled with the selected coordinator backend` and runs without coordination.
 
 ## Order of configuration
 
-Every coordinator other than `Disabled` requires the [in-memory store](/docs/storage/in-memory) to be Redis-based: `Redis`, `RedisCluster`, `RedisSentinel`, or the Enterprise `Sharded` store. The reason is that the local in-process store cannot be shared by the nodes. The server enforces this rule in both directions, so the two settings must be changed in a specific order.
+Every coordinator other than `Disabled` requires a shared [in-memory store](/docs/storage/in-memory): `Keep`, `Redis`, `RedisCluster`, `RedisSentinel`, or the Enterprise `Sharded` store. The reason is that the local in-process store cannot be shared by the nodes. The server enforces this rule in both directions, so the two settings must be changed in a specific order.
 
 To turn a single node into the first node of a cluster:
 
-1. Set the [InMemoryStore](/docs/ref/object/in-memory-store) to a Redis variant.
+1. Set the [InMemoryStore](/docs/ref/object/in-memory-store) to `Keep` or a Redis variant.
 2. Set the Coordinator.
 3. Restart the node, so that both settings take effect.
 
 Setting a coordinator while the in-memory store is still `Default` is refused with:
 
 ```text
-A cluster coordinator requires a Redis in-memory store, configure one first.
+A cluster coordinator requires a Stalwart Keep or Redis in-memory store, configure one first.
 ```
 
 To return to a single node, the order is reversed:
@@ -57,9 +58,9 @@ Setting the in-memory store to `Default` while a coordinator is configured is re
 The local in-memory store cannot be used while a cluster coordinator is configured, disable the coordinator first.
 ```
 
-These checks apply to changes made through the server. A node can nevertheless start with both settings, for example because another tool wrote them. It then logs a `registry.build-error` event with the message `The local in-memory store cannot be used when a cluster coordinator is configured, use a Redis in-memory store or disable the coordinator`, and it runs without a usable in-memory store.
+These checks apply to changes made through the server. A node can nevertheless start with both settings, for example because another tool wrote them. It then logs a `registry.build-error` event with the message `The local in-memory store cannot be used when a cluster coordinator is configured, use a Stalwart Keep or Redis in-memory store or disable the coordinator`, and it runs without a usable in-memory store.
 
-The coordinator's `Default` variant reuses the in-memory store's connection. With a `Sharded` in-memory store, it uses the first member of the store, so all nodes exchange their messages through the same Redis deployment. A node whose in-memory store is not Redis-based logs `Default coordinator requires a Redis, Redis Cluster, Redis Sentinel or sharded Redis in-memory store`, and runs without coordination.
+The coordinator's `Default` variant reuses the in-memory store's connection. With a `Sharded` in-memory store, it uses the first member of the store, so all nodes exchange their messages through the same Redis deployment. A node whose in-memory store is neither Keep nor Redis-based logs `Default coordinator requires a Stalwart Keep, Redis, Redis Cluster, Redis Sentinel or sharded Redis in-memory store`, and runs without coordination.
 
 ## Running several nodes without a coordinator
 

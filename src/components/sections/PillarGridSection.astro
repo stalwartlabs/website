@@ -44,6 +44,9 @@ const span = (i: number) => {
 <style>
   .pillar-cell {
     display: grid;
+    grid-row: span 3;
+    grid-template-rows: subgrid;
+    row-gap: 0;
   }
   .c-5 {
     grid-column: span 5;
@@ -55,13 +58,14 @@ const span = (i: number) => {
     grid-column: 1 / -1;
   }
   .pillar {
-    min-height: 290px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+    grid-row: 1 / -1;
+    display: grid;
+    grid-template-rows: subgrid;
+    row-gap: 12px;
+    align-content: start;
   }
   .pillar .badge {
-    margin-bottom: auto;
+    align-self: start;
   }
   .pillar .h3 {
     margin-top: 36px;
@@ -71,9 +75,6 @@ const span = (i: number) => {
     max-width: 46ch;
   }
   @media (max-width: 1023px) {
-    .pillar {
-      min-height: 0;
-    }
     .pillar .badge {
       margin-bottom: 0;
     }

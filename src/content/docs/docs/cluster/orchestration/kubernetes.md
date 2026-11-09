@@ -61,7 +61,7 @@ A single-node install leaves `role` empty and keeps `replicaCount: 1`, so its on
 
 - A shared data store, such as PostgreSQL, set in `.Values.config`. `persistence.enabled` can then be `false`.
 - A shared blob store and search store, for example S3 and the shared data store.
-- A Redis-based in-memory store.
+- A [Stalwart Keep](/docs/cluster/keep/kubernetes) or Redis in-memory store.
 - A coordinator.
 
 The [cluster overview](/docs/cluster/#cluster-requirements) lists these components. The data store is set in `config.json`, and the others are set through the WebUI or the CLI once the first pod is running, as described below.
@@ -71,7 +71,7 @@ The [cluster overview](/docs/cluster/#cluster-requirements) lists these componen
 The in-memory store and the [Coordinator](/docs/ref/object/coordinator) (found in the WebUI under <!-- breadcrumb:Coordinator --><svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M10 5H3" /><path d="M12 19H3" /><path d="M14 3v4" /><path d="M16 17v4" /><path d="M21 12h-9" /><path d="M21 19h-5" /><path d="M21 5h-7" /><path d="M8 10v4" /><path d="M8 12H3" /></svg> Settings › <svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M2.97 12.92A2 2 0 0 0 2 14.63v3.24a2 2 0 0 0 .97 1.71l3 1.8a2 2 0 0 0 2.06 0L12 19v-5.5l-5-3-4.03 2.42Z" /><path d="m7 16.5-4.74-2.85" /><path d="m7 16.5 5-3" /><path d="M7 16.5v5.17" /><path d="M12 13.5V19l3.97 2.38a2 2 0 0 0 2.06 0l3-1.8a2 2 0 0 0 .97-1.71v-3.24a2 2 0 0 0-.97-1.71L17 10.5l-5 3Z" /><path d="m17 16.5-5-3" /><path d="m17 16.5 4.74-2.85" /><path d="M17 16.5v5.17" /><path d="M7.97 4.42A2 2 0 0 0 7 6.13v4.37l5 3 5-3V6.13a2 2 0 0 0-.97-1.71l-3-1.8a2 2 0 0 0-2.06 0l-3 1.8Z" /><path d="M12 8 7.26 5.15" /><path d="m12 8 4.74-2.85" /><path d="M12 13.5V8" /></svg> Cluster › Coordinator<!-- /breadcrumb:Coordinator -->) are kept in the database, not in `config.json`. They can therefore be configured only after installation, in the following order:
 
 1. Install the chart with `replicaCount: 1` and the shared data store in `.Values.config`.
-2. Sign in to the first pod with the recovery administrator (`recoveryAdmin.enabled: true`, see [Bootstrapping](#bootstrapping)) and set the blob store, the search store and a Redis [in-memory store](/docs/storage/in-memory).
+2. Sign in to the first pod with the recovery administrator (`recoveryAdmin.enabled: true`, see [Bootstrapping](#bootstrapping)) and set the blob store, the search store and a Keep or Redis [in-memory store](/docs/storage/in-memory).
 3. Set the Coordinator. The registry refuses a coordinator while the in-memory store is still the local default, so this step must follow the previous one, as described in [Coordination mechanism](/docs/cluster/configuration/coordination#order-of-configuration).
 4. Restart the pod so that the new stores take effect, then raise `replicaCount` and run `helm upgrade`. The new pods read the same configuration from the shared data store.
 
@@ -174,5 +174,5 @@ The following problems can occur on Kubernetes. Each entry gives the symptom, it
 - Pod stuck in `CrashLoopBackOff` on a fresh install with RocksDB: check that `persistence.enabled: true` and that the cluster's default StorageClass can provision a `ReadWriteOnce` volume of the requested size. See [persistent storage](/docs/install/store).
 - Mail ports unreachable from outside the cluster: `service.type: ClusterIP` only exposes the listeners inside the cluster. Switch to `LoadBalancer`, add a `NodePort`, or front the chart with an L4 load balancer. Review the [security recommendations](/docs/install/security) before exposing SMTP and IMAP publicly.
 - TLS errors on the HTTPS listener: Stalwart needs a TLS certificate before mail clients will connect. Configure ACME in the WebUI under Settings › TLS › ACME Providers, or upload an existing certificate under Settings › TLS › Certificates. See [ACME](/docs/server/tls/acme/).
-- Cluster nodes do not see each other: verify that a coordinator is configured, that the in-memory store is Redis-based, and that both are reachable from every pod. See [coordination overview](/docs/cluster/coordination/).
+- Cluster nodes do not see each other: verify that a coordinator is configured, that the in-memory store is Keep or Redis, and that both are reachable from every pod. See [coordination overview](/docs/cluster/coordination/).
 - Two nodes acquire the same node id: StatefulSet pods already have stable, unique hostnames, but custom Deployment-based installs must ensure each pod runs with a distinct hostname. See [node id](/docs/cluster/configuration/node-id).

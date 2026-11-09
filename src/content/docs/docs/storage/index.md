@@ -10,6 +10,30 @@ Stalwart therefore keeps each kind of data in its own store, and each store is c
 
 ## Main stores
 
+The following diagram shows the four stores, what each one holds, and where each can keep its data:
+
+```mermaid
+flowchart LR
+    SW["Stalwart"]:::brand
+    OS["Object storage"]:::muted
+    BS["Blob store<br/><small>messages, attachments, files</small>"]
+    DS["Data store<br/><small>accounts, mailboxes, configuration</small>"]
+    SS["Search store<br/><small>full-text index</small>"]
+    MS["In-memory store<br/><small>counters, locks, tokens</small>"]
+    ES["ElasticSearch, Meilisearch"]:::muted
+    PM["Process memory<br/><small>single node</small>"]:::muted
+    RD["Stalwart Keep or Redis<br/><small>cluster</small>"]:::muted
+    SW --> BS
+    SW --> DS
+    SW --> SS & MS
+    BS --> OS
+    BS -->|Default| DS
+    SS -->|Default| DS
+    SS --> ES
+    MS -->|Default| PM
+    MS --> RD
+```
+
 The [data store](/docs/storage/data) holds every structured record of the server. This covers accounts and domains, mailboxes and message metadata, calendars and contacts, the change history from which clients synchronise, and the server's configuration objects. It is the only store that every other part of the server depends on. It is configured through the [DataStore](/docs/ref/object/data-store) object (found in the WebUI under <!-- breadcrumb:DataStore --><svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M10 5H3" /><path d="M12 19H3" /><path d="M14 3v4" /><path d="M16 17v4" /><path d="M21 12h-9" /><path d="M21 19h-5" /><path d="M21 5h-7" /><path d="M8 10v4" /><path d="M8 12H3" /></svg> Settings › <svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><ellipse cx="12" cy="5" rx="9" ry="3" /><path d="M3 5V19A9 3 0 0 0 21 19V5" /><path d="M3 12A9 3 0 0 0 21 12" /></svg> Storage › Data Store<!-- /breadcrumb:DataStore -->).
 
 The [blob store](/docs/storage/blob) holds large binary objects, or blobs: the raw messages with their attachments, Sieve scripts, the contents of file storage and similar data. Every blob is written to the blob store. With the `Default` variant, however, the blob store keeps its blobs inside the data store, so no separate service is needed until the volume of data calls for one. It is configured through the [BlobStore](/docs/ref/object/blob-store) object (found in the WebUI under <!-- breadcrumb:BlobStore --><svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M10 5H3" /><path d="M12 19H3" /><path d="M14 3v4" /><path d="M16 17v4" /><path d="M21 12h-9" /><path d="M21 19h-5" /><path d="M21 5h-7" /><path d="M8 10v4" /><path d="M8 12H3" /></svg> Settings › <svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><ellipse cx="12" cy="5" rx="9" ry="3" /><path d="M3 5V19A9 3 0 0 0 21 19V5" /><path d="M3 12A9 3 0 0 0 21 12" /></svg> Storage › Blob Store<!-- /breadcrumb:BlobStore -->).

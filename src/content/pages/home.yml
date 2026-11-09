@@ -117,6 +117,7 @@ sections:
     bullets:
       - Encryption at rest with S/MIME or OpenPGP, including post-quantum ML-KEM keys.
       - Encryption gateway with automatic recipient key discovery.
+      - Blob store encryption for messages and files kept on S3, Azure or other object storage.
       - Strong transport security through DANE, MTA-STS, and TLS reporting.
       - Automatic TLS provisioning over ACME.
       - Automated DKIM key generation, rotation, and DNS publication.
@@ -141,7 +142,7 @@ sections:
     bullets:
       - "Pluggable storage: RocksDB, FoundationDB, PostgreSQL, MySQL, SQLite, S3, Azure Blob, Redis."
       - Full-text search in 17 languages, internal or via Meilisearch, ElasticSearch, OpenSearch, PostgreSQL, including the text of PDF and Office attachments and stored files.
-      - LDAP, OIDC, SQL, or built-in auth, with 2FA, app passwords, and API keys.
+      - LDAP, OIDC, SQL, or built-in auth, with passkeys, 2FA, app passwords, and API keys.
       - Automated DNS management on Cloudflare, Route53, Google Cloud DNS, and more.
       - Sieve scripting plus Stalwart's expression language.
       - Web administration plus a CLI.
@@ -204,8 +205,8 @@ sections:
     title: Built to scale to millions of mailboxes.
     body: >-
       Stalwart was designed for clustering from day one, not retrofitted.
-      Any node can serve any protocol, no external coordinator is
-      required, and capacity grows by adding nodes, so the same product
+      Any node can serve any protocol, Stalwart Keep handles
+      coordination and short-lived state, and capacity grows by adding nodes, so the same product
       that handles a small organisation today handles a hosting platform
       tomorrow.
     bullets:
@@ -213,8 +214,8 @@ sections:
       - Kubernetes, Apache Mesos, and Docker Swarm orchestration.
       - Distributed MTA queue with delayed delivery, priority, quotas, routing, and throttling.
       - Read replicas, sharded blob storage and in-memory data stores.
-      - Peer-to-peer cluster coordination using Zenoh; no external coordinator required.
-      - Optional coordinator-based clustering with Apache Kafka, Redpanda, NATS, or Redis.
+      - Stalwart Keep for cluster coordination, locks and rate-limit counters in one service.
+      - Alternative coordination through NATS, Redis, Apache Kafka, Redpanda or peer-to-peer Zenoh.
     visual:
       kind: diagram
       id: cluster

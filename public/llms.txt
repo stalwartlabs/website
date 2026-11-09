@@ -95,7 +95,7 @@ The documentation is versioned; links below point at the current release line. O
 - [Full-text search](https://stalw.art/docs/storage/fts): FTS backends.
 - [Search indexing](https://stalw.art/docs/storage/indexing): the index queue and rebuilding the index.
 - [Attachment text extraction](https://stalw.art/docs/storage/text-extraction): document formats indexed for search.
-- [In-memory store](https://stalw.art/docs/storage/in-memory): rate-limit counters, greylisting entries, locks and short-lived tokens; Redis for clusters.
+- [In-memory store](https://stalw.art/docs/storage/in-memory): rate-limit counters, greylisting entries, locks and short-lived tokens; Stalwart Keep or Redis for clusters.
 - [Cache swapping](https://stalw.art/docs/storage/cache-swap): persisted account cache snapshots.
 - [Data retention](https://stalw.art/docs/storage/maintenance): purging deleted and expired data and reclaiming disk space.
 - [Backends overview](https://stalw.art/docs/storage/backends/): RocksDB, FoundationDB, SQL, S3, and others.
@@ -139,7 +139,11 @@ The documentation is versioned; links below point at the current release line. O
 
 - [Cluster overview](https://stalw.art/docs/cluster/): multi-node deployments.
 - [Cluster configuration overview](https://stalw.art/docs/cluster/configuration/): node IDs, roles, and load balancing.
-- [Coordination overview](https://stalw.art/docs/cluster/coordination/): Kafka, NATS, Redis and peer-to-peer coordination.
+- [Coordination overview](https://stalw.art/docs/cluster/coordination/): Stalwart Keep, Kafka, NATS, Redis and peer-to-peer coordination.
+- [Stalwart Keep](https://stalw.art/docs/cluster/keep/): the recommended in-memory store, coordinator and cache swap store for clusters.
+- [Keep installation](https://stalw.art/docs/cluster/keep/installation): binaries, systemd, Docker and verification.
+- [Keep architecture](https://stalw.art/docs/cluster/keep/architecture): thread-per-core shards, event loop, clustering and performance.
+- [Keep testing](https://stalw.art/docs/cluster/keep/testing): test levels and running the Jepsen suite.
 - [Orchestration overview](https://stalw.art/docs/cluster/orchestration/): Kubernetes and Docker Swarm.
 - [Deployment overview](https://stalw.art/docs/cluster/deployment/): sizing and storage.
 

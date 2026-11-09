@@ -358,7 +358,7 @@ image:
 
 # Number of pods in the StatefulSet.
 # Single-node deployments keep this at 1. Values above 1 require a
-# shared data store, blob store and search store, a Redis-based
+# shared data store, blob store and search store, a Keep or Redis
 # in-memory store and a coordinator; see /docs/cluster/ for the list.
 # Set `role` (and `pushShard` where applicable) for the whole
 # StatefulSet, or install one release of this chart per role.

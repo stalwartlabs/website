@@ -11,8 +11,8 @@ All the nodes of a cluster read and write the same data. Every store must theref
 | [Data store](/docs/storage/data) | Yes | PostgreSQL, MySQL or MariaDB, FoundationDB | RocksDB, SQLite |
 | [Blob store](/docs/storage/blob) | Yes | S3-compatible, Azure, PostgreSQL, MySQL, FoundationDB, or the shared data store (`Default`) | FileSystem, unless on a shared file system |
 | [Search store](/docs/storage/fts) | Yes | The shared data store (`Default`), PostgreSQL, MySQL, FoundationDB, ElasticSearch, Meilisearch | |
-| [In-memory store](/docs/storage/in-memory) | Yes | Redis, Valkey, Redis Cluster, Redis Sentinel, Sharded (Enterprise) | The local default |
-| [Cache swap tier](/docs/storage/cache-swap) | No | Redis, the blob store | LocalFile is per node |
+| [In-memory store](/docs/storage/in-memory) | Yes | [Stalwart Keep](/docs/cluster/keep/), Redis, Valkey, Redis Cluster, Redis Sentinel, Sharded (Enterprise) | The local default |
+| [Cache swap tier](/docs/storage/cache-swap) | No | Stalwart Keep, Redis, the blob store | LocalFile is per node |
 
 One storage setting is not shared. Every node must carry the same DataStore definition in its own `config.json`, because that is the only storage setting kept per node. All the other settings are stored once, in the shared data store.
 
@@ -44,10 +44,10 @@ Indexing is performed by the nodes with the `searchIndexing` [role](/docs/cluste
 
 The in-memory store holds rate-limit counters, greylisting entries, locks and short-lived tokens, and all the nodes must share them. A lock taken by one node must be visible to the others, and a rate limit must count the requests made to every node.
 
-A cluster therefore requires a Redis-based in-memory store: [Redis or Valkey](/docs/storage/backends/redis), Redis Cluster, Redis Sentinel, or a [sharded](/docs/storage/backends/composite#sharded-in-memory-store) store of Redis deployments (Enterprise). The local in-process store that a single node uses cannot be shared, and the registry refuses it when a coordinator is configured. For the same reason, the in-memory store has to be configured before the coordinator, as described in [Coordination mechanism](/docs/cluster/configuration/coordination#order-of-configuration). [Redis](/docs/storage/backends/redis#memory-limit-and-eviction-policy) describes the memory limit and the eviction policy that Redis should use.
+A cluster therefore requires a shared in-memory store. [Stalwart Keep](/docs/cluster/keep/) is the recommended one, because it is built for this workload and also carries the cluster's coordination traffic. The alternatives are [Redis or Valkey](/docs/storage/backends/redis), Redis Cluster, Redis Sentinel, or a [sharded](/docs/storage/backends/composite#sharded-in-memory-store) store of Redis deployments (Enterprise). The local in-process store that a single node uses cannot be shared, and the registry refuses it when a coordinator is configured. For the same reason, the in-memory store has to be configured before the coordinator, as described in [Coordination mechanism](/docs/cluster/configuration/coordination#order-of-configuration). [Redis](/docs/storage/backends/redis#memory-limit-and-eviction-policy) describes the memory limit and the eviction policy that Redis should use.
 
-TLS client certificates are not supported for Redis connections. Authentication to Redis therefore uses a password, or an access control list user.
+Keep connections use mutual TLS. TLS client certificates are not supported for Redis connections, so authentication to Redis uses a password, or an access control list user.
 
 ## Cache swap tier
 
-[Cache swapping](/docs/storage/cache-swap) is optional, and in a cluster its value depends on where the snapshots are kept. A shared tier, in Redis or in the blob store, allows any node to load the snapshot of an account that another node served before. This avoids rebuilding the cache after a rolling restart or a change of node. The `LocalFile` tier, by contrast, is per node, and it helps only when a node serves the same accounts again.
+[Cache swapping](/docs/storage/cache-swap) is optional, and in a cluster its value depends on where the snapshots are kept. A shared tier, in Stalwart Keep, Redis or the blob store, allows any node to load the snapshot of an account that another node served before. This avoids rebuilding the cache after a rolling restart or a change of node. The `LocalFile` tier, by contrast, is per node, and it helps only when a node serves the same accounts again. A tier in Keep or Redis holds the snapshots of every account written within the retention period in memory, which can raise the memory the deployment needs considerably; [Memory for in-memory snapshots](/docs/storage/cache-swap#memory-for-in-memory-snapshots) explains how much, and when `BlobStore` or `LocalFile` with account affinity is the better choice.

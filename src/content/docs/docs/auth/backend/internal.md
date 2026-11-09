@@ -6,7 +6,7 @@ description: "The internal directory: accounts, passwords and addresses managed 
 
 The internal directory is Stalwart's own store of users. It keeps accounts, passwords, addresses and group memberships on the server itself, as [Account](/docs/ref/object/account) objects in the [data store](/docs/storage/data). It is the right choice when Stalwart is the only system that manages the mail users.
 
-Every account feature is available with the internal directory. This includes two features that external directories do not offer: [two-factor authentication](/docs/auth/authentication/2fa), and self-service password changes in the Account Manager.
+Every account feature is available with the internal directory. This includes three features that external directories do not offer: [two-factor authentication](/docs/auth/authentication/2fa), [passkeys](/docs/auth/authentication/passkeys), and self-service password changes in the Account Manager.
 
 ## Configuration
 

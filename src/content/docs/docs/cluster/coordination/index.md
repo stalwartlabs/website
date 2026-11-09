@@ -10,6 +10,23 @@ The coordinator is the messaging service that carries these notifications. Every
 
 An example shows how this works. A node that receives SMTP delivers a message to a mailbox, while the user's IMAP IDLE session is open on a different node. The delivering node publishes a state change for the account. The other node receives it, and sends the IDLE response to the client.
 
+The following diagram shows this sequence:
+
+```mermaid
+sequenceDiagram
+    participant S as SMTP sender
+    participant A as Node A
+    participant C as Coordinator
+    participant B as Node B
+    participant I as IMAP client
+    I->>B: IDLE
+    S->>A: Message for the account
+    Note over A: Delivers the message to the mailbox
+    A->>C: State change for the account
+    C->>B: State change for the account
+    B->>I: IDLE response
+```
+
 ## Notifications
 
 The coordinator carries the following kinds of notification:
@@ -34,11 +51,12 @@ The cost of an outage is therefore limited. For a while, IDLE sessions and push 
 
 ## Coordination services
 
-[Coordination mechanism](/docs/cluster/configuration/coordination) describes how to configure the coordinator. It includes a comparison of the options, and the requirement for a Redis-based in-memory store. The following services are available:
+[Coordination mechanism](/docs/cluster/configuration/coordination) describes how to configure the coordinator. It includes a comparison of the options, and the requirement for a shared in-memory store. The following services are available:
 
+- [Stalwart Keep](/docs/cluster/coordination/keep), the recommended choice, which also serves as the in-memory store, either through the in-memory store's connection or through a separate one.
 - [Redis](/docs/cluster/coordination/redis), including Valkey, Redis Cluster and Redis Sentinel, either through the in-memory store's connection or through a separate one.
 - [NATS](/docs/cluster/coordination/nats), a lightweight publish and subscribe messaging system.
 - [Apache Kafka or Redpanda](/docs/cluster/coordination/kafka), event streaming platforms, available in custom builds.
 - [Eclipse Zenoh](/docs/cluster/coordination/peer-to-peer), a peer-to-peer protocol in which nodes connect to each other directly, available in custom builds.
 
-The coordinator carries only notifications, which are small and short-lived, so the choice rarely depends on throughput. A cluster that already runs Redis for its in-memory store needs no other service.
+The coordinator carries only notifications, which are small and short-lived, so the choice rarely depends on throughput. A cluster that runs Keep or Redis for its in-memory store needs no other service.

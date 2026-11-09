@@ -24,6 +24,8 @@ The Subject in particular always stays readable at rest. Clients show it in the 
 
 Because the protection applies only from the moment of storage, it does not cover a message while it is being received. An attacker in control of the server at that moment can read the message. Encryption at rest protects stored mail against later access, not against a compromised running server.
 
+Encryption at rest applies only to accounts that have registered a public key. To protect every message and file in the blob store against the storage backend, independently of users and their clients, use [blob encryption](/docs/storage/blob-encryption). The two can be combined.
+
 ### Header protection
 
 Header fields outside the encryption can be changed by anyone who can modify the stored message, without the change being noticeable. Header protection ([RFC 9788](https://www.rfc-editor.org/rfc/rfc9788)) addresses this by placing a copy of the important header fields inside the encrypted part, where they cannot be altered without detection. A client that supports header protection shows the protected copy instead of the outer one.

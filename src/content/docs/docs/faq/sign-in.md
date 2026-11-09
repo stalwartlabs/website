@@ -1,6 +1,6 @@
 ---
 title: "Sign-in, directories and API access"
-description: "Frequently asked questions about LDAP, SQL and OpenID Connect directories, single sign-on to the WebUI, OAuth in mail clients, two-factor authentication, app passwords and API keys."
+description: "Frequently asked questions about LDAP, SQL and OpenID Connect directories, single sign-on to the WebUI, OAuth in mail clients, two-factor authentication, passkeys, app passwords and API keys."
 sidebar_position: 4
 ---
 
@@ -64,6 +64,10 @@ For a domain served by an external identity provider, the provider must implemen
 These protocols have no place for the one-time code. Password sign-ins over IMAP, POP3, SMTP, ManageSieve and HTTP Basic authentication can carry only a password, so they always fail for an account with two-factor authentication. SMTP, for example, answers `334 5.7.8 This account requires multi-factor authentication. Alternatively, you can use an app password if your account has one.`
 
 Such clients need OAuth or an [app password](/docs/auth/authentication/app-password). Two-factor authentication applies only to accounts of the internal directory, so accounts of an LDAP or SQL directory are never asked for a code. See [Signing in with two-factor authentication](/docs/auth/authentication/2fa#signing-in-with-two-factor-authentication).
+
+### Can users sign in to mail clients with a passkey?
+
+Only to clients that sign in through OAuth, because a passkey can be used only on the OAuth sign-in page. Clients that send a password over IMAP, POP3, SMTP or ManageSieve keep using the account's password or an [app password](/docs/auth/authentication/app-password). A passkey sign-in asks for neither the password nor the two-factor code. See [Passkeys](/docs/auth/authentication/passkeys).
 
 ### Can I require two-factor authentication for everyone?
 

@@ -42,7 +42,7 @@ When a cache is full, it has to evict an entry to make room for a new one, and t
 
 ## Cache snapshots
 
-Building a very large account from the data store can take seconds. A restart empties every cache, so the first requests after a restart pay that cost for every large account. [Cache swapping](/docs/storage/cache-swap) reduces it by writing snapshots of large account caches to a file, Redis or the blob store. A miss then loads the snapshot and applies the recent changes from the change log, instead of building the account from scratch. When the change log no longer reaches back to a snapshot, the snapshot is discarded, so a snapshot never serves outdated data.
+Building a very large account from the data store can take seconds. A restart empties every cache, so the first requests after a restart pay that cost for every large account. [Cache swapping](/docs/storage/cache-swap) reduces it by writing snapshots of large account caches to a file, Stalwart Keep, Redis or the blob store. A miss then loads the snapshot and applies the recent changes from the change log, instead of building the account from scratch. When the change log no longer reaches back to a snapshot, the snapshot is discarded, so a snapshot never serves outdated data.
 
 ## Caches in a cluster
 

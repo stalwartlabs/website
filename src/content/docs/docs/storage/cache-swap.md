@@ -41,16 +41,22 @@ The [`swap`](/docs/ref/object/cache#swap) field of the [Cache](/docs/ref/object/
 |---|---|---|---|
 | `Disabled` | Not kept | | |
 | `LocalFile` | A directory on this node | No | Replaced on rewrite |
-| `Redis` | The Redis in-memory store, or a separate Redis deployment | Yes | [`retention`](/docs/ref/object/cache#retention) |
+| `InMemory` | The [Stalwart Keep](/docs/storage/backends/keep) or Redis in-memory store, or a separate Keep or Redis deployment | Yes | [`retention`](/docs/ref/object/cache#retention) |
 | `BlobStore` | The blob store, or a separate blob store | Yes | `retention`, removed by the blob purge |
 
 `LocalFile` writes snapshots to the directory named in `path`, which is created with permissions restricted to the server's user. It needs no other service, which makes it suit a single node.
 
-`Redis` stores each snapshot in chunks of [`chunkSize`](/docs/ref/object/cache#chunksize) bytes. Its `store` field decides which Redis holds them. Set to `Default`, it reuses the [in-memory store](/docs/storage/in-memory), which is accepted only when the in-memory store is Redis, or a sharded store whose members are all Redis. The store can instead be a separate `Redis`, `RedisCluster` or `RedisSentinel` deployment. That keeps the snapshots, which can each reach `maxAccountSize`, out of the Redis instance used for locks and rate limits. [Redis](/docs/storage/backends/redis#memory-limit-and-eviction-policy) describes the eviction policy for each case.
+`InMemory` stores each snapshot in chunks of [`chunkSize`](/docs/ref/object/cache#chunksize) bytes, in Stalwart Keep or Redis. Its `store` field decides which deployment holds them. Set to `Default`, it reuses the [in-memory store](/docs/storage/in-memory), which is accepted when the in-memory store is Keep, Redis, or a sharded store whose members are all Redis. The store can instead be a separate `Keep`, `Redis`, `RedisCluster` or `RedisSentinel` deployment. That keeps the snapshots, which can each reach `maxAccountSize`, out of the instance used for locks and rate limits. On Keep, snapshots suit the lack of persistence, because they can always be rebuilt from the data store, but the [memory cap](/docs/cluster/keep/tuning#memory-cap) has to allow for them, as described in [Memory for in-memory snapshots](#memory-for-in-memory-snapshots). [Redis](/docs/storage/backends/redis#memory-limit-and-eviction-policy) describes the eviction policy for each case.
 
 `BlobStore` stores snapshots as blobs. Its `store` field set to `Default` reuses the [blob store](/docs/storage/blob), and it can also name a separate S3, Azure, FoundationDB, PostgreSQL or MySQL store.
 
-Two combinations are refused when the configuration is loaded. The first is any attempt to keep snapshots in a filesystem blob store, whether through `BlobStore` with `Default` on a server whose blob store is `FileSystem`, or as an explicit `FileSystem` store. It fails with `The filesystem blob store cannot back the cache swap tier ...`, and `LocalFile` is the backend to use for snapshots on a local disk. The second is `Redis` with `Default` on a server whose in-memory store is the local in-process store, which fails with `The default cache swap store requires a Redis in-memory backend, either directly or as every shard of a sharded store`.
+Two combinations are refused when the configuration is loaded. The first is `BlobStore` with `Default` on a server whose blob store is `FileSystem`, which would keep snapshots in a filesystem blob store. It fails with `The filesystem blob store cannot back the cache swap tier ...`, and `LocalFile` is the backend to use for snapshots on a local disk. The second is `InMemory` with `Default` on a server whose in-memory store is the local in-process store, which fails with `The default cache swap store requires a Stalwart Keep or Redis in-memory backend, or a sharded store with Redis as every shard`.
+
+### Memory for in-memory snapshots
+
+Snapshots in Keep or Redis can need far more memory than the locks and counters that the in-memory store otherwise holds, so the deployment has to be sized for them before `InMemory` is enabled. A snapshot expires only when it has not been rewritten for [`retention`](/docs/ref/object/cache#retention), <!-- default:Cache.InMemorySwap.retention -->7 days<!-- /default --> by default. Loading a snapshot does not extend it, and evicting an account from a node's memory does not remove it. The Keep or Redis deployment therefore holds a snapshot of every account large enough to be swapped that was written within that period, whether or not the account is still in use. Each account can have up to five snapshots, one for its messages and one each for its calendars, contacts, files and scheduling notifications. Each can reach `maxAccountSize`, and snapshots are stored uncompressed, so on a server with many large accounts they can multiply the memory that the deployment needs. A shorter `retention` reduces that memory, at the cost of rebuilding the accounts that stay inactive for longer.
+
+A deployment that cannot provide this memory keeps its snapshots elsewhere. `BlobStore` keeps them in the blob store, which every node can read and where space costs far less than memory. `LocalFile` keeps them on each node's disk, and in a cluster it pays off only when each account is always served by the same node, which the migration proxy provides as described in [Account affinity](/docs/cluster/deployment/topology#account-affinity).
 
 ## Enabling cache swapping
 
@@ -67,12 +73,12 @@ The following value stores snapshots in a local directory:
 }
 ```
 
-The following value stores snapshots in the Redis in-memory store and keeps unused snapshots for three days:
+The following value stores snapshots in the Keep or Redis in-memory store and keeps unused snapshots for three days:
 
 ```json
 {
   "swap": {
-    "@type": "Redis",
+    "@type": "InMemory",
     "store": {"@type": "Default"},
     "retention": 259200000
   }

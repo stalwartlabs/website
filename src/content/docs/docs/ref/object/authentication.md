@@ -95,6 +95,13 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 > The default maximum number of API keys a user can create
 
 
+##### `maxPasskeys`
+
+> Type: <code>UnsignedInt?</code> · default: `10` · min: 1
+>
+> The default maximum number of passkeys a user can register
+
+
 
 ## JMAP API
 

@@ -312,7 +312,7 @@ sections:
       file or an SSH session. Account, domain, group and mailing-list
       management; SMTP queue and report visualisation; configuration of
       every server object; a log viewer with search; and a self-service
-      portal for password reset and encryption-at-rest key management,
+      portal for password reset, passkeys and encryption-at-rest key management,
       all in one console.
     bullets:
       - Real-time dashboards and live tracing.

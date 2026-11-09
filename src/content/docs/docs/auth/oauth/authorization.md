@@ -24,6 +24,22 @@ Every kind of client uses the authorization code flow: native mail applications,
 3. The server redirects the browser to the client's redirect URI, with an authorization code.
 4. The client exchanges the code at the token endpoint for an access token and a refresh token.
 
+The following diagram shows the exchange between the three parties. The authorization code travels through the browser, while the tokens go straight from the server to the client:
+
+```mermaid
+sequenceDiagram
+    participant C as Client application
+    participant B as User's browser
+    participant S as Stalwart
+    C->>B: Open /login with response_type=code, client_id,<br/>redirect_uri, state, code_challenge (S256)
+    B->>S: GET /login
+    S->>B: Sign-in form, then consent screen<br/>(unless already authorized)
+    S->>B: Redirect to redirect_uri with code, state, iss
+    B->>C: code, state, iss
+    C->>S: POST /auth/token with code and code_verifier
+    S->>C: access_token, refresh_token<br/>(id_token with the openid scope)
+```
+
 The following URL is a typical request from a native application, with line breaks added for readability:
 
 ```text

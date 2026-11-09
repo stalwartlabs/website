@@ -61,7 +61,8 @@ The HTTP listeners serve every HTTP-based service from the same port: JMAP, CalD
 The steps above close the exposures that every deployment has. The following settings and features are worth a review as well, because their right values depend on the users and the network. Each item links to the page that explains it:
 
 - The password policy of the internal directory, set by [`minPasswordLength`](/docs/ref/object/authentication#minpasswordlength), [`maxPasswordLength`](/docs/ref/object/authentication#maxpasswordlength) and [`minPasswordStrength`](/docs/ref/object/authentication#minpasswordstrength) on the [Authentication](/docs/ref/object/authentication) object, as described in [Passwords](/docs/auth/authentication/password).
-- [Two-factor authentication](/docs/auth/authentication/2fa) and [app passwords](/docs/auth/authentication/app-password) for accounts in the internal directory.
+- [Two-factor authentication](/docs/auth/authentication/2fa), [passkeys](/docs/auth/authentication/passkeys) and [app passwords](/docs/auth/authentication/app-password) for accounts in the internal directory.
+- [Blob encryption](/docs/storage/blob-encryption) when the blob store is kept on third-party object storage, such as an S3 bucket or an Azure container.
 - The protocol versions and cipher suites the listeners accept, described in [TLS](/docs/server/tls/).
 - The auto-ban thresholds and exemptions. Addresses that must never be banned, such as monitoring systems and the administrator's network, belong in the allowed IP list, as described in [Auto-ban](/docs/server/auto-ban).
 - The rate limits for inbound SMTP and for HTTP, described in [Inbound rate limits](/docs/mta/inbound/rate-limit) and [HTTP settings](/docs/http/settings#rate-limiting).

@@ -67,6 +67,6 @@ Blob store load shows in the `store.blob-read-time` and `store.blob-write-time` 
 
 The in-memory store holds rate limit counters, greylisting state, short-lived tokens and similar data. The `Default` in-memory store keeps this data inside the server process and holds at most 1048576 entries. When it is full, it removes expired entries first and then other entries, so an operation fails only when nothing can be removed. The failure is logged as a `store.unexpected-error` event with the reason `In-memory store is full`.
 
-The `Default` store cannot be used when a cluster coordinator is configured. A cluster needs Redis instead, as described in [In-memory store](/docs/storage/in-memory).
+The `Default` store cannot be used when a cluster coordinator is configured. A cluster needs [Stalwart Keep](/docs/cluster/keep/tuning) or Redis instead, as described in [In-memory store](/docs/storage/in-memory).
 
 A Redis in-memory store opens at most `poolMaxConnections` connections, and its connection and pool timeouts are listed on the [InMemoryStore](/docs/ref/object/in-memory-store) reference page. The Redis server itself also needs a memory limit and an eviction policy. Set a `maxmemory` limit and the `volatile-lru` or `volatile-lfu` eviction policy, so that only entries with an expiry are evicted when it is full. When [cache swapping](/docs/storage/cache-swap) also uses Redis, give the snapshots a separate Redis instance with the `allkeys-lru` policy. The [Redis](/docs/storage/backends/redis) backend page explains the eviction policies.

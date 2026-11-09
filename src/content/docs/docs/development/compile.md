@@ -87,6 +87,7 @@ Blob store backends:
 
 In-memory store backends:
 
+- `keep`: Stalwart Keep, also used for cluster coordination through Keep
 - `redis`: Redis, Redis Cluster and Redis Sentinel, also used for cluster coordination through Redis
 
 Cluster coordination backends:
@@ -101,6 +102,6 @@ Other features:
 
 Some backends need no feature at all. The ElasticSearch and Meilisearch search stores and the file system blob store are included in every build. Other features cover more than one store: `postgres`, `mysql` and `foundationdb` also provide the blob and search stores of the same backend.
 
-A binary meant for a cluster must include `redis`. A cluster coordinator requires a Redis in-memory store, so a cluster cannot be formed without it ([In-memory store](/docs/storage/in-memory)).
+A binary meant for a cluster must include `keep` or `redis`. A cluster coordinator requires a Stalwart Keep or Redis in-memory store, so a cluster cannot be formed without one ([In-memory store](/docs/storage/in-memory)).
 
-Official releases are built with `sqlite postgres mysql rocks s3 redis azure nats enterprise`.
+Official releases are built with `sqlite postgres mysql rocks s3 keep redis azure nats enterprise`.

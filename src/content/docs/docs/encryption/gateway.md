@@ -21,6 +21,37 @@ The gateway acts when a message is accepted into the queue, before the server co
 
 The original message and the encrypted copies are then queued together, and delivery sends each recipient its own copy. Recipients without a key receive the original.
 
+The following diagram shows how the gateway decides what each recipient receives:
+
+```mermaid
+flowchart TD
+    G["Gateway applies?<br/><small>gatewayEnable on; not a DSN, a report or already encrypted</small>"]
+    P["gatewayOutbound<br/><small>evaluated per recipient</small>"]
+    K["Usable key that reaches gatewayMinTrust?"]
+    M["Message checks"]
+    E["Encrypted copy<br/><small>DKIM and ARC fields removed, signed with DKIM</small>"]:::brand
+    O1["Original"]:::muted
+    O2["Original"]:::muted
+    O3["Original"]:::muted
+    O4["Original"]:::muted
+    B1["Bounce 5.7.5<br/><small>The encryption policy could not be evaluated</small>"]
+    B2["Bounce 5.7.5<br/><small>No usable encryption key for this recipient</small>"]
+    B3["Bounce 5.7.5<br/><small>The message could not be parsed for encryption</small>"]
+    B4["Bounce 5.7.5<br/><small>The message could not be encrypted</small>"]
+    G -->|no| O1
+    G -->|yes| P
+    P -->|disable| O2
+    P -->|error| B1
+    P -->|"opportunistic, required"| K
+    K -->|"no, opportunistic"| O3
+    K -->|"no, required"| B2
+    K -->|yes| M
+    M -->|"signed, gatewayEncryptSigned off, opportunistic"| O4
+    M -->|unparseable| B3
+    M -->|ok| E
+    E -.->|failure| B4
+```
+
 ## Enable the gateway
 
 The gateway is configured in the [Encryption](/docs/ref/object/encryption) singleton, found in the WebUI under <!-- breadcrumb:Encryption/EncryptionGateway --><svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M10 5H3" /><path d="M12 19H3" /><path d="M14 3v4" /><path d="M16 17v4" /><path d="M21 12h-9" /><path d="M21 19h-5" /><path d="M21 5h-7" /><path d="M8 10v4" /><path d="M8 12H3" /></svg> Settings › <svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="16" r="1" /><rect x="3" y="10" width="18" height="12" rx="2" /><path d="M7 10V7a5 5 0 0 1 10 0v3" /></svg> Encryption › Gateway<!-- /breadcrumb:Encryption/EncryptionGateway -->. Its [`gatewayEnable`](/docs/ref/object/encryption#gatewayenable) field is <!-- default:Encryption.gatewayEnable as=enabled -->disabled<!-- /default --> by default. While it is disabled, outgoing mail is not touched, external keys are ignored, no keys are learned from incoming mail and the key maintenance task does nothing. A policy that returns `disable` for every recipient stops the encryption of outgoing mail, but harvesting and key refreshes continue.

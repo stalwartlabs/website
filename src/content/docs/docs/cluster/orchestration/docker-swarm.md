@@ -11,7 +11,7 @@ description: "Deploy Stalwart on Docker Swarm with a stack file: shared configur
 A Swarm service with more than one replica is a cluster only when the replicas share their data. Otherwise each replica is a separate server with its own accounts. Three conditions must therefore hold before the replica count is raised:
 
 - Every replica needs the same `config.json`, pointing to a shared data store such as PostgreSQL. In the stack below, `config.json` is distributed as a Swarm config, so that every replica receives the same file.
-- The deployment needs a shared blob store and search store, a Redis-based in-memory store and a coordinator, configured through the WebUI or the CLI once the first replica is running, in the order described in the [cluster overview](/docs/cluster/#cluster-requirements).
+- The deployment needs a shared blob store and search store, a [Stalwart Keep](/docs/cluster/keep/) or Redis in-memory store and a coordinator, configured through the WebUI or the CLI once the first replica is running, in the order described in the [cluster overview](/docs/cluster/#cluster-requirements).
 - Each replica needs a unique hostname, from which its [node identifier](/docs/cluster/configuration/node-id) is derived. The stack sets the container hostname from the service name and the Swarm task slot, which is unique across services.
 
 Swarm can also manage a single node. A single replica with a RocksDB data store on a local volume works, as a single node managed by Swarm.

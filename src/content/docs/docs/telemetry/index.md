@@ -17,6 +17,29 @@ The telemetry facilities decide where events and metrics go, and each serves a d
 - [Live telemetry](/docs/telemetry/live) streams events and metrics to the WebUI or another HTTP client in real time (Enterprise).
 - [History](/docs/telemetry/history) stores message delivery traces and metrics in a database, for the WebUI's delivery history and dashboard (Enterprise).
 
+The following diagram shows how events and metrics reach each facility:
+
+```mermaid
+flowchart LR
+    EV["Events"]:::brand
+    LT["Live telemetry<br/><small>Enterprise</small>"]
+    TR["Tracers<br/><small>log file, console, journal, OpenTelemetry</small>"]
+    WH["Webhooks<br/><small>HTTP endpoint</small>"]
+    MT["Metrics<br/><small>derived from events</small>"]:::brand
+    EX["Prometheus, OpenTelemetry"]:::muted
+    AL["Alerts<br/><small>email or event (Enterprise)</small>"]
+    HS["History stores<br/><small>Enterprise</small>"]
+    UI([WebUI]):::ink
+    EV --> LT
+    EV --> TR & WH
+    EV --> MT
+    EV -->|delivery traces| HS
+    MT --> LT
+    MT --> EX & AL
+    MT --> HS
+    LT & HS --> UI
+```
+
 Logs, stored traces and stored metrics can be read back from the WebUI, the CLI and the API. [Telemetry management](/docs/telemetry/management) describes the objects through which this is done.
 
 ## Recommended setup

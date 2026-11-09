@@ -38,8 +38,6 @@ The names in `destination` and `fallback` must be declared destinations that dec
 - `http route fallback "<name>" does not declare the http protocol`
 - `undeclared destination "<name>"`
 
-Releases of the proxy up to 1.0.4 ignore `fallback`, and send such requests to `routing.default_destination`.
-
 The protocols of the default destination, by contrast, are not checked for HTTP listeners. A configuration whose default destination serves no HTTP, such as a Dovecot backend, routes HTTP with pinned rules, or with a `fallback` that names a destination with HTTP.
 
 ## Identifier extraction

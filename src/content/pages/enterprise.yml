@@ -70,7 +70,7 @@ sections:
       console; they want to see their own. Stalwart serves a per-tenant
       and per-domain logo on the web admin and on the customer-facing
       Account Manager, where end users sign in to manage their own
-      password, application passwords, two-factor authentication and
+      password, passkeys, application passwords, two-factor authentication and
       masked email addresses, all under the brand they recognise.
       White-label hosting becomes a configuration choice, not a fork.
     learnMore:
@@ -254,7 +254,7 @@ sections:
     bullets:
       - "**Multi-tenancy** isolates customers from each other, with per-tenant disk and principal quotas and per-domain directory backends."
       - "**Branding** lets each customer see their own logo at their own domain, on the same WebUI bundle."
-      - "**Account Manager** gives each customer's end users a self-service portal for passwords, 2FA, application passwords and masked email."
+      - "**Account Manager** gives each customer's end users a self-service portal for passwords, passkeys, 2FA, application passwords and masked email."
       - "**Live telemetry, alerts and message delivery history** give support engineers the data they need to triage tickets."
       - "**Lawful interception** is available on demand for jurisdictions that require it."
       - "**Domain-anchored licensing** ties the Enterprise key to a domain name and keeps the per-server count unlimited under that domain."

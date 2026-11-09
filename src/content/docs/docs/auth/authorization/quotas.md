@@ -30,7 +30,7 @@ The two kinds of quota behave differently when the account does not set them. An
 | Calendars, events, participant identities, event notifications | [Calendar](/docs/ref/object/calendar) (`maxCalendars`, `maxEvents`, `maxParticipantIdentities`, `maxEventNotifications`) |
 | Address books and contacts | [AddressBook](/docs/ref/object/address-book) (`maxAddressBooks`, `maxContacts`) |
 | Files and folders | [FileStorage](/docs/ref/object/file-storage) (`maxFiles`, `maxFolders`) |
-| App passwords and API keys | [Authentication](/docs/ref/object/authentication) (`maxAppPasswords`, `maxApiKeys`) |
+| App passwords, API keys and passkeys | [Authentication](/docs/ref/object/authentication) (`maxAppPasswords`, `maxApiKeys`, `maxPasskeys`) |
 
 The [`StorageQuota`](/docs/ref/object/account#storagequota) enumeration lists every quota type an account accepts. The read-only `usedDiskQuota` field reports the space the account currently uses.
 

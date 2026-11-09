@@ -6,7 +6,7 @@ description: "Use Eclipse Zenoh for peer-to-peer coordination between cluster no
 
 The other coordinators all route notifications through a messaging server. With peer-to-peer coordination, the nodes of a cluster instead send notifications to each other directly, over the [Eclipse Zenoh](https://zenoh.io/) protocol, with no server in between. The nodes find each other in one of two ways: automatically, on networks that allow multicast, or through a configured list of peers.
 
-Peer-to-peer coordination removes the messaging server, but not the other shared services. A cluster coordinated through Zenoh still requires a Redis-based [in-memory store](/docs/storage/in-memory), configured before the coordinator as described in [Coordination mechanism](/docs/cluster/configuration/coordination#order-of-configuration). That Redis deployment could serve as the coordinator as well, so Zenoh does not reduce the number of services a cluster depends on.
+Peer-to-peer coordination removes the messaging server, but not the other shared services. A cluster coordinated through Zenoh still requires a [Stalwart Keep](/docs/cluster/keep/) or Redis [in-memory store](/docs/storage/in-memory), configured before the coordinator as described in [Coordination mechanism](/docs/cluster/configuration/coordination#order-of-configuration). That deployment could serve as the coordinator as well, so Zenoh does not reduce the number of services a cluster depends on.
 
 Zenoh support is not part of the official binaries. Using it requires [compiling Stalwart](/docs/development/compile) with the `zenoh` feature, and an official binary on which Zenoh is selected logs `Binary was not compiled with the selected coordinator backend`.
 

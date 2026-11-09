@@ -91,6 +91,7 @@ Metrics reported alongside events are listed on the [Metrics](/docs/ref/metrics)
 | `cache.swap-miss` | `debug` | Cache snapshot unavailable | No usable cache snapshot was found in the swap tier, so the cache was rebuilt from the data store. |
 | `cache.swap-write` | `debug` | Cache snapshot written | A cache snapshot was persisted to the swap tier by the background writer. |
 | `cache.swap-error` | `warn` | Cache swap tier error | The swap tier failed to read or write a cache snapshot. The cache falls back to rebuilding from the data store, so this degrades performance without affecting correctness. |
+| `cache.swap-skip` | `info` | Cache snapshot skipped | The swap store has no room for a cache snapshot, so it was not written. The account's cache is rebuilt from the data store if it is needed before a later write succeeds. |
 | `cache.swap-metrics` | `debug` | Cache swap metrics | Summary from the cache swap writer, emitted every 5 minutes. The totals are the snapshots written in the window and the targets the writer tracks, both those with unsaved changes and those written recently; the size is the bytes written per hour; the details are the median, 95th percentile and maximum time since the last snapshot of targets with unsaved changes. |
 | `cache.swap-flush` | `debug` | Cache swap flushed | The swap writer flushed every pending cache snapshot in response to an explicit flush or a shutdown; the total is the number of snapshots written and the details hold the number of targets whose changes could not be persisted. |
 
@@ -113,7 +114,7 @@ Metrics reported alongside events are listed on the [Metrics](/docs/ref/metrics)
 
 | Event | Level | Short | Long |
 |---|---|---|---|
-| `cluster.startup` | `info` | Clustering enabled | The clustering subsystem has been initialized; inter-node communication via the configured PubSub backend (Kafka, NATS, or Redis) is now active. |
+| `cluster.startup` | `info` | Clustering enabled | The clustering subsystem has been initialized; inter-node communication via the configured PubSub backend (Stalwart Keep, Kafka, NATS, or Redis) is now active. |
 | `cluster.subscriber-start` | `info` | PubSub subscriber started | This node has connected to the PubSub backend and begun consuming inter-node messages. |
 | `cluster.subscriber-stop` | `info` | PubSub subscriber stopped | This node's PubSub subscription has been torn down, typically during a graceful shutdown. |
 | `cluster.subscriber-error` | `error` | PubSub subscriber error | An error occurred on the PubSub subscription channel; inter-node cache invalidation and state sync may be disrupted. |
@@ -860,6 +861,7 @@ Metrics reported alongside events are listed on the [Metrics](/docs/ref/metrics)
 | `store.elasticsearch-error` | `error` | ElasticSearch error | An error was returned by the Elasticsearch backend; check cluster health, index availability, and connectivity. |
 | `store.meilisearch-error` | `error` | Meilisearch error | An error was returned by the Meilisearch backend; check service availability and index configuration. |
 | `store.redis-error` | `error` | Redis error | An error was returned by the Redis backend; check connectivity and Redis server health. |
+| `store.keep-error` | `error` | Stalwart Keep error | An error was returned by the Stalwart Keep backend; check connectivity and the health of the Stalwart Keep servers. |
 | `store.s3-error` | `error` | S3 error | An error was returned by the S3-compatible blob store; check bucket permissions, credentials, and endpoint configuration. |
 | `store.azure-error` | `error` | Azure error | An error was returned by the Azure Blob Storage backend; check container permissions and the configured credentials. |
 | `store.filesystem-error` | `error` | Filesystem error | A filesystem operation failed; check disk space, file permissions, and the configured storage path. |

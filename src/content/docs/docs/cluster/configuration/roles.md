@@ -20,7 +20,7 @@ Each background task covers one kind of work. The following table also shows wha
 
 | Task | Work | When no node runs it |
 |---|---|---|
-| `outboundMta` | Delivers the outbound mail queue. Messages accepted by any node are delivered by the nodes with this task. | Outbound mail stays in the queue. |
+| `outboundMta` | Delivers the mail queue, to local mailboxes as well as to remote servers. Messages accepted by any node are delivered by the nodes with this task. | No mail is delivered, not even to local mailboxes; messages stay in the queue. |
 | `searchIndexing` | Processes the [search index queue](/docs/storage/indexing). CPU-intensive during imports. | New items never become searchable. |
 | `taskScheduler` | Creates the periodic tasks: the daily purges, auto-expunge and similar maintenance. Each node with this task creates its own copy of every periodic task. | No periodic maintenance is scheduled. |
 | `taskQueueProcessing` | Runs the queue of background tasks. Calendar alarms and scheduling messages, DMARC and TLS reports, ACME certificate renewal, DKIM key rotation and DNS record management run on every node that processes the task queue, which is any node with this task or with `storeMaintenance`, `accountMaintenance` or `spamClassifierTraining`. | If no node has any of these four tasks, queued tasks wait. |
@@ -110,4 +110,4 @@ The following roles implement the three groups. The listener identifiers are tho
 
 Each node is then started with `STALWART_ROLE=access`, `STALWART_ROLE=transfer` or `STALWART_ROLE=background`. The load balancer sends client traffic to the access nodes and SMTP traffic to the transfer nodes. In a multi-site deployment, the same groups are typically repeated in each site, and the shared stores are replicated between sites by their own mechanisms.
 
-[Tuning a cluster](/docs/performance/cluster) discusses resource planning for each group.
+[Topologies](/docs/cluster/deployment/topology) describes this and other layouts, and [Tuning a cluster](/docs/performance/cluster) discusses resource planning for each group.

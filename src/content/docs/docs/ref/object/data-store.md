@@ -63,7 +63,7 @@ SQLite
 
 > Type: <code>String</code> · required
 >
-> Path to the SQLite data directory
+> Path to the SQLite database file, created if missing. When a directory is given, the database is stored in it as stalwart.db
 
 
 ##### `poolWorkers`
@@ -139,6 +139,13 @@ PostgreSQL
 > Type: <code>Duration?</code> · default: `15000`
 >
 > Maximum time to wait for a connection to the database server to be established
+
+
+##### `responseTimeout`
+
+> Type: <code>Duration?</code> · default: `120000`
+>
+> Maximum time to wait for the database server to start answering a request before the connection is closed and the request fails. When unset, requests wait indefinitely.
 
 
 ##### `useTls`

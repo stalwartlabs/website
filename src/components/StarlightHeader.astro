@@ -75,11 +75,115 @@ import Search from "@astrojs/starlight/components/Search.astro";
     };
   }
 
+  const themeCSS = `
+    .node rect, .node path, .node polygon, .node circle, .node ellipse {
+      fill: var(--tile) !important;
+      stroke: none !important;
+      filter: drop-shadow(0 6px 10px var(--shadow-c2));
+    }
+    .node rect { rx: 16px; ry: 16px; }
+    .node .nodeLabel, .node .nodeLabel p {
+      color: var(--text) !important;
+      font-family: var(--font-display);
+      font-weight: 680;
+      line-height: 1.3;
+    }
+    .node .nodeLabel small, .node .nodeLabel code {
+      display: block;
+      margin-top: 2px;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 500;
+      background: none;
+      padding: 0;
+    }
+    .node.brand rect, .node.brand path, .node.brand polygon {
+      fill: var(--rose) !important;
+      filter: none;
+    }
+    .node.brand .nodeLabel, .node.brand .nodeLabel p { color: var(--brand-text) !important; }
+    .node.ink rect, .node.ink path, .node.ink polygon {
+      fill: var(--ink) !important;
+      filter: none;
+    }
+    .node.ink rect { rx: 999px; ry: 999px; }
+    .node.ink .nodeLabel, .node.ink .nodeLabel p {
+      color: var(--on-ink) !important;
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .node.muted rect, .node.muted path, .node.muted polygon {
+      fill: var(--tray) !important;
+      filter: none;
+    }
+    .node.muted .nodeLabel, .node.muted .nodeLabel p { color: var(--muted) !important; }
+    .cluster rect {
+      fill: color-mix(in oklab, var(--tile) 45%, transparent) !important;
+      stroke: none !important;
+      rx: 26px;
+      ry: 26px;
+    }
+    .cluster.brand rect { fill: var(--rose) !important; }
+    .cluster-label .nodeLabel, .cluster-label .nodeLabel p, .cluster-label span {
+      color: var(--dim) !important;
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 650;
+    }
+    .cluster.brand .cluster-label .nodeLabel, .cluster.brand .cluster-label .nodeLabel p, .cluster.brand .cluster-label span {
+      color: var(--brand-text) !important;
+    }
+    .flowchart-link, .edgePath .path {
+      stroke: var(--brand) !important;
+      stroke-opacity: 0.5;
+      stroke-width: 1.6px !important;
+      stroke-linecap: round;
+    }
+    marker path, .marker, .arrowheadPath {
+      fill: var(--brand) !important;
+      stroke: var(--brand) !important;
+    }
+    .edgeLabel, .edgeLabel p, .edgeLabel span, .labelBkg {
+      background: var(--sand) !important;
+      background-color: var(--sand) !important;
+      color: var(--muted) !important;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+    .edgeLabel rect { fill: var(--sand) !important; opacity: 1 !important; }
+    .edgeLabel p { padding: 1px 6px; }
+    .edgeLabel, .edgeLabel p, .edgeLabel span, .labelBkg { border-radius: 6px; }
+    .actor, rect.actor { fill: var(--tile) !important; stroke: none !important; rx: 14px; ry: 14px; filter: drop-shadow(0 6px 10px var(--shadow-c2)); }
+    text.actor, text.actor > tspan { fill: var(--text) !important; font-family: var(--font-display); font-weight: 680; }
+    .actor-line { stroke: var(--dim) !important; stroke-opacity: 0.4; }
+    .messageLine0, .messageLine1 { stroke: var(--brand) !important; stroke-opacity: 0.6; stroke-width: 1.6px !important; }
+    #arrowhead path, #crosshead path, #filled-head path { fill: var(--brand) !important; stroke: var(--brand) !important; }
+    .messageText { fill: var(--muted) !important; font-family: var(--font-mono); font-size: 12px !important; }
+    .note { fill: var(--rose) !important; stroke: none !important; }
+    .noteText, .noteText > tspan { fill: var(--brand-text) !important; }
+    .activation0, .activation1, .activation2 { fill: var(--rose) !important; stroke: var(--brand) !important; stroke-opacity: 0.4; }
+    .loopLine { stroke: var(--dim) !important; stroke-opacity: 0.5; }
+    .labelBox { fill: var(--ink) !important; stroke: none !important; }
+    .labelText, .labelText > tspan { fill: var(--on-ink) !important; font-family: var(--font-mono); }
+    .loopText, .loopText > tspan { fill: var(--dim) !important; }
+  `;
+
   async function render() {
     const targets = document.querySelectorAll<HTMLElement>("pre.mermaid");
     if (targets.length === 0) return;
     const mermaid = await loadMermaid();
-    mermaid.initialize({ startOnLoad: false, theme: "base", themeVariables: themeVariables() });
+    const fontFamily = getComputedStyle(root).getPropertyValue("--font-display").trim() || "sans-serif";
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: "base",
+      themeVariables: { ...themeVariables(), fontFamily },
+      themeCSS,
+      flowchart: { curve: "basis", nodeSpacing: 36, rankSpacing: 56, padding: 18, diagramPadding: 8, htmlLabels: true },
+      sequence: { actorMargin: 60, boxMargin: 8, noteMargin: 12, messageMargin: 36, mirrorActors: false },
+    });
     targets.forEach((el) => {
       if (!el.dataset.mermaidSource) {
         el.dataset.mermaidSource = (el.textContent ?? "").trim();

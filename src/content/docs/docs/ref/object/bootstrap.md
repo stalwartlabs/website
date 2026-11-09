@@ -70,7 +70,7 @@ Initial setup shown the first time Stalwart starts. Configures the server's iden
 > Type: [<code>InMemoryStore</code>](/docs/ref/object/in-memory-store) · default: `{"@type":"Default"}`
 >
 > Where short-lived data lives: session caches, rate-limit counters, and temporary tokens.
-> Leave as default to keep this data in the memory of the server process, or point to Redis for multi-node deployments.
+> Leave as default to keep this data in the memory of the server process, or point to Stalwart Keep or Redis for multi-node deployments.
 
 
 ##### `directory`
@@ -574,6 +574,13 @@ PostgreSQL data store.
 > Maximum time to wait for a connection to the database server to be established
 
 
+##### `responseTimeout`
+
+> Type: <code>Duration?</code> · default: `120000`
+>
+> Maximum time to wait for the database server to start answering a request before the connection is closed and the request fails. When unset, requests wait indefinitely.
+
+
 ##### `useTls`
 
 > Type: <code>Boolean</code> · default: `false`
@@ -852,7 +859,7 @@ SQLite embedded data store.
 
 > Type: <code>String</code> · required
 >
-> Path to the SQLite data directory
+> Path to the SQLite database file, created if missing. When a directory is given, the database is stored in it as stalwart.db
 
 
 ##### `poolWorkers`

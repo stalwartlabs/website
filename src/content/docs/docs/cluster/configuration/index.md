@@ -7,7 +7,7 @@ description: "The settings that turn a group of Stalwart servers into a cluster,
 A group of Stalwart servers becomes a cluster when two conditions hold: the servers share their stores, and a coordinator connects them. The [cluster overview](/docs/cluster/#cluster-requirements) lists the components involved. This section describes the settings that bring them together:
 
 - [Node identifiers](/docs/cluster/configuration/node-id), which each node obtains automatically from its hostname.
-- The [coordination mechanism](/docs/cluster/configuration/coordination), which requires a Redis-based in-memory store to be configured first.
+- The [coordination mechanism](/docs/cluster/configuration/coordination), which requires a [Stalwart Keep](/docs/cluster/keep/) or Redis in-memory store to be configured first.
 - [Load balancing](/docs/cluster/configuration/load-balancing): the hostname presented by every node, health checks and the client address behind a proxy.
 - [Roles](/docs/cluster/configuration/roles), which select the listeners and background tasks of each node.
 

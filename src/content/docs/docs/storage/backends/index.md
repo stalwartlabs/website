@@ -18,12 +18,13 @@ Each of Stalwart's [stores](/docs/storage/) can use one of several backends, the
 | [Filesystem](/docs/storage/backends/filesystem) | | :white_check_mark: | | | :white_check_mark: | Shared file system only |
 | [ElasticSearch](/docs/storage/backends/elasticsearch) | | | :white_check_mark: | | :white_check_mark: | Yes |
 | [Meilisearch](/docs/storage/backends/meilisearch) | | | :white_check_mark: | | :white_check_mark: | Yes |
+| [Stalwart Keep](/docs/storage/backends/keep) | | | | :white_check_mark: | :white_check_mark: | Yes |
 | [Redis, Valkey](/docs/storage/backends/redis) | | | | :white_check_mark: | :white_check_mark: | Yes |
 | Local (in process) | | | | `Default` | :white_check_mark: | No |
 
 The value `Default` in the blob and search columns needs a word of explanation. It means that the store's `Default` variant keeps its data in the data store. RocksDB and SQLite are therefore not offered as separate blob or search backends. When one of them is the data store, however, it holds the blobs and Stalwart's built-in search index. On a PostgreSQL or MySQL data store, the search store's `Default` variant uses the database's own full-text search instead, as described in [Search store](/docs/storage/fts).
 
-The in-memory store's `Default` variant is different again: it is a local store inside the server process, suitable only for a single node. The Redis row covers standalone Redis or Valkey, Redis Cluster and Redis Sentinel. Several backends of the same kind can also be combined into [composite stores](/docs/storage/backends/composite) (Enterprise).
+The in-memory store's `Default` variant is different again: it is a local store inside the server process, suitable only for a single node. Stalwart Keep is the recommended in-memory store for a cluster. The Redis row covers standalone Redis or Valkey, Redis Cluster and Redis Sentinel. Several backends of the same kind can also be combined into [composite stores](/docs/storage/backends/composite) (Enterprise).
 
 ## Official binaries
 

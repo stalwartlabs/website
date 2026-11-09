@@ -1133,6 +1133,16 @@ The first section lists the baseline permissions declared in the permission sche
 - **`sysOidcProviderUpdate`**: Update OidcProvider settings
 
 
+### sysPasskey
+
+
+- **`sysPasskeyGet`**: Get passkeys
+- **`sysPasskeyCreate`**: Create passkeys
+- **`sysPasskeyUpdate`**: Update passkeys
+- **`sysPasskeyDestroy`**: Destroy passkeys
+- **`sysPasskeyQuery`**: Query passkeys
+
+
 ### sysPublicKey
 
 

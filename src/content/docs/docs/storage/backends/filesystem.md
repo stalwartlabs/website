@@ -28,4 +28,4 @@ The following blob store keeps blobs under `/var/lib/stalwart/blobs`:
 
 The directory belongs to one node. Several nodes can share a filesystem blob store only when the directory is on a shared file system that every node mounts at the same path. Without one, a cluster uses an [S3-compatible](/docs/storage/backends/s3) or [Azure](/docs/storage/backends/azure) blob store.
 
-A filesystem blob store also cannot hold the snapshots of [cache swapping](/docs/storage/cache-swap). On a server with this blob store, cache swapping uses either the `LocalFile` backend, which writes snapshots to a local directory, or Redis.
+A filesystem blob store also cannot hold the snapshots of [cache swapping](/docs/storage/cache-swap). On a server with this blob store, cache swapping uses either the `LocalFile` backend, which writes snapshots to a local directory, or the `InMemory` backend, which keeps them in Stalwart Keep or Redis.

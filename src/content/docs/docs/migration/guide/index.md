@@ -31,6 +31,23 @@ The new deployment becomes the public mail exchanger at the cutover, and it stay
 
 Client sessions, by contrast, are routed per account. The proxy resolves IMAP, POP3, ManageSieve, SMTP submission and HTTP requests through its mapping table. An account without an entry resolves to the source, and a moved account has an entry that points to the new deployment. Moving an account therefore consists of two actions: copying its data, and changing its mapping entry. The account's clients reach the new deployment on their next connection.
 
+The following diagram shows how the proxy routes both kinds of traffic:
+
+```mermaid
+flowchart LR
+    CL(["IMAP, POP3, ManageSieve,<br/>submission, HTTP"]):::ink
+    MS(["Sending servers"]):::ink
+    P["Proxy<br/><small>mapping table</small>"]:::muted
+    N["New deployment<br/><small>Stalwart, public mail exchanger</small>"]:::brand
+    SRC["Source"]
+    CL -->|client sessions| P
+    MS -->|SMTP port 25| P
+    P -->|account mapped| N
+    P -->|account not mapped| SRC
+    P -->|all inbound SMTP| N
+    N -->|"split delivery:<br/>account still on source"| SRC
+```
+
 The migration copies data and never deletes it from the source. The source keeps a complete copy of each account as it stood when the account moved, so a moved account can be routed back to the source until the source is decommissioned. The rollback does not bring back what happened after the move, though: data that the account received or created on the new deployment after the move has to be carried back separately.
 
 One kind of mail bypasses the new deployment. When an account still on the source sends mail to an account that has already moved, the source delivers it locally, because the source still holds the moved account (it is kept for a rollback). The catch-up run after the switch copies what arrived until then. Later mail of this kind is handled in one of two ways: by repeating the catch-up, or, on a Dovecot and Postfix source, by a transport entry for each moved account that sends such mail to the new deployment. [Migrating accounts](/docs/migration/guide/migrate-accounts/#migrating-many-accounts) describes both.
