@@ -67,7 +67,7 @@ When that set is empty, the server chooses the names, and the choice depends on 
 
 With TLS-ALPN-01 or HTTP-01, an empty set therefore requests no wildcard. The domain name itself is included with these challenges only when it is also the server hostname, a mail exchanger or a service hostname.
 
-To request a specific set of names, list them in `subjectAlternativeNames`. An entry without a dot is completed with the domain, so `mail` becomes `mail.example.com`, and the domain itself must therefore be written in full. Every listed name must pass the challenge, which means that with TLS-ALPN-01 and HTTP-01 each name must resolve to this server.
+To request a specific set of names, list them in `subjectAlternativeNames`. An entry without a dot is completed with the domain, so `mail` becomes `mail.example.com`, and the domain itself must therefore be written in full. Every listed name must pass the challenge, which means that with TLS-ALPN-01 and HTTP-01 each name must resolve to this server. On a domain owned by a tenant, every name must also be the domain itself, one of its aliases, or a name under either; the server rejects other names when the domain is saved and again when the certificate is ordered.
 
 The private key of an ACME certificate is an ECDSA P-256 key. Servers that need an RSA certificate install it by hand, as described in [Certificates](/docs/server/tls/certificates).
 
