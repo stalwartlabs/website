@@ -48,6 +48,20 @@ The tool has the following limitations:
 
 A 0.16 store can hold a spam training sample whose message blob no longer exists. The tool cannot copy such a sample, so it reports a `skipped` error with the message `blob <hash> is missing in the source; the object was not copied`. Samples only feed the spam classifier, so the loss does not affect mailboxes. `run --final --allow-errors` accepts these errors, and verification then counts the matching `the converted source object is missing in the target` rows as explained.
 
+## Missing message blobs
+
+A 0.16 store can also hold an email whose message blob no longer exists in the blob store. 0.16 keeps listing such an email, but cannot index or serve its contents, and its search reindex fails on it with `Blob not found`. The tool cannot copy the email without its contents, so it reports a `failed` error with the message `message blob <hash> is missing`, and the run ends with the error `run finished with objects that could not be copied`. The report row gives the account identifier and the document identifier of each affected email:
+
+```bash
+stalwart-migrate report --state /var/lib/stalwart-migrate --severity error
+```
+
+A failed email blocks `run --final` for as long as it still exists in 0.16 and is missing in 1.0. There are three ways to resolve it:
+
+- Restore the blob. When a backup of the blob store still holds the blob, restore it to its original location. Every run tries the emails that failed earlier again, so the next run copies it. Versions of the tool before 1.0.8 copy only the emails that changed in 0.16 since the previous run, so with them the restored email has to change once as well: setting and then clearing a flag on it in any mail client is enough.
+- Delete the email in 0.16. An email that no longer exists in 0.16 no longer blocks finalising. The email has to be removed for good (expunged), because moving it to the trash keeps it in the store.
+- Accept the loss. `run --final --allow-errors` finalises without the email and records the accepted errors. To make sure that nothing else is accepted along with them, list the errors with `report --severity error` before the final run, and compare them with the errors of the final run itself (`report --run <id> --severity error`). The verification after the final run then counts the missing emails as explained.
+
 ## Open file limit
 
 RocksDB keeps every table file of a store open, and a RocksDB deployment has one such store on each side of the migration. A large store can therefore exhaust the limit on open files of the process, and the run fails with `Too many open files`. The tool raises its soft limit to the hard limit when it starts, so this error means the hard limit is too low. The `--concurrency` option has no effect on it. Raise the hard limit of the process that starts the tool, for example with `ulimit -Hn 65536` as root, or with `--ulimit nofile=65536:65536` when the tool runs in Docker, and then repeat the command with the same state directory.
