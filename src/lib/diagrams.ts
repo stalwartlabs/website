@@ -30,6 +30,11 @@ import BrandingMock from "../components/BrandingMock.astro";
 import ScimLifecycleDiagram from "../components/ScimLifecycleDiagram.astro";
 import EncryptionGatewayDiagram from "../components/EncryptionGatewayDiagram.astro";
 import EncryptionAlgorithmsDiagram from "../components/EncryptionAlgorithmsDiagram.astro";
+import JournalingFlowDiagram from "../components/JournalingFlowDiagram.astro";
+import ComplianceRolesDiagram from "../components/ComplianceRolesDiagram.astro";
+import LiCaptureDiagram from "../components/LiCaptureDiagram.astro";
+import LiHandoverDiagram from "../components/LiHandoverDiagram.astro";
+import LiRolesDiagram from "../components/LiRolesDiagram.astro";
 
 export const diagrams: Record<string, any> = {
   architecture: ArchitectureDiagram,
@@ -61,4 +66,9 @@ export const diagrams: Record<string, any> = {
   "scim-lifecycle": ScimLifecycleDiagram,
   "encryption-gateway": EncryptionGatewayDiagram,
   "encryption-algorithms": EncryptionAlgorithmsDiagram,
+  "journaling-flow": JournalingFlowDiagram,
+  "compliance-roles": ComplianceRolesDiagram,
+  "li-capture": LiCaptureDiagram,
+  "li-handover": LiHandoverDiagram,
+  "li-roles": LiRolesDiagram,
 };

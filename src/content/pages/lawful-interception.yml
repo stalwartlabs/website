@@ -1,0 +1,268 @@
+title: Lawful Interception | Stalwart Labs
+description: >-
+  Lawful interception built into the Stalwart mail server: warrant and target
+  management, real-time capture, ETSI handover to mediation devices and the
+  SINA Box, and help through national approval.
+slug: /lawful-interception
+
+hero:
+  layout: stacked
+  eyebrow: Lawful Interception add-on
+  title: Lawful interception built into the mail server
+  titleHighlight: built into the mail server
+  lead: >-
+    Internet service providers, hosting companies and national mail
+    providers can be legally required to intercept the email of
+    specific users when a court or authority orders it. The Lawful
+    Interception add-on implements that obligation inside Stalwart:
+    orders and targets are managed under a dedicated role, messages and
+    session events are captured as they happen, and the results are
+    handed over to the authorities in the formats defined by the
+    European Telecommunications Standards Institute (ETSI). Stalwart
+    Labs also assists operators through national approval.
+  ctas:
+    - label: Talk to sales
+      href: /contact
+    - label: Request a quote
+      href: https://account.stalw.art
+      external: true
+      primary: false
+  meta:
+    - Enterprise add-on
+    - Stalwart On-Premise only
+
+sections:
+  - kind: list
+    eyebrow: Who needs it
+    title: Interception obligations for email providers.
+    body: >-
+      Interception obligations depend on the country and on the number
+      of users. Even below the thresholds for a permanent capability,
+      operators must still carry out individual orders, which without a
+      built-in capability means copying mailboxes by hand.
+    bullets:
+      - "**Germany.** Email providers with more than 100,000 users must maintain interception capability (§ 170 TKG with § 3(2) of the Telecommunications Interception Ordinance, TKÜV), and users of hosting partners on the same system count towards the threshold. The technical directive TR TKÜV requires handover per ETSI TS 102 232-1 and -2, the implementation is checked by the Bundesnetzagentur (Nachweis), and handover runs over IPsec through a secunet SINA Box."
+      - "**United Kingdom.** The interception obligations of a technical capability notice under the Investigatory Powers Act 2016 apply to operators providing services to more than 10,000 persons (Investigatory Powers (Technical Capability) Regulations 2018)."
+      - "**Other countries.** Most European countries impose comparable obligations on providers of electronic communication services, with national handover requirements based on ETSI standards."
+
+  - kind: feature
+    band: alt
+    eyebrow: Orders and targets
+    title: Orders and targets managed in one place.
+    body: >-
+      Every interception starts from a legal order. The Lawful
+      Interception add-on records each order with its reference, the
+      requesting authority, its targets and its validity period, and
+      activates, changes or ends interception on its schedule. An order
+      can be activated as soon as a copy is received, and ended early at
+      the authority's request.
+
+      Several authorities can intercept the same target at the same time
+      without being aware of each other. Targets can be identified by
+      email address, including internationalised addresses, by login
+      name or by client IP address, and Stalwart resolves them across
+      aliases, catch-all addresses, forwarding and shared mailboxes, so
+      no message reaches the target through a route the order did not
+      name.
+    bullets:
+      - Orders with reference, authority, targets, validity period and scheduled end.
+      - Activation, modification, early termination and automatic expiry.
+      - Several concurrent interceptions of one target, isolated from each other.
+      - Targets by email address, login name or client IP, resolved across aliases, catch-all addresses, forwarding and shared mailboxes.
+      - Notifications to the authority of activation, deactivation, changes and temporary unavailability.
+      - External administration through the ETSI X1 administration interface (TS 103 221-1).
+    visual:
+      kind: screenshot
+      src: /images/webadmin/li-orders-light.webp
+      srcDark: /images/webadmin/li-orders-dark.webp
+      width: 880
+      height: 844
+      alt: Stalwart lawful interception orders list with order references, authorities, target counts, validity periods, active, scheduled or expired status and handover points
+      url: admin.stalw.art / Lawful Interception / Orders
+
+  - kind: feature
+    reverse: true
+    eyebrow: Capture
+    title: Real-time capture of messages and session events.
+    body: >-
+      Once an order is active, Stalwart captures what the order covers
+      as it happens: every message the target sends or receives, and
+      every session in which the target logs in, reads, downloads or
+      stores mail. Content is the complete message with its SMTP
+      envelope, and the related data (the intercept-related information,
+      or IRI) records who communicated with whom, when, from which
+      address and with what result. Orders that cover related data only
+      are supported.
+
+      Capture happens inside the server, on every node of a cluster, so
+      nothing changes for the target: no delay, no altered headers and
+      no visible trace.
+    bullets:
+      - "SMTP reception and submission after the message is accepted, and SMTP authentication."
+      - "IMAP log-in, fetch, append and log-out; POP3 log-in, retrieval and partial retrieval."
+      - "JMAP and web sessions, mapped to the equivalent ETSI messaging events."
+      - "Calendar and contact events (CalDAV and CardDAV) where national rules require them."
+      - "Related data: client and server addresses and ports, protocol, sender, all recipients including Bcc, size, Message-ID and status."
+      - "Content-only, related-data-only or full interception, as the order specifies."
+      - "Messages are captured before Stalwart's per-user encryption at rest is applied, so received mail is delivered readable; mail encrypted end to end by the sender (OpenPGP or S/MIME), and stored messages fetched from an encrypted mailbox, are delivered as they are."
+    visual:
+      kind: diagram
+      id: li-capture
+
+  - kind: feature
+    band: alt
+    eyebrow: Lawful Interception (LI) Handover
+    title: Standards-based handover to the authorities.
+    body: >-
+      The LI Handover add-on delivers intercepted content and related
+      data to the authority's mediation or recording equipment, using
+      the ETSI handover standards for IP-based services; in Germany,
+      delivery runs over IPsec through a SINA Box. Records are encoded as
+      ETSI TS 102 232-1 protocol data units (PDUs) carrying the
+      TS 102 232-2 messaging service records, over TLS or IPsec.
+
+      Delivery is reliable: records are buffered when the connection to
+      the authority is down and sent in order once it returns, with
+      keep-alive and test messages to confirm the link is working. Each
+      handover point is configured separately, so one deployment can
+      deliver to several authorities or countries.
+    bullets:
+      - "Handover per ETSI TS 102 232-1 (transport) and TS 102 232-2 (messaging services)."
+      - "Internal interfaces per ETSI TS 103 221-1 (X1, administration) and TS 103 221-2 (X2 and X3, related data and content) for operators with their own mediation function."
+      - "Requests for stored subscriber and traffic data per ETSI TS 102 657, a separate obligation from interception."
+      - "TLS 1.2 or later, or IPsec through a SINA Box where required (Germany)."
+      - "Buffering and in-order redelivery after a connection loss, with keep-alives and test records."
+      - "Integrity protection with hashes and signatures over the delivered records (TS 102 232-1 Annex J)."
+      - "Several handover points per deployment."
+    visual:
+      kind: diagram
+      id: li-handover
+
+  - kind: feature
+    reverse: true
+    eyebrow: Security and accountability
+    title: Interception hidden from administrators and fully audited.
+    body: >-
+      Interception must be invisible to the target and to everyone
+      without a need to know, and every use of it must be accountable.
+      Orders, targets and intercepted data are accessible only to the
+      lawful interception officer role, which is separate from server
+      administration. Through Stalwart's administration interfaces,
+      administrators cannot see which accounts are targeted, how many
+      orders are active or how they are implemented.
+
+      Every action is logged without gaps, including tests and
+      incorrect entries: the order reference, the target identifier
+      entered, the person who entered it and when, the period during
+      which data was captured and the authority it was delivered to.
+      The people who operate interception cannot read, change or delete
+      that log, and its records are kept for the periods national rules
+      require.
+    bullets:
+      - Dedicated lawful interception officer role, separate from administration.
+      - Targets, orders and implementation concealed from administrators and users.
+      - Gap-free audit log of every action, including tests and incorrect entries.
+      - Log access, deletion and rights changes restricted to a separate auditor role and themselves logged.
+      - Reports that support periodic reviews by the operator and the regulator.
+      - Timestamps from a synchronised time source.
+    visual:
+      kind: diagram
+      id: li-roles
+
+  - kind: list
+    band: alt
+    eyebrow: Compliance assistance
+    title: Help through documentation, testing and approval.
+    body: >-
+      Having the capability is only part of the obligation: it must be
+      documented, tested with the authorities and, in some countries,
+      formally approved. Stalwart's interception implementation follows
+      TR TKÜV, and its type-sample test by the Bundesnetzagentur
+      (Typmusterprüfung) is in process; once completed, operators will
+      be able to refer to the result in their own Nachweis. Stalwart
+      Labs also offers
+      [lawful-interception compliance assistance](/services) as a
+      professional service.
+    bullets:
+      - Documentation of the implementation for the regulator.
+      - Integration tests with the authority's mediation or recording equipment, including the SINA Box link in Germany.
+      - Liaison during national approval, such as the Bundesnetzagentur Nachweis in Germany.
+
+  - kind: list
+    eyebrow: Responsibilities
+    title: What stays with the operator.
+    body: >-
+      Stalwart Labs provides the software and the assistance. The legal
+      obligation, and the day-to-day work that comes with it, stays with
+      the operator.
+    bullets:
+      - Receiving orders from the authorities, including outside business hours where national rules require it.
+      - Entering orders, or connecting an external administration function that does.
+      - Registering contact points with the regulator.
+      - Operating the handover equipment, such as the SINA Box.
+      - Operation can be delegated to a trusted third party where national law allows it.
+
+  - kind: faq
+    band: alt
+    eyebrow: Frequently asked
+    title: Lawful Interception FAQ.
+    items:
+      - question: Is Lawful Interception available in Enterprise Cloud?
+        answer: >-
+          No. Lawful Interception is available for Stalwart On-Premise
+          only, where the operator of the deployment holds the
+          interception obligation.
+      - question: Does Stalwart Labs have access to intercepted data?
+        answer: >-
+          No. The Lawful Interception add-on runs inside the operator's
+          own deployment, and intercepted data goes directly from the
+          operator's servers to the authority.
+      - question: Does interception cover mail stored before the order?
+        answer: >-
+          Interception captures communications from the moment the order
+          is activated. Requests for stored subscriber and traffic data
+          are a separate obligation, handled through the TS 102 657
+          interface of the LI Handover add-on.
+      - question: What about resellers and tenants on our system?
+        answer: >-
+          Targets are resolved across every tenant of the deployment, so
+          users of resellers and hosting partners can be intercepted by
+          the operator that runs the system, without the tenant
+          administrators being aware of it.
+      - question: How is this different from journaling in the Compliance add-on?
+        answer: >-
+          Journaling keeps a copy of an organisation's own mail for its
+          own records, and is known to its users. Lawful interception
+          captures the communications of specific targets named in a
+          legal order, conceals the capture from everyone except the
+          lawful interception officer, and delivers the result to an
+          authority in a standardised format.
+      - question: Do I need the LI Handover add-on?
+        answer: >-
+          Only if the authorities in your country require delivery
+          through an ETSI handover interface. Without it, the Lawful
+          Interception add-on captures and exports the data for each
+          order, which is enough where authorities accept another form
+          of delivery.
+      - question: Can intercepted mail be delivered to more than one authority?
+        answer: >-
+          Yes. Several orders can cover the same target, each with its
+          own authority and handover point, and none of them is visible
+          to the others.
+      - question: How is Lawful Interception priced?
+        answer: >-
+          Lawful Interception is licensed on top of the Enterprise
+          subscription, and LI Handover per handover point.
+          Compliance assistance is quoted separately. A quote and a
+          pro-forma invoice can be obtained from the
+          [licensing portal](https://account.stalw.art).
+
+footerCta:
+  cta: Meet your interception obligations with Stalwart.
+  ctaSub: Tell us about your jurisdiction and deployment, and we will scope the add-ons and assistance you need.
+  ctaButton: Talk to sales
+  ctaLink: /contact
+  secondary:
+    label: Request a quote
+    href: https://account.stalw.art
+    external: true

@@ -1,0 +1,235 @@
+---
+import Icon from "./Icon.astro";
+
+const label = "Handover to the authorities: an external administration function connects to Stalwart over the X1 administration interface (ETSI TS 103 221-1). The Stalwart delivery function sends ETSI TS 102 232-1 protocol data units carrying TS 102 232-2 messaging records, with keep-alive and test messages, either over TLS 1.2 or later to the authority's mediation device, or, in Germany, over IPsec through a SINA Box to the authority's recording equipment. A buffer holds records while the connection is down and sends them in order once it returns.";
+---
+<div class="dg" role="img" aria-label={label}>
+  <span class="dg-caption">Handover per ETSI TS 102 232</span>
+  <div class="card card--plain">
+    <span class="ic"><Icon name="sliders-horizontal" size={16} /></span>
+    <div class="body">
+      <strong>External administration function</strong>
+    </div>
+  </div>
+  <div class="hop">
+    <span class="arrow"><Icon name="arrow-down" size={15} /></span>
+    <span class="hop-lbl">X1 · TS 103 221-1</span>
+  </div>
+  <div class="card card--brand">
+    <span class="ic"><Icon name="send" size={16} /></span>
+    <div class="body">
+      <span class="name"><strong>Stalwart</strong><span class="v">delivery function</span></span>
+    </div>
+    <div class="inner">
+      <span class="inner-hd"><Icon name="layers" size={14} />Buffer</span>
+      <span class="sub">Holds records while the connection is down, then sends them in order</span>
+    </div>
+  </div>
+  <div class="hop">
+    <span class="arrow"><Icon name="arrow-down" size={15} /></span>
+    <span class="pdu">TS 102 232-1 PDUs · TS 102 232-2 records</span>
+    <span class="hop-lbl">with keep-alive and test messages</span>
+  </div>
+  <div class="split">
+    <div class="branch">
+      <span class="tag tag--brand"><Icon name="lock" size={12} />TLS 1.2 or later</span>
+      <span class="arrow"><Icon name="arrow-down" size={15} /></span>
+      <div class="card">
+        <span class="ic"><Icon name="shield-check" size={16} /></span>
+        <div class="body">
+          <strong>Mediation device</strong>
+          <span class="sub">Operated by the authority</span>
+        </div>
+      </div>
+    </div>
+    <div class="branch">
+      <span class="tag tag--brand"><Icon name="lock" size={12} />IPsec</span>
+      <span class="arrow"><Icon name="arrow-down" size={15} /></span>
+      <div class="card">
+        <span class="ic"><Icon name="network" size={16} /></span>
+        <div class="body">
+          <strong>SINA Box</strong>
+          <span class="sub">IPsec gateway to the authority's recording equipment, Germany</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .dg {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    container-type: inline-size;
+  }
+  .card {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px;
+    border-radius: var(--r-lg);
+    background: var(--tile);
+    box-shadow: var(--shadow-tile);
+  }
+  .card--brand {
+    flex-wrap: wrap;
+    align-items: center;
+    background: var(--rose);
+    box-shadow: none;
+  }
+  .card--plain {
+    align-items: center;
+    background: none;
+    box-shadow: inset 0 0 0 1px var(--hairline);
+  }
+  .body {
+    display: grid;
+    gap: 6px;
+    flex: 1;
+    min-width: 0;
+  }
+  .ic {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    background: var(--sand);
+    color: var(--text);
+  }
+  .card--plain .ic {
+    background: var(--tile);
+  }
+  .card--brand .ic {
+    background: var(--brand);
+    color: #fff;
+  }
+  strong {
+    font-family: var(--font-display);
+    font-size: 0.9375rem;
+    font-weight: 680;
+    line-height: 1.3;
+    color: var(--text);
+  }
+  .name {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 2px 8px;
+  }
+  .card--brand strong,
+  .v {
+    color: var(--brand-text);
+  }
+  .v {
+    font-size: var(--fs-xs);
+    font-weight: 600;
+  }
+  .sub {
+    color: var(--muted);
+    font-size: var(--fs-xs);
+    line-height: 1.4;
+  }
+  .inner {
+    flex-basis: 100%;
+    display: grid;
+    gap: 4px;
+    padding: 10px 12px;
+    border-radius: 14px;
+    background: var(--tile);
+  }
+  .inner-hd {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-display);
+    font-size: var(--fs-xs);
+    font-weight: 650;
+    color: var(--text);
+  }
+  .inner-hd :global(svg) {
+    color: var(--brand-text);
+  }
+  .hop {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    text-align: center;
+  }
+  .arrow {
+    display: inline-flex;
+    align-self: center;
+    color: var(--brand-text);
+  }
+  .hop-lbl {
+    color: var(--dim);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 600;
+  }
+  .pdu {
+    padding: 4px 12px;
+    border-radius: var(--r-pill);
+    background: var(--ink);
+    color: var(--on-ink);
+    box-shadow: inset 0 0 0 1px var(--ink-edge);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+  .split {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .branch {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+  }
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    align-self: center;
+    gap: 5px;
+    padding: 3px 11px;
+    border-radius: var(--r-pill);
+    background: var(--tile);
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 600;
+  }
+  .tag--brand {
+    background: var(--rose);
+    color: var(--brand-text);
+  }
+  .branch .card {
+    flex: 1;
+  }
+  @container (max-width: 460px) {
+    .branch .card {
+      flex-direction: column;
+      gap: 8px;
+    }
+    .tag {
+      padding: 3px 9px;
+      white-space: nowrap;
+    }
+    .tag :global(svg) {
+      display: none;
+    }
+  }
+  @container (max-width: 240px) {
+    .split {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 14px;
+    }
+  }
+</style>

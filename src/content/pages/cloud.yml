@@ -1,8 +1,8 @@
-title: Managed Email | Stalwart Labs
+title: Enterprise Cloud | Stalwart Labs
 description: >-
   Stalwart-hosted mail and collaboration, run for you as a clustered service
-  with high availability, included migration help, and tiered support.
-slug: /managed-email
+  with high availability, included migration help, and Premium Support.
+slug: /cloud
 
 hero:
   banner:
@@ -11,14 +11,14 @@ hero:
     body: >-
       We are taking expressions of interest now; the
       service goes live in 2027.
-  eyebrow: Managed service
+  eyebrow: Stalwart Enterprise Cloud
   title: Stalwart, operated by us
   titleHighlight: operated by us
   lead: >-
     We host, cluster and operate the same mail and collaboration server we
-    ship to self-hosters (JMAP, IMAP, POP3, SMTP, CalDAV, CardDAV, WebDAV)
+    ship as Stalwart On-Premise (JMAP, IMAP, POP3, SMTP, CalDAV, CardDAV, WebDAV)
     on infrastructure we maintain, with included migration help and
-    contractual support.
+    Premium Support, plus optional SLA plans.
   ctas:
     - label: Register interest
       href: /contact
@@ -26,7 +26,7 @@ hero:
 sections:
   - kind: prose
     eyebrow: What you get
-    title: Managed Stalwart, sized to your mailbox count.
+    title: Stalwart Enterprise Cloud, sized to your mailbox count.
     body: >-
       Each tenant runs on a Stalwart cluster operated by Stalwart Labs.
       Provisioning, upgrades, certificate renewal, backups, monitoring and
@@ -34,7 +34,7 @@ sections:
       control over accounts, domains, mail rules, calendars and contacts
       through the standard Stalwart web admin and CLI.
 
-      The deployment uses the same code path that runs in self-hosted
+      The deployment uses the same code path that runs in Stalwart On-Premise
       production. There is no forked feature set; new releases land here
       on the same cadence as the open-source and Enterprise editions.
 
@@ -111,26 +111,24 @@ sections:
 
   - kind: list
     band: alt
-    eyebrow: Support tiers
-    title: Pick the level of operations involvement you need.
+    eyebrow: Support
+    title: The same support plans as Stalwart On-Premise.
     bullets:
-      - "**Standard.** Business-hours response on operational issues. Access to the customer portal, ticketing, and the same release notes and security advisories sent to Enterprise self-hosters."
-      - "**Enterprise standard.** Priority response, named technical contact, scheduled review calls, and signed SLAs covering availability and recovery objectives."
-      - "**Enterprise on-demand.** Dedicated Support Engineer, custom SLAs (including 24x7 with paged response), lawful-interception assistance where applicable. Subject to the same 150-mailbox minimum used for self-hosted Premium Support."
+      - "**Premium Support** is included with every Enterprise Cloud subscription: a private Priority Support area on the support portal and email support at support@stalw.art, without a guaranteed response time."
+      - "**Incident Pack and SLA plans** add guaranteed initial response times to support tickets, from two business days down to one hour, with Severity 1 handled around the clock on SLA 4 and SLA 2."
     learnMore:
-      - label: Full tier breakdown
+      - label: Support plans
         href: /support
 
   - kind: prose
     eyebrow: SLAs
     title: Availability and support targets in the contract.
     body: >-
-      Standard tiers include a service-credit-backed availability SLA on
-      the mail and collaboration endpoints, plus targets for support
-      response by severity. Enterprise tiers add per-incident recovery
-      time and recovery point objectives negotiated at contract signing.
-      Specific numeric targets are published with the commercial terms
-      when the service launches.
+      Enterprise Cloud includes a service-credit-backed availability SLA
+      on the mail and collaboration endpoints, with recovery time and
+      recovery point objectives. Support response targets come from the
+      [SLA plans](/support). Specific numeric targets are published with
+      the commercial terms when the service launches.
 
   - kind: list
     band: alt
@@ -140,22 +138,22 @@ sections:
       - "**Data location.** Mail content, calendars, contacts and files stay in the region selected at sign-up. We publish the list of sub-processors and notify customers of changes in advance."
       - "**Encryption at rest.** Storage volumes and blob backends are encrypted at rest. Per-mailbox S/MIME and OpenPGP encryption-at-rest is available for sensitive mailboxes."
       - "**Encryption in transit.** TLS on every public listener; DANE, MTA-STS and TLS-RPT enforced on outbound. ACME-managed certificates with automatic renewal."
-      - "**Independent security audit.** Stalwart has been independently audited; the report is published in the [security audit blog post](/blog/security-audit). The managed service runs the audited codebase."
+      - "**Independent security audit.** Stalwart has been independently audited; the report is published in the [security audit blog post](/blog/security-audit). Stalwart Enterprise Cloud runs the audited codebase."
       - "**DPA and GDPR.** A Data Processing Addendum is available before contract signing. Stalwart Labs acts as processor for customer mailbox content; the sub-processor list is part of the legal pack."
 
   - kind: prose
     eyebrow: Pricing
     title: Per-mailbox, with hosting and operations bundled.
     body: >-
-      Managed Email follows the per-mailbox bands published on the
-      [pricing page](/pricing). Hosting, storage, bandwidth, support at
-      the contracted tier and migration assistance are included in the
-      per-mailbox figure. Optional add-ons (custom SLAs, lawful
-      interception, dedicated engineering time) are quoted separately.
+      Stalwart Enterprise Cloud follows the per-mailbox bands published on the
+      [pricing page](/pricing). Hosting, storage, bandwidth, Premium
+      Support and migration assistance are included in the
+      per-mailbox figure. The [Compliance](/compliance) add-on and
+      the [support plans](/support) are quoted separately.
 
 footerCta:
   cta: Get on the early-access list
-  ctaSub: Stalwart Managed Email goes live in 2027. Tell us about your deployment and we will keep you posted.
+  ctaSub: Stalwart Enterprise Cloud goes live in 2027. Tell us about your deployment and we will keep you posted.
   ctaButton: Register interest
   ctaLink: /contact
   secondary:

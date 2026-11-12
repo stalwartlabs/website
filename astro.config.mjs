@@ -31,6 +31,7 @@ export default defineConfig({
   // to the same route — declaring both forms triggers a router collision
   // warning, so we list the canonical (no trailing slash) form only.
   redirects: {
+    "/managed-email": "/cloud",
     "/docs": "/docs/install/",
     "/docs/install/get-started": "/docs/install/",
     "/docs/install/setup-wizard": "/docs/install/platform/",

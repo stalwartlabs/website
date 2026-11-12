@@ -75,7 +75,7 @@ Some server functions connect to the internet at startup or on a schedule. On a 
 - The spam filter rule set is downloaded from `https://github.com/stalwartlabs/spam-filter/releases/latest/download/spam-filter-rules.json.gz` at first start and whenever an administrator runs a rule update. [Rule set updates](/docs/spamfilter/settings/general#rule-set-updates) describes how to load it from a local file instead.
 - Certificates are issued through the configured ACME directory, `https://acme-v02.api.letsencrypt.org/directory` for Let's Encrypt. Without access to it, the server can neither obtain nor renew certificates automatically.
 - The [Asn](/docs/server/asn) object created at first start downloads IP-to-ASN and IP-to-country lists from `https://github.com/sapics/ip-location-db/releases/` once a day. The spam filter and country-based expressions use them.
-- When a license API key is configured, the license is renewed through `https://license.stalw.art/`, as described in [Licensing](/docs/server/enterprise).
+- When a license API key is configured, the license is renewed through `https://account.stalw.art/`, as described in [Licensing](/docs/server/enterprise).
 - Lookups of MX, SPF, DKIM, DMARC, DNSBL and similar records need outbound DNS on UDP and TCP port 53, or DNS over HTTPS or TLS when the [resolver](/docs/server/dns/resolver) is configured for it.
 - When a domain uses automatic DNS management, the server connects to the API endpoint of its DNS provider, as described in [DNS providers](/docs/server/dns/provider).
 

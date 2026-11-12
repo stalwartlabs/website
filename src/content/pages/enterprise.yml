@@ -14,12 +14,11 @@ hero:
     operations features that matter once a business depends on it:
     multi-tenancy and branding for hosted customers, archiving and
     un-deletion for fast recovery, real-time telemetry and alerts for
-    your support team, AI-driven spam filtering, masked email for
-    privacy-conscious users, and read replicas and sharded storage for
-    the largest deployments.
+    your support team, AI-driven spam filtering, and read replicas and
+    sharded storage for the largest deployments.
   ctas:
     - label: Start a 30-day trial
-      href: https://license.stalw.art/trial
+      href: https://account.stalw.art/trial
       external: true
     - label: See pricing
       href: /pricing
@@ -170,32 +169,6 @@ sections:
   - kind: feature
     reverse: true
     band: alt
-    eyebrow: Masked email
-    title: Masked email addresses for privacy.
-    body: >-
-      Privacy-conscious users want a different email address for every
-      site they sign up to, so a leak at one site does not become spam
-      at the rest. Stalwart lets end users create disposable addresses
-      directly from their Account Manager or through any password
-      manager that supports the standard. Each mask carries a
-      description and an enabled toggle, so a user can disable a
-      leaking address without losing the record of where it was
-      handed out.
-
-      This gives mailbox operators a privacy primitive to surface to
-      their customers without running a separate aliasing service.
-    learnMore:
-      - label: Masked email reference
-        href: /docs/email/management/masked-email
-    visual:
-      kind: screenshot
-      src: /images/webadmin/masked-email-light.webp
-      srcDark: /images/webadmin/masked-email-dark.webp
-      width: 940
-      alt: Stalwart masked addresses list with generated addresses, descriptions, target domains and enabled state
-      url: admin.stalw.art / Account / Masked Addresses
-
-  - kind: feature
     eyebrow: SCIM provisioning
     title: Mailbox provisioning from your identity provider.
     body: >-
@@ -225,8 +198,6 @@ sections:
       id: scim-lifecycle
 
   - kind: feature
-    reverse: true
-    band: alt
     eyebrow: Read replicas and sharded storage
     title: Scale the data plane without rewriting the cluster.
     body: >-
@@ -246,6 +217,7 @@ sections:
       id: read-replicas
 
   - kind: list
+    band: alt
     eyebrow: For mail-hosting providers and MSPs
     title: Multi-tenant hosting under your brand.
     body: >-
@@ -256,35 +228,48 @@ sections:
       - "**Branding** lets each customer see their own logo at their own domain, on the same WebUI bundle."
       - "**Account Manager** gives each customer's end users a self-service portal for passwords, passkeys, 2FA, application passwords and masked email."
       - "**Live telemetry, alerts and message delivery history** give support engineers the data they need to triage tickets."
-      - "**Lawful interception** is available on demand for jurisdictions that require it."
+      - "**[Lawful Interception](/lawful-interception)** is available as an add-on for operators in jurisdictions that require it."
       - "**Domain-anchored licensing** ties the Enterprise key to a domain name and keeps the per-server count unlimited under that domain."
 
+  - kind: list
+    eyebrow: Add-ons
+    title: Add-ons for regulated environments.
+    body: >-
+      Some organisations need capabilities that most deployments do
+      not. These are available as add-ons to the Enterprise
+      subscription, priced separately and enabled by the same
+      license key.
+    bullets:
+      - "**[Compliance](/compliance)** for organisations with record-keeping obligations: retention policies, legal hold, eDiscovery search and export, journaling and an audit trail of mailbox access."
+      - "**[Lawful Interception](/lawful-interception)** for providers subject to interception obligations: warrant and target management and real-time capture, with ETSI handover to the authorities through the LI Handover add-on. Available for Stalwart On-Premise only."
+
   - kind: feature
+    reverse: true
     band: alt
     eyebrow: Premium Support
-    title: Priority Support, included with Enterprise.
+    title: Premium Support, included with every subscription.
     body: >-
       Production deployments need a way to reach the people who build
-      the server, not just a community forum. Premium Support is
-      included at no extra cost with every Enterprise subscription of
-      150 mailboxes or more. Tickets get an initial response within 48
-      hours during business hours, and a direct line to the engineers
-      who write Stalwart.
+      the server, not just a community forum. Every Enterprise
+      subscription includes Premium Support at no extra cost: a
+      private Priority Support area on the support portal and email
+      support at [support@stalw.art](mailto:support@stalw.art), with
+      tickets queued ahead of community requests and answered by the
+      engineers who write Stalwart.
 
-      A **dedicated Support Engineer**, a **custom SLA** with tighter
-      response targets, and **lawful-interception assistance** are
-      available as separately
-      purchasable add-ons on top of Premium Support, for organisations
-      that need them.
+      Premium Support does not include a response commitment. When
+      response times need to be contractual, an Incident Pack or an
+      SLA plan can be added, and [professional services](/services)
+      cover onboarding, health checks and upgrades.
     learnMore:
-      - label: Support overview
+      - label: Support plans
         href: /support
 
 footerCta:
   cta: Try Stalwart Enterprise for 30 days
   ctaSub: Full feature set, no commitment, instant key issuance.
   ctaButton: Start a trial
-  ctaLink: https://license.stalw.art/trial
+  ctaLink: https://account.stalw.art/trial
   secondary:
     label: See pricing
     href: /pricing

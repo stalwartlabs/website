@@ -7,7 +7,6 @@ interface Props {
   tiers?: any[];
 }
 const { data, tiers = [] } = Astro.props;
-const threshold = data.premiumSupportThreshold ?? 150;
 const minimum = tiers.length ? tiers[0].lower : 1;
 const sliderMax = 100000;
 const fmt = (n: number) => n.toLocaleString("en-US");
@@ -27,7 +26,6 @@ const alt = data.band === "alt";
       class="bento calc"
       data-calculator
       data-tiers={JSON.stringify(tiers)}
-      data-premium={String(threshold)}
       data-min={String(minimum)}
     >
       <div class="tile calc-input reveal">
@@ -63,7 +61,7 @@ const alt = data.band === "alt";
         </p>
         <div class="calc-premium" data-calc-premium>
           <span class="tick"><Icon name="check" size={14} /></span>
-          <span data-calc-premium-text>Premium Support included</span>
+          <span>Premium Support included</span>
         </div>
       </div>
 
@@ -91,7 +89,6 @@ const alt = data.band === "alt";
   document.querySelectorAll<HTMLElement>("[data-calculator]").forEach((root) => {
     const tiers: Tier[] = JSON.parse(root.dataset.tiers || "[]");
     if (!tiers.length) return;
-    const threshold = parseInt(root.dataset.premium || "150", 10);
     const minimum = parseInt(root.dataset.min || "1", 10);
     const q = <T extends Element>(s: string) => root.querySelector<T>(s)!;
     const input = q<HTMLInputElement>("[data-calc-input]");
@@ -102,8 +99,6 @@ const alt = data.band === "alt";
     const brk = q<HTMLElement>("[data-calc-break]");
     const minBox = q<HTMLElement>("[data-calc-min]");
     const minText = q<HTMLElement>("[data-calc-min-text]");
-    const premium = q<HTMLElement>("[data-calc-premium]");
-    const premiumText = q<HTMLElement>("[data-calc-premium-text]");
 
     let currency: Cur = document.documentElement.dataset.currency === "usd" ? "usd" : "eur";
     const other = (): Cur => (currency === "eur" ? "usd" : "eur");
@@ -160,14 +155,6 @@ const alt = data.band === "alt";
       const below = typed < minimum;
       minBox.classList.toggle("is-active", below);
       minText.textContent = below ? `Below the minimum: priced as ${fmt(minimum)} mailboxes.` : minDefault;
-      if (count >= threshold) {
-        premium.classList.remove("is-off");
-        premiumText.textContent = "Premium Support included";
-      } else {
-        premium.classList.add("is-off");
-        const need = threshold - count;
-        premiumText.textContent = `${fmt(need)} more mailbox${need === 1 ? "" : "es"} for Premium Support`;
-      }
       paintSlider();
     };
 
@@ -348,14 +335,6 @@ const alt = data.band === "alt";
   .calc-premium .tick {
     background: var(--brand);
     color: #fff;
-  }
-  .calc-premium.is-off {
-    background: var(--sand);
-    color: var(--muted);
-  }
-  .calc-premium.is-off .tick {
-    background: var(--tile);
-    color: var(--dim);
   }
   .calc-total {
     font-family: var(--font-display);

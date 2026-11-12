@@ -178,12 +178,12 @@ const comparisonTablesSection = z.object({
   title: z.string().optional(),
   body: z.string().optional(),
   legend: z.string().optional(),
-  columns: z.tuple([z.string(), z.string()]),
+  columns: z.array(z.string()).min(2),
   band: z.enum(["default", "alt"]).default("default"),
   groups: z.array(
     z.object({
       title: z.string(),
-      rows: z.array(z.tuple([z.string(), z.string(), z.string()])),
+      rows: z.array(z.array(z.string()).min(3)),
     })
   ),
   ctas: z.array(ctaSchema).default([]),
@@ -217,7 +217,6 @@ const calculatorSection = z.object({
   body: z.string().optional(),
   band: z.enum(["default", "alt"]).default("default"),
   // Calculator reads the same tier table from a sibling pricing-tiers section.
-  premiumSupportThreshold: z.number().default(150),
 });
 
 const contactFormSection = z.object({

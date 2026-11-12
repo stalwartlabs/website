@@ -1,0 +1,163 @@
+title: Professional Services | Stalwart Labs
+description: >-
+  Onboarding, health checks, upgrade assistance, lawful-interception
+  compliance assistance and funded features, delivered by the engineers who
+  write Stalwart.
+slug: /services
+
+hero:
+  eyebrow: Professional Services
+  title: Onboarding, health checks and upgrades by the Stalwart engineers.
+  titleHighlight: by the Stalwart engineers
+  lead: >-
+    Support answers questions and fixes defects. Professional services
+    cover the hands-on work around a deployment: installing and tuning
+    a new one, reviewing an existing one, carrying it through a major
+    upgrade, or building a feature it needs. Every engagement is a
+    fixed-scope project with a written deliverable, carried out by
+    Stalwart Labs engineers.
+  ctas:
+    - label: Request a quote
+      href: https://account.stalw.art
+      external: true
+    - label: Talk to sales
+      href: /contact
+      primary: false
+
+sections:
+  - kind: list
+    eyebrow: Onboarding
+    title: A new deployment installed, configured and tuned.
+    body: >-
+      Onboarding takes a new deployment from empty servers to a tuned,
+      documented service. It covers the decisions that are hardest to
+      change later, such as storage backends and directory integration,
+      as well as the tuning that usually comes only after weeks in
+      production. Onboarding covers deployments of up to three nodes;
+      larger clusters are scoped individually.
+    bullets:
+      - Installation of Stalwart on your infrastructure, on up to three nodes.
+      - Choice and set-up of the storage backends for your size and availability needs.
+      - Domains, DNS records, DKIM, SPF, DMARC, MTA-STS and TLS certificates.
+      - Integration with your directory (LDAP or SQL) or identity provider (OpenID Connect).
+      - Spam filter tuning for your mail flow.
+      - Performance and resource tuning (caches, limits and queues).
+      - Backup set-up, with a test restore.
+      - "**Deliverable:** a handover document describing the deployment and how to operate it."
+
+  - kind: list
+    band: alt
+    eyebrow: Health check
+    title: An expert review of an existing deployment.
+    body: >-
+      Deployments drift: settings that were right at installation stop
+      fitting as the number of users grows, and new releases add
+      options that are never switched on. A health check is a review of
+      a running deployment by a Stalwart Labs engineer, with written
+      findings and recommendations. It is advisory: the
+      recommendations are yours to apply, or can be applied as a
+      separate engagement.
+    bullets:
+      - Configuration review against current recommendations.
+      - Security review, covering authentication, encryption, access control and exposure.
+      - Deliverability review, covering DNS records, authentication, reputation and blocklists.
+      - Performance and capacity review of servers, storage and queues.
+      - Backup and restore procedure review.
+      - "**Deliverable:** a written report with findings ranked by priority and recommended actions."
+
+  - kind: list
+    eyebrow: Upgrade assistance
+    title: Major-version upgrades planned and carried out with you.
+    body: >-
+      Major upgrades can change configuration formats, storage layouts
+      and defaults. Upgrade assistance plans the upgrade of a
+      deployment, carries it out with your team and checks the result,
+      with a rollback plan ready in case it is needed.
+    bullets:
+      - Upgrade path assessment for your current version and configuration.
+      - Compatibility review of integrations, directories, storage backends and clients.
+      - A written upgrade and rollback plan.
+      - Execution of the upgrade with your team, in a window you choose.
+      - Post-upgrade validation of mail flow, client access and integrations.
+
+  - kind: list
+    band: alt
+    eyebrow: Lawful-interception compliance assistance
+    title: Help through national approval of lawful interception.
+    body: >-
+      Operators subject to interception obligations must document their
+      implementation, test it with the authorities and, in some
+      countries, obtain formal approval before the obligation takes
+      effect. Stalwart Labs assists operators using the
+      [Lawful Interception](/lawful-interception) add-on through that
+      process.
+    bullets:
+      - Documentation of the Stalwart interception implementation for the regulator.
+      - Integration tests with the authority's mediation or recording equipment, including the SINA Box link in Germany.
+      - Liaison during national approval, for example the Bundesnetzagentur Nachweis in Germany.
+      - Day-to-day operation (receiving orders and delivering to the authorities) remains with the operator or a trusted third party.
+
+  - kind: list
+    eyebrow: Funded features
+    title: Features on the roadmap, delivered sooner.
+    body: >-
+      When a feature you need is on the roadmap but not yet scheduled,
+      or is not on it at all, you can fund its development. Stalwart
+      Labs agrees the scope and a fixed price with you, builds the
+      feature as part of the product and maintains it from then on.
+    bullets:
+      - Fixed scope and fixed price, agreed before work starts.
+      - Built and maintained as part of Stalwart, not as a custom fork.
+      - The result lands in the Community or the Enterprise edition.
+
+  - kind: prose
+    band: alt
+    eyebrow: Migration
+    title: Migration from other mail servers.
+    body: >-
+      Moving mailboxes, calendars and contacts from another mail server
+      is offered as a separate service, launching in 2027. The
+      [Migration page](/migration) describes the source systems,
+      process and cutover options.
+
+  - kind: list
+    eyebrow: How engagements work
+    title: From request to handover.
+    bullets:
+      - "**Request.** Tell us about your deployment and what you need, through the licensing portal or the contact form."
+      - "**Scoping.** An engineer confirms the scope, the prerequisites (such as access and the information needed) and the schedule."
+      - "**Quote.** You receive a fixed quote and a pro-forma invoice."
+      - "**Delivery.** The work is carried out on the agreed schedule, with your team involved where needed."
+      - "**Handover.** The engagement closes with its written deliverable and a review of the results with your team."
+
+  - kind: faq
+    band: alt
+    eyebrow: Frequently asked
+    title: Professional services FAQ.
+    items:
+      - question: Are professional services included in the SLA plans?
+        answer: >-
+          No. SLA plans cover support: answering questions and fixing
+          defects within a guaranteed response time. Professional
+          services are separate, one-off engagements, and can be bought
+          with or without an SLA plan.
+      - question: Who can buy professional services?
+        answer: >-
+          Professional services are available to Enterprise customers.
+          Lawful-interception compliance assistance is available for
+          Stalwart On-Premise only, like the Lawful Interception add-on.
+      - question: How are services priced?
+        answer: >-
+          Each service has a fixed price for its standard scope, and
+          larger deployments are quoted individually. A quote and a
+          pro-forma invoice can be obtained from the
+          [licensing portal](https://account.stalw.art).
+
+footerCta:
+  cta: Get expert help with your Stalwart deployment.
+  ctaSub: Onboarding, health checks, upgrades and funded features, delivered by Stalwart Labs engineers.
+  ctaButton: Request a quote
+  ctaLink: https://account.stalw.art
+  secondary:
+    label: Talk to sales
+    href: /contact

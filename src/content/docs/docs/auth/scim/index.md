@@ -12,7 +12,7 @@ Organisations that manage their staff in a central identity provider want mail a
 
 SCIM, the System for Cross-domain Identity Management, is the standard protocol for this exchange. It defines a set of HTTP endpoints and JSON resources that represent users and groups. The identity provider acts as the SCIM client: it watches its own directory and sends a request to each application it governs whenever an identity is created, changed, suspended or deleted. The application acts as the SCIM service provider and applies each request to its own accounts. The schema is defined in [RFC 7643](https://www.rfc-editor.org/rfc/rfc7643), and the protocol in [RFC 7644](https://www.rfc-editor.org/rfc/rfc7644).
 
-Stalwart implements the service provider side of the protocol. It receives provisioning requests at `/scim/v2` on its HTTP listeners and applies them to its accounts. It never acts as a SCIM client, so it sends no provisioning requests to other systems. SCIM requires an Enterprise license. On a server without one, requests to `/scim/v2` are refused with `403 Forbidden` and the detail `SCIM provisioning is only available in the Enterprise edition. Obtain your trial license at https://license.stalw.art/trial.`
+Stalwart implements the service provider side of the protocol. It receives provisioning requests at `/scim/v2` on its HTTP listeners and applies them to its accounts. It never acts as a SCIM client, so it sends no provisioning requests to other systems. SCIM requires an Enterprise license. On a server without one, requests to `/scim/v2` are refused with `403 Forbidden` and the detail `SCIM provisioning is only available in the Enterprise edition. Obtain your trial license at https://account.stalw.art/trial.`
 
 ## Roles in the deployment
 

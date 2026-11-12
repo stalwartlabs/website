@@ -2,7 +2,7 @@
 title: Vulnerability Disclosure Policy
 description: How to report security vulnerabilities in Stalwart software and services, our response commitments, and the legal safe harbour for good-faith research.
 order: 13
-lastUpdated: May 3, 2026
+lastUpdated: November 12, 2026
 ---
 
 Stalwart Labs takes the security of its software and services seriously. This Vulnerability Disclosure Policy sets out how to report a vulnerability, what you can expect from us, and the safe-harbour protections we provide to good-faith security researchers. The corresponding machine-readable file is published at [/.well-known/security.txt](/.well-known/security.txt) in accordance with [RFC 9116](https://www.rfc-editor.org/rfc/rfc9116).
@@ -15,7 +15,7 @@ This policy applies to:
 
 - the Stalwart Mail and Collaboration Server, all currently supported versions (see [Supported versions](#supported-versions) below);
 - the official Docker images published by Stalwart Labs;
-- the websites operated by Stalwart Labs Ltd: **stalw.art**, **license.stalw.art**, and **support.stalw.art**;
+- the websites operated by Stalwart Labs Ltd: **stalw.art**, **account.stalw.art**, and **support.stalw.art**;
 - documentation that, if followed, would lead to an insecure deployment.
 
 **Out of scope:**
@@ -94,7 +94,7 @@ We follow coordinated disclosure principles:
 - **Default timeline:** ninety (90) days from your initial report to public disclosure.
 - **Earlier disclosure:** may occur if the issue is being actively exploited in the wild, or if a coordinated industry-wide disclosure date applies.
 - **Later disclosure:** may be necessary for complex issues that require significant code changes, downstream coordination, or operator preparation.
-- **Pre-notification:** for severe issues, we may pre-notify operators of large Stalwart deployments under embargo so that patches can be applied before public disclosure.
+- **Pre-notification:** customers with an active SLA plan are notified of security fixes under embargo before public disclosure, so that patches can be applied in advance. For severe issues, we may also pre-notify operators of other large Stalwart deployments under embargo.
 
 ## Legal safe harbour
 

@@ -18,11 +18,11 @@ hero:
     - label: See pricing
       href: /pricing
     - label: Buy now
-      href: https://license.stalw.art/buy
+      href: https://account.stalw.art/buy
       external: true
       primary: false
     - label: Start a 30-day trial
-      href: https://license.stalw.art/trial
+      href: https://account.stalw.art/trial
       external: true
       primary: false
 
@@ -58,7 +58,7 @@ sections:
           - ["Domain aliases", "yes", "yes"]
           - ["Disk quotas per user and per tenant", "yes", "yes"]
           - ["Auto-configuration and Autodiscover", "yes", "yes"]
-          - ["Masked email addresses (privacy aliases)", "", "yes"]
+          - ["Masked email addresses (privacy aliases)", "yes", "yes"]
       - title: MTA
         rows:
           - ["SMTP server with programmable rules", "yes", "yes"]
@@ -230,16 +230,18 @@ sections:
       - title: Support
         rows:
           - ["Community support (support.stalw.art, free tier)", "yes", "yes"]
-          - ["Premium Support (minimum 150 mailboxes)", "", "yes"]
-          - ["Email support at support@stalw.art (minimum 150 mailboxes)", "", "yes"]
-          - ["Dedicated Support Engineer", "", "On demand"]
-          - ["Custom SLA", "", "On demand"]
-          - ["Lawful interception", "", "On demand"]
+          - ["Premium Support (private portal area and support@stalw.art)", "", "yes"]
+          - ["Incident Pack and SLA plans", "", "Add-on"]
+      - title: Add-ons
+        rows:
+          - ["Compliance (retention, legal hold, eDiscovery, journaling)", "", "Add-on"]
+          - ["Lawful Interception (Stalwart On-Premise only)", "", "Add-on"]
+          - ["LI Handover (ETSI TS 102 232)", "", "Add-on"]
     ctas:
       - label: See pricing
         href: /pricing
       - label: Start a 30-day trial
-        href: https://license.stalw.art/trial
+        href: https://account.stalw.art/trial
         external: true
         primary: false
 
@@ -291,9 +293,8 @@ sections:
           in-memory stores, live telemetry, message
           delivery history, dashboards and metric alerts. The full
           breakdown is in the table above and on the
-          [Enterprise edition](/enterprise) page. To qualify for
-          Premium Support, your organisation must subscribe to **150
-          or more mailboxes** under the Enterprise license.
+          [Enterprise edition](/enterprise) page. Every Enterprise
+          subscription also includes Premium Support.
       - question: How does the Enterprise licensing work?
         answer: >-
           Enterprise licensing is sold per mailbox as a subscription,
@@ -321,7 +322,7 @@ sections:
       - question: How can I upgrade to Enterprise?
         answer: >-
           Upgrading is a fully automated process. Visit the
-          [Stalwart Labs Licensing Portal](https://license.stalw.art/buy).
+          [Stalwart Labs Licensing Portal](https://account.stalw.art/buy).
           Credit-card purchases are issued instantly, so your license
           key is available immediately and activates the Enterprise
           features as soon as it is installed on the server.
@@ -329,7 +330,7 @@ sections:
         answer: >-
           Yes. We offer a 30-day trial license with full access to
           every Enterprise feature, available at
-          [license.stalw.art/trial](https://license.stalw.art/trial),
+          [account.stalw.art/trial](https://account.stalw.art/trial),
           so you can evaluate Enterprise in your own environment
           before committing.
       - question: What happens if I cancel my Enterprise subscription?
@@ -345,7 +346,7 @@ footerCta:
   cta: Ready to evaluate Enterprise?
   ctaSub: Start a 30-day trial with full access to every Enterprise feature, or talk to us about your deployment.
   ctaButton: Start a 30-day trial
-  ctaLink: https://license.stalw.art/trial
+  ctaLink: https://account.stalw.art/trial
   secondary:
     label: See pricing
     href: /pricing

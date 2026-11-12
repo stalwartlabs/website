@@ -2,12 +2,12 @@
 title: License Agreement (World)
 description: Stalwart Enterprise License 2.0 (SELv2) Agreement (World).
 order: 1
-lastUpdated: May 3, 2026
+lastUpdated: November 12, 2026
 ---
 
 # Stalwart Enterprise License 2.0 (SELv2) Agreement
 
-*Last Update: May 3, 2026*
+*Last Update: November 12, 2026*
 
 PLEASE CAREFULLY READ THIS STALWART ENTERPRISE LICENSE AGREEMENT ("AGREEMENT"). THIS AGREEMENT CONSTITUTES A LEGALLY BINDING AGREEMENT BETWEEN YOU AND STALWART LABS LLC AND GOVERNS YOUR USE OF THE SOFTWARE (DEFINED BELOW). IF YOU DO NOT AGREE WITH THIS AGREEMENT, YOU MAY NOT USE THE SOFTWARE. IF YOU ARE USING THE SOFTWARE ON BEHALF OF A LEGAL ENTITY, YOU REPRESENT AND WARRANT THAT YOU HAVE AUTHORITY TO AGREE TO THIS AGREEMENT ON BEHALF OF SUCH ENTITY. IF YOU DO NOT HAVE SUCH AUTHORITY, DO NOT USE THE SOFTWARE IN ANY MANNER.
 
@@ -91,11 +91,13 @@ This Agreement is entered into by and between Stalwart Labs LLC and you, or the 
 
 7.1. All Licensees with an active Subscription have access to standard community support resources, including documentation and community forums, as made available by Licensor.
 
-7.2. Priority email support is available exclusively to Licensees whose Subscription covers one hundred fifty (150) or more Mailboxes. Priority email support inquiries will receive an initial response within forty-eight (48) hours of receipt during Licensor's standard business hours.
+7.2. Every Licensee with an active Subscription is entitled to Premium Support, which consists of (a) email support at the address designated by Licensor, and (b) access to the priority support area of Licensor's support portal, where requests are answered ahead of community requests. Premium Support is provided in English during Licensor's business hours (09:00 to 18:00 CET/CEST, Monday to Friday, excluding public holidays) and does not include any guaranteed response time.
 
-7.3. The forty-eight (48) hour response time set forth in Section 7.2 constitutes a service level commitment. In the event Licensor consistently fails to meet this commitment over a period of thirty (30) consecutive days, the affected Licensee's sole remedy shall be the right to terminate the Subscription and receive a prorated refund for the unused portion of the billing cycle.
+7.3. Licensee may purchase, with a yearly Subscription, an incident pack ("Incident Pack") or a service-level agreement plan ("SLA Plan") that provides guaranteed initial response times. The scope, response times, severity definitions and hours of each Incident Pack and SLA Plan are those published on Licensor's support plans page at https://stalw.art/support on the date of purchase, which form part of this Agreement for the term of that purchase.
 
-7.4. The Software is self-hosted by Licensee on Licensee's own infrastructure. Licensor does not provide hosting services and makes no guarantees regarding uptime, availability, or performance of Licensee's self-hosted deployment.
+7.4. If Licensor fails to meet the initial response time of a Severity 1 or Severity 2 request under an SLA Plan, Licensee shall be entitled to a service credit equal to five percent (5%) of the annual fee of that SLA Plan for each such failure, up to a maximum of twenty-five percent (25%) of that fee per subscription year, applied to Licensee's next invoice. If Licensor fails to meet three (3) or more such response times within any period of twelve (12) consecutive months, Licensee may terminate the SLA Plan and receive a prorated refund of the unused portion of its fee. The service credits and the termination right set forth in this Section 7.4 are Licensee's sole and exclusive remedies for any failure to meet a response time.
+
+7.5. The Software is self-hosted by Licensee on Licensee's own infrastructure. Licensor does not provide hosting services and makes no guarantees regarding uptime, availability, or performance of Licensee's self-hosted deployment.
 
 ## 8. TERMINATION
 
@@ -121,7 +123,7 @@ This Agreement is entered into by and between Stalwart Labs LLC and you, or the 
 
 10.1. In no event will the Licensor be liable for any indirect, incidental, special, consequential, or punitive damages, or any loss of profits or revenues, whether incurred directly or indirectly, or any loss of data, use, goodwill, or other intangible losses, resulting from (i) your use or inability to use the Software; (ii) any unauthorized access to or use of your servers and/or any personal information stored therein.
 
-10.2. Except for liability arising from death or personal injury caused by negligence, fraud, willful misconduct, or a party's indemnification obligations under this Agreement, Licensor's total aggregate liability for any and all claims under this Agreement shall be limited to the total Subscription fees paid by Licensee to Licensor in the twelve (12) months immediately preceding the event giving rise to the claim.
+10.2. Except for liability arising from death or personal injury caused by negligence, fraud, or willful misconduct, Licensor's total aggregate liability for any and all claims under this Agreement shall be limited to the total Subscription fees paid by Licensee to Licensor in the twelve (12) months immediately preceding the event giving rise to the claim.
 
 ## 11. INDEMNIFICATION
 

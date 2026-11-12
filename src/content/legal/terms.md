@@ -7,7 +7,7 @@ lastUpdated: May 3, 2026
 
 We are Stalwart Labs Ltd ('Company', 'we', 'us', or 'our'), a company registered in England and Wales at 128 City Road, London EC1V 2NX, United Kingdom.
 
-We operate the website [https://stalw.art](https://stalw.art) (the 'Site'), the Licensing Portal at **license.stalw.art**, and the Support Portal at **support.stalw.art** (which provides a public community forum and a private priority-support area for eligible subscribers), as well as any other related products and services that refer or link to these legal terms (the 'Legal Terms') (collectively, the 'Services').
+We operate the website [https://stalw.art](https://stalw.art) (the 'Site'), the Licensing Portal at **account.stalw.art**, and the Support Portal at **support.stalw.art** (which provides a public community forum and a private priority-support area for eligible subscribers), as well as any other related products and services that refer or link to these legal terms (the 'Legal Terms') (collectively, the 'Services').
 
 Stalwart is a mail and collaboration server.
 

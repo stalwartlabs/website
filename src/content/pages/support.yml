@@ -1,37 +1,41 @@
-title: Support | Stalwart Labs
+title: Support Plans | Stalwart Labs
 description: >-
-  Stalwart support runs through a single portal at support.stalw.art, with
-  free, Enterprise, and Premium tiers.
+  Community support, Premium Support included with every Enterprise
+  subscription, Incident Packs and SLA plans with guaranteed response times
+  from two business days to one hour around the clock.
 slug: /support
 
 hero:
-  eyebrow: Support
-  title: Help when you need it.
-  titleHighlight: need it
+  eyebrow: Support Plans
+  title: Support from the engineers who write Stalwart.
+  titleHighlight: who write Stalwart
   lead: >-
     All Stalwart support runs through a single portal at
-    [support.stalw.art](https://support.stalw.art), where any user can
-    file a bug, suggest a new feature or get help from the community.
-    Enterprise customers with Premium Support also have access to a
-    private Priority Support area on the same portal for opening
-    tickets directly with Stalwart Labs, and can also reach the support
-    team by email at [support@stalw.art](mailto:support@stalw.art).
+    [support.stalw.art](https://support.stalw.art). Community users get
+    help from Stalwart Labs engineers and other operators, every
+    Enterprise subscription includes Premium Support, and organisations
+    that need contractual response times can add an Incident Pack or a
+    service-level agreement (SLA) plan.
   ctas:
     - label: Open the support portal
       href: https://support.stalw.art
       external: true
+    - label: Request a quote
+      href: https://account.stalw.art
+      external: true
+      primary: false
 
 sections:
   - kind: feature
     eyebrow: Community Support
-    title: Free support for Community-edition users.
+    title: Free support for every Stalwart user.
     body: >-
-      Anyone running the Community edition can sign up for the support
-      portal at no cost and post questions there. It is the supported
-      channel for installation questions, configuration help, bug reports
-      against the open-source release, feature discussion and general
-      operator questions. Stalwart Labs engineers and experienced
-      operators read the portal daily.
+      Anyone running Stalwart can sign up for the support portal at no
+      cost and post questions there. It is the place for installation
+      questions, configuration help, bug reports, feature discussion and
+      general operator questions. Stalwart Labs engineers and experienced
+      operators read the portal daily, but answers are given on a
+      best-effort basis, without a response commitment.
 
       Stalwart also has a presence on Discord, Reddit and Matrix. Those
       venues are for general discussion only; they are not support
@@ -45,58 +49,192 @@ sections:
     reverse: true
     band: alt
     eyebrow: Premium Support
-    title: Priority Support for Enterprise customers, from 150 mailboxes.
+    title: Premium Support, included with every Enterprise subscription.
     body: >-
-      Premium Support is included at no extra cost with every
-      Enterprise subscription of 150 mailboxes or more. Once activated,
-      customers have access to a private Priority Support area on the
-      portal where tickets are opened directly with Stalwart Labs, and
-      can also email [support@stalw.art](mailto:support@stalw.art).
-      Every ticket gets an initial response
-      within 48 hours of receipt during business hours, and carries an
-      SLA counter, so the response window against the contracted terms
-      is visible to both sides at all times.
+      Every Enterprise subscription includes Premium Support at no extra
+      cost, whatever the number of mailboxes. Customers open tickets
+      directly with Stalwart Labs in a private Priority Support area on
+      the portal, or by email at
+      [support@stalw.art](mailto:support@stalw.art). Tickets are queued
+      ahead of community requests and answered by the engineers who
+      write Stalwart.
+
+      Premium Support does not include a guaranteed response time.
+      Most tickets are answered quickly, but when a response time has to
+      be contractual, for example for a production service with its own
+      service-level commitments, add an Incident Pack or an SLA plan.
     bullets:
-      - Email support at support@stalw.art, alongside the Priority Support area on the portal.
-      - Initial response within 48 hours during business hours, with severity levels and a per-ticket SLA counter.
-      - Direct escalation path to the engineers who write Stalwart.
-      - Access to security advisories ahead of public disclosure where relevant.
-      - Optional add-ons (purchased separately) include a dedicated Support Engineer, a custom SLA and lawful-interception assistance.
+      - Private Priority Support area on support.stalw.art.
+      - Email support at support@stalw.art.
+      - Tickets queued ahead of community requests.
+      - Unlimited tickets, handled during business hours.
+      - Included with every Enterprise subscription, for Stalwart On-Premise and Stalwart Enterprise Cloud.
+
+  - kind: list
+    eyebrow: Incident Pack
+    title: Guaranteed responses for smaller deployments.
+    body: >-
+      Smaller organisations often need a guaranteed answer only a few
+      times a year. The Incident Pack adds five tickets per year to
+      Premium Support, each with an initial response within two
+      business days, whatever its severity.
+    bullets:
+      - Five tickets per year, each answered within two business days.
+      - Available with yearly subscriptions only.
+      - Unused tickets expire at the end of the subscription year.
 
   - kind: comparison-tables
     band: alt
-    eyebrow: What's covered
-    title: Community Support and Premium Support, side by side.
-    columns:
-      - Community
-      - Enterprise (Premium)
+    eyebrow: SLA plans
+    title: Contractual response times for production services.
+    body: >-
+      SLA plans add guaranteed initial response times to Premium
+      Support, for an unlimited number of tickets. Each plan is priced as
+      a multiple of the Enterprise license fee, with an annual minimum
+      and maximum. SLA plans are available
+      with yearly subscriptions only. A quote and a pro-forma invoice
+      can be obtained from the
+      [licensing portal](https://account.stalw.art).
     legend: >-
-      Premium Support is included with Enterprise subscriptions of
-      150 mailboxes or more. The 48-hour initial response is the
-      standard commitment in the licence agreement; tighter targets,
-      including 24x7 paged response, are available as a custom SLA.
-      Exact terms are confirmed at contract signing.
+      Response times are counted in business hours, 09:00 to 18:00
+      CET/CEST, Monday to Friday, excluding public holidays, except for
+      Severity 1 on SLA 4 and SLA 2, which is handled around the clock.
+      Severity levels are defined below.
+    columns:
+      - Premium
+      - Incident Pack
+      - SLA 48
+      - SLA 24
+      - SLA 4
+      - SLA 2
     groups:
+      - title: Initial response
+        rows:
+          - ["Severity 1", "Best effort", "2 business days", "2 business days", "4 business hours", "2 hours, 24x7", "1 hour, 24x7"]
+          - ["Severity 2", "Best effort", "2 business days", "2 business days", "1 business day", "4 business hours", "2 business hours"]
+          - ["Severity 3 and 4", "Best effort", "2 business days", "2 business days", "1 business day", "4 business hours", "2 business hours"]
       - title: Coverage
         rows:
-          - ["Where", "support.stalw.art", "support.stalw.art (Priority Support) and support@stalw.art"]
-          - ["Eligibility", "All users", "150 mailboxes or more"]
-          - ["Initial response time", "Best effort", "Within 48 hours, business hours"]
-          - ["Bug triage", "Public issue tracker", "Prioritised, ticketed"]
-          - ["Security advisories", "Public release notes", "Advance notice where relevant"]
-          - ["Email support (support@stalw.art)", "-", "yes"]
-          - ["Direct escalation to Stalwart engineers", "-", "yes"]
-      - title: Optional add-ons (purchased separately)
-        rows:
-          - ["Dedicated Support Engineer", "-", "On demand"]
-          - ["Custom SLA", "-", "On demand"]
-          - ["Lawful-interception assistance", "-", "On demand"]
+          - ["Tickets", "Unlimited", "5 per year", "Unlimited", "Unlimited", "Unlimited", "Unlimited"]
+          - ["Portal and email", "yes", "yes", "yes", "yes", "yes", "yes"]
+          - ["Scheduled video call", "", "", "", "Severity 1 and 2", "Severity 1 and 2", "Severity 1 and 2"]
+          - ["Phone", "", "", "", "", "Severity 1, business hours", "Severity 1 and 2, 24x7 for Severity 1"]
+          - ["Advance security notices", "", "", "yes", "yes", "yes", "yes"]
+          - ["Bug-fix priority", "", "", "yes", "yes", "yes", "yes"]
+          - ["Hotfix builds", "", "", "", "", "", "yes"]
+
+  - kind: list
+    eyebrow: Severity levels
+    title: Severity levels based on the impact on users.
+    body: >-
+      The customer sets the severity when opening a ticket, and Stalwart
+      Labs may adjust it with the customer's agreement. Severity 1 and 2
+      apply to production deployments.
+    bullets:
+      - "**Severity 1.** The service is down, more than 35% of users are affected, or data is exposed or about to be exposed."
+      - "**Severity 2.** More than 10% of users are affected, or a secondary service (for example calendars or file storage) is unavailable for more than 35% of users."
+      - "**Severity 3.** A partial loss of functionality affecting a limited number of users, or a problem with a workaround."
+      - "**Severity 4.** Questions about configuration or usage, documentation issues and feature requests."
+
+  - kind: list
+    band: alt
+    eyebrow: How response times work
+    title: What a guaranteed response means.
+    body: >-
+      The response time is the time between the ticket being opened and
+      the first reply from a Stalwart Labs engineer who has read it.
+      Automatic acknowledgements do not count. Response times are
+      targets for the first engineer response, not for resolution:
+      after the first response, the engineer keeps working on the
+      ticket and keeps the customer updated until it is resolved or a
+      workaround is in place.
+    bullets:
+      - Business hours are 09:00 to 18:00 CET/CEST, Monday to Friday, excluding public holidays.
+      - Support is provided in English.
+      - On SLA 4 and SLA 2, Severity 1 tickets are handled around the clock, including weekends and public holidays.
+      - On SLA 2, Severity 1 and 2 tickets can also be raised by phone, Severity 1 at any time, using the number in the contract; on SLA 4, Severity 1 can be raised by phone during business hours.
+      - Severity 1 and 2 tickets must be opened on the portal or, on plans with phone support, by phone, not by email, so they reach the on-duty engineer immediately.
+      - A Severity 1 ticket becomes Severity 2 once a workaround restores service.
+
+  - kind: list
+    eyebrow: Opening a ticket
+    title: Information that speeds up every ticket.
+    body: >-
+      Most of the time spent on a ticket goes into collecting
+      information. Including the following when the ticket is opened
+      usually saves a round trip.
+    bullets:
+      - The Stalwart version, the platform (Linux package, Docker, Kubernetes or Windows) and the storage backends in use.
+      - Whether the deployment is a single server or a cluster, and how many nodes it has.
+      - The severity, the number of users affected and the impact on them.
+      - Any recent change to the configuration, the infrastructure or the version.
+      - The steps that reproduce the problem, with the expected and the actual behaviour.
+      - Relevant log excerpts or traces, with personal data removed where possible.
+
+  - kind: list
+    band: alt
+    eyebrow: Scope
+    title: What support covers.
+    body: >-
+      Support covers the Stalwart software on supported versions.
+      Work that goes beyond answering questions and fixing defects is
+      available as [professional services](/services).
+    bullets:
+      - "**Covered.** Defects in Stalwart, configuration and usage questions, upgrade guidance, and troubleshooting of performance, delivery and interoperability problems."
+      - "**Covered as far as Stalwart is concerned.** Interaction with storage backends, directories, identity providers, proxies and mail clients."
+      - "**Not covered.** Installation and initial configuration (see [Onboarding](/services)), operating systems and third-party software, modified builds, custom development and versions that are no longer supported."
+      - "**Supported versions.** The supported versions and their end-of-support dates are listed in the [Vulnerability Disclosure Policy](/legal/security#supported-versions)."
+      - "**Security advisories.** Customers on an SLA plan are notified of security fixes under embargo before public disclosure."
+      - "**Security vulnerabilities.** Suspected vulnerabilities in Stalwart are reported to security@stalw.art as described in the [Vulnerability Disclosure Policy](/legal/security), not through the support portal."
+
+  - kind: faq
+    eyebrow: Frequently asked
+    title: Support FAQ.
+    items:
+      - question: Does Premium Support have a response time?
+        answer: >-
+          No. Premium Support tickets are queued ahead of community
+          requests and answered by Stalwart Labs engineers during
+          business hours, but without a guaranteed response time. An
+          Incident Pack or an SLA plan adds a contractual response time.
+      - question: Which plan do I need?
+        answer: >-
+          For occasional questions, Premium Support is usually enough.
+          An Incident Pack suits small deployments that want a guarantee
+          a few times a year. SLA 48 and SLA 24 suit production services
+          that need a guaranteed answer on every ticket, and SLA 4 and
+          SLA 2 are for services where an outage has to be handled
+          within hours.
+      - question: Do SLA plans cover Enterprise Cloud?
+        answer: >-
+          Yes. Support plans apply to Stalwart On-Premise
+          deployments and to [Stalwart Enterprise Cloud](/cloud).
+      - question: Is support available outside business hours?
+        answer: >-
+          Only for Severity 1 on SLA 4 and SLA 2, which is handled
+          around the clock, with a 24x7 phone line on SLA 2. Everything
+          else is handled during business hours, 09:00 to 18:00 CET/CEST,
+          Monday to Friday.
+      - question: How do I buy an Incident Pack or an SLA plan?
+        answer: >-
+          A quote and a pro-forma invoice can be obtained from the
+          [licensing portal](https://account.stalw.art). Incident Packs
+          and SLA plans require a yearly subscription.
+      - question: What happens if a response target is missed?
+        answer: >-
+          For each Severity 1 or Severity 2 ticket whose initial response
+          target is missed, the customer receives a service credit of 5%
+          of the annual fee of the SLA plan, up to 25% per subscription
+          year, applied to the next invoice. If three or more Severity 1
+          or Severity 2 targets are missed within twelve months, the
+          customer may terminate the SLA plan and receive a refund of the
+          unused part of its fee.
 
 footerCta:
-  cta: Find the right support tier for your deployment.
-  ctaSub: Tell us about your deployment and we will recommend the right tier.
-  ctaButton: Talk to sales
-  ctaLink: /contact
+  cta: Find the right support plan for your deployment.
+  ctaSub: Tell us about your deployment and we will recommend a plan, or request a quote directly.
+  ctaButton: Request a quote
+  ctaLink: https://account.stalw.art
   secondary:
-    label: See pricing
-    href: /pricing
+    label: Talk to sales
+    href: /contact

@@ -8,7 +8,7 @@ lastUpdated: May 3, 2026
 This Privacy Notice for **Stalwart Labs Ltd** ('**we**', '**us**', or '**our**'), describes how and why we might access, collect, store, use, and/or share ('**process**') your personal information when you use our services ('**Services**'), including when you:
 
 - Visit our website at [https://stalw.art](https://stalw.art), or any website of ours that links to this Privacy Notice.
-- Register for, manage, or renew a Stalwart Enterprise License at **license.stalw.art** (the 'Licensing Portal').
+- Register for, manage, or renew a Stalwart Enterprise License at **account.stalw.art** (the 'Licensing Portal').
 - Create an account on, or post questions or issues to, our community support forum at **support.stalw.art** (the 'Support Portal'), or open a private support ticket through the priority support area within the Support Portal.
 - Use **Stalwart Mail and Collaboration Server**. Stalwart is an open-source mail and collaboration server with JMAP, IMAP4, POP3, SMTP, CalDAV, CardDAV and WebDAV support. It is written in Rust and designed to be secure, fast, and scalable. The server is self-hosted by you on your own infrastructure; for the open-source self-hosted server we do not act as a controller or processor of any data stored within your deployment.
 - Engage with us in other related ways, including any sales, marketing, or events.
@@ -33,7 +33,7 @@ This summary provides key points from our Privacy Notice. Each topic has a fulle
 
 **How do we keep your information safe?** We use organisational and technical measures appropriate to the risk. No system is 100% secure, but we work to reduce the likelihood and impact of any incident.
 
-**What are your rights?** Depending on where you are located, applicable privacy law may give you rights of access, rectification, erasure, restriction, portability, and objection. You can exercise rights of access, correction, data export, and account deletion directly from your account settings on **license.stalw.art** and on **support.stalw.art**, or by emailing **privacy@stalw.art**.
+**What are your rights?** Depending on where you are located, applicable privacy law may give you rights of access, rectification, erasure, restriction, portability, and objection. You can exercise rights of access, correction, data export, and account deletion directly from your account settings on **account.stalw.art** and on **support.stalw.art**, or by emailing **privacy@stalw.art**.
 
 ## 1. What information do we collect?
 
@@ -43,7 +43,7 @@ We collect personal information that you voluntarily provide to us when you crea
 
 The personal information we collect, and the surface that collects it, are limited to the following:
 
-**Licensing Portal (license.stalw.art):**
+**Licensing Portal (account.stalw.art):**
 
 - name
 - company name
@@ -76,7 +76,7 @@ When you access the Services, we automatically receive limited technical informa
 
 The Support Portal sets a small number of first-party session cookies that are strictly necessary to keep you signed in and to protect against cross-site request forgery. See our [Cookies Policy](/legal/cookies) for the full list.
 
-We do not use Google Analytics or any other third-party analytics service on stalw.art, license.stalw.art, or support.stalw.art.
+We do not use Google Analytics or any other third-party analytics service on stalw.art, account.stalw.art, or support.stalw.art.
 
 ## 2. How do we process your information?
 
@@ -180,7 +180,7 @@ Where we rely on your consent to process your personal information, you have the
 
 You can review, correct, export, or delete most of your personal information directly:
 
-- **Licensing Portal**: log in at **license.stalw.art** and use the account-management area to update your details, download an export, or delete your account.
+- **Licensing Portal**: log in at **account.stalw.art** and use the account-management area to update your details, download an export, or delete your account.
 - **Support Portal**: log in at **support.stalw.art** and use the account-management area to update your details, download an export, or delete your account.
 
 If you prefer, you can ask us to do this for you by emailing **privacy@stalw.art**. When you ask us to delete your account, we will deactivate or delete it from our active systems. We may retain a limited subset of information where required to prevent fraud, comply with legal obligations (such as tax records), enforce our terms, or defend legal claims.
@@ -221,7 +221,7 @@ Depending on the state where you live, you may also have the right to access the
 
 ### How to exercise your rights
 
-To exercise these rights, log in to your account at **license.stalw.art** or **support.stalw.art** and use the in-product controls, email us at **privacy@stalw.art**, or contact us via [stalw.art/contact](/contact).
+To exercise these rights, log in to your account at **account.stalw.art** or **support.stalw.art** and use the in-product controls, email us at **privacy@stalw.art**, or contact us via [stalw.art/contact](/contact).
 
 Under certain US state data protection laws, you can designate an authorised agent to make a request on your behalf. We may deny a request from an authorised agent that does not provide proof of authorisation.
 
@@ -267,4 +267,4 @@ For abuse reports, contact **abuse@stalw.art**. For security vulnerability repor
 
 ## 15. How can you review, update, or delete the data we collect from you?
 
-You can review, update, export, or delete most of the personal information we hold about you directly from your account settings on **license.stalw.art** and on **support.stalw.art**, or by emailing **privacy@stalw.art**. We will respond to verified requests within one month of receipt.
+You can review, update, export, or delete most of the personal information we hold about you directly from your account settings on **account.stalw.art** and on **support.stalw.art**, or by emailing **privacy@stalw.art**. We will respond to verified requests within one month of receipt.

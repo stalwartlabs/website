@@ -91,3 +91,6 @@
 /docs/migration/proxy/mappings/sql                   /docs/migration/proxy/mappings/#sql-source                301
 /docs/migration/proxy/routing/pop3                   /docs/migration/proxy/routing/imap#pop3                   301
 /docs/migration/proxy/routing/managesieve            /docs/migration/proxy/routing/imap#managesieve            301
+
+# Marketing pages renamed.
+/managed-email                                       /cloud                                                    301

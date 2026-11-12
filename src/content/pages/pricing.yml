@@ -16,10 +16,10 @@ hero:
     an unlimited number of servers.
   ctas:
     - label: Buy now
-      href: https://license.stalw.art/buy
+      href: https://account.stalw.art/buy
       external: true
     - label: Start a 30-day trial
-      href: https://license.stalw.art/trial
+      href: https://account.stalw.art/trial
       external: true
       primary: false
     - label: Contact sales
@@ -65,14 +65,19 @@ sections:
     title: Estimate your annual cost.
     body: >-
       Drag the slider or type a mailbox count. The total uses the same
-      tiered rates above. Premium Support is included at 150 mailboxes
-      and above.
-    premiumSupportThreshold: 150
+      tiered rates above. Premium Support is included with every
+      Enterprise subscription.
 
   - kind: prose
     eyebrow: How licensing works
     title: Per-mailbox subscription, annual or monthly.
     body: >-
+      These prices are for the Enterprise edition of **Stalwart
+      On-Premise**, the name for Stalwart running on your own
+      infrastructure in either edition. Stalwart
+      Enterprise Cloud, operated by Stalwart Labs, is described on the
+      [Enterprise Cloud page](/cloud).
+
       Two billing cycles are available: **annual** and **monthly**, 
       for organisations that prefer a shorter commitment.
 
@@ -85,10 +90,10 @@ sections:
     band: alt
     title: How a license is issued.
     body: >-
-      After purchase at the [Stalwart Labs licensing portal](https://license.stalw.art/buy),
+      After purchase at the [Stalwart Labs licensing portal](https://account.stalw.art/buy),
       the key is available immediately and activates Enterprise features
       as soon as it is installed on the server. A 30-day Enterprise trial
-      is available at the [trial portal](https://license.stalw.art/trial),
+      is available at the [trial portal](https://account.stalw.art/trial),
       with full access to Enterprise features for evaluation.
     bullets:
       - "**One key per customer.** Your subscription has a single license key, which carries your mailbox count."
@@ -99,23 +104,32 @@ sections:
 
   - kind: prose
     eyebrow: Premium Support
-    title: Premium Support is included from 150 mailboxes.
+    title: Premium Support is included with every subscription.
     body: >-
-      Enterprise subscriptions of 150 mailboxes or more include
-      Premium Support: email support at
-      [support@stalw.art](mailto:support@stalw.art) alongside the
-      Priority Support area on the portal, an initial response within
-      48 hours during business hours, expedited bug fixing and
-      influence on the product roadmap.
-      Smaller Enterprise subscriptions (below 150 mailboxes) get the
-      Enterprise feature set only; for help and questions, those
-      customers rely on the same community support channels as
-      Community-edition users.
+      Every Enterprise subscription, whatever its size, includes
+      Premium Support: a private Priority Support area on the
+      [support portal](https://support.stalw.art) and email support at
+      [support@stalw.art](mailto:support@stalw.art), with tickets
+      queued ahead of community requests and handled by the engineers
+      who write Stalwart. Premium Support does not carry a response
+      commitment; organisations that need contractual response times
+      can add an Incident Pack or one of the SLA plans described on the
+      [Support Plans page](/support).
 
-      On-demand options for Premium Support customers include a
-      dedicated Support Engineer, a custom SLA with tighter response
-      targets, and lawful interception. The coverage comparison and the
-      list of on-demand services live on the [Support page](/support).
+  - kind: list
+    band: alt
+    eyebrow: Add-ons and services
+    title: Extend the subscription with add-ons, SLAs and services.
+    body: >-
+      The following are not part of the Enterprise license and are
+      priced separately. A quote and a pro-forma invoice for any of
+      them can be obtained from the
+      [licensing portal](https://account.stalw.art).
+    bullets:
+      - "**[Compliance](/compliance).** Retention policies, legal hold, eDiscovery, journaling and access auditing."
+      - "**[Lawful Interception](/lawful-interception) and LI Handover.** Warrant and target management with real-time capture, and ETSI handover to the authorities as a separate add-on, for Stalwart On-Premise."
+      - "**[Support Plans](/support).** An Incident Pack, or an SLA plan with guaranteed initial response times from two business days down to one hour, with Severity 1 handled around the clock on SLA 4 and SLA 2. SLA plans require a yearly subscription."
+      - "**[Professional Services](/services).** Onboarding, health checks, upgrade assistance and lawful-interception compliance assistance."
 
   - kind: faq
     eyebrow: Frequently asked
@@ -142,7 +156,7 @@ sections:
           Existing mailboxes keep working without restriction; the
           server simply stops creating new mailboxes once your licensed
           count is reached. To unblock new mailboxes, buy additional
-          mailbox licenses at [license.stalw.art](https://license.stalw.art):
+          mailbox licenses at [account.stalw.art](https://account.stalw.art):
           they raise the mailbox count of your existing key. Install the
           updated key in place of the old one on your server or cluster; keys do not
           stack. There is no downtime, and the system generates a prorated
@@ -150,7 +164,7 @@ sections:
       - question: Can I purchase additional mailboxes mid-cycle?
         answer: >-
           Yes. Buy more mailbox licenses at
-          [license.stalw.art](https://license.stalw.art) at any time
+          [account.stalw.art](https://account.stalw.art) at any time
           during your billing period. Your single license key is updated
           with the new mailbox count; install the updated key in place of
           the old one on your server or cluster. It takes effect without a restart,
@@ -159,7 +173,7 @@ sections:
       - question: Can I switch between monthly and annual billing?
         answer: >-
           Yes, in either direction. The change is applied at
-          [license.stalw.art](https://license.stalw.art) and takes
+          [account.stalw.art](https://account.stalw.art) and takes
           effect without downtime; the system reconciles the change
           with a prorated invoice for the rest of the period.
       - question: What happens if I cancel my Enterprise subscription?
@@ -173,8 +187,8 @@ footerCta:
   cta: Ready to deploy Stalwart Enterprise?
   ctaSub: Buy a license now, start a 30-day trial, or talk to sales for custom requirements.
   ctaButton: Buy now
-  ctaLink: https://license.stalw.art/buy
+  ctaLink: https://account.stalw.art/buy
   secondary:
     label: Start a 30-day trial
-    href: https://license.stalw.art/trial
+    href: https://account.stalw.art/trial
     external: true

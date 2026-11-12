@@ -4,7 +4,7 @@ title: "Enterprise edition"
 description: "What the Enterprise edition adds, how the license key is installed and renewed, how it relates to server hostnames and mailbox counts, and what stops when it expires."
 ---
 
-Stalwart is available in two editions, and both run the same binary. The Community edition is available without a subscription. The Enterprise edition adds features for larger and multi-tenant deployments. It is activated by installing a license key, which comes with an [Enterprise subscription](https://license.stalw.art/buy).
+Stalwart is available in two editions, and both run the same binary. The Community edition is available without a subscription. The Enterprise edition adds features for larger and multi-tenant deployments. It is activated by installing a license key, which comes with an [Enterprise subscription](https://account.stalw.art/buy).
 
 The two editions also share one data format. Activating or cancelling a subscription therefore switches between them without a data migration: only the Enterprise features are enabled or disabled. Throughout the documentation, pages that describe an Enterprise feature mark it with an Enterprise note.
 
@@ -67,7 +67,7 @@ A key that cannot be used is reported as a warning with its reason. The warning 
 
 ## Automatic renewal
 
-License keys are valid for a fixed period, so a key installed by hand has to be replaced before it expires. Automatic renewal removes that task. It requires an API key from the [licensing portal](https://license.stalw.art), stored in [`apiKey`](/docs/ref/object/enterprise#apikey), which accepts the same secret formats as `licenseKey`. With the API key in place, the server renews the license itself.
+License keys are valid for a fixed period, so a key installed by hand has to be replaced before it expires. Automatic renewal removes that task. It requires an API key from the [licensing portal](https://account.stalw.art), stored in [`apiKey`](/docs/ref/object/enterprise#apikey), which accepts the same secret formats as `licenseKey`. With the API key in place, the server renews the license itself.
 
 Renewal starts four days before the license expires. A failed attempt is repeated every 24 hours, and every hour once less than 24 hours remain. A renewed key replaces the installed one and is stored in `licenseKey` as a `Value`. That happens also when the installed key was read from an environment variable or a file.
 

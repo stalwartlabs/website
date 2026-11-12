@@ -13,7 +13,9 @@ const kindOf = (cell: string) => {
   if (v === "" || v === "-") return "no";
   return v.length <= 12 ? "tag" : "text";
 };
-const compact = data.groups.every((g: any) => g.rows.every((r: string[]) => kindOf(r[1]) !== "text" && kindOf(r[2]) !== "text"));
+const cols: string[] = data.columns;
+const wide = cols.length > 2;
+const compact = !wide && data.groups.every((g: any) => g.rows.every((r: string[]) => r.slice(1).every((c) => kindOf(c) !== "text")));
 const cellKind = (cell: string) => {
   const k = kindOf(cell);
   return !compact && k === "tag" ? "text" : k;
@@ -31,7 +33,7 @@ const headId = `cmp-${(data.title ?? "compare").toLowerCase().replace(/[^a-z0-9]
         {data.legend && <p class="cmp-legend" set:html={inlineMd(data.legend)} />}
       </div>
     )}
-    <div class:list={["cmp-groups", { "cmp-groups--cols": compact }]}>
+    <div class:list={["cmp-groups", { "cmp-groups--cols": compact, "cmp-groups--wide": wide }]}>
       {data.groups.map((group: any, gi: number) => (
         <div class="tile cmp-group reveal">
           <table class="cmp-table" role="table" aria-labelledby={`${headId}-g${gi}`}>
@@ -39,19 +41,18 @@ const headId = `cmp-${(data.title ?? "compare").toLowerCase().replace(/[^a-z0-9]
             <thead role="rowgroup">
               <tr role="row">
                 <th scope="col" role="columnheader"><span class="sr-only">Feature</span></th>
-                <th scope="col" role="columnheader">{data.columns[0]}</th>
-                <th scope="col" role="columnheader">{data.columns[1]}</th>
+                {cols.map((c) => <th scope="col" role="columnheader">{c}</th>)}
               </tr>
             </thead>
             <tbody role="rowgroup">
               {group.rows.map((row: string[]) => (
                 <tr role="row">
                   <th scope="row" role="rowheader" set:html={inlineMd(row[0])} />
-                  {[row[1], row[2]].map((cell, ci) => {
+                  {cols.map((_, ci) => row[ci + 1] ?? "").map((cell, ci) => {
                     const k = cellKind(cell);
                     return (
                       <td role="cell" class={`cmp-cell cmp-cell--${k}`}>
-                        <span class="cmp-col" aria-hidden="true">{data.columns[ci]}</span>
+                        <span class="cmp-col" aria-hidden="true">{cols[ci]}</span>
                         {k === "yes" && <span class="cmp-mark cmp-mark--yes"><Icon name="check" size={14} /><span class="sr-only">Included</span></span>}
                         {k === "no" && <span class="cmp-mark cmp-mark--no"><Icon name="minus" size={14} /><span class="sr-only">Not included</span></span>}
                         {k === "tag" && <span class="cmp-tag" set:html={inlineMd(cell)} />}
@@ -136,6 +137,12 @@ const headId = `cmp-${(data.title ?? "compare").toLowerCase().replace(/[^a-z0-9]
   }
   .cmp-groups:not(.cmp-groups--cols) .cmp-table thead th:not(:first-child) {
     width: 28%;
+  }
+  .cmp-groups.cmp-groups--wide .cmp-table thead th:not(:first-child) {
+    width: auto;
+  }
+  .cmp-groups.cmp-groups--wide .cmp-table thead th:first-child {
+    width: 26%;
   }
   .cmp-table tbody th,
   .cmp-table tbody td {

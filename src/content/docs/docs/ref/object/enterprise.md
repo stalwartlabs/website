@@ -15,14 +15,14 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 > Type: [<code>SecretKeyOptional</code>](#secretkeyoptional) · default: `{"@type":"None"}`
 >
-> API key for license retrieval and automatic renewals. Obtain your API key at https://license.stalw.art.
+> API key for license retrieval and automatic renewals. Obtain your API key at https://account.stalw.art.
 
 
 ##### `licenseKey`
 
 > Type: [<code>SecretKeyOptional</code>](#secretkeyoptional) · default: `{"@type":"None"}`
 >
-> Upgrade to the enterprise version of Stalwart by entering your license key here. Obtain your license at https://license.stalw.art/buy
+> Upgrade to the enterprise version of Stalwart by entering your license key here. Obtain your license at https://account.stalw.art/buy
 
 
 ##### `logo`

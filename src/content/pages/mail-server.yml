@@ -268,6 +268,38 @@ sections:
   - kind: feature
     reverse: true
     band: alt
+    eyebrow: Masked email
+    title: A different address for every site.
+    body: >-
+      An address handed to a website tends to spread: it is sold,
+      leaked in a breach or added to marketing lists, and once it has
+      spread it cannot be taken back. Masked addresses limit the
+      damage. Each one delivers to the user's own mailbox without
+      revealing the real address, so a user can give every site its
+      own, and when one starts attracting spam, disable that address
+      alone while every other keeps working.
+
+      Users create masked addresses from the self-service portal, and
+      password managers can create one over JMAP the moment a new login
+      is saved, recording which site it was issued to.
+    bullets:
+      - Generated addresses with an optional custom prefix and domain.
+      - A description and the issuing site recorded with each address.
+      - Disable, re-enable or delete each address at any time.
+      - Optional expiry time, after which the address stops receiving mail.
+      - Per-account limit on the number of masked addresses.
+    learnMore:
+      - label: Read masked email
+        href: /docs/email/management/masked-email
+    visual:
+      kind: screenshot
+      src: /images/webadmin/masked-email-light.webp
+      srcDark: /images/webadmin/masked-email-dark.webp
+      width: 940
+      alt: Stalwart masked addresses list with generated addresses, descriptions, target domains and enabled state
+      url: admin.stalw.art / Account / Masked Addresses
+
+  - kind: feature
     eyebrow: Sieve scripting
     title: Filter, route and rewrite without leaving the server.
     body: >-
@@ -305,6 +337,8 @@ sections:
           "I am away until Monday. Will reply on return.";
 
   - kind: feature
+    reverse: true
+    band: alt
     eyebrow: Web admin
     title: Manage everything from a browser.
     body: >-

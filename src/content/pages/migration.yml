@@ -102,11 +102,11 @@ sections:
 
   - kind: prose
     band: alt
-    eyebrow: Self-hosted or managed destination
+    eyebrow: On-Premise or Cloud destination
     title: Same migration, your choice of destination.
     body: >-
-      You can migrate onto your own self-hosted Stalwart deployment
-      (Community or Enterprise edition) or onto [Stalwart Managed Email](/managed-email).
+      You can migrate onto your own Stalwart On-Premise
+      deployment or onto [Stalwart Enterprise Cloud](/cloud).
       The assessment, pilot and cutover process are identical; the only
       difference is who runs the destination cluster.
 

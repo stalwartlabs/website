@@ -1,0 +1,187 @@
+---
+import Icon from "./Icon.astro";
+
+const roles = [
+  { name: "Server administrator", icon: "server-cog", can: ["Administers the server"], cannot: ["Orders and targets hidden", "No access to the audit log"] },
+  { name: "LI officer", icon: "shield-user", can: ["Manages orders and targets", "Accesses intercepted data"], cannot: ["Cannot read, change or delete the audit log"], brand: true },
+  { name: "LI auditor", icon: "user-round-check", can: ["Reads the audit log"], cannot: ["No access to orders or targets"] },
+];
+const label = "Three separated roles: the server administrator administers the server but cannot see orders or targets and has no access to the audit log; the lawful interception officer is the only role that manages orders and targets and accesses intercepted data, and cannot read, change or delete the audit log; the lawful interception auditor is the only role that reads the audit log and has no access to orders or targets. Every interception action, including tests and incorrect entries, and every access to the log is recorded in the audit log.";
+---
+<div class="dg" role="img" aria-label={label}>
+  <span class="dg-caption">Three separated roles</span>
+  <ul class="roles">
+    {roles.map((r) => (
+      <li class:list={["card", { "card--brand": r.brand }]}>
+        <span class="hd"><span class="ic"><Icon name={r.icon} size={16} /></span><strong>{r.name}</strong></span>
+        <ul class="can">
+          {r.can.map((c) => <li><Icon name="check" size={13} />{c}</li>)}
+        </ul>
+        <ul class="cannot">
+          {r.cannot.map((c) => <li><Icon name="ban" size={13} />{c}</li>)}
+        </ul>
+      </li>
+    ))}
+  </ul>
+  <div class="ticks" aria-hidden="true"><span /><span /><span /></div>
+  <div class="log">
+    <span class="ic"><Icon name="scroll-text" size={16} /></span>
+    <div class="log-body">
+      <strong>Audit log</strong>
+      <span>Every action, including tests and incorrect entries, and every access to the log</span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .dg {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    container-type: inline-size;
+  }
+  .roles {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    padding: 0;
+  }
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+    padding: 14px;
+    border-radius: var(--r-lg);
+    background: var(--tile);
+    box-shadow: var(--shadow-tile);
+  }
+  .card--brand {
+    background: var(--rose);
+    box-shadow: none;
+  }
+  .hd {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 2px;
+  }
+  .ic {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    background: var(--sand);
+    color: var(--text);
+  }
+  .card--brand .ic {
+    background: var(--brand);
+    color: #fff;
+  }
+  strong {
+    font-family: var(--font-display);
+    font-size: 0.9375rem;
+    font-weight: 680;
+    line-height: 1.3;
+    color: var(--text);
+  }
+  .card--brand strong {
+    color: var(--brand-text);
+  }
+  .can {
+    display: grid;
+    gap: 4px;
+    padding: 0;
+  }
+  .can li,
+  .cannot li {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    font-size: var(--fs-xs);
+    line-height: 1.4;
+  }
+  .can li {
+    color: var(--text);
+    font-weight: 550;
+  }
+  .can :global(svg),
+  .cannot :global(svg) {
+    flex: none;
+    margin-top: 2px;
+  }
+  .can :global(svg) {
+    color: var(--brand-text);
+  }
+  .cannot {
+    display: grid;
+    gap: 4px;
+    margin-top: auto;
+    padding: 8px 0 0;
+    border-top: 1px solid var(--hairline);
+  }
+  .cannot li {
+    color: var(--dim);
+  }
+  .ticks {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin: -10px 0;
+  }
+  .ticks span:first-child {
+    visibility: hidden;
+  }
+  .ticks span {
+    justify-self: center;
+    width: 2px;
+    height: 18px;
+    border-radius: 1px;
+    background: var(--brand);
+    opacity: 0.35;
+  }
+  .log {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: var(--r-lg);
+    background: var(--ink);
+    box-shadow: inset 0 0 0 1px var(--ink-edge);
+  }
+  .log .ic {
+    background: var(--brand);
+    color: #fff;
+  }
+  .log-body {
+    display: grid;
+    gap: 2px;
+  }
+  .log strong {
+    color: var(--on-ink);
+  }
+  .log-body span {
+    color: var(--on-ink-muted);
+    font-size: var(--fs-xs);
+    line-height: 1.4;
+  }
+  @container (max-width: 560px) {
+    .roles {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .hd {
+      flex-direction: row;
+      align-items: center;
+    }
+    .ticks {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .ticks span:not(:last-child) {
+      display: none;
+    }
+  }
+</style>

@@ -2,7 +2,7 @@
 title: Reseller Agreement (World)
 description: Software Reseller Agreement for resellers contracting with Stalwart Labs LLC (rest of world).
 order: 11
-lastUpdated: May 3, 2026
+lastUpdated: November 12, 2026
 ---
 
 # Software Reseller Agreement
@@ -83,7 +83,7 @@ Stalwart and Reseller may collectively be referred to as the "Parties" and indiv
 
 5.2. **Where Stalwart provides all support (10% discount model):**
 
-(a) Stalwart shall provide Tier-1 and Tier-2 support directly to the End Customer, subject to the support terms set forth in the Master License Agreement (including the 150-Mailbox threshold for priority email support).
+(a) Stalwart shall provide Tier-1 and Tier-2 support directly to the End Customer, subject to the support terms set forth in the Master License Agreement (including Premium Support and any Incident Pack or SLA Plan purchased for the End Customer).
 
 (b) Reseller shall facilitate communication between Stalwart and the End Customer as reasonably necessary and shall not interfere with Stalwart's support processes.
 

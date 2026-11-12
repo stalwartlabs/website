@@ -7,7 +7,7 @@ lastUpdated: May 3, 2026
 
 This Cookies Policy explains what cookies are and which cookies are set by the websites operated by Stalwart Labs Ltd. It complements our [Privacy Policy](/legal/privacy).
 
-We do not use Google Analytics, and we do not load any third-party analytics, advertising, or social-media tracking scripts on stalw.art, license.stalw.art, or support.stalw.art.
+We do not use Google Analytics, and we do not load any third-party analytics, advertising, or social-media tracking scripts on stalw.art, account.stalw.art, or support.stalw.art.
 
 ## Definitions
 
@@ -17,7 +17,7 @@ We do not use Google Analytics, and we do not load any third-party analytics, ad
 - **Third-party cookies** are set by a domain other than the one you are visiting (for example, a cookie set by an advertising network embedded in a page). **The Stalwart Labs websites do not set any third-party cookies.**
 - **Websites** refers, collectively, to:
   - **stalw.art** — the marketing site, documentation, and blog;
-  - **license.stalw.art** — the Licensing Portal, where you create an account, purchase a Stalwart Enterprise License subscription, and manage your invoices;
+  - **account.stalw.art** — the Licensing Portal, where you create an account, purchase a Stalwart Enterprise License subscription, and manage your invoices;
   - **support.stalw.art** — the Support Portal, the public community forum and the private priority support area.
 - **You** means the individual accessing or using the Websites, or a company or other legal entity on behalf of which such individual is accessing or using the Websites.
 
@@ -33,7 +33,7 @@ All cookies described below are **first-party** cookies set by Stalwart Labs Ltd
 
 The marketing site, documentation, and blog do not set any HTTP cookies and do not load any third-party tracker.
 
-### license.stalw.art (Licensing Portal)
+### account.stalw.art (Licensing Portal)
 
 The Licensing Portal sets a small number of strictly necessary first-party cookies to keep you signed in and to protect against cross-site request forgery while you manage your account. These are session cookies (cleared when you close your browser) or short-lived persistent cookies, set with the `Secure`, `HttpOnly`, and `SameSite=Lax` (or `SameSite=Strict`) attributes as appropriate.
 

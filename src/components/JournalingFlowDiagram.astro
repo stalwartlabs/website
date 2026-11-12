@@ -1,0 +1,246 @@
+---
+import Icon from "./Icon.astro";
+
+const scope = ["Internal", "External", "All"];
+const match = ["Recipient", "Sender", "Domain"];
+const copy = ["Unaltered original and SMTP envelope", "Bcc recipients and list expansion included", "Exchange journal report or envelope headers"];
+const label = "Journaling flow: inbound and outbound messages pass through the Stalwart MTA, where a journal rule captures them before delivery, selected by direction (internal, external or all) and by recipient, sender or domain. The original continues to the mailbox as usual. A journal copy is sent over SMTP to an external archive: the unaltered original with its SMTP envelope, including Bcc recipients and mailing list expansion, as an Exchange-compatible journal report or with envelope headers. If the archive is unreachable, the copy waits in a retry queue and can go to an alternate destination.";
+---
+<div class="dg" role="img" aria-label={label}>
+  <span class="dg-caption">Captured at the MTA, before delivery</span>
+  <div class="card">
+    <span class="ic"><Icon name="mail" size={16} /></span>
+    <div class="body">
+      <strong>Messages</strong>
+      <ul class="mini-chips"><li>Inbound</li><li>Outbound</li></ul>
+    </div>
+  </div>
+  <span class="arrow"><Icon name="arrow-down" size={15} /></span>
+  <div class="card card--brand">
+    <span class="ic"><Icon name="server" size={16} /></span>
+    <div class="body">
+      <span class="name"><strong>Stalwart MTA</strong><span class="v">before delivery</span></span>
+    </div>
+    <div class="inner">
+      <span class="inner-hd"><Icon name="filter" size={14} />Journal rule</span>
+      <ul class="mini-chips">{scope.map((s) => <li>{s}</li>)}</ul>
+      <ul class="mini-chips">{match.map((s) => <li>{s}</li>)}</ul>
+    </div>
+  </div>
+  <div class="split">
+    <div class="branch">
+      <span class="tag">Original</span>
+      <span class="arrow"><Icon name="arrow-down" size={15} /></span>
+      <div class="card card--plain">
+        <span class="ic"><Icon name="inbox" size={16} /></span>
+        <div class="body">
+          <strong>Mailbox</strong>
+          <span class="sub">Delivered as usual</span>
+        </div>
+      </div>
+    </div>
+    <div class="branch">
+      <span class="tag tag--brand">Journal copy over SMTP</span>
+      <span class="arrow"><Icon name="arrow-down" size={15} /></span>
+      <div class="card">
+        <span class="ic ic--brand"><Icon name="archive" size={16} /></span>
+        <div class="body">
+          <strong>External archive</strong>
+          <ul class="list">{copy.map((c) => <li><Icon name="check" size={13} />{c}</li>)}</ul>
+        </div>
+      </div>
+      <div class="fallback">
+        <span class="fb-hd"><Icon name="rotate-cw" size={13} />Archive unreachable</span>
+        <div class="fb-steps">
+          <span class="step">Retry queue</span>
+          <Icon name="arrow-right" size={13} />
+          <span class="step">Alternate destination</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .dg {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    container-type: inline-size;
+  }
+  .card {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px;
+    border-radius: var(--r-lg);
+    background: var(--tile);
+    box-shadow: var(--shadow-tile);
+  }
+  .card--brand {
+    flex-wrap: wrap;
+    align-items: center;
+    background: var(--rose);
+    box-shadow: none;
+  }
+  .card--plain {
+    background: none;
+    box-shadow: inset 0 0 0 1px var(--hairline);
+  }
+  .body {
+    display: grid;
+    gap: 6px;
+    flex: 1;
+    min-width: 0;
+  }
+  .ic {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    background: var(--sand);
+    color: var(--text);
+  }
+  .card--brand .ic,
+  .ic--brand {
+    background: var(--brand);
+    color: #fff;
+  }
+  strong {
+    font-family: var(--font-display);
+    font-size: 0.9375rem;
+    font-weight: 680;
+    line-height: 1.3;
+    color: var(--text);
+  }
+  .name {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 2px 8px;
+  }
+  .card--brand strong,
+  .v {
+    color: var(--brand-text);
+  }
+  .v {
+    font-size: var(--fs-xs);
+    font-weight: 600;
+  }
+  .sub {
+    color: var(--muted);
+    font-size: var(--fs-xs);
+    line-height: 1.4;
+  }
+  .inner {
+    flex-basis: 100%;
+    display: grid;
+    gap: 6px;
+    padding: 10px 12px;
+    border-radius: 14px;
+    background: var(--tile);
+  }
+  .inner-hd {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-display);
+    font-size: var(--fs-xs);
+    font-weight: 650;
+    color: var(--text);
+  }
+  .inner-hd :global(svg) {
+    color: var(--brand-text);
+  }
+  .arrow {
+    display: inline-flex;
+    align-self: center;
+    color: var(--brand-text);
+  }
+  .split {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.7fr);
+    gap: 10px;
+    margin-top: 4px;
+  }
+  .branch {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+  }
+  .tag {
+    align-self: center;
+    padding: 3px 11px;
+    border-radius: var(--r-pill);
+    background: var(--tile);
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-align: center;
+  }
+  .tag--brand {
+    background: var(--ink);
+    color: var(--on-ink);
+  }
+  .list {
+    display: grid;
+    gap: 4px;
+    padding: 0;
+  }
+  .list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    color: var(--muted);
+    font-size: var(--fs-xs);
+    line-height: 1.4;
+  }
+  .list :global(svg) {
+    flex: none;
+    margin-top: 2px;
+    color: var(--brand-text);
+  }
+  .fallback {
+    display: grid;
+    gap: 6px;
+    padding: 10px 12px;
+    border-radius: 14px;
+    box-shadow: inset 0 0 0 1px var(--hairline);
+  }
+  .fb-hd {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--dim);
+    font-family: var(--font-display);
+    font-size: var(--fs-xs);
+    font-weight: 650;
+  }
+  .fb-steps {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    color: var(--brand-text);
+  }
+  .step {
+    padding: 3px 10px;
+    border-radius: var(--r-pill);
+    background: var(--tile);
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 600;
+  }
+  @container (max-width: 460px) {
+    .split {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 14px;
+    }
+  }
+</style>

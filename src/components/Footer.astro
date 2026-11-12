@@ -35,13 +35,18 @@ const editions = [
   { href: "/pricing", label: "Pricing" },
 ];
 const solutions = [
-  { href: "/managed-email", label: "Managed e-mail" },
+  { href: "/cloud", label: "Enterprise Cloud" },
+  { href: "/compliance", label: "Compliance" },
+  { href: "/lawful-interception", label: "Lawful Interception" },
+];
+const services = [
+  { href: "/support", label: "Support Plans" },
+  { href: "/services", label: "Professional Services" },
   { href: "/migration", label: "Migration" },
 ];
 const company = [
   { href: "/about", label: "About" },
   { href: "/blog", label: "Blog" },
-  { href: "/support", label: "Support" },
   { href: "/contact", label: "Contact" },
   { href: "/legal", label: "Legal" },
 ];
@@ -95,6 +100,7 @@ const socials = [
           { title: "Platform", links: platform },
           { title: "Editions", links: editions },
           { title: "Solutions", links: solutions },
+          { title: "Services", links: services },
           { title: "Company", links: company },
         ].map((col) => (
           <div>
@@ -242,7 +248,7 @@ const socials = [
   }
   .foot-cols {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 24px;
   }
   .foot-title {

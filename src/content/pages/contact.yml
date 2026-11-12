@@ -1,7 +1,7 @@
 title: Contact | Stalwart Labs
 description: >-
-  Talk to Stalwart Labs about Enterprise licensing, partnerships, Managed
-  Email or Migration. For technical support, use the Stalwart support portal.
+  Talk to Stalwart Labs about Enterprise licensing, partnerships,
+  Enterprise Cloud or Migration. For technical support, use the Stalwart support portal.
 slug: /contact
 
 hero:
@@ -9,7 +9,7 @@ hero:
   title: Talk to sales.
   titleHighlight: sales
   lead: >-
-    For licensing, partnerships, Managed Email and Migration interest,
+    For licensing, partnerships, Enterprise Cloud and Migration interest,
     or any other commercial question, send us a message below. For
     technical questions, configuration help and bug reports, please
     use the [Stalwart support portal](https://support.stalw.art).
@@ -24,7 +24,9 @@ sections:
     topics:
       - Sales
       - Partnerships
-      - Managed Email
+      - Enterprise Cloud
+      - Compliance
+      - Lawful Interception
       - Migration
       - Technical question or problem
       - Other
