@@ -181,8 +181,10 @@ export default defineConfig({
           exclude: [
             // Marketing + legal pages are served by the custom [...slug].astro
             // route and are not visible to the docs link validator.
+            "/",
+            "/{about,anti-spam,architecture,cloud,collaboration,compare,compliance,contact,enterprise,integrations,lawful-interception,legal,mail-server,migration,mta,open-source,pricing,services,support}{,/}",
+            "/{about,anti-spam,architecture,cloud,collaboration,compare,compliance,contact,enterprise,integrations,lawful-interception,legal,mail-server,migration,mta,open-source,pricing,services,support}{,/}#*",
             "/legal/**",
-            "/contact",
             "http://localhost:8081",
           ],
         }),
