@@ -6,8 +6,8 @@ slug: /integrations
 
 hero:
   eyebrow: Integrations
-  title: Stalwart connects to the systems you already run.
-  titleHighlight: systems you already run
+  title: Integrations with your existing infrastructure.
+  titleHighlight: existing infrastructure
   lead: >-
     Stalwart fits into the infrastructure your team already operates,
     so adopting it is a configuration choice, not a migration. Plug in
@@ -20,6 +20,10 @@ hero:
       href: /compare
 
 sections:
+  - kind: chapter
+    title: Identity
+    icon: key-round
+
   - kind: list
     eyebrow: Authentication and identity
     title: Built-in directory or your own IdP.
@@ -37,10 +41,14 @@ sections:
       - "[SQL directories](/docs/auth/backend/sql) (PostgreSQL, MySQL, MariaDB, SQLite)."
       - "[Built-in directory](/docs/auth/backend/internal) for self-managed deployments."
 
+  - kind: chapter
+    title: Storage and search
+    icon: database
+
   - kind: list
     band: alt
     eyebrow: Storage backends
-    title: Pick the data store that fits the scale.
+    title: Data stores for every scale.
     body: >-
       The data store keeps structured metadata such as mailboxes, message
       metadata, ACLs, calendars and contacts. Each backend has different
@@ -82,6 +90,10 @@ sections:
       - PostgreSQL.
       - MySQL / MariaDB.
 
+  - kind: chapter
+    title: Infrastructure
+    icon: server
+
   - kind: list
     eyebrow: Cluster coordination
     title: Stalwart Keep and alternative coordination backends.
@@ -116,20 +128,6 @@ sections:
       - RFC 2136 dynamic updates with TSIG or SIG(0) for self-hosted authoritative servers (BIND-compatible).
 
   - kind: list
-    eyebrow: Spam filtering
-    title: Built-in spam filtering, plus the tools you already run.
-    body: >-
-      Stalwart's built-in spam filter (statistical classifier, DNSBL,
-      phishing protection, sender reputation, greylisting and spam
-      traps) can be combined with external anti-spam systems through
-      Milter or MTA Hooks.
-    bullets:
-      - SpamAssassin via Milter.
-      - RSPAMD via Milter or MTA Hooks.
-      - Pyzor for collaborative digest-based spam detection.
-      - DNSBL providers (Spamhaus, SURBL, URIBL, and any RBL or hashlist that speaks DNS).
-
-  - kind: list
     band: alt
     eyebrow: Observability
     title: Metrics, logs, traces, webhooks.
@@ -159,10 +157,49 @@ sections:
       - "[Docker Swarm](/docs/cluster/orchestration/docker-swarm)."
       - Plain Docker.
 
+  - kind: chapter
+    title: Filtering and AI
+    icon: sparkles
+
+  - kind: list
+    eyebrow: Spam filtering
+    title: Built-in spam filtering, plus your existing tools.
+    body: >-
+      Stalwart's built-in spam filter (statistical classifier, DNSBL,
+      phishing protection, sender reputation, greylisting and spam
+      traps) can be combined with external anti-spam systems through
+      Milter or MTA Hooks.
+    bullets:
+      - SpamAssassin via Milter.
+      - RSPAMD via Milter or MTA Hooks.
+      - Pyzor for collaborative digest-based spam detection.
+      - DNSBL providers (Spamhaus, SURBL, URIBL, and any RBL or hashlist that speaks DNS).
+
+  - kind: list
+    band: alt
+    eyebrow: AI providers
+    title: LLMs in the spam filter and in Sieve scripts.
+    body: >-
+      The Enterprise edition uses language models in the spam
+      classifier and in Sieve scripts for content analysis. Each
+      provider is supported through its own API, and every model has
+      its own rate limit, concurrency cap and timeout, so hosted and
+      self-hosted models can be mixed in the same deployment.
+    bullets:
+      - OpenAI and Azure OpenAI.
+      - Anthropic.
+      - Google Gemini.
+      - Ollama.
+      - Self-hosted servers with an OpenAI-compatible API, such as vLLM and llama.cpp.
+
+  - kind: chapter
+    title: Clients
+    icon: mail
+
   - kind: list
     band: alt
     eyebrow: Mail clients
-    title: Anything that speaks JMAP, IMAP or POP3.
+    title: Any JMAP, IMAP or POP3 client.
     body: >-
       Stalwart speaks every standard mail protocol, so any RFC-compliant
       client works. Automatic account configuration is supported through
@@ -192,23 +229,6 @@ sections:
       - KDE Kontact.
       - Mobile CalDAV / CardDAV clients on iOS and Android.
       - "JMAP for Calendars, Contacts and File Storage clients."
-
-  - kind: list
-    band: alt
-    eyebrow: AI providers
-    title: LLMs in the spam filter and in Sieve scripts.
-    body: >-
-      The Enterprise edition uses language models in the spam
-      classifier and in Sieve scripts for content analysis. Each
-      provider is supported through its own API, and every model has
-      its own rate limit, concurrency cap and timeout, so hosted and
-      self-hosted models can be mixed in the same deployment.
-    bullets:
-      - OpenAI and Azure OpenAI.
-      - Anthropic.
-      - Google Gemini.
-      - Ollama.
-      - Self-hosted servers with an OpenAI-compatible API, such as vLLM and llama.cpp.
 
 footerCta:
   cta: See how Stalwart fits your stack.

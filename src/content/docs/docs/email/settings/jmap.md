@@ -84,7 +84,7 @@ Besides the shape of individual objects, the server bounds how many objects an a
 | [`maxMailboxes`](/docs/ref/object/email#maxmailboxes) | <!-- default:Email.maxMailboxes -->250<!-- /default --> | Mailboxes |
 | [`maxIdentities`](/docs/ref/object/email#maxidentities) | <!-- default:Email.maxIdentities -->20<!-- /default --> | JMAP sending identities |
 | [`maxSubmissions`](/docs/ref/object/email#maxsubmissions) | <!-- default:Email.maxSubmissions -->500<!-- /default --> | JMAP email submissions |
-| [`maxMaskedAddresses`](/docs/ref/object/email#maxmaskedaddresses) | <!-- default:Email.maxMaskedAddresses -->5<!-- /default --> | [Masked addresses](/docs/email/management/masked-email) (Enterprise edition) |
+| [`maxMaskedAddresses`](/docs/ref/object/email#maxmaskedaddresses) | <!-- default:Email.maxMaskedAddresses -->5<!-- /default --> | [Masked addresses](/docs/email/management/masked-email) |
 | [`maxPublicKeys`](/docs/ref/object/email#maxpublickeys) | <!-- default:Email.maxPublicKeys -->5<!-- /default --> | Public keys for [encryption at rest](/docs/encryption) |
 
 The remaining fields of the singleton control how messages are stored. [`compressionAlgorithm`](/docs/ref/object/email#compressionalgorithm) selects the compression applied to stored message data. The default folders created for new accounts are described in [IMAP and POP3](/docs/email/settings/imap#default-folders).

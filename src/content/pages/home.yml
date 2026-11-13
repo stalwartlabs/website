@@ -10,7 +10,6 @@ hero:
   title: |
     Upgrade your email with Stalwart.
   titleHighlight: Stalwart
-  layout: stacked
   lead: >-
     One server for your email, calendars, contacts and shared files,
     with spam and phishing protection built in. Every standard
@@ -131,8 +130,8 @@ sections:
   - kind: feature
     reverse: true
     band: alt
-    eyebrow: Fits the stack you already run
-    title: Works with the infrastructure you already run.
+    eyebrow: Fits your existing stack
+    title: Works with your existing infrastructure.
     body: >-
       From a single-node setup to a multi-tenant hosting platform,
       Stalwart fits the storage, search, external directory and DNS

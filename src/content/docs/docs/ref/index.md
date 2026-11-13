@@ -69,7 +69,7 @@ For telemetry data and permission identifiers referenced from this documentation
 | [Jmap](/docs/ref/object/jmap) | Singleton | Configures JMAP protocol limits for requests, uploads, and push notifications. |
 | [Log](/docs/ref/object/log) | Object | Represents a server log entry. |
 | [MailingList](/docs/ref/object/mailing-list) | Object | Defines a mailing list that distributes messages to a group of recipients. |
-| [MaskedEmail](/docs/ref/object/masked-email) | Object <sup>\*</sup> | Defines a masked email address for privacy protection. |
+| [MaskedEmail](/docs/ref/object/masked-email) | Object | Defines a masked email address for privacy protection. |
 | [MemoryLookupKey](/docs/ref/object/memory-lookup-key) | Object | Defines an in-memory lookup key for fast data access. |
 | [MemoryLookupKeyValue](/docs/ref/object/memory-lookup-key-value) | Object | Defines an in-memory lookup key-value pair. |
 | [Metadata](/docs/ref/object/metadata) | Singleton | Configures object metadata: JMAP metadata, WebDAV dead properties and IMAP annotations. |

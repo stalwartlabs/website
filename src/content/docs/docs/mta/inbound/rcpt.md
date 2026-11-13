@@ -13,7 +13,7 @@ The stage is configured on the [MtaStageRcpt](/docs/ref/object/mta-stage-rcpt) s
 For a recipient in a domain hosted on the server, Stalwart must find out which mailbox, if any, the address belongs to. It tries the following steps in order, and the first step that matches decides:
 
 1. With [sub-addressing](#sub-addressing), the part of the local part after `+` is removed.
-2. A [masked address](/docs/email/management/masked-email) of an account, when it is enabled and not expired (Enterprise edition).
+2. A [masked address](/docs/email/management/masked-email) of an account, when it is enabled and not expired.
 3. For a domain whose accounts are kept in an LDAP or SQL directory, the directory is asked whether the address exists. OpenID Connect directories cannot be queried for recipients, so in such a domain only accounts that already exist on the server are accepted ([OpenID Connect directory](/docs/auth/backend/oidc)).
 4. The address of an account or group, or one of their aliases, is accepted and delivered to that mailbox. In a domain served by an LDAP or SQL directory, only the directory decides for accounts. The address of a [mailing list](/docs/email/management/mailing-lists) is replaced by the list's recipients.
 5. The domain's [catch-all address](#catch-all-addresses), when set, receives the message.

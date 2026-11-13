@@ -13,9 +13,7 @@ hero:
     Support answers questions and fixes defects. Professional services
     cover the hands-on work around a deployment: installing and tuning
     a new one, reviewing an existing one, carrying it through a major
-    upgrade, or building a feature it needs. Every engagement is a
-    fixed-scope project with a written deliverable, carried out by
-    Stalwart Labs engineers.
+    upgrade, or building a feature it needs.
   ctas:
     - label: Request a quote
       href: https://account.stalw.art
@@ -25,9 +23,13 @@ hero:
       primary: false
 
 sections:
+  - kind: chapter
+    title: Deployment services
+    icon: wrench
+
   - kind: list
     eyebrow: Onboarding
-    title: A new deployment installed, configured and tuned.
+    title: New deployments installed, configured and tuned.
     body: >-
       Onboarding takes a new deployment from empty servers to a tuned,
       documented service. It covers the decisions that are hardest to
@@ -48,7 +50,7 @@ sections:
   - kind: list
     band: alt
     eyebrow: Health check
-    title: An expert review of an existing deployment.
+    title: Expert review of an existing deployment.
     body: >-
       Deployments drift: settings that were right at installation stop
       fitting as the number of users grows, and new releases add
@@ -80,6 +82,20 @@ sections:
       - Execution of the upgrade with your team, in a window you choose.
       - Post-upgrade validation of mail flow, client access and integrations.
 
+  - kind: prose
+    band: alt
+    eyebrow: Migration
+    title: Migration from other mail servers.
+    body: >-
+      Moving mailboxes, calendars and contacts from another mail server
+      is offered as a separate service, launching in 2027. The
+      [Migration page](/migration) describes the source systems,
+      process and cutover options.
+
+  - kind: chapter
+    title: Compliance and custom development
+    icon: code
+
   - kind: list
     band: alt
     eyebrow: Lawful-interception compliance assistance
@@ -110,18 +126,12 @@ sections:
       - Built and maintained as part of Stalwart, not as a custom fork.
       - The result lands in the Community or the Enterprise edition.
 
-  - kind: prose
-    band: alt
-    eyebrow: Migration
-    title: Migration from other mail servers.
-    body: >-
-      Moving mailboxes, calendars and contacts from another mail server
-      is offered as a separate service, launching in 2027. The
-      [Migration page](/migration) describes the source systems,
-      process and cutover options.
+  - kind: chapter
+    title: Engagement process
+    icon: workflow
 
   - kind: list
-    eyebrow: How engagements work
+    eyebrow: Engagement process
     title: From request to handover.
     bullets:
       - "**Request.** Tell us about your deployment and what you need, through the licensing portal or the contact form."
@@ -129,6 +139,10 @@ sections:
       - "**Quote.** You receive a fixed quote and a pro-forma invoice."
       - "**Delivery.** The work is carried out on the agreed schedule, with your team involved where needed."
       - "**Handover.** The engagement closes with its written deliverable and a review of the results with your team."
+
+  - kind: chapter
+    title: FAQ
+    icon: message-circle-question-mark
 
   - kind: faq
     band: alt

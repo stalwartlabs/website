@@ -4,10 +4,6 @@ title: "Masked email"
 description: "Disposable receiving addresses that deliver to an account without revealing its real address: how they are generated and delivered, how to create them, and their limits."
 ---
 
-:::tip[Enterprise feature]
-This feature is available in the [Enterprise edition](/docs/server/enterprise) of Stalwart.
-:::
-
 An address given to a website tends to spread: it is sold, leaked in a breach, or added to marketing lists, and once it has spread it cannot be taken back. Masked addresses limit the damage. A masked address is a receiving address that delivers to an existing account without revealing the account's real address.
 
 A user can hand a different masked address to every website or service. When one of them starts sending unwanted mail or leaks the address, the user disables that address alone, and every other address keeps working. An application such as a password manager can create a masked address over JMAP when the user registers a new login, and record which site it was issued to.

@@ -11,14 +11,13 @@ import ComparisonTablesSection from "./sections/ComparisonTablesSection.astro";
 import PricingTiersSection from "./sections/PricingTiersSection.astro";
 import CalculatorSection from "./sections/CalculatorSection.astro";
 import ContactFormSection from "./sections/ContactFormSection.astro";
+import ChapterSection from "./sections/ChapterSection.astro";
 
 interface Props {
   sections: any[];
 }
 const { sections } = Astro.props;
 
-// For the calculator: locate the most recent pricing-tiers section so we can
-// hand it the same tier data.
 function tiersForIndex(idx: number): any[] {
   for (let i = idx - 1; i >= 0; i--) {
     if (sections[i].kind === "pricing-tiers") return sections[i].tiers;
@@ -27,10 +26,11 @@ function tiersForIndex(idx: number): any[] {
 }
 ---
 {sections.map((section: any, i: number) => {
+  const nested = sections.slice(0, i).some((s: any) => s.kind === "chapter");
   switch (section.kind) {
-    case "feature":            return <FeatureSection data={section} />;
-    case "prose":              return <ProseSection data={section} />;
-    case "list":               return <ListSection data={section} />;
+    case "feature":            return <FeatureSection data={section} nested={nested} />;
+    case "prose":              return <ProseSection data={section} nested={nested} />;
+    case "list":               return <ListSection data={section} nested={nested} />;
     case "pillar-grid":        return <PillarGridSection data={section} />;
     case "feature-grid":       return <FeatureGridSection data={section} />;
     case "cta-callout":        return <CtaCalloutSection data={section} />;
@@ -40,6 +40,7 @@ function tiersForIndex(idx: number): any[] {
     case "pricing-tiers":      return <PricingTiersSection data={section} />;
     case "calculator":         return <CalculatorSection data={section} tiers={tiersForIndex(i)} />;
     case "contact-form":       return <ContactFormSection data={section} />;
+    case "chapter":            return <ChapterSection data={section} />;
     default:                   return null;
   }
 })}

@@ -14,9 +14,9 @@ The screens shown depend on the permissions of the account: a screen appears onl
 
 - Settings
 - The Credentials screens: Password, Passkeys, App Passwords, API Keys and Connected Applications
-- Mailboxes, Calendars, Address Books, Sieve Scripts, Vacation Response, Spam Samples and Public Keys
+- Mailboxes, Calendars, Address Books, Sieve Scripts, Vacation Response, Spam Samples, Public Keys and Masked Addresses
 
-The Enterprise edition adds Masked Addresses and Archived Items.
+The Enterprise edition adds Archived Items.
 
 ## Settings
 
@@ -76,10 +76,6 @@ The Connected Applications screen, under <!-- breadcrumb:OAuthGrant --><svg clas
 Applications that registered themselves are marked as unverified. Deleting an entry signs that application out: its tokens stop working, and it must ask for authorization again ([Consent and connected applications](/docs/auth/oauth/consent#connected-applications)).
 
 ## Masked addresses
-
-:::tip[Enterprise feature]
-This feature is available in the [Enterprise edition](/docs/server/enterprise) of Stalwart.
-:::
 
 A masked address is a disposable address that delivers to the account, which lets a user give out an address without revealing the real one. The Masked Addresses screen creates them as [MaskedEmail](/docs/ref/object/masked-email) objects, found in the WebUI under <!-- breadcrumb:MaskedEmail --><svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10" /><circle cx="12" cy="10" r="3" /><path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662" /></svg> Account › <svg class="lucide-icon" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M22 15V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h8" /><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" /><path d="M16 19h6" /></svg> Masked Addresses<!-- /breadcrumb:MaskedEmail -->. Each one can be disabled or deleted without affecting the others ([Masked email](/docs/email/management/masked-email)).
 

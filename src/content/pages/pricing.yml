@@ -35,6 +35,10 @@ hero:
       - { label: servers, icon: server }
 
 sections:
+  - kind: chapter
+    title: Rates
+    icon: receipt
+
   - kind: pricing-tiers
     eyebrow: Tier rates
     title: Each tier billed at its own rate.
@@ -68,8 +72,13 @@ sections:
       tiered rates above. Premium Support is included with every
       Enterprise subscription.
 
+  - kind: chapter
+    title: Licensing
+    icon: key-round
+    summary: Subscription terms · License issuance
+
   - kind: prose
-    eyebrow: How licensing works
+    eyebrow: Licensing
     title: Per-mailbox subscription, annual or monthly.
     body: >-
       These prices are for the Enterprise edition of **Stalwart
@@ -88,7 +97,7 @@ sections:
 
   - kind: list
     band: alt
-    title: How a license is issued.
+    title: License issuance.
     body: >-
       After purchase at the [Stalwart Labs licensing portal](https://account.stalw.art/buy),
       the key is available immediately and activates Enterprise features
@@ -101,6 +110,10 @@ sections:
       - "**Growing replaces the key, it does not add one.** Buying more mailbox licenses raises the mailbox count of your key; install the updated key in place of the old one."
       - "**Unlimited client domains**: the domain restriction applies only to server hostnames, not to the domains your users send and receive mail under."
       - "**Cancellation reverts to Community.** Enterprise-only features are disabled, but no data is lost and service continues without interruption."
+
+  - kind: chapter
+    title: Support and add-ons
+    icon: life-buoy
 
   - kind: prose
     eyebrow: Premium Support
@@ -130,6 +143,10 @@ sections:
       - "**[Lawful Interception](/lawful-interception) and LI Handover.** Warrant and target management with real-time capture, and ETSI handover to the authorities as a separate add-on, for Stalwart On-Premise."
       - "**[Support Plans](/support).** An Incident Pack, or an SLA plan with guaranteed initial response times from two business days down to one hour, with Severity 1 handled around the clock on SLA 4 and SLA 2. SLA plans require a yearly subscription."
       - "**[Professional Services](/services).** Onboarding, health checks, upgrade assistance and lawful-interception compliance assistance."
+
+  - kind: chapter
+    title: FAQ
+    icon: message-circle-question-mark
 
   - kind: faq
     eyebrow: Frequently asked

@@ -13,8 +13,8 @@ hero:
      We are taking
       expressions of interest now; the service goes live in 2027.
   eyebrow: Migration service
-  title: Planned migrations, run by the people who write Stalwart.
-  titleHighlight: by the people who write Stalwart
+  title: Planned migrations, run by Stalwart's own engineers.
+  titleHighlight: by Stalwart's own engineers
   lead: >-
     Mailboxes, folder structure, flags, calendars, address books and
     shared resources are carried across; cutover happens in a window you
@@ -25,7 +25,7 @@ hero:
 
 sections:
   - kind: list
-    eyebrow: What we move
+    eyebrow: Scope
     title: Source systems we support out of the box.
     body: >-
       The migration tooling reads from the protocols and on-disk formats
@@ -42,7 +42,7 @@ sections:
 
   - kind: prose
     band: alt
-    title: What carries over, and what does not.
+    title: Data carried over, and data left behind.
     body: >-
       Carried over per source: messages with full headers and flags,
       folder hierarchy, sieve filters where the format permits, calendars
@@ -77,7 +77,7 @@ sections:
 
   - kind: list
     band: alt
-    eyebrow: How a migration runs
+    eyebrow: Process
     title: Typical phases and timeline.
     bullets:
       - "**Assessment.** A short engagement: we inventory the source server, sample a few accounts, and produce a sizing and risk document."

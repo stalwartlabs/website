@@ -5,7 +5,6 @@ description: >-
 slug: /architecture
 
 hero:
-  layout: stacked
   eyebrow: Architecture
   title: Deploy how you want, scale when you need
   titleHighlight: scale when you need
@@ -62,7 +61,7 @@ sections:
 
   - kind: list
     eyebrow: Storage tier
-    title: Pick the storage that fits the deployment.
+    title: Storage backends for every deployment size.
     body: >-
       Stalwart separates persistent state into four roles and lets you
       pick a backend for each, so you can match what the team already

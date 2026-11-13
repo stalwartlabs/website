@@ -34,7 +34,7 @@ The interoperable scopes reach mail, contacts, calendars and files, but none of 
 
 `urn:stalwart:oauth:scope:security` covers the objects that control how the account signs in: the account password and two-factor authentication (`sysAccountPasswordGet`, `sysAccountPasswordUpdate`), app passwords and API keys (every `sysAppPassword*` and `sysApiKey*` permission), and the grants of connected applications, which it can list and revoke (`sysOAuthGrantGet`, `sysOAuthGrantQuery`, `sysOAuthGrantDestroy`).
 
-`urn:stalwart:oauth:scope:settings` covers the account's own settings: locale, time zone and encryption at rest (`sysAccountSettingsGet`, `sysAccountSettingsUpdate`) and public keys (every `sysPublicKey*` permission). In the Enterprise edition it also covers masked email addresses (every `sysMaskedEmail*` permission).
+`urn:stalwart:oauth:scope:settings` covers the account's own settings: locale, time zone and encryption at rest (`sysAccountSettingsGet`, `sysAccountSettingsUpdate`), public keys (every `sysPublicKey*` permission) and masked email addresses (every `sysMaskedEmail*` permission).
 
 Some account objects hold mail rather than settings, so the grouped scopes leave them out. Spam training samples carry the sender, subject and content of a message, so they belong to `urn:ietf:params:oauth:scope:mail` (`sysSpamTrainingSampleGet`, `sysSpamTrainingSampleCreate`, `sysSpamTrainingSampleDestroy`, `sysSpamTrainingSampleQuery`). Archived items (Enterprise edition), which keep deleted mail and Sieve scripts, are reachable only with `urn:stalwart:oauth:scope:full`.
 

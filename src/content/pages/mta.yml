@@ -8,7 +8,6 @@ hero:
   eyebrow: SMTP server
   title: Programmable, distributed MTA
   titleHighlight: distributed MTA
-  layout: stacked
   lead: >-
     Stalwart's MTA delivers your outbound mail and accepts the inbound
     traffic for it, with sender authentication, transport-layer
@@ -32,6 +31,10 @@ hero:
     url: admin.stalw.art / Dashboard / Delivery
 
 sections:
+  - kind: chapter
+    title: Security
+    icon: shield-check
+
   - kind: feature
     eyebrow: Sender and message authentication
     title: Comprehensive sender and message authentication.
@@ -109,6 +112,10 @@ sections:
       kind: diagram
       id: encryption-gateway
 
+  - kind: chapter
+    title: Delivery
+    icon: send
+
   - kind: feature
     reverse: true
     band: alt
@@ -139,6 +146,33 @@ sections:
       url: admin.stalw.art / Emails / Queued
 
   - kind: feature
+    band: alt
+    eyebrow: High availability
+    title: Seamless failover with distributed queues.
+    body: >-
+      With its distributed message-queue design, Stalwart's MTA is
+      built for high availability. Unlike traditional MTAs that rely on
+      local storage for queues, Stalwart shares the queue across the
+      cluster, so any node can take over message delivery if another
+      one fails and no message is stranded on a downed host. Adding
+      outbound nodes increases delivery throughput without changing the
+      rest of the topology.
+    bullets:
+      - Distributed, fault-tolerant SMTP queue.
+      - Any node delivers any message; no per-node spool.
+      - Node autodiscovery for streamlined network expansion.
+      - Network partition-tolerant failure detection.
+      - Dedicated outbound nodes for high-volume delivery tiers.
+    visual:
+      kind: diagram
+      id: cluster
+
+  - kind: chapter
+    title: Filtering and policy
+    icon: filter
+
+  - kind: feature
+    reverse: true
     eyebrow: Filter pipeline
     title: Programmable filtering, at every SMTP stage.
     body: >-
@@ -165,7 +199,6 @@ sections:
       id: smtp-pipeline
 
   - kind: feature
-    reverse: true
     band: alt
     eyebrow: Envelope and message rewriting
     title: Policy enforcement on every message.
@@ -188,7 +221,12 @@ sections:
       kind: diagram
       id: envelope-rewrite
 
+  - kind: chapter
+    title: Administration
+    icon: activity
+
   - kind: feature
+    reverse: true
     eyebrow: Web admin
     title: Queue, reports and live tracing in a browser.
     body: >-
@@ -208,29 +246,6 @@ sections:
       srcDark: /images/webadmin/live-tracing-dark.webp
       alt: Stalwart live tracing streaming TLSA match and DANE authentication events for an outbound delivery
       url: admin.stalw.art / Observability / Live Tracing
-
-  - kind: feature
-    reverse: true
-    band: alt
-    eyebrow: High availability
-    title: Seamless failover with distributed queues.
-    body: >-
-      With its distributed message-queue design, Stalwart's MTA is
-      built for high availability. Unlike traditional MTAs that rely on
-      local storage for queues, Stalwart shares the queue across the
-      cluster, so any node can take over message delivery if another
-      one fails and no message is stranded on a downed host. Adding
-      outbound nodes increases delivery throughput without changing the
-      rest of the topology.
-    bullets:
-      - Distributed, fault-tolerant SMTP queue.
-      - Any node delivers any message; no per-node spool.
-      - Node autodiscovery for streamlined network expansion.
-      - Network partition-tolerant failure detection.
-      - Dedicated outbound nodes for high-volume delivery tiers.
-    visual:
-      kind: diagram
-      id: cluster
 
 footerCta:
   cta: Modern SMTP, ready for production.

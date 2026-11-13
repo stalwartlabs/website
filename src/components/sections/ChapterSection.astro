@@ -1,0 +1,50 @@
+---
+import Icon from "../Icon.astro";
+import { slugify } from "../../lib/md";
+
+interface Props {
+  data: any;
+}
+const { data } = Astro.props;
+---
+<div class="wrap chapter reveal" id={`ch-${slugify(data.title)}`} data-chapter>
+  <span class="chapter-icon"><Icon name={data.icon} size={20} /></span>
+  <h2 class="chapter-title">{data.title}</h2>
+</div>
+
+<style>
+  .chapter {
+    margin-top: var(--section);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    scroll-margin-top: 72px;
+  }
+  .chapter::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--hairline);
+  }
+  .chapter-icon {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    flex: none;
+    border-radius: 12px;
+    background: var(--rose);
+    color: var(--brand-text);
+  }
+  .chapter-title {
+    font-size: var(--fs-h3);
+    font-weight: 700;
+    letter-spacing: -0.015em;
+  }
+  :global(.chapter-nav) + .chapter {
+    margin-top: clamp(40px, 5vw, 64px);
+  }
+  .chapter + :global(.section) {
+    margin-top: clamp(36px, 4vw, 56px);
+  }
+</style>

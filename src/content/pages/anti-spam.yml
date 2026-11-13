@@ -5,7 +5,6 @@ description: >-
 slug: /anti-spam
 
 hero:
-  layout: stacked
   eyebrow: Anti-spam & phishing
   title: Stop spam before it reaches the mailbox
   titleHighlight: before it reaches the mailbox
@@ -32,6 +31,10 @@ hero:
     url: admin.stalw.art / Dashboard / Security
 
 sections:
+  - kind: chapter
+    title: Classification
+    icon: sparkles
+
   - kind: feature
     eyebrow: Statistical classifier
     title: Spam classifier trained by your users.
@@ -104,6 +107,10 @@ sections:
       kind: diagram
       id: dnsbl-fan-in
 
+  - kind: chapter
+    title: Sender checks
+    icon: badge-check
+
   - kind: feature
     reverse: true
     band: alt
@@ -175,6 +182,10 @@ sections:
     visual:
       kind: diagram
       id: sender-reputation
+
+  - kind: chapter
+    title: Blocking and external filters
+    icon: shield-ban
 
   - kind: feature
     reverse: false

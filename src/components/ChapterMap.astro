@@ -1,0 +1,78 @@
+---
+import Icon from "./Icon.astro";
+import { inlineMd } from "../lib/md";
+
+interface Props {
+  items: { title: string; icon: string; body: string; href: string }[];
+  steps?: boolean;
+}
+const { items, steps = false } = Astro.props;
+---
+<ol class:list={["chapter-map", { "is-steps": steps }]}>
+  {items.map((it, i) => (
+    <li>
+      <a class:list={["tile tile--link chapter-map-item reveal", { "tile--sand": i % 2 === 1 }]} href={it.href}>
+        <span class="badge"><Icon name={it.icon} size={22} /></span>
+        <span class="h3">{it.title}</span>
+        <p set:html={inlineMd(it.body)} />
+        <span class="go" aria-hidden="true"><Icon name="arrow-up-right" size={18} /></span>
+      </a>
+    </li>
+  ))}
+</ol>
+
+<style>
+  .chapter-map {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: var(--gap);
+  }
+  .chapter-map > li {
+    display: grid;
+  }
+  .chapter-map-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: clamp(22px, 2.2vw, 30px);
+  }
+  .chapter-map-item .go {
+    top: 18px;
+    right: 18px;
+    width: 34px;
+    height: 34px;
+  }
+  .chapter-map-item .h3 {
+    margin-top: 26px;
+    font-size: 1.15rem;
+  }
+  .chapter-map-item p {
+    color: var(--muted);
+    font-size: var(--fs-sm);
+    line-height: 1.5;
+  }
+  @media (max-width: 760px) {
+    .chapter-map {
+      grid-template-columns: 1fr 1fr;
+    }
+    .chapter-map-item {
+      gap: 6px;
+      padding: 16px 18px;
+    }
+    .chapter-map-item .badge {
+      width: 36px;
+      height: 36px;
+      border-radius: 11px;
+    }
+    .chapter-map-item .go {
+      display: none;
+    }
+    .chapter-map-item .h3 {
+      margin-top: 10px;
+      font-size: 1rem;
+    }
+    .chapter-map:not(.is-steps) .chapter-map-item p {
+      display: none;
+    }
+  }
+</style>

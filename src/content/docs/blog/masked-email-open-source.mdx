@@ -1,0 +1,74 @@
+---
+title: "Masked Email is now Open Source"
+description: "Masked email moves from the Enterprise edition to the AGPL-licensed Community edition, Premium Support is now included with every Enterprise license, including the one sponsors receive, and new SLA plans offer guaranteed response times from 48 hours down to 2."
+authors: [mdecimus]
+tags: [open-source, agpl, masked-email, privacy, enterprise, support, stalwart]
+excerpt: |
+  Masked email is no longer an Enterprise feature. Starting today it is part of the Community edition, under the AGPL, for everyone who runs Stalwart. And there is a second piece of news: Premium Support, which used to start at 150 mailboxes, now comes with every Enterprise license, including the one our $5 sponsors receive.
+date: 2026-11-13
+---
+
+A month ago, in [Private Tests, Public Code](/blog/protecting-stalwart), we wrote about the relationship between Stalwart and its community, and about the people who have started to treat it as something to feed on. It was not a cheerful post. Today's is, because it is about the other direction: what flows back.
+
+**Masked email is now open source.** It moves from the Enterprise edition to the Community edition, under the AGPL-3.0, for everyone who runs Stalwart. No license key, no sponsorship, no mailbox count.
+
+## Per-site addresses
+
+If you have not used masked email yet, the idea is simple. Every website, shop and newsletter wants an email address, and every one of them is a place where that address can leak. It gets sold, lost in a breach or added to a marketing list, and once it has spread, it cannot be taken back.
+
+A masked address is a disposable address that delivers to your own mailbox without revealing your real one. You give each site its own: one for the airline, one for the forum, one for the shop you will order from exactly once. When one of them starts receiving spam, you know exactly who leaked it, because the masked address is still visible in the `To` header. You switch that address off, and every other address keeps working.
+
+Masked addresses can be created by hand from the Account Manager, or automatically by a password manager over JMAP the moment you save a new login, so the site, the password and the address are recorded together. Each address can carry a description, the site it was issued to, an optional custom prefix and domain, and an optional expiry time, after which it stops receiving mail. Masked addresses receive only, so your replies always go out under your real address. The [masked email documentation](/docs/email/management/masked-email) covers the details, including the JMAP request a password manager sends.
+
+It is one of the most effective privacy tools available, and that is exactly why it belongs in the Community edition.
+
+## Reasons for the move
+
+When we explained in [Private Tests, Public Code](/blog/protecting-stalwart) why the Enterprise edition exists, we drew a line. Enterprise is for the features that matter to large organizations and hosting providers running Stalwart at scale: multi-tenancy, SCIM provisioning, read replicas and sharded storage, live telemetry, archiving. The revenue it brings in pays the full-time team that writes the Community edition.
+
+Masked email never sat comfortably on that side of the line. It is not an operations feature for a hosting provider. It is a privacy feature for the person reading their mail, and it is just as useful to someone running Stalwart for their family as it is to a company with ten thousand mailboxes. Keeping it behind a license was protecting revenue that was never really the point of Enterprise, while keeping a privacy tool away from the people who would benefit from it most.
+
+So it moves.
+
+## One-way commitment to open source
+
+In the same post we repeated a promise we had made before: **no existing open source feature will ever be moved to the Enterprise edition.** Today we want to add the other half.
+
+Features only travel in one direction, and it is towards open source. From time to time, we will review what is in Enterprise and move the features that every Stalwart user can benefit from to the Community edition. Masked email is the second. The first was [OpenID Connect](/blog/oidc-open-source): in January 2025, authentication against external identity providers such as Keycloak moved from Enterprise to the AGPL, so that any organization could connect Stalwart to the identity provider it already runs.
+
+We cannot promise how often this will happen, and the features that pay for Stalwart's development will stay in Enterprise for as long as they are needed for that. But the direction will not change. Nothing goes from open to closed. Some things go from closed to open.
+
+This is only possible because the Enterprise edition works. Every feature we can afford to give away is paid for by the customers and sponsors who keep the team full-time. If you would like to see more Enterprise features reach the Community edition sooner, [sponsoring Stalwart](https://opencollective.com/stalwart) is the most direct way to make that happen.
+
+## Premium Support for every Enterprise license
+
+The second announcement is about support, and it matters most to our smallest customers.
+
+Until now, Premium Support was included only with Enterprise subscriptions of 150 mailboxes or more. Smaller subscriptions had the Enterprise features, but for help they used the same community area of the support portal as everyone else.
+
+**That limit is gone.** Every Enterprise license now includes Premium Support, whatever the number of mailboxes. That means:
+
+- Access to the private **Priority Support** area on [support.stalw.art](https://support.stalw.art).
+- Support by email at [support@stalw.art](mailto:support@stalw.art).
+- Tickets queued ahead of community requests, and answered by the engineers who write Stalwart.
+
+This includes the **Enterprise license that every GitHub and OpenCollective sponsor receives**. If you sponsor Stalwart for $5 a month, you now get the same priority access to our engineers as a customer with thousands of mailboxes. We wanted sponsors to get something real in return for supporting the project, and there is nothing more real than a direct line to the people who build it.
+
+Premium Support does not come with a guaranteed response time. Most tickets are answered quickly, but "quickly" is not a contract, and for some organizations it needs to be.
+
+## SLA plans
+
+For companies that need guaranteed response times, we now offer four SLA plans on top of Premium Support, each with an unlimited number of tickets:
+
+- **SLA 48**: an initial response within two business days, whatever the severity.
+- **SLA 24**: within four business hours for a Severity 1 incident, and one business day for everything else.
+- **SLA 4**: within two hours around the clock for a Severity 1 incident, and four business hours for everything else.
+- **SLA 2**: within one hour around the clock for a Severity 1 incident, and two business hours for everything else.
+
+The higher plans add scheduled video calls, phone support, advance security notices, bug-fix priority and, on SLA 2, hotfix builds. For smaller organizations that only need a guaranteed answer a few times a year, the Incident Pack adds five tickets per year with a two-business-day response. The [support plans page](/support) has the full comparison and the severity definitions, and a quote can be requested from the [licensing portal](https://account.stalw.art).
+
+## Availability
+
+Masked email is open source starting with Stalwart v1.1.1. If you already used it with an Enterprise license, nothing changes: your masked addresses keep working exactly as before. If you run the Community edition, upgrade and you will find a new Masked Addresses screen in the Account Manager.
+
+Thank you to everyone who uses Stalwart, reports what breaks, and sponsors the project. You are the reason this relationship keeps working in both directions.

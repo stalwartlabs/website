@@ -56,12 +56,21 @@ const heroSchema = z.object({
   ctas: z.array(ctaSchema).default([]),
   meta: z.array(z.string()).default([]),
   visual: visualSchema.optional(),
-  layout: z.enum(["split", "stacked"]).default("split"),
   aside: z
     .object({
       title: z.string(),
       items: z.array(z.object({ label: z.string(), icon: z.string() })),
     })
+    .optional(),
+  steps: z
+    .array(
+      z.object({
+        title: z.string(),
+        icon: z.string(),
+        body: z.string(),
+        href: z.string(),
+      })
+    )
     .optional(),
 });
 
@@ -74,6 +83,13 @@ const ctaCardSchema = z.object({
 });
 
 // ----- Section kinds -----
+
+const chapterSection = z.object({
+  kind: z.literal("chapter"),
+  title: z.string(),
+  icon: z.string(),
+  summary: z.string().optional(),
+});
 
 const featureSection = z.object({
   kind: z.literal("feature"),
@@ -233,6 +249,7 @@ const contactFormSection = z.object({
 });
 
 const sectionSchema = z.discriminatedUnion("kind", [
+  chapterSection,
   featureSection,
   proseSection,
   listSection,

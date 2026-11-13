@@ -18,6 +18,10 @@
   margin-top: var(--section);
 }
 
+.section--story + .section--story {
+  margin-top: clamp(80px, 9vw, 128px);
+}
+
 .section-head {
   display: grid;
   gap: 16px;

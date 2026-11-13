@@ -16,7 +16,6 @@ The Enterprise edition adds the following features to the Community edition:
 - [SCIM provisioning](/docs/auth/scim/) of accounts from an identity provider
 - [Per-domain directories](/docs/auth/backend/#per-domain-directories) and failover servers for LDAP directories
 - [AI models](/docs/server/ai-models) for [AI spam classification](/docs/spamfilter/ai/) and the Sieve function `llm_prompt`, which sends a prompt to a model
-- [Masked email](/docs/email/management/masked-email) addresses
 - Restoration of [deleted items](/docs/management/maintenance/deleted-items) and of [deleted accounts](/docs/auth/accounts/manage)
 - [Stored metrics and traces](/docs/telemetry/history), the metrics dashboard, [live telemetry](/docs/telemetry/live) and [alerts](/docs/telemetry/alerts)
 - [Sharded blob and in-memory stores](/docs/storage/backends/composite), the sharded lookup store, and read replicas for PostgreSQL and MySQL data stores
@@ -87,7 +86,6 @@ When the license expires, the Enterprise features stop at one of two moments, de
 - Multi-tenancy: tenant administrators keep only ordinary user permissions, and tenant quotas are no longer enforced. Tenants and their accounts and domains remain.
 - Per-domain directories: all domains are looked up in the default directory. The directories themselves are dropped later, as listed below.
 - The licensed account limit is no longer enforced.
-- Masked email: mail to masked addresses is rejected as addressed to an unknown recipient, and masks can no longer be created or changed.
 - Access to archived items and their restoration, and restoring deleted accounts, stop.
 - Access to stored metrics and traces and live telemetry stops. Logging to files, the console, the journal and OpenTelemetry, webhooks and the basic Prometheus metrics keep working.
 - Logos are no longer shown.

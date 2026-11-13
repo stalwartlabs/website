@@ -5,17 +5,13 @@ description: >-
 slug: /mail-server
 
 hero:
-  layout: stacked
   eyebrow: Mail server
   title: Mail server fluent in every protocol
   titleHighlight: every protocol
   lead: >-
     Stalwart speaks every standard mail protocol your users' clients
     already use, so no one in your fleet gets left behind. JMAP for new
-    apps, IMAP for everything else. Storage,
-    search, external directory and automated DNS are part of the same
-    server, so what you install is one mail server, not a stack of
-    services to glue together.
+    apps, IMAP for everything else.
   ctas:
     - label: Get started
       href: /docs/install/
@@ -32,6 +28,10 @@ hero:
     url: admin.stalw.art / Dashboard / Network
 
 sections:
+  - kind: chapter
+    title: Client protocols
+    icon: mail
+
   - kind: feature
     eyebrow: JMAP
     title: First-class JMAP support.
@@ -89,6 +89,34 @@ sections:
       id: imap-client-grid
 
   - kind: feature
+    band: alt
+    eyebrow: Autoconfig and Autodiscover
+    title: Automatic client configuration.
+    body: >-
+      Helpdesk tickets that begin "I can't get my email set up"
+      disappear when a client can fetch its own settings from the
+      server. Pointing a mail client at a Stalwart server returns IMAP,
+      POP, SMTP, CalDAV and CardDAV settings without the user typing a
+      host name. The modern UA Autoconfig discovery is served alongside
+      the legacy Mozilla Autoconfig and Microsoft Autodiscover v1 and
+      v2 formats, so old and new clients are both covered.
+    bullets:
+      - Modern UA Autoconfig discovery.
+      - Mozilla Autoconfig for older Thunderbird-based clients.
+      - Microsoft Autodiscover v1 and v2 for Outlook and Exchange clients.
+    learnMore:
+      - label: Read Autoconfig
+        href: /docs/server/autoconfig
+    visual:
+      kind: diagram
+      id: autoconfig
+
+  - kind: chapter
+    title: DNS and certificates
+    icon: globe
+
+  - kind: feature
+    reverse: true
     eyebrow: Automated DNS
     title: Hands-off DNS for every mail domain.
     body: >-
@@ -111,7 +139,6 @@ sections:
       id: dns-records-tile
 
   - kind: feature
-    reverse: true
     band: alt
     eyebrow: Automated DKIM rotation
     title: DKIM keys, rotated on a schedule.
@@ -137,6 +164,7 @@ sections:
       url: admin.stalw.art / Domains / DKIM Signatures
 
   - kind: feature
+    reverse: true
     eyebrow: ACME and TLS
     title: Automatic TLS certificates with ACME.
     body: >-
@@ -157,8 +185,11 @@ sections:
       kind: diagram
       id: acme-lifecycle
 
+  - kind: chapter
+    title: Encryption
+    icon: lock
+
   - kind: feature
-    reverse: true
     band: alt
     eyebrow: Encryption at rest
     title: Mailbox encryption with each user's own key.
@@ -189,6 +220,7 @@ sections:
       id: encryption-algorithms
 
   - kind: feature
+    reverse: true
     eyebrow: Encryption gateway
     title: Outbound encryption, with nothing to install for the sender.
     body: >-
@@ -217,29 +249,9 @@ sections:
       kind: diagram
       id: encryption-gateway
 
-  - kind: feature
-    reverse: true
-    band: alt
-    eyebrow: Autoconfig and Autodiscover
-    title: Automatic client configuration.
-    body: >-
-      Helpdesk tickets that begin "I can't get my email set up"
-      disappear when a client can fetch its own settings from the
-      server. Pointing a mail client at a Stalwart server returns IMAP,
-      POP, SMTP, CalDAV and CardDAV settings without the user typing a
-      host name. The modern UA Autoconfig discovery is served alongside
-      the legacy Mozilla Autoconfig and Microsoft Autodiscover v1 and
-      v2 formats, so old and new clients are both covered.
-    bullets:
-      - Modern UA Autoconfig discovery.
-      - Mozilla Autoconfig for older Thunderbird-based clients.
-      - Microsoft Autodiscover v1 and v2 for Outlook and Exchange clients.
-    learnMore:
-      - label: Read Autoconfig
-        href: /docs/server/autoconfig
-    visual:
-      kind: diagram
-      id: autoconfig
+  - kind: chapter
+    title: Accounts and addresses
+    icon: users
 
   - kind: feature
     eyebrow: Multi-tenancy and quotas
@@ -269,7 +281,7 @@ sections:
     reverse: true
     band: alt
     eyebrow: Masked email
-    title: A different address for every site.
+    title: Disposable addresses for every site.
     body: >-
       An address handed to a website tends to spread: it is sold,
       leaked in a breach or added to marketing lists, and once it has
@@ -298,6 +310,10 @@ sections:
       width: 940
       alt: Stalwart masked addresses list with generated addresses, descriptions, target domains and enabled state
       url: admin.stalw.art / Account / Masked Addresses
+
+  - kind: chapter
+    title: Filtering and administration
+    icon: sliders-horizontal
 
   - kind: feature
     eyebrow: Sieve scripting

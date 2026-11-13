@@ -24,8 +24,12 @@ hero:
       href: /contact
 
 sections:
+  - kind: chapter
+    title: Plans and regions
+    icon: globe
+
   - kind: prose
-    eyebrow: What you get
+    eyebrow: Included
     title: Stalwart Enterprise Cloud, sized to your mailbox count.
     body: >-
       Each tenant runs on a Stalwart cluster operated by Stalwart Labs.
@@ -58,7 +62,7 @@ sections:
 
   - kind: prose
     eyebrow: Regions
-    title: Hosted in the region you choose.
+    title: Hosting in your choice of region.
     body: >-
       We are launching in multiple regions across Europe and North America.
       Specific data-centre locations and providers will be announced ahead
@@ -69,6 +73,10 @@ sections:
       particular member-state location or a sovereign-cloud provider),
       tell us at the interest stage and we will factor it into the launch
       plan.
+
+  - kind: chapter
+    title: Platform and migration
+    icon: server
 
   - kind: feature
     band: alt
@@ -109,10 +117,14 @@ sections:
       Full details, including timelines and tooling, are on the
       [migration page](/migration).
 
+  - kind: chapter
+    title: Support and SLAs
+    icon: life-buoy
+
   - kind: list
     band: alt
     eyebrow: Support
-    title: The same support plans as Stalwart On-Premise.
+    title: Same support plans as Stalwart On-Premise.
     bullets:
       - "**Premium Support** is included with every Enterprise Cloud subscription: a private Priority Support area on the support portal and email support at support@stalw.art, without a guaranteed response time."
       - "**Incident Pack and SLA plans** add guaranteed initial response times to support tickets, from two business days down to one hour, with Severity 1 handled around the clock on SLA 4 and SLA 2."
@@ -130,10 +142,14 @@ sections:
       [SLA plans](/support). Specific numeric targets are published with
       the commercial terms when the service launches.
 
+  - kind: chapter
+    title: Compliance and pricing
+    icon: shield-check
+
   - kind: list
     band: alt
     eyebrow: Trust and compliance
-    title: Where your data lives and how it is protected.
+    title: Data residency and protection.
     bullets:
       - "**Data location.** Mail content, calendars, contacts and files stay in the region selected at sign-up. We publish the list of sub-processors and notify customers of changes in advance."
       - "**Encryption at rest.** Storage volumes and blob backends are encrypted at rest. Per-mailbox S/MIME and OpenPGP encryption-at-rest is available for sensitive mailboxes."

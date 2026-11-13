@@ -37,12 +37,12 @@
   --font-sans: "Inter Variable", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --font-mono: "JetBrains Mono Variable", "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
 
-  --fs-display: clamp(2.6rem, 1.4rem + 4.4vw, 4.75rem);
-  --fs-display-xl: clamp(2.6rem, 1.2rem + 4.8vw, 5.5rem);
-  --fs-h2: clamp(1.95rem, 1.35rem + 2.1vw, 3rem);
-  --fs-h2-feature: clamp(1.7rem, 1.3rem + 1.4vw, 2.4rem);
+  --fs-display: clamp(2.3rem, 1.5rem + 2.4vw, 3.5rem);
+  --fs-display-xl: clamp(2.5rem, 1.6rem + 2.8vw, 4rem);
+  --fs-h2: clamp(1.8rem, 1.35rem + 1.4vw, 2.5rem);
+  --fs-h2-feature: clamp(1.55rem, 1.25rem + 0.9vw, 2.05rem);
   --fs-h3: clamp(1.2rem, 1.1rem + 0.4vw, 1.4rem);
-  --fs-lead: clamp(1.075rem, 1rem + 0.3vw, 1.225rem);
+  --fs-lead: clamp(1.075rem, 1rem + 0.22vw, 1.1875rem);
   --fs-body: 1.0625rem;
   --fs-sm: 0.9375rem;
   --fs-xs: 0.8125rem;
@@ -59,7 +59,7 @@
   --s-10: 128px;
   --gap: clamp(12px, 1.4vw, 18px);
   --pad: clamp(24px, 3.2vw, 44px);
-  --section: clamp(72px, 9vw, 128px);
+  --section: clamp(88px, 10vw, 144px);
   --wrap: 1264px;
   --gutter: clamp(16px, 3vw, 32px);
 

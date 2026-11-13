@@ -1,0 +1,112 @@
+---
+interface Props {
+  chapters: { id: string; title: string }[];
+}
+const { chapters } = Astro.props;
+---
+<script is:inline>
+  (() => {
+    let nav, links, chapters, current;
+    const smooth = !matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const update = () => {
+      nav ??= document.querySelector("[data-chapter-nav]");
+      if (!nav) return;
+      links ??= [...nav.querySelectorAll("a")];
+      chapters ??= [...document.querySelectorAll("[data-chapter]")];
+      const limit = nav.getBoundingClientRect().bottom + 24;
+      let id = null;
+      for (const c of chapters) if (c.getBoundingClientRect().top <= limit) id = c.id;
+      if (id === current) return;
+      current = id;
+      for (const a of links) {
+        const on = a.getAttribute("href") === `#${id}`;
+        a.classList.toggle("is-active", on);
+        if (on) a.setAttribute("aria-current", "location");
+        else a.removeAttribute("aria-current");
+        if (on) nav.scrollTo({ left: a.offsetLeft - (nav.clientWidth - a.offsetWidth) / 2, behavior: smooth ? "smooth" : "auto" });
+      }
+    };
+    addEventListener("scroll", update, { passive: true });
+    addEventListener("resize", update, { passive: true });
+    addEventListener("DOMContentLoaded", update);
+  })();
+</script>
+
+<nav class="chapter-nav" aria-label="On this page">
+  <div class="chapter-nav-inner" data-chapter-nav>
+    {chapters.map((c) => (
+      <a href={`#${c.id}`}><i class="chapter-dot" aria-hidden="true"></i>{c.title}</a>
+    ))}
+  </div>
+</nav>
+
+
+<style>
+  .chapter-nav {
+    position: sticky;
+    top: 80px;
+    z-index: 40;
+    display: flex;
+    justify-content: center;
+    margin-top: clamp(40px, 5vw, 64px);
+    padding-inline: var(--gutter);
+    pointer-events: none;
+  }
+  .chapter-nav-inner {
+    pointer-events: auto;
+    display: flex;
+    gap: 2px;
+    max-width: 100%;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding: 5px;
+    border-radius: var(--r-pill);
+    background: color-mix(in oklab, var(--tile) 84%, transparent);
+    -webkit-backdrop-filter: saturate(150%) blur(14px);
+    backdrop-filter: saturate(150%) blur(14px);
+    box-shadow: 0 0 0 1px var(--hairline), var(--shadow-tile);
+  }
+  .chapter-nav-inner::-webkit-scrollbar {
+    display: none;
+  }
+  .chapter-nav a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: var(--r-pill);
+    font-family: var(--font-display);
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: var(--muted);
+    white-space: nowrap;
+    transition: background-color var(--t) var(--ease), color var(--t) var(--ease);
+  }
+  .chapter-nav a:hover {
+    color: var(--text);
+    background: var(--sand);
+  }
+  .chapter-nav a.is-active {
+    background: var(--rose);
+    color: var(--brand-text);
+  }
+  .chapter-dot {
+    width: 6px;
+    height: 6px;
+    flex: none;
+    border-radius: 50%;
+    background: var(--dim);
+    opacity: 0.55;
+    transition: background-color var(--t) var(--ease), opacity var(--t) var(--ease);
+  }
+  .chapter-nav a.is-active .chapter-dot {
+    background: var(--brand);
+    opacity: 1;
+  }
+  @media (max-width: 760px) {
+    .chapter-nav {
+      top: 76px;
+      justify-content: flex-start;
+    }
+  }
+</style>

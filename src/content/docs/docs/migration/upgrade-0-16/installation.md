@@ -140,6 +140,8 @@ The target configuration serves two readers. Its paths are the paths that the to
 
 The data can also be mounted at `/var/lib/stalwart` in the 1.0 container. In that case, the target configuration names `/var/lib/stalwart`, and the tool is run with `--target-path-map /var/lib/stalwart=/var/lib/stalwart-v1`, as described below.
 
+A file system blob store needs the same care. Its directory is not named in the target configuration but in the blob store settings, which the tool carries over from 0.16 with the same path, whichever answer was given to the [blob store question](/docs/migration/upgrade-0-16/prepare#shared-blob-stores). In copy mode the tool writes the blobs to that path, rewritten by `--target-path-map` when a prefix matches. When the path lies in the 0.16 data volume, for example `/var/lib/stalwart/blobs`, and no target path map moves it, the blobs stay in that volume, and the 1.0 container must mount it at the same path, read-write. Otherwise 1.0 lists the messages but cannot open them. The new data volume then stays at `/var/lib/stalwart-v1`, because the two volumes cannot both be mounted at `/var/lib/stalwart`.
+
 ## Paths and file ownership
 
 The configuration files and the 0.16 settings contain paths, such as a RocksDB directory, a SQLite file, a file system blob store or a FoundationDB cluster file. The tool reads these paths exactly as the servers see them.

@@ -90,7 +90,7 @@ This object can be configured from the [WebUI](/docs/management/webui/) under <s
 
 ##### `maxMaskedAddresses`
 
-> Type: <code>UnsignedInt?</code> · [enterprise](/docs/server/enterprise) · default: `5` · min: 1
+> Type: <code>UnsignedInt?</code> · default: `5` · min: 1
 >
 > The default maximum number of masked email addresses a user can create
 

@@ -5,7 +5,6 @@ description: >-
 slug: /compliance
 
 hero:
-  layout: stacked
   eyebrow: Compliance add-on
   title: Retention, legal hold and eDiscovery for Stalwart
   titleHighlight: legal hold and eDiscovery
@@ -31,6 +30,10 @@ hero:
     - Open export formats
 
 sections:
+  - kind: chapter
+    title: Retention and holds
+    icon: archive
+
   - kind: feature
     eyebrow: Retention policies
     title: Retention policies for every tenant, domain, account and folder.
@@ -68,7 +71,7 @@ sections:
     reverse: true
     band: alt
     eyebrow: Legal hold
-    title: Legal hold that overrides retention and deletion.
+    title: Legal hold, with priority over retention and deletion.
     body: >-
       When litigation or an investigation is expected, the relevant data
       has to be preserved from that moment on. A legal hold preserves
@@ -97,6 +100,10 @@ sections:
       height: 844
       alt: Stalwart case detail page for an open case, listing four custodians with account-wide or query holds and the active holds with their search queries
       url: admin.stalw.art / Compliance / Cases
+
+  - kind: chapter
+    title: Search and journaling
+    icon: search
 
   - kind: feature
     eyebrow: eDiscovery
@@ -159,9 +166,13 @@ sections:
       kind: diagram
       id: journaling-flow
 
+  - kind: chapter
+    title: Accountability
+    icon: shield-check
+
   - kind: feature
     eyebrow: Audit trail
-    title: A tamper-evident record of every compliance action.
+    title: Tamper-evident audit trail of every compliance action.
     body: >-
       Compliance tools are only trustworthy if their own use is
       accountable. Every search, view, export, hold and policy change is
@@ -226,6 +237,10 @@ sections:
       kind: diagram
       id: compliance-roles
 
+  - kind: chapter
+    title: Regulations and API access
+    icon: scale
+
   - kind: list
     eyebrow: Regulations
     title: Built for the rules organisations are audited against.
@@ -256,6 +271,10 @@ sections:
       - Create and release holds, run searches and start exports from the API or the CLI.
       - Reports on retention coverage, active holds, export status and archive growth.
       - Event notifications for holds, exports and policy changes through webhooks.
+
+  - kind: chapter
+    title: FAQ
+    icon: message-circle-question-mark
 
   - kind: faq
     eyebrow: Frequently asked

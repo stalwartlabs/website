@@ -5,7 +5,6 @@ description: >-
 slug: /enterprise
 
 hero:
-  layout: stacked
   eyebrow: Enterprise edition
   title: Stalwart at enterprise scale
   titleHighlight: enterprise scale
@@ -36,6 +35,10 @@ hero:
     url: admin.stalw.art / Dashboard / Message Authentication
 
 sections:
+  - kind: chapter
+    title: Multi-tenant hosting
+    icon: building-2
+
   - kind: feature
     eyebrow: Multi-tenancy
     title: Many organisations on the same deployment.
@@ -78,6 +81,25 @@ sections:
     visual:
       kind: diagram
       id: branding
+
+  - kind: list
+    band: alt
+    eyebrow: For mail-hosting providers and MSPs
+    title: Multi-tenant hosting under your brand.
+    body: >-
+      For ISPs, MSPs and white-label hosters, the operational features
+      above combine into a single hosting platform.
+    bullets:
+      - "**Multi-tenancy** isolates customers from each other, with per-tenant disk and principal quotas and per-domain directory backends."
+      - "**Branding** lets each customer see their own logo at their own domain, on the same WebUI bundle."
+      - "**Account Manager** gives each customer's end users a self-service portal for passwords, passkeys, 2FA, application passwords and masked email."
+      - "**Live telemetry, alerts and message delivery history** give support engineers the data they need to triage tickets."
+      - "**[Lawful Interception](/lawful-interception)** is available as an add-on for operators in jurisdictions that require it."
+      - "**Domain-anchored licensing** ties the Enterprise key to a domain name and keeps the per-server count unlimited under that domain."
+
+  - kind: chapter
+    title: Recovery and monitoring
+    icon: activity
 
   - kind: feature
     eyebrow: Account archiving and un-deletion
@@ -134,6 +156,10 @@ sections:
       srcDark: /images/webadmin/live-tracing-dark.webp
       alt: Stalwart live tracing streaming TLSA match and DANE authentication events as they happen
       url: admin.stalw.art / Observability / Live Tracing
+
+  - kind: chapter
+    title: Automation
+    icon: bot
 
   - kind: feature
     eyebrow: AI-assisted spam filtering and Sieve scripting
@@ -197,6 +223,10 @@ sections:
       kind: diagram
       id: scim-lifecycle
 
+  - kind: chapter
+    title: Large deployments
+    icon: server
+
   - kind: feature
     eyebrow: Read replicas and sharded storage
     title: Scale the data plane without rewriting the cluster.
@@ -216,20 +246,9 @@ sections:
       kind: diagram
       id: read-replicas
 
-  - kind: list
-    band: alt
-    eyebrow: For mail-hosting providers and MSPs
-    title: Multi-tenant hosting under your brand.
-    body: >-
-      For ISPs, MSPs and white-label hosters, the operational features
-      above combine into a single hosting platform.
-    bullets:
-      - "**Multi-tenancy** isolates customers from each other, with per-tenant disk and principal quotas and per-domain directory backends."
-      - "**Branding** lets each customer see their own logo at their own domain, on the same WebUI bundle."
-      - "**Account Manager** gives each customer's end users a self-service portal for passwords, passkeys, 2FA, application passwords and masked email."
-      - "**Live telemetry, alerts and message delivery history** give support engineers the data they need to triage tickets."
-      - "**[Lawful Interception](/lawful-interception)** is available as an add-on for operators in jurisdictions that require it."
-      - "**Domain-anchored licensing** ties the Enterprise key to a domain name and keeps the per-server count unlimited under that domain."
+  - kind: chapter
+    title: Add-ons and support
+    icon: life-buoy
 
   - kind: list
     eyebrow: Add-ons

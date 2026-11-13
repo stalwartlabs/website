@@ -1,6 +1,6 @@
 ---
 import Icon from "../Icon.astro";
-import { inlineMd, paragraphMd } from "../../lib/md";
+import { inlineMd, storyMd } from "../../lib/md";
 
 interface Props {
   data: any;
@@ -8,6 +8,7 @@ interface Props {
 const { data } = Astro.props;
 const items: any[] = data.items ?? [];
 const tray = data.band === "alt";
+const story = storyMd(data.body ?? "");
 const hasLead = !!(data.eyebrow || data.title || data.body);
 const headingId = data.title
   ? `g-${data.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}`
@@ -22,7 +23,12 @@ const cols = beside ? 2 : items.length % 3 === 0 ? 3 : items.length === 1 ? 1 : 
         <div class="tile tile--rose fgrid-lead reveal">
           {data.eyebrow && <span class="pill">{data.eyebrow}</span>}
           {data.title && <h2 id={headingId} class="h2" set:html={inlineMd(data.title)}></h2>}
-          {data.body && <div class="section-body" set:html={paragraphMd(data.body)}></div>}
+          {data.body && (
+            <div class="section-body fgrid-body">
+              <p class="fgrid-stand" set:html={story.stand}></p>
+              {story.paras.map((p) => <p set:html={p}></p>)}
+            </div>
+          )}
         </div>
       )}
       <ul class="fgrid-items">
@@ -56,6 +62,11 @@ const cols = beside ? 2 : items.length % 3 === 0 ? 3 : items.length === 1 ? 1 : 
   }
   .fgrid-lead .section-body {
     max-width: 64ch;
+  }
+  .fgrid-stand {
+    font-size: var(--fs-lead);
+    line-height: 1.55;
+    color: var(--text);
   }
   .fgrid-item {
     display: flex;

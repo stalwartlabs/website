@@ -20,7 +20,7 @@ hero:
 
 sections:
   - kind: prose
-    eyebrow: What we build
+    eyebrow: Product
     title: Modern mail and collaboration, in one server.
     body: >-
       Stalwart is a single product that covers the mail and
@@ -34,7 +34,7 @@ sections:
 
   - kind: prose
     band: alt
-    eyebrow: What we're building toward
+    eyebrow: Mission
     title: Replacing the legacy mail stack with one product.
     body: >-
       Most mail-server stacks in production still combine
@@ -69,8 +69,8 @@ sections:
 
   - kind: prose
     band: alt
-    eyebrow: The team
-    title: A distributed team.
+    eyebrow: Team
+    title: Distributed team.
     body: >-
       Stalwart Labs is incorporated in both the United States and the
       United Kingdom. The team works remotely, distributed across
@@ -82,7 +82,7 @@ sections:
 
   - kind: addresses
     eyebrow: Get in touch
-    title: Where to find us.
+    title: Contact details.
     items:
       - label: US Address
         lines:

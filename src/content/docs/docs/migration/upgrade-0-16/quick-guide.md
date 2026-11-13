@@ -100,7 +100,7 @@ When the window allows it, `stalwart-migrate verify --full` compares every accou
 Start the 1.0 server with the configuration of the new store, while 0.16 stays stopped. The method follows the installation:
 
 - **Script installation.** Keep a copy of the 0.16 configuration, copy `/etc/stalwart-v1/config.json` over `/etc/stalwart/config.json`, then run the [1.0 install script](/docs/install/upgrade#upgrading-a-script-installation). Because the configuration file exists, the script replaces the binary, keeps the configuration and the environment file, and restarts the service on the new store.
-- **Docker.** Start the `stalwartlabs/stalwart:v1` image with the new configuration as its `config.json` and the new data volume mounted at the path that configuration names, as described in [Mounting the new store in the 1.0 container](/docs/migration/upgrade-0-16/installation#mounting-the-new-store-in-the-10-container).
+- **Docker.** Start the `stalwartlabs/stalwart:v1` image with the new configuration as its `config.json` and the new data volume mounted at the path that configuration names, plus the volume of a file system blob store at its 0.16 path, as described in [Mounting the new store in the 1.0 container](/docs/migration/upgrade-0-16/installation#mounting-the-new-store-in-the-10-container).
 
 Stalwart 1.0 rebuilds the search index after it starts, so searches return incomplete results until the rebuild finishes. Users also sign in again in OAuth clients.
 

@@ -5,7 +5,6 @@ description: >-
 slug: /collaboration
 
 hero:
-  layout: stacked
   eyebrow: Collaboration
   title: Collaboration, included with your mail
   titleHighlight: included with your mail
@@ -31,6 +30,10 @@ hero:
     url: admin.stalw.art / Account / Calendars
 
 sections:
+  - kind: chapter
+    title: Calendars and scheduling
+    icon: calendar
+
   - kind: feature
     eyebrow: Calendars
     title: Calendars on every device.
@@ -80,6 +83,33 @@ sections:
       id: itip-imip
 
   - kind: feature
+    band: alt
+    eyebrow: Notifications
+    title: Real-time event reminders by email.
+    body: >-
+      A meeting reminder is only useful if it actually fires. Stalwart
+      delivers email-action reminders directly from the server, so
+      organisers and attendees get notified even when their calendar
+      app is closed or their phone is offline. Reasonable defaults
+      prevent floods of reminders, and external-recipient policy is
+      configurable per deployment.
+    bullets:
+      - Server-side email reminders for events.
+      - Sensible per-account interval limits.
+      - External-recipient policy configurable per deployment.
+    learnMore:
+      - label: Read Notifications
+        href: /docs/collaboration/notifications
+    visual:
+      kind: diagram
+      id: valarm-email
+
+  - kind: chapter
+    title: Contacts and files
+    icon: folder
+
+  - kind: feature
+    reverse: true
     eyebrow: Contacts
     title: Manage, share and sync your contacts.
     body: >-
@@ -103,7 +133,6 @@ sections:
       id: contacts-sync
 
   - kind: feature
-    reverse: true
     band: alt
     eyebrow: File storage
     title: Shared files alongside the mail.
@@ -129,7 +158,12 @@ sections:
       kind: diagram
       id: file-browser
 
+  - kind: chapter
+    title: Sharing and clients
+    icon: share-2
+
   - kind: feature
+    reverse: true
     eyebrow: Sharing
     title: Granular control over calendars, contacts and files.
     body: >-
@@ -150,28 +184,6 @@ sections:
       alt: Stalwart calendar sharing with per-account rights for free/busy, reading, writing, RSVP and sharing
       url: admin.stalw.art / Account / Calendars
   
-  - kind: feature
-    reverse: true
-    band: alt
-    eyebrow: Notifications
-    title: Real-time event reminders by email.
-    body: >-
-      A meeting reminder is only useful if it actually fires. Stalwart
-      delivers email-action reminders directly from the server, so
-      organisers and attendees get notified even when their calendar
-      app is closed or their phone is offline. Reasonable defaults
-      prevent floods of reminders, and external-recipient policy is
-      configurable per deployment.
-    bullets:
-      - Server-side email reminders for events.
-      - Sensible per-account interval limits.
-      - External-recipient policy configurable per deployment.
-    learnMore:
-      - label: Read Notifications
-        href: /docs/collaboration/notifications
-    visual:
-      kind: diagram
-      id: valarm-email
 
   - kind: list
     eyebrow: Discovery and clients

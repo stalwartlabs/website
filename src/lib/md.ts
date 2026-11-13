@@ -73,3 +73,30 @@ export function withHighlight(text: string, highlight?: string): string {
   const after = text.slice(end + punct);
   return `${escapeHtml(before)}<em class="hl">${escapeHtml(marked)}</em>${escapeHtml(after)}`;
 }
+
+function sentences(p: string): string[] {
+  return p.split(/(?<=[.!?])\s+(?=[A-Za-z"(*[`])/);
+}
+
+export function storyMd(text: string): { stand: string; paras: string[] } {
+  if (!text) return { stand: "", paras: [] };
+  const blocks = text.split(/\n{2,}/).map((p) => p.trim().replace(/\s+/g, " ")).filter(Boolean);
+  const first = sentences(blocks[0]);
+  const stand = first.shift() ?? "";
+  const rest = first.join(" ");
+  const paras: string[] = [];
+  if (rest.length > 420) {
+    let acc = "";
+    let i = 0;
+    while (i < first.length && acc.length < rest.length / 2) acc += (acc ? " " : "") + first[i++];
+    paras.push(acc, first.slice(i).join(" "));
+  } else if (rest) {
+    paras.push(rest);
+  }
+  paras.push(...blocks.slice(1));
+  return { stand: inlineMd(stand), paras: paras.filter(Boolean).map(inlineMd) };
+}
+
+export function slugify(text: string): string {
+  return text.toLowerCase().replace(/\*\*/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+}

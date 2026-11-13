@@ -7,8 +7,8 @@ slug: /support
 
 hero:
   eyebrow: Support Plans
-  title: Support from the engineers who write Stalwart.
-  titleHighlight: who write Stalwart
+  title: Support from Stalwart's own engineers.
+  titleHighlight: Stalwart's own engineers
   lead: >-
     All Stalwart support runs through a single portal at
     [support.stalw.art](https://support.stalw.art). Community users get
@@ -26,6 +26,10 @@ hero:
       primary: false
 
 sections:
+  - kind: chapter
+    title: Support plans
+    icon: life-buoy
+
   - kind: feature
     eyebrow: Community Support
     title: Free support for every Stalwart user.
@@ -123,6 +127,10 @@ sections:
           - ["Bug-fix priority", "", "", "yes", "yes", "yes", "yes"]
           - ["Hotfix builds", "", "", "", "", "", "yes"]
 
+  - kind: chapter
+    title: Service levels
+    icon: timer
+
   - kind: list
     eyebrow: Severity levels
     title: Severity levels based on the impact on users.
@@ -138,8 +146,8 @@ sections:
 
   - kind: list
     band: alt
-    eyebrow: How response times work
-    title: What a guaranteed response means.
+    eyebrow: Response times
+    title: Definition of a guaranteed response.
     body: >-
       The response time is the time between the ticket being opened and
       the first reply from a Stalwart Labs engineer who has read it.
@@ -156,9 +164,13 @@ sections:
       - Severity 1 and 2 tickets must be opened on the portal or, on plans with phone support, by phone, not by email, so they reach the on-duty engineer immediately.
       - A Severity 1 ticket becomes Severity 2 once a workaround restores service.
 
+  - kind: chapter
+    title: Tickets and scope
+    icon: ticket
+
   - kind: list
     eyebrow: Opening a ticket
-    title: Information that speeds up every ticket.
+    title: Information to include in a ticket.
     body: >-
       Most of the time spent on a ticket goes into collecting
       information. Including the following when the ticket is opened
@@ -174,7 +186,7 @@ sections:
   - kind: list
     band: alt
     eyebrow: Scope
-    title: What support covers.
+    title: Support coverage.
     body: >-
       Support covers the Stalwart software on supported versions.
       Work that goes beyond answering questions and fixing defects is
@@ -186,6 +198,10 @@ sections:
       - "**Supported versions.** The supported versions and their end-of-support dates are listed in the [Vulnerability Disclosure Policy](/legal/security#supported-versions)."
       - "**Security advisories.** Customers on an SLA plan are notified of security fixes under embargo before public disclosure."
       - "**Security vulnerabilities.** Suspected vulnerabilities in Stalwart are reported to security@stalw.art as described in the [Vulnerability Disclosure Policy](/legal/security), not through the support portal."
+
+  - kind: chapter
+    title: FAQ
+    icon: message-circle-question-mark
 
   - kind: faq
     eyebrow: Frequently asked

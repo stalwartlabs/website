@@ -14,7 +14,7 @@ Three tools cover most investigations: a delivery test for outbound mail, action
 
 ### Delivery test
 
-The delivery test traces the delivery of a message to an address or domain step by step, without sending anything. It is found in the WebUI under Management › Emails › Delivery tests. The test performs the same steps as a real delivery:
+The delivery test traces the delivery of a message to an address or domain step by step, without sending anything. It is found in the WebUI under Management › Emails › Delivery tests. The test performs the steps of a direct delivery to the domain's mail servers:
 
 1. It resolves the MX records of the domain and their addresses.
 2. It evaluates the MTA-STS and DANE policies, which tell a sender whether the receiving server must be reached over verified TLS.
@@ -22,6 +22,8 @@ The delivery test traces the delivery of a message to an address or domain step 
 4. It checks that the recipient is accepted.
 
 Each step is shown as it happens, so a failure appears at the step that caused it, together with its error. Running the test requires the `liveDeliveryTest` permission.
+
+The test always connects to the MX hosts on port 25 and does not evaluate the [outbound routing](/docs/mta/outbound/routing) configuration, so it ignores relay routes. On a server that sends through a relay host, for example because the hosting provider blocks outbound connections on port 25, the test times out at the connection step even when real deliveries succeed; that timeout confirms the block. To check where routed mail goes, send a test message and follow it in the event log: the `delivery.connect` event names the host that each delivery attempt connects to.
 
 The WebUI streams the test from `GET /api/live/delivery/<target>`. The target must be a plain domain or address, and any other target makes the request fail with `400` and `Invalid delivery target`.
 

@@ -1,18 +1,23 @@
 ---
 import VisualBlock from "./VisualBlock.astro";
+import ChapterMap from "./ChapterMap.astro";
 import Icon from "./Icon.astro";
 import { inlineMd, withHighlight } from "../lib/md";
 
 interface Props {
   hero: any;
+  xl?: boolean;
+  chapters?: { id: string; title: string; icon: string; summary: string }[];
 }
-const { hero } = Astro.props;
+const { hero, xl = false, chapters = [] } = Astro.props;
 const titleHtml = hero.titleHighlight ? withHighlight(hero.title.trim(), hero.titleHighlight) : inlineMd(hero.title.trim());
-const stacked = hero.layout === "stacked" && !!hero.visual;
-const side = hero.visual ? "visual" : hero.aside ? "aside" : null;
+const aside = !hero.visual && hero.aside;
+const map = hero.steps?.length
+  ? hero.steps
+  : chapters.map((c) => ({ title: c.title, icon: c.icon, body: c.summary, href: `#${c.id}` }));
 ---
-<section class="wrap hero" aria-labelledby="hero-title">
-  <div class:list={["bento hero-grid", { "hero-grid--stacked": stacked, "hero-grid--solo": !side, "hero-grid--aside": side === "aside" }]}>
+<section class:list={["wrap hero", { "hero--xl": xl }]} aria-labelledby="hero-title">
+  <div class:list={["hero-grid", { "hero-grid--aside": aside }]}>
     <div class="tile hero-copy reveal">
       {hero.banner && (
         <p class:list={["hero-banner", `hero-banner--${hero.banner.tone}`]}>
@@ -23,33 +28,34 @@ const side = hero.visual ? "visual" : hero.aside ? "aside" : null;
       {hero.eyebrow && <span class="pill">{hero.eyebrow}</span>}
       <h1 id="hero-title" class="display" set:html={titleHtml} />
       {hero.lead && <p class="lead" set:html={inlineMd(hero.lead)} />}
-      {hero.ctas?.length > 0 && (
-        <div class="actions">
-          {hero.ctas.map((cta: any, i: number) => (
-            <a
-              href={cta.href}
-              class:list={["btn", cta.primary === false ? "btn-soft" : "btn-primary"]}
-              {...(cta.external ? { target: "_blank", rel: "noopener" } : {})}
-            >
-              {cta.label}
-              {cta.primary !== false && i === 0 && <Icon name="arrow-right" />}
-            </a>
-          ))}
+      {(hero.ctas?.length > 0 || hero.meta?.length > 0) && (
+        <div class="hero-cta">
+          {hero.ctas?.length > 0 && (
+            <div class="actions">
+              {hero.ctas.map((cta: any, i: number) => (
+                <a
+                  href={cta.href}
+                  class:list={["btn", cta.primary === false ? "btn-soft" : "btn-primary"]}
+                  {...(cta.external ? { target: "_blank", rel: "noopener" } : {})}
+                >
+                  {cta.label}
+                  {cta.primary !== false && i === 0 && <Icon name="arrow-right" />}
+                </a>
+              ))}
+            </div>
+          )}
+          {hero.meta?.length > 0 && (
+            <ul class="chips chips--meta" aria-label="Highlights">
+              {hero.meta.map((m: string) => (
+                <li><Icon name="check" size={14} />{m}</li>
+              ))}
+            </ul>
+          )}
         </div>
-      )}
-      {hero.meta?.length > 0 && (
-        <ul class="chips chips--meta" aria-label="Highlights">
-          {hero.meta.map((m: string) => (
-            <li><Icon name="check" size={14} />{m}</li>
-          ))}
-        </ul>
       )}
     </div>
 
-    {side === "visual" && (
-      <VisualBlock visual={hero.visual} class="hero-visual reveal" full={stacked} loading="eager" />
-    )}
-    {side === "aside" && (
+    {aside && (
       <div class="tile tile--rose hero-aside reveal">
         <p class="aside-k"><span class="badge"><Icon name="infinity" size={22} /></span>{hero.aside.title}</p>
         <ul class="aside-grid">
@@ -60,34 +66,59 @@ const side = hero.visual ? "visual" : hero.aside ? "aside" : null;
       </div>
     )}
   </div>
+
+  {hero.visual && <VisualBlock visual={hero.visual} class="hero-visual reveal" full loading="eager" />}
+  {map.length > 0 && <ChapterMap items={map} steps={!!hero.steps?.length} />}
 </section>
 
 <style>
   .hero {
     padding-top: clamp(16px, 2vw, 28px);
+    display: grid;
+    gap: var(--gap);
   }
   .hero-grid {
-    min-height: min(620px, calc(100svh - 120px));
+    display: grid;
+    gap: var(--gap);
   }
   .hero-copy {
-    grid-column: span 6;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    align-items: flex-start;
     gap: 22px;
-    padding: clamp(28px, 4.6vw, 64px);
-    container-type: inline-size;
+    padding: clamp(32px, 5vw, 72px);
   }
   .hero-copy h1 {
-    font-size: min(var(--fs-display), 10.5cqi);
+    font-size: var(--fs-display);
+    line-height: 1.05;
+    max-width: 22ch;
     overflow-wrap: break-word;
   }
-  .hero-copy .actions {
-    margin-top: 8px;
+  .hero--xl .hero-copy h1 {
+    font-size: var(--fs-display-xl);
   }
-  .hero-grid :global(.hero-visual) {
-    grid-column: span 6;
-    min-height: 460px;
+  .hero-copy .lead {
+    max-width: 64ch;
+    margin-top: 4px;
+  }
+  .hero-cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 18px 28px;
+    margin-top: 6px;
+  }
+  .hero-cta .actions {
+    flex-wrap: nowrap;
+  }
+
+  .hero :global(.hero-visual.shot) {
+    aspect-ratio: 16 / 9;
+    min-height: 0;
+  }
+  .hero :global(.hero-visual.visual-dg svg) {
+    max-width: 860px;
+    margin-inline: auto;
   }
 
   .hero-banner {
@@ -116,21 +147,13 @@ const side = hero.visual ? "visual" : hero.aside ? "aside" : null;
     text-underline-offset: 3px;
   }
 
-  .hero-grid--solo {
-    min-height: 0;
+  .hero-grid--aside {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
   }
-  .hero-grid--solo .hero-copy {
-    grid-column: 1 / -1;
-  }
-  .hero-grid--solo .hero-copy .lead {
-    max-width: 46em;
-  }
-
   .hero-grid--aside .hero-copy {
-    grid-column: span 7;
+    justify-content: center;
   }
   .hero-aside {
-    grid-column: span 5;
     display: flex;
     flex-direction: column;
     gap: 22px;
@@ -184,82 +207,18 @@ const side = hero.visual ? "visual" : hero.aside ? "aside" : null;
     color: #fff;
   }
 
-  .hero-grid--stacked {
-    min-height: 0;
-  }
-  .hero-grid--stacked .hero-copy {
-    grid-column: 1 / -1;
-    display: grid;
-    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
-    grid-template-rows: auto auto auto 1fr;
-    column-gap: clamp(32px, 5vw, 80px);
-    row-gap: 22px;
-    align-items: start;
-  }
-  .hero-grid--stacked .hero-copy > .pill {
-    grid-column: 1;
-    grid-row: 1;
-    justify-self: start;
-  }
-  .hero-grid--stacked .hero-copy > h1 {
-    grid-column: 1;
-    grid-row: 2 / span 3;
-    font-size: min(var(--fs-display-xl), 9cqi);
-  }
   @media (max-width: 1023px) {
-    .hero-grid--stacked .hero-copy > h1 {
-      font-size: min(var(--fs-display), 12.5cqi);
-    }
-  }
-  .hero-grid--stacked .hero-copy > .lead {
-    grid-column: 2;
-    grid-row: 2;
-    padding-top: 0.6em;
-  }
-  .hero-grid--stacked .hero-copy > .actions {
-    grid-column: 2;
-    grid-row: 3;
-    margin-top: 0;
-  }
-  .hero-grid--stacked .hero-copy > .chips {
-    grid-column: 2;
-    grid-row: 4;
-  }
-  .hero-grid.hero-grid--stacked :global(.hero-visual) {
-    grid-column: 1 / -1;
-    min-height: 0;
-  }
-  .hero-grid--stacked :global(.hero-visual.shot) {
-    aspect-ratio: 16 / 9;
-  }
-  .hero-grid--stacked :global(.hero-visual.visual-dg svg) {
-    max-width: 860px;
-    margin-inline: auto;
-  }
-
-  @media (max-width: 1023px) {
-    .hero-grid {
-      min-height: 0;
-    }
-    .hero-copy,
-    .hero-aside,
-    .hero-grid--aside .hero-copy,
-    .hero-grid :global(.hero-visual) {
-      grid-column: 1 / -1;
-    }
-    .hero-grid :global(.hero-visual) {
-      min-height: 400px;
-    }
-    .hero-grid--stacked .hero-copy {
-      display: flex;
+    .hero-grid--aside {
+      grid-template-columns: 1fr;
     }
   }
   @media (max-width: 760px) {
-    .hero-grid :global(.hero-visual) {
-      min-height: 340px;
-    }
-    .hero-grid--stacked :global(.hero-visual.shot) {
+    .hero :global(.hero-visual.shot) {
       aspect-ratio: 4 / 3;
+    }
+    .hero-cta .actions {
+      flex-wrap: wrap;
+      width: 100%;
     }
   }
 </style>

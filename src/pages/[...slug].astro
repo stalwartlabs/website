@@ -3,6 +3,8 @@ import { getCollection } from "astro:content";
 import Base from "../layouts/Base.astro";
 import HeroBlock from "../components/HeroBlock.astro";
 import SectionRenderer from "../components/SectionRenderer.astro";
+import ChapterNav from "../components/ChapterNav.astro";
+import { slugify } from "../lib/md";
 
 export async function getStaticPaths() {
   const all = await getCollection("pages");
@@ -16,6 +18,15 @@ export async function getStaticPaths() {
 
 const { page } = Astro.props;
 const data = page.data;
+const chapters = data.sections.flatMap((s: any, i: number) => {
+  if (s.kind !== "chapter") return [];
+  const eyebrows: string[] = [];
+  for (let j = i + 1; j < data.sections.length && data.sections[j].kind !== "chapter"; j++) {
+    const e = data.sections[j].eyebrow;
+    if (e) eyebrows.push(e);
+  }
+  return [{ id: `ch-${slugify(s.title)}`, title: s.title, icon: s.icon, summary: s.summary ?? eyebrows.join(" · ") }];
+});
 
 // Extra structured data on the homepage: Organization (publisher) and
 // WebSite (with a SearchAction so engines surface our search box).
@@ -71,6 +82,7 @@ const jsonLd = isHome
   ctaSecondary={data.footerCta?.secondary}
   jsonLd={jsonLd}
 >
-  {data.hero && <HeroBlock hero={data.hero} />}
+  {data.hero && <HeroBlock hero={data.hero} xl={isHome} chapters={chapters} />}
+  {chapters.length > 0 && <ChapterNav chapters={chapters} />}
   <SectionRenderer sections={data.sections} />
 </Base>

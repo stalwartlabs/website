@@ -24,7 +24,7 @@ Install the updated key as soon as it is issued. Automatic renewal fetches a new
 
 The server keeps running as the Community edition on the same data. The two editions share one data format, so changing between them needs no data migration.
 
-There is no grace period, and the Enterprise features stop at one of two moments. Features that the server checks each time they are used, such as SCIM, tenant administration and masked email, stop at the moment of expiry. The others, such as AI features, alerts and LDAP failover, stop when the configuration is next loaded, normally within an hour.
+There is no grace period, and the Enterprise features stop at one of two moments. Features that the server checks each time they are used, such as SCIM and tenant administration, stop at the moment of expiry. The others, such as AI features, alerts and LDAP failover, stop when the configuration is next loaded, normally within an hour.
 
 Nothing is lost in the meantime. Configuration and stored data are kept, and the features return once a valid key is installed. With an API key set, the server keeps retrying renewal after expiry and logs each failure as `Enterprise license renewal failed, retrying`. See [License expiry](/docs/server/enterprise#license-expiry).
 
