@@ -3815,25 +3815,11 @@ NameSilo
 Netcup
 
 
-##### `customerNumber`
-
-> Type: <code>String</code> · required
->
-> Netcup customer number
-
-
-##### `apiKeyId`
-
-> Type: <code>String</code> · required
->
-> Netcup API key identifier
-
-
-##### `password`
+##### `apiKey`
 
 > Type: [<code>SecretKey</code>](#secretkey) · required
 >
-> Netcup API password
+> Netcup API key used to authenticate with the netcup REST API
 
 
 ##### `description`

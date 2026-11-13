@@ -112,7 +112,7 @@ Each hosted provider is a variant of DnsServer with its own credential fields. T
 | Name.com | `NameDotCom` | `username`, `token` |
 | Namecheap | `Namecheap` | `apiUser`, `apiKey`, `clientIp`, `username` |
 | NameSilo | `NameSilo` | `secret` |
-| Netcup | `Netcup` | `customerNumber`, `apiKeyId`, `password` |
+| Netcup (CloudDNS) | `Netcup` | `apiKey` |
 | Netlify | `Netlify` | `secret` |
 | Nifcloud | `Nifcloud` | `accessKeyId`, `secretKey` |
 | NS1 | `Ns1` | `secret` |
@@ -131,3 +131,5 @@ Each hosted provider is a variant of DnsServer with its own credential fields. T
 | Vultr | `Vultr` | `secret` |
 | WebSupport | `WebSupport` | `apiKeyId`, `secret` |
 | Yandex Cloud | `YandexCloud` | `apiKey`, `folderId` |
+
+The `Netcup` variant uses the netcup REST API, which authenticates with an API key alone and manages only domains that netcup has moved to CloudDNS. Domains still on the classic netcup DNS are not managed until netcup migrates them to CloudDNS.
