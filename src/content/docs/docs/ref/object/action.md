@@ -71,9 +71,9 @@ DMARC: Troubleshooting
 
 ##### `mailFrom`
 
-> Type: <code>EmailAddress</code> · required
+> Type: <code>EmailAddress?</code>
 >
-> MAIL FROM address provided by the SMTP client
+> MAIL FROM address provided by the SMTP client, or null for the null reverse-path (MAIL FROM:&lt;>)
 
 
 ##### `rcptTo`
@@ -238,9 +238,9 @@ Spam Filter: Classify a message
 
 ##### `mailFrom`
 
-> Type: <code>EmailAddress</code> · required
+> Type: <code>EmailAddress?</code>
 >
-> MAIL FROM address provided by the SMTP client
+> MAIL FROM address provided by the SMTP client, or null for the null reverse-path (MAIL FROM:&lt;>)
 
 
 ##### `mailFromParameters`
@@ -460,7 +460,7 @@ A tag and score contributing to spam classification.
 | Value | Label |
 |---|---|
 | `bit7` | 7-bit message content |
-| `bit8Mime - 8-bit MIME message content` | bit8Mime - 8-bit MIME message content |
+| `bit8Mime` | 8-bit MIME message content |
 | `binaryMime` | Binary MIME message content |
 | `smtpUtf8` | UTF-8 message content |
 
