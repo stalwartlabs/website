@@ -150,7 +150,7 @@ The documentation is versioned; links below point at the current release line. O
 ## Management and telemetry
 
 - [Management overview](https://stalw.art/docs/management/): administering a running server.
-- [CLI overview](https://stalw.art/docs/management/cli/): the `stalwart` CLI (get, query, create, update, delete, apply, snapshot).
+- [CLI overview](https://stalw.art/docs/management/cli/): the `stalwart-cli` command-line tool (describe, get, query, create, update, delete, apply, snapshot) and its [interactive console](https://stalw.art/docs/management/cli/console).
 - [Web UI overview](https://stalw.art/docs/management/webui/): the admin web interface.
 - [Tasks & Actions](https://stalw.art/docs/management/tasks-actions/): operational actions and background tasks, with [Actions](https://stalw.art/docs/management/tasks-actions/actions) and [Tasks](https://stalw.art/docs/management/tasks-actions/tasks).
 - [Backup and restore](https://stalw.art/docs/management/maintenance/backup), [Recovering deleted items](https://stalw.art/docs/management/maintenance/deleted-items), [Database console](https://stalw.art/docs/management/maintenance/database) and [Database migration](https://stalw.art/docs/management/maintenance/migration) (moving to another data store backend).

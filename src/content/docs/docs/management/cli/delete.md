@@ -54,17 +54,27 @@ stalwart-cli query memorylookupkey --where namespace=tmp --fields id --json \
 
 ## Output
 
-Each id is deleted on its own, so some can succeed while others fail. The CLI therefore prints one line per id, followed by a summary:
+Each id is deleted on its own, so some can succeed while others fail. The CLI therefore prints one line per id, followed by a summary. In the following run, the last id did not exist:
 
-```text
-id1 deleted
-id2 deleted
-id3 failed: error: objectIsLinked
-    Linked by:   <linked objects>
-2 deleted, 1 failed
+```sh
+stalwart-cli delete domain --ids h,i,zz
 ```
 
-A failed entry reports the JMAP `SetError` type, which names the reason for the failure. It also lists the linked objects when there are any, and any validation details.
+```text
+✓ Deleted Domain h
+✓ Deleted Domain i
+✗ Domain zz: Not found (notFound)
+2 deleted, 1 failed
+error: one or more deletions failed
+```
+
+A failed entry names the reason for the failure, followed by the JMAP `SetError` type in parentheses. It also lists the linked objects when there are any, and any validation details. A domain still referenced by its DKIM signatures, which the server creates automatically for a new domain, is refused like this:
+
+```text
+✗ Domain h: Object is linked (objectIsLinked)
+    Object:     Domain h
+    Linked by:  DkimSignature joz2ctvwkpqa, DkimSignature joz2cwkwkqqa
+```
 
 The exit status is `0` when every deletion succeeded and non-zero when at least one failed, so a script can tell whether the whole delete went through. A singleton type is refused before any request is sent, with `<Object> is a singleton and cannot be deleted`.
 
@@ -76,9 +86,9 @@ The server limits how many objects a single request may change. That limit is `m
 
 A delete most often reports one of these `SetError` types:
 
-- `objectIsLinked`: other objects reference this one. Destroy the linked objects first; the message lists them.
-- `notFound`: the id does not exist. Confirm the id with [`query`](/docs/management/cli/query).
-- `forbidden`: the account lacks the permission for this object type. Authenticate as an account with the required permission.
+- `Object is linked (objectIsLinked)`: other objects reference this one. Destroy the linked objects first; the message lists them.
+- `Not found (notFound)`: the id does not exist. Confirm the id with [`query`](/docs/management/cli/query).
+- `Forbidden (forbidden)`: the account lacks the permission for this object type. Authenticate as an account with the required permission.
 
 The `objectIsLinked` failure is the reason that order matters in a teardown: an object can be deleted only once nothing references it any more. A teardown in which order matters is therefore better done with [`apply`](/docs/management/cli/apply), which processes destroys in reverse plan order and so removes dependent objects before the objects they reference.
 

@@ -23,53 +23,59 @@ The command takes the following arguments and options:
 
 ## Reading a regular object
 
-A regular object is fetched by naming its type and its id. The following command reads the domain with id `b`:
+A regular object is fetched by naming its type and its id. The following command reads the domain with id `c`:
 
 ```sh
-stalwart-cli get domain b
+stalwart-cli get domain c
 ```
 
 ```text
+Domain northwind.test (id c)
+
 Domain
-  Domain Name: example.org
-  Aliases:     <none>
-  Enabled:     Yes
-  Tenant:      <none>
-  Directory:   <none>
+  Domain Name:             northwind.test
+  Aliases:                 northwind-traders.test
+  Enabled:                 Yes
+  Tenant:                  <none>
+  Directory:               <none>
+  Allow SCIM Provisioning: No
 
 Email
   Catch-All Address: <none>
-  Sub-Addressing:
-    Type: Enable sub-addressing
+  Sub-Addressing:    Enable sub-addressing
   Allow Relaying:    No
 
 DKIM
-  DKIM Management:
-    Type: Automatic DKIM management
+  DKIM Management: Automatic DKIM management
     Key Generation
-      Signing Algorithms: DKIM1 - Ed25519 SHA-256, DKIM1 - RSA SHA-256
+      Signing Algorithms: DKIM1 (Ed25519 SHA-256), DKIM1 (RSA SHA-256)
       Selector Template:  v{version}-{algorithm}-{date-%Y%m%d}
+
     Key Rotation
       Rotate After: 90 d
       Retire After: 7 d
       Delete After: 30 d
 
 TLS
-  Certificate Management:
-    Type: Manual TLS certificate management
+  Certificate Management: Manual TLS certificate management
 
 DNS
-  DNS Management:
-    Type: Manual DNS management
+  DNS Management: Manual DNS management
 
 Reports
   Report Address: mailto:postmaster
 
 Details
-  Description: Test domain
+  Description: Northwind Traders
   Logo:        <none>
-  Created At:  2026-04-15T18:13:35Z
+  Created At:  2026-11-16T17:02:39Z
+
+Zone File
+  DNS Zone File:
+    ...
 ```
+
+The first line names the object: its type, its display name and its id. A singleton is headed by its type alone.
 
 The layout of this output comes from the schema. Besides the fields of each object, the schema contains form definitions, which describe how the WebUI groups those fields into sections and labels them. The CLI organises its output into the same sections. It also merges in the sections of the associated views that the WebUI uses, so every property the server returns is visible, even one that the main form does not list.
 
@@ -89,34 +95,38 @@ Any other id is rejected for a singleton.
 An object can have many properties, and often only a few of them matter. The `--fields` option restricts both the request sent to the server and the rendering to the listed properties. The `id` and `@type` properties are always allowed in the list:
 
 ```sh
-stalwart-cli get domain b --fields id,name,enable,createdAt
+stalwart-cli get domain c --fields id,name,enable,createdAt
 ```
 
 ```text
+Domain northwind.test (id c)
+
 Domain
-  Domain Name: example.org
+  Domain Name: northwind.test
   Enabled:     Yes
-  Created At:  2026-04-15T18:13:35Z
+
+Details
+  Created At: 2026-11-16T17:02:39Z
 ```
 
-A small field list also suits a check of whether an object exists: `--fields id`, or any single `server-set` field, keeps the response minimal.
+A small field list also suits a check of whether an object exists: `--fields id`, or any single read-only field, keeps the response minimal.
 
 ## JSON output
 
 With `--json`, the object is printed as a JSON document:
 
 ```sh
-stalwart-cli get domain b --json
+stalwart-cli get domain c --json
 ```
 
 ```json
-{"aliases":{},"allowRelaying":false,"catchAllAddress":null,"certificateManagement":{"@type":"Manual"},"createdAt":"2026-04-15T18:13:35Z","description":"Test domain","directoryId":null,...,"id":"b"}
+{"name":"northwind.test","aliases":{"northwind-traders.test":true},"enable":true,"createdAt":"2026-11-16T17:02:39Z","description":"Northwind Traders","logo":null,"certificateManagement":{"@type":"Manual"},...,"id":"c"}
 ```
 
 The JSON is compact, without pretty printing. It can therefore be stored verbatim, or piped into `jq` to extract or reshape the fields:
 
 ```sh
-stalwart-cli get domain b --json | jq '{name, enable, createdAt}'
+stalwart-cli get domain c --json | jq '{name, enable, createdAt}'
 ```
 
 ## Value rendering
@@ -125,19 +135,20 @@ In the human-readable view, raw values are converted into a form that is easier 
 
 | Type | Rendering |
 |---|---|
-| `boolean` | `Yes` or `No` |
-| `number<size>` | Bytes converted to binary units, such as `1.5 GB`, `12 MB` or `512 B` |
-| `number<duration>` | Milliseconds converted to the two most significant units, such as `1 m 30 s`, `2 h 15 m` or `1 d 5 h` |
-| `datetime` | ISO 8601 in UTC, such as `2026-04-15T18:13:35Z` |
-| `enum` | The label of the variant, coloured when the schema declares a colour |
-| `id<Object>` | The resolved display name with the id, such as `Tenant Acme (id: c)` |
-| `set<...>` | Comma-separated values |
-| `object<...>` (single-variant) | A nested block |
-| `object<...>` (multi-variant) | The label of the variant, with the fields of the variant nested below |
-| `list<Object>` | A small inline table |
-| `map<_, Object>` | A small inline table keyed by the map key |
+| Boolean | `Yes` or `No` |
+| Size in bytes | Bytes converted to binary units, such as `1.5 GB`, `12 MB` or `512 B` |
+| Duration in milliseconds | Milliseconds converted to the two most significant units, such as `1 m 30 s`, `2 h 15 m` or `1 d 5 h` |
+| Date and time | ISO 8601 in UTC, such as `2026-11-16T17:02:39Z` |
+| Enumeration | The label of the value, coloured when the schema declares a colour |
+| Reference | The display name followed by the id, such as `northwind.test (c)` |
+| Set | Comma-separated values |
+| Map of scalars | One `key → value` pair per line |
+| Object (single variant) | A nested block |
+| Object (multi-variant) | The label of the variant, with the fields of the variant nested below |
+| List of objects | A small inline table |
+| Map of objects | A small inline table keyed by the map key |
 
-A `null` value is dimmed and rendered as `<none>`.
+A `null` value is dimmed and rendered as `<none>`, and an empty string as `<empty>`.
 
 A reference to another object is shown by that object's display name, so the CLI has to look the names up. It resolves them in batches: when a single `get` returns ten references to a `Tenant`, the CLI issues only one extra JMAP request to resolve their labels. When the referenced object declares no `labelProperty` in its list, there is no name to show, and the bare id is shown instead.
 

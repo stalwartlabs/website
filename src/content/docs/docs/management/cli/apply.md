@@ -85,18 +85,28 @@ A `destroy` works in two steps as well. It first collects the ids it will remove
 
 ### Human (default)
 
-Without `--json`, the CLI prints the plan, one line per completed operation and a final summary. For a plan that upserts domains, accounts and DKIM signatures and then updates `SystemSettings`, the output looks like this:
+Without `--json`, the CLI prints the plan, one line per completed operation and a final summary. The `Plan:` and `Done:` lines only name the counts that are not zero. For a plan that upserts two domains and creates a third, the first run creates all three:
 
 ```text
-Plan: 0 destroy, 1 update, 0 create, 3 upsert, 0 reconcile (7 objects)
-✓ upserted Domain (2)
-✓ upserted Account (2)
-✓ upserted DkimSignature (3)
-✓ updated SystemSettings (1)
-Done: 0 destroyed, 4 updated, 4 created (0 failed)
+Plan: 1 create, 1 upsert (3 objects)
+✓ Upserted Domain (2 objects)
+✓ Created Domain (1 object)
+Done: 3 created
 ```
 
-An `upsert` or `reconcile` line shows the total number of objects that the operation handled. The `Done:` summary splits that total by outcome: `created` counts the objects that had no existing match, and `updated` counts the objects that were matched and reconciled. In this example, the seven upserted objects became four creates and three updates, and the singleton update brings `updated` to four. A `reconcile` that deletes objects also prints a cleanup line during the final pass, for example `✓ reconcile removed Domain (2)`, and the summary counts those deletions under `destroyed`.
+An `upsert` or `reconcile` line shows the total number of objects that the operation handled. The `Done:` summary splits that total by outcome: `created` counts the objects that had no existing match, and `updated` counts the objects that were matched and updated. Running the same plan again with `--continue-on-error` shows both outcomes. The upsert now matches the two existing domains and updates them, while the plain `create` collides with the domain it created the first time:
+
+```text
+Plan: 1 create, 1 upsert (3 objects)
+✓ Upserted Domain (2 objects)
+✗ Create Domain failed: Domain: create failed for `docs-c` (operation #2): Primary key violation (primaryKeyViolation)
+    Property:   name
+    Object:     Domain m
+Done: 2 updated, 1 failed
+error: apply completed with 1 failed operation(s)
+```
+
+A `reconcile` that deletes objects also prints a cleanup line during the final pass, such as `✓ Removed Domain not in the plan (2 objects)`, and the summary counts those deletions under `destroyed`.
 
 The `Plan:` and `Done:` lines are written to stderr. They therefore never mix with the records that `--json` writes to stdout for downstream tools.
 
@@ -106,9 +116,7 @@ For CI pipelines and infrastructure-as-code providers, `--json` is the recommend
 
 ```text
 {"op":"upsert","object":"Domain","index":0,"count":2,"status":"ok"}
-{"op":"upsert","object":"Account","index":1,"count":2,"status":"ok"}
-{"op":"update","object":"SystemSettings","index":2,"count":1,"status":"ok"}
-{"op":"summary","plan":{"destroys":0,"updates":1,"creates":0,"create_objects":0,"upserts":2,"upsert_objects":4,"reconciles":0,"reconcile_objects":0},"done":{"destroyed":0,"updated":3,"created":2,"failed":0}}
+{"op":"summary","plan":{"destroys":0,"updates":0,"creates":0,"create_objects":0,"upserts":1,"upsert_objects":2,"reconciles":0,"reconcile_objects":0},"done":{"destroyed":0,"updated":2,"created":0,"failed":0}}
 ```
 
 The summary record has two blocks. The `plan` block counts what the plan contained: the `destroys`, `updates` and `creates`, plus `upserts`, `upsert_objects`, `reconciles` and `reconcile_objects`. The `done` block counts what actually happened, and the objects of an upsert or reconcile appear there under `created` or `updated`.
@@ -129,15 +137,15 @@ stalwart-cli apply --file plan.ndjson --dry-run
 ```
 
 ```text
-Plan: 0 destroy, 1 update, 0 create, 3 upsert, 0 reconcile (7 objects)
-(dry run: no changes will be made)
+Plan: 1 create, 1 upsert (3 objects)
+Dry run: no changes will be made.
 ```
 
 A dry run checks that the plan parses, that every object type it names exists in the schema, and that it follows the structural rules. These rules cover singletons and ids, the ban on an `upsert` or `reconcile` of a singleton, a non-empty `value` and `matchOn` where they are required, and a usable match key on every `reconcile`.
 
 A dry run also resolves the `#<id>` references in match keys offline, walking the operations in plan order. A `matchOn` reference to an id that no earlier operation produces is therefore rejected before anything is applied.
 
-The limits of a dry run follow from what it sends. Its only request fetches the schema, which is normally cached. Anything that depends on live data is consequently checked only when the plan is applied: whether an object exists, whether a match is ambiguous, and what a `reconcile` would delete.
+The limits of a dry run follow from what it sends. It only fetches the schema, which is normally cached, and the JMAP session. Anything that depends on live data is consequently checked only when the plan is applied: whether an object exists, whether a match is ambiguous, and what a `reconcile` would delete.
 
 ## Exit status
 

@@ -68,7 +68,7 @@ If a type has no label property, `snapshot` omits `matchOn` and prints a warning
 
 ## Reference handling
 
-Objects refer to each other by id, and those ids are specific to the source server. During export, every field that references another object is therefore translated to the `#<prefix>-<server-id>` form. This covers `id<Type>`, `set<id<Type>>` and `map<id<Type>, ...>` fields, and any such reference nested inside an embedded object. The prefix is the target type name with `x:` stripped and lowercased, cut at the first `/` when the reference targets a specific view:
+Objects refer to each other by id, and those ids are specific to the source server. During export, every field that references another object is therefore translated to the `#<prefix>-<server-id>` form. This covers single references, sets of references and maps keyed by references (`Reference to <Type>`, `Set of references to <Type>` and `Map from <Type> ...` in [`describe`](/docs/management/cli/describe)), and any such reference nested inside an embedded object. The prefix is the target type name with `x:` stripped and lowercased, cut at the first `/` when the reference targets a specific view:
 
 | Target type | Example reference |
 |---|---|
@@ -80,7 +80,7 @@ The mapping is deterministic, so two snapshots of the same state produce identic
 
 ## Static reference validation
 
-A reference to a type that the snapshot does not contain could not be restored, so `snapshot` checks for such references before it exports anything. Before it sends any request beyond the initial schema fetch, it walks the schema of every selected type, including every embedded object reachable through `object<>`, `objectList<>` and `map<_, object<>>` fields, and collects the full set of reference targets. When a reference target is neither selected nor listed in `--allow-unresolved`, the command fails with a message that names the missing type. A snapshot of `Domain` alone shows this:
+A reference to a type that the snapshot does not contain could not be restored, so `snapshot` checks for such references before it exports anything. Before it sends any request beyond the initial schema fetch, it walks the schema of every selected type, including every embedded object reachable through embedded objects, lists of objects and maps of objects, and collects the full set of reference targets. When a reference target is neither selected nor listed in `--allow-unresolved`, the command fails with a message that names the missing type. A snapshot of `Domain` alone shows this:
 
 ```sh
 stalwart-cli snapshot Domain
@@ -152,21 +152,33 @@ With `--include-secrets` but without `includeSecrets` on the server, the plan co
 
 ## Progress output
 
-While it runs, `snapshot` reports its progress per type. The progress lines go to stderr, so that stdout contains only the plan:
+While it runs, `snapshot` reports its progress per type. The progress lines go to stderr, so that stdout contains only the plan. The following snapshot covers tenants, domains, accounts and the `SystemSettings` singleton; `Account` has three variants, each exported as its own `upsert`, which makes five upserts in all:
 
-```text
-snapshot: 2 upserts, 1 singletons
-  fetching Tenant...
-    4 fetched
-    Tenant: 4
-  fetching Domain...
-    127 fetched
-    Domain: 127
-  fetching singleton SystemSettings...
-snapshot complete
+```sh
+stalwart-cli snapshot Tenant Domain Account SystemSettings \
+    --allow-unresolved Role,Directory,AcmeProvider,Certificate,DkimSignature,DnsServer,PublicKey,CalendarScheduling \
+    --output plan.ndjson
 ```
 
-For a multi-variant type, the `<count> fetched` line is followed by one line per variant. These lines show how the CLI divided the objects among the variants, for example `Account (User): 12` and `Account (Group): 3`. `--quiet` suppresses this output.
+
+```text
+Snapshot: 5 upserts, 1 singleton update
+  Fetching Tenant…
+    1 object fetched
+  Fetching Domain…
+    5 objects fetched
+  Fetching Account…
+    32 objects fetched
+  warning: Account has no label property; objects will be matched by value on apply (a changed object will be created as a new one). Add a `matchOn` to the plan to match on a specific key.
+    Account Group: 5 objects
+  warning: Account has secret field(s) the server returns anonymized (****); their values cannot be captured and must be supplied in the plan before applying.
+    Account User: 24 objects
+    Account Resource: 3 objects
+  Fetching SystemSettings (singleton)…
+✓ Snapshot complete
+```
+
+For a multi-variant type, the `<count> objects fetched` line is followed by one line per variant. These lines show how the CLI divided the objects among the variants, and any warning about a variant appears next to it. `--quiet` suppresses this output.
 
 ## Cyclic dependencies
 

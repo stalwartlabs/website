@@ -30,10 +30,12 @@ stalwart-cli query domain
 ```
 
 ```text
-Id  Domain Name  Enabled  Certificate Management             DNS Management
-b   example.org  Yes      Manual TLS certificate management  Manual DNS management
-c   foo.com      Yes      Manual TLS certificate management  Manual DNS management
-d   bar.com      No       Manual TLS certificate management  Manual DNS management
+Id  Domain Name     Enabled  Certificate Management             DNS Management
+f   tailspin.test   No       Manual TLS certificate management  Manual DNS management
+e   fabrikam.test   Yes      Manual TLS certificate management  Manual DNS management
+d   contoso.test    Yes      Manual TLS certificate management  Manual DNS management
+c   northwind.test  Yes      Manual TLS certificate management  Manual DNS management
+b   cli.test        Yes      Manual TLS certificate management  Manual DNS management
 ```
 
 Structured values would not fit in a table cell, so they are summarised to keep the table compact. A multi-variant field, one whose value takes one of several shapes selected by its `@type`, such as `Certificate Management`, shows the label of its variant. A single-variant embedded object shows as `<object>`. Lists and maps with object values show as `<list:N>` and `<map:N>`.
@@ -47,10 +49,12 @@ stalwart-cli query domain --fields id,name,enable,createdAt
 ```
 
 ```text
-id  Domain Name  Enabled  Created At
-b   example.org  Yes      2026-04-15T18:13:35Z
-c   foo.com      Yes      2026-04-15T18:17:54Z
-d   bar.com      No       2026-04-15T18:17:54Z
+Id  Domain Name     Enabled  Created At
+f   tailspin.test   No       2026-11-16T17:02:39Z
+e   fabrikam.test   Yes      2026-11-16T17:02:39Z
+d   contoso.test    Yes      2026-11-16T17:02:39Z
+c   northwind.test  Yes      2026-11-16T17:02:39Z
+b   cli.test        Yes      2026-11-16T17:02:39Z
 ```
 
 Property names are matched case-insensitively. The CLI rewrites each one to its canonical case before it sends the request, so `--fields ID` returns `id`. An unknown name is rejected with an error.
@@ -89,7 +93,7 @@ A comparison selects a range instead. The following command lists the queued mes
 stalwart-cli query queuedmessage --where 'due<2026-10-15T00:00:00Z' --fields id,returnPath,due
 ```
 
-Not every property can be filtered on. A filter that the object does not support is refused by the server, with a message such as `Filter on property level is not supported or invalid`. The filters that an object accepts are listed in the `Filters:` section of [`describe <object>`](/docs/management/cli/describe), with the key, kind and label of each.
+Not every property can be filtered on. A filter that the object does not support is refused by the server, with a message such as `Filter on property level is not supported or invalid`. The filters that an object accepts are listed in the `Filters` section of [`describe <object>`](/docs/management/cli/describe), with the key, kind and label of each.
 
 Each filter field holds a single value. Repeating the same `--where` field therefore replaces the earlier value, and no error is raised.
 
@@ -102,9 +106,11 @@ stalwart-cli query domain --fields id,name --json
 ```
 
 ```text
-{"name":"example.org","id":"b"}
-{"name":"foo.com","id":"c"}
-{"name":"bar.com","id":"d"}
+{"name":"tailspin.test","id":"f"}
+{"name":"fabrikam.test","id":"e"}
+{"name":"contoso.test","id":"d"}
+{"name":"northwind.test","id":"c"}
+{"name":"cli.test","id":"b"}
 ```
 
 The records are streamed page by page as they are fetched. Memory use therefore stays constant whatever the size of the result set, even for a query that returns hundreds of thousands of rows. Without `--fields`, each record contains the default columns of the object's list. When only the ids are needed, `--fields id` returns them, and `jq -r '.id'` extracts them from the records.

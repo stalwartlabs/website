@@ -161,3 +161,5 @@ curl -X POST https://mail.example.com/auth/device \
 Only registered clients whose `grantTypes` include `deviceCode` can use the flow, and any other client is refused with `unauthorized_client`. Requested scopes follow the same rules as in the authorization code flow. A user code expires after the time set in [`userCodeExpiry`](/docs/ref/object/oidc-provider#usercodeexpiry).
 
 Once the user enters the code, the verification page shows the client's name and logo and the access it requests, and the user must allow the request and sign in. Until the user has decided, polling returns `authorization_pending`. If the user denies the request, polling returns `access_denied`.
+
+`stalwart-cli` uses this flow to sign administrators in from a terminal ([Device sign-in](/docs/management/cli/#device-sign-in)).

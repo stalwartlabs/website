@@ -74,6 +74,8 @@ Only the English label names are recognised, so an export from an account whose 
 
 A message without an `X-Gmail-Labels` header, as in mbox files from other programs, is placed in a mailbox named after its file, without the extension: the messages of `Thunderbird-Inbox.mbox` go to `Thunderbird-Inbox`.
 
+The importer reads only Gmail labels from an mbox file, so the mail folders that a server such as Dovecot keeps in mbox format lose part of their state. The read, answered and flagged state that the server records in the `Status`, `X-Status` and `X-Keywords` headers is ignored, and every message arrives without keywords. The directory of a file does not create a parent mailbox, so `Work/Projects.mbox` becomes a top-level `Projects`, and files without the `.mbox` extension are not read at all. Server mailboxes are therefore best read through the server itself with the [IMAP importer](/docs/migration/import-export/import/imap) while it still runs. Once it is gone, converting the mbox tree to a Maildir++ tree first, for example with Dovecot's `doveadm` and its default Maildir layout, keeps the flags and the folder hierarchy for the [Maildir importer](/docs/migration/import-export/import/maildir).
+
 With `--noautomap`, the system label mailboxes are created with their names but without roles.
 
 ## Repeated runs

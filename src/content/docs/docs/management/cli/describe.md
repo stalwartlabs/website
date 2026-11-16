@@ -18,19 +18,19 @@ stalwart-cli describe
 
 ```text
 Account                 Defines a user or group account for authentication and email access.
-AccountPassword         Password-based authentication credential. [singleton]
-AccountSettings         Configures default account settings for locale and encryption. [singleton]
+AccountPassword         Password-based authentication credential. (singleton)
+AccountSettings         Configures default account settings for locale and encryption. (singleton)
 AcmeProvider            Defines an ACME provider for automatic TLS certificate management.
 Action                  Defines server management actions such as reloads, troubleshooting and cache operations.
-AddressBook             Configures address book and contact storage settings. [singleton]
+AddressBook             Configures address book and contact storage settings. (singleton)
 ...
 Domain                  Defines an email domain and its DNS, DKIM, and TLS certificate settings.
 ...
-SystemSettings          Server-wide configuration. [singleton]
+SystemSettings          Configures core server settings including hostname and network services. (singleton)
 ...
 ```
 
-The `[singleton]` tag marks a configuration object that has exactly one instance per server, such as `SystemSettings`. Because that instance always exists, a singleton cannot be created or destroyed, only updated. [Updating objects](/docs/management/cli/update) explains how its id works.
+The `(singleton)` tag marks a configuration object that has exactly one instance per server, such as `SystemSettings`. Because that instance always exists, a singleton cannot be created or destroyed, only updated. [Updating objects](/docs/management/cli/update) explains how its id works.
 
 ## Inspecting a single object
 
@@ -44,42 +44,44 @@ stalwart-cli describe domain
 Domain
   Defines an email domain and its DNS, DKIM, and TLS certificate settings.
 
-Fields:
-    aliases                set<string<string>>  mutable
-        List of additional domain names that are aliases of this domain
-    allowRelaying          boolean  mutable
-        Whether to allow relaying for non-local recipients, useful in split delivery scenarios
-    catchAllAddress        string<emailAddress>?  mutable
-        Catch-all email address that receives messages addressed to unknown local recipients
-    certificateManagement  object<CertificateManagement>  mutable
-        Whether TLS certificates for this domain are managed manually or automatically by an ACME provider
-    createdAt              datetime  server-set
-        Creation date of the domain
-    description            string<string>?  mutable
-        Description of the domain
-    ...
-    name                   string<string>  mutable
-        Domain name
+Fields
+  aliases                Set of text
+      List of additional domain names that are aliases of this domain
+  allowRelaying          Boolean
+      Whether to allow relaying for non-local recipients, useful in split delivery scenarios
+  ...
+  catchAllAddress        Email address (optional)
+      Catch-all email address that receives messages addressed to unknown local recipients
+  certificateManagement  CertificateManagement object
+      Whether TLS certificates for this domain are managed manually or automatically by an ACME provider
+  createdAt              Date and time (read-only)
+      Creation date of the domain
+  description            Text (optional)
+      Description of the domain
+  directoryId            Reference to Directory (optional)
+      Identifier for the directory where accounts for this domain are stored, or null to use the internal directory
+  ...
+  name                   Text
+      Domain name
+  ...
 
-Filters:
-    text            text        Text
-    name            text        Name
-    memberTenantId  id<Tenant>  Tenant
+Filters
+  text            Text                 Text
+  name            Text                 Name
+  memberTenantId  Reference to Tenant  Tenant
 ```
 
 The output is divided into sections, and each appears only where it applies to the object:
 
-* Header: the object name, the `[singleton]` tag when the object is one, and the description.
-* Fields: for an object with a single schema, every property the server exposes, with its type, its mutability and a description. The mutability states who may set the field: `mutable` fields can be changed at any time, `immutable` ones are set when the object is created, and `server-set` ones are filled in by the server.
-* Variants: for a multi-variant object, each `@type` discriminator value with its label, followed by the fields of that variant, as shown in the next section.
-* Filters: the `--where` keys that [`query`](/docs/management/cli/query) accepts for the object. Each key has a kind (`text`, `integer`, `date`, `enum` or `id<Object>`), which indicates the shape of the value it expects.
+* Header: the object name, the `(singleton)` tag when the object is one, and the description.
+* Fields: for an object with a single schema, every property the server exposes, with its type and a description. A tag after the type states who may set the field: a field without a tag can be changed at any time, a `(create-only)` field is set when the object is created and cannot be changed afterwards, and a `(read-only)` field is filled in by the server. An `(optional)` field accepts `null`.
+* Variants: for a multi-variant object, each `@type` discriminator value with its label, followed by one section with the fields of each variant, as shown in the next section.
+* Filters: the `--where` keys that [`query`](/docs/management/cli/query) accepts for the object, each with the kind of value it expects (such as `Text`, `Integer`, `Date`, `One of <Enum>` or `Reference to <Object>`) and its label.
 * Sort by: the property names that JMAP `sort` accepts. The section is omitted when the object declares none.
-
-A `?` after a type means that the field is nullable, so `null` is an accepted value.
 
 ### Multi-variant objects
 
-Some objects come in several distinct shapes, called variants, and each variant has its own fields. Every instance of such a multi-variant object has an `@type` field that names its variant. `Account` is the typical example, with the variants `User` and `Group`, and its description lists the fields per variant:
+Some objects come in several distinct shapes, called variants, and each variant has its own fields. Every instance of such a multi-variant object has an `@type` field that names its variant. `Account` is the typical example, with the variants `User`, `Group` and `Resource`, and its description lists the fields per variant:
 
 ```sh
 stalwart-cli describe account
@@ -89,28 +91,38 @@ stalwart-cli describe account
 Account
   Defines a user or group account for authentication and email access.
 
-  Variants:
-    User: User account
-      Fields:
-        aliases           list<EmailAlias>  mutable
-            List of email aliases for the account
-        createdAt         datetime  server-set
-        ...
-        name              string<string>  mutable
-            Name of the account, typically an email address local part.
-        domainId          id<Domain>  mutable
-            Identifier for the domain this account belongs to.
-        ...
-    Group: Group account
-      Fields:
-        ...
+Variants
+  User      User account
+  Group     Group account
+  Resource  Resource account
 
-Filters:
-    text            text               Text
-    name            text               Name
-    domainId        id<Domain>         Domain
-    memberGroupIds  id<Account/Group>  Group
-    memberTenantId  id<Tenant>         Tenant
+User fields
+  aliases           List of EmailAlias objects
+      List of email aliases for the account
+  createdAt         Date and time (read-only)
+      Creation date of the account
+  ...
+  domainId          Reference to Domain
+      Identifier for the domain this account belongs to. This is used to determine the email address of the account, which is formed as name@domain.
+  ...
+  locale            One of Locale
+      Preferred locale for the account
+  memberGroupIds    Set of references to Account/Group
+      List of groups that this account is a member of
+  ...
+
+Group fields
+  ...
+
+Resource fields
+  ...
+
+Filters
+  text            Text                        Text
+  name            Text                        Name
+  domainId        Reference to Domain         Domain
+  memberTenantId  Reference to Tenant         Tenant
+  memberGroupIds  Reference to Account/Group  Group
 ```
 
 Because the server needs to know which shape an object has, [creating](/docs/management/cli/create) a multi-variant object requires an `@type`. It is supplied either through the `Object/Variant` shorthand or as an explicit field.
@@ -126,34 +138,37 @@ stalwart-cli describe AccountType
 ```
 
 ```text
-AccountType  (enum)
+AccountType (enum)
 
-  Variants:
-    User   User account
-    Group  Group account
+Values
+  User      User account
+  Group     Group account
+  Resource  Resource account
 ```
 
-When the variants of an enumeration carry a `color`, as log severity levels do, interactive terminals show them in those colours:
+When the values of an enumeration carry a `color`, as log severity levels do, interactive terminals show them in those colours:
 
 ```sh
 stalwart-cli describe TracingLevel
 ```
 
 ```text
-TracingLevel  (enum)
+TracingLevel (enum)
 
-  Variants:
-    error  Error
-    warn   Warning
-    info   Info
-    debug  Debug
-    trace  Trace
+Values
+  error  Error
+  warn   Warning
+  info   Info
+  debug  Debug
+  trace  Trace
 ```
 
 ## Reading the output
 
 The output is purely descriptive. `describe` issues no requests for individual objects and changes nothing, so it can be run freely while learning the schema before designing an [apply plan](/docs/management/cli/apply).
 
-Field types are summarised in a compact notation: `string<format>`, `number<format>`, `set<scalar>`, `list<embedded>`, `map<key, value>` and `id<RefObject>`, with the `?` suffix marking a nullable field. An `id<RefObject>` field holds a reference to an object of the named type.
+Field types are written out in words. A scalar type names its format, such as `Text`, `Email address`, `Size in bytes` or `Date and time`. `Reference to <Object>` holds the id of an object of the named type, `<Object> object` an embedded object, and `List of`, `Set of` and `Map from ... to ...` the collections.
 
-An enumeration with hundreds of variants would swamp the description of every object that uses it, so it is not inlined there. Those objects show `enum (see <enumName>)` instead, and `describe <enumName>` lists the values.
+A field whose type is an enumeration shows `One of <Enum>` rather than the values, because some enumerations have hundreds of them. `describe <Enum>` lists the values.
+
+A name that matches neither an object nor an enumeration fails with `no object or enum named <name>`.

@@ -9,7 +9,7 @@ Once a Stalwart server is running, its administrators keep changing it: they add
 Stalwart keeps its whole configuration as objects in its data store, from an account to a listener. Every management operation reads or writes those objects through one interface, the JMAP management API at `/jmap/`. JMAP is an HTTP protocol that exchanges JSON, and Stalwart extends it with methods for its configuration objects. Three tools use that API:
 
 - The [WebUI](/docs/management/webui/), the browser interface for administrators at `/admin` and for users at `/account`
-- The [CLI](/docs/management/cli/), `stalwart-cli`, for terminals, scripts and declarative deployments
+- The [CLI](/docs/management/cli/), `stalwart-cli`, for scripts and declarative deployments, with an [interactive console](/docs/management/cli/console) for administrators who work in a terminal
 - Direct JMAP calls from other programs, documented with each object in the [schema reference](/docs/ref/)
 
 Because all three send the same calls, an operation performed in one of them can be reproduced in the others. A change made by hand in the WebUI can later be scripted with the CLI, for example, or sent by an external program.
@@ -27,6 +27,6 @@ The section covers these tools:
 - [Applications](/docs/management/applications/): the web applications served by the server, including the WebUI, and how they are updated.
 - [Tasks and actions](/docs/management/tasks-actions/): operations that run immediately on request, and background jobs with retries.
 - [WebUI](/docs/management/webui/): the administration interface, the Account Manager and branding.
-- [CLI](/docs/management/cli/): `stalwart-cli`, its commands and declarative plans.
+- [CLI](/docs/management/cli/): `stalwart-cli`, its commands, its interactive console and declarative plans.
 - [Maintenance](/docs/management/maintenance/): backup and restore, recovery of deleted items, the database console and data migration between backends.
 - [Troubleshooting](/docs/management/troubleshoot): diagnosing delivery, authentication and sign-in problems.
